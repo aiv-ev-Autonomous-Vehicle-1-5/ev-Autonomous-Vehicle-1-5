@@ -1,2 +1,1 @@
-source;share/lidar_launch/environment/ament_prefix_path.sh
-source;share/lidar_launch/environment/path.sh
+/home/aiv/ev_ws/perception/build/lidar_launch/ament_cmake_environment_hooks/local_setup.dsv

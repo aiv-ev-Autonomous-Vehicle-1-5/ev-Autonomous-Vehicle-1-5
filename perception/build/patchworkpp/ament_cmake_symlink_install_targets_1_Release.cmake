@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/aiv/ev_ws/perception/build/patchworkpp/libgseg_component.so" "TARGETS" "gseg_component" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "lib/patchworkpp")

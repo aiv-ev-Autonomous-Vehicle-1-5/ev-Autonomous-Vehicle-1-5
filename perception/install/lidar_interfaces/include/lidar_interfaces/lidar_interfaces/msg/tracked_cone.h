@@ -1,12 +1,1 @@
-// generated from rosidl_generator_c/resource/idl.h.em
-// with input from lidar_interfaces:msg/TrackedCone.idl
-// generated code does not contain a copyright notice
-
-#ifndef LIDAR_INTERFACES__MSG__TRACKED_CONE_H_
-#define LIDAR_INTERFACES__MSG__TRACKED_CONE_H_
-
-#include "lidar_interfaces/msg/detail/tracked_cone__struct.h"
-#include "lidar_interfaces/msg/detail/tracked_cone__functions.h"
-#include "lidar_interfaces/msg/detail/tracked_cone__type_support.h"
-
-#endif  // LIDAR_INTERFACES__MSG__TRACKED_CONE_H_
+/home/aiv/ev_ws/perception/build/lidar_interfaces/rosidl_generator_c/lidar_interfaces/msg/tracked_cone.h

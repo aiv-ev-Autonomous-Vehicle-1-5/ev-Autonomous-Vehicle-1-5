@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/aiv/ev_ws/perception/build/lidar_voxel_grid/libvoxel_grid_component.so" "TARGETS" "voxel_grid_component" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

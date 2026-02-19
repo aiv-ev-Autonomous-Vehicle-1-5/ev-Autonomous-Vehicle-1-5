@@ -1,3 +1,1 @@
-source;share/lidar_tracking/environment/ament_prefix_path.sh
-source;share/lidar_tracking/environment/library_path.sh
-source;share/lidar_tracking/environment/path.sh
+/home/aiv/ev_ws/perception/build/lidar_tracking/ament_cmake_environment_hooks/local_setup.dsv

@@ -1,17 +1,1 @@
-cropbox_component:
-  ros__parameters:
-    # CropBox ROI parameters (in meters)
-    # X-axis: forward/backward (vehicle coordinate)
-    x_min: -100.0
-    x_max: 500.0
-
-    # Y-axis: left/right
-    y_min: -100.0
-    y_max: 100.0
-
-    # Z-axis: up/down
-    z_min: -2.0
-    z_max: 3.0
-
-    # If true, remove points inside the box instead of outside
-    negative: false
+/home/aiv/ev_ws/perception/src/lidar/velodyne_cropbox/config/default_cropbox_params.yaml

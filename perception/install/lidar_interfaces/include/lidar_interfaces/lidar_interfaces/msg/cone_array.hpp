@@ -1,12 +1,1 @@
-// generated from rosidl_generator_cpp/resource/idl.hpp.em
-// generated code does not contain a copyright notice
-
-#ifndef LIDAR_INTERFACES__MSG__CONE_ARRAY_HPP_
-#define LIDAR_INTERFACES__MSG__CONE_ARRAY_HPP_
-
-#include "lidar_interfaces/msg/detail/cone_array__struct.hpp"
-#include "lidar_interfaces/msg/detail/cone_array__builder.hpp"
-#include "lidar_interfaces/msg/detail/cone_array__traits.hpp"
-#include "lidar_interfaces/msg/detail/cone_array__type_support.hpp"
-
-#endif  // LIDAR_INTERFACES__MSG__CONE_ARRAY_HPP_
+/home/aiv/ev_ws/perception/build/lidar_interfaces/rosidl_generator_cpp/lidar_interfaces/msg/cone_array.hpp

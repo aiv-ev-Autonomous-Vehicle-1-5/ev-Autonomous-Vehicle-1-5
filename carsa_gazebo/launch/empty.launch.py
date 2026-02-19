@@ -40,7 +40,7 @@ def generate_launch_description():
 
             # Rviz configureation file
             'rviz_config_file': PathJoinSubstitution([
-                FindPackageShare('carsa_gazebo'), 'rviz', 'erp42.rviz'
+                FindPackageShare('carsa_gazebo'), 'rviz', 't870.rviz'
             ]),
 
         }.items()

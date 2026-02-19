@@ -1,14 +1,1 @@
-filter_component:
-  ros__parameters:
-    # cluster size filtering
-    min_cluster_size: 5
-    max_cluster_size: 5000
-
-    # flatness filter (PCA) — ground remnant removal
-    flatness_threshold: 0.1
-
-    # bounding box filter — lava cone dimensions
-    min_height: 0.1
-    max_height: 1.5
-    min_width: 0.1
-    max_width: 1.5
+/home/aiv/ev_ws/perception/src/lidar/cluster_filter/config/filter_params.yaml

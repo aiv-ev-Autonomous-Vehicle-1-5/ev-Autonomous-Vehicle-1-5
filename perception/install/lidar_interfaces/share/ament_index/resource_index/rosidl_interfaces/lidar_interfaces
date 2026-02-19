@@ -1,8 +1,1 @@
-msg/Cone.idl
-msg/Cone.msg
-msg/ConeArray.idl
-msg/ConeArray.msg
-msg/TrackedCone.idl
-msg/TrackedCone.msg
-msg/TrackedConeArray.idl
-msg/TrackedConeArray.msg
+/home/aiv/ev_ws/perception/build/lidar_interfaces/ament_cmake_index/share/ament_index/resource_index/rosidl_interfaces/lidar_interfaces

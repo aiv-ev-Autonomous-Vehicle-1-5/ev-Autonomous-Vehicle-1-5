@@ -1,0 +1,82 @@
+[0.012s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/velodyne_cropbox -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/velodyne_cropbox
+[0.047s] -- The C compiler identification is GNU 11.4.0
+[0.084s] -- The CXX compiler identification is GNU 11.4.0
+[0.089s] -- Detecting C compiler ABI info
+[0.133s] -- Detecting C compiler ABI info - done
+[0.139s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.140s] -- Detecting C compile features
+[0.140s] -- Detecting C compile features - done
+[0.142s] -- Detecting CXX compiler ABI info
+[0.201s] -- Detecting CXX compiler ABI info - done
+[0.206s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.206s] -- Detecting CXX compile features
+[0.206s] -- Detecting CXX compile features - done
+[0.207s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.305s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.340s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.357s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.379s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.382s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.387s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.393s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.404s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.432s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.434s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.489s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.507s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.537s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.542s] -- Looking for pthread.h
+[0.587s] -- Looking for pthread.h - found
+[0.588s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.634s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.635s] -- Found Threads: TRUE  
+[0.663s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.677s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.694s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.737s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.737s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/aiv/ev_ws/perception/src/lidar/velodyne_cropbox/include>
+[0.737s] -- Configured cppcheck exclude dirs and/or files: 
+[0.737s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.737s] -- Added test 'lint_cmake' to check CMake code style
+[0.737s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.738s] -- Added test 'uncrustify' to check C / C++ code style
+[0.738s] -- Configured uncrustify additional arguments: 
+[0.738s] -- Added test 'xmllint' to check XML markup files
+[0.740s] -- Configuring done
+[0.745s] -- Generating done
+[0.746s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/velodyne_cropbox
+[0.752s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/velodyne_cropbox -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/velodyne_cropbox
+[0.754s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/velodyne_cropbox -- -j28 -l28
+[0.788s] [ 50%] [32mBuilding CXX object CMakeFiles/cropbox_component.dir/src/cropbox_component.cpp.o[0m
+[7.123s] [100%] [32m[1mLinking CXX shared library libcropbox_component.so[0m
+[7.593s] [100%] Built target cropbox_component
+[7.602s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/velodyne_cropbox -- -j28 -l28
+[7.603s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/velodyne_cropbox
+[7.610s] -- Install configuration: ""
+[7.610s] -- Execute custom install script
+[7.611s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/lib/libcropbox_component.so
+[7.620s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/include/velodyne_cropbox/cropbox_component.hpp
+[7.629s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/config/default_cropbox_params.yaml
+[7.638s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/launch/cropbox.launch.py
+[7.647s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.sh
+[7.656s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.dsv
+[7.664s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/package_run_dependencies/velodyne_cropbox
+[7.673s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/parent_prefix_path/velodyne_cropbox
+[7.682s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.sh
+[7.691s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.dsv
+[7.699s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.sh
+[7.709s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.dsv
+[7.717s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.bash
+[7.726s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.sh
+[7.732s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.zsh
+[7.741s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.dsv
+[7.750s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/package.dsv
+[7.756s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/packages/velodyne_cropbox
+[7.762s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/rclcpp_components/velodyne_cropbox
+[7.771s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_include_directories-extras.cmake
+[7.778s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_libraries-extras.cmake
+[7.784s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_dependencies-extras.cmake
+[7.794s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig.cmake
+[7.801s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig-version.cmake
+[7.810s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/package.xml
+[7.821s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/velodyne_cropbox

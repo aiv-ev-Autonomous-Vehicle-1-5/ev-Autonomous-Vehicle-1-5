@@ -57,6 +57,10 @@ install(DIRECTORY config/
   DESTINATION share/${PROJECT_NAME}/config
 )
 
+install(DIRECTORY launch/
+  DESTINATION share/${PROJECT_NAME}/launch
+)
+
 ament_export_include_directories(include)
 ament_export_libraries(tracking_component)
 ament_export_dependencies(

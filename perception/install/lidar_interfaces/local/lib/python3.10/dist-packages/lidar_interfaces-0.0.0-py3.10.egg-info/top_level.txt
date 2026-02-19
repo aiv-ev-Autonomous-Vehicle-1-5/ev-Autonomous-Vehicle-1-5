@@ -1,1 +1,1 @@
-lidar_interfaces
+/home/aiv/ev_ws/perception/build/lidar_interfaces/ament_cmake_python/lidar_interfaces/lidar_interfaces.egg-info/top_level.txt
