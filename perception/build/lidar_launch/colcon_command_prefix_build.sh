@@ -1,0 +1,11 @@
+# generated from colcon_core/shell/template/command_prefix.sh.em
+. "/home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/package.sh"
+. "/home/aiv/ev_ws/perception/install/lidar_interfaces/share/lidar_interfaces/package.sh"
+. "/home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/package.sh"
+. "/home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.sh"
+. "/home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/package.sh"
+. "/home/aiv/ev_ws/perception/install/velodyne_msgs/share/velodyne_msgs/package.sh"
+. "/home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/package.sh"
+. "/home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/package.sh"
+. "/home/aiv/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/package.sh"
+. "/home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/package.sh"

@@ -1,0 +1,808 @@
+[01m[K/tmp/tmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.cpp:1:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    1 | # [01;35m[K1[m[K "/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu"
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | //[01;35m[K [m[KNO STL, NO CUB, NO Thrust - only cuda_runtime.h and C headers
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | //[01;35m[K [m[KNO STL, NO CUB, NO Thrust - only cuda_runtime.h and C headers
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | //[01;35m[K [m[KNO STL, NO CUB, NO Thrust - only cuda_runtime.h and C headers
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | //[01;35m[K [m[KNO STL, NO CUB, NO Thrust - only cuda_runtime.h and C headers
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | //[01;35m[K [m[KNO STL, NO CUB, NO Thrust - only cuda_runtime.h and C headers
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | //[01;35m[K [m[KNO STL, NO CUB, NO Thrust - only cuda_runtime.h and C headers
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:3:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    3 | //[01;35m[K [m[KThis avoids nvcc 11.5 + GCC 11 incompatibility with <functional>
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:7:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    7 | #i[01;35m[Kn[m[Kclude <cuda_runtime.h>
+      |   [01;35m[K^[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:1:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    1 | //[01;35m[K P[m[Kure CUDA kernels + C API wrappers
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:9:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    9 | #e[01;35m[Knd[m[Kif
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:13:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   13 | 
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:16:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   16 | vo[01;35m[Kid[m[K gpu_resources_destroy(GpuResourcesHandle h);
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:17:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   17 | 
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:20:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   20 | 
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:23:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   23 |   [01;35m[KGp[m[KuResourcesHandle h, int n,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:31:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   31 |   [01;35m[KGp[m[KuResourcesHandle h,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:37:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   37 |   [01;35m[KGp[m[KuResourcesHandle h, int n,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:44:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   44 |   [01;35m[KGp[m[KuResourcesHandle h, int n,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:53:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   53 |   [01;35m[KGp[m[KuResourcesHandle h, int n,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:60:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   60 | 
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h:63:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   63 | #e[01;35m[Knd[m[Kif
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:15:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   15 |   [01;35m[Kfl[m[Koat* d_px;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:16:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   16 |   [01;35m[Kfl[m[Koat* d_py;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:17:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   17 |   [01;35m[Kfl[m[Koat* d_pz;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:18:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   18 |   [01;35m[Kin[m[Kt* d_cell_indices;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:19:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   19 |   [01;35m[Kin[m[Kt* d_sorted_indices;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:20:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   20 |   [01;35m[Kin[m[Kt* d_sorted_cells;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:21:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   21 |   [01;35m[Kin[m[Kt* d_cell_start;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:22:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   22 |   [01;35m[Kin[m[Kt* d_cell_end;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:23:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   23 |   [01;35m[Kin[m[Kt* d_neighbor_counts;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:24:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   24 |   [01;35m[Kin[m[Kt* d_is_core;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:25:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   25 |   [01;35m[Kin[m[Kt* d_neighbor_offsets;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:26:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   26 |   [01;35m[Kin[m[Kt* d_neighbor_list;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:27:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   27 |   [01;35m[Ksi[m[Kze_t max_points;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:28:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   28 |   [01;35m[Ksi[m[Kze_t max_cells;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:29:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   29 |   [01;35m[Ksi[m[Kze_t max_neighbors;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:30:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   30 | };
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:31:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   31 | 
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:37:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   37 |   [01;35m[Kin[m[Kt p = labels[i];
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:70:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   70 |   [01;35m[K  [m[Kroot_j = small;
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:50:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   50 |   [01;35m[Kin[m[Kt root_i = i;
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:107:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  107 |   [01;35m[K}[m[K
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:75:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   75 |   [01;35m[Kco[m[Knst float* px, const float* py, const float* pz,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:76:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   76 |   [01;35m[Kin[m[Kt* cell_indices, int n,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:77:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   77 |   [01;35m[Kfl[m[Koat origin_x, float origin_y, float origin_z,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:78:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   78 |   [01;35m[Kfl[m[Koat inv_cell_size,
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:79:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   79 |   [01;35m[Kin[m[Kt grid_x, int grid_y, int grid_z)
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:110:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  110 |   [01;35m[K}[m[K
+      |   [01;35m[K^[m[K 
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:99:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   99 |   [01;35m[Kco[m[Knst int* cell_indices, int* cell_start, int* cell_end, int n)
+      |   [01;35m[K^~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:124:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  124 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:114:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  114 |   [01;35m[Kcon[m[Kst float* px, const float* py, const float* pz,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:115:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  115 |   [01;35m[Kcon[m[Kst int* sorted_indices,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:116:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  116 |   [01;35m[Kcon[m[Kst int* cell_indices_sorted,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:117:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  117 |   [01;35m[Kcon[m[Kst int* cell_start, const int* cell_end,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:118:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  118 |   [01;35m[Kint[m[K n, float eps_sq, int min_pts,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:119:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  119 |   [01;35m[Kint[m[K* neighbor_counts, int* is_core,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:120:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  120 |   [01;35m[Kint[m[K grid_x, int grid_y, int grid_z)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:201:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  201 |   [01;35m[K   [m[K   int start = cell_start[ncell];
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:168:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  168 |   [01;35m[Kcon[m[Kst float* px, const float* py, const float* pz,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:169:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  169 |   [01;35m[Kcon[m[Kst int* sorted_indices,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:170:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  170 |   [01;35m[Kcon[m[Kst int* cell_indices_sorted,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:171:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  171 |   [01;35m[Kcon[m[Kst int* cell_start, const int* cell_end,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:172:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  172 |   [01;35m[Kint[m[K n, float eps_sq,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:173:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  173 |   [01;35m[Kcon[m[Kst int* neighbor_offsets,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:174:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  174 |   [01;35m[Kint[m[K* neighbor_list,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:175:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  175 |   [01;35m[Kint[m[K grid_x, int grid_y, int grid_z)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:252:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  252 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_neighbor_offsets, (max_points + 1) * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:225:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  225 |   [01;35m[Kif [m[K(err != cudaSuccess) {
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:226:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  226 |   [01;35m[K  f[m[Kprintf(stderr, "CUDA error: %s\n", cudaGetErrorString(err));
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:227:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  227 |   [01;35m[K  r[m[Keturn -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:228:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  228 |   [01;35m[K}[m[K
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:229:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  229 |   [01;35m[Kret[m[Kurn 0;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:230:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  230 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:231:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  231 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:233:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  233 |   [01;35m[Ksiz[m[Ke_t max_points, size_t max_cells, size_t max_neighbors)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:234:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  234 | {
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:235:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  235 |   [01;35m[KGpu[m[KResources* r = (GpuResources*)calloc(1, sizeof(GpuResources));
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:236:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  236 |   [01;35m[Kif [m[K(!r) return NULL;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:237:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  237 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:239:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  239 |   [01;35m[Kr->[m[Kmax_cells = max_cells;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:240:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  240 |   [01;35m[Kr->[m[Kmax_neighbors = max_neighbors;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:241:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  241 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:243:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  243 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_py, max_points * sizeof(float)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:244:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  244 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_pz, max_points * sizeof(float)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:245:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  245 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_cell_indices, max_points * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:246:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  246 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_sorted_indices, max_points * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:247:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  247 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_sorted_cells, max_points * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:248:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  248 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_cell_start, max_cells * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:249:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  249 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_cell_end, max_cells * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:250:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  250 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_neighbor_counts, max_points * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:251:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  251 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_is_core, max_points * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:252:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  252 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_neighbor_offsets, (max_points + 1) * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:253:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  253 |   [01;35m[Kif [m[K(cudaMalloc(&r->d_neighbor_list, max_neighbors * sizeof(int)) != cudaSuccess) goto fail;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:254:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  254 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:256:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  256 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:258:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  258 |   [01;35m[Kgpu[m[K_resources_destroy(r);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:259:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  259 |   [01;35m[Kret[m[Kurn NULL;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:260:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  260 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:261:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  261 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:263:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  263 |   [01;35m[Kif [m[K(!h) return;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:264:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  264 |   [01;35m[Kcud[m[KaFree(h->d_px);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:265:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  265 |   [01;35m[Kcud[m[KaFree(h->d_py);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:266:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  266 |   [01;35m[Kcud[m[KaFree(h->d_pz);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:267:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  267 |   [01;35m[Kcud[m[KaFree(h->d_cell_indices);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:268:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  268 |   [01;35m[Kcud[m[KaFree(h->d_sorted_indices);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:269:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  269 |   [01;35m[Kcud[m[KaFree(h->d_sorted_cells);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:270:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  270 |   [01;35m[Kcud[m[KaFree(h->d_cell_start);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:271:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  271 |   [01;35m[Kcud[m[KaFree(h->d_cell_end);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:272:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  272 |   [01;35m[Kcud[m[KaFree(h->d_neighbor_counts);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:273:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  273 |   [01;35m[Kcud[m[KaFree(h->d_is_core);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:274:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  274 |   [01;35m[Kcud[m[KaFree(h->d_neighbor_offsets);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:275:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  275 |   [01;35m[Kcud[m[KaFree(h->d_neighbor_list);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:276:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  276 |   [01;35m[Kfre[m[Ke(h);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:277:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  277 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:278:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  278 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:280:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  280 |   [01;35m[KGpu[m[KResourcesHandle h,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:281:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  281 |   [01;35m[Kcon[m[Kst float* hx, const float* hy, const float* hz, int n)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:282:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  282 | {
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:283:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  283 |   [01;35m[Kif [m[K(!h || n <= 0) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:284:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  284 |   [01;35m[Kif [m[K(check_cuda(cudaMemcpy(h->d_px, hx, n * sizeof(float), cudaMemcpyHostToDevice))) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:285:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  285 |   [01;35m[Kif [m[K(check_cuda(cudaMemcpy(h->d_py, hy, n * sizeof(float), cudaMemcpyHostToDevice))) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:286:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  286 |   [01;35m[Kif [m[K(check_cuda(cudaMemcpy(h->d_pz, hz, n * sizeof(float), cudaMemcpyHostToDevice))) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:287:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  287 |   [01;35m[Kret[m[Kurn 0;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:288:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  288 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:289:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  289 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:291:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  291 |   [01;35m[KGpu[m[KResourcesHandle h, int n,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:292:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  292 |   [01;35m[Kflo[m[Kat origin_x, float origin_y, float origin_z,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:293:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  293 |   [01;35m[Kflo[m[Kat inv_cell_size,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:294:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  294 |   [01;35m[Kint[m[K grid_x, int grid_y, int grid_z,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:295:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  295 |   [01;35m[Kint[m[K* h_cell_indices_out)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:296:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  296 | {
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:297:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  297 |   [01;35m[Kif [m[K(!h || n <= 0) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:298:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  298 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:300:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  300 |   [01;35m[Kint[m[K grid_dim = (n + block_size - 1) / block_size;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:301:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  301 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:303:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  303 |   [01;35m[K  h[m[K->d_px, h->d_py, h->d_pz,
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:309:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  309 |   [01;35m[Kif [m[K(check_cuda(cudaDeviceSynchronize())) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:310:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  310 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:312:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  312 |   [01;35m[K  n[m[K * sizeof(int), cudaMemcpyDeviceToHost))) return -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:313:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  313 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:315:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  315 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:316:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  316 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:318:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  318 |   [01;35m[KGpu[m[KResourcesHandle h,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:319:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  319 |   [01;35m[Kcon[m[Kst int* h_sorted_indices, const int* h_sorted_cells,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:320:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  320 |   [01;35m[Kint[m[K n, size_t num_cells)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:321:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  321 | {
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:322:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  322 |   [01;35m[Kif [m[K(!h || n <= 0) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:323:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  323 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:325:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  325 |   [01;35m[K  n[m[K * sizeof(int), cudaMemcpyHostToDevice))) return -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:326:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  326 |   [01;35m[Kif [m[K(check_cuda(cudaMemcpy(h->d_sorted_cells, h_sorted_cells,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:327:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  327 |   [01;35m[K  n[m[K * sizeof(int), cudaMemcpyHostToDevice))) return -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:328:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  328 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:330:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  330 |   [01;35m[Kif [m[K(check_cuda(cudaMemset(h->d_cell_end, 0, num_cells * sizeof(int)))) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:331:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  331 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:333:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  333 |   [01;35m[Kint[m[K grid_dim = (n + block_size - 1) / block_size;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:334:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  334 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:336:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  336 |   [01;35m[K  h[m[K->d_sorted_cells, h->d_cell_start, h->d_cell_end, n);
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:339:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  339 |   [01;35m[Kif [m[K(check_cuda(cudaDeviceSynchronize())) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:340:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  340 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:342:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  342 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:343:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  343 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:345:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  345 |   [01;35m[KGpu[m[KResourcesHandle h, int n,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:346:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  346 |   [01;35m[Kflo[m[Kat eps_sq, int min_pts,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:347:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  347 |   [01;35m[Kint[m[K grid_x, int grid_y, int grid_z,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:348:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  348 |   [01;35m[Kint[m[K* h_neighbor_counts_out, int* h_is_core_out)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:349:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  349 | {
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:350:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  350 |   [01;35m[Kif [m[K(!h || n <= 0) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:351:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  351 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:353:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  353 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:355:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  355 |   [01;35m[Kint[m[K grid_dim = (n + block_size - 1) / block_size;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:356:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  356 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:358:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  358 |   [01;35m[K  h[m[K->d_px, h->d_py, h->d_pz,
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:367:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  367 |   [01;35m[Kif [m[K(check_cuda(cudaDeviceSynchronize())) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:368:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  368 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:370:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  370 |   [01;35m[K  n[m[K * sizeof(int), cudaMemcpyDeviceToHost))) return -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:371:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  371 |   [01;35m[Kif [m[K(check_cuda(cudaMemcpy(h_is_core_out, h->d_is_core,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:372:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  372 |   [01;35m[K  n[m[K * sizeof(int), cudaMemcpyDeviceToHost))) return -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:373:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  373 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:375:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  375 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:376:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  376 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:378:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  378 |   [01;35m[KGpu[m[KResourcesHandle h, int n,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:379:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  379 |   [01;35m[Kflo[m[Kat eps_sq,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:380:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  380 |   [01;35m[Kint[m[K grid_x, int grid_y, int grid_z,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:381:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  381 |   [01;35m[Kcon[m[Kst int* h_neighbor_offsets,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:382:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  382 |   [01;35m[Kint[m[K* h_neighbor_list_out, size_t total_neighbors)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:383:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  383 | {
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:384:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  384 |   [01;35m[Kif [m[K(!h || n <= 0) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:385:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  385 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:387:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  387 |   [01;35m[K  n[m[K * sizeof(int), cudaMemcpyHostToDevice))) return -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:388:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  388 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:390:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  390 |   [01;35m[Kint[m[K grid_dim = (n + block_size - 1) / block_size;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:391:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  391 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:393:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  393 |   [01;35m[K  h[m[K->d_px, h->d_py, h->d_pz,
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:403:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  403 |   [01;35m[Kif [m[K(check_cuda(cudaDeviceSynchronize())) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:404:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  404 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:406:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  406 |   [01;35m[K  i[m[Kf (check_cuda(cudaMemcpy(h_neighbor_list_out, h->d_neighbor_list,
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:407:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  407 |   [01;35m[K   [m[K total_neighbors * sizeof(int), cudaMemcpyDeviceToHost))) return -1;
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:408:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  408 |   [01;35m[K}[m[K
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:409:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  409 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:411:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  411 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:412:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  412 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:414:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  414 |   [01;35m[Kif [m[K(!h) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:415:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  415 |   [01;35m[Kcud[m[KaFree(h->d_neighbor_list);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:416:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  416 |   [01;35m[Kh->[m[Kd_neighbor_list = NULL;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:417:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  417 |   [01;35m[Kh->[m[Kmax_neighbors = new_max_neighbors;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:418:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  418 |   [01;35m[Kif [m[K(check_cuda(cudaMalloc(&h->d_neighbor_list,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:419:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  419 |   [01;35m[K  n[m[Kew_max_neighbors * sizeof(int)))) return -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:420:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  420 |   [01;35m[Kret[m[Kurn 0;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:421:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  421 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:422:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  422 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:434:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  434 |   [01;35m[Kint[m[K* labels,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:429:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  429 |   [01;35m[Kcon[m[Kst float* px, const float* py, const float* pz,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:430:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  430 |   [01;35m[Kcon[m[Kst int* sorted_indices,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:431:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  431 |   [01;35m[Kcon[m[Kst int* cell_indices_sorted,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:432:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  432 |   [01;35m[Kcon[m[Kst int* cell_start, const int* cell_end,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:433:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  433 |   [01;35m[Kint[m[K n, float eps_sq,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:434:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  434 |   [01;35m[Kint[m[K* labels,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:435:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  435 |   [01;35m[Kcon[m[Kst int* is_core,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:436:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  436 |   [01;35m[Kint[m[K grid_x, int grid_y, int grid_z)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:513:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  513 |   [01;35m[K  g[m[Krid_x, grid_y, grid_z);
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:488:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  488 |   [01;35m[KGpu[m[KResourcesHandle h, int n,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:489:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  489 |   [01;35m[Kflo[m[Kat eps_sq,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:490:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  490 |   [01;35m[Kint[m[K grid_x, int grid_y, int grid_z,
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:491:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  491 |   [01;35m[Kint[m[K* h_labels_out)
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:492:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  492 | {
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:493:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  493 |   [01;35m[Kif [m[K(!h || n <= 0) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:494:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  494 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:497:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  497 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:500:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  500 |   [01;35m[Kint[m[K grid_dim = (n + block_size - 1) / block_size;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:501:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  501 |   [01;35m[Kker[m[Knel_init_labels<<<grid_dim, block_size>>>(d_labels, n);
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:502:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  502 |   [01;35m[Kif [m[K(check_cuda(cudaGetLastError())) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:503:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  503 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:506:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  506 |   [01;35m[K  h[m[K->d_px, h->d_py, h->d_pz,
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:516:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  516 |   [01;35m[Kif [m[K(check_cuda(cudaDeviceSynchronize())) return -1;
+      |   [01;35m[K^~~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:517:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  517 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:520:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  520 |   [01;35m[K  n[m[K * sizeof(int), cudaMemcpyDeviceToHost))) return -1;
+      |   [01;35m[K^[m[K [01;35m[K~[m[K
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:521:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  521 | 
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:523:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  523 | }
+      |   [01;35m[K^[m[K  
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:525:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+[01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:4:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:75:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   75 |   [01;35m[Kco[m[Knst float* px, const float* py, const float* pz,
+      |   [01;35m[K^~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:81:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   81 |   [01;35m[Kin[m[Kt idx = blockIdx.x * blockDim.x + threadIdx.x;
+      |   [01;35m[K^~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:97:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   97 | 
+      |   [01;35m[K^[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/tmp/tmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | #p[01;35m[Kra[m[Kgma GCC diagnostic ignored "-Wunused-function"
+      |   [01;35m[K^~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:99:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+   99 |   [01;35m[Kcon[m[Kst int* cell_indices, int* cell_start, int* cell_end, int n)
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:101:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  101 |   [01;35m[Kint[m[K idx = blockIdx.x * blockDim.x + threadIdx.x;
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:112:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  112 | 
+      |   [01;35m[K^[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/tmp/tmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | #p[01;35m[Krag[m[Kma GCC diagnostic ignored "-Wunused-function"
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:114:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  114 |   [01;35m[Kcon[m[Kst float* px, const float* py, const float* pz,
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:122:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  122 |   [01;35m[Kint[m[K sorted_idx = blockIdx.x * blockDim.x + threadIdx.x;
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:166:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  166 | 
+      |   [01;35m[K^[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/tmp/tmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | #p[01;35m[Krag[m[Kma GCC diagnostic ignored "-Wunused-function"
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:168:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  168 |   [01;35m[Kcon[m[Kst float* px, const float* py, const float* pz,
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:177:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  177 |   [01;35m[Kint[m[K sorted_idx = blockIdx.x * blockDim.x + threadIdx.x;
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:219:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  219 | 
+      |   [01;35m[K^[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/tmp/tmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | #p[01;35m[Krag[m[Kma GCC diagnostic ignored "-Wunused-function"
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:424:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  424 |   [01;35m[Kint[m[K idx = blockIdx.x * blockDim.x + threadIdx.x;
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:427:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  427 | 
+      |   [01;35m[K^[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/tmp/tmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+    2 | #p[01;35m[Krag[m[Kma GCC diagnostic ignored "-Wunused-function"
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:429:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  429 |   [01;35m[Kcon[m[Kst float* px, const float* py, const float* pz,
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:438:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  438 |   [01;35m[Kint[m[K sorted_idx = blockIdx.x * blockDim.x + threadIdx.x;
+      |   [01;35m[K^~~[m[K
+In file included from [01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/lidar_clustering/src/dbscan_gpu.cu:485:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension
+  485 | 
+      |   [01;35m[K^[m[K
+[01m[Ktmpxft_00002c90_00000000-6_dbscan_gpu.cudafe1.stub.c:2:3:[m[K [01;35m[Kwarning: [m[Kstyle of line directive is a GCC extension

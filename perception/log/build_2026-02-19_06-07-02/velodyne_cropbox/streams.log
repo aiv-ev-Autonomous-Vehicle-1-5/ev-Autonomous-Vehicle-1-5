@@ -1,0 +1,33 @@
+[0.015s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/velodyne_cropbox -- -j28 -l28
+[0.053s] [100%] Built target cropbox_component
+[0.071s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/velodyne_cropbox -- -j28 -l28
+[0.073s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/velodyne_cropbox
+[0.080s] -- Install configuration: ""
+[0.080s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/lib/libcropbox_component.so
+[0.080s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/include
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/include/velodyne_cropbox
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/include/velodyne_cropbox/cropbox_component.hpp
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/config
+[0.081s] -- Installing: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/config/default_cropbox_params.yaml
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.sh
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.dsv
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/package_run_dependencies/velodyne_cropbox
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/parent_prefix_path/velodyne_cropbox
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.sh
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.dsv
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.sh
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.dsv
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.bash
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.sh
+[0.081s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.zsh
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.dsv
+[0.082s] -- Installing: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/package.dsv
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/packages/velodyne_cropbox
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/rclcpp_components/velodyne_cropbox
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_libraries-extras.cmake
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig.cmake
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig-version.cmake
+[0.082s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/package.xml
+[0.107s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_cropbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/velodyne_cropbox

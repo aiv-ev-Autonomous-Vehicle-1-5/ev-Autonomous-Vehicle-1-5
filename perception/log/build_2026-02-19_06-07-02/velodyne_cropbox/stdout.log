@@ -1,0 +1,29 @@
+[100%] Built target cropbox_component
+-- Install configuration: ""
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/lib/libcropbox_component.so
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/include
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/include/velodyne_cropbox
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/include/velodyne_cropbox/cropbox_component.hpp
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/config
+-- Installing: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/config/default_cropbox_params.yaml
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/package_run_dependencies/velodyne_cropbox
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/parent_prefix_path/velodyne_cropbox
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.bash
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.zsh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.dsv
+-- Installing: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/package.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/packages/velodyne_cropbox
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/ament_index/resource_index/rclcpp_components/velodyne_cropbox
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_libraries-extras.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig-version.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_cropbox/share/velodyne_cropbox/package.xml

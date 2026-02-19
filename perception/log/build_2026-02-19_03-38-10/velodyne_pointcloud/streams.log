@@ -1,0 +1,70 @@
+[0.018s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/velodyne_pointcloud -- -j28 -l28
+[0.049s] [ 11%] Built target gtest
+[0.050s] [ 22%] Built target gtest_main
+[0.054s] [ 38%] Built target velodyne_cloud_types
+[0.055s] [ 55%] Built target velodyne_rawdata
+[0.068s] [ 66%] Built target test_row_step
+[0.070s] [ 77%] Built target test_calibration
+[0.071s] [ 88%] Built target transform
+[0.087s] [100%] Built target velodyne_transform_node
+[0.092s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/velodyne_pointcloud -- -j28 -l28
+[0.093s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/velodyne_pointcloud
+[0.097s] -- Install configuration: ""
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libvelodyne_cloud_types.so
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libvelodyne_rawdata.so
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libtransform.so
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/velodyne_pointcloud/velodyne_transform_node
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/pointcloudXYZIRT.hpp
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/datacontainerbase.hpp
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/organized_cloudXYZIRT.hpp
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/rawdata.hpp
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/calibration.hpp
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/transform.hpp
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/config
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/config/VLP32C-velodyne_transform_node-params.yaml
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/config/VLS128-velodyne_transform_node-params.yaml
+[0.097s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/config/VLP16-velodyne_transform_node-params.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLS128-launch.py
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLP32C-launch.py
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLP16-launch.py
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLP16-composed-launch.py
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLS128-composed-launch.py
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLP32C-composed-launch.py
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/VLP16_hires_db.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/VLP16db.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/32db.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/issue_84_float_intensities.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/VLS128.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/VeloView-VLP-32C.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/64e_s2.1-sztaki.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/64e_utexas.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/rviz_points.vcg
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/64e_s3-xiesc.yaml
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/library_path.sh
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/library_path.dsv
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/ament_index/resource_index/package_run_dependencies/velodyne_pointcloud
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/ament_index/resource_index/parent_prefix_path/velodyne_pointcloud
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/ament_prefix_path.sh
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/ament_prefix_path.dsv
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/path.sh
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/path.dsv
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/local_setup.bash
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/local_setup.sh
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/local_setup.zsh
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/local_setup.dsv
+[0.098s] -- Installing: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/package.dsv
+[0.098s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/ament_index/resource_index/packages/velodyne_pointcloud
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/ament_index/resource_index/rclcpp_components/velodyne_pointcloud
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/velodyne_pointcloudExport.cmake
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/velodyne_pointcloudExport-noconfig.cmake
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/ament_cmake_export_libraries-extras.cmake
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/ament_cmake_export_targets-extras.cmake
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/velodyne_pointcloudConfig.cmake
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/velodyne_pointcloudConfig-version.cmake
+[0.099s] -- Up-to-date: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/package.xml
+[0.105s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/velodyne_pointcloud

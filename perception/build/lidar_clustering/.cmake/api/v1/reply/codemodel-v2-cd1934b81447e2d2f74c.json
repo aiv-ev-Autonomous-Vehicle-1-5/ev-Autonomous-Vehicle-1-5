@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-524871f05a5510a0b6b1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "lidar_clustering",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "clustering_component::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-clustering_component-8782184f4484a80c5c12.json",
+					"name" : "clustering_component",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_gpu_kernels::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_gpu_kernels-bdb2c585772ca6f3cf87.json",
+					"name" : "dbscan_gpu_kernels",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "lidar_clustering_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-lidar_clustering_uninstall-886ffc070e96987180ae.json",
+					"name" : "lidar_clustering_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-6a67d15dd14f40383fa3.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/aiv/ev_ws/perception/build/lidar_clustering",
+		"source" : "/home/aiv/ev_ws/perception/src/lidar/lidar_clustering"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

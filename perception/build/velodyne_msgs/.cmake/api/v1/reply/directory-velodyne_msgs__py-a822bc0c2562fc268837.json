@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "velodyne_msgs__py",
+		"source" : "/home/aiv/ev_ws/perception/build/velodyne_msgs/velodyne_msgs__py"
+	}
+}

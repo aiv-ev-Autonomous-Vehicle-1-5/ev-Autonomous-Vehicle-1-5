@@ -1,0 +1,36 @@
+[0.016s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_clustering': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/lidar_clustering -- -j28 -l28
+[0.053s] [ 33%] Built target dbscan_gpu_kernels
+[0.075s] [100%] Built target clustering_component
+[0.083s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_clustering' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/lidar_clustering -- -j28 -l28
+[0.088s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_clustering': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/lidar_clustering
+[0.092s] -- Install configuration: ""
+[0.092s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/lib/libclustering_component.so
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/include
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/include/lidar_clustering
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/include/lidar_clustering/dbscan_gpu.hpp
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/include/lidar_clustering/clustering_component.hpp
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/include/lidar_clustering/dbscan_gpu_kernels.h
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/config
+[0.093s] -- Installing: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/config/clustering_params.yaml
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/environment/library_path.sh
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/environment/library_path.dsv
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/ament_index/resource_index/package_run_dependencies/lidar_clustering
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/ament_index/resource_index/parent_prefix_path/lidar_clustering
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/environment/ament_prefix_path.sh
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/environment/ament_prefix_path.dsv
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/environment/path.sh
+[0.093s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/environment/path.dsv
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/local_setup.bash
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/local_setup.sh
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/local_setup.zsh
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/local_setup.dsv
+[0.094s] -- Installing: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/package.dsv
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/ament_index/resource_index/packages/lidar_clustering
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/ament_index/resource_index/rclcpp_components/lidar_clustering
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/cmake/ament_cmake_export_libraries-extras.cmake
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/cmake/lidar_clusteringConfig.cmake
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/cmake/lidar_clusteringConfig-version.cmake
+[0.094s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_clustering/share/lidar_clustering/package.xml
+[0.115s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_clustering' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/lidar_clustering

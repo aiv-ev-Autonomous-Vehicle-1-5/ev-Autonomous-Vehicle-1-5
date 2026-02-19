@@ -1,0 +1,44 @@
+[0.005s] Invoking command in '/home/aiv/ev_ws/perception/build/patchworkpp': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/patchworkpp -- -j28 -l28
+[0.102s] Building CXX object patchworkpp_cpp/patchworkpp/CMakeFiles/ground_seg_cores.dir/src/patchworkpp.cpp.o
+[0.105s] Built target patchworkpp_node
+[7.439s] Linking CXX static library libground_seg_cores.a
+[7.460s] Built target ground_seg_cores
+[7.477s] Linking CXX shared library libgseg_component.so
+[7.575s] Built target gseg_component
+[7.582s] Invoked command in '/home/aiv/ev_ws/perception/build/patchworkpp' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/patchworkpp -- -j28 -l28
+[7.588s] Invoking command in '/home/aiv/ev_ws/perception/build/patchworkpp': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/patchworkpp
+[7.592s] -- Install configuration: "Release"
+[7.592s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/include
+[7.592s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/include/patchwork
+[7.592s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/include/patchwork/patchworkpp.h
+[7.592s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/libground_seg_cores.a
+[7.592s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig.cmake
+[7.592s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig-release.cmake
+[7.592s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets.cmake
+[7.592s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets-release.cmake
+[7.592s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/patchworkpp/patchworkpp_node
+[7.592s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/libgseg_component.so
+[7.593s] -- Set runtime path of "/home/aiv/ev_ws/perception/install/patchworkpp/lib/libgseg_component.so" to ""
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//launch
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//launch/patchworkpp.launch.py
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//rviz
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//rviz/patchworkpp.rviz
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//config
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//config/patchworkpp_params.yaml
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/package_run_dependencies/patchworkpp
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/parent_prefix_path/patchworkpp
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.sh
+[7.594s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.dsv
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/path.sh
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/path.dsv
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.bash
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.sh
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.zsh
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.dsv
+[7.595s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.dsv
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/packages/patchworkpp
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/rclcpp_components/patchworkpp
+[7.595s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig.cmake
+[7.596s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig-version.cmake
+[7.596s] -- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.xml
+[7.596s] Invoked command in '/home/aiv/ev_ws/perception/build/patchworkpp' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/patchworkpp

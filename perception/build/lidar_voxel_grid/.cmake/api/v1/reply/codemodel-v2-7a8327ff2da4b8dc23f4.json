@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-fb94e7babf9da8636299.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "lidar_voxel_grid",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "lidar_voxel_grid_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-lidar_voxel_grid_uninstall-4ed5f15e9236bcb65797.json",
+					"name" : "lidar_voxel_grid_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-7b38c74b504938f269bc.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "voxel_grid_component::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-voxel_grid_component-a8a8397189ac22730015.json",
+					"name" : "voxel_grid_component",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "voxel_grid_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-voxel_grid_node-9b22cb2ca8d2896b16e7.json",
+					"name" : "voxel_grid_node",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/aiv/ev_ws/perception/build/lidar_voxel_grid",
+		"source" : "/home/aiv/ev_ws/perception/src/lidar/lidar_voxel_grid"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

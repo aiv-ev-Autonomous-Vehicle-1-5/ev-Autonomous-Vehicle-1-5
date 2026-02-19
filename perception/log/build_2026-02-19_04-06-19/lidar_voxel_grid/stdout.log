@@ -1,0 +1,26 @@
+[ 50%] Built target voxel_grid_node
+[100%] Built target voxel_grid_component
+-- Install configuration: ""
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib/lidar_voxel_grid/voxel_grid_node
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib/libvoxel_grid_component.so
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/include
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/include/lidar_voxel_grid
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/include/lidar_voxel_grid/voxel_grid_component.hpp
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/config
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/config/voxel_grid_params.yaml
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/package_run_dependencies/lidar_voxel_grid
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/parent_prefix_path/lidar_voxel_grid
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/ament_prefix_path.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/path.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/path.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.bash
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.zsh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.dsv
+-- Installing: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/package.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/packages/lidar_voxel_grid
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/rclcpp_components/lidar_voxel_grid
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/cmake/lidar_voxel_gridConfig.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/cmake/lidar_voxel_gridConfig-version.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/package.xml

@@ -1,0 +1,256 @@
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The C compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test EIGEN_COMPILER_SUPPORT_CPP11
+-- Performing Test EIGEN_COMPILER_SUPPORT_CPP11 - Success
+-- Performing Test COMPILER_SUPPORT_std=cpp03
+-- Performing Test COMPILER_SUPPORT_std=cpp03 - Success
+-- Performing Test standard_math_library_linked_to_automatically
+-- Performing Test standard_math_library_linked_to_automatically - Success
+-- Standard libraries to link to explicitly: none
+-- Performing Test COMPILER_SUPPORT_WERROR
+-- Performing Test COMPILER_SUPPORT_WERROR - Success
+-- Performing Test COMPILER_SUPPORT_pedantic
+-- Performing Test COMPILER_SUPPORT_pedantic - Success
+-- Performing Test COMPILER_SUPPORT_Wall
+-- Performing Test COMPILER_SUPPORT_Wall - Success
+-- Performing Test COMPILER_SUPPORT_Wextra
+-- Performing Test COMPILER_SUPPORT_Wextra - Success
+-- Performing Test COMPILER_SUPPORT_Wundef
+-- Performing Test COMPILER_SUPPORT_Wundef - Success
+-- Performing Test COMPILER_SUPPORT_Wcastalign
+-- Performing Test COMPILER_SUPPORT_Wcastalign - Success
+-- Performing Test COMPILER_SUPPORT_Wcharsubscripts
+-- Performing Test COMPILER_SUPPORT_Wcharsubscripts - Success
+-- Performing Test COMPILER_SUPPORT_Wnonvirtualdtor
+-- Performing Test COMPILER_SUPPORT_Wnonvirtualdtor - Success
+-- Performing Test COMPILER_SUPPORT_Wunusedlocaltypedefs
+-- Performing Test COMPILER_SUPPORT_Wunusedlocaltypedefs - Success
+-- Performing Test COMPILER_SUPPORT_Wpointerarith
+-- Performing Test COMPILER_SUPPORT_Wpointerarith - Success
+-- Performing Test COMPILER_SUPPORT_Wwritestrings
+-- Performing Test COMPILER_SUPPORT_Wwritestrings - Success
+-- Performing Test COMPILER_SUPPORT_Wformatsecurity
+-- Performing Test COMPILER_SUPPORT_Wformatsecurity - Success
+-- Performing Test COMPILER_SUPPORT_Wshorten64to32
+-- Performing Test COMPILER_SUPPORT_Wshorten64to32 - Failed
+-- Performing Test COMPILER_SUPPORT_Wlogicalop
+-- Performing Test COMPILER_SUPPORT_Wlogicalop - Success
+-- Performing Test COMPILER_SUPPORT_Wenumconversion
+-- Performing Test COMPILER_SUPPORT_Wenumconversion - Success
+-- Performing Test COMPILER_SUPPORT_Wcpp11extensions
+-- Performing Test COMPILER_SUPPORT_Wcpp11extensions - Failed
+-- Performing Test COMPILER_SUPPORT_Wdoublepromotion
+-- Performing Test COMPILER_SUPPORT_Wdoublepromotion - Success
+-- Performing Test COMPILER_SUPPORT_Wshadow
+-- Performing Test COMPILER_SUPPORT_Wshadow - Success
+-- Performing Test COMPILER_SUPPORT_Wnopsabi
+-- Performing Test COMPILER_SUPPORT_Wnopsabi - Success
+-- Performing Test COMPILER_SUPPORT_Wnovariadicmacros
+-- Performing Test COMPILER_SUPPORT_Wnovariadicmacros - Success
+-- Performing Test COMPILER_SUPPORT_Wnolonglong
+-- Performing Test COMPILER_SUPPORT_Wnolonglong - Success
+-- Performing Test COMPILER_SUPPORT_fnochecknew
+-- Performing Test COMPILER_SUPPORT_fnochecknew - Success
+-- Performing Test COMPILER_SUPPORT_fnocommon
+-- Performing Test COMPILER_SUPPORT_fnocommon - Success
+-- Performing Test COMPILER_SUPPORT_fstrictaliasing
+-- Performing Test COMPILER_SUPPORT_fstrictaliasing - Success
+-- Performing Test COMPILER_SUPPORT_wd981
+-- Performing Test COMPILER_SUPPORT_wd981 - Failed
+-- Performing Test COMPILER_SUPPORT_wd2304
+-- Performing Test COMPILER_SUPPORT_wd2304 - Failed
+-- Performing Test COMPILER_SUPPORT_STRICTANSI
+-- Performing Test COMPILER_SUPPORT_STRICTANSI - Failed
+-- Performing Test COMPILER_SUPPORT_Qunusedarguments
+-- Performing Test COMPILER_SUPPORT_Qunusedarguments - Failed
+-- Performing Test COMPILER_SUPPORT_ansi
+-- Performing Test COMPILER_SUPPORT_ansi - Success
+-- Performing Test COMPILER_SUPPORT_OPENMP
+-- Performing Test COMPILER_SUPPORT_OPENMP - Success
+-- Looking for a Fortran compiler
+-- Looking for a Fortran compiler - /usr/bin/f95
+-- The Fortran compiler identification is GNU 11.4.0
+-- Detecting Fortran compiler ABI info
+-- Detecting Fortran compiler ABI info - done
+-- Check for working Fortran compiler: /usr/bin/f95 - skipped
+-- Could NOT find CHOLMOD (missing: CHOLMOD_INCLUDES CHOLMOD_LIBRARIES) 
+-- Could NOT find UMFPACK (missing: UMFPACK_INCLUDES UMFPACK_LIBRARIES) 
+-- Could NOT find KLU (missing: KLU_INCLUDES KLU_LIBRARIES) 
+-- Performing Test SUPERLU_HAS_GLOBAL_MEM_USAGE_T
+-- Performing Test SUPERLU_HAS_GLOBAL_MEM_USAGE_T - Success
+-- Performing Test SUPERLU_HAS_CLEAN_ENUMS
+-- Performing Test SUPERLU_HAS_CLEAN_ENUMS - Success
+-- Performing Test SUPERLU_HAS_GLOBALLU_T
+-- Performing Test SUPERLU_HAS_GLOBALLU_T - Success
+-- Found SuperLU: /usr/include/superlu (found suitable version "5.0", minimum required is "4.0") 
+-- Checking for one of the modules 'hwloc'
+-- Performing Test HAVE_HWLOC_PARENT_MEMBER
+-- Performing Test HAVE_HWLOC_PARENT_MEMBER - Success
+-- Performing Test HAVE_HWLOC_CACHE_ATTR
+-- Performing Test HAVE_HWLOC_CACHE_ATTR - Success
+-- Performing Test HAVE_HWLOC_OBJ_PU
+-- Performing Test HAVE_HWLOC_OBJ_PU - Success
+-- Looking for hwloc_bitmap_free in hwloc
+-- Looking for hwloc_bitmap_free in hwloc - found
+-- Looking for Fortran sgemm
+-- Looking for Fortran sgemm - found
+-- Performing Test SCOTCH_Num_4
+-- Performing Test SCOTCH_Num_4 - Failed
+-- Performing Test SCOTCH_Num_8
+-- Performing Test SCOTCH_Num_8 - Failed
+-- A version of Pastix has been found but pastix_nompi.h does not exist in the include directory. Because Eigen tests require a version without MPI, we disable the Pastix backend.
+-- Could NOT find SPQR (missing: SPQR_INCLUDES SPQR_LIBRARIES) 
+-- Found unsuitable Qt version "5.15.3" from /usr/bin/qmake
+-- Performing Test COMPILER_SUPPORT_FASTMATH
+-- Performing Test COMPILER_SUPPORT_FASTMATH - Success
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.53.0")  
+-- The Fortran compiler identification is GNU 11.4.0
+-- Found Threads: TRUE  
+-- Could NOT find GoogleHash (missing: GOOGLEHASH_INCLUDES GOOGLEHASH_COMPILE) 
+-- Could NOT find Adolc (missing: ADOLC_INCLUDES ADOLC_LIBRARIES) 
+-- Could NOT find MPFR (missing: MPFR_INCLUDES MPFR_LIBRARIES MPFR_VERSION_OK) (Required is at least version "1.0.0")
+-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.2") 
+-- Could NOT find FFTW (missing: FFTW_INCLUDES FFTW_LIBRARIES) 
+-- Found CUDA: /usr/local/cuda-12.6 (found suitable version "12.6", minimum required is "7.0") 
+-- Found unsuitable Qt version "5.15.3" from /usr/bin/qmake
+-- Qt4 not found, so disabling the mandelbrot and opengl demos
+-- Could NOT find CHOLMOD (missing: CHOLMOD_INCLUDES CHOLMOD_LIBRARIES) 
+-- Could NOT find UMFPACK (missing: UMFPACK_INCLUDES UMFPACK_LIBRARIES) 
+-- Could NOT find KLU (missing: KLU_INCLUDES KLU_LIBRARIES) 
+-- A version of Pastix has been found but pastix_nompi.h does not exist in the include directory. Because Eigen tests require a version without MPI, we disable the Pastix backend.
+-- ************************************************************
+-- ***    Eigen's unit tests configuration summary          ***
+-- ************************************************************
+-- 
+-- Build type:        Release
+-- Build site:        aiv
+-- Build string:      linux-6.8.0-94-generic-_-11.4.0-sse2-64bit
+-- Enabled backends:  SuperLU,  Boost.Multiprecision, 
+-- Disabled backends: CHOLMOD,  UMFPACK,  KLU,  PaStiX,  METIS,  SPQR,  Qt4 support,  GoogleHash,  Adolc,  MPFR C++,  fftw,  OpenGL, 
+-- Default order:     Column-major
+-- Maximal matrix/vector size: 320
+-- SSE2:              Using architecture defaults
+-- SSE3:              Using architecture defaults
+-- SSSE3:             Using architecture defaults
+-- SSE4.1:            Using architecture defaults
+-- SSE4.2:            Using architecture defaults
+-- AVX:               Using architecture defaults
+-- AVX2:              Using architecture defaults
+-- FMA:               Using architecture defaults
+-- AVX512:            Using architecture defaults
+-- AVX512DQ:          Using architecture defaults
+-- Altivec:           Using architecture defaults
+-- VSX:               Using architecture defaults
+-- MIPS MSA:          Using architecture defaults
+-- ARM NEON:          Using architecture defaults
+-- ARMv8 NEON:        Using architecture defaults
+-- S390X ZVECTOR:     Using architecture defaults
+-- C++11:             OFF
+-- SYCL:              OFF
+-- CUDA:              OFF
+-- HIP:               OFF
+-- 
+CXX:               /usr/bin/c++
+ CXX_VERSION:       c++ (Ubuntu 11.4.0-1ubuntu1~22.04.2) 11.4.0
+ CXX_FLAGS:           -std=c++03 -pedantic -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wnon-virtual-dtor -Wunused-local-typedefs -Wpointer-arith -Wwrite-strings -Wformat-security -Wlogical-op -Wenum-conversion -Wdouble-promotion -Wshadow -Wno-psabi -Wno-variadic-macros -Wno-long-long -fno-check-new -fno-common -fstrict-aliasing -ansi
+ Sparse lib flags:   ;/usr/lib/x86_64-linux-gnu/libsuperlu.so;eigen_blas
+
+-- ************************************************************
+-- 
+-- Configured Eigen 3.4.0
+-- 
+-- Available targets (use: make TARGET):
+-- ---------+--------------------------------------------------------------
+-- Target   |   Description
+-- ---------+--------------------------------------------------------------
+-- install  | Install Eigen. Headers will be installed to:
+--          |     <CMAKE_INSTALL_PREFIX>/<INCLUDE_INSTALL_DIR>
+--          |   Using the following values:
+--          |     CMAKE_INSTALL_PREFIX: /home/aiv/ev_ws/perception/install/patchworkpp
+--          |     INCLUDE_INSTALL_DIR:  include/eigen3
+--          |   Change the install location of Eigen headers using:
+--          |     cmake . -DCMAKE_INSTALL_PREFIX=yourprefix
+--          |   Or:
+--          |     cmake . -DINCLUDE_INSTALL_DIR=yourdir
+-- doc      | Generate the API documentation, requires Doxygen & LaTeX
+-- check    | Build and run the unit-tests. Read this page:
+--          |   http://eigen.tuxfamily.org/index.php?title=Tests
+-- blas     | Build BLAS library (not the same thing as Eigen)
+-- uninstall| Remove files installed by the install target
+-- ---------+--------------------------------------------------------------
+-- 
+[0mParent project name: patchworkpp[0m
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+-- Found FastRTPS: /opt/ros/humble/include  
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+-- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+-- Found tf2_ros: 0.25.18 (/opt/ros/humble/share/tf2_ros/cmake)
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/aiv/ev_ws/perception/build/patchworkpp
+[32mBuilding CXX object patchworkpp_cpp/patchworkpp/CMakeFiles/ground_seg_cores.dir/src/patchworkpp.cpp.o[0m
+[32mBuilding CXX object CMakeFiles/patchworkpp_node.dir/rclcpp_components/node_main_patchworkpp_node.cpp.o[0m
+[32m[1mLinking CXX executable patchworkpp_node[0m
+Built target patchworkpp_node
+[32m[1mLinking CXX static library libground_seg_cores.a[0m
+Built target ground_seg_cores
+[32mBuilding CXX object CMakeFiles/gseg_component.dir/src/GroundSegmentationServer.cpp.o[0m
+[32m[1mLinking CXX shared library libgseg_component.so[0m
+Built target gseg_component
+-- Install configuration: "Release"
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/include
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/include/patchwork
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/include/patchwork/patchworkpp.h
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/libground_seg_cores.a
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig.cmake
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig-release.cmake
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets.cmake
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets-release.cmake
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/patchworkpp/patchworkpp_node
+-- Set runtime path of "/home/aiv/ev_ws/perception/install/patchworkpp/lib/patchworkpp/patchworkpp_node" to ""
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/libgseg_component.so
+-- Set runtime path of "/home/aiv/ev_ws/perception/install/patchworkpp/lib/libgseg_component.so" to ""
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//launch
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//launch/patchworkpp.launch.py
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//rviz
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//rviz/patchworkpp.rviz
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//config
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//config/patchworkpp_params.yaml
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/package_run_dependencies/patchworkpp
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/parent_prefix_path/patchworkpp
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.sh
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.dsv
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/path.sh
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/path.dsv
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.bash
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.sh
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.zsh
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.dsv
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.dsv
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/packages/patchworkpp
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/rclcpp_components/patchworkpp
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig.cmake
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig-version.cmake
+-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.xml

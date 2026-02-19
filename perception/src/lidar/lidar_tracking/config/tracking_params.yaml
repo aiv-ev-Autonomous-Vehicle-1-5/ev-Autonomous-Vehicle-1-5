@@ -1,0 +1,19 @@
+# L-ByteTrack Configuration Parameters
+/**:
+  ros__parameters:
+    # --- Kalman Filter Parameters ---
+    kalman_filter:
+      dt: 0.1                 # Time step (should match sensor rate, e.g., 10Hz = 0.1)
+      process_noise_cov: 0.1  # Q: Uncertainty in the model (e.g., unexpected velocity changes)
+      measure_noise_cov: 0.05 # R: Uncertainty in the measurement (LiDAR noise)
+
+    # --- ByteTrack Association Parameters ---
+    bytetrack:
+      high_thresh: 0.6        # Detection confidence threshold to be considered 'High' (D_high)
+      low_thresh: 0.1         # Detection confidence threshold to be considered 'Low' (D_low)
+      
+      match_distance_high: 0.3 # Max Euclidean distance (meters) for High Confidence matching
+      match_distance_low: 0.5  # Max Euclidean distance (meters) for Low Confidence matching
+      
+      max_time_lost: 10       # Frames to keep a lost track before deleting it
+      new_track_thresh: 0.7   # Minimum confidence to start a NEW track (usually > high_thresh)

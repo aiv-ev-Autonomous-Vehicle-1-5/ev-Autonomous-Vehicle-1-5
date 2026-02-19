@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdbscan_gpu_kernels.a CMakeFiles/dbscan_gpu_kernels.dir/src/dbscan_gpu.cu.o
+/usr/bin/ranlib libdbscan_gpu_kernels.a

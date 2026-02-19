@@ -1,0 +1,9 @@
+{
+  "package_name": "lidar_interfaces",
+  "non_idl_tuples": [
+    "/home/aiv/ev_ws/perception/src/lidar/lidar_interfaces:msg/Cone.msg",
+    "/home/aiv/ev_ws/perception/src/lidar/lidar_interfaces:msg/ConeArray.msg",
+    "/home/aiv/ev_ws/perception/src/lidar/lidar_interfaces:msg/TrackedCone.msg",
+    "/home/aiv/ev_ws/perception/src/lidar/lidar_interfaces:msg/TrackedConeArray.msg"
+  ]
+}

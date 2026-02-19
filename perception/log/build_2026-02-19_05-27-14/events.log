@@ -1,0 +1,139 @@
+[0.000000] (-) TimerEvent: {}
+[0.000288] (-) JobUnselected: {'identifier': 'cluster_filter'}
+[0.000348] (-) JobUnselected: {'identifier': 'lidar_clustering'}
+[0.000370] (-) JobUnselected: {'identifier': 'lidar_interfaces'}
+[0.000427] (-) JobUnselected: {'identifier': 'lidar_launch'}
+[0.000443] (-) JobUnselected: {'identifier': 'lidar_tracking'}
+[0.000458] (-) JobUnselected: {'identifier': 'lidar_voxel_grid'}
+[0.000474] (-) JobUnselected: {'identifier': 'velodyne'}
+[0.000488] (-) JobUnselected: {'identifier': 'velodyne_cropbox'}
+[0.000502] (-) JobUnselected: {'identifier': 'velodyne_driver'}
+[0.000525] (-) JobUnselected: {'identifier': 'velodyne_laserscan'}
+[0.000545] (-) JobUnselected: {'identifier': 'velodyne_msgs'}
+[0.000583] (-) JobUnselected: {'identifier': 'velodyne_pointcloud'}
+[0.000604] (patchworkpp) JobQueued: {'identifier': 'patchworkpp', 'dependencies': OrderedDict()}
+[0.000641] (patchworkpp) JobStarted: {'identifier': 'patchworkpp'}
+[0.004331] (patchworkpp) JobProgress: {'identifier': 'patchworkpp', 'progress': 'cmake'}
+[0.004773] (patchworkpp) JobProgress: {'identifier': 'patchworkpp', 'progress': 'build'}
+[0.005168] (patchworkpp) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/aiv/ev_ws/perception/build/patchworkpp', '--', '-j28', '-l28'], 'cwd': '/home/aiv/ev_ws/perception/build/patchworkpp', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('USER', 'aiv'), ('CLAUDE_CODE_ENTRYPOINT', 'cli'), ('LC_TIME', 'ko_KR.UTF-8'), ('GIT_EDITOR', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('OLDPWD', '/home/aiv/ev_ws/perception'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.0/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.0/include/node'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2066'), ('SYSTEMD_EXEC_PID', '2535'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator23558193cd9818af7fe4d2c2f5bd9d00f'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '3423'), ('NVM_DIR', '/home/aiv/.nvm'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:9698'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'aiv'), ('TERM', 'xterm-256color'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/usr/local/cuda-12.6/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.0/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2510,unix/aiv:/tmp/.ICE-unix/2510'), ('INVOCATION_ID', 'f3b4240fa7254712a286c98e10705d54'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:187d0cde-cb80-469c-b140-3489dfb06b3f'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/perception/build/patchworkpp'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.099815] (-) TimerEvent: {}
+[0.102075] (patchworkpp) StdoutLine: {'line': b'Building CXX object patchworkpp_cpp/patchworkpp/CMakeFiles/ground_seg_cores.dir/src/patchworkpp.cpp.o\n'}
+[0.105224] (patchworkpp) StdoutLine: {'line': b'Built target patchworkpp_node\n'}
+[0.199895] (-) TimerEvent: {}
+[0.300034] (-) TimerEvent: {}
+[0.400176] (-) TimerEvent: {}
+[0.500347] (-) TimerEvent: {}
+[0.600452] (-) TimerEvent: {}
+[0.700622] (-) TimerEvent: {}
+[0.800825] (-) TimerEvent: {}
+[0.900997] (-) TimerEvent: {}
+[1.001126] (-) TimerEvent: {}
+[1.101295] (-) TimerEvent: {}
+[1.201462] (-) TimerEvent: {}
+[1.301638] (-) TimerEvent: {}
+[1.401845] (-) TimerEvent: {}
+[1.502018] (-) TimerEvent: {}
+[1.602237] (-) TimerEvent: {}
+[1.702383] (-) TimerEvent: {}
+[1.802523] (-) TimerEvent: {}
+[1.902659] (-) TimerEvent: {}
+[2.002796] (-) TimerEvent: {}
+[2.102936] (-) TimerEvent: {}
+[2.203088] (-) TimerEvent: {}
+[2.303237] (-) TimerEvent: {}
+[2.403356] (-) TimerEvent: {}
+[2.503531] (-) TimerEvent: {}
+[2.603697] (-) TimerEvent: {}
+[2.703832] (-) TimerEvent: {}
+[2.803973] (-) TimerEvent: {}
+[2.904109] (-) TimerEvent: {}
+[3.004230] (-) TimerEvent: {}
+[3.104334] (-) TimerEvent: {}
+[3.204476] (-) TimerEvent: {}
+[3.304623] (-) TimerEvent: {}
+[3.404812] (-) TimerEvent: {}
+[3.504987] (-) TimerEvent: {}
+[3.605160] (-) TimerEvent: {}
+[3.705315] (-) TimerEvent: {}
+[3.805455] (-) TimerEvent: {}
+[3.905597] (-) TimerEvent: {}
+[4.005745] (-) TimerEvent: {}
+[4.105917] (-) TimerEvent: {}
+[4.206110] (-) TimerEvent: {}
+[4.306253] (-) TimerEvent: {}
+[4.406389] (-) TimerEvent: {}
+[4.506547] (-) TimerEvent: {}
+[4.606716] (-) TimerEvent: {}
+[4.706936] (-) TimerEvent: {}
+[4.807173] (-) TimerEvent: {}
+[4.907383] (-) TimerEvent: {}
+[5.007573] (-) TimerEvent: {}
+[5.107743] (-) TimerEvent: {}
+[5.207917] (-) TimerEvent: {}
+[5.308124] (-) TimerEvent: {}
+[5.408292] (-) TimerEvent: {}
+[5.508461] (-) TimerEvent: {}
+[5.608624] (-) TimerEvent: {}
+[5.708792] (-) TimerEvent: {}
+[5.808964] (-) TimerEvent: {}
+[5.909179] (-) TimerEvent: {}
+[6.009408] (-) TimerEvent: {}
+[6.109591] (-) TimerEvent: {}
+[6.209755] (-) TimerEvent: {}
+[6.309927] (-) TimerEvent: {}
+[6.410094] (-) TimerEvent: {}
+[6.510230] (-) TimerEvent: {}
+[6.610388] (-) TimerEvent: {}
+[6.710533] (-) TimerEvent: {}
+[6.810694] (-) TimerEvent: {}
+[6.910856] (-) TimerEvent: {}
+[7.011067] (-) TimerEvent: {}
+[7.111253] (-) TimerEvent: {}
+[7.211426] (-) TimerEvent: {}
+[7.311590] (-) TimerEvent: {}
+[7.411759] (-) TimerEvent: {}
+[7.439912] (patchworkpp) StdoutLine: {'line': b'Linking CXX static library libground_seg_cores.a\n'}
+[7.460848] (patchworkpp) StdoutLine: {'line': b'Built target ground_seg_cores\n'}
+[7.477270] (patchworkpp) StdoutLine: {'line': b'Linking CXX shared library libgseg_component.so\n'}
+[7.511850] (-) TimerEvent: {}
+[7.575154] (patchworkpp) StdoutLine: {'line': b'Built target gseg_component\n'}
+[7.582027] (patchworkpp) CommandEnded: {'returncode': 0}
+[7.583703] (patchworkpp) JobProgress: {'identifier': 'patchworkpp', 'progress': 'install'}
+[7.587800] (patchworkpp) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/aiv/ev_ws/perception/build/patchworkpp'], 'cwd': '/home/aiv/ev_ws/perception/build/patchworkpp', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('USER', 'aiv'), ('CLAUDE_CODE_ENTRYPOINT', 'cli'), ('LC_TIME', 'ko_KR.UTF-8'), ('GIT_EDITOR', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('OLDPWD', '/home/aiv/ev_ws/perception'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.0/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.0/include/node'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2066'), ('SYSTEMD_EXEC_PID', '2535'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator23558193cd9818af7fe4d2c2f5bd9d00f'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '3423'), ('NVM_DIR', '/home/aiv/.nvm'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:9698'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'aiv'), ('TERM', 'xterm-256color'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/usr/local/cuda-12.6/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.0/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2510,unix/aiv:/tmp/.ICE-unix/2510'), ('INVOCATION_ID', 'f3b4240fa7254712a286c98e10705d54'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:187d0cde-cb80-469c-b140-3489dfb06b3f'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/perception/build/patchworkpp'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[7.592192] (patchworkpp) StdoutLine: {'line': b'-- Install configuration: "Release"\n'}
+[7.592365] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/include\n'}
+[7.592423] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/include/patchwork\n'}
+[7.592475] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/include/patchwork/patchworkpp.h\n'}
+[7.592523] (patchworkpp) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/libground_seg_cores.a\n'}
+[7.592688] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig.cmake\n'}
+[7.592784] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig-release.cmake\n'}
+[7.592859] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets.cmake\n'}
+[7.592908] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets-release.cmake\n'}
+[7.592984] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/lib/patchworkpp/patchworkpp_node\n'}
+[7.593033] (patchworkpp) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/libgseg_component.so\n'}
+[7.593927] (patchworkpp) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/perception/install/patchworkpp/lib/libgseg_component.so" to ""\n'}
+[7.594128] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//launch\n'}
+[7.594252] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//launch/patchworkpp.launch.py\n'}
+[7.594300] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//rviz\n'}
+[7.594348] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//rviz/patchworkpp.rviz\n'}
+[7.594395] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//config\n'}
+[7.594442] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//config/patchworkpp_params.yaml\n'}
+[7.594488] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/package_run_dependencies/patchworkpp\n'}
+[7.594536] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/parent_prefix_path/patchworkpp\n'}
+[7.594583] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.sh\n'}
+[7.594849] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.dsv\n'}
+[7.595093] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/path.sh\n'}
+[7.595206] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/path.dsv\n'}
+[7.595318] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.bash\n'}
+[7.595407] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.sh\n'}
+[7.595582] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.zsh\n'}
+[7.595667] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.dsv\n'}
+[7.595748] (patchworkpp) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.dsv\n'}
+[7.595822] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/packages/patchworkpp\n'}
+[7.595891] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/rclcpp_components/patchworkpp\n'}
+[7.595966] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig.cmake\n'}
+[7.596122] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig-version.cmake\n'}
+[7.596252] (patchworkpp) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.xml\n'}
+[7.596281] (patchworkpp) CommandEnded: {'returncode': 0}
+[7.605599] (patchworkpp) JobEnded: {'identifier': 'patchworkpp', 'rc': 0}
+[7.605854] (-) EventReactorShutdown: {}

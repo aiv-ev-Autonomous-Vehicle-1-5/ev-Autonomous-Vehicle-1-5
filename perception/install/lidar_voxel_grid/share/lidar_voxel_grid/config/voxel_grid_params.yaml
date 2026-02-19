@@ -1,0 +1,11 @@
+voxel_grid_component:
+  ros__parameters:
+    # Voxel grid leaf size for near zone (meters)
+    leaf_size_x: 0.05
+    leaf_size_y: 0.05
+    leaf_size_z: 0.05
+
+    # XY distance threshold (meters)
+    # r <= near_range : voxel grid applied
+    # r >  near_range : passthrough (no downsampling)
+    near_range: 1.5

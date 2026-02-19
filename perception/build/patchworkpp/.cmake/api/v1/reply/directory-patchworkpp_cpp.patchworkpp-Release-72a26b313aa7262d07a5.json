@@ -1,0 +1,112 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/cpp/patchworkpp/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 17,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 20,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 32,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 38,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				{
+					"from" : "/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/cpp/patchworkpp/include",
+					"to" : "."
+				}
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"patchworkpp_cpp/patchworkpp/libground_seg_cores.a"
+			],
+			"targetId" : "ground_seg_cores::@8667304aefeb979c40fc",
+			"targetIndex" : 369,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/patchworkpp",
+			"exportName" : "patchworkppConfig",
+			"exportTargets" : 
+			[
+				{
+					"id" : "ground_seg_cores::@8667304aefeb979c40fc",
+					"index" : 369
+				}
+			],
+			"paths" : 
+			[
+				"patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppConfig.cmake"
+			],
+			"type" : "export"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "lib/cmake/patchworkpp",
+			"exportName" : "patchworkppConfig",
+			"exportTargets" : 
+			[
+				{
+					"id" : "ground_seg_cores::@8667304aefeb979c40fc",
+					"index" : 369
+				}
+			],
+			"paths" : 
+			[
+				"patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppTargets.cmake"
+			],
+			"type" : "export"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "patchworkpp_cpp/patchworkpp",
+		"source" : "/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/cpp/patchworkpp"
+	}
+}

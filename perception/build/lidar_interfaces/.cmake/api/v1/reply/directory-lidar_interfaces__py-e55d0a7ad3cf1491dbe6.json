@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "lidar_interfaces__py",
+		"source" : "/home/aiv/ev_ws/perception/build/lidar_interfaces/lidar_interfaces__py"
+	}
+}

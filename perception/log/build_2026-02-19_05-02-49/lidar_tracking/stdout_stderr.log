@@ -1,0 +1,31 @@
+[100%] Built target tracking_component
+-- Install configuration: ""
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/lib/libtracking_component.so
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include/lidar_tracking
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include/lidar_tracking/byte_tracker.hpp
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include/lidar_tracking/tracking_node.hpp
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include/lidar_tracking/kalman_filter.hpp
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/config
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/config/tracking_params.yaml
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/library_path.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/library_path.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/ament_index/resource_index/package_run_dependencies/lidar_tracking
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/ament_index/resource_index/parent_prefix_path/lidar_tracking
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/ament_prefix_path.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/path.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/path.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/local_setup.bash
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/local_setup.sh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/local_setup.zsh
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/local_setup.dsv
+-- Installing: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/package.dsv
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/ament_index/resource_index/packages/lidar_tracking
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/ament_index/resource_index/rclcpp_components/lidar_tracking
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/ament_cmake_export_libraries-extras.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/lidar_trackingConfig.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/lidar_trackingConfig-version.cmake
+-- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/package.xml

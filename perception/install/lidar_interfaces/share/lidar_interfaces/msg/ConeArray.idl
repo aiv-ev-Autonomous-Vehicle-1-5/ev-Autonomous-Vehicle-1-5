@@ -1,0 +1,16 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from lidar_interfaces/msg/ConeArray.msg
+// generated code does not contain a copyright notice
+
+#include "lidar_interfaces/msg/Cone.idl"
+#include "std_msgs/msg/Header.idl"
+
+module lidar_interfaces {
+  module msg {
+    struct ConeArray {
+      std_msgs::msg::Header header;
+
+      sequence<lidar_interfaces::msg::Cone> cones;
+    };
+  };
+};

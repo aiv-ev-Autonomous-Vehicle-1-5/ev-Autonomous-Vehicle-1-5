@@ -1,0 +1,75 @@
+[0.008s] Invoking command in '/home/aiv/ev_ws/perception/build/cluster_filter': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/cluster_filter -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/cluster_filter
+[0.046s] -- The C compiler identification is GNU 11.4.0
+[0.084s] -- The CXX compiler identification is GNU 11.4.0
+[0.088s] -- Detecting C compiler ABI info
+[0.134s] -- Detecting C compiler ABI info - done
+[0.138s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.138s] -- Detecting C compile features
+[0.139s] -- Detecting C compile features - done
+[0.140s] -- Detecting CXX compiler ABI info
+[0.190s] -- Detecting CXX compiler ABI info - done
+[0.194s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.194s] -- Detecting CXX compile features
+[0.195s] -- Detecting CXX compile features - done
+[0.196s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.309s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.375s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.399s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.402s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.407s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.414s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.423s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.448s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.450s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.506s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.529s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.564s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.572s] -- Looking for pthread.h
+[0.621s] -- Looking for pthread.h - found
+[0.622s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.671s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.672s] -- Found Threads: TRUE  
+[0.720s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.745s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.775s] -- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)
+[0.795s] -- Found lidar_interfaces: 0.0.0 (/home/aiv/ev_ws/perception/install/lidar_interfaces/share/lidar_interfaces/cmake)
+[0.857s] -- Configuring done
+[0.864s] -- Generating done
+[0.866s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/cluster_filter
+[0.874s] Invoked command in '/home/aiv/ev_ws/perception/build/cluster_filter' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/cluster_filter -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/cluster_filter
+[0.875s] Invoking command in '/home/aiv/ev_ws/perception/build/cluster_filter': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/cluster_filter -- -j28 -l28
+[0.918s] [ 50%] [32mBuilding CXX object CMakeFiles/filter_component.dir/src/filter_component.cpp.o[0m
+[8.143s] [100%] [32m[1mLinking CXX shared library libfilter_component.so[0m
+[8.460s] [100%] Built target filter_component
+[8.468s] Invoked command in '/home/aiv/ev_ws/perception/build/cluster_filter' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/cluster_filter -- -j28 -l28
+[8.469s] Invoking command in '/home/aiv/ev_ws/perception/build/cluster_filter': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/cluster_filter
+[8.474s] -- Install configuration: ""
+[8.474s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/lib/libfilter_component.so
+[8.477s] -- Set runtime path of "/home/aiv/ev_ws/perception/install/cluster_filter/lib/libfilter_component.so" to ""
+[8.477s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/include
+[8.477s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/include/cluster_filter
+[8.477s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/include/cluster_filter/filter_component.hpp
+[8.477s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/config
+[8.477s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/config/filter_params.yaml
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/environment/library_path.sh
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/environment/library_path.dsv
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/ament_index/resource_index/package_run_dependencies/cluster_filter
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/ament_index/resource_index/parent_prefix_path/cluster_filter
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/environment/ament_prefix_path.sh
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/environment/ament_prefix_path.dsv
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/environment/path.sh
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/environment/path.dsv
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/local_setup.bash
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/local_setup.sh
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/local_setup.zsh
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/local_setup.dsv
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/package.dsv
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/ament_index/resource_index/packages/cluster_filter
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/ament_index/resource_index/rclcpp_components/cluster_filter
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/cmake/ament_cmake_export_include_directories-extras.cmake
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/cmake/ament_cmake_export_libraries-extras.cmake
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/cmake/ament_cmake_export_dependencies-extras.cmake
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/cmake/cluster_filterConfig.cmake
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/cmake/cluster_filterConfig-version.cmake
+[8.478s] -- Installing: /home/aiv/ev_ws/perception/install/cluster_filter/share/cluster_filter/package.xml
+[8.480s] Invoked command in '/home/aiv/ev_ws/perception/build/cluster_filter' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/cluster_filter

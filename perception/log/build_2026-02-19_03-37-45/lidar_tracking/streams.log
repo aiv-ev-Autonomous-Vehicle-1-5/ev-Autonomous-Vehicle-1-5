@@ -1,0 +1,36 @@
+[0.007s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_tracking': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/lidar_tracking -- -j28 -l28
+[0.033s] [35m[1mConsolidate compiler generated dependencies of target tracking_component[0m
+[0.045s] [100%] Built target tracking_component
+[0.053s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_tracking' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/lidar_tracking -- -j28 -l28
+[0.054s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_tracking': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/lidar_tracking
+[0.057s] -- Install configuration: ""
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/lib/libtracking_component.so
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include/lidar_tracking
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include/lidar_tracking/byte_tracker.hpp
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include/lidar_tracking/tracking_node.hpp
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/include/lidar_tracking/kalman_filter.hpp
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/config
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/config/tracking_params.yaml
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/library_path.sh
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/library_path.dsv
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/ament_index/resource_index/package_run_dependencies/lidar_tracking
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/ament_index/resource_index/parent_prefix_path/lidar_tracking
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/ament_prefix_path.sh
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/ament_prefix_path.dsv
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/path.sh
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/environment/path.dsv
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/local_setup.bash
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/local_setup.sh
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/local_setup.zsh
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/local_setup.dsv
+[0.058s] -- Installing: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/package.dsv
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/ament_index/resource_index/packages/lidar_tracking
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/ament_index/resource_index/rclcpp_components/lidar_tracking
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/ament_cmake_export_libraries-extras.cmake
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/lidar_trackingConfig.cmake
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/cmake/lidar_trackingConfig-version.cmake
+[0.058s] -- Up-to-date: /home/aiv/ev_ws/perception/install/lidar_tracking/share/lidar_tracking/package.xml
+[0.061s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_tracking' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/lidar_tracking
