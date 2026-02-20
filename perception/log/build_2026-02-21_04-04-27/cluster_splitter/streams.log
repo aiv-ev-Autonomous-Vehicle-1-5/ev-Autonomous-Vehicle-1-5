@@ -1,0 +1,31 @@
+[0.007s] Invoking command in '/home/aiv/ev_ws/perception/build/cluster_splitter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/cluster_splitter -- -j28 -l28
+[0.037s] Consolidate compiler generated dependencies of target cluster_splitter_component
+[0.043s] [ 50%] Built target cluster_splitter_node
+[0.047s] [ 75%] Building CXX object CMakeFiles/cluster_splitter_component.dir/src/cluster_splitter_node.cpp.o
+[4.917s] [100%] Linking CXX shared library libcluster_splitter_component.so
+[5.169s] [100%] Built target cluster_splitter_component
+[5.177s] Invoked command in '/home/aiv/ev_ws/perception/build/cluster_splitter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/cluster_splitter -- -j28 -l28
+[5.184s] Invoking command in '/home/aiv/ev_ws/perception/build/cluster_splitter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/cluster_splitter
+[5.190s] -- Install configuration: ""
+[5.190s] -- Execute custom install script
+[5.190s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/lib/cluster_splitter/cluster_splitter_node
+[5.190s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/lib/libcluster_splitter_component.so
+[5.191s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/include/cluster_splitter/cluster_splitter_node.hpp
+[5.191s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/launch/cluster_splitter.launch.py
+[5.191s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/ament_index/resource_index/package_run_dependencies/cluster_splitter
+[5.191s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/ament_index/resource_index/parent_prefix_path/cluster_splitter
+[5.191s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/environment/ament_prefix_path.sh
+[5.191s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/environment/ament_prefix_path.dsv
+[5.192s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/environment/path.sh
+[5.192s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/environment/path.dsv
+[5.192s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/local_setup.bash
+[5.192s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/local_setup.sh
+[5.192s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/local_setup.zsh
+[5.192s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/local_setup.dsv
+[5.192s] -- Symlinking: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/package.dsv
+[5.197s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/ament_index/resource_index/packages/cluster_splitter
+[5.197s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/ament_index/resource_index/rclcpp_components/cluster_splitter
+[5.197s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/cmake/cluster_splitterConfig.cmake
+[5.197s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/cmake/cluster_splitterConfig-version.cmake
+[5.197s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/cluster_splitter/share/cluster_splitter/package.xml
+[5.198s] Invoked command in '/home/aiv/ev_ws/perception/build/cluster_splitter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/cluster_splitter

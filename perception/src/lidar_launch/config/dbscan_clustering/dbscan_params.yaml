@@ -2,8 +2,8 @@ dbscan_clustering:
   ros__parameters:
     input_topic: "/patchworkpp/nonground"
     output_topic: "/pointcloud/clustered"
-    eps: 0.5
-    min_points: 6
+    eps: 0.24
+    min_points: 15
     max_neighbors: 1024
     max_points: 500000
     queue_size: 1
@@ -27,7 +27,14 @@ dbscan_clustering:
     azimuth_ground_bins: 720
 
     cluster_xy_only: false
+    
     # z축 거리 적응형 가중치 (cluster_xy_only: false 일 때만 동작)
     # z_scaled = z * z_weight / (1 + range_xy * z_distance_scale)
     z_weight: 0.3
     z_distance_scale: 0.05
+
+    # gazebo 라바콘 크기 :
+    #   - 가로(X): 약 0.503 m
+    #   - 세로(Y): 약 0.503 m
+    #   - 바닥 지름 : 약 0.607 m
+    #   - 높이(Z): 약 1.089 m

@@ -1,0 +1,32 @@
+[0.019s] Invoking command in '/home/aiv/ev_ws/perception/build/dbscan_clustering': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/dbscan_clustering -- -j28 -l28
+[0.046s] [35m[1mConsolidate compiler generated dependencies of target dbscan_gpu[0m
+[0.046s] [35m[1mConsolidate compiler generated dependencies of target dbscan_node[0m
+[0.053s] [ 33%] Built target dbscan_gpu
+[0.059s] [ 66%] Built target dbscan_node
+[0.061s] [35m[1mConsolidate compiler generated dependencies of target dbscan_component[0m
+[0.077s] [100%] Built target dbscan_component
+[0.088s] Invoked command in '/home/aiv/ev_ws/perception/build/dbscan_clustering' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/dbscan_clustering -- -j28 -l28
+[0.091s] Invoking command in '/home/aiv/ev_ws/perception/build/dbscan_clustering': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/dbscan_clustering
+[0.098s] -- Install configuration: ""
+[0.099s] -- Execute custom install script
+[0.100s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/dbscan_clustering/dbscan_node
+[0.100s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/libdbscan_component.so
+[0.100s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/libdbscan_gpu.so
+[0.100s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering//launch/dbscan_clustering.launch.py
+[0.100s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/package_run_dependencies/dbscan_clustering
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/parent_prefix_path/dbscan_clustering
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.sh
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.dsv
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/path.sh
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/path.dsv
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.bash
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.sh
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.zsh
+[0.101s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.dsv
+[0.101s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/package.dsv
+[0.104s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/packages/dbscan_clustering
+[0.104s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/rclcpp_components/dbscan_clustering
+[0.104s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig.cmake
+[0.104s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig-version.cmake
+[0.104s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/package.xml
+[0.136s] Invoked command in '/home/aiv/ev_ws/perception/build/dbscan_clustering' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/dbscan_clustering

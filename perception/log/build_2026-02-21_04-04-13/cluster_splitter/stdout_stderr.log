@@ -1,0 +1,64 @@
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+-- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+-- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: /home/aiv/ev_ws/perception/src/lidar/cluster_splitter/include
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'flake8' to check Python code syntax and style conventions
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+-- Added test 'uncrustify' to check C / C++ code style
+-- Configured uncrustify additional arguments: 
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/aiv/ev_ws/perception/build/cluster_splitter
+Consolidate compiler generated dependencies of target cluster_splitter_node
+Consolidate compiler generated dependencies of target cluster_splitter_component
+[ 25%] Building CXX object CMakeFiles/cluster_splitter_component.dir/src/cluster_splitter_node.cpp.o
+[ 75%] Built target cluster_splitter_node
+In file included from /opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155,
+                 from /home/aiv/ev_ws/perception/src/lidar/cluster_splitter/include/cluster_splitter/cluster_splitter_node.hpp:11,
+                 from /home/aiv/ev_ws/perception/src/lidar/cluster_splitter/src/cluster_splitter_node.cpp:1:
+/home/aiv/ev_ws/perception/src/lidar/cluster_splitter/src/cluster_splitter_node.cpp: In lambda function:
+/home/aiv/ev_ws/perception/src/lidar/cluster_splitter/src/cluster_splitter_node.cpp:825:3: error: passing ‘const rclcpp::Clock’ as ‘this’ argument discards qualifiers [-fpermissive]
+  825 |   RCLCPP_INFO_THROTTLE(
+      |   ^~~~~~~~~~~~~~~~~~~~
+In file included from /opt/ros/humble/include/rclcpp/rclcpp/timer.hpp:27,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:30,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155,
+                 from /home/aiv/ev_ws/perception/src/lidar/cluster_splitter/include/cluster_splitter/cluster_splitter_node.hpp:11,
+                 from /home/aiv/ev_ws/perception/src/lidar/cluster_splitter/src/cluster_splitter_node.cpp:1:
+/opt/ros/humble/include/rclcpp/rclcpp/clock.hpp:87:3: note:   in call to ‘rclcpp::Time rclcpp::Clock::now()’
+   87 |   now();
+      |   ^~~
+gmake[2]: *** [CMakeFiles/cluster_splitter_component.dir/build.make:76: CMakeFiles/cluster_splitter_component.dir/src/cluster_splitter_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/cluster_splitter_component.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

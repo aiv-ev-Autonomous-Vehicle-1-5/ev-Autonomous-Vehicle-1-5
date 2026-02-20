@@ -3,10 +3,8 @@
 #include <cstdint>
 #include <cstring>
 #include <limits>
-#include <memory>
 #include <queue>
 #include <string>
-#include <tuple>
 #include <vector>
 
 #include "dbscan_clustering/dbscan_gpu.cuh"
@@ -474,72 +472,24 @@ private:
     fcluster.datatype = sensor_msgs::msg::PointField::INT32;
     fcluster.count = 1;
 
-    sensor_msgs::msg::PointField frgb;
-    frgb.name = "rgb";
-    frgb.offset = 16;
-    frgb.datatype = sensor_msgs::msg::PointField::FLOAT32;
-    frgb.count = 1;
-
-    out.fields = {fx, fy, fz, fcluster, frgb};
-    out.point_step = 20;
+    out.fields = {fx, fy, fz, fcluster};
+    out.point_step = 16;
     out.row_step = out.point_step * out.width;
     out.data.resize(static_cast<size_t>(out.row_step));
-
-    auto pack_rgb_to_float = [](uint8_t r, uint8_t g, uint8_t b) {
-      uint32_t rgb = (static_cast<uint32_t>(r) << 16) |
-        (static_cast<uint32_t>(g) << 8) |
-        static_cast<uint32_t>(b);
-      float f = 0.0F;
-      std::memcpy(&f, &rgb, sizeof(float));
-      return f;
-    };
-
-    auto id_to_color = [](int id) -> std::tuple<uint8_t, uint8_t, uint8_t> {
-      if (id < 0) {
-        return {128, 128, 128};
-      }
-      const int hue = (id * 37) % 360;
-      const float hf = static_cast<float>(hue) / 60.0F;
-      const int sector = static_cast<int>(std::floor(hf)) % 6;
-      const float frac = hf - std::floor(hf);
-      const float v = 1.0F;
-      const float s = 1.0F;
-      const float p = v * (1.0F - s);
-      const float q = v * (1.0F - s * frac);
-      const float t = v * (1.0F - s * (1.0F - frac));
-      float r = 0.0F;
-      float g = 0.0F;
-      float b = 0.0F;
-      switch (sector) {
-        case 0: r = v; g = t; b = p; break;
-        case 1: r = q; g = v; b = p; break;
-        case 2: r = p; g = v; b = t; break;
-        case 3: r = p; g = q; b = v; break;
-        case 4: r = t; g = p; b = v; break;
-        default: r = v; g = p; b = q; break;
-      }
-      return {
-        static_cast<uint8_t>(std::round(r * 255.0F)),
-        static_cast<uint8_t>(std::round(g * 255.0F)),
-        static_cast<uint8_t>(std::round(b * 255.0F))};
-    };
 
     sensor_msgs::PointCloud2Iterator<float> out_x(out, "x");
     sensor_msgs::PointCloud2Iterator<float> out_y(out, "y");
     sensor_msgs::PointCloud2Iterator<float> out_z(out, "z");
     sensor_msgs::PointCloud2Iterator<int32_t> out_cluster(out, "cluster_id");
-    sensor_msgs::PointCloud2Iterator<float> out_rgb(out, "rgb");
 
     for (int i = 0; i < m; ++i) {
       const auto & p = nonground_points[static_cast<size_t>(i)];
       const int32_t lbl = labels[static_cast<size_t>(i)];
-      auto [r, g, b] = id_to_color(lbl);
 
       *out_x = p.x; ++out_x;
       *out_y = p.y; ++out_y;
       *out_z = p.z; ++out_z;
       *out_cluster = lbl; ++out_cluster;
-      *out_rgb = pack_rgb_to_float(r, g, b); ++out_rgb;
     }
 
     pub_->publish(out);

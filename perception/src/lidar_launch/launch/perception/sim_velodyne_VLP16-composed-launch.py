@@ -3,7 +3,7 @@
 Gazebo's velodyne plugin publishes PointCloud2 directly to /velodyne_points,
 so velodyne_driver and velodyne_transform are not needed.
 
-Pipeline: /velodyne_points -> Patchwork++ -> DBSCAN(GPU)
+Pipeline: /velodyne_points -> Patchwork++ -> DBSCAN(GPU) -> ClusterSplitter
 """
 
 import os
@@ -27,6 +27,11 @@ def generate_launch_description():
     with open(dbscan_params_file, 'r') as f:
         dbscan_params = yaml.safe_load(f)['dbscan_clustering']['ros__parameters']
 
+    splitter_params_file = os.path.join(
+        launch_share_dir, 'config', 'cluster_splitter', 'cluster_splitter_params.yaml')
+    with open(splitter_params_file, 'r') as f:
+        splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
+
     container = ComposableNodeContainer(
         name='velodyne_container',
         namespace='',
@@ -49,6 +54,13 @@ def generate_launch_description():
                 plugin='dbscan_clustering::DBSCANNode',
                 name='dbscan_clustering',
                 parameters=[dbscan_params]),
+
+            # 3. Cluster Splitter - split over-merged cone clusters
+            ComposableNode(
+                package='cluster_splitter',
+                plugin='cluster_splitter::ClusterSplitterNode',
+                name='cluster_splitter',
+                parameters=[splitter_params]),
 
         ],
         output='both',

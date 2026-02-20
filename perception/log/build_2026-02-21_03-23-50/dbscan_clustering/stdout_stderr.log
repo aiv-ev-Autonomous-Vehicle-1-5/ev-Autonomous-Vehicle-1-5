@@ -1,0 +1,28 @@
+[35m[1mConsolidate compiler generated dependencies of target dbscan_gpu[0m
+[35m[1mConsolidate compiler generated dependencies of target dbscan_node[0m
+[ 33%] Built target dbscan_gpu
+[ 66%] Built target dbscan_node
+[35m[1mConsolidate compiler generated dependencies of target dbscan_component[0m
+[100%] Built target dbscan_component
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/dbscan_clustering/dbscan_node
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/libdbscan_component.so
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/libdbscan_gpu.so
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering//launch/dbscan_clustering.launch.py
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/package_run_dependencies/dbscan_clustering
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/parent_prefix_path/dbscan_clustering
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/path.sh
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/path.dsv
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.bash
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.sh
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.zsh
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.dsv
+-- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/package.dsv
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/packages/dbscan_clustering
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/rclcpp_components/dbscan_clustering
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig.cmake
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig-version.cmake
+-- Up-to-date symlink: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/package.xml

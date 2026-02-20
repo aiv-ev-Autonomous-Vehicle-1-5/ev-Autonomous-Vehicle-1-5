@@ -1,6 +1,6 @@
-"""Debug Stage 5: Driver + Transform + Patchwork++ + VoxelGrid + DBSCAN.
+"""Debug Stage 6: Driver + Transform + Patchwork++ + VoxelGrid + DBSCAN + ClusterSplitter.
 
-Verify clustered obstacle output on /pointcloud/clustered.
+Verify split obstacle output on /pointcloud/clustered_split.
 """
 
 import os
@@ -42,11 +42,16 @@ def generate_launch_description():
     with open(dbscan_params_file, 'r') as f:
         dbscan_params = yaml.safe_load(f)['dbscan_clustering']['ros__parameters']
 
+    splitter_params_file = os.path.join(
+        launch_share_dir, 'config', 'cluster_splitter', 'cluster_splitter_params.yaml')
+    with open(splitter_params_file, 'r') as f:
+        splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
+
     debug_script = os.path.join(
         launch_share_dir,
         'launch',
         'perception',
-        'clustering_debug_scripts',
+        'debug_scripts',
         'count_clusters.py'
     )
 
@@ -98,12 +103,19 @@ def generate_launch_description():
                     plugin='dbscan_clustering::DBSCANNode',
                     name='dbscan_clustering',
                     parameters=[dbscan_params]),
+
+                # 5. Cluster Splitter - split over-merged cone clusters
+                ComposableNode(
+                    package='cluster_splitter',
+                    plugin='cluster_splitter::ClusterSplitterNode',
+                    name='cluster_splitter',
+                    parameters=[splitter_params]),
             ],
             output='both',
     )
 
     debug_counter = ExecuteProcess(
-        cmd=['python3', debug_script],
+        cmd=['python3', debug_script, '/pointcloud/clustered_split'],
         output='screen',
     )
 
