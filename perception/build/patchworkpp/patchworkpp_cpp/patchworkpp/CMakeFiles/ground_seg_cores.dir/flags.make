@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/include -I/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/cpp/patchworkpp/include -isystem /home/aiv/ev_ws/perception/build/patchworkpp/_deps/eigen-src
+CXX_INCLUDES = -I/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/include -I/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp/patchworkpp/include -isystem /usr/include/eigen3
 
 CXX_FLAGS = -O3 -DNDEBUG -fPIC -std=gnu++20
 

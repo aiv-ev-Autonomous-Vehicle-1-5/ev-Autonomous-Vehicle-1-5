@@ -1,8 +1,0 @@
-clustering_component:
-  ros__parameters:
-    eps: 0.3
-    min_pts: 5
-    # 거리 기반 adaptive eps 보정
-    # eps_effective(r) = eps * (1 + r / adaptive_range_ref)
-    # 10m → eps*2, 20m → eps*3, 30m → eps*4
-    adaptive_range_ref: 20.0

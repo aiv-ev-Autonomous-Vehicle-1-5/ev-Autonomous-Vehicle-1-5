@@ -3,12 +3,11 @@
 
     <!-- Include files -->
     <xacro:include filename="$(find erp42_gazebo)/urdf/erp42_gazebo_control.xacro"/>
-    <!-- <xacro:include filename="$(find carsa_gazebo)/urdf/xsens_mti3.xacro"/>
+    <xacro:include filename="$(find carsa_gazebo)/urdf/xsens_mti3.xacro"/>
     <xacro:include filename="$(find carsa_gazebo)/urdf/ublox_zed_f9p.xacro"/>
     <xacro:include filename="$(find carsa_gazebo)/urdf/velodyne_vlp_32c.xacro"/>
     <xacro:include filename="$(find carsa_gazebo)/urdf/logitech_c930.xacro"/>
-    <xacro:include filename="$(find carsa_gazebo)/urdf/logitech_c920.xacro"/> -->
-    <xacro:include filename="$(find carsa_gazebo)/urdf/velodyne_vlp_16c.xacro"/>
+    <xacro:include filename="$(find carsa_gazebo)/urdf/logitech_c920.xacro"/>
     
     <!-- ERP42 model description and gazebo control settings -->
     <xacro:erp42_gazebo_control publish_odometry = "true"/>

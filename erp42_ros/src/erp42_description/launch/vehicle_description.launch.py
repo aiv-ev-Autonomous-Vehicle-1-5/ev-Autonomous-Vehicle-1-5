@@ -12,7 +12,7 @@ def generate_launch_description():
     # Robot description file
     vehicle_description_file = DeclareLaunchArgument('vehicle_description_file', 
         default_value = PathJoinSubstitution([
-            FindPackageShare('erp42_description'), 'urdf', 'erp42.xacro'
+            FindPackageShare('erp42_description'), 'urdf', 't870.xacro'
         ])
     )
 

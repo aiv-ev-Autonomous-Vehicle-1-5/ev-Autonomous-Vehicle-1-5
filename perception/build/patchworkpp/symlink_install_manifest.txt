@@ -2,7 +2,6 @@
 /home/aiv/ev_ws/perception/install/patchworkpp/lib/libgseg_component.so
 /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//launch/patchworkpp.launch.py
 /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//rviz/patchworkpp.rviz
-/home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//config/patchworkpp_params.yaml
 /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/package_run_dependencies/patchworkpp
 /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/parent_prefix_path/patchworkpp
 /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.sh

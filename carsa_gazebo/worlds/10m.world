@@ -1,0 +1,850 @@
+<sdf version='1.7'>
+  <world name='empty'>
+    <plugin name='gazebo_ros_properties' filename='libgazebo_ros_properties.so'>
+      <ros>
+        <namespace>/erp42</namespace>
+      </ros>
+    </plugin>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <physics name='default_physics' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <real_time_factor>1</real_time_factor>
+    </physics>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>37.239</latitude_deg>
+      <longitude_deg>126.773</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>180</heading_deg>
+    </spherical_coordinates>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <model name='erp42'>
+      <link name='base_footprint'>
+        <inertial>
+          <pose>0 0 0.27 0 -0 0</pose>
+          <mass>160</mass>
+          <inertia>
+            <ixx>20.43</ixx>
+            <ixy>0.584</ixy>
+            <ixz>-0.191</ixz>
+            <iyy>54.197</iyy>
+            <iyz>-0.2449</iyz>
+            <izz>72.2588</izz>
+          </inertia>
+        </inertial>
+        <collision name='base_footprint_fixed_joint_lump__base_link_collision'>
+          <pose>0.02 0 0.27 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>1.58 0.95 0.316</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base_footprint_fixed_joint_lump__base_link_collision_1'>
+          <pose>0.92 0 0.195 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.22 1 0.15</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <collision name='base_footprint_fixed_joint_lump__base_link_collision_2'>
+          <pose>-0.88 0 0.195 0 -0 3.14159</pose>
+          <geometry>
+            <box>
+              <size>0.22 1 0.15</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='base_footprint_fixed_joint_lump__base_link_visual'>
+          <pose>0 0 0.27 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_chassis.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__base_link_visual_1'>
+          <pose>0.92 0 0.195 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_bumper.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__base_link_visual_2'>
+          <pose>-0.88 0 0.195 0 -0 3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_bumper.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__velodyne_visual_3'>
+          <pose>0.7 0 0.9775 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.015</length>
+              <radius>0.052</radius>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Gray</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__velodyne_visual_4'>
+          <pose>0.7 0 1.0475 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.015</length>
+              <radius>0.052</radius>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Gray</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <visual name='base_footprint_fixed_joint_lump__velodyne_optical_visual_5'>
+          <pose>0.7 0 1.0125 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.055</length>
+              <radius>0.05</radius>
+            </cylinder>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Blue</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <sensor name='velodyne' type='gpu_ray'>
+          <update_rate>10</update_rate>
+          <always_on>1</always_on>
+          <visualize>0</visualize>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>1800</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.14159</min_angle>
+                <max_angle>3.14159</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>16</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.261799</min_angle>
+                <max_angle>0.261799</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>1</min>
+              <max>50</max>
+              <resolution>0.002</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.0025</stddev>
+            </noise>
+          </ray>
+          <plugin name='velodyne_plugin' filename='libgazebo_ros_velodyne_laser.so'>
+            <ros>
+              <remapping>~/out:=/velodyne_points</remapping>
+            </ros>
+            <output_type>sensor_msgs/PointCloud2</output_type>
+            <frame_name>velodyne_optical</frame_name>
+            <organize_cloud>0</organize_cloud>
+            <min_range>1.0</min_range>
+            <max_range>50.0</max_range>
+          </plugin>
+          <pose>0.7 0 1.0125 0 -0 0</pose>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='front_left_steering_hub_joint' type='revolute'>
+        <pose relative_to='base_footprint'>0.52 0.4925 0.27 0 -0 0</pose>
+        <parent>base_footprint</parent>
+        <child>front_left_steering_hub</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-0.698132</lower>
+            <upper>0.698132</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.1</damping>
+            <friction>0.1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='front_left_steering_hub'>
+        <pose relative_to='front_left_steering_hub_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.001</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.001</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='front_left_wheel_joint' type='revolute'>
+        <pose relative_to='front_left_steering_hub'>0 0 0 0 -0 0</pose>
+        <parent>front_left_steering_hub</parent>
+        <child>front_left_wheel</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='front_left_wheel'>
+        <pose relative_to='front_left_wheel_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>7</mass>
+          <inertia>
+            <ixx>0.145425</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.25515</iyy>
+            <iyz>0</iyz>
+            <izz>0.145425</izz>
+          </inertia>
+        </inertial>
+        <collision name='front_left_wheel_collision'>
+          <pose>0 0 0 -1.57079 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.175</length>
+              <radius>0.27</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='front_left_wheel_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_tire.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='front_left_wheel_visual_1'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_rim.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='front_right_steering_hub_joint' type='revolute'>
+        <pose relative_to='base_footprint'>0.52 -0.4925 0.27 0 -0 0</pose>
+        <parent>base_footprint</parent>
+        <child>front_right_steering_hub</child>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-0.698132</lower>
+            <upper>0.698132</upper>
+            <effort>100</effort>
+            <velocity>100</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.1</damping>
+            <friction>0.1</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='front_right_steering_hub'>
+        <pose relative_to='front_right_steering_hub_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.001</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.001</iyy>
+            <iyz>0</iyz>
+            <izz>0.001</izz>
+          </inertia>
+        </inertial>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='front_right_wheel_joint' type='revolute'>
+        <pose relative_to='front_right_steering_hub'>0 0 0 3.14159 -0 0</pose>
+        <parent>front_right_steering_hub</parent>
+        <child>front_right_wheel</child>
+        <axis>
+          <xyz>0 -1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='front_right_wheel'>
+        <pose relative_to='front_right_wheel_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>7</mass>
+          <inertia>
+            <ixx>0.145425</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.25515</iyy>
+            <iyz>0</iyz>
+            <izz>0.145425</izz>
+          </inertia>
+        </inertial>
+        <collision name='front_right_wheel_collision'>
+          <pose>0 0 0 -1.57079 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.175</length>
+              <radius>0.27</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='front_right_wheel_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_tire.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='front_right_wheel_visual_1'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_rim.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='rear_left_wheel_joint' type='revolute'>
+        <pose relative_to='base_footprint'>-0.52 0.4925 0.27 0 -0 0</pose>
+        <parent>base_footprint</parent>
+        <child>rear_left_wheel</child>
+        <axis>
+          <xyz>0 1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='rear_left_wheel'>
+        <pose relative_to='rear_left_wheel_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>7</mass>
+          <inertia>
+            <ixx>0.145425</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.25515</iyy>
+            <iyz>0</iyz>
+            <izz>0.145425</izz>
+          </inertia>
+        </inertial>
+        <collision name='rear_left_wheel_collision'>
+          <pose>0 0 0 -1.57079 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.175</length>
+              <radius>0.27</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='rear_left_wheel_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_tire.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='rear_left_wheel_visual_1'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_rim.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='rear_right_wheel_joint' type='revolute'>
+        <pose relative_to='base_footprint'>-0.52 -0.4925 0.27 3.14159 -0 0</pose>
+        <parent>base_footprint</parent>
+        <child>rear_right_wheel</child>
+        <axis>
+          <xyz>0 -1 0</xyz>
+          <limit>
+            <lower>-1e+16</lower>
+            <upper>1e+16</upper>
+          </limit>
+          <dynamics>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+        </axis>
+      </joint>
+      <link name='rear_right_wheel'>
+        <pose relative_to='rear_right_wheel_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>7</mass>
+          <inertia>
+            <ixx>0.145425</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.25515</iyy>
+            <iyz>0</iyz>
+            <izz>0.145425</izz>
+          </inertia>
+        </inertial>
+        <collision name='rear_right_wheel_collision'>
+          <pose>0 0 0 -1.57079 0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.175</length>
+              <radius>0.27</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.9</mu>
+                <mu2>0.9</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='rear_right_wheel_visual'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_tire.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <visual name='rear_right_wheel_visual_1'>
+          <pose>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>file:///home/aiv/ev_ws/erp42_ros/install/erp42_description/share/erp42_description/meshes/erp42_rim.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <static>0</static>
+      <plugin name='joint_state_publisher' filename='libgazebo_ros_joint_state_publisher.so'>
+        <ros>
+          <namespace>erp42</namespace>
+        </ros>
+        <update_rate>100.0</update_rate>
+        <joint_name>front_left_wheel_joint</joint_name>
+        <joint_name>front_right_wheel_joint</joint_name>
+        <joint_name>rear_left_wheel_joint</joint_name>
+        <joint_name>rear_right_wheel_joint</joint_name>
+        <joint_name>front_left_steering_hub_joint</joint_name>
+        <joint_name>front_right_steering_hub_joint</joint_name>
+      </plugin>
+      <plugin name='gazebo_ros_ackermann_drive' filename='libgazebo_ros_ackermann_drive.so'>
+        <ros>
+          <namespace>erp42</namespace>
+          <remapping>cmd_vel:=cmd_vel</remapping>
+          <remapping>odom:=odometry_ground_truth</remapping>
+        </ros>
+        <update_rate>100.0</update_rate>
+        <front_left_joint>front_left_wheel_joint</front_left_joint>
+        <front_right_joint>front_right_wheel_joint</front_right_joint>
+        <rear_left_joint>rear_left_wheel_joint</rear_left_joint>
+        <rear_right_joint>rear_right_wheel_joint</rear_right_joint>
+        <left_steering_joint>front_left_steering_hub_joint</left_steering_joint>
+        <right_steering_joint>front_right_steering_hub_joint</right_steering_joint>
+        <max_steer>0.436332</max_steer>
+        <max_speed>7.0</max_speed>
+        <left_steering_pid_gain>1000 0 200</left_steering_pid_gain>
+        <left_steering_i_range>0 0</left_steering_i_range>
+        <right_steering_pid_gain>1000 0 200</right_steering_pid_gain>
+        <right_steering_i_range>0 0</right_steering_i_range>
+        <linear_velocity_pid_gain>50 0 1</linear_velocity_pid_gain>
+        <linear_velocity_i_range>0 0</linear_velocity_i_range>
+        <publish_odom>1</publish_odom>
+        <publish_odom_tf>1</publish_odom_tf>
+        <odometry_frame>odom</odometry_frame>
+        <robot_base_frame>base_footprint</robot_base_frame>
+      </plugin>
+      <pose>0 0 0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-0.002233 -0.012121 0 0 -0 0</pose>
+    </model>
+    <state world_name='empty'>
+      <sim_time>250 835000000</sim_time>
+      <real_time>251 222416222</real_time>
+      <wall_time>1771592701 881090454</wall_time>
+      <iterations>250835</iterations>
+      <model name='Construction Cone o'>
+        <pose>-0.002233 -0.012121 -0 0 -1e-06 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-0.002233 -0.012121 -0 0 -1e-06 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0.008512 2.58585 -1.13682 -3.14159</acceleration>
+          <wrench>-0 0 0.008512 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='erp42'>
+        <pose>-10.7376 0.018602 -8.5e-05 -0 0.000164 -0.000894</pose>
+        <scale>1 1 1</scale>
+        <link name='base_footprint'>
+          <pose>-10.7376 0.018602 -8.5e-05 -0 0.000164 -0.000894</pose>
+          <velocity>0.00013 0.001674 0.000906 0.007383 0.005057 0.000373</velocity>
+          <acceleration>-0.033163 -0.402453 5.44582 -0.769103 -0.758042 -2.58759</acceleration>
+          <wrench>-5.30604 -64.3925 871.33 0 -0 0</wrench>
+        </link>
+        <link name='front_left_steering_hub'>
+          <pose>-10.2171 0.510638 0.270068 -9e-06 0.000164 0.001024</pose>
+          <velocity>0.001554 0.000535 0.013728 -0.005045 0.005033 -0.000207</velocity>
+          <acceleration>0.031219 1.0286 68.4601 -0.68711 -0.705774 2.96262</acceleration>
+          <wrench>0.003122 0.10286 6.84601 0 -0 0</wrench>
+        </link>
+        <link name='front_left_wheel'>
+          <pose>-10.2171 0.510637 0.270001 -1.3e-05 1.10045 0.001012</pose>
+          <velocity>0.001482 0.000351 0.010275 -0.0013 0.005485 -7.4e-05</velocity>
+          <acceleration>-0.069442 0.710219 51.9885 1.91958 -0.019301 -0.017927</acceleration>
+          <wrench>-0.486096 4.97153 363.919 0 -0 0</wrench>
+        </link>
+        <link name='front_right_steering_hub'>
+          <pose>-10.218 -0.474364 0.270069 4e-06 0.000164 0.000434</pose>
+          <velocity>0.00147 -0.000623 0.016735 -0.000364 0.005058 -0.000134</velocity>
+          <acceleration>-0.058928 -0.672744 65.9219 -0.105841 -0.794035 3.03565</acceleration>
+          <wrench>-0.005893 -0.067274 6.59219 0 -0 0</wrench>
+        </link>
+        <link name='front_right_wheel'>
+          <pose>-10.218 -0.474363 0.270001 3.14159 1.09927 0.000434</pose>
+          <velocity>0.001531 -0.000487 0.010343 0.001804 0.005674 -4.4e-05</velocity>
+          <acceleration>0.030301 -0.513618 45.9179 0.176323 -0.113698 0.011343</acceleration>
+          <wrench>0.212107 -3.59533 321.426 0 -0 0</wrench>
+        </link>
+        <link name='rear_left_wheel'>
+          <pose>-11.2571 0.511565 0.27 -1.7e-05 1.09109 -0.000909</pose>
+          <velocity>0.001318 -0.000708 0.007354 0.002623 0.004891 0.000135</velocity>
+          <acceleration>-0.298108 -1.06432 14.9152 2.98484 -1.05539 0.36136</acceleration>
+          <wrench>-2.08676 -7.45022 104.406 0 -0 0</wrench>
+        </link>
+        <link name='rear_right_wheel'>
+          <pose>-11.258 -0.473433 0.27 3.14159 1.08743 -0.000896</pose>
+          <velocity>0.001667 -0.000793 -0.000376 0.002979 0.006059 0.000348</velocity>
+          <acceleration>0.229817 -0.829226 -0.207065 -0.561128 0.810729 0.589231</acceleration>
+          <wrench>1.60872 -5.80458 -1.44946 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>-2.66043 -1.72656 40.0669 3.14159 1.57079 3.14159</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>

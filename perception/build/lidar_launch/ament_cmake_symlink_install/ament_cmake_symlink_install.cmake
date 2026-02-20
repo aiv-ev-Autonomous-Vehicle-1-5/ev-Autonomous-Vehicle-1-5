@@ -313,6 +313,9 @@ message(STATUS "Execute custom install script")
 # install(DIRECTORY "launch/" "DESTINATION" "share/lidar_launch/launch")
 ament_cmake_symlink_install_directory("/home/aiv/ev_ws/perception/src/lidar_launch" DIRECTORY "launch/" "DESTINATION" "share/lidar_launch/launch")
 
+# install(DIRECTORY "config/" "DESTINATION" "share/lidar_launch/config")
+ament_cmake_symlink_install_directory("/home/aiv/ev_ws/perception/src/lidar_launch" DIRECTORY "config/" "DESTINATION" "share/lidar_launch/config")
+
 # install(FILES "/home/aiv/ev_ws/perception/build/lidar_launch/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/lidar_launch" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar_launch" FILES "/home/aiv/ev_ws/perception/build/lidar_launch/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/lidar_launch" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 

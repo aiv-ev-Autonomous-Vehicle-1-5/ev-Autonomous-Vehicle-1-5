@@ -316,50 +316,50 @@ include("/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_symlink_instal
 # install("TARGETS" "gseg_component" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "lib/patchworkpp")
 include("/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_symlink_install_targets_1_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install(DIRECTORY "launch" "rviz" "config" "DESTINATION" "share/patchworkpp/")
-ament_cmake_symlink_install_directory("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" DIRECTORY "launch" "rviz" "config" "DESTINATION" "share/patchworkpp/")
+# install(DIRECTORY "launch" "rviz" "DESTINATION" "share/patchworkpp/")
+ament_cmake_symlink_install_directory("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" DIRECTORY "launch" "rviz" "DESTINATION" "share/patchworkpp/")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/patchworkpp" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/patchworkpp" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/patchworkpp" "DESTINATION" "share/ament_index/resource_index/package_run_dependencies")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/patchworkpp" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/patchworkpp" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/patchworkpp" "DESTINATION" "share/ament_index/resource_index/parent_prefix_path")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/patchworkpp/environment")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/patchworkpp/environment")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh" "DESTINATION" "share/patchworkpp/environment")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/patchworkpp/environment")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/patchworkpp/environment")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/ament_prefix_path.dsv" "DESTINATION" "share/patchworkpp/environment")
 
 # install(FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/patchworkpp/environment")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/patchworkpp/environment")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh" "DESTINATION" "share/patchworkpp/environment")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/patchworkpp/environment")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/patchworkpp/environment")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/path.dsv" "DESTINATION" "share/patchworkpp/environment")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/patchworkpp")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/patchworkpp")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.bash" "DESTINATION" "share/patchworkpp")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/patchworkpp")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/patchworkpp")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.sh" "DESTINATION" "share/patchworkpp")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/patchworkpp")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/patchworkpp")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.zsh" "DESTINATION" "share/patchworkpp")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/patchworkpp")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/patchworkpp")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/local_setup.dsv" "DESTINATION" "share/patchworkpp")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/patchworkpp")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/patchworkpp")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_environment_hooks/package.dsv" "DESTINATION" "share/patchworkpp")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/packages/patchworkpp" "DESTINATION" "share/ament_index/resource_index/packages")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/packages/patchworkpp" "DESTINATION" "share/ament_index/resource_index/packages")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/packages/patchworkpp" "DESTINATION" "share/ament_index/resource_index/packages")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/rclcpp_components/patchworkpp" "DESTINATION" "share/ament_index/resource_index/rclcpp_components")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/rclcpp_components/patchworkpp" "DESTINATION" "share/ament_index/resource_index/rclcpp_components")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_index/share/ament_index/resource_index/rclcpp_components/patchworkpp" "DESTINATION" "share/ament_index/resource_index/rclcpp_components")
 
 # install(FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_core/patchworkppConfig.cmake" "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_core/patchworkppConfig-version.cmake" "DESTINATION" "share/patchworkpp/cmake")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_core/patchworkppConfig.cmake" "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_core/patchworkppConfig-version.cmake" "DESTINATION" "share/patchworkpp/cmake")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_core/patchworkppConfig.cmake" "/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_core/patchworkppConfig-version.cmake" "DESTINATION" "share/patchworkpp/cmake")
 
-# install(FILES "/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros/package.xml" "DESTINATION" "share/patchworkpp")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros" FILES "/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros/package.xml" "DESTINATION" "share/patchworkpp")
+# install(FILES "/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros/package.xml" "DESTINATION" "share/patchworkpp")
+ament_cmake_symlink_install_files("/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros" FILES "/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros/package.xml" "DESTINATION" "share/patchworkpp")

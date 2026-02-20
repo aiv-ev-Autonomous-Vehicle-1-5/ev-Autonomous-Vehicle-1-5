@@ -1,4 +1,4 @@
-# Install script for directory: /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus/ros
+# Install script for directory: /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

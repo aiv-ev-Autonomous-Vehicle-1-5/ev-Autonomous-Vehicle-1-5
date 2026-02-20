@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/build/cluster_filter/ament_cmake_environment_hooks/local_setup.zsh

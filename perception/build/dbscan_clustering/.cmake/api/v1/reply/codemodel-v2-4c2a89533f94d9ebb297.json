@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-c9c0d4bd782d9c6b7368.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "dbscan_clustering",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_clustering_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_clustering_uninstall-b836f374d55483f723db.json",
+					"name" : "dbscan_clustering_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_component::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_component-a6dcf27a685ca2f334e3.json",
+					"name" : "dbscan_component",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_gpu::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_gpu-67ae366c5924ab665ed9.json",
+					"name" : "dbscan_gpu",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_node-17b45a10d3ad1be451ba.json",
+					"name" : "dbscan_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-a44c72881c79364945fd.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/aiv/ev_ws/perception/build/dbscan_clustering",
+		"source" : "/home/aiv/ev_ws/perception/src/lidar/dbscan_clustering"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

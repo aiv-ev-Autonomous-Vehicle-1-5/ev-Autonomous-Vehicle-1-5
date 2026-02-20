@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/build/lidar_tracking/ament_cmake_environment_hooks/local_setup.sh
