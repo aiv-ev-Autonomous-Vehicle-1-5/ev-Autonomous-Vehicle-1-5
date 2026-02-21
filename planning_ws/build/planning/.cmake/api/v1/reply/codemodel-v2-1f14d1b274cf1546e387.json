@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-72ed3617cc1370f70a00.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "planning",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "fake_cone_pub::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-fake_cone_pub-ab8d052fc79e80a48461.json",
+					"name" : "fake_cone_pub",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "planning_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-planning_node-c50dfff8528c8d5fce7e.json",
+					"name" : "planning_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "planning_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-planning_uninstall-1847ccc70398f24fb1ee.json",
+					"name" : "planning_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-c113dfd3e990f61e9347.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning",
+		"source" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/src/planning"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

@@ -1,0 +1,28 @@
+[0.004s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning -- -j10 -l10
+[0.025s] [35m[1mConsolidate compiler generated dependencies of target planning_node[0m
+[0.032s] [ 33%] Built target fake_cone_pub
+[0.035s] [ 50%] [32mBuilding CXX object CMakeFiles/planning_node.dir/src/planning_node.cpp.o[0m
+[4.254s] [ 66%] [32m[1mLinking CXX executable planning_node[0m
+[4.502s] [100%] Built target planning_node
+[4.507s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning -- -j10 -l10
+[4.511s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning
+[4.513s] -- Install configuration: ""
+[4.513s] -- Execute custom install script
+[4.513s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/lib/planning/planning_node
+[4.513s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/lib/planning/fake_cone_pub
+[4.513s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/ament_index/resource_index/package_run_dependencies/planning
+[4.513s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/ament_index/resource_index/parent_prefix_path/planning
+[4.513s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/environment/ament_prefix_path.sh
+[4.514s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/environment/ament_prefix_path.dsv
+[4.514s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/environment/path.sh
+[4.514s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/environment/path.dsv
+[4.514s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/local_setup.bash
+[4.514s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/local_setup.sh
+[4.514s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/local_setup.zsh
+[4.514s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/local_setup.dsv
+[4.514s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/package.dsv
+[4.517s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/ament_index/resource_index/packages/planning
+[4.517s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/cmake/planningConfig.cmake
+[4.517s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/cmake/planningConfig-version.cmake
+[4.517s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/install/planning/share/planning/package.xml
+[4.518s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning_ws/build/planning
