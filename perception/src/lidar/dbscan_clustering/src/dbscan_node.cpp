@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <cstring>
 #include <limits>
+#include <memory>
 #include <queue>
 #include <string>
 #include <vector>
@@ -441,12 +442,12 @@ private:
       ++cluster_id;
     }
 
-    sensor_msgs::msg::PointCloud2 out;
-    out.header = msg->header;
-    out.height = 1;
-    out.width = static_cast<uint32_t>(m);
-    out.is_bigendian = msg->is_bigendian;
-    out.is_dense = false;
+    auto out = std::make_unique<sensor_msgs::msg::PointCloud2>();
+    out->header = msg->header;
+    out->height = 1;
+    out->width = static_cast<uint32_t>(m);
+    out->is_bigendian = msg->is_bigendian;
+    out->is_dense = false;
 
     sensor_msgs::msg::PointField fx;
     fx.name = "x";
@@ -472,15 +473,15 @@ private:
     fcluster.datatype = sensor_msgs::msg::PointField::INT32;
     fcluster.count = 1;
 
-    out.fields = {fx, fy, fz, fcluster};
-    out.point_step = 16;
-    out.row_step = out.point_step * out.width;
-    out.data.resize(static_cast<size_t>(out.row_step));
+    out->fields = {fx, fy, fz, fcluster};
+    out->point_step = 16;
+    out->row_step = out->point_step * out->width;
+    out->data.resize(static_cast<size_t>(out->row_step));
 
-    sensor_msgs::PointCloud2Iterator<float> out_x(out, "x");
-    sensor_msgs::PointCloud2Iterator<float> out_y(out, "y");
-    sensor_msgs::PointCloud2Iterator<float> out_z(out, "z");
-    sensor_msgs::PointCloud2Iterator<int32_t> out_cluster(out, "cluster_id");
+    sensor_msgs::PointCloud2Iterator<float> out_x(*out, "x");
+    sensor_msgs::PointCloud2Iterator<float> out_y(*out, "y");
+    sensor_msgs::PointCloud2Iterator<float> out_z(*out, "z");
+    sensor_msgs::PointCloud2Iterator<int32_t> out_cluster(*out, "cluster_id");
 
     for (int i = 0; i < m; ++i) {
       const auto & p = nonground_points[static_cast<size_t>(i)];
@@ -492,7 +493,7 @@ private:
       *out_cluster = lbl; ++out_cluster;
     }
 
-    pub_->publish(out);
+    pub_->publish(std::move(out));
 
     RCLCPP_INFO_THROTTLE(
       get_logger(), *get_clock(), 2000,

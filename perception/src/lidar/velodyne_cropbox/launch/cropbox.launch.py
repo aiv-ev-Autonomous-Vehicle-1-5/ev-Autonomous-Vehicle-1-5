@@ -22,7 +22,8 @@ def generate_launch_description():
                 remappings=[
                     ('input', 'velodyne_points'),
                     ('output', 'velodyne_points_cropped')
-                ]
+                ],
+                extra_arguments=[{'use_intra_process_comms': True}],
             )
         ],
         output='screen',

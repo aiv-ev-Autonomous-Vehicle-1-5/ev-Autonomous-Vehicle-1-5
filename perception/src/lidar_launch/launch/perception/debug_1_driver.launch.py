@@ -38,14 +38,16 @@ def generate_launch_description():
                     package='velodyne_driver',
                     plugin='velodyne_driver::VelodyneDriver',
                     name='velodyne_driver_node',
-                    parameters=[driver_params]),
+                    parameters=[driver_params],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
                 # 2. Velodyne transform - converts packets to point cloud
                 ComposableNode(
                     package='velodyne_pointcloud',
                     plugin='velodyne_pointcloud::Transform',
                     name='velodyne_transform_node',
-                    parameters=[convert_params]),
+                    parameters=[convert_params],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
             ],
             output='both',
     )

@@ -22,7 +22,8 @@ def generate_launch_description():
                 remappings=[
                     ('input', '/patchworkpp/nonground'),
                     ('output', '/voxel_grid/output')
-                ]
+                ],
+                extra_arguments=[{'use_intra_process_comms': True}],
             )
         ],
         output='screen',

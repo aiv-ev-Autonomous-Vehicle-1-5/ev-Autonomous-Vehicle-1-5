@@ -1,0 +1,31 @@
+[0.009s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/lidar_voxel_grid -- -j28 -l28
+[0.049s] [ 50%] Built target voxel_grid_node
+[0.054s] [ 75%] Building CXX object CMakeFiles/voxel_grid_component.dir/src/voxel_grid_component.cpp.o
+[7.095s] [100%] Linking CXX shared library libvoxel_grid_component.so
+[7.674s] [100%] Built target voxel_grid_component
+[7.682s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/lidar_voxel_grid -- -j28 -l28
+[7.683s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/lidar_voxel_grid
+[7.687s] -- Install configuration: ""
+[7.688s] -- Execute custom install script
+[7.688s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib/lidar_voxel_grid/voxel_grid_node
+[7.688s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib/libvoxel_grid_component.so
+[7.688s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/include/lidar_voxel_grid/voxel_grid_component.hpp
+[7.688s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/config/voxel_grid_params.yaml
+[7.688s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/launch/voxel_grid.launch.py
+[7.688s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/package_run_dependencies/lidar_voxel_grid
+[7.688s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/parent_prefix_path/lidar_voxel_grid
+[7.689s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/ament_prefix_path.sh
+[7.689s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/ament_prefix_path.dsv
+[7.689s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/path.sh
+[7.689s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/path.dsv
+[7.689s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.bash
+[7.689s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.sh
+[7.689s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.zsh
+[7.689s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.dsv
+[7.689s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/package.dsv
+[7.694s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/packages/lidar_voxel_grid
+[7.694s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/rclcpp_components/lidar_voxel_grid
+[7.694s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/cmake/lidar_voxel_gridConfig.cmake
+[7.694s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/cmake/lidar_voxel_gridConfig-version.cmake
+[7.694s] -- Up-to-date symlink: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/package.xml
+[7.695s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/lidar_voxel_grid

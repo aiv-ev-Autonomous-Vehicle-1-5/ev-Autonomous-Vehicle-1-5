@@ -73,11 +73,11 @@ void VoxelGridComponent::pointCloudCallback(
   merged += *far_cloud;
 
   // Convert PCL → ROS2 msg
-  sensor_msgs::msg::PointCloud2 output_msg;
-  pcl::toROSMsg(merged, output_msg);
-  output_msg.header = msg->header;
+  auto output_msg = std::make_unique<sensor_msgs::msg::PointCloud2>();
+  pcl::toROSMsg(merged, *output_msg);
+  output_msg->header = msg->header;
 
-  publisher_->publish(output_msg);
+  publisher_->publish(std::move(output_msg));
 
   RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
     "VoxelGrid: %zu total -> near %zu->%zu (filtered), far %zu (passthrough) -> %zu output",

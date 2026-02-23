@@ -21,6 +21,7 @@ def generate_launch_description():
                 plugin='cluster_splitter::ClusterSplitterNode',
                 name='cluster_splitter',
                 parameters=[params_file],
+                extra_arguments=[{'use_intra_process_comms': True}],
             ),
         ],
         output='both',

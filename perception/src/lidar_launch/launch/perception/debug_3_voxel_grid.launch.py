@@ -66,7 +66,8 @@ def generate_launch_description():
                     parameters=[patchworkpp_params],
                     remappings=[
                         ('pointcloud_topic', 'velodyne_points'),
-                    ]),
+                    ],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
                 # 4. VoxelGrid Downsampling
                 ComposableNode(
@@ -77,7 +78,8 @@ def generate_launch_description():
                     remappings=[
                         ('input', '/patchworkpp/nonground'),
                         ('output', '/voxel_grid/output')
-                    ]),
+                    ],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
             ],
             output='both',
     )

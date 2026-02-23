@@ -51,18 +51,21 @@ def generate_launch_description():
                 remappings=[
                     ('pointcloud_topic', 'velodyne_points'),
                 ],
+                extra_arguments=[{'use_intra_process_comms': True}],
             ),
             ComposableNode(
                 package='dbscan_clustering',
                 plugin='dbscan_clustering::DBSCANNode',
                 name='dbscan_clustering',
                 parameters=[dbscan_params],
+                extra_arguments=[{'use_intra_process_comms': True}],
             ),
             ComposableNode(
                 package='cluster_splitter',
                 plugin='cluster_splitter::ClusterSplitterNode',
                 name='cluster_splitter',
                 parameters=[splitter_params],
+                extra_arguments=[{'use_intra_process_comms': True}],
             ),
         ],
         output='both',

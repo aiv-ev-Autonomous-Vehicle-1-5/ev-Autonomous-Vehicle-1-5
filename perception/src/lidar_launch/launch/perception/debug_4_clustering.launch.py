@@ -84,7 +84,8 @@ def generate_launch_description():
                     parameters=[patchworkpp_params],
                     remappings=[
                         ('pointcloud_topic', 'velodyne_points'),
-                    ]),
+                    ],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
                 # # 4. VoxelGrid Downsampling
                 # ComposableNode(
@@ -102,14 +103,16 @@ def generate_launch_description():
                     package='dbscan_clustering',
                     plugin='dbscan_clustering::DBSCANNode',
                     name='dbscan_clustering',
-                    parameters=[dbscan_params]),
+                    parameters=[dbscan_params],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
                 # 5. Cluster Splitter - split over-merged cone clusters
                 ComposableNode(
                     package='cluster_splitter',
                     plugin='cluster_splitter::ClusterSplitterNode',
                     name='cluster_splitter',
-                    parameters=[splitter_params]),
+                    parameters=[splitter_params],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
             ],
             output='both',
     )

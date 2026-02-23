@@ -6,6 +6,7 @@
 #include <cstring>
 #include <functional>
 #include <limits>
+#include <memory>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -96,9 +97,9 @@ void ClusterSplitterNode::callback(const sensor_msgs::msg::PointCloud2::SharedPt
 {
   const size_t total_points = static_cast<size_t>(msg->width) * static_cast<size_t>(msg->height);
   if (total_points == 0U) {
-    sensor_msgs::msg::PointCloud2 out;
-    out.header = msg->header;
-    pub_->publish(out);
+    auto out = std::make_unique<sensor_msgs::msg::PointCloud2>();
+    out->header = msg->header;
+    pub_->publish(std::move(out));
     return;
   }
 
@@ -180,12 +181,12 @@ void ClusterSplitterNode::callback(const sensor_msgs::msg::PointCloud2::SharedPt
     }
   }
 
-  sensor_msgs::msg::PointCloud2 out;
-  out.header = msg->header;
-  out.height = 1;
-  out.width = static_cast<uint32_t>(output_indices.size());
-  out.is_bigendian = msg->is_bigendian;
-  out.is_dense = false;
+  auto out = std::make_unique<sensor_msgs::msg::PointCloud2>();
+  out->header = msg->header;
+  out->height = 1;
+  out->width = static_cast<uint32_t>(output_indices.size());
+  out->is_bigendian = msg->is_bigendian;
+  out->is_dense = false;
 
   sensor_msgs::msg::PointField fx;
   fx.name = "x";
@@ -217,10 +218,10 @@ void ClusterSplitterNode::callback(const sensor_msgs::msg::PointCloud2::SharedPt
   frgb.datatype = sensor_msgs::msg::PointField::FLOAT32;
   frgb.count = 1;
 
-  out.fields = {fx, fy, fz, fcluster, frgb};
-  out.point_step = 20;
-  out.row_step = out.point_step * out.width;
-  out.data.resize(static_cast<size_t>(out.row_step));
+  out->fields = {fx, fy, fz, fcluster, frgb};
+  out->point_step = 20;
+  out->row_step = out->point_step * out->width;
+  out->data.resize(static_cast<size_t>(out->row_step));
 
   // cluster_id → RGB (간단 hash, near_radius 없음)
   auto id_to_packed_rgb = [](int32_t cid) -> float {
@@ -259,11 +260,11 @@ void ClusterSplitterNode::callback(const sensor_msgs::msg::PointCloud2::SharedPt
   }
   const float noise_rgb = id_to_packed_rgb(-1);
 
-  sensor_msgs::PointCloud2Iterator<float> out_x(out, "x");
-  sensor_msgs::PointCloud2Iterator<float> out_y(out, "y");
-  sensor_msgs::PointCloud2Iterator<float> out_z(out, "z");
-  sensor_msgs::PointCloud2Iterator<int32_t> out_cluster(out, "cluster_id");
-  sensor_msgs::PointCloud2Iterator<float> out_rgb(out, "rgb");
+  sensor_msgs::PointCloud2Iterator<float> out_x(*out, "x");
+  sensor_msgs::PointCloud2Iterator<float> out_y(*out, "y");
+  sensor_msgs::PointCloud2Iterator<float> out_z(*out, "z");
+  sensor_msgs::PointCloud2Iterator<int32_t> out_cluster(*out, "cluster_id");
+  sensor_msgs::PointCloud2Iterator<float> out_rgb(*out, "rgb");
 
   for (const size_t idx : output_indices) {
     const auto & p = points[idx];
@@ -282,7 +283,7 @@ void ClusterSplitterNode::callback(const sensor_msgs::msg::PointCloud2::SharedPt
     ++out_rgb;
   }
 
-  pub_->publish(out);
+  pub_->publish(std::move(out));
 
   RCLCPP_INFO_THROTTLE(
     get_logger(), *get_clock(), 2000,

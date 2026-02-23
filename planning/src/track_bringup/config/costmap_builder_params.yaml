@@ -17,10 +17,9 @@ costmap_builder:
     # Obstacle rasterization
     obstacle_radius: 0.30   # Cone base radius (~0.607m diameter / 2)
     occupied_value: 100      # OccupancyGrid value for obstacle cells
-    min_cluster_points: 3    # Min points per cluster to consider valid
 
     # Inflation
-    inflation_radius: 0.45  # Vehicle half-width(0.35) + margin(0.10)
+    inflation_radius: 0.65  # Vehicle half-width(0.35) + margin(0.10)
     inflation_cost_max: 99   # Cost at obstacle boundary
     inflation_cost_min: 1    # Cost at inflation outer edge (linear decay)
 

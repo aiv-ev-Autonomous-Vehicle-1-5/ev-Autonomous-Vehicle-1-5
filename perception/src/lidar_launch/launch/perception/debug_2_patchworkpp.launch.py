@@ -62,7 +62,8 @@ def generate_launch_description():
                     parameters=[patchworkpp_params],
                     remappings=[
                         ('pointcloud_topic', 'velodyne_points'),
-                    ]),
+                    ],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
             ],
             output='both',
     )

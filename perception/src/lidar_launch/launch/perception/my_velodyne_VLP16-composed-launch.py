@@ -54,14 +54,16 @@ def generate_launch_description():
                     package='velodyne_driver',
                     plugin='velodyne_driver::VelodyneDriver',
                     name='velodyne_driver_node',
-                    parameters=[driver_params]),
+                    parameters=[driver_params],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
                 # 2. Velodyne transform - converts packets to point cloud
                 ComposableNode(
                     package='velodyne_pointcloud',
                     plugin='velodyne_pointcloud::Transform',
                     name='velodyne_transform_node',
-                    parameters=[convert_params]),
+                    parameters=[convert_params],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
                 # 3. Patchwork++ - ground segmentation
                 ComposableNode(
@@ -71,21 +73,24 @@ def generate_launch_description():
                     parameters=[patchworkpp_params],
                     remappings=[
                         ('pointcloud_topic', 'velodyne_points'),
-                    ]),
+                    ],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
                 # 4. DBSCAN Clustering - GPU accelerated
                 ComposableNode(
                     package='dbscan_clustering',
                     plugin='dbscan_clustering::DBSCANNode',
                     name='dbscan_clustering',
-                    parameters=[dbscan_params]),
+                    parameters=[dbscan_params],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
                 # 5. Cluster Splitter - split over-merged cone clusters
                 ComposableNode(
                     package='cluster_splitter',
                     plugin='cluster_splitter::ClusterSplitterNode',
                     name='cluster_splitter',
-                    parameters=[splitter_params]),
+                    parameters=[splitter_params],
+                    extra_arguments=[{'use_intra_process_comms': True}]),
 
             ],
             output='both',

@@ -38,7 +38,8 @@ void CropBoxComponent::pointCloudCallback(
 {
   const uint32_t num_points = msg->width * msg->height;
   if (num_points == 0) {
-    publisher_->publish(*msg);
+    auto empty = std::make_unique<sensor_msgs::msg::PointCloud2>(*msg);
+    publisher_->publish(std::move(empty));
     return;
   }
 
@@ -66,25 +67,25 @@ void CropBoxComponent::pointCloudCallback(
   }
 
   // Build output message preserving all original fields (ring, time, etc.)
-  sensor_msgs::msg::PointCloud2 output_msg;
-  output_msg.header = msg->header;
-  output_msg.fields = msg->fields;
-  output_msg.point_step = msg->point_step;
-  output_msg.height = 1;
-  output_msg.width = static_cast<uint32_t>(kept_indices.size());
-  output_msg.row_step = output_msg.width * msg->point_step;
-  output_msg.is_bigendian = msg->is_bigendian;
-  output_msg.is_dense = msg->is_dense;
-  output_msg.data.resize(output_msg.row_step);
+  auto output_msg = std::make_unique<sensor_msgs::msg::PointCloud2>();
+  output_msg->header = msg->header;
+  output_msg->fields = msg->fields;
+  output_msg->point_step = msg->point_step;
+  output_msg->height = 1;
+  output_msg->width = static_cast<uint32_t>(kept_indices.size());
+  output_msg->row_step = output_msg->width * msg->point_step;
+  output_msg->is_bigendian = msg->is_bigendian;
+  output_msg->is_dense = msg->is_dense;
+  output_msg->data.resize(output_msg->row_step);
 
   for (uint32_t out = 0; out < kept_indices.size(); ++out) {
     std::memcpy(
-      &output_msg.data[out * msg->point_step],
+      &output_msg->data[out * msg->point_step],
       &msg->data[kept_indices[out] * msg->point_step],
       msg->point_step);
   }
 
-  publisher_->publish(output_msg);
+  publisher_->publish(std::move(output_msg));
 
   RCLCPP_INFO_THROTTLE(this->get_logger(), *this->get_clock(), 1000,
     "CropBox: Input %u pts -> Output %zu pts (%.1f%%)",
