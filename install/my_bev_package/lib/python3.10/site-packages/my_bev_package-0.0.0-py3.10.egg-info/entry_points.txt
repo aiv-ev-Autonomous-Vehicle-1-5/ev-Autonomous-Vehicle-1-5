@@ -1,0 +1,4 @@
+[console_scripts]
+bev_node = my_bev_package.bev_node:main
+lane_yolo_seg = my_bev_package.lane_yolo_seg:main
+

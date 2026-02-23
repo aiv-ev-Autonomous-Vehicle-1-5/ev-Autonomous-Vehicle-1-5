@@ -1,0 +1,3 @@
+[console_scripts]
+bev_node = lane_seg.bev_node:main
+

@@ -1,0 +1,32 @@
+running develop
+Removing /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my-bev-package.egg-link (link to .)
+running egg_info
+writing ../../build/my_bev_package/my_bev_package.egg-info/PKG-INFO
+writing dependency_links to ../../build/my_bev_package/my_bev_package.egg-info/dependency_links.txt
+writing entry points to ../../build/my_bev_package/my_bev_package.egg-info/entry_points.txt
+writing requirements to ../../build/my_bev_package/my_bev_package.egg-info/requires.txt
+writing top-level names to ../../build/my_bev_package/my_bev_package.egg-info/top_level.txt
+reading manifest file '../../build/my_bev_package/my_bev_package.egg-info/SOURCES.txt'
+writing manifest file '../../build/my_bev_package/my_bev_package.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+creating /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+copying /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package/lane_yolo_seg.py -> /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+copying /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package/find_points.py -> /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+copying /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package/bev_node.py -> /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+copying /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package/__init__.py -> /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+byte-compiling /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package/lane_yolo_seg.py to lane_yolo_seg.cpython-310.pyc
+byte-compiling /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package/find_points.py to find_points.cpython-310.pyc
+byte-compiling /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package/bev_node.py to bev_node.cpython-310.pyc
+byte-compiling /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package/__init__.py to __init__.cpython-310.pyc
+running install_data
+copying resource/my_bev_package -> /home/woonggook/ev_ws/install/my_bev_package/share/ament_index/resource_index/packages
+copying package.xml -> /home/woonggook/ev_ws/install/my_bev_package/share/my_bev_package
+running install_egg_info
+Copying ../../build/my_bev_package/my_bev_package.egg-info to /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package-0.0.0-py3.10.egg-info
+running install_scripts
+Installing bev_node script to /home/woonggook/ev_ws/install/my_bev_package/lib/my_bev_package
+Installing lane_yolo_seg script to /home/woonggook/ev_ws/install/my_bev_package/lib/my_bev_package
+writing list of installed files to '/home/woonggook/ev_ws/build/my_bev_package/install.log'

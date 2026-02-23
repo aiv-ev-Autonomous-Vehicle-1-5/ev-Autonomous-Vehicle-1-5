@@ -1,0 +1,87 @@
+[0.009s] Invoking command in '/home/woonggook/ev_ws/build/usb_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/woonggook/ev_ws/build/usb_cam -- -j12 -l12
+[0.041s] [35m[1mConsolidate compiler generated dependencies of target usb_cam[0m
+[0.042s] [35m[1mConsolidate compiler generated dependencies of target usb_cam_node_exe[0m
+[0.043s] [35m[1mConsolidate compiler generated dependencies of target gtest_main[0m
+[0.043s] [35m[1mConsolidate compiler generated dependencies of target gtest[0m
+[0.052s] [ 14%] Built target gtest
+[0.053s] [ 28%] Built target usb_cam
+[0.053s] [ 42%] Built target gtest_main
+[0.054s] [ 57%] Built target usb_cam_node_exe
+[0.061s] [35m[1mConsolidate compiler generated dependencies of target test_pixel_formats[0m
+[0.062s] [35m[1mConsolidate compiler generated dependencies of target usb_cam_node[0m
+[0.062s] [35m[1mConsolidate compiler generated dependencies of target test_usb_cam_utils[0m
+[0.073s] [ 71%] Built target test_usb_cam_utils
+[0.073s] [ 85%] Built target test_pixel_formats
+[0.076s] [100%] Built target usb_cam_node
+[0.085s] Invoked command in '/home/woonggook/ev_ws/build/usb_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/woonggook/ev_ws/build/usb_cam -- -j12 -l12
+[0.091s] Invoking command in '/home/woonggook/ev_ws/build/usb_cam': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/woonggook/ev_ws/build/usb_cam
+[0.098s] -- Install configuration: ""
+[0.098s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/environment/library_path.sh
+[0.098s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/environment/library_path.dsv
+[0.098s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/lib/usb_cam/usb_cam_node_exe
+[0.098s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/lib/usb_cam/show_image.py
+[0.098s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/lib/libusb_cam.so
+[0.098s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/lib/libusb_cam_node.so
+[0.098s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include
+[0.098s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/rgb.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/mono.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/pixel_format_base.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/utils.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/m420.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/yuyv.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/mjpeg.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/av_pixel_format_helper.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/formats/uyvy.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/constants.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/utils.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/conversions.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/usb_cam_node.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/include/usb_cam/usb_cam.hpp
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/lib/libusb_cam_node.so
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/launch
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/launch/camera.launch.py
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/launch/camera_config.py
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/launch/__pycache__
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/launch/__pycache__/camera_config.cpython-310.pyc
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/launch/__init__.py
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/launch/camera_intra.launch.py
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/camera_info1.yaml
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/camera_info4.yaml
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/camera_info2.yaml
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/camera_info.yaml
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/params_1.yaml
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/params_2.yaml
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/TFConfig.zip
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/params_4.yaml
+[0.099s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/TFConfig
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/TFConfig/oldcamera4_tf.yaml
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/TFConfig/camera3_tf.yaml
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/TFConfig/camera2_tf.yaml
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/TFConfig/camera4_tf.yaml
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/TFConfig/oldcamera2_tf.yaml
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/TFConfig/camera1_tf.yaml
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/camera_info3.yaml
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/config/params_3.yaml
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/ament_index/resource_index/package_run_dependencies/usb_cam
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/ament_index/resource_index/parent_prefix_path/usb_cam
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/environment/ament_prefix_path.sh
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/environment/ament_prefix_path.dsv
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/environment/path.sh
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/environment/path.dsv
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/local_setup.bash
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/local_setup.sh
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/local_setup.zsh
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/local_setup.dsv
+[0.100s] -- Installing: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/package.dsv
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/ament_index/resource_index/packages/usb_cam
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/ament_index/resource_index/rclcpp_components/usb_cam
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/cmake/ament_cmake_export_libraries-extras.cmake
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/cmake/ament_cmake_export_dependencies-extras.cmake
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/cmake/usb_camConfig.cmake
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/cmake/usb_camConfig-version.cmake
+[0.100s] -- Up-to-date: /home/woonggook/ev_ws/install/usb_cam/share/usb_cam/package.xml
+[0.101s] Invoked command in '/home/woonggook/ev_ws/build/usb_cam' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/woonggook/ev_ws/build/usb_cam

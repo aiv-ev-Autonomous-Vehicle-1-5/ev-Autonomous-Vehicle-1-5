@@ -1,0 +1,40 @@
+[0.443s] Invoking command in '/home/woonggook/ev_ws/build/my_bev_package': PYTHONPATH=/home/woonggook/ev_ws/build/my_bev_package/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/woonggook/ev_ws/build/my_bev_package/build
+[0.635s] running develop
+[0.754s] Removing /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my-bev-package.egg-link (link to .)
+[0.773s] Invoked command in '/home/woonggook/ev_ws/build/my_bev_package' returned '0': PYTHONPATH=/home/woonggook/ev_ws/build/my_bev_package/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/woonggook/ev_ws/build/my_bev_package/build
+[0.774s] Invoking command in '/home/woonggook/ev_ws/src/my_bev_package': PYTHONPATH=/home/woonggook/ev_ws/build/my_bev_package/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/my_bev_package build --build-base /home/woonggook/ev_ws/build/my_bev_package/build install --record /home/woonggook/ev_ws/build/my_bev_package/install.log --single-version-externally-managed install_data --force
+[0.930s] running egg_info
+[0.930s] writing ../../build/my_bev_package/my_bev_package.egg-info/PKG-INFO
+[0.930s] writing dependency_links to ../../build/my_bev_package/my_bev_package.egg-info/dependency_links.txt
+[0.931s] writing entry points to ../../build/my_bev_package/my_bev_package.egg-info/entry_points.txt
+[0.931s] writing requirements to ../../build/my_bev_package/my_bev_package.egg-info/requires.txt
+[0.931s] writing top-level names to ../../build/my_bev_package/my_bev_package.egg-info/top_level.txt
+[0.932s] reading manifest file '../../build/my_bev_package/my_bev_package.egg-info/SOURCES.txt'
+[0.933s] writing manifest file '../../build/my_bev_package/my_bev_package.egg-info/SOURCES.txt'
+[0.933s] running build
+[0.933s] running build_py
+[0.933s] creating /home/woonggook/ev_ws/build/my_bev_package/build
+[0.933s] creating /home/woonggook/ev_ws/build/my_bev_package/build/lib
+[0.933s] creating /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package
+[0.933s] copying my_bev_package/lane_yolo_seg.py -> /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package
+[0.933s] copying my_bev_package/bev_node.py -> /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package
+[0.933s] copying my_bev_package/__init__.py -> /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package
+[0.933s] running install
+[0.933s] running install_lib
+[0.934s] creating /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+[0.934s] copying /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package/lane_yolo_seg.py -> /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+[0.934s] copying /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package/bev_node.py -> /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+[0.934s] copying /home/woonggook/ev_ws/build/my_bev_package/build/lib/my_bev_package/__init__.py -> /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package
+[0.934s] byte-compiling /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package/lane_yolo_seg.py to lane_yolo_seg.cpython-310.pyc
+[0.935s] byte-compiling /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package/bev_node.py to bev_node.cpython-310.pyc
+[0.935s] byte-compiling /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package/__init__.py to __init__.cpython-310.pyc
+[0.935s] running install_data
+[0.935s] copying resource/my_bev_package -> /home/woonggook/ev_ws/install/my_bev_package/share/ament_index/resource_index/packages
+[0.936s] copying package.xml -> /home/woonggook/ev_ws/install/my_bev_package/share/my_bev_package
+[0.936s] running install_egg_info
+[0.939s] Copying ../../build/my_bev_package/my_bev_package.egg-info to /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my_bev_package-0.0.0-py3.10.egg-info
+[0.939s] running install_scripts
+[0.960s] Installing bev_node script to /home/woonggook/ev_ws/install/my_bev_package/lib/my_bev_package
+[0.960s] Installing lane_yolo_seg script to /home/woonggook/ev_ws/install/my_bev_package/lib/my_bev_package
+[0.960s] writing list of installed files to '/home/woonggook/ev_ws/build/my_bev_package/install.log'
+[0.980s] Invoked command in '/home/woonggook/ev_ws/src/my_bev_package' returned '0': PYTHONPATH=/home/woonggook/ev_ws/build/my_bev_package/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/my_bev_package build --build-base /home/woonggook/ev_ws/build/my_bev_package/build install --record /home/woonggook/ev_ws/build/my_bev_package/install.log --single-version-externally-managed install_data --force

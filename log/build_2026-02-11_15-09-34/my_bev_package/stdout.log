@@ -1,0 +1,18 @@
+running develop
+running egg_info
+writing my_bev_package.egg-info/PKG-INFO
+writing dependency_links to my_bev_package.egg-info/dependency_links.txt
+writing entry points to my_bev_package.egg-info/entry_points.txt
+writing requirements to my_bev_package.egg-info/requires.txt
+writing top-level names to my_bev_package.egg-info/top_level.txt
+reading manifest file 'my_bev_package.egg-info/SOURCES.txt'
+writing manifest file 'my_bev_package.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/woonggook/ev_ws/install/my_bev_package/lib/python3.10/site-packages/my-bev-package.egg-link (link to .)
+Installing bev_node script to /home/woonggook/ev_ws/install/my_bev_package/lib/my_bev_package
+Installing lane_yolo_seg script to /home/woonggook/ev_ws/install/my_bev_package/lib/my_bev_package
+
+Installed /home/woonggook/ev_ws/build/my_bev_package
+running symlink_data
+symbolically linking /home/woonggook/ev_ws/build/my_bev_package/resource/my_bev_package -> /home/woonggook/ev_ws/install/my_bev_package/share/ament_index/resource_index/packages
+symbolically linking /home/woonggook/ev_ws/build/my_bev_package/package.xml -> /home/woonggook/ev_ws/install/my_bev_package/share/my_bev_package
