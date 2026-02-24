@@ -1,0 +1,214 @@
+[0.000000] (-) TimerEvent: {}
+[0.000184] (-) JobUnselected: {'identifier': 'track_msgs'}
+[0.000353] (track_planning) JobQueued: {'identifier': 'track_planning', 'dependencies': OrderedDict([('track_msgs', '/home/aiv/ev_ws/planning/install/track_msgs')])}
+[0.000428] (track_planning) JobStarted: {'identifier': 'track_planning'}
+[0.007609] (track_planning) JobProgress: {'identifier': 'track_planning', 'progress': 'cmake'}
+[0.008060] (track_planning) JobProgress: {'identifier': 'track_planning', 'progress': 'build'}
+[0.008542] (track_planning) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/aiv/ev_ws/planning/build/track_planning', '--', '-j28', '-l28'], 'cwd': '/home/aiv/ev_ws/planning/build/track_planning', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('VSCODE_CWD', '/home/aiv'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('USER', 'aiv'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('LC_TIME', 'ko_KR.UTF-8'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('CLAUDE_AGENT_SDK_VERSION', '0.2.49'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/aiv/ev_ws/planning/install/track_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_laserscan/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('VSCODE_IPC_HOOK', '/run/user/1000/vscode-b400ee21-1.10-main.sock'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL', '1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2094'), ('SYSTEMD_EXEC_PID', '2603'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4020'), ('NVM_DIR', '/home/aiv/.nvm'), ('VSCODE_CRASH_REPORTER_PROCESS_TYPE', 'extensionHost'), ('VSCODE_L10N_BUNDLE_LOCATION', ''), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:21696'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('APPLICATIONINSIGHTS_CONFIGURATION_CONTENT', '{}'), ('USERNAME', 'aiv'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/usr/bin:/home/aiv/.local/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.0/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2584,unix/aiv:/tmp/.ICE-unix/2584'), ('INVOCATION_ID', '1744b5a31de14982a42b5a0c06740c92'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('ELECTRON_RUN_AS_NODE', '1'), ('GDMSESSION', 'ubuntu'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('VIRTUAL_ENV', '/usr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/track_planning'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('VSCODE_CODE_CACHE_PATH', '/home/aiv/.config/Code/CachedData/591199df409fbf59b4b52d5ad4ee0470152a9b31'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('VSCODE_PID', '4020')]), 'shell': False}
+[0.035576] (track_planning) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_planning_postprocess\n'}
+[0.044304] (track_planning) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_planning_corridor\n'}
+[0.044587] (track_planning) StdoutLine: {'line': b'[ 10%] Building CXX object CMakeFiles/track_planning_postprocess.dir/src/postprocess/path_postprocessor.cpp.o\n'}
+[0.045326] (track_planning) StdoutLine: {'line': b'[ 30%] Built target local_planner_node_exe\n'}
+[0.054943] (track_planning) StdoutLine: {'line': b'[ 50%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/corridor_builder.cpp.o\n'}
+[0.055018] (track_planning) StdoutLine: {'line': b'[ 50%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/virtual_boundary.cpp.o\n'}
+[0.055434] (track_planning) StdoutLine: {'line': b'[ 60%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/centerline_builder.cpp.o\n'}
+[0.099932] (-) TimerEvent: {}
+[0.200106] (-) TimerEvent: {}
+[0.300316] (-) TimerEvent: {}
+[0.310223] (track_planning) StdoutLine: {'line': b'[ 70%] Linking CXX shared library libtrack_planning_postprocess.so\n'}
+[0.381626] (track_planning) StdoutLine: {'line': b'[ 70%] Built target track_planning_postprocess\n'}
+[0.400382] (-) TimerEvent: {}
+[0.500507] (-) TimerEvent: {}
+[0.600668] (-) TimerEvent: {}
+[0.700812] (-) TimerEvent: {}
+[0.800960] (-) TimerEvent: {}
+[0.901208] (-) TimerEvent: {}
+[1.001356] (-) TimerEvent: {}
+[1.101517] (-) TimerEvent: {}
+[1.201662] (-) TimerEvent: {}
+[1.301818] (-) TimerEvent: {}
+[1.401967] (-) TimerEvent: {}
+[1.502164] (-) TimerEvent: {}
+[1.602303] (-) TimerEvent: {}
+[1.702423] (-) TimerEvent: {}
+[1.802544] (-) TimerEvent: {}
+[1.902679] (-) TimerEvent: {}
+[2.002826] (-) TimerEvent: {}
+[2.102995] (-) TimerEvent: {}
+[2.203222] (-) TimerEvent: {}
+[2.303361] (-) TimerEvent: {}
+[2.346393] (track_planning) StdoutLine: {'line': b'[ 80%] Linking CXX shared library libtrack_planning_corridor.so\n'}
+[2.403508] (-) TimerEvent: {}
+[2.454028] (track_planning) StdoutLine: {'line': b'[ 80%] Built target track_planning_corridor\n'}
+[2.466869] (track_planning) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target local_planner_component\n'}
+[2.475453] (track_planning) StdoutLine: {'line': b'[ 90%] Building CXX object CMakeFiles/local_planner_component.dir/src/nodes/local_planner_node.cpp.o\n'}
+[2.503581] (-) TimerEvent: {}
+[2.603706] (-) TimerEvent: {}
+[2.703926] (-) TimerEvent: {}
+[2.804113] (-) TimerEvent: {}
+[2.904251] (-) TimerEvent: {}
+[3.004403] (-) TimerEvent: {}
+[3.104582] (-) TimerEvent: {}
+[3.204722] (-) TimerEvent: {}
+[3.304970] (-) TimerEvent: {}
+[3.405219] (-) TimerEvent: {}
+[3.505361] (-) TimerEvent: {}
+[3.605495] (-) TimerEvent: {}
+[3.705630] (-) TimerEvent: {}
+[3.805764] (-) TimerEvent: {}
+[3.905896] (-) TimerEvent: {}
+[4.006134] (-) TimerEvent: {}
+[4.106274] (-) TimerEvent: {}
+[4.206520] (-) TimerEvent: {}
+[4.306685] (-) TimerEvent: {}
+[4.406828] (-) TimerEvent: {}
+[4.507003] (-) TimerEvent: {}
+[4.607186] (-) TimerEvent: {}
+[4.707498] (-) TimerEvent: {}
+[4.807671] (-) TimerEvent: {}
+[4.907811] (-) TimerEvent: {}
+[5.007959] (-) TimerEvent: {}
+[5.108093] (-) TimerEvent: {}
+[5.208229] (-) TimerEvent: {}
+[5.308363] (-) TimerEvent: {}
+[5.408500] (-) TimerEvent: {}
+[5.508673] (-) TimerEvent: {}
+[5.608811] (-) TimerEvent: {}
+[5.709049] (-) TimerEvent: {}
+[5.809196] (-) TimerEvent: {}
+[5.909334] (-) TimerEvent: {}
+[6.009486] (-) TimerEvent: {}
+[6.109675] (-) TimerEvent: {}
+[6.209854] (-) TimerEvent: {}
+[6.310020] (-) TimerEvent: {}
+[6.410134] (-) TimerEvent: {}
+[6.510270] (-) TimerEvent: {}
+[6.610412] (-) TimerEvent: {}
+[6.710596] (-) TimerEvent: {}
+[6.810787] (-) TimerEvent: {}
+[6.911024] (-) TimerEvent: {}
+[7.011163] (-) TimerEvent: {}
+[7.111306] (-) TimerEvent: {}
+[7.211479] (-) TimerEvent: {}
+[7.311643] (-) TimerEvent: {}
+[7.411775] (-) TimerEvent: {}
+[7.511908] (-) TimerEvent: {}
+[7.612080] (-) TimerEvent: {}
+[7.712258] (-) TimerEvent: {}
+[7.812390] (-) TimerEvent: {}
+[7.912525] (-) TimerEvent: {}
+[8.012656] (-) TimerEvent: {}
+[8.112790] (-) TimerEvent: {}
+[8.212923] (-) TimerEvent: {}
+[8.313086] (-) TimerEvent: {}
+[8.413255] (-) TimerEvent: {}
+[8.513390] (-) TimerEvent: {}
+[8.613548] (-) TimerEvent: {}
+[8.713687] (-) TimerEvent: {}
+[8.813894] (-) TimerEvent: {}
+[8.914036] (-) TimerEvent: {}
+[9.014139] (-) TimerEvent: {}
+[9.114293] (-) TimerEvent: {}
+[9.214452] (-) TimerEvent: {}
+[9.314626] (-) TimerEvent: {}
+[9.414769] (-) TimerEvent: {}
+[9.514913] (-) TimerEvent: {}
+[9.615085] (-) TimerEvent: {}
+[9.715233] (-) TimerEvent: {}
+[9.815392] (-) TimerEvent: {}
+[9.915536] (-) TimerEvent: {}
+[10.015670] (-) TimerEvent: {}
+[10.115810] (-) TimerEvent: {}
+[10.215939] (-) TimerEvent: {}
+[10.316106] (-) TimerEvent: {}
+[10.416240] (-) TimerEvent: {}
+[10.516373] (-) TimerEvent: {}
+[10.616494] (-) TimerEvent: {}
+[10.716620] (-) TimerEvent: {}
+[10.816754] (-) TimerEvent: {}
+[10.916881] (-) TimerEvent: {}
+[11.017034] (-) TimerEvent: {}
+[11.117169] (-) TimerEvent: {}
+[11.217296] (-) TimerEvent: {}
+[11.317420] (-) TimerEvent: {}
+[11.417553] (-) TimerEvent: {}
+[11.517695] (-) TimerEvent: {}
+[11.617837] (-) TimerEvent: {}
+[11.717984] (-) TimerEvent: {}
+[11.818194] (-) TimerEvent: {}
+[11.918340] (-) TimerEvent: {}
+[12.018492] (-) TimerEvent: {}
+[12.093629] (track_planning) StdoutLine: {'line': b'[100%] Linking CXX shared library liblocal_planner_component.so\n'}
+[12.118576] (-) TimerEvent: {}
+[12.218711] (-) TimerEvent: {}
+[12.318855] (-) TimerEvent: {}
+[12.419025] (-) TimerEvent: {}
+[12.519137] (-) TimerEvent: {}
+[12.619279] (-) TimerEvent: {}
+[12.690186] (track_planning) StdoutLine: {'line': b'[100%] Built target local_planner_component\n'}
+[12.698768] (track_planning) CommandEnded: {'returncode': 0}
+[12.699193] (track_planning) JobProgress: {'identifier': 'track_planning', 'progress': 'install'}
+[12.704031] (track_planning) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/aiv/ev_ws/planning/build/track_planning'], 'cwd': '/home/aiv/ev_ws/planning/build/track_planning', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('VSCODE_CWD', '/home/aiv'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('USER', 'aiv'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('LC_TIME', 'ko_KR.UTF-8'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('CLAUDE_AGENT_SDK_VERSION', '0.2.49'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/aiv/ev_ws/planning/install/track_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_laserscan/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('VSCODE_IPC_HOOK', '/run/user/1000/vscode-b400ee21-1.10-main.sock'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL', '1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2094'), ('SYSTEMD_EXEC_PID', '2603'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4020'), ('NVM_DIR', '/home/aiv/.nvm'), ('VSCODE_CRASH_REPORTER_PROCESS_TYPE', 'extensionHost'), ('VSCODE_L10N_BUNDLE_LOCATION', ''), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:21696'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('APPLICATIONINSIGHTS_CONFIGURATION_CONTENT', '{}'), ('USERNAME', 'aiv'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/usr/bin:/home/aiv/.local/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.0/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2584,unix/aiv:/tmp/.ICE-unix/2584'), ('INVOCATION_ID', '1744b5a31de14982a42b5a0c06740c92'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('ELECTRON_RUN_AS_NODE', '1'), ('GDMSESSION', 'ubuntu'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('VIRTUAL_ENV', '/usr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/track_planning'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('VSCODE_CODE_CACHE_PATH', '/home/aiv/.config/Code/CachedData/591199df409fbf59b4b52d5ad4ee0470152a9b31'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('VSCODE_PID', '4020')]), 'shell': False}
+[12.708613] (track_planning) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[12.708762] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_corridor.so\n'}
+[12.709605] (track_planning) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_corridor.so" to ""\n'}
+[12.709672] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_postprocess.so\n'}
+[12.709818] (track_planning) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_postprocess.so" to ""\n'}
+[12.709880] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/lib/track_planning/local_planner_node_exe\n'}
+[12.709980] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/liblocal_planner_component.so\n'}
+[12.719333] (-) TimerEvent: {}
+[12.720535] (track_planning) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/liblocal_planner_component.so" to ""\n'}
+[12.720936] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include\n'}
+[12.720964] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning\n'}
+[12.720990] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor\n'}
+[12.721015] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/corridor_builder.hpp\n'}
+[12.721043] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/virtual_boundary.hpp\n'}
+[12.721068] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/centerline_builder.hpp\n'}
+[12.721125] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common\n'}
+[12.721150] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/geometry.hpp\n'}
+[12.721175] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/types.hpp\n'}
+[12.721197] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/params.hpp\n'}
+[12.721219] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/debug_publish.hpp\n'}
+[12.721241] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/nodes\n'}
+[12.721262] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/nodes/local_planner_node.hpp\n'}
+[12.721284] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/safety\n'}
+[12.721306] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/safety/safety_checker.hpp\n'}
+[12.721329] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party\n'}
+[12.721351] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT\n'}
+[12.721373] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/LICENSE\n'}
+[12.721414] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDT.hpp\n'}
+[12.721436] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDTUtils.hpp\n'}
+[12.721458] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/portable_nth_element.hpp\n'}
+[12.721480] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/Triangulation.h\n'}
+[12.721507] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/predicates.h\n'}
+[12.721528] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/LocatorKDTree.h\n'}
+[12.721549] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/remove_at.hpp\n'}
+[12.721587] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/Triangulation.hpp\n'}
+[12.721611] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDTUtils.h\n'}
+[12.721635] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/KDTree.h\n'}
+[12.721658] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDT.h\n'}
+[12.721681] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/postprocess\n'}
+[12.721704] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/postprocess/path_postprocessor.hpp\n'}
+[12.721726] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/config\n'}
+[12.721750] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/config/planning.yaml\n'}
+[12.721774] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/launch\n'}
+[12.721796] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/launch/planning.launch.py\n'}
+[12.721819] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/package_run_dependencies/track_planning\n'}
+[12.721843] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/parent_prefix_path/track_planning\n'}
+[12.721865] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/ament_prefix_path.sh\n'}
+[12.721889] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/ament_prefix_path.dsv\n'}
+[12.721911] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/path.sh\n'}
+[12.721934] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/path.dsv\n'}
+[12.721957] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.bash\n'}
+[12.721980] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.sh\n'}
+[12.722002] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.zsh\n'}
+[12.722025] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.dsv\n'}
+[12.722047] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/package.dsv\n'}
+[12.722070] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/packages/track_planning\n'}
+[12.722093] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/rclcpp_components/track_planning\n'}
+[12.722123] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/cmake/track_planningConfig.cmake\n'}
+[12.722171] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/cmake/track_planningConfig-version.cmake\n'}
+[12.722197] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/package.xml\n'}
+[12.722415] (track_planning) CommandEnded: {'returncode': 0}
+[12.731227] (track_planning) JobEnded: {'identifier': 'track_planning', 'rc': 0}
+[12.731394] (-) EventReactorShutdown: {}

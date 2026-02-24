@@ -5,7 +5,7 @@
  * ## 각 단계별 목적
  *
  * prune()
- *  - A* 그리드 경로의 계단 모양 제거
+ *  - 원시 경로의 불필요한 중간 포인트(이상점, 노이즈) 제거
  *  - 수직 편차 허용 범위 내에서 최대한 직선으로 단순화
  *
  * smooth()
@@ -210,11 +210,11 @@ std::vector<Point2D> PathPostprocessor::smooth(
  *
  * ## 파이프라인 흐름
  *
- *  입력: raw_path (A* 또는 센터라인의 원시 경로)
+ *  입력: raw_path (DTR 센터라인의 원시 경로)
  *
  *  [단계 1: Prune]
  *   pruned = prune(raw_path, prune_max_dev)
- *   - A* 격자 경로의 계단 모양을 직선에 가깝게 단순화
+ *   - 원시 경로의 불필요한 중간 포인트를 제거하고 직선에 가깝게 단순화
  *   - max_dev가 크면 더 직선화, 작으면 원래 경로에 가까움
  *
  *  [단계 2: Smooth]
@@ -251,7 +251,7 @@ PostprocessResult PathPostprocessor::process(
   if (raw_path.size() < 2) return result;
 
   // ---- 단계 1: Greedy shortcut pruning ----
-  // A* 경로의 계단 모양(격자 아티팩트) 제거
+  // 원시 경로의 불필요한 중간 포인트(이상점) 제거
   auto pruned = prune(raw_path, prune_max_dev);
 
   // ---- 단계 2: 이동 평균 스무딩 ----

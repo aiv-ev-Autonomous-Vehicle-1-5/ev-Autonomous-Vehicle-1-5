@@ -93,8 +93,6 @@ local_planner_component_EXTERNAL_OBJECTS =
 liblocal_planner_component.so: CMakeFiles/local_planner_component.dir/src/nodes/local_planner_node.cpp.o
 liblocal_planner_component.so: CMakeFiles/local_planner_component.dir/build.make
 liblocal_planner_component.so: libtrack_planning_corridor.so
-liblocal_planner_component.so: libtrack_planning_costmap.so
-liblocal_planner_component.so: libtrack_planning_planner.so
 liblocal_planner_component.so: libtrack_planning_postprocess.so
 liblocal_planner_component.so: /opt/ros/humble/lib/libcomponent_manager.so
 liblocal_planner_component.so: /opt/ros/humble/lib/libnav_msgs__rosidl_typesupport_fastrtps_c.so

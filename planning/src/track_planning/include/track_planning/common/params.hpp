@@ -6,10 +6,9 @@
  * load(rclcpp::Node*) 메서드를 호출하면 ROS 2 파라미터 서버에서
  * planning.yaml의 값을 선언(declare)하고 가져온다(get).
  *
- * 차량 점 모델(Vehicle Point Model):
- *   v3 명세서에서 차량을 점으로 모델링하고, 차량 폭과 안전 마진을
- *   inflation 반경에 흡수시킨다.
- *   r_infl = vehicle.width/2 + safety.margin + extra_margin
+ * 파이프라인 흐름:
+ *   Stale 검사 → 입력 파싱 → 코리더 빌드 → 가상 경계 →
+ *   DTR 센터라인 → 후처리 → 안전 검사 → 퍼블리시
  */
 #ifndef TRACK_PLANNING__COMMON__PARAMS_HPP_
 #define TRACK_PLANNING__COMMON__PARAMS_HPP_
@@ -23,7 +22,7 @@ namespace track_planning
 struct PlanningParams
 {
   // ============================================================
-  // ROI & Grid — costmap의 영역 범위 및 해상도
+  // ROI — 코리더 구축 및 가상 경계 필터링 범위 (ego-centric)
   // ============================================================
   struct ROI
   {
@@ -49,13 +48,12 @@ struct PlanningParams
   } vehicle;
 
   // ============================================================
-  // Safety — 안전 마진 (차량 점 모델)
+  // Safety — 안전 마진
+  //   가상 경계 생성 시 최소 차로 폭 판정(vehicle.width + margin)에 사용
   // ============================================================
   struct Safety
   {
-    double margin = 0.10;             // 기본 안전 마진 (m)
-    double margin_boundary = 0.0;     // 경계 inflation 추가 마진
-    double margin_obstacle = 0.0;     // 장애물 inflation 추가 마진
+    double margin = 0.10;  // 기본 안전 마진 (m)
   } safety;
 
   // ============================================================
@@ -63,7 +61,11 @@ struct PlanningParams
   // ============================================================
   struct CorridorSeed
   {
-    double x_seed_min = 0.5;     // seed를 찾기 시작할 최소 x 좌표 (m)
+    double r_seed        = 5.0;   // 최대 탐색 반지름 [m] (1m씩 확장하며 이 값까지 탐색)
+    double r_seed_step   = 1.0;   // 반경 확장 단계 [m] (1m → 2m → ... → r_seed)
+    double forward_range = 1.047; // 전방 탐색 각도 범위 [rad] (~60도, 접선 기준 좌우 허용)
+    double w_dist        = 1.0;   // 점수 가중치: 이전 seed로부터의 거리 (멀수록 높은 점수)
+    double w_center      = 1.0;   // 점수 가중치: 예측 중앙선 근접도 (가까울수록 높은 점수)
   } corridor_seed;
 
   // ============================================================
@@ -108,15 +110,6 @@ struct PlanningParams
   } corridor_ref_tangent;
 
   // ============================================================
-  // Corridor: Cold Start — 이전 centerline 없을 때 초기화
-  // ============================================================
-  struct CorridorColdStart
-  {
-    int min_centerline_points = 3;       // centerline_prev 최소 점 수
-    double theta_heading_gate_deg = 60.0; // heading 기준 후보 필터 각도 (deg)
-  } corridor_cold_start;
-
-  // ============================================================
   // Corridor: General — 일반 제한
   // ============================================================
   struct CorridorGeneral
@@ -125,59 +118,24 @@ struct PlanningParams
   } corridor_general;
 
   // ============================================================
-  // Pair Validator — 좌우 경계 쌍 검증 기준
-  // ============================================================
-  struct Pair
-  {
-    double resample_ds = 0.2;    // 검증용 리샘플 간격 (m)
-    double theta_mean_th = 0.35; // 접선 각도차 평균 상한 (~20도)
-    double theta_max_th = 0.70;  // 접선 각도차 최대 상한 (~40도)
-    double w_min = 0.8;          // 최소 허용 폭 (m)
-    double w_max = 3.0;          // 최대 허용 폭 (m)
-    double w_std_th = 0.5;       // 폭 표준편차 상한 (m)
-  } pair;
-
-  // ============================================================
   // Virtual Boundary — 가상 경계 생성
   // ============================================================
   struct Virtual
   {
     double default_track_width = 1.5;  // 기본 트랙 폭 (m, 대회 규격)
-    double ema_alpha = 0.3;            // EMA 스무딩 계수 (0~1)
     double min_corridor_width = 0.6;   // 최소 코리도 폭 (m)
   } virt;
 
   // ============================================================
-  // Inflation — 셀 팽창 반경 (차량 점 모델)
+  // Centerline — DTR 센터라인 빌드 파라미터
+  //   삼각형 기하 필터 조건 (인접 그래프 체이닝은 파라미터 불필요)
   // ============================================================
-  struct Inflation
+  struct Centerline
   {
-    double boundary_extra_margin = 0.0;  // 경계 inflation 추가 마진 (YAML)
-    double obstacle_extra_margin = 0.0;  // 장애물 inflation 추가 마진 (YAML)
-
-    // load() 시 자동 계산: vehicle.width/2 + safety.margin + extra
-    double boundary_radius = 0.0;  // 경계 inflation 반경 (m)
-    double obstacle_radius = 0.0;  // 장애물 inflation 반경 (m)
-  } inflation;
-
-  // ============================================================
-  // Costmap Validation — DIRECT 모드 충돌 검사
-  // ============================================================
-  struct CostmapValid
-  {
-    double ds_check = 0.1;  // centerline 충돌 검사 샘플링 간격 (m)
-    int cost_th = 80;        // 충돌로 판정할 cost 임계값
-  } costmap_valid;
-
-  // ============================================================
-  // Goal Selection — A* 모드 목표점 선택
-  // ============================================================
-  struct Goal
-  {
-    double lookahead_l0 = 3.0;  // 기본 lookahead 거리 (m)
-    double lookahead_kv = 0.5;  // 속도 비례 계수: L = L0 + kv * v
-    int ring_samples = 36;      // Method2 ring sampling 후보 수
-  } goal;
+    double tri_isosceles_ratio = 1.5;   // 삼각형 이등변 비율 (sides[2]/sides[1] < ratio)
+    double tri_pointed_ratio = 2.0;     // 삼각형 가늘기 비율 (sides[2]/sides[0] > ratio)
+    double tri_min_area = 0.01;         // [m²] 삼각형 최소 면적
+  } centerline;
 
   // ============================================================
   // Speed — 속도 제한
@@ -199,23 +157,11 @@ struct PlanningParams
   } postprocess;
 
   // ============================================================
-  // Mode Selector — DIRECT / ASTAR 모드 전환 조건
-  // ============================================================
-  struct ModeSelector
-  {
-    double l_check = 5.0;          // 전방 충돌 검사 거리 (m)
-    double centerline_jump_th = 1.0; // centerline 프레임간 점프 임계값 (m)
-    bool enable_astar = true;       // A* 모드 활성화 (false면 항상 DIRECT)
-  } mode_selector;
-
-  // ============================================================
   // Timeouts — 입력 데이터 stale 판정 기준 (ms)
   // ============================================================
   struct Timeouts
   {
-    int odom_ms = 100;        // odometry 타임아웃 (ms)
     int perception_ms = 300;  // perception(lane/cone) 타임아웃 (ms)
-    int plan_ms = 100;        // 계획 주기 타임아웃 (ms)
   } timeouts;
 
   // ============================================================
@@ -227,8 +173,6 @@ struct PlanningParams
    *
    * 내부에서 lambda 'p'를 사용: declare_parameter() + get_parameter() 원라인 처리.
    * YAML 파일에 값이 있으면 해당 값 사용, 없으면 코드의 기본값 사용.
-   * 마지막에 inflation 반경을 자동 계산 (차량 점 모델):
-   *   r = vehicle.width/2 + safety.margin + extra_margin
    *
    * @param node  파라미터를 선언할 ROS 2 노드 포인터
    */
@@ -254,11 +198,13 @@ struct PlanningParams
 
     // Safety
     safety.margin = p("safety.margin", safety.margin);
-    safety.margin_boundary = p("safety.margin_boundary", safety.margin_boundary);
-    safety.margin_obstacle = p("safety.margin_obstacle", safety.margin_obstacle);
 
     // Corridor: Seed
-    corridor_seed.x_seed_min = p("corridor.seed.x_seed_min", corridor_seed.x_seed_min);
+    corridor_seed.r_seed        = p("corridor.seed.r_seed",        corridor_seed.r_seed);
+    corridor_seed.r_seed_step   = p("corridor.seed.r_seed_step",   corridor_seed.r_seed_step);
+    corridor_seed.forward_range = p("corridor.seed.forward_range", corridor_seed.forward_range);
+    corridor_seed.w_dist        = p("corridor.seed.w_dist",        corridor_seed.w_dist);
+    corridor_seed.w_center      = p("corridor.seed.w_center",      corridor_seed.w_center);
 
     // Corridor: Filter
     corridor_filter.s_min = p("corridor.filter.s_min", corridor_filter.s_min);
@@ -281,49 +227,21 @@ struct PlanningParams
     // Corridor: Reference Tangent
     corridor_ref_tangent.n_reg = p("corridor.ref_tangent.n_reg", corridor_ref_tangent.n_reg);
 
-    // Corridor: Cold Start
-    corridor_cold_start.min_centerline_points =
-      p("corridor.cold_start.min_centerline_points", corridor_cold_start.min_centerline_points);
-    corridor_cold_start.theta_heading_gate_deg =
-      p("corridor.cold_start.theta_heading_gate_deg", corridor_cold_start.theta_heading_gate_deg);
-
     // Corridor: General
     corridor_general.max_points_side =
       p("corridor.general.max_points_side", corridor_general.max_points_side);
 
-    // Pair
-    pair.resample_ds = p("pair.resample_ds", pair.resample_ds);
-    pair.theta_mean_th = p("pair.theta_mean_th", pair.theta_mean_th);
-    pair.theta_max_th = p("pair.theta_max_th", pair.theta_max_th);
-    pair.w_min = p("pair.w_min", pair.w_min);
-    pair.w_max = p("pair.w_max", pair.w_max);
-    pair.w_std_th = p("pair.w_std_th", pair.w_std_th);
-
     // Virtual
     virt.default_track_width = p("virtual.default_track_width", virt.default_track_width);
-    virt.ema_alpha = p("virtual.ema_alpha", virt.ema_alpha);
     virt.min_corridor_width = p("virtual.min_corridor_width", virt.min_corridor_width);
 
-    // Inflation
-    inflation.boundary_extra_margin =
-      p("inflation.boundary_extra_margin", inflation.boundary_extra_margin);
-    inflation.obstacle_extra_margin =
-      p("inflation.obstacle_extra_margin", inflation.obstacle_extra_margin);
-
-    // 차량 점 모델: inflation 반경 자동 계산
-    // r = (차폭/2) + 기본마진 + 구간별_추가마진 + YAML_추가마진
-    const double r_base = vehicle.width / 2.0 + safety.margin;
-    inflation.boundary_radius = r_base + safety.margin_boundary + inflation.boundary_extra_margin;
-    inflation.obstacle_radius = r_base + safety.margin_obstacle + inflation.obstacle_extra_margin;
-
-    // Costmap Validation
-    costmap_valid.ds_check = p("costmap_valid.ds_check", costmap_valid.ds_check);
-    costmap_valid.cost_th = p("costmap_valid.cost_th", costmap_valid.cost_th);
-
-    // Goal
-    goal.lookahead_l0 = p("goal.lookahead_l0", goal.lookahead_l0);
-    goal.lookahead_kv = p("goal.lookahead_kv", goal.lookahead_kv);
-    goal.ring_samples = p("goal.ring_samples", goal.ring_samples);
+    // Centerline
+    centerline.tri_isosceles_ratio =
+      p("centerline.tri_isosceles_ratio", centerline.tri_isosceles_ratio);
+    centerline.tri_pointed_ratio =
+      p("centerline.tri_pointed_ratio", centerline.tri_pointed_ratio);
+    centerline.tri_min_area =
+      p("centerline.tri_min_area", centerline.tri_min_area);
 
     // Speed
     speed.v_max = p("speed.v_max", speed.v_max);
@@ -334,21 +252,13 @@ struct PlanningParams
     postprocess.smooth_window = p("postprocess.smooth_window", postprocess.smooth_window);
     postprocess.prune_max_dev = p("postprocess.prune_max_dev", postprocess.prune_max_dev);
 
-    // Mode Selector
-    mode_selector.l_check = p("mode_selector.l_check", mode_selector.l_check);
-    mode_selector.centerline_jump_th =
-      p("mode_selector.centerline_jump_th", mode_selector.centerline_jump_th);
-    mode_selector.enable_astar = p("mode_selector.enable_astar", mode_selector.enable_astar);
-
     // Timeouts
-    timeouts.odom_ms = p("timeouts.odom_ms", timeouts.odom_ms);
     timeouts.perception_ms = p("timeouts.perception_ms", timeouts.perception_ms);
-    timeouts.plan_ms = p("timeouts.plan_ms", timeouts.plan_ms);
 
     RCLCPP_INFO(
       node->get_logger(),
-      "PlanningParams loaded: vehicle_w=%.2f, r_min=%.2f, infl_boundary=%.3f, infl_obstacle=%.3f",
-      vehicle.width, vehicle.r_min(), inflation.boundary_radius, inflation.obstacle_radius);
+      "PlanningParams loaded: vehicle_w=%.2f, r_min=%.2f, v_max=%.2f",
+      vehicle.width, vehicle.r_min(), speed.v_max);
   }
 };
 

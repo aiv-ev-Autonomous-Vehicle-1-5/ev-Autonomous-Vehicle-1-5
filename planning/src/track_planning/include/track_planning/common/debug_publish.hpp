@@ -3,7 +3,7 @@
  * @brief RViz2 디버그 시각화를 위한 메시지 변환 유틸리티 (header-only)
  *
  * 내부 자료구조(Point2D, bool 등)를 ROS 2 메시지로 변환하여
- * /planning/debug/* 토픽으로 발행할 수 있게 해주는 헬퍼 함수들.
+ * /planning/debug/ 토픽으로 발행할 수 있게 해주는 헬퍼 함수들.
  *
  * 사용 예시:
  *   auto msg = to_path_msg(centerline, "base_link", now());
@@ -18,7 +18,6 @@
 #include <nav_msgs/msg/path.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/bool.hpp>
-#include <std_msgs/msg/string.hpp>
 
 #include <string>
 #include <vector>
@@ -63,14 +62,6 @@ inline nav_msgs::msg::Path to_path_msg(
 inline std_msgs::msg::Bool to_bool_msg(bool value)
 {
   std_msgs::msg::Bool msg;
-  msg.data = value;
-  return msg;
-}
-
-/// 문자열을 std_msgs/String 메시지로 변환
-inline std_msgs::msg::String to_string_msg(const std::string & value)
-{
-  std_msgs::msg::String msg;
   msg.data = value;
   return msg;
 }

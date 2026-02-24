@@ -1,8 +1,6 @@
 /home/aiv/ev_ws/planning/build/track_planning/CMakeFiles/uninstall.dir
 /home/aiv/ev_ws/planning/build/track_planning/CMakeFiles/track_planning_uninstall.dir
 /home/aiv/ev_ws/planning/build/track_planning/CMakeFiles/track_planning_corridor.dir
-/home/aiv/ev_ws/planning/build/track_planning/CMakeFiles/track_planning_costmap.dir
-/home/aiv/ev_ws/planning/build/track_planning/CMakeFiles/track_planning_planner.dir
 /home/aiv/ev_ws/planning/build/track_planning/CMakeFiles/track_planning_postprocess.dir
 /home/aiv/ev_ws/planning/build/track_planning/CMakeFiles/local_planner_component.dir
 /home/aiv/ev_ws/planning/build/track_planning/CMakeFiles/local_planner_node_exe.dir

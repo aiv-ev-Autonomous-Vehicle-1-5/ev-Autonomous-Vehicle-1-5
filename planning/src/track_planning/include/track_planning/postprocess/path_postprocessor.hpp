@@ -3,13 +3,13 @@
  * @brief 원시 경로(raw path)를 후처리하는 PathPostprocessor 클래스 헤더
  *
  * ## 역할
- * - A* 또는 센터라인에서 생성된 원시 경로를 부드럽고 균일한 경로로 변환한다.
+ * - DTR 센터라인에서 생성된 원시 경로를 부드럽고 균일한 경로로 변환한다.
  * - 제어기(컨트롤러)에 직접 전달할 수 있는 형태로 가공한다.
  *
  * ## 4단계 후처리 파이프라인 (process())
  *
  *  단계 1: Prune (가지치기 / 숏컷 제거)
- *   - 그리드 셀 중심을 그대로 연결한 A* 경로는 계단 모양(지그재그)
+ *   - 원시 경로의 불필요한 중간 포인트(노이즈, 이상점)를 제거
  *   - Greedy shortcut pruning으로 중간 포인트 제거
  *   - 두 끝점을 잇는 직선에서 중간 포인트들의 수직 거리(perpendicular distance)가
  *     prune_max_dev 이하이면 중간 포인트를 모두 건너뜀
@@ -32,7 +32,7 @@
  *   - i→j 직선에서 모든 중간점(k=i+1..j-1)의 수직 거리 ≤ max_dev이면 숏컷 허용
  *   - 허용되면 best_j = j, break
  *   - result에 pts[best_j] 추가, i = best_j
- *  이를 통해 A* 격자 경로의 계단 모양을 직선에 가깝게 단순화
+ *  이를 통해 원시 경로의 불필요한 중간 포인트를 제거하고 직선에 가깝게 단순화
  */
 
 #ifndef TRACK_PLANNING__POSTPROCESS__PATH_POSTPROCESSOR_HPP_
@@ -57,7 +57,7 @@ public:
   /**
    * @brief 전체 후처리 파이프라인 실행
    *
-   * @param raw_path       입력 원시 경로 (A* 출력 또는 센터라인)
+   * @param raw_path       입력 원시 경로 (DTR 센터라인)
    * @param prune_max_dev  숏컷 허용 최대 수직 편차(m)
    *                       크게 설정할수록 더 많이 잘라냄 (직선화)
    *                       작게 설정할수록 원래 경로에 가까움

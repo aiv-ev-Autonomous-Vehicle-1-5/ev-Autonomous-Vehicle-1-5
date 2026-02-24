@@ -1,0 +1,4 @@
+In file included from /home/aiv/ev_ws/planning/src/track_planning/src/nodes/local_planner_node.cpp:14:
+/home/aiv/ev_ws/planning/src/track_planning/include/track_planning/common/debug_publish.hpp:6:19: warning: "/*" within comment [-Wcomment]
+    6 |  * /planning/debug/* 토픽으로 발행할 수 있게 해주는 헬퍼 함수들.
+      |                    

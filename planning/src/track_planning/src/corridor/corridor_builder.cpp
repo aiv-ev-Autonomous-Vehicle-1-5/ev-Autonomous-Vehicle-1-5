@@ -6,10 +6,9 @@
  *
  * Greedy Chaining 흐름:
  *   1. determine_reference()로 참조점/접선 결정
- *      - warm start: 이전 centerline 끝점 + 회귀 접선
- *      - cold start: ego 위치 + ego heading
+ *      - 항상 ego_pos + ego_heading (이전 프레임 의존 제거)
  *   2. find_seed()로 체이닝 시작점 탐색 (콘 우선)
- *      - x >= x_seed_min인 점 중 ego에 가장 가까운 점 선택
+ *      - ego 중심 반지름 r_seed 이내 + 접선 방향 forward_range [rad] 각도 이내에서 가장 가까운 점 선택
  *   3. 반복 (Greedy Chaining Loop):
  *      a. 미사용 후보점 수집 (used[] 플래그로 재방문 방지)
  *      b. filter_candidates()로 s/d 좌표계 필터링
@@ -34,52 +33,34 @@ namespace track_planning
 /**
  * @brief 체이닝 기준이 되는 참조점(c_end)과 참조 접선(t_end)을 결정한다.
  *
- * Warm Start (이전 centerline 있음):
- *   - c_end = centerline_prev 의 마지막 점
- *   - t_end = 마지막 n_reg 개 점으로 회귀 계산한 접선
- *   → 이전 경로의 연장선상에서 체이닝을 시작해 연속성 유지
- *
- * Cold Start (이전 centerline 없음 또는 너무 짧음):
- *   - c_end = ego_pos (차량 현재 위치)
- *   - t_end = ego_heading (차량 전방 방향)
- *   → 첫 프레임이나 경로가 초기화된 경우에 사용
+ * 항상 ego_pos + ego_heading 사용 (이전 프레임 의존 제거).
+ * 센서 데이터가 이미 base_link 기준이므로 ego = (0,0), heading = (1,0).
  */
-std::pair<Point2D, Point2D> CorridorBuilder::determine_reference(
-  const Input & in, const PlanningParams & p)
+std::pair<Point2D, Point2D> CorridorBuilder::determine_reference(const Input & in)
 {
-  const auto & cs = p.corridor_cold_start;   // cold start 관련 파라미터
-  const auto & ref = p.corridor_ref_tangent; // 참조 접선 회귀 파라미터
-
-  // Case 1: 이전 centerline이 충분히 길면 → warm start
-  if (static_cast<int>(in.centerline_prev.size()) >= cs.min_centerline_points) {
-    Point2D c_end = in.centerline_prev.back();  // centerline 끝점을 참조점으로
-    // 끝점 부근의 n_reg 개 점으로 회귀 접선 계산 (노이즈 제거 효과)
-    Point2D t_end = regress_tangent(in.centerline_prev, static_cast<size_t>(ref.n_reg));
-    return {c_end, t_end};
-  }
-
-  // Case 2: cold start — ego 위치 + heading 사용
-  // centerline_prev가 비어있거나 min_centerline_points 미만일 때
   return {in.ego_pos, in.ego_heading};
 }
 
 // ============================================================
-// Seed 선택: ego에 가장 가까운 점 (x >= x_min)
+// Seed 선택: 참조 접선 방향 전방 범위 내에서 ego에 가장 가까운 점
 // 콘 우선: 콘에서 seed가 있으면 차선 seed보다 우선 사용
 // ============================================================
 /**
  * @brief 그리디 체이닝의 시작점(seed)을 찾는다.
  *
- * 탐색 방법:
- *   - x >= x_min 조건으로 ego 뒤쪽 점 제외 (전방 점만 고려)
- *   - ego와의 유클리드 거리가 가장 가까운 점 선택
+ * 탐색 방법 (적응형 반경 + 점수 기반):
+ *   1. 반경 r_step부터 시작, r_max까지 r_step씩 확장하며 반복
+ *   2. 현재 반경 이내 + forward_range 각도 이내인 점을 후보로 수집
+ *   3. 각 후보 점수 = w_dist*(거리/반경) + w_center*(1/(1+횡편차))
+ *      - 이전 seed로부터 멀수록 + 예측 중앙선에 가까울수록 높은 점수
+ *   4. 최고 점수 후보를 seed로 선택 (찾는 즉시 반환, 반경 더 넓히지 않음)
  *
  * 콘 우선(Cone Priority):
  *   - 콘과 차선 양쪽에서 seed 탐색 후, 콘 seed가 있으면 콘 우선 사용
  *   - 콘이 없을 때만 차선 seed 사용
  *   → 교통 콘이 신뢰도가 더 높다고 가정 (경진대회 환경)
  *
- * @param x_min     seed 탐색 최소 x 값 (ego 기준, 뒤쪽 제외)
+ * @param t_end     참조 접선 단위벡터 (이전 corridor 방향 또는 ego heading)
  * @param seed_out  찾은 seed 점 (출력 파라미터)
  * @return          seed 발견 시 true, 없으면 false
  */
@@ -87,39 +68,66 @@ bool CorridorBuilder::find_seed(
   const std::vector<Point2D> & lane_pts,
   const std::vector<Point2D> & cone_pts,
   const Point2D & ego,
-  double x_min,
-  Point2D & seed_out)
+  const Point2D & t_end,
+  Point2D & seed_out,
+  int & seed_source,
+  size_t & seed_index,
+  const PlanningParams & p)
 {
-  // 람다: 주어진 점 배열에서 x >= x_min이고 ego에 가장 가까운 점 찾기
-  auto find_closest = [&](const std::vector<Point2D> & pts, Point2D & out) -> bool {
-    double best_dist = std::numeric_limits<double>::max();
-    bool found = false;
-    for (const auto & pt : pts) {
-      if (pt.x < x_min) continue;  // ego 뒤쪽 또는 너무 가까운 점 제외
-      double d = dist(pt, ego);
-      if (d < best_dist) {
-        best_dist = d;
-        out = pt;
-        found = true;
+  const double r_max   = p.corridor_seed.r_seed;
+  const double r_step  = p.corridor_seed.r_seed_step;
+  const double cos_fwd = std::cos(p.corridor_seed.forward_range);
+  const double w_dist  = p.corridor_seed.w_dist;
+  const double w_ctr   = p.corridor_seed.w_center;
+
+  // 람다: 적응형 반경(r_step씩 확장, r_max까지) + 점수 기반 최적 seed 선택
+  //   점수 = w_dist * (거리/반경) + w_ctr * (1 / (1 + 횡편차))
+  //   → 이전 seed로부터 멀수록, 예측 중앙선에 가까울수록 높은 점수
+  auto find_best = [&](const std::vector<Point2D> & pts,
+                       Point2D & out, size_t & out_idx) -> bool {
+    for (double r = r_step; r <= r_max + 1e-9; r += r_step) {
+      double best_score = -std::numeric_limits<double>::max();
+      bool found = false;
+      for (size_t i = 0; i < pts.size(); ++i) {
+        const double d = dist(pts[i], ego);
+        if (d > r || d < 1e-9) continue;
+        if (dot2(normalize(pts[i] - ego), t_end) < cos_fwd) continue;
+
+        const double s     = dot2(pts[i] - ego, t_end);
+        const double d_lat = std::sqrt(std::max(0.0, d * d - s * s));
+        const double score = w_dist * (d / r) + w_ctr * (1.0 / (1.0 + d_lat));
+
+        if (score > best_score) {
+          best_score = score;
+          out = pts[i];
+          out_idx = i;
+          found = true;
+        }
       }
+      if (found) return true;
     }
-    return found;
+    return false;
   };
 
   // 콘 우선: 콘 seed를 먼저 탐색
   Point2D cone_seed, lane_seed;
-  bool cone_found = find_closest(cone_pts, cone_seed);
-  bool lane_found = find_closest(lane_pts, lane_seed);
+  size_t cone_idx = 0, lane_idx = 0;
+  bool cone_found = find_best(cone_pts, cone_seed, cone_idx);
+  bool lane_found = find_best(lane_pts, lane_seed, lane_idx);
 
   if (cone_found) {
-    seed_out = cone_seed;  // 콘 seed 우선 사용
+    seed_out = cone_seed;
+    seed_source = 0;  // cone
+    seed_index = cone_idx;
     return true;
   }
   if (lane_found) {
-    seed_out = lane_seed;  // 콘이 없으면 차선 seed 사용
+    seed_out = lane_seed;
+    seed_source = 1;  // lane
+    seed_index = lane_idx;
     return true;
   }
-  return false;  // seed를 찾지 못함 → 이 쪽 경계 생성 불가
+  return false;
 }
 
 // ============================================================
@@ -292,12 +300,12 @@ int CorridorBuilder::score_and_select(
  *      f. chain에 추가, used[] 마킹
  *      g. 추가된 점의 x > x_max 이면 루프 종료
  *
- * @param lane_pts  차선 경계점 배열
- * @param cone_pts  콘 중심점 배열
- * @param c_end     초기 참조점 (warm/cold start에서 결정됨)
- * @param t_end     초기 참조 접선 단위벡터
- * @param ego_pos   ego 위치 (seed 탐색 기준)
- * @return          greedy chaining으로 연결된 경계 폴리라인 점 배열
+ * @param lane_pts       차선 경계점 배열
+ * @param cone_pts       콘 중심점 배열
+ * @param c_end          초기 참조점 (warm/cold start에서 결정됨)
+ * @param t_end          초기 참조 접선 단위벡터
+ * @param ego_pos        ego 위치 (seed 탐색 기준)
+ * @return               greedy chaining으로 연결된 경계 폴리라인 점 배열
  */
 std::vector<Point2D> CorridorBuilder::build_one_side(
   const std::vector<Point2D> & lane_pts,
@@ -308,27 +316,25 @@ std::vector<Point2D> CorridorBuilder::build_one_side(
   const PlanningParams & p)
 {
   std::vector<Point2D> chain;  // 체이닝 결과 경계 폴리라인
+  const auto & ref = p.corridor_ref_tangent; // 접선 회귀 파라미터
 
-  // seed 탐색 (콘 우선)
+  // seed 탐색 (콘 우선): 항상 ego 기준 (이전 프레임 의존 제거)
   Point2D seed;
-  if (!find_seed(lane_pts, cone_pts, ego_pos, p.corridor_seed.x_seed_min, seed)) {
-    return chain;  // seed 없음 → 이 쪽 경계 생성 실패 (빈 벡터 반환)
+  int seed_source = -1;    // 0 = cone, 1 = lane
+  size_t seed_idx = 0;
+  if (!find_seed(lane_pts, cone_pts, ego_pos, t_end, seed, seed_source, seed_idx, p)) {
+    return chain;  // seed 실패 → 빈 벡터 반환
   }
   chain.push_back(seed);
 
   // 사용된 점 추적 (같은 점 재방문 방지)
-  // used_cone[i] = true 이면 cone_pts[i]는 이미 chain에 포함됨
   std::vector<bool> used_cone(cone_pts.size(), false);
   std::vector<bool> used_lane(lane_pts.size(), false);
 
-  // seed를 사용됨으로 마킹 (seed가 콘인지 차선인지 확인 후 해당 배열 마킹)
-  for (size_t i = 0; i < cone_pts.size(); ++i) {
-    if (dist(cone_pts[i], seed) < 1e-6) { used_cone[i] = true; break; }
-  }
-  for (size_t i = 0; i < lane_pts.size(); ++i) {
-    if (dist(lane_pts[i], seed) < 1e-6) { used_lane[i] = true; break; }
-  }
-
+  // seed를 인덱스 기반으로 정확히 마킹
+  if (seed_source == 0) { used_cone[seed_idx] = true; }
+  else                   { used_lane[seed_idx] = true; }
+ 
   const int max_pts = p.corridor_general.max_points_side;  // 한 쪽 경계 최대 점 수
   const double x_max = p.roi.x_max;  // ROI 전방 한계 (이 x 초과 시 체이닝 종료)
 
@@ -336,11 +342,11 @@ std::vector<Point2D> CorridorBuilder::build_one_side(
   while (static_cast<int>(chain.size()) < max_pts) {
     const Point2D & p_k = chain.back();  // 현재 chain 끝점
 
-    // 로컬 접선 계산: chain이 2개 이상이면 마지막 두 점으로, 아니면 초기 참조 접선 사용
+    // 로컬 접선 계산: chain이 2개 이상이면 회귀 접선, 아니면 초기 참조 접선 사용
     Point2D t_k;
     if (chain.size() >= 2) {
-      // 마지막 두 점의 방향으로 로컬 접선 계산 (정규화)
-      t_k = normalize(chain.back() - chain[chain.size() - 2]);
+      // 마지막 n_reg개 점으로 회귀 접선 계산 (단일 outlier에 강건)
+      t_k = regress_tangent(chain, static_cast<size_t>(ref.n_reg));
     } else {
       t_k = t_end;  // 첫 번째 반복: 초기 참조 접선 사용
     }
@@ -420,30 +426,29 @@ std::vector<Point2D> CorridorBuilder::build_one_side(
  * @brief 좌/우 경계 폴리라인을 독립적으로 구축하여 반환한다.
  *
  * 처리 순서:
- *   1. determine_reference()로 참조점/접선 결정 (warm/cold start)
+ *   1. determine_reference()로 참조점/접선 결정 (항상 ego 기준)
  *   2. build_one_side()로 좌측 경계 구축
  *   3. build_one_side()로 우측 경계 구축
  *   4. 각 경계가 2점 이상이면 ok 플래그 설정
  *
  * 좌/우 경계는 동일한 c_end, t_end를 기준으로 독립적으로 구축됨.
- * (left와 right가 서로 간섭하지 않음)
  */
 CorridorPolylines CorridorBuilder::build(const Input & in, const PlanningParams & p)
 {
   CorridorPolylines result;
 
-  // 참조점/접선 결정 (구조적 바인딩으로 c_end, t_end 추출)
-  auto [c_end, t_end] = determine_reference(in, p);
+  // 참조점/접선 결정 (항상 ego_pos + ego_heading)
+  auto [c_end, t_end] = determine_reference(in);
 
   // 좌측 경계 구축
   result.left = build_one_side(
     in.lane_left, in.cone_left, c_end, t_end, in.ego_pos, p);
-  result.left_ok = (result.left.size() >= 2);  // 2점 이상이면 유효
+  result.left_ok = (result.left.size() >= 2);
 
   // 우측 경계 구축
   result.right = build_one_side(
     in.lane_right, in.cone_right, c_end, t_end, in.ego_pos, p);
-  result.right_ok = (result.right.size() >= 2);  // 2점 이상이면 유효
+  result.right_ok = (result.right.size() >= 2);
 
   return result;
 }

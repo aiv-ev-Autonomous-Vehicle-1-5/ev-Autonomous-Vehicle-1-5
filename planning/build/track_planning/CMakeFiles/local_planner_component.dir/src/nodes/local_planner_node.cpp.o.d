@@ -624,67 +624,31 @@ CMakeFiles/local_planner_component.dir/src/nodes/local_planner_node.cpp.o: \
  /opt/ros/humble/include/rclcpp/rclcpp/wait_set_policies/detail/write_preferring_read_write_lock.hpp \
  /opt/ros/humble/include/rclcpp/rclcpp/wait_set_template.hpp \
  /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/corridor/corridor_builder.hpp \
- /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/corridor/pair_validator.hpp \
  /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/corridor/virtual_boundary.hpp \
  /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/corridor/centerline_builder.hpp \
- /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/costmap/costmap_validation_builder.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/occupancy_grid.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/occupancy_grid__struct.hpp \
+ /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/postprocess/path_postprocessor.hpp \
+ /opt/ros/humble/include/nav_msgs/nav_msgs/msg/path.hpp \
+ /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__struct.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/header__struct.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/map_meta_data__struct.hpp \
+ /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose_stamped__struct.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose__struct.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/point__struct.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/quaternion__struct.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/occupancy_grid__builder.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/occupancy_grid__traits.hpp \
+ /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__builder.hpp \
+ /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__traits.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/header__traits.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/map_meta_data__traits.hpp \
+ /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose_stamped__traits.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose__traits.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/point__traits.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/quaternion__traits.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/occupancy_grid__type_support.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
- /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/costmap/drivable_mask_scanline.hpp \
- /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/costmap/connected_component.hpp \
- /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/goal/goal_selector.hpp \
- /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/planner/astar_planner.hpp \
- /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/postprocess/path_postprocessor.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/odometry.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/odometry__struct.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose_with_covariance__struct.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/twist_with_covariance__struct.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/twist__struct.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/vector3__struct.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/odometry__builder.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/odometry__traits.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose_with_covariance__traits.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/twist_with_covariance__traits.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/twist__traits.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/vector3__traits.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/odometry__type_support.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/path.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__struct.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose_stamped__struct.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__builder.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__traits.hpp \
- /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose_stamped__traits.hpp \
  /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__type_support.hpp \
+ /opt/ros/humble/include/nav_msgs/nav_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/bool.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/bool__struct.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/bool__builder.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/bool__traits.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/bool__type_support.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/float64.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/float64__struct.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/float64__builder.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/float64__traits.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/float64__type_support.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/string.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/string__struct.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/string__builder.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/string__traits.hpp \
- /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/string__type_support.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/lane_boundary_array.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__struct.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__struct.hpp \
@@ -696,34 +660,23 @@ CMakeFiles/local_planner_component.dir/src/nodes/local_planner_node.cpp.o: \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/cone_array.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__struct.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__struct.hpp \
+ /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/vector3__struct.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__builder.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__traits.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__traits.hpp \
+ /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/vector3__traits.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__type_support.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/obstacle_array.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__struct.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__struct.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__builder.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__traits.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__traits.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__type_support.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/planner_status.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__struct.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__builder.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__traits.hpp \
  /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__type_support.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/system_state.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__struct.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__builder.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__traits.hpp \
- /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__type_support.hpp \
  /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/common/geometry.hpp \
  /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/common/debug_publish.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/pose_stamped.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose_stamped__builder.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/pose_stamped__type_support.hpp \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
- /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/planner/mode_selector.hpp \
  /home/aiv/ev_ws/planning/src/track_planning/include/track_planning/safety/safety_checker.hpp \
  /opt/ros/humble/include/rclcpp_components/rclcpp_components/register_node_macro.hpp \
  /opt/ros/humble/include/class_loader/class_loader/class_loader.hpp \

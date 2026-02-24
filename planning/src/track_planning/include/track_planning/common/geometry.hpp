@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 #include <vector>
 
 namespace track_planning
@@ -120,12 +121,12 @@ inline Point2D rotate90_cw(const Point2D & v)
 // 각도 연산 (Angle Operations)
 // ============================================================
 
-/// 각도를 [-π, π] 범위로 정규화
+/// 각도를 [-π, π] 범위로 정규화 (NaN/Inf 안전: std::fmod 기반)
 inline double wrap_pi(double angle)
 {
-  while (angle > M_PI) { angle -= 2.0 * M_PI; }
-  while (angle < -M_PI) { angle += 2.0 * M_PI; }
-  return angle;
+  angle = std::fmod(angle + M_PI, 2.0 * M_PI);
+  if (angle < 0.0) angle += 2.0 * M_PI;
+  return angle - M_PI;
 }
 
 /// 부호 있는 각도 차이: (b - a), 결과는 [-π, π]
@@ -287,6 +288,91 @@ inline Point2D regress_tangent(const std::vector<Point2D> & pts, size_t n_reg)
     return normalize(pts.back() - pts[start]);  // fallback: 처음→끝 방향
   }
   return {sum.x / sn, sum.y / sn};
+}
+
+/// 삼각형 외심(circumcenter) 계산
+/// 세 꼭짓점에서 등거리인 점 (Delaunay 삼각분할에서 Voronoi 정점에 해당)
+/// 퇴화 삼각형(D≈0)이면 무게중심 반환
+inline Point2D circumcenter(const Point2D & a, const Point2D & b, const Point2D & c)
+{
+  const double ax = a.x, ay = a.y;
+  const double bx = b.x, by = b.y;
+  const double cx = c.x, cy = c.y;
+  const double D = 2.0 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by));
+  if (std::abs(D) < 1e-12) {
+    return {(ax + bx + cx) / 3.0, (ay + by + cy) / 3.0};
+  }
+  const double a2 = ax * ax + ay * ay;
+  const double b2 = bx * bx + by * by;
+  const double c2 = cx * cx + cy * cy;
+  return {
+    (a2 * (by - cy) + b2 * (cy - ay) + c2 * (ay - by)) / D,
+    (a2 * (cx - bx) + b2 * (ax - cx) + c2 * (bx - ax)) / D
+  };
+}
+
+/// 두 선분 (p1-p2)와 (p3-p4)가 교차하는지 판정 (CCW 기반)
+/// 끝점 공유(T-접촉)는 교차로 판정하지 않음
+inline bool segments_intersect(
+  const Point2D & p1, const Point2D & p2,
+  const Point2D & p3, const Point2D & p4)
+{
+  auto ccw = [](const Point2D & a, const Point2D & b, const Point2D & c) -> double {
+    return cross2(b - a, c - a);
+  };
+  const double d1 = ccw(p3, p4, p1);
+  const double d2 = ccw(p3, p4, p2);
+  const double d3 = ccw(p1, p2, p3);
+  const double d4 = ccw(p1, p2, p4);
+
+  if (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
+      ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0))) {
+    return true;
+  }
+  return false;
+}
+
+/// 두 폴리라인이 교차하는지 판정 (O(N*M))
+inline bool polylines_cross(
+  const std::vector<Point2D> & a,
+  const std::vector<Point2D> & b)
+{
+  for (size_t i = 0; i + 1 < a.size(); ++i) {
+    for (size_t j = 0; j + 1 < b.size(); ++j) {
+      if (segments_intersect(a[i], a[i + 1], b[j], b[j + 1])) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/// 좌/우 corridor에서 각 점의 반대편 경계까지 최근접점 거리의 중앙값 계산
+/// 인덱스 매칭 대신 nearest-point 방식으로 커브에서도 정확한 폭 추정
+inline double compute_median_width(
+  const std::vector<Point2D> & left,
+  const std::vector<Point2D> & right,
+  double ds = 0.2)
+{
+  auto left_rs  = resample_polyline(left, ds);
+  auto right_rs = resample_polyline(right, ds);
+  if (left_rs.empty() || right_rs.empty()) return 0.0;
+
+  std::vector<double> widths;
+  widths.reserve(left_rs.size());
+
+  // 각 좌측 점에서 우측 경계까지 최근접 거리
+  for (const auto & lp : left_rs) {
+    double min_d = std::numeric_limits<double>::max();
+    for (const auto & rp : right_rs) {
+      const double d = dist(lp, rp);
+      if (d < min_d) min_d = d;
+    }
+    widths.push_back(min_d);
+  }
+
+  std::sort(widths.begin(), widths.end());
+  return widths[widths.size() / 2];
 }
 
 }  // namespace track_planning

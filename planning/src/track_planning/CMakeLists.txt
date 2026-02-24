@@ -3,18 +3,14 @@
 # ============================================================================
 # 로컬 플래너(Local Planner) 파이프라인 빌드 설정
 #
-# 빌드 구조 (5개 공유 라이브러리 + 1개 컴포넌트):
-#   1) track_planning_corridor   — 복도(corridor) 구축, 페어 검증, 가상 경계, 센터라인
-#   2) track_planning_costmap    — 코스트맵 생성, 팽창(inflation), 주행가능 마스크, 연결 컴포넌트
-#   3) track_planning_planner    — 목표점 선택, A* 경로 탐색
-#   4) track_planning_postprocess — 경로 후처리 (가지치기, 스무딩, 리샘플)
-#   5) local_planner_component   — ROS 2 ComposableNode (위 4개 라이브러리 링크)
+# 빌드 구조 (2개 공유 라이브러리 + 1개 컴포넌트):
+#   1) track_planning_corridor   — 복도(corridor) 구축, 가상 경계, DTR 센터라인
+#   2) track_planning_postprocess — 경로 후처리 (가지치기, 스무딩, 리샘플)
+#   3) local_planner_component   — ROS 2 ComposableNode (위 2개 라이브러리 링크)
 #
 # 의존성 흐름:
 #   local_planner_component
 #     └── track_planning_corridor
-#     └── track_planning_costmap
-#     └── track_planning_planner
 #     └── track_planning_postprocess
 # ============================================================================
 
@@ -62,12 +58,10 @@ include_directories(include)
 # ============================================================================
 # 파이프라인 Phase 1+2: 차선 경계로부터 복도(corridor) 구축
 #   - corridor_builder.cpp    : Greedy Chaining 알고리즘으로 좌/우 경계 폴리라인 생성
-#   - pair_validator.cpp      : 좌우 경계 쌍(pair) 유효성 검증 (폭, 각도, 교차 검사)
-#   - virtual_boundary.cpp    : 한쪽 경계만 있을 때 EMA 기반 가상 경계 생성
-#   - centerline_builder.cpp  : 좌우 경계 중점 또는 한쪽 오프셋으로 센터라인 생성
+#   - virtual_boundary.cpp    : 한쪽 경계만 있을 때 가상 경계 생성
+#   - centerline_builder.cpp  : DTR 외심 기반 또는 한쪽 오프셋으로 센터라인 생성
 add_library(track_planning_corridor SHARED
   src/corridor/corridor_builder.cpp
-  src/corridor/pair_validator.cpp
   src/corridor/virtual_boundary.cpp
   src/corridor/centerline_builder.cpp
 )
@@ -90,60 +84,7 @@ install(TARGETS track_planning_corridor
 )
 
 # ============================================================================
-# 라이브러리 2: track_planning_costmap (코스트맵 모듈)
-# ============================================================================
-# 파이프라인 Phase 2+3: 5층 코스트맵 생성
-#   - costmap_validation_builder.cpp : 5층 코스트맵 빌드 (경계 장벽 → 경계 팽창 → 장애물 → 장애물 팽창)
-#                                       + Bresenham 라인 래스터화, DIRECT 모드 충돌 검사
-#   - inflation.cpp                  : 원형 커널 기반 코스트맵 팽창 (차량 폭/2 + 안전 마진)
-#   - drivable_mask_scanline.cpp     : Scanline Fill로 좌/우 경계 사이 주행 가능 영역 마스크 생성
-#   - connected_component.cpp        : BFS 4방향 탐색으로 ego 도달 가능 자유 셀만 필터링
-add_library(track_planning_costmap SHARED
-  src/costmap/costmap_validation_builder.cpp
-  src/costmap/inflation.cpp
-  src/costmap/drivable_mask_scanline.cpp
-  src/costmap/connected_component.cpp
-)
-
-ament_target_dependencies(track_planning_costmap
-  rclcpp
-  nav_msgs
-  geometry_msgs
-  track_msgs
-)
-
-install(TARGETS track_planning_costmap
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-
-# ============================================================================
-# 라이브러리 3: track_planning_planner (경로 계획 모듈)
-# ============================================================================
-# 파이프라인 Phase 3: 목표점 선택 + A* 경로 탐색
-#   - goal_selector.cpp   : Lookahead 거리 기반 목표점 선택 (센터라인 위) + Ring 탐색 보조
-#   - astar_planner.cpp   : 8방향 A* 탐색 (Octile 휴리스틱, 셀 비용 가중치, 목표 스냅)
-add_library(track_planning_planner SHARED
-  src/goal/goal_selector.cpp
-  src/planner/astar_planner.cpp
-)
-
-ament_target_dependencies(track_planning_planner
-  rclcpp
-  nav_msgs
-  geometry_msgs
-  track_msgs
-)
-
-install(TARGETS track_planning_planner
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-
-# ============================================================================
-# 라이브러리 4: track_planning_postprocess (후처리 모듈)
+# 라이브러리 2: track_planning_postprocess (후처리 모듈)
 # ============================================================================
 # 파이프라인 Phase 4: 경로 후처리
 #   - path_postprocessor.cpp : Greedy Shortcut 가지치기 → 이동 평균 스무딩
@@ -167,12 +108,11 @@ install(TARGETS track_planning_postprocess
 # ============================================================================
 # 컴포넌트: local_planner_component (ROS 2 ComposableNode)
 # ============================================================================
-# 파이프라인 Phase 5: 모든 모듈을 통합하는 메인 노드
+# 모든 모듈을 통합하는 메인 노드
 #   - local_planner_node.cpp : LocalPlannerNode 클래스
 #     → 타이머 콜백(on_timer)에서 전체 파이프라인 실행:
-#       Stale 검사 → 입력 파싱 → 복도 구축 → 페어 검증 → 가상 경계 →
-#       센터라인 → 코스트맵 → 모드 선택(DIRECT/ASTAR) → 경로 생성 →
-#       후처리 → 안전 검사 → 퍼블리시
+#       Stale 검사 → 입력 파싱 → 복도 구축 → 가상 경계 →
+#       DTR 센터라인 → 후처리 → 안전 검사 → 퍼블리시
 #
 # ComposableNode로 등록하면:
 #   - launch 파일에서 ComposableNodeContainer에 로딩 가능
@@ -181,13 +121,11 @@ add_library(local_planner_component SHARED
   src/nodes/local_planner_node.cpp
 )
 
-# 위 4개 라이브러리를 직접 링크 (CMake target_link_libraries)
+# 파이프라인 라이브러리를 직접 링크 (CMake target_link_libraries)
 # ament_target_dependencies는 ROS 2 패키지 의존성만 처리하므로,
 # 같은 패키지 내 라이브러리는 target_link_libraries로 연결해야 함
 target_link_libraries(local_planner_component
   track_planning_corridor
-  track_planning_costmap
-  track_planning_planner
   track_planning_postprocess
 )
 

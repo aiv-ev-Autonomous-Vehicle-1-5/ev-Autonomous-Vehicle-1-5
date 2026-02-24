@@ -1,0 +1,78 @@
+[0.008s] Invoking command in '/home/aiv/ev_ws/planning/build/track_planning': AMENT_PREFIX_PATH=/home/aiv/ev_ws/planning/install/track_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/planning/install/track_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/track_planning -- -j28 -l28
+[0.038s] Consolidate compiler generated dependencies of target track_planning_postprocess
+[0.041s] Consolidate compiler generated dependencies of target track_planning_corridor
+[0.046s] [ 10%] Building CXX object CMakeFiles/track_planning_postprocess.dir/src/postprocess/path_postprocessor.cpp.o
+[0.049s] [ 30%] Built target local_planner_node_exe
+[0.053s] [ 40%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/virtual_boundary.cpp.o
+[0.053s] [ 50%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/corridor_builder.cpp.o
+[0.054s] [ 60%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/centerline_builder.cpp.o
+[0.311s] [ 70%] Linking CXX shared library libtrack_planning_postprocess.so
+[0.385s] [ 70%] Built target track_planning_postprocess
+[2.387s] [ 80%] Linking CXX shared library libtrack_planning_corridor.so
+[2.495s] [ 80%] Built target track_planning_corridor
+[2.508s] Consolidate compiler generated dependencies of target local_planner_component
+[2.517s] [ 90%] Building CXX object CMakeFiles/local_planner_component.dir/src/nodes/local_planner_node.cpp.o
+[12.160s] [100%] Linking CXX shared library liblocal_planner_component.so
+[12.767s] [100%] Built target local_planner_component
+[12.775s] Invoked command in '/home/aiv/ev_ws/planning/build/track_planning' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/planning/install/track_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/planning/install/track_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/track_planning -- -j28 -l28
+[12.781s] Invoking command in '/home/aiv/ev_ws/planning/build/track_planning': AMENT_PREFIX_PATH=/home/aiv/ev_ws/planning/install/track_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/planning/install/track_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/track_planning
+[12.787s] -- Install configuration: ""
+[12.788s] -- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_corridor.so
+[12.789s] -- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_corridor.so" to ""
+[12.789s] -- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_postprocess.so
+[12.790s] -- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_postprocess.so" to ""
+[12.790s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/lib/track_planning/local_planner_node_exe
+[12.790s] -- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/liblocal_planner_component.so
+[12.801s] -- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/liblocal_planner_component.so" to ""
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/corridor_builder.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/virtual_boundary.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/centerline_builder.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common
+[12.801s] -- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/geometry.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/types.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/params.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/debug_publish.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/nodes
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/nodes/local_planner_node.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/safety
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/safety/safety_checker.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/LICENSE
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDT.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDTUtils.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/portable_nth_element.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/Triangulation.h
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/predicates.h
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/LocatorKDTree.h
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/remove_at.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/Triangulation.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDTUtils.h
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/KDTree.h
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDT.h
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/postprocess
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/postprocess/path_postprocessor.hpp
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/config
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/config/planning.yaml
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/launch
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/launch/planning.launch.py
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/package_run_dependencies/track_planning
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/parent_prefix_path/track_planning
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/ament_prefix_path.sh
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/ament_prefix_path.dsv
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/path.sh
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/path.dsv
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.bash
+[12.801s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.sh
+[12.802s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.zsh
+[12.802s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.dsv
+[12.802s] -- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/package.dsv
+[12.802s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/packages/track_planning
+[12.802s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/rclcpp_components/track_planning
+[12.802s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/cmake/track_planningConfig.cmake
+[12.802s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/cmake/track_planningConfig-version.cmake
+[12.802s] -- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/package.xml
+[12.802s] Invoked command in '/home/aiv/ev_ws/planning/build/track_planning' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/planning/install/track_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/planning/install/track_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/track_planning

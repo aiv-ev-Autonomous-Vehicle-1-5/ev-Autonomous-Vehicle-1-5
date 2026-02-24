@@ -52,22 +52,6 @@ struct CorridorPolylines
 };
 
 /**
- * @brief PairValidator의 출력: 좌우 경계 쌍의 유효성 검사 결과
- *
- * valid        : 쌍이 유효한지 (교차 없음, 폭/각도 기준 충족)
- * width_median : 좌우 폭의 중앙값 (m)
- * width_std    : 좌우 폭의 표준편차 (m)
- * angle_mean   : 좌우 접선 각도 차이의 평균 (rad)
- */
-struct PairResult
-{
-  bool valid = false;
-  double width_median = 0.0;
-  double width_std = 0.0;
-  double angle_mean = 0.0;
-};
-
-/**
  * @brief VirtualBoundary의 출력: 보이지 않는 쪽 경계를 추정한 결과
  *
  * boundary : 생성된 가상 경계 폴리라인
@@ -89,38 +73,6 @@ struct CenterlineResult
 {
   std::vector<Point2D> center;
   bool valid = false;
-};
-
-// ============================================================
-// Costmap / Path 관련
-// ============================================================
-
-/**
- * @brief 경로 계획 모드
- *
- * DIRECT : 중앙선을 그대로 경로로 사용 (정상 상황)
- * ASTAR  : 장애물 회피 등 A* 경로 탐색 필요 시 전환
- */
-enum class PathMode : uint8_t
-{
-  DIRECT = 0,
-  ASTAR = 1
-};
-
-/**
- * @brief GoalSelector의 출력: A* 모드에서의 목표점 정보
- *
- * goal   : 목표 위치 (world 좌표)
- * valid  : 유효한 목표를 찾았는지
- * method : 선택 방법 (0 = centerline lookahead, 1 = ring sampling)
- * score  : 목표점의 평가 점수
- */
-struct GoalResult
-{
-  Point2D goal;
-  bool valid = false;
-  uint8_t method = 0;   // 0 = centerline 기반, 1 = ring sampling
-  double score = 0.0;
 };
 
 // ============================================================

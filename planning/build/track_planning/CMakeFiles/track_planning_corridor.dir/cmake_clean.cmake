@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/track_planning_corridor.dir/src/corridor/centerline_builder.cpp.o.d"
   "CMakeFiles/track_planning_corridor.dir/src/corridor/corridor_builder.cpp.o"
   "CMakeFiles/track_planning_corridor.dir/src/corridor/corridor_builder.cpp.o.d"
-  "CMakeFiles/track_planning_corridor.dir/src/corridor/pair_validator.cpp.o"
-  "CMakeFiles/track_planning_corridor.dir/src/corridor/pair_validator.cpp.o.d"
   "CMakeFiles/track_planning_corridor.dir/src/corridor/virtual_boundary.cpp.o"
   "CMakeFiles/track_planning_corridor.dir/src/corridor/virtual_boundary.cpp.o.d"
   "libtrack_planning_corridor.pdb"

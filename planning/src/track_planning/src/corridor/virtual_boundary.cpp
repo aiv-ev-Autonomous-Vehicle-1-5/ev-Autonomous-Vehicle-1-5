@@ -13,8 +13,8 @@
  *   - 가상점: p_virtual = visible[i] + (sgn * w_hat) * rotate90(tangent[i])
  *
  * w_hat(추정 차로 폭) 관리:
- *   - update_w_hat(): EMA로 프레임마다 점진적 갱신 (급격한 변화 방지)
- *   - init_w_hat(): 세션 시작 시 또는 리셋 후 초기값 결정
+ *   - 양쪽 corridor 모두 보일 때 median_width 직접 계산하여 w_hat_ 갱신
+ *   - 한쪽만 보일 때 직전 w_hat_ 사용, 초기값: default_track_width
  */
 #include "track_planning/corridor/virtual_boundary.hpp"
 #include "track_planning/common/geometry.hpp"
@@ -100,54 +100,6 @@ VirtualBoundaryResult VirtualBoundary::generate(
   // [Step 5] 결과 확인: 2점 이상이어야 유효한 폴리라인
   result.success = (result.boundary.size() >= 2);
   return result;
-}
-
-/**
- * @brief EMA(지수 이동 평균)로 추정 차로 폭 w_hat을 갱신한다.
- *
- * EMA 공식: w_hat_new = alpha * width_measured + (1 - alpha) * w_hat_prev
- *
- * EMA 특성:
- *   - alpha = 1.0: 항상 최신 측정값만 사용 (EMA 효과 없음)
- *   - alpha = 0.0: 측정값 무시, 이전 값 그대로 유지 (의미 없음)
- *   - alpha = 0.1~0.3: 완만한 추적 (노이즈에 강함, 변화에 느림)
- *   - alpha = 0.5~0.7: 빠른 추적 (변화에 빠름, 노이즈에 민감)
- *
- * @param w_hat_prev      이전 프레임의 추정 차로 폭 [m]
- * @param width_measured  이번 프레임의 측정 차로 폭 [m] (PairResult.width_median)
- * @param alpha           EMA 계수 (0 < alpha < 1, 파라미터로 설정)
- * @return                갱신된 추정 차로 폭 [m]
- */
-double VirtualBoundary::update_w_hat(
-  double w_hat_prev, double width_measured, double alpha)
-{
-  // EMA: 현재 측정값과 이전 추정값을 alpha 비율로 혼합
-  return alpha * width_measured + (1.0 - alpha) * w_hat_prev;
-}
-
-/**
- * @brief w_hat 초기값을 결정한다.
- *
- * 초기화 우선순위:
- *   1순위: 이전 쌍 검증이 유효하고 측정 폭이 양수이면 → 측정값 사용
- *          → 신뢰할 수 있는 이전 측정이 있으므로 그 값으로 시작
- *   2순위: 이전 측정이 없거나 무효이면 → default_width 사용
- *          → 경진대회 규정상 알려진 차로 폭 (예: 1.5m) 으로 시작
- *
- * @param prev_width_median  이전 PairResult.width_median [m]
- * @param prev_pair_valid    이전 PairResult.valid 플래그
- * @param default_width      파라미터 기본 차로 폭 [m] (경진대회 규정값)
- * @return                   초기 w_hat [m]
- */
-double VirtualBoundary::init_w_hat(
-  double prev_width_median, bool prev_pair_valid, double default_width)
-{
-  // 이전 쌍 검증이 유효하고 측정 폭이 양수이면 측정값으로 초기화
-  if (prev_pair_valid && prev_width_median > 0.0) {
-    return prev_width_median;
-  }
-  // 그렇지 않으면 기본값(default_width) 사용
-  return default_width;
 }
 
 }  // namespace track_planning

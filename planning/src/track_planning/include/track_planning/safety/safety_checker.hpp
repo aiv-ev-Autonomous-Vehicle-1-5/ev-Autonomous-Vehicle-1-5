@@ -6,13 +6,13 @@
  * - 후처리된 경로(PostprocessResult)가 차량의 물리적 제약을 만족하는지 검사한다.
  * - 경로의 최대 곡률을 계산하고, 최소 회전 반경(R_min)과 비교한다.
  * - 곡률 기반 안전 속도와 v_max 중 작은 값을 목표 속도로 설정한다.
- * - 입력 데이터 타임아웃(stale) 감지 및 A* 실패 상태를 처리한다.
  *
  * ## SafetyResult 상태 우선순위 (높은 것부터)
- *  1. STALE     — 입력 데이터 타임아웃 (즉시 정지)
- *  2. INFEASIBLE — 경로 곡률 > 차량 조향 한계 (경로 추종 불가)
- *  3. STOP      — 유효한 경로 없음 (A* 미시도)
- *  4. OK        — 정상 주행 가능 (target_speed > 0)
+ *  1. INFEASIBLE — 경로 곡률 > 차량 조향 한계 (경로 추종 불가)
+ *  2. STOP      — 유효한 경로 없음
+ *  3. OK        — 정상 주행 가능 (target_speed > 0)
+ *
+ * @note Stale 검사는 on_timer() 상단에서 사전 처리됨 (이 함수에 도달하면 항상 not-stale)
  *
  * ## Menger 곡률 (compute_max_curvature)
  *  세 연속 포인트 A, B, C에서 외접원 반경의 역수를 곡률로 계산:
@@ -133,16 +133,9 @@ inline double compute_max_curvature(const std::vector<Point2D> & path)
  *
  * ## 검사 순서 (우선순위 높은 것부터)
  *
- * ### 1. Stale gate (최고 우선순위)
- *   input_stale == true이면:
- *     state = STALE, target_speed = 0, reason = "input_stale"
- *     즉시 반환 (다른 검사 없이)
- *
- * ### 2. 경로 유효성 검사
+ * ### 1. 경로 유효성 검사
  *   !path.valid || path.path.size() < 2이면:
- *     - astar_failed == true → state = INFEASIBLE (A*가 시도했지만 실패)
- *     - 그 외 → state = STOP (A*를 시도하지 않음 또는 입력 없음)
- *     target_speed = 0, 즉시 반환
+ *     state = STOP, target_speed = 0, 즉시 반환
  *
  * ### 3. 곡률 실현 가능성 검사
  *   kappa_limit = 1 / r_min  (r_min = 최소 회전 반경)
@@ -167,45 +160,25 @@ inline double compute_max_curvature(const std::vector<Point2D> & path)
  *   state = OK, reason = "ok"
  *
  * @param path        후처리된 경로 결과 (PostprocessResult)
- * @param input_stale 입력 데이터 타임아웃 여부
- * @param astar_failed A*를 시도했지만 경로를 찾지 못한 경우 true
  * @param p           플래닝 파라미터 (v_max, a_lat_max, r_min)
  * @return            SafetyResult (상태, 목표속도, 최대곡률, 이유)
  */
 inline SafetyResult check(
   const PostprocessResult & path,
-  bool input_stale,
-  bool astar_failed,
   const PlanningParams & p)
 {
   SafetyResult result;
 
-  // ---- 1. Stale gate (최고 우선순위) ----
-  // 입력 데이터가 타임아웃되면 즉시 정지 (신뢰할 수 없는 데이터)
-  if (input_stale) {
-    result.state = PlannerState::STALE;
-    result.target_speed = 0.0;
-    result.reason = "input_stale";
-    return result;
-  }
-
-  // ---- 2. 경로 유효성 검사 ----
+  // ---- 1. 경로 유효성 검사 ----
   // 유효한 경로가 없거나 포인트 수가 너무 적으면 정지
   if (!path.valid || path.path.size() < 2) {
-    if (astar_failed) {
-      // A*가 경로를 찾지 못함 → INFEASIBLE (장애물로 막혀 있을 가능성)
-      result.state = PlannerState::INFEASIBLE;
-      result.reason = "astar_failed";
-    } else {
-      // A*를 시도하지 않은 상태에서 경로 없음 → 단순 STOP
-      result.state = PlannerState::STOP;
-      result.reason = "no_valid_path";
-    }
+    result.state = PlannerState::STOP;
+    result.reason = "no_valid_path";
     result.target_speed = 0.0;
     return result;
   }
 
-  // ---- 3. 곡률 실현 가능성 검사 ----
+  // ---- 2. 곡률 실현 가능성 검사 ----
   // Menger 곡률로 경로 전체의 최대 곡률 계산
   result.max_curvature = compute_max_curvature(path.path);
 
@@ -223,7 +196,7 @@ inline SafetyResult check(
     return result;
   }
 
-  // ---- 4. 목표 속도 계산 ----
+  // ---- 3. 목표 속도 계산 ----
   double v_target = p.speed.v_max;  // 기본값: 최대 속도에서 시작
 
   // [곡률 기반 속도 제한]
