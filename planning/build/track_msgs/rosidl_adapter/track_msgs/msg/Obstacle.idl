@@ -1,0 +1,33 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from track_msgs/msg/Obstacle.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Point.idl"
+#include "geometry_msgs/msg/Vector3.idl"
+
+module track_msgs {
+  module msg {
+    module Obstacle_Constants {
+      const uint8 TYPE_STATIC = 0;
+      const uint8 TYPE_DYNAMIC = 1;
+    };
+    @verbatim (language="comment", text=
+      "track_msgs/msg/Obstacle.msg" "\n"
+      "Single obstacle (static or dynamic)")
+    struct Obstacle {
+      @verbatim (language="comment", text=
+        "Centroid (x, y, z)")
+      geometry_msgs::msg::Point position;
+
+      @verbatim (language="comment", text=
+        "(width, depth, height)")
+      geometry_msgs::msg::Vector3 dimensions;
+
+      @verbatim (language="comment", text=
+        "Estimated velocity (vx, vy, vz) for dynamic")
+      geometry_msgs::msg::Vector3 velocity;
+
+      uint8 type;
+    };
+  };
+};

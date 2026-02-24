@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<library path = "t870_rqt_plugin">
+
+    <!-- Henes T870 control panel -->
+    <class name = "t870_rqt_plugin/ControlPanelPlugin" type = "t870_rqt_plugin::ControlPanelPlugin" base_class_type = "rqt_gui_cpp::Plugin">
+        <description>Henes T870 Control Panel</description>
+        <qtgui>
+            <group>
+                <label>Henes T870</label>
+                <icon type="theme">folder</icon>
+                <statustip>Henes T870 RQT Plugin</statustip>
+            </group>
+            
+            <label>Control Panel</label>
+            <icon type="theme">image-x-generic</icon>
+            <statustip>A GUI plugin for controlling the Henes T870 platform.</statustip>
+        </qtgui>
+    </class>
+
+    <!-- Henes T870 feedback monitor -->
+    <class name = "t870_rqt_plugin/FeedbackMonitorPlugin" type = "t870_rqt_plugin::FeedbackMonitorPlugin" base_class_type = "rqt_gui_cpp::Plugin">
+        <description>Henes T870 Feedback Monitor</description>
+        <qtgui>
+            <group>
+                <label>Henes T870</label>
+                <icon type="theme">folder</icon>
+                <statustip>Henes T870 RQT Plugin</statustip>
+            </group>
+            
+            <label>Feedback Monitor</label>
+            <icon type="theme">image-x-generic</icon>
+            <statustip>A GUI plugin for monitoring feedback from the Henes T870 platform.</statustip>
+        </qtgui>
+    </class>
+
+</library>

@@ -1,0 +1,119 @@
+# =============================================================
+# track_planning parameters (v3 spec)
+# =============================================================
+# Node name in launch: local_planner_node
+local_planner_node:
+  ros__parameters:
+
+    # ---- ROI & Grid ----
+    roi:
+      x_min: -1.0          # m (behind ego)
+      x_max: 10.0           # m (forward)
+      y_min: -4.0           # m (right)
+      y_max:  4.0           # m (left)
+      resolution: 0.10      # m/cell
+
+    # ---- Vehicle (T870) ----
+    vehicle:
+      width: 0.50           # m
+      wheelbase: 0.87       # m
+      delta_max: 0.314      # rad (~18 deg)
+
+    # ---- Safety (vehicle point model) ----
+    safety:
+      margin: 0.10          # base margin (m)
+      margin_boundary: 0.0  # extra boundary margin (m)
+      margin_obstacle: 0.0  # extra obstacle margin (m)
+
+    # ---- Corridor: Seed ----
+    corridor:
+      seed:
+        x_seed_min: 0.5     # m
+
+      # ---- Corridor: Filter ----
+      filter:
+        s_min: 0.05          # min forward progress (m)
+        s_max: 2.0           # max forward search (m)
+        d_max: 2.0           # max lateral distance (m)
+        r_search: 2.5        # circular search radius (m)
+
+      # ---- Corridor: Scoring ----
+      score:
+        w_s: 1.0             # weight: forward progress
+        w_d: 0.8             # weight: lateral deviation
+        w_a: 0.5             # weight: angle deviation
+        w_p: 0.3             # weight: prediction error
+        theta_max: 1.047     # rad (~60 deg)
+        step_pred: 0.5       # m
+
+      # ---- Corridor: Top-K ----
+      topk:
+        enable: false
+        k_top: 5
+
+      # ---- Corridor: Reference Tangent ----
+      ref_tangent:
+        n_reg: 7             # regression window
+
+      # ---- Corridor: Cold Start ----
+      cold_start:
+        min_centerline_points: 3
+        theta_heading_gate_deg: 60.0
+
+      # ---- Corridor: General ----
+      general:
+        max_points_side: 100
+
+    # ---- Pair Validator ----
+    pair:
+      resample_ds: 0.2      # m
+      theta_mean_th: 0.35   # rad (~20 deg)
+      theta_max_th: 0.70    # rad (~40 deg)
+      w_min: 0.8            # m
+      w_max: 3.0            # m
+      w_std_th: 0.5         # m
+
+    # ---- Virtual Boundary ----
+    virtual:
+      default_track_width: 1.5   # m (competition spec: 1.5m lane width)
+      ema_alpha: 0.3
+      min_corridor_width: 0.6    # m
+
+    # ---- Inflation (computed: vehicle.width/2 + safety.margin + extra) ----
+    inflation:
+      boundary_extra_margin: 0.0  # m
+      obstacle_extra_margin: 0.0  # m
+
+    # ---- Costmap Validation (DIRECT mode) ----
+    costmap_valid:
+      ds_check: 0.1         # centerline sampling interval (m)
+      cost_th: 80            # cost threshold for collision
+
+    # ---- Goal Selection ----
+    goal:
+      lookahead_l0: 3.0     # base lookahead distance (m)
+      lookahead_kv: 0.5     # speed gain: L = L0 + kv * v
+      ring_samples: 36      # Method2 ring sample count
+
+    # ---- Speed ----
+    speed:
+      v_max: 1.60            # m/s (T870 max)
+      a_lat_max: 2.0         # m/s^2 lateral acceleration limit
+
+    # ---- Postprocess ----
+    postprocess:
+      resample_ds: 0.10      # m, output path spacing
+      smooth_window: 5        # moving average window
+      prune_max_dev: 0.15    # m, max lateral deviation for pruning
+
+    # ---- Mode Selector ----
+    mode_selector:
+      l_check: 5.0          # forward check distance (m)
+      centerline_jump_th: 1.0  # m
+      enable_astar: true
+
+    # ---- Timeouts ----
+    timeouts:
+      odom_ms: 100
+      perception_ms: 300
+      plan_ms: 100

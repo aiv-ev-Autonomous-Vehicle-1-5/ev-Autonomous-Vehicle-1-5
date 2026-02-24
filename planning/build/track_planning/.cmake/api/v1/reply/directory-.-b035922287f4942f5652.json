@@ -1,0 +1,567 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install",
+			"rclcpp_components_register_node",
+			"ament_index_register_resource",
+			"ament_cmake_environment_generate_package_run_dependencies_marker",
+			"include",
+			"ament_execute_extensions",
+			"ament_package",
+			"ament_cmake_environment_generate_parent_prefix_path_marker",
+			"ament_environment_hooks",
+			"ament_generate_package_environment",
+			"ament_index_register_package",
+			"_ament_package"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt",
+			"/opt/ros/humble/share/rclcpp_components/cmake/rclcpp_components_register_node.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/index/ament_index_register_resource.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/environment/ament_cmake_environment_package_hook.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/ament_environment_hooks.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/ament_cmake_environment_hooks_package_hook.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/ament_generate_package_environment.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/index/ament_index_register_package.cmake",
+			"/opt/ros/humble/share/ament_cmake_core/cmake/index/ament_cmake_index_package_hook.cmake",
+			"/opt/ros/humble/share/rclcpp_components/cmake/rclcpp_components_package_hook.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 38,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 59,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 78,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 95,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 120,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 1,
+				"line" : 77,
+				"parent" : 5
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 124,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 131,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 136,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 140,
+				"parent" : 0
+			},
+			{
+				"command" : 6,
+				"file" : 0,
+				"line" : 151,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 66,
+				"parent" : 11
+			},
+			{
+				"command" : 4,
+				"file" : 4,
+				"line" : 48,
+				"parent" : 12
+			},
+			{
+				"file" : 3,
+				"parent" : 13
+			},
+			{
+				"command" : 3,
+				"file" : 3,
+				"line" : 47,
+				"parent" : 14
+			},
+			{
+				"command" : 2,
+				"file" : 3,
+				"line" : 29,
+				"parent" : 15
+			},
+			{
+				"command" : 0,
+				"file" : 2,
+				"line" : 105,
+				"parent" : 16
+			},
+			{
+				"command" : 7,
+				"file" : 3,
+				"line" : 48,
+				"parent" : 14
+			},
+			{
+				"command" : 2,
+				"file" : 3,
+				"line" : 43,
+				"parent" : 18
+			},
+			{
+				"command" : 0,
+				"file" : 2,
+				"line" : 105,
+				"parent" : 19
+			},
+			{
+				"command" : 4,
+				"file" : 4,
+				"line" : 48,
+				"parent" : 12
+			},
+			{
+				"file" : 7,
+				"parent" : 21
+			},
+			{
+				"command" : 8,
+				"file" : 7,
+				"line" : 20,
+				"parent" : 22
+			},
+			{
+				"command" : 0,
+				"file" : 6,
+				"line" : 70,
+				"parent" : 23
+			},
+			{
+				"command" : 0,
+				"file" : 6,
+				"line" : 87,
+				"parent" : 23
+			},
+			{
+				"command" : 0,
+				"file" : 6,
+				"line" : 70,
+				"parent" : 23
+			},
+			{
+				"command" : 0,
+				"file" : 6,
+				"line" : 87,
+				"parent" : 23
+			},
+			{
+				"command" : 9,
+				"file" : 7,
+				"line" : 26,
+				"parent" : 22
+			},
+			{
+				"command" : 0,
+				"file" : 8,
+				"line" : 91,
+				"parent" : 28
+			},
+			{
+				"command" : 0,
+				"file" : 8,
+				"line" : 91,
+				"parent" : 28
+			},
+			{
+				"command" : 0,
+				"file" : 8,
+				"line" : 91,
+				"parent" : 28
+			},
+			{
+				"command" : 0,
+				"file" : 8,
+				"line" : 107,
+				"parent" : 28
+			},
+			{
+				"command" : 0,
+				"file" : 8,
+				"line" : 119,
+				"parent" : 28
+			},
+			{
+				"command" : 4,
+				"file" : 4,
+				"line" : 48,
+				"parent" : 12
+			},
+			{
+				"file" : 10,
+				"parent" : 34
+			},
+			{
+				"command" : 10,
+				"file" : 10,
+				"line" : 16,
+				"parent" : 35
+			},
+			{
+				"command" : 2,
+				"file" : 9,
+				"line" : 29,
+				"parent" : 36
+			},
+			{
+				"command" : 0,
+				"file" : 2,
+				"line" : 105,
+				"parent" : 37
+			},
+			{
+				"command" : 4,
+				"file" : 4,
+				"line" : 48,
+				"parent" : 12
+			},
+			{
+				"file" : 11,
+				"parent" : 39
+			},
+			{
+				"command" : 2,
+				"file" : 11,
+				"line" : 18,
+				"parent" : 40
+			},
+			{
+				"command" : 0,
+				"file" : 2,
+				"line" : 105,
+				"parent" : 41
+			},
+			{
+				"command" : 11,
+				"file" : 5,
+				"line" : 68,
+				"parent" : 11
+			},
+			{
+				"command" : 0,
+				"file" : 5,
+				"line" : 150,
+				"parent" : 43
+			},
+			{
+				"command" : 0,
+				"file" : 5,
+				"line" : 157,
+				"parent" : 43
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"libtrack_planning_corridor.so"
+			],
+			"targetId" : "track_planning_corridor::@6890427a1f51a3e7e1df",
+			"targetIndex" : 2,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 2,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"libtrack_planning_costmap.so"
+			],
+			"targetId" : "track_planning_costmap::@6890427a1f51a3e7e1df",
+			"targetIndex" : 3,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 3,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"libtrack_planning_planner.so"
+			],
+			"targetId" : "track_planning_planner::@6890427a1f51a3e7e1df",
+			"targetIndex" : 4,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 4,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"libtrack_planning_postprocess.so"
+			],
+			"targetId" : "track_planning_postprocess::@6890427a1f51a3e7e1df",
+			"targetIndex" : 5,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 6,
+			"component" : "Unspecified",
+			"destination" : "lib/track_planning",
+			"paths" : 
+			[
+				"local_planner_node_exe"
+			],
+			"targetId" : "local_planner_node_exe::@6890427a1f51a3e7e1df",
+			"targetIndex" : 1,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 7,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"liblocal_planner_component.so"
+			],
+			"targetId" : "local_planner_component::@6890427a1f51a3e7e1df",
+			"targetIndex" : 0,
+			"type" : "target"
+		},
+		{
+			"backtrace" : 8,
+			"component" : "Unspecified",
+			"destination" : "include",
+			"paths" : 
+			[
+				{
+					"from" : "include",
+					"to" : "."
+				}
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 9,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning",
+			"paths" : 
+			[
+				"config"
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 10,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning",
+			"paths" : 
+			[
+				"launch"
+			],
+			"type" : "directory"
+		},
+		{
+			"backtrace" : 17,
+			"component" : "Unspecified",
+			"destination" : "share/ament_index/resource_index/package_run_dependencies",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_index/share/ament_index/resource_index/package_run_dependencies/track_planning"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 20,
+			"component" : "Unspecified",
+			"destination" : "share/ament_index/resource_index/parent_prefix_path",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_index/share/ament_index/resource_index/parent_prefix_path/track_planning"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 24,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning/environment",
+			"paths" : 
+			[
+				"/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/ament_prefix_path.sh"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 25,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning/environment",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_environment_hooks/ament_prefix_path.dsv"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 26,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning/environment",
+			"paths" : 
+			[
+				"/opt/ros/humble/share/ament_cmake_core/cmake/environment_hooks/environment/path.sh"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 27,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning/environment",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_environment_hooks/path.dsv"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 29,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_environment_hooks/local_setup.bash"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 30,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_environment_hooks/local_setup.sh"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 31,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_environment_hooks/local_setup.zsh"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 32,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_environment_hooks/local_setup.dsv"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 33,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_environment_hooks/package.dsv"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 38,
+			"component" : "Unspecified",
+			"destination" : "share/ament_index/resource_index/packages",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_index/share/ament_index/resource_index/packages/track_planning"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 42,
+			"component" : "Unspecified",
+			"destination" : "share/ament_index/resource_index/rclcpp_components",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_index/share/ament_index/resource_index/rclcpp_components/track_planning"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 44,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning/cmake",
+			"paths" : 
+			[
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_core/track_planningConfig.cmake",
+				"/home/aiv/ev_ws/planning/build/track_planning/ament_cmake_core/track_planningConfig-version.cmake"
+			],
+			"type" : "file"
+		},
+		{
+			"backtrace" : 45,
+			"component" : "Unspecified",
+			"destination" : "share/track_planning",
+			"paths" : 
+			[
+				"package.xml"
+			],
+			"type" : "file"
+		}
+	],
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	}
+}

@@ -1,0 +1,99 @@
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+-- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+-- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)
+-- Found track_msgs: 0.1.0 (/home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake)
+-- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: /home/aiv/ev_ws/planning/src/track_planning/include
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'uncrustify' to check C / C++ code style
+-- Configured uncrustify additional arguments: 
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/aiv/ev_ws/planning/build/track_planning
+Consolidate compiler generated dependencies of target track_planning_costmap
+Consolidate compiler generated dependencies of target track_planning_planner
+Consolidate compiler generated dependencies of target track_planning_corridor
+[  6%] Building CXX object CMakeFiles/track_planning_postprocess.dir/src/postprocess/path_postprocessor.cpp.o
+[ 13%] Building CXX object CMakeFiles/track_planning_planner.dir/src/planner/astar_planner.cpp.o
+[ 20%] Building CXX object CMakeFiles/track_planning_costmap.dir/src/costmap/costmap_validation_builder.cpp.o
+[ 26%] Building CXX object CMakeFiles/track_planning_costmap.dir/src/costmap/drivable_mask_scanline.cpp.o
+[ 33%] Building CXX object CMakeFiles/track_planning_costmap.dir/src/costmap/connected_component.cpp.o
+[ 46%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/corridor_builder.cpp.o
+[ 46%] Building CXX object CMakeFiles/track_planning_planner.dir/src/goal/goal_selector.cpp.o
+[ 53%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/pair_validator.cpp.o
+[ 60%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/centerline_builder.cpp.o
+[ 66%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/virtual_boundary.cpp.o
+[ 73%] Linking CXX shared library libtrack_planning_postprocess.so
+[ 73%] Built target track_planning_postprocess
+[ 80%] Linking CXX shared library libtrack_planning_planner.so
+[ 86%] Linking CXX shared library libtrack_planning_corridor.so
+[ 93%] Linking CXX shared library libtrack_planning_costmap.so
+[ 93%] Built target track_planning_planner
+[ 93%] Built target track_planning_corridor
+[100%] Built target track_planning_costmap
+-- Install configuration: ""
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_corridor.so
+-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_corridor.so" to ""
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_costmap.so
+-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_costmap.so" to ""
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_planner.so
+-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_planner.so" to ""
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_postprocess.so
+-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_postprocess.so" to ""
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/corridor_builder.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/virtual_boundary.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/centerline_builder.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/pair_validator.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/costmap
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/costmap/costmap_validation_builder.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/costmap/inflation.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/costmap/connected_component.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/costmap/drivable_mask_scanline.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/geometry.hpp
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/types.hpp
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/params.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/debug_publish.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/planner
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/planner/astar_planner.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/planner/mode_selector.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/goal
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/goal/goal_selector.hpp
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/safety
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/safety/safety_checker.hpp
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/postprocess
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/postprocess/path_postprocessor.hpp
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/config
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/config/planning.yaml
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/launch
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/package_run_dependencies/track_planning
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/parent_prefix_path/track_planning
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/ament_prefix_path.sh
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/path.sh
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/path.dsv
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.bash
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.sh
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.zsh
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.dsv
+-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/package.dsv
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/packages/track_planning
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/cmake/track_planningConfig.cmake
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/cmake/track_planningConfig-version.cmake
+-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/package.xml
