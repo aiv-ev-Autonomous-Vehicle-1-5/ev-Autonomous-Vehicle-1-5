@@ -10,8 +10,11 @@ setup.py
 ../../build/lane_seg/lane_seg.egg-info/zip-safe
 lane_seg/__init__.py
 lane_seg/bev_node.py
+lane_seg/convert_to_yolo.py
+lane_seg/generate_synthetic_bev.py
 lane_seg/get_extrinsic.py
 lane_seg/get_points.py
+lane_seg/yolo_seg_node.py
 resource/lane_seg
 test/test_copyright.py
 test/test_flake8.py

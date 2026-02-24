@@ -24,7 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'bev_node = lane_seg.bev_node:main'
+            'bev_node = lane_seg.bev_node:main',
+            'yolo_seg = lane_seg.yolo_seg_node:main'
         ],
     },
 )

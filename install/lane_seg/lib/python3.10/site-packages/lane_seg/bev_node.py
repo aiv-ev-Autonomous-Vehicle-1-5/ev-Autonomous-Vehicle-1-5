@@ -13,7 +13,7 @@ class BEVTransformNode(Node):
         self.bridge = CvBridge()
         
         # 1. 구독(Subscriber)과 발행(Publisher) 설정
-        # 주의: '/image_raw' 부분을 실제 사용하는 카메라 토픽 이름으로 변경해야 합니다.
+        
         self.subscription = self.create_subscription(
             Image,
             '/camera1/image_raw', 
@@ -44,9 +44,9 @@ class BEVTransformNode(Node):
         extrinsic = np.hstack((rmat, tvec))
 
         # BEV 도화지 물리적 범위 (미터 단위)
-        world_y_min, world_y_max = 1.0, 5.0  # 전방 1m ~ 5m
-        world_x_min, world_x_max = -2.0, 2.0 # 좌우 -2m ~ 2m
-        interval = 0.02 # 1픽셀 = 2cm 해상도
+        world_y_min, world_y_max = 1.0 , 4.0  # 전방 1m ~ 4m
+        world_x_min, world_x_max = -1.2, 1.2 # 좌우 -1.2m ~ 1.2m
+        interval = 0.01 # 1픽셀 = 1cm 해상도
 
         self.output_height = int(np.ceil((world_y_max - world_y_min) / interval))
         self.output_width = int(np.ceil((world_x_max - world_x_min) / interval))

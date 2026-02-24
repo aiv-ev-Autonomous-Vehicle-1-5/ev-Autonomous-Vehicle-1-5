@@ -1,0 +1,36 @@
+[0.418s] Invoking command in '/home/woonggook/ev_ws/build/lane_seg': PYTHONPATH=/home/woonggook/ev_ws/build/lane_seg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/woonggook/ev_ws/build/lane_seg/build
+[0.584s] running develop
+[0.699s] Removing /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane-seg.egg-link (link to .)
+[0.719s] Invoked command in '/home/woonggook/ev_ws/build/lane_seg' returned '0': PYTHONPATH=/home/woonggook/ev_ws/build/lane_seg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/woonggook/ev_ws/build/lane_seg/build
+[0.721s] Invoking command in '/home/woonggook/ev_ws/src/lane_seg': PYTHONPATH=/home/woonggook/ev_ws/build/lane_seg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/lane_seg build --build-base /home/woonggook/ev_ws/build/lane_seg/build install --record /home/woonggook/ev_ws/build/lane_seg/install.log --single-version-externally-managed install_data --force
+[0.892s] running egg_info
+[0.892s] writing ../../build/lane_seg/lane_seg.egg-info/PKG-INFO
+[0.892s] writing dependency_links to ../../build/lane_seg/lane_seg.egg-info/dependency_links.txt
+[0.892s] writing entry points to ../../build/lane_seg/lane_seg.egg-info/entry_points.txt
+[0.893s] writing requirements to ../../build/lane_seg/lane_seg.egg-info/requires.txt
+[0.893s] writing top-level names to ../../build/lane_seg/lane_seg.egg-info/top_level.txt
+[0.894s] reading manifest file '../../build/lane_seg/lane_seg.egg-info/SOURCES.txt'
+[0.894s] writing manifest file '../../build/lane_seg/lane_seg.egg-info/SOURCES.txt'
+[0.894s] running build
+[0.894s] running build_py
+[0.894s] copying lane_seg/bev_node.py -> /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg
+[0.894s] running install
+[0.895s] running install_lib
+[0.895s] creating /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg
+[0.895s] copying /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/bev_node.py -> /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg
+[0.895s] copying /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/get_points.py -> /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg
+[0.895s] copying /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/__init__.py -> /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg
+[0.895s] copying /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/get_extrinsic.py -> /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg
+[0.895s] byte-compiling /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/bev_node.py to bev_node.cpython-310.pyc
+[0.896s] byte-compiling /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/get_points.py to get_points.cpython-310.pyc
+[0.896s] byte-compiling /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/__init__.py to __init__.cpython-310.pyc
+[0.896s] byte-compiling /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/get_extrinsic.py to get_extrinsic.cpython-310.pyc
+[0.897s] running install_data
+[0.897s] copying resource/lane_seg -> /home/woonggook/ev_ws/install/lane_seg/share/ament_index/resource_index/packages
+[0.897s] copying package.xml -> /home/woonggook/ev_ws/install/lane_seg/share/lane_seg
+[0.897s] running install_egg_info
+[0.898s] Copying ../../build/lane_seg/lane_seg.egg-info to /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg-0.0.0-py3.10.egg-info
+[0.898s] running install_scripts
+[0.911s] Installing bev_node script to /home/woonggook/ev_ws/install/lane_seg/lib/lane_seg
+[0.912s] writing list of installed files to '/home/woonggook/ev_ws/build/lane_seg/install.log'
+[0.928s] Invoked command in '/home/woonggook/ev_ws/src/lane_seg' returned '0': PYTHONPATH=/home/woonggook/ev_ws/build/lane_seg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/lane_seg build --build-base /home/woonggook/ev_ws/build/lane_seg/build install --record /home/woonggook/ev_ws/build/lane_seg/install.log --single-version-externally-managed install_data --force
