@@ -8,10 +8,22 @@
 module track_msgs {
   module msg {
     @verbatim (language="comment", text=
-      "track_msgs/msg/ObstacleArray.msg")
+      "=============================================================" "\n"
+      "track_msgs/msg/ObstacleArray.msg" "\n"
+      "=============================================================" "\n"
+      "장애물 배열 — 현재 미사용, 향후 장애물 회피 기능 확장 시 사용 예정" "\n"
+      "" "\n"
+      "토픽 (예정): /perception/obstacles" "\n"
+      "발행 (예정): Perception 노드" "\n"
+      "구독 (예정): 장애물 회피 플래너" "\n"
+      "=============================================================")
     struct ObstacleArray {
+      @verbatim (language="comment", text=
+        "타임스탬프 + 좌표계 프레임 (base_link)")
       std_msgs::msg::Header header;
 
+      @verbatim (language="comment", text=
+        "장애물 배열 (가변 길이)")
       sequence<track_msgs::msg::Obstacle> obstacles;
     };
   };

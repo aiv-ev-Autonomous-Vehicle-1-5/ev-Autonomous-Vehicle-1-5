@@ -4,17 +4,32 @@
  *
  * 파이프라인 Step (3): 한쪽 경계가 없을 때 추정 차로 폭(w_hat)으로 반대쪽 가상 경계 생성.
  *
- * 핵심 기하 연산:
- *   - rotate90(t): 접선 t를 CCW 90도 회전 → 좌측 법선(left normal) 생성
- *     예: t = (1, 0) → rotate90(t) = (0, 1) (위쪽 = 좌측)
- *   - sgn 결정:
- *     visible이 좌측(left) → 가상은 우측(right) → 우측 방향 = 법선 반대 → sgn = -1
- *     visible이 우측(right) → 가상은 좌측(left) → 좌측 방향 = 법선 방향 → sgn = +1
- *   - 가상점: p_virtual = visible[i] + (sgn * w_hat) * rotate90(tangent[i])
+ * ┌─────────────────────────────────────────────────────────────────────┐
+ * │               법선(normal) 방향과 가상 경계 생성 원리               │
+ * ├─────────────────────────────────────────────────────────────────────┤
+ * │                                                                     │
+ * │  [Case A] visible이 좌측 (visible_is_left = true, sgn = -1):       │
+ * │                                                                     │
+ * │    좌측(실측):  V0──V1──V2──V3      ← visible boundary             │
+ * │                  ↓   ↓   ↓   ↓      sgn * w_hat * n (아래쪽)       │
+ * │    우측(가상):  G0──G1──G2──G3      ← generated boundary           │
+ * │                                                                     │
+ * │  [Case B] visible이 우측 (visible_is_left = false, sgn = +1):      │
+ * │                                                                     │
+ * │    좌측(가상):  G0──G1──G2──G3      ← generated boundary           │
+ * │                  ↑   ↑   ↑   ↑      sgn * w_hat * n (위쪽)         │
+ * │    우측(실측):  V0──V1──V2──V3      ← visible boundary             │
+ * │                                                                     │
+ * │  수식: p_virtual[i] = visible[i] + sgn * w_hat * rotate90(t[i])    │
+ * │    - t[i] = 접선 단위벡터                                          │
+ * │    - rotate90(t) = (-t.y, t.x): CCW 90° → 좌측 법선               │
+ * │    - sgn = -1: 우측으로 오프셋 / sgn = +1: 좌측으로 오프셋        │
+ * └─────────────────────────────────────────────────────────────────────┘
  *
  * w_hat(추정 차로 폭) 관리:
  *   - 양쪽 corridor 모두 보일 때 median_width 직접 계산하여 w_hat_ 갱신
- *   - 한쪽만 보일 때 직전 w_hat_ 사용, 초기값: default_track_width
+ *   - 한쪽만 보일 때 직전 w_hat_ 사용, 초기값: default_track_width (1.5m)
+ *   - 대회 규격: 차로 폭 1.5m
  */
 #include "track_planning/corridor/virtual_boundary.hpp"
 #include "track_planning/common/geometry.hpp"

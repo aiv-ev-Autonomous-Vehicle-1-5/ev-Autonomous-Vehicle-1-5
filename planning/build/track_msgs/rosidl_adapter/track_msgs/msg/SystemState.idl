@@ -7,20 +7,57 @@
 module track_msgs {
   module msg {
     module SystemState_Constants {
+      @verbatim (language="comment", text=
+        "시스템 상태 상수 정의" "\n"        "시스템 비활성")
       const uint8 OFFLINE = 0;
+      @verbatim (language="comment", text=
+        "수동 조종 모드")
       const uint8 MANUAL = 1;
+      @verbatim (language="comment", text=
+        "자율주행 대기")
       const uint8 AUTO_STANDBY = 2;
+      @verbatim (language="comment", text=
+        "자율주행 활성 (경로 추종 중)")
       const uint8 AUTO_ACTIVE = 3;
+      @verbatim (language="comment", text=
+        "자율주행 일시정지")
       const uint8 AUTO_HOLD = 4;
+      @verbatim (language="comment", text=
+        "경로 추종 불가")
       const uint8 INFEASIBLE = 5;
+      @verbatim (language="comment", text=
+        "비상 정지")
       const uint8 EMERGENCY_STOP = 6;
     };
     @verbatim (language="comment", text=
+      "=============================================================" "\n"
       "track_msgs/msg/SystemState.msg" "\n"
-      "Global system state")
+      "=============================================================" "\n"
+      "시스템 전체 상태 (FSM: Finite State Machine)" "\n"
+      "현재 미사용, 향후 상위 시스템 통합 시 사용 예정" "\n"
+      "" "\n"
+      "상태 전이 예시:" "\n"
+      "  OFFLINE → MANUAL → AUTO_STANDBY → AUTO_ACTIVE" "\n"
+      "  AUTO_ACTIVE → AUTO_HOLD (일시정지)" "\n"
+      "  AUTO_ACTIVE → INFEASIBLE (경로 추종 불가)" "\n"
+      "  * → EMERGENCY_STOP (비상 정지, 어디서든 전이 가능)" "\n"
+      "" "\n"
+      "각 상태 설명:" "\n"
+      "  OFFLINE (0)        — 시스템 비활성 (초기화 전)" "\n"
+      "  MANUAL (1)         — 수동 조종 모드 (조이스틱/RC)" "\n"
+      "  AUTO_STANDBY (2)   — 자율주행 대기 (경로 수신 대기 중)" "\n"
+      "  AUTO_ACTIVE (3)    — 자율주행 활성 (경로 추종 중)" "\n"
+      "  AUTO_HOLD (4)      — 자율주행 일시정지 (장애물/신호 대기)" "\n"
+      "  INFEASIBLE (5)     — 경로 추종 불가 (감속 후 정지)" "\n"
+      "  EMERGENCY_STOP (6) — 비상 정지 (즉시 정지)" "\n"
+      "=============================================================")
     struct SystemState {
+      @verbatim (language="comment", text=
+        "타임스탬프 + 좌표계 프레임")
       std_msgs::msg::Header header;
 
+      @verbatim (language="comment", text=
+        "현재 시스템 상태")
       uint8 state;
     };
   };

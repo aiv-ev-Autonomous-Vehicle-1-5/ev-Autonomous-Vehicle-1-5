@@ -14,20 +14,42 @@
  *
  * @note Stale 검사는 on_timer() 상단에서 사전 처리됨 (이 함수에 도달하면 항상 not-stale)
  *
- * ## Menger 곡률 (compute_max_curvature)
- *  세 연속 포인트 A, B, C에서 외접원 반경의 역수를 곡률로 계산:
- *  κ = 2 * |cross(B-A, C-B)| / (|B-A| * |C-B| * |A-C|)
- *
- *  원리: 외접원 공식 R = (ab * bc * ca) / (4 * Area)
- *        Area = 0.5 * |cross(B-A, C-B)|
- *        → κ = 1/R = 2*Area / (ab*bc*ca)
- *             = 2 * |cross(B-A, C-B)| / (ab * bc * ca)
+ * ┌─────────────────────────────────────────────────────────────────┐
+ * │               Menger 곡률 (compute_max_curvature)               │
+ * ├─────────────────────────────────────────────────────────────────┤
+ * │                                                                 │
+ * │           B(i+1)                                                │
+ * │          / \                                                    │
+ * │    ab   /   \  bc                                               │
+ * │        /  O  \        O = 외접원 중심 (circumcenter)            │
+ * │       / (R)   \       R = 외접원 반경 (circumradius)            │
+ * │      /         \      κ = 1/R = 곡률                           │
+ * │   A(i)────────C(i+2)                                           │
+ * │        ac                                                       │
+ * │                                                                 │
+ * │  공식 유도:                                                     │
+ * │    삼각형 넓이   Area = 0.5 * |cross(BA, CB)|                  │
+ * │    외접원 반경   R = (ab * bc * ac) / (4 * Area)               │
+ * │    곡률          κ = 1/R = 4*Area / (ab*bc*ac)                 │
+ * │                     = 2*|cross(BA,CB)| / (ab*bc*ac)            │
+ * │                                                                 │
+ * │  물리적 제약:                                                   │
+ * │    κ_limit = 1/r_min  (r_min = L/tan(δ_max), Ackermann)       │
+ * │    κ_max > κ_limit → INFEASIBLE (조향 한계 초과)               │
+ * └─────────────────────────────────────────────────────────────────┘
  *
  * ## 목표 속도 계산
+ *  원심 가속도 조건: a_lat = v² * κ ≤ a_lat_max
+ *    → v ≤ sqrt(a_lat_max / κ)
+ *
  *  v_curve = sqrt(a_lat_max / κ_max)
- *             (원심력 = m*v²/R = m*v²*κ ≤ m*a_lat_max)
  *  v_target = min(v_max, v_curve)
  *  v_target = clamp(v_target, 0, v_max)
+ *
+ *  예시 (T870 기준: a_lat_max=2.0, v_max=1.6):
+ *    κ=0.5 → v_curve=2.0 → v_target=1.6 (v_max 제한)
+ *    κ=1.0 → v_curve=1.41 → v_target=1.41 (곡률 제한)
+ *    κ=2.0 → v_curve=1.0 → v_target=1.0 (곡률 제한)
  */
 
 #ifndef TRACK_PLANNING__SAFETY__SAFETY_CHECKER_HPP_

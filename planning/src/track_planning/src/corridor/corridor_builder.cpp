@@ -2,20 +2,50 @@
  * @file corridor_builder.cpp
  * @brief 코리도 빌더 구현 — greedy chaining 알고리즘
  *
- * [OV-04-01] 파이프라인 Step (1)
+ * 파이프라인 Step (2): Perception이 제공하는 차선점 + 콘 점을 좌/우 경계 폴리라인으로 변환.
+ *
+ * ┌─────────────────────────────────────────────────────────────────┐
+ * │                   s/d 좌표계 (Frenet-like)                      │
+ * ├─────────────────────────────────────────────────────────────────┤
+ * │                                                                 │
+ * │            d (횡방향)                                           │
+ * │            ▲                                                    │
+ * │   d_max    │· · · · · · ·  ← 횡방향 상한                      │
+ * │            │        ★      ← 후보점 (s, d)                    │
+ * │            │                                                    │
+ * │  ──────────●───────────────► s (종방향 = 접선 방향)            │
+ * │          c_end   s_min  s_max                                   │
+ * │   (참조점) │                                                    │
+ * │  -d_max    │· · · · · · ·  ← 횡방향 하한                      │
+ * │            │                                                    │
+ * │                                                                 │
+ * │  s = dot(pt - c_end, t_end)        전방 진행거리               │
+ * │  d = |cross(t_end, pt - c_end)|    횡방향 거리                 │
+ * │                                                                 │
+ * │  필터 조건: s_min < s < s_max, d < d_max                       │
+ * └─────────────────────────────────────────────────────────────────┘
  *
  * Greedy Chaining 흐름:
  *   1. determine_reference()로 참조점/접선 결정
  *      - 항상 ego_pos + ego_heading (이전 프레임 의존 제거)
  *   2. find_seed()로 체이닝 시작점 탐색 (콘 우선)
- *      - ego 중심 반지름 r_seed 이내 + 접선 방향 forward_range [rad] 각도 이내에서 가장 가까운 점 선택
+ *      - ego 중심 반지름 r_seed 이내 + 접선 방향 forward_range [rad] 각도 이내
+ *      - 적응형 반경: r_step씩 확장하며 가장 가까운 적합 점 선택
  *   3. 반복 (Greedy Chaining Loop):
  *      a. 미사용 후보점 수집 (used[] 플래그로 재방문 방지)
  *      b. filter_candidates()로 s/d 좌표계 필터링
  *      c. 콘 후보가 있으면 콘만, 없으면 차선 후보 사용 (cone priority per step)
  *      d. score_and_select()로 가중 점수 최적 점 선택
+ *         score = w_s·(진행) - w_d·(편차) - w_a·(각도) - w_p·(예측오차)
  *      e. chain에 추가, used 마킹
  *      f. x > roi.x_max 이면 종료
+ *
+ * 점수 산정 공식:
+ *   score = w_s * norm_s           ← 전방 진행 보상 (멀수록 높은 점수)
+ *         - w_d * norm_d           ← 횡방향 편차 패널티
+ *         - w_a * norm_a           ← 방향 편차 패널티 (접선과의 각도 차이)
+ *         - w_p * norm_p           ← 예측 오차 패널티 (예측 위치와의 거리)
+ *   각 항은 [0, 1]로 정규화 (clamp)
  */
 #include "track_planning/corridor/corridor_builder.hpp"
 #include "track_planning/common/geometry.hpp"

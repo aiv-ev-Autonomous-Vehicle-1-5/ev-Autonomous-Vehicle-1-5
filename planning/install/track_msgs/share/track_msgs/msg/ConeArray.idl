@@ -8,10 +8,29 @@
 module track_msgs {
   module msg {
     @verbatim (language="comment", text=
-      "track_msgs/msg/ConeArray.msg")
+      "=============================================================" "\n"
+      "track_msgs/msg/ConeArray.msg" "\n"
+      "=============================================================" "\n"
+      "콘 배열 — 한 프레임에서 검출된 모든 콘을 묶어서 전달" "\n"
+      "" "\n"
+      "토픽: /perception/cones" "\n"
+      "발행: Perception 노드 (LiDAR DBSCAN 클러스터링 결과)" "\n"
+      "구독: LocalPlannerNode → parse_cones()에서 좌/우 분리" "\n"
+      "" "\n"
+      "처리 흐름:" "\n"
+      "  Perception → ConeArray 발행" "\n"
+      "    → LocalPlannerNode.parse_cones()" "\n"
+      "      → cone.position.y >= 0 → cone_left (좌측 콘)" "\n"
+      "      → cone.position.y <  0 → cone_right (우측 콘)" "\n"
+      "    → CorridorBuilder.build() 입력으로 전달" "\n"
+      "=============================================================")
     struct ConeArray {
+      @verbatim (language="comment", text=
+        "타임스탬프 + 좌표계 프레임 (base_link)")
       std_msgs::msg::Header header;
 
+      @verbatim (language="comment", text=
+        "검출된 콘 배열 (가변 길이)")
       sequence<track_msgs::msg::Cone> cones;
     };
   };

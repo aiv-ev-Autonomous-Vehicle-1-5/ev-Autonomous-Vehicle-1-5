@@ -5,12 +5,42 @@
  * 플래닝 파이프라인 전체에서 사용하는 2D 벡터 연산, 각도 연산, 폴리라인 처리 함수.
  * 모든 함수가 inline으로 정의되어 있어 별도 .cpp 없이 헤더만 include하면 사용 가능.
  *
+ * ┌────────────────────────────────────────────────────────────────┐
+ * │                  base_link 좌표계 기준                         │
+ * ├────────────────────────────────────────────────────────────────┤
+ * │                                                                │
+ * │           +y (좌측)                                            │
+ * │            ▲                                                   │
+ * │            │                                                   │
+ * │            │    · · ·   ← 좌측 경계 (corridor.left)           │
+ * │            │                                                   │
+ * │  ──────────●────────────► +x (전방)                           │
+ * │       ego (0,0)                                                │
+ * │            │                                                   │
+ * │            │    · · ·   ← 우측 경계 (corridor.right)          │
+ * │            │                                                   │
+ * │           -y (우측)                                            │
+ * │                                                                │
+ * │  heading = atan2(y, x): +x = 0°, +y = 90° (반시계 양수)      │
+ * │  rotate90(v): (x,y) → (-y,x) = CCW 90° (좌측 법선)           │
+ * └────────────────────────────────────────────────────────────────┘
+ *
  * 주요 기능:
- *   - 스칼라 연산: dot, cross, norm, dist
- *   - 벡터 연산: +, -, *, normalize, rotate90
+ *   - 스칼라 연산: dot2, cross2, norm, dist, dist_sq
+ *   - 벡터 연산: +, -, *, normalize, rotate90, rotate90_cw
  *   - 각도 연산: wrap_pi, angle_diff, heading
  *   - 보간: lerp (선형 보간)
- *   - 폴리라인: 길이 계산, 리샘플링, 접선 계산, 접선 회귀
+ *   - 폴리라인: polyline_length, resample_polyline, polyline_tangents, regress_tangent
+ *   - 기하 판정: circumcenter, segments_intersect, polylines_cross
+ *   - 통계: compute_median_width (좌/우 경계 간 중앙값 폭)
+ *
+ * 사용 위치:
+ *   - corridor_builder.cpp  : dot2, cross2, norm, dist, heading, angle_diff, regress_tangent
+ *   - virtual_boundary.cpp  : polyline_tangents, rotate90
+ *   - centerline_builder.cpp: resample_polyline, polyline_tangents, circumcenter, polylines_cross
+ *   - path_postprocessor.cpp: resample_polyline, polyline_tangents, heading
+ *   - safety_checker.hpp    : dist, cross2 (Menger 곡률)
+ *   - local_planner_node.cpp: compute_median_width
  */
 #ifndef TRACK_PLANNING__COMMON__GEOMETRY_HPP_
 #define TRACK_PLANNING__COMMON__GEOMETRY_HPP_

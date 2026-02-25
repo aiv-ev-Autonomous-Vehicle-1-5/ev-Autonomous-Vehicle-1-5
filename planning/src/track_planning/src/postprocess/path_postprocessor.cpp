@@ -2,23 +2,48 @@
  * @file path_postprocessor.cpp
  * @brief PathPostprocessor 구현부 — prune, smooth, resample, yaw 4단계 파이프라인
  *
+ * ┌─────────────────────────────────────────────────────────────────┐
+ * │                  후처리 4단계 파이프라인 시각화                  │
+ * ├─────────────────────────────────────────────────────────────────┤
+ * │                                                                 │
+ * │  입력 (raw_path):   ·─·─·─·─·─·─·─·─·─·    DTR 센터라인       │
+ * │                    (노이즈 포함, 불규칙 간격)                   │
+ * │                          ▼                                      │
+ * │  [1] Prune:        ·───────·──────·──·      불필요한 점 제거   │
+ * │                    (직선 구간 단순화)                            │
+ * │                          ▼                                      │
+ * │  [2] Smooth:       ·~~~~~~~·~~~~~~·~~·      꺾임 완화          │
+ * │                    (이동 평균, 양끝 보존)                       │
+ * │                          ▼                                      │
+ * │  [3] Resample:     ·  ·  ·  ·  ·  ·  ·     균일 간격 (ds)     │
+ * │                    (제어기가 기대하는 형태)                      │
+ * │                          ▼                                      │
+ * │  [4] Yaw:          →  →  →  ↗  →  →  →     진행 방향 각도     │
+ * │                    (각 점의 heading 라디안)                      │
+ * │                          ▼                                      │
+ * │  출력: PostprocessResult { path, yaw, valid }                   │
+ * │                                                                 │
+ * └─────────────────────────────────────────────────────────────────┘
+ *
  * ## 각 단계별 목적
  *
  * prune()
  *  - 원시 경로의 불필요한 중간 포인트(이상점, 노이즈) 제거
- *  - 수직 편차 허용 범위 내에서 최대한 직선으로 단순화
+ *  - 수직 편차 허용 범위(prune_max_dev) 내에서 최대한 직선으로 단순화
+ *  - Greedy shortcut: i→j 직선에서 중간점의 수직 거리 ≤ max_dev 이면 숏컷 허용
  *
  * smooth()
  *  - 가지치기 후 남은 날카로운 꺾임 완화
- *  - 이동 평균으로 연속적이고 부드러운 경로 생성
+ *  - 이동 평균(moving average)으로 연속적이고 부드러운 경로 생성
+ *  - 양 끝점(start, goal)은 항상 보존 (위치 고정)
  *
  * resample_polyline() [geometry.hpp]
- *  - 균일한 간격의 waypoint 생성
+ *  - resample_ds 간격으로 균일한 waypoint 생성
  *  - 제어기가 일정 간격의 포인트를 기대할 때 필수
  *
  * polyline_tangents() + heading() [geometry.hpp]
  *  - 각 waypoint에서의 차량 목표 방향(yaw) 계산
- *  - 전방 또는 중앙 차분으로 접선 방향 계산
+ *  - 전방 차분(forward difference)으로 접선 방향 계산 후 atan2로 각도 변환
  *
  * ## 의존 파일
  *  - geometry.hpp: resample_polyline(), polyline_tangents(), heading()

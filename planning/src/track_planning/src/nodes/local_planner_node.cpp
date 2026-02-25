@@ -7,6 +7,38 @@
 //   3. Stale 검사 (check_stale)
 //   4. 메인 파이프라인 (on_timer): 9단계 (0)-(8)로 경로 생성
 //   5. RCLCPP_COMPONENTS_REGISTER_NODE 매크로: 컴포넌트 등록
+//
+// ┌──────────────────────────────────────────────────────────┐
+// │          on_timer() 파이프라인 흐름도 (10Hz)             │
+// ├──────────────────────────────────────────────────────────┤
+// │                                                          │
+// │  (0) check_stale()                                       │
+// │   │  ├─ stale → PlannerStatus(STALE) → return           │
+// │   │  └─ fresh → 계속                                     │
+// │   ▼                                                      │
+// │  (1) parse_lanes() + parse_cones()                       │
+// │   │  LaneBoundaryArray → lane_left, lane_right           │
+// │   │  ConeArray → cone_left, cone_right                   │
+// │   ▼                                                      │
+// │  (2) CorridorBuilder::build()                            │
+// │   │  → CorridorPolylines {left, right, left_ok, right_ok}│
+// │   ▼                                                      │
+// │  (3) w_hat 갱신 + VirtualBoundary::generate()            │
+// │   │  both_ok → median_width, 한쪽만 → 가상 경계         │
+// │   ▼                                                      │
+// │  (4-5) CenterlineBuilder::build()                        │
+// │   │  DTR 외심 (both) 또는 offset (한쪽)                  │
+// │   ▼                                                      │
+// │  (6) PathPostprocessor::process()                        │
+// │   │  prune → smooth → resample → yaw                    │
+// │   ▼                                                      │
+// │  (7) safety_checker::check()                             │
+// │   │  곡률 검사 → 속도 제한 → PlannerState 결정           │
+// │   ▼                                                      │
+// │  (8) publish: /planning/path + /planning/status          │
+// │      + debug topics (Lazy Publishing)                    │
+// │                                                          │
+// └──────────────────────────────────────────────────────────┘
 // ============================================================
 
 #include "track_planning/nodes/local_planner_node.hpp"

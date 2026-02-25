@@ -1,0 +1,666 @@
+[0.000000] (-) TimerEvent: {}
+[0.000048] (track_msgs) JobQueued: {'identifier': 'track_msgs', 'dependencies': OrderedDict()}
+[0.000098] (track_planning) JobQueued: {'identifier': 'track_planning', 'dependencies': OrderedDict([('track_msgs', '/home/aiv/ev_ws/planning/install/track_msgs')])}
+[0.000136] (track_msgs) JobStarted: {'identifier': 'track_msgs'}
+[0.005149] (track_msgs) JobProgress: {'identifier': 'track_msgs', 'progress': 'cmake'}
+[0.005462] (track_msgs) JobProgress: {'identifier': 'track_msgs', 'progress': 'build'}
+[0.005751] (track_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/aiv/ev_ws/planning/build/track_msgs', '--', '-j28', '-l28'], 'cwd': '/home/aiv/ev_ws/planning/build/track_msgs', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('VSCODE_CWD', '/home/aiv'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('USER', 'aiv'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('LC_TIME', 'ko_KR.UTF-8'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('CLAUDE_AGENT_SDK_VERSION', '0.2.49'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_laserscan/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('VSCODE_IPC_HOOK', '/run/user/1000/vscode-b400ee21-1.10-main.sock'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL', '1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2094'), ('SYSTEMD_EXEC_PID', '2603'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4020'), ('NVM_DIR', '/home/aiv/.nvm'), ('VSCODE_CRASH_REPORTER_PROCESS_TYPE', 'extensionHost'), ('VSCODE_L10N_BUNDLE_LOCATION', ''), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:21696'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('APPLICATIONINSIGHTS_CONFIGURATION_CONTENT', '{}'), ('USERNAME', 'aiv'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/usr/bin:/home/aiv/.local/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.0/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2584,unix/aiv:/tmp/.ICE-unix/2584'), ('INVOCATION_ID', '1744b5a31de14982a42b5a0c06740c92'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('ELECTRON_RUN_AS_NODE', '1'), ('GDMSESSION', 'ubuntu'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('VIRTUAL_ENV', '/usr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/track_msgs'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('VSCODE_CODE_CACHE_PATH', '/home/aiv/.config/Code/CachedData/591199df409fbf59b4b52d5ad4ee0470152a9b31'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('VSCODE_PID', '4020')]), 'shell': False}
+[0.028699] (track_msgs) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.091803] (track_msgs) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[0.093791] (track_msgs) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.094982] (track_msgs) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.099522] (-) TimerEvent: {}
+[0.109250] (track_msgs) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.120970] (track_msgs) StdoutLine: {'line': b'-- Found geometry_msgs: 4.9.0 (/opt/ros/humble/share/geometry_msgs/cmake)\n'}
+[0.199602] (-) TimerEvent: {}
+[0.299718] (-) TimerEvent: {}
+[0.305327] (track_msgs) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[0.399794] (-) TimerEvent: {}
+[0.436205] (track_msgs) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.499982] (-) TimerEvent: {}
+[0.600160] (-) TimerEvent: {}
+[0.613152] (track_msgs) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.625456] (track_msgs) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[0.637723] (track_msgs) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.637754] (track_msgs) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[0.637776] (track_msgs) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so\n'}
+[0.660510] (track_msgs) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[0.665025] (track_msgs) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[0.665326] (track_msgs) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[0.666038] (track_msgs) StdoutLine: {'line': b'-- Configuring done\n'}
+[0.685295] (track_msgs) StdoutLine: {'line': b'-- Generating done\n'}
+[0.691091] (track_msgs) StdoutLine: {'line': b'-- Build files have been written to: /home/aiv/ev_ws/planning/build/track_msgs\n'}
+[0.700277] (-) TimerEvent: {}
+[0.708646] (track_msgs) StdoutLine: {'line': b'[  1%] Generating C code for ROS interfaces\n'}
+[0.716562] (track_msgs) StdoutLine: {'line': b'[  2%] Generating C++ code for ROS interfaces\n'}
+[0.722571] (track_msgs) StdoutLine: {'line': b'[  2%] Built target ament_cmake_python_copy_track_msgs\n'}
+[0.800343] (-) TimerEvent: {}
+[0.839096] (track_msgs) StdoutLine: {'line': b'running egg_info\n'}
+[0.839430] (track_msgs) StdoutLine: {'line': b'writing track_msgs.egg-info/PKG-INFO\n'}
+[0.839486] (track_msgs) StdoutLine: {'line': b'writing dependency_links to track_msgs.egg-info/dependency_links.txt\n'}
+[0.839534] (track_msgs) StdoutLine: {'line': b'writing top-level names to track_msgs.egg-info/top_level.txt\n'}
+[0.841051] (track_msgs) StdoutLine: {'line': b"reading manifest file 'track_msgs.egg-info/SOURCES.txt'\n"}
+[0.841433] (track_msgs) StdoutLine: {'line': b"writing manifest file 'track_msgs.egg-info/SOURCES.txt'\n"}
+[0.856848] (track_msgs) StdoutLine: {'line': b'[  2%] Built target ament_cmake_python_build_track_msgs_egg\n'}
+[0.900432] (-) TimerEvent: {}
+[1.000591] (-) TimerEvent: {}
+[1.100740] (-) TimerEvent: {}
+[1.200892] (-) TimerEvent: {}
+[1.268972] (track_msgs) StdoutLine: {'line': b'[  2%] Built target track_msgs__cpp\n'}
+[1.275003] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_generator_c\n'}
+[1.277058] (track_msgs) StdoutLine: {'line': b'[  4%] Generating C++ introspection for ROS interfaces\n'}
+[1.277118] (track_msgs) StdoutLine: {'line': b'[  4%] Generating C++ type support for eProsima Fast-RTPS\n'}
+[1.277374] (track_msgs) StdoutLine: {'line': b'[  5%] Generating C++ type support dispatch for ROS interfaces\n'}
+[1.282983] (track_msgs) StdoutLine: {'line': b'[ 10%] Building C object CMakeFiles/track_msgs__rosidl_generator_c.dir/rosidl_generator_c/track_msgs/msg/detail/planner_status__functions.c.o\n'}
+[1.283145] (track_msgs) StdoutLine: {'line': b'[ 10%] Building C object CMakeFiles/track_msgs__rosidl_generator_c.dir/rosidl_generator_c/track_msgs/msg/detail/obstacle__functions.c.o\n'}
+[1.283211] (track_msgs) StdoutLine: {'line': b'[ 10%] Building C object CMakeFiles/track_msgs__rosidl_generator_c.dir/rosidl_generator_c/track_msgs/msg/detail/cone__functions.c.o\n'}
+[1.283271] (track_msgs) StdoutLine: {'line': b'[ 10%] Building C object CMakeFiles/track_msgs__rosidl_generator_c.dir/rosidl_generator_c/track_msgs/msg/detail/cone_array__functions.c.o\n'}
+[1.283954] (track_msgs) StdoutLine: {'line': b'[ 11%] Building C object CMakeFiles/track_msgs__rosidl_generator_c.dir/rosidl_generator_c/track_msgs/msg/detail/system_state__functions.c.o\n'}
+[1.284161] (track_msgs) StdoutLine: {'line': b'[ 12%] Building C object CMakeFiles/track_msgs__rosidl_generator_c.dir/rosidl_generator_c/track_msgs/msg/detail/lane_boundary_array__functions.c.o\n'}
+[1.284255] (track_msgs) StdoutLine: {'line': b'[ 13%] Building C object CMakeFiles/track_msgs__rosidl_generator_c.dir/rosidl_generator_c/track_msgs/msg/detail/lane_boundary__functions.c.o\n'}
+[1.284612] (track_msgs) StdoutLine: {'line': b'[ 14%] Building C object CMakeFiles/track_msgs__rosidl_generator_c.dir/rosidl_generator_c/track_msgs/msg/detail/obstacle_array__functions.c.o\n'}
+[1.300981] (-) TimerEvent: {}
+[1.336876] (track_msgs) StdoutLine: {'line': b'[ 16%] Linking C shared library libtrack_msgs__rosidl_generator_c.so\n'}
+[1.362829] (track_msgs) StdoutLine: {'line': b'[ 16%] Built target track_msgs__rosidl_generator_c\n'}
+[1.370300] (track_msgs) StdoutLine: {'line': b'[ 17%] Generating C type support dispatch for ROS interfaces\n'}
+[1.370847] (track_msgs) StdoutLine: {'line': b'[ 18%] Generating C type support for eProsima Fast-RTPS\n'}
+[1.371685] (track_msgs) StdoutLine: {'line': b'[ 19%] Generating C introspection for ROS interfaces\n'}
+[1.401073] (-) TimerEvent: {}
+[1.501227] (-) TimerEvent: {}
+[1.601491] (-) TimerEvent: {}
+[1.701633] (-) TimerEvent: {}
+[1.770849] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_cpp\n'}
+[1.783700] (track_msgs) StdoutLine: {'line': b'[ 22%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/track_msgs/msg/lane_boundary_array__type_support.cpp.o\n'}
+[1.783890] (track_msgs) StdoutLine: {'line': b'[ 22%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/track_msgs/msg/cone_array__type_support.cpp.o\n'}
+[1.783934] (track_msgs) StdoutLine: {'line': b'[ 22%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/track_msgs/msg/planner_status__type_support.cpp.o\n'}
+[1.783980] (track_msgs) StdoutLine: {'line': b'[ 24%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/track_msgs/msg/obstacle__type_support.cpp.o\n'}
+[1.784656] (track_msgs) StdoutLine: {'line': b'[ 25%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/track_msgs/msg/obstacle_array__type_support.cpp.o\n'}
+[1.784770] (track_msgs) StdoutLine: {'line': b'[ 26%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/track_msgs/msg/system_state__type_support.cpp.o\n'}
+[1.785722] (track_msgs) StdoutLine: {'line': b'[ 27%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/track_msgs/msg/cone__type_support.cpp.o\n'}
+[1.786234] (track_msgs) StdoutLine: {'line': b'[ 28%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/track_msgs/msg/lane_boundary__type_support.cpp.o\n'}
+[1.801838] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_introspection_cpp\n'}
+[1.801993] (-) TimerEvent: {}
+[1.815658] (track_msgs) StdoutLine: {'line': b'[ 33%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/track_msgs/msg/detail/lane_boundary_array__type_support.cpp.o\n'}
+[1.815820] (track_msgs) StdoutLine: {'line': b'[ 33%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/track_msgs/msg/detail/cone__type_support.cpp.o\n'}
+[1.815868] (track_msgs) StdoutLine: {'line': b'[ 33%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/track_msgs/msg/detail/lane_boundary__type_support.cpp.o\n'}
+[1.815913] (track_msgs) StdoutLine: {'line': b'[ 33%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/track_msgs/msg/detail/cone_array__type_support.cpp.o\n'}
+[1.815956] (track_msgs) StdoutLine: {'line': b'[ 36%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/track_msgs/msg/detail/obstacle__type_support.cpp.o\n'}
+[1.815995] (track_msgs) StdoutLine: {'line': b'[ 36%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/track_msgs/msg/detail/planner_status__type_support.cpp.o\n'}
+[1.816033] (track_msgs) StdoutLine: {'line': b'[ 35%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/track_msgs/msg/detail/obstacle_array__type_support.cpp.o\n'}
+[1.816072] (track_msgs) StdoutLine: {'line': b'[ 37%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/track_msgs/msg/detail/system_state__type_support.cpp.o\n'}
+[1.840859] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_fastrtps_cpp\n'}
+[1.855605] (track_msgs) StdoutLine: {'line': b'[ 41%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/track_msgs/msg/detail/dds_fastrtps/lane_boundary_array__type_support.cpp.o\n'}
+[1.855829] (track_msgs) StdoutLine: {'line': b'[ 41%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/track_msgs/msg/detail/dds_fastrtps/cone__type_support.cpp.o\n'}
+[1.855874] (track_msgs) StdoutLine: {'line': b'[ 42%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/track_msgs/msg/detail/dds_fastrtps/cone_array__type_support.cpp.o\n'}
+[1.855919] (track_msgs) StdoutLine: {'line': b'[ 43%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/track_msgs/msg/detail/dds_fastrtps/obstacle__type_support.cpp.o\n'}
+[1.855961] (track_msgs) StdoutLine: {'line': b'[ 44%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/track_msgs/msg/detail/dds_fastrtps/obstacle_array__type_support.cpp.o\n'}
+[1.856008] (track_msgs) StdoutLine: {'line': b'[ 44%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/track_msgs/msg/detail/dds_fastrtps/lane_boundary__type_support.cpp.o\n'}
+[1.856323] (track_msgs) StdoutLine: {'line': b'[ 45%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/track_msgs/msg/detail/dds_fastrtps/system_state__type_support.cpp.o\n'}
+[1.857485] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_c\n'}
+[1.857606] (track_msgs) StdoutLine: {'line': b'[ 47%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/track_msgs/msg/detail/dds_fastrtps/planner_status__type_support.cpp.o\n'}
+[1.868017] (track_msgs) StdoutLine: {'line': b'[ 49%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/track_msgs/msg/lane_boundary_array__type_support.cpp.o\n'}
+[1.868173] (track_msgs) StdoutLine: {'line': b'[ 49%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/track_msgs/msg/lane_boundary__type_support.cpp.o\n'}
+[1.903536] (track_msgs) StdoutLine: {'line': b'[ 50%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/track_msgs/msg/cone__type_support.cpp.o\n'}
+[1.903764] (-) TimerEvent: {}
+[1.912171] (track_msgs) StdoutLine: {'line': b'[ 51%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/track_msgs/msg/cone_array__type_support.cpp.o\n'}
+[1.936855] (track_msgs) StdoutLine: {'line': b'[ 52%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/track_msgs/msg/obstacle__type_support.cpp.o\n'}
+[1.955480] (track_msgs) StdoutLine: {'line': b'[ 54%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/track_msgs/msg/obstacle_array__type_support.cpp.o\n'}
+[1.980875] (track_msgs) StdoutLine: {'line': b'[ 55%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/track_msgs/msg/planner_status__type_support.cpp.o\n'}
+[1.994584] (track_msgs) StdoutLine: {'line': b'[ 56%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/track_msgs/msg/system_state__type_support.cpp.o\n'}
+[2.004336] (-) TimerEvent: {}
+[2.025719] (track_msgs) StdoutLine: {'line': b'[ 57%] Linking CXX shared library libtrack_msgs__rosidl_typesupport_c.so\n'}
+[2.040271] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_introspection_c\n'}
+[2.042911] (track_msgs) StdoutLine: {'line': b'[ 58%] Linking CXX shared library libtrack_msgs__rosidl_typesupport_cpp.so\n'}
+[2.049355] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_fastrtps_c\n'}
+[2.052661] (track_msgs) StdoutLine: {'line': b'[ 62%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/track_msgs/msg/detail/cone__type_support.c.o\n'}
+[2.052886] (track_msgs) StdoutLine: {'line': b'[ 62%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/track_msgs/msg/detail/lane_boundary__type_support.c.o\n'}
+[2.053668] (track_msgs) StdoutLine: {'line': b'[ 62%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/track_msgs/msg/detail/lane_boundary_array__type_support.c.o\n'}
+[2.053763] (track_msgs) StdoutLine: {'line': b'[ 63%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/track_msgs/msg/detail/obstacle_array__type_support.c.o\n'}
+[2.054319] (track_msgs) StdoutLine: {'line': b'[ 64%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/track_msgs/msg/detail/obstacle__type_support.c.o\n'}
+[2.060196] (track_msgs) StdoutLine: {'line': b'[ 65%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/track_msgs/msg/detail/cone_array__type_support.c.o\n'}
+[2.060419] (track_msgs) StdoutLine: {'line': b'[ 66%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/track_msgs/msg/detail/system_state__type_support.c.o\n'}
+[2.060468] (track_msgs) StdoutLine: {'line': b'[ 67%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/track_msgs/msg/detail/planner_status__type_support.c.o\n'}
+[2.067604] (track_msgs) StdoutLine: {'line': b'[ 68%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/track_msgs/msg/detail/lane_boundary__type_support_c.cpp.o\n'}
+[2.067808] (track_msgs) StdoutLine: {'line': b'[ 70%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/track_msgs/msg/detail/lane_boundary_array__type_support_c.cpp.o\n'}
+[2.069780] (track_msgs) StdoutLine: {'line': b'[ 70%] Built target track_msgs__rosidl_typesupport_c\n'}
+[2.094333] (track_msgs) StdoutLine: {'line': b'[ 71%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/track_msgs/msg/detail/cone__type_support_c.cpp.o\n'}
+[2.096135] (track_msgs) StdoutLine: {'line': b'[ 72%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/track_msgs/msg/detail/cone_array__type_support_c.cpp.o\n'}
+[2.098789] (track_msgs) StdoutLine: {'line': b'[ 73%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/track_msgs/msg/detail/obstacle_array__type_support_c.cpp.o\n'}
+[2.098986] (track_msgs) StdoutLine: {'line': b'[ 74%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/track_msgs/msg/detail/obstacle__type_support_c.cpp.o\n'}
+[2.100180] (track_msgs) StdoutLine: {'line': b'[ 74%] Built target track_msgs__rosidl_typesupport_cpp\n'}
+[2.104457] (-) TimerEvent: {}
+[2.105998] (track_msgs) StdoutLine: {'line': b'[ 77%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/track_msgs/msg/detail/planner_status__type_support_c.cpp.o\n'}
+[2.106204] (track_msgs) StdoutLine: {'line': b'[ 77%] Building CXX object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/track_msgs/msg/detail/system_state__type_support_c.cpp.o\n'}
+[2.113052] (track_msgs) StdoutLine: {'line': b'[ 78%] Linking C shared library libtrack_msgs__rosidl_typesupport_introspection_c.so\n'}
+[2.157462] (track_msgs) StdoutLine: {'line': b'[ 78%] Built target track_msgs__rosidl_typesupport_introspection_c\n'}
+[2.204550] (-) TimerEvent: {}
+[2.249733] (track_msgs) StdoutLine: {'line': b'[ 79%] Linking CXX shared library libtrack_msgs__rosidl_typesupport_introspection_cpp.so\n'}
+[2.254278] (track_msgs) StdoutLine: {'line': b'[ 80%] Linking CXX shared library libtrack_msgs__rosidl_typesupport_fastrtps_cpp.so\n'}
+[2.301633] (track_msgs) StdoutLine: {'line': b'[ 80%] Built target track_msgs__rosidl_typesupport_introspection_cpp\n'}
+[2.304607] (-) TimerEvent: {}
+[2.308136] (track_msgs) StdoutLine: {'line': b'[ 80%] Built target track_msgs__rosidl_typesupport_fastrtps_cpp\n'}
+[2.361799] (track_msgs) StdoutLine: {'line': b'[ 81%] Linking CXX shared library libtrack_msgs__rosidl_typesupport_fastrtps_c.so\n'}
+[2.404586] (track_msgs) StdoutLine: {'line': b'[ 81%] Built target track_msgs__rosidl_typesupport_fastrtps_c\n'}
+[2.404723] (-) TimerEvent: {}
+[2.418782] (track_msgs) StdoutLine: {'line': b'[ 81%] Built target track_msgs\n'}
+[2.434097] (track_msgs) StdoutLine: {'line': b'[ 82%] Generating Python code for ROS interfaces\n'}
+[2.504953] (-) TimerEvent: {}
+[2.605094] (-) TimerEvent: {}
+[2.705233] (-) TimerEvent: {}
+[2.805435] (-) TimerEvent: {}
+[2.905697] (-) TimerEvent: {}
+[3.005872] (-) TimerEvent: {}
+[3.106115] (-) TimerEvent: {}
+[3.206269] (-) TimerEvent: {}
+[3.306416] (-) TimerEvent: {}
+[3.367605] (track_msgs) StdoutLine: {'line': b'[ 82%] Built target track_msgs__py\n'}
+[3.376588] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_generator_py\n'}
+[3.385378] (track_msgs) StdoutLine: {'line': b'[ 83%] Building C object CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_planner_status_s.c.o\n'}
+[3.385505] (track_msgs) StdoutLine: {'line': b'[ 85%] Building C object CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_system_state_s.c.o\n'}
+[3.386211] (track_msgs) StdoutLine: {'line': b'[ 86%] Building C object CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_lane_boundary_s.c.o\n'}
+[3.386316] (track_msgs) StdoutLine: {'line': b'[ 87%] Building C object CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_lane_boundary_array_s.c.o\n'}
+[3.386515] (track_msgs) StdoutLine: {'line': b'[ 89%] Building C object CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_cone_array_s.c.o\n'}
+[3.386573] (track_msgs) StdoutLine: {'line': b'[ 88%] Building C object CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_cone_s.c.o\n'}
+[3.386697] (track_msgs) StdoutLine: {'line': b'[ 90%] Building C object CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_obstacle_s.c.o\n'}
+[3.386935] (track_msgs) StdoutLine: {'line': b'[ 91%] Building C object CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_obstacle_array_s.c.o\n'}
+[3.406518] (-) TimerEvent: {}
+[3.460802] (track_msgs) StdoutLine: {'line': b'[ 93%] Linking C shared library rosidl_generator_py/track_msgs/libtrack_msgs__rosidl_generator_py.so\n'}
+[3.490040] (track_msgs) StdoutLine: {'line': b'[ 93%] Built target track_msgs__rosidl_generator_py\n'}
+[3.499137] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_fastrtps_c__pyext\n'}
+[3.499309] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_introspection_c__pyext\n'}
+[3.499574] (track_msgs) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_msgs__rosidl_typesupport_c__pyext\n'}
+[3.506450] (track_msgs) StdoutLine: {'line': b'[ 94%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/track_msgs/_track_msgs_s.ep.rosidl_typesupport_introspection_c.c.o\n'}
+[3.506540] (-) TimerEvent: {}
+[3.507699] (track_msgs) StdoutLine: {'line': b'[ 95%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/track_msgs/_track_msgs_s.ep.rosidl_typesupport_c.c.o\n'}
+[3.508213] (track_msgs) StdoutLine: {'line': b'[ 96%] Building C object CMakeFiles/track_msgs__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/track_msgs/_track_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o\n'}
+[3.572872] (track_msgs) StdoutLine: {'line': b'[ 97%] Linking C shared library rosidl_generator_py/track_msgs/track_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.573576] (track_msgs) StdoutLine: {'line': b'[ 98%] Linking C shared library rosidl_generator_py/track_msgs/track_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.573816] (track_msgs) StdoutLine: {'line': b'[100%] Linking C shared library rosidl_generator_py/track_msgs/track_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.598330] (track_msgs) StdoutLine: {'line': b'[100%] Built target track_msgs__rosidl_typesupport_fastrtps_c__pyext\n'}
+[3.601804] (track_msgs) StdoutLine: {'line': b'[100%] Built target track_msgs__rosidl_typesupport_introspection_c__pyext\n'}
+[3.602665] (track_msgs) StdoutLine: {'line': b'[100%] Built target track_msgs__rosidl_typesupport_c__pyext\n'}
+[3.606605] (-) TimerEvent: {}
+[3.610727] (track_msgs) CommandEnded: {'returncode': 0}
+[3.611159] (track_msgs) JobProgress: {'identifier': 'track_msgs', 'progress': 'install'}
+[3.617850] (track_msgs) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/aiv/ev_ws/planning/build/track_msgs'], 'cwd': '/home/aiv/ev_ws/planning/build/track_msgs', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('VSCODE_CWD', '/home/aiv'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('USER', 'aiv'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('LC_TIME', 'ko_KR.UTF-8'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('CLAUDE_AGENT_SDK_VERSION', '0.2.49'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_laserscan/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('VSCODE_IPC_HOOK', '/run/user/1000/vscode-b400ee21-1.10-main.sock'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL', '1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2094'), ('SYSTEMD_EXEC_PID', '2603'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4020'), ('NVM_DIR', '/home/aiv/.nvm'), ('VSCODE_CRASH_REPORTER_PROCESS_TYPE', 'extensionHost'), ('VSCODE_L10N_BUNDLE_LOCATION', ''), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:21696'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('APPLICATIONINSIGHTS_CONFIGURATION_CONTENT', '{}'), ('USERNAME', 'aiv'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/usr/bin:/home/aiv/.local/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.0/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2584,unix/aiv:/tmp/.ICE-unix/2584'), ('INVOCATION_ID', '1744b5a31de14982a42b5a0c06740c92'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('ELECTRON_RUN_AS_NODE', '1'), ('GDMSESSION', 'ubuntu'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('VIRTUAL_ENV', '/usr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/track_msgs'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('VSCODE_CODE_CACHE_PATH', '/home/aiv/.config/Code/CachedData/591199df409fbf59b4b52d5ad4ee0470152a9b31'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('VSCODE_PID', '4020')]), 'shell': False}
+[3.622308] (track_msgs) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[3.622421] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/ament_index/resource_index/rosidl_interfaces/track_msgs\n'}
+[3.622454] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs\n'}
+[3.622481] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg\n'}
+[3.622506] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/lane_boundary.h\n'}
+[3.622580] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/rosidl_generator_c__visibility_control.h\n'}
+[3.622628] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/system_state.h\n'}
+[3.622672] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/obstacle_array.h\n'}
+[3.622697] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/cone.h\n'}
+[3.622722] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/lane_boundary_array.h\n'}
+[3.622748] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/cone_array.h\n'}
+[3.622772] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail\n'}
+[3.622838] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__functions.h\n'}
+[3.622864] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__struct.h\n'}
+[3.622888] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__functions.c\n'}
+[3.622912] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__functions.c\n'}
+[3.622962] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__functions.c\n'}
+[3.622989] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__type_support.h\n'}
+[3.623015] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__functions.h\n'}
+[3.623074] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__functions.h\n'}
+[3.623100] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__struct.h\n'}
+[3.623128] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__functions.h\n'}
+[3.623171] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__functions.c\n'}
+[3.623219] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__functions.c\n'}
+[3.623245] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__functions.h\n'}
+[3.623294] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__struct.h\n'}
+[3.623320] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__type_support.h\n'}
+[3.623368] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__struct.h\n'}
+[3.623393] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__struct.h\n'}
+[3.623441] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__struct.h\n'}
+[3.623466] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__functions.c\n'}
+[3.623511] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__type_support.h\n'}
+[3.623562] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__type_support.h\n'}
+[3.623586] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__functions.h\n'}
+[3.623645] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__functions.h\n'}
+[3.623667] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__functions.h\n'}
+[3.623726] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__functions.c\n'}
+[3.623749] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__type_support.h\n'}
+[3.623806] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__functions.c\n'}
+[3.623833] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__type_support.h\n'}
+[3.623891] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__struct.h\n'}
+[3.623914] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__type_support.h\n'}
+[3.623970] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__struct.h\n'}
+[3.624012] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__type_support.h\n'}
+[3.624053] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/obstacle.h\n'}
+[3.624075] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/planner_status.h\n'}
+[3.624132] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/environment/library_path.sh\n'}
+[3.624154] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/environment/library_path.dsv\n'}
+[3.624223] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_generator_c.so\n'}
+[3.624369] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_generator_c.so" to ""\n'}
+[3.624437] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs\n'}
+[3.624459] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg\n'}
+[3.624497] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[3.624520] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail\n'}
+[3.624543] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__rosidl_typesupport_fastrtps_c.h\n'}
+[3.624602] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__rosidl_typesupport_fastrtps_c.h\n'}
+[3.624625] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__rosidl_typesupport_fastrtps_c.h\n'}
+[3.624647] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__rosidl_typesupport_fastrtps_c.h\n'}
+[3.624669] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__rosidl_typesupport_fastrtps_c.h\n'}
+[3.624715] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__rosidl_typesupport_fastrtps_c.h\n'}
+[3.624738] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__rosidl_typesupport_fastrtps_c.h\n'}
+[3.624758] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__rosidl_typesupport_fastrtps_c.h\n'}
+[3.624799] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_fastrtps_c.so\n'}
+[3.624950] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[3.625009] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs\n'}
+[3.625033] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg\n'}
+[3.625056] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail\n'}
+[3.625079] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__rosidl_typesupport_introspection_c.h\n'}
+[3.625137] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__rosidl_typesupport_introspection_c.h\n'}
+[3.625180] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__type_support.c\n'}
+[3.625215] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__rosidl_typesupport_introspection_c.h\n'}
+[3.625238] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__type_support.c\n'}
+[3.625279] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__type_support.c\n'}
+[3.625302] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__type_support.c\n'}
+[3.625347] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__type_support.c\n'}
+[3.625370] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__rosidl_typesupport_introspection_c.h\n'}
+[3.625415] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__rosidl_typesupport_introspection_c.h\n'}
+[3.625440] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__type_support.c\n'}
+[3.625484] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__rosidl_typesupport_introspection_c.h\n'}
+[3.625507] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__type_support.c\n'}
+[3.625562] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__type_support.c\n'}
+[3.625584] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__rosidl_typesupport_introspection_c.h\n'}
+[3.625637] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__rosidl_typesupport_introspection_c.h\n'}
+[3.625660] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[3.625699] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_introspection_c.so\n'}
+[3.625828] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_introspection_c.so" to ""\n'}
+[3.625879] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_c.so\n'}
+[3.625986] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_c.so" to ""\n'}
+[3.626032] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs\n'}
+[3.626074] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg\n'}
+[3.626094] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/system_state.hpp\n'}
+[3.626121] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/cone_array.hpp\n'}
+[3.626174] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/planner_status.hpp\n'}
+[3.626197] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/obstacle_array.hpp\n'}
+[3.626219] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/lane_boundary.hpp\n'}
+[3.626279] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[3.626302] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/obstacle.hpp\n'}
+[3.626325] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail\n'}
+[3.626347] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__builder.hpp\n'}
+[3.626393] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__builder.hpp\n'}
+[3.626432] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__type_support.hpp\n'}
+[3.626454] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__traits.hpp\n'}
+[3.626477] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__type_support.hpp\n'}
+[3.626522] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__struct.hpp\n'}
+[3.626546] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__struct.hpp\n'}
+[3.626600] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__traits.hpp\n'}
+[3.626622] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__struct.hpp\n'}
+[3.626667] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__type_support.hpp\n'}
+[3.626706] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__traits.hpp\n'}
+[3.626728] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__type_support.hpp\n'}
+[3.626783] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__traits.hpp\n'}
+[3.626805] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__struct.hpp\n'}
+[3.626857] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__traits.hpp\n'}
+[3.626879] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__builder.hpp\n'}
+[3.626931] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__builder.hpp\n'}
+[3.626971] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__struct.hpp\n'}
+[3.626994] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__builder.hpp\n'}
+[3.627044] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__traits.hpp\n'}
+[3.627065] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__builder.hpp\n'}
+[3.627121] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__traits.hpp\n'}
+[3.627143] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__type_support.hpp\n'}
+[3.627194] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__struct.hpp\n'}
+[3.627217] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__struct.hpp\n'}
+[3.627262] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__builder.hpp\n'}
+[3.627322] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__builder.hpp\n'}
+[3.627346] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__type_support.hpp\n'}
+[3.627404] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__type_support.hpp\n'}
+[3.627426] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__traits.hpp\n'}
+[3.627485] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__struct.hpp\n'}
+[3.627507] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__type_support.hpp\n'}
+[3.627566] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/cone.hpp\n'}
+[3.627589] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/lane_boundary_array.hpp\n'}
+[3.627672] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs\n'}
+[3.627696] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg\n'}
+[3.627721] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail\n'}
+[3.627745] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[3.627795] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/dds_fastrtps\n'}
+[3.627820] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[3.627878] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[3.627902] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[3.627926] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[3.627988] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[3.628013] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[3.628037] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[3.628083] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[3.628131] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_fastrtps_cpp.so\n'}
+[3.628293] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[3.628349] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs\n'}
+[3.628369] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg\n'}
+[3.628389] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail\n'}
+[3.628410] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__type_support.cpp\n'}
+[3.628463] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__rosidl_typesupport_introspection_cpp.hpp\n'}
+[3.628484] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__type_support.cpp\n'}
+[3.628505] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__type_support.cpp\n'}
+[3.628545] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/system_state__rosidl_typesupport_introspection_cpp.hpp\n'}
+[3.628581] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__type_support.cpp\n'}
+[3.628601] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__rosidl_typesupport_introspection_cpp.hpp\n'}
+[3.628650] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__rosidl_typesupport_introspection_cpp.hpp\n'}
+[3.628672] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__type_support.cpp\n'}
+[3.628723] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/planner_status__rosidl_typesupport_introspection_cpp.hpp\n'}
+[3.628743] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle_array__type_support.cpp\n'}
+[3.628781] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary_array__type_support.cpp\n'}
+[3.628821] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone_array__type_support.cpp\n'}
+[3.628860] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/cone__rosidl_typesupport_introspection_cpp.hpp\n'}
+[3.628911] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/obstacle__rosidl_typesupport_introspection_cpp.hpp\n'}
+[3.628931] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/include/track_msgs/track_msgs/msg/detail/lane_boundary__rosidl_typesupport_introspection_cpp.hpp\n'}
+[3.629002] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_introspection_cpp.so\n'}
+[3.629189] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[3.629250] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_cpp.so\n'}
+[3.629370] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_typesupport_cpp.so" to ""\n'}
+[3.629418] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/environment/pythonpath.sh\n'}
+[3.629441] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/environment/pythonpath.dsv\n'}
+[3.629490] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs-0.1.0-py3.10.egg-info\n'}
+[3.629515] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs-0.1.0-py3.10.egg-info/PKG-INFO\n'}
+[3.629563] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs-0.1.0-py3.10.egg-info/top_level.txt\n'}
+[3.629604] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs-0.1.0-py3.10.egg-info/SOURCES.txt\n'}
+[3.629626] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs-0.1.0-py3.10.egg-info/dependency_links.txt\n'}
+[3.629674] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs\n'}
+[3.629698] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.629744] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.629818] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/__init__.py\n'}
+[3.629843] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg\n'}
+[3.629867] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_cone_array.py\n'}
+[3.629916] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_planner_status.py\n'}
+[3.629941] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_lane_boundary.py\n'}
+[3.629989] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_lane_boundary_s.c\n'}
+[3.630015] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/__init__.py\n'}
+[3.630063] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_system_state_s.c\n'}
+[3.630087] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_lane_boundary_array_s.c\n'}
+[3.630145] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_planner_status_s.c\n'}
+[3.630184] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_obstacle_array_s.c\n'}
+[3.630206] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_cone_array_s.c\n'}
+[3.630247] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_lane_boundary_array.py\n'}
+[3.630266] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_obstacle_array.py\n'}
+[3.630317] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_obstacle.py\n'}
+[3.630338] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_cone_s.c\n'}
+[3.630388] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_system_state.py\n'}
+[3.630408] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_cone.py\n'}
+[3.630458] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_obstacle_s.c\n'}
+[3.630479] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/_track_msgs_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[3.630517] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.630557] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/libtrack_msgs__rosidl_generator_py.so\n'}
+[3.630618] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/_track_msgs_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[3.630668] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/_track_msgs_s.ep.rosidl_typesupport_c.c\n'}
+[3.656327] (track_msgs) StdoutLine: {'line': b"Listing '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs'...\n"}
+[3.656422] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/__init__.py'...\n"}
+[3.656472] (track_msgs) StdoutLine: {'line': b"Listing '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg'...\n"}
+[3.656517] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/__init__.py'...\n"}
+[3.656561] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_cone.py'...\n"}
+[3.656604] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_cone_array.py'...\n"}
+[3.656646] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_lane_boundary.py'...\n"}
+[3.656688] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_lane_boundary_array.py'...\n"}
+[3.656731] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_obstacle.py'...\n"}
+[3.656773] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_obstacle_array.py'...\n"}
+[3.656820] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_planner_status.py'...\n"}
+[3.656863] (track_msgs) StdoutLine: {'line': b"Compiling '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/msg/_system_state.py'...\n"}
+[3.658630] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.658854] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so" to ""\n'}
+[3.659047] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.659391] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so" to ""\n'}
+[3.659484] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[3.659714] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages/track_msgs/track_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so" to ""\n'}
+[3.659826] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_generator_py.so\n'}
+[3.659913] (track_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_msgs/lib/libtrack_msgs__rosidl_generator_py.so" to ""\n'}
+[3.659996] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/LaneBoundary.idl\n'}
+[3.660076] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/LaneBoundaryArray.idl\n'}
+[3.660164] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/Cone.idl\n'}
+[3.660244] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/ConeArray.idl\n'}
+[3.660328] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/Obstacle.idl\n'}
+[3.660409] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/ObstacleArray.idl\n'}
+[3.660502] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/PlannerStatus.idl\n'}
+[3.660588] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/SystemState.idl\n'}
+[3.660684] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/LaneBoundary.msg\n'}
+[3.660774] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/LaneBoundaryArray.msg\n'}
+[3.660897] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/Cone.msg\n'}
+[3.660998] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/ConeArray.msg\n'}
+[3.661096] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/Obstacle.msg\n'}
+[3.661177] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/ObstacleArray.msg\n'}
+[3.661225] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/PlannerStatus.msg\n'}
+[3.661267] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/msg/SystemState.msg\n'}
+[3.661309] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/ament_index/resource_index/package_run_dependencies/track_msgs\n'}
+[3.661351] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/ament_index/resource_index/parent_prefix_path/track_msgs\n'}
+[3.661393] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/environment/ament_prefix_path.sh\n'}
+[3.661435] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/environment/ament_prefix_path.dsv\n'}
+[3.661476] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/environment/path.sh\n'}
+[3.661518] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/environment/path.dsv\n'}
+[3.661560] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/local_setup.bash\n'}
+[3.661602] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/local_setup.sh\n'}
+[3.661643] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/local_setup.zsh\n'}
+[3.661685] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/local_setup.dsv\n'}
+[3.661727] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/package.dsv\n'}
+[3.661768] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/ament_index/resource_index/packages/track_msgs\n'}
+[3.661810] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_generator_cExport.cmake\n'}
+[3.661852] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_generator_cExport-noconfig.cmake\n'}
+[3.661894] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[3.661985] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_typesupport_fastrtps_cExport-noconfig.cmake\n'}
+[3.662059] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgs__rosidl_typesupport_introspection_cExport.cmake\n'}
+[3.662171] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgs__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[3.662530] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgs__rosidl_typesupport_cExport.cmake\n'}
+[3.662625] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgs__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[3.662676] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_generator_cppExport.cmake\n'}
+[3.662757] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[3.662840] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake\n'}
+[3.662905] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgs__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[3.663120] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgs__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[3.663224] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgs__rosidl_typesupport_cppExport.cmake\n'}
+[3.663275] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgs__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[3.663353] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_generator_pyExport.cmake\n'}
+[3.663431] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/export_track_msgs__rosidl_generator_pyExport-noconfig.cmake\n'}
+[3.663505] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/rosidl_cmake-extras.cmake\n'}
+[3.663615] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[3.663693] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[3.663811] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[3.663951] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[3.664012] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[3.664082] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[3.664217] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgsConfig.cmake\n'}
+[3.664512] (track_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake/track_msgsConfig-version.cmake\n'}
+[3.664575] (track_msgs) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/package.xml\n'}
+[3.664667] (track_msgs) CommandEnded: {'returncode': 0}
+[3.672181] (track_msgs) JobEnded: {'identifier': 'track_msgs', 'rc': 0}
+[3.672447] (track_planning) JobStarted: {'identifier': 'track_planning'}
+[3.678100] (track_planning) JobProgress: {'identifier': 'track_planning', 'progress': 'cmake'}
+[3.678563] (track_planning) JobProgress: {'identifier': 'track_planning', 'progress': 'build'}
+[3.678759] (track_planning) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/aiv/ev_ws/planning/build/track_planning', '--', '-j28', '-l28'], 'cwd': '/home/aiv/ev_ws/planning/build/track_planning', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('VSCODE_CWD', '/home/aiv'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('USER', 'aiv'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('LC_TIME', 'ko_KR.UTF-8'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('CLAUDE_AGENT_SDK_VERSION', '0.2.49'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/aiv/ev_ws/planning/install/track_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_laserscan/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('VSCODE_IPC_HOOK', '/run/user/1000/vscode-b400ee21-1.10-main.sock'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL', '1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2094'), ('SYSTEMD_EXEC_PID', '2603'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4020'), ('NVM_DIR', '/home/aiv/.nvm'), ('VSCODE_CRASH_REPORTER_PROCESS_TYPE', 'extensionHost'), ('VSCODE_L10N_BUNDLE_LOCATION', ''), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:21696'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('APPLICATIONINSIGHTS_CONFIGURATION_CONTENT', '{}'), ('USERNAME', 'aiv'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/usr/bin:/home/aiv/.local/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.0/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2584,unix/aiv:/tmp/.ICE-unix/2584'), ('INVOCATION_ID', '1744b5a31de14982a42b5a0c06740c92'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('ELECTRON_RUN_AS_NODE', '1'), ('GDMSESSION', 'ubuntu'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('VIRTUAL_ENV', '/usr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/track_planning'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('VSCODE_CODE_CACHE_PATH', '/home/aiv/.config/Code/CachedData/591199df409fbf59b4b52d5ad4ee0470152a9b31'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('VSCODE_PID', '4020')]), 'shell': False}
+[3.696430] (track_planning) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[3.706766] (-) TimerEvent: {}
+[3.769156] (track_planning) StdoutLine: {'line': b'-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[3.785543] (track_planning) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[3.786650] (track_planning) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[3.789956] (track_planning) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[3.794713] (track_planning) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[3.800531] (track_planning) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[3.806828] (-) TimerEvent: {}
+[3.815550] (track_planning) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[3.816371] (track_planning) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[3.872059] (track_planning) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[3.894243] (track_planning) StdoutLine: {'line': b'-- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)\n'}
+[3.902524] (track_planning) StdoutLine: {'line': b'-- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)\n'}
+[3.907031] (-) TimerEvent: {}
+[3.915374] (track_planning) StdoutLine: {'line': b'-- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)\n'}
+[3.931891] (track_planning) StdoutLine: {'line': b'-- Found track_msgs: 0.1.0 (/home/aiv/ev_ws/planning/install/track_msgs/share/track_msgs/cmake)\n'}
+[3.943715] (track_planning) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[3.980383] (track_planning) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[3.980545] (track_planning) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/aiv/ev_ws/planning/src/track_planning/include\n'}
+[3.980602] (track_planning) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[3.980650] (track_planning) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[3.980906] (track_planning) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[3.981206] (track_planning) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[3.981946] (track_planning) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[3.982065] (track_planning) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[3.982153] (track_planning) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[3.982508] (track_planning) StdoutLine: {'line': b'-- Configuring done\n'}
+[3.992145] (track_planning) StdoutLine: {'line': b'-- Generating done\n'}
+[3.996033] (track_planning) StdoutLine: {'line': b'-- Build files have been written to: /home/aiv/ev_ws/planning/build/track_planning\n'}
+[4.007259] (-) TimerEvent: {}
+[4.017034] (track_planning) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_planning_postprocess\n'}
+[4.019118] (track_planning) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target local_planner_node_exe\n'}
+[4.021409] (track_planning) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target track_planning_corridor\n'}
+[4.025055] (track_planning) StdoutLine: {'line': b'[ 10%] Building CXX object CMakeFiles/track_planning_postprocess.dir/src/postprocess/path_postprocessor.cpp.o\n'}
+[4.030197] (track_planning) StdoutLine: {'line': b'[ 30%] Built target local_planner_node_exe\n'}
+[4.032821] (track_planning) StdoutLine: {'line': b'[ 40%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/corridor_builder.cpp.o\n'}
+[4.032908] (track_planning) StdoutLine: {'line': b'[ 50%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/virtual_boundary.cpp.o\n'}
+[4.033892] (track_planning) StdoutLine: {'line': b'[ 60%] Building CXX object CMakeFiles/track_planning_corridor.dir/src/corridor/centerline_builder.cpp.o\n'}
+[4.107344] (-) TimerEvent: {}
+[4.207509] (-) TimerEvent: {}
+[4.281722] (track_planning) StdoutLine: {'line': b'[ 70%] Linking CXX shared library libtrack_planning_postprocess.so\n'}
+[4.307620] (-) TimerEvent: {}
+[4.352877] (track_planning) StdoutLine: {'line': b'[ 70%] Built target track_planning_postprocess\n'}
+[4.407829] (-) TimerEvent: {}
+[4.508034] (-) TimerEvent: {}
+[4.608265] (-) TimerEvent: {}
+[4.708444] (-) TimerEvent: {}
+[4.808651] (-) TimerEvent: {}
+[4.908833] (-) TimerEvent: {}
+[5.009095] (-) TimerEvent: {}
+[5.109298] (-) TimerEvent: {}
+[5.209584] (-) TimerEvent: {}
+[5.309954] (-) TimerEvent: {}
+[5.410242] (-) TimerEvent: {}
+[5.510530] (-) TimerEvent: {}
+[5.610776] (-) TimerEvent: {}
+[5.710974] (-) TimerEvent: {}
+[5.811247] (-) TimerEvent: {}
+[5.911408] (-) TimerEvent: {}
+[6.011645] (-) TimerEvent: {}
+[6.111916] (-) TimerEvent: {}
+[6.212247] (-) TimerEvent: {}
+[6.312400] (-) TimerEvent: {}
+[6.412544] (-) TimerEvent: {}
+[6.502819] (track_planning) StdoutLine: {'line': b'[ 80%] Linking CXX shared library libtrack_planning_corridor.so\n'}
+[6.512595] (-) TimerEvent: {}
+[6.612699] (-) TimerEvent: {}
+[6.613794] (track_planning) StdoutLine: {'line': b'[ 80%] Built target track_planning_corridor\n'}
+[6.623544] (track_planning) StdoutLine: {'line': b'Consolidate compiler generated dependencies of target local_planner_component\n'}
+[6.634212] (track_planning) StdoutLine: {'line': b'[ 90%] Building CXX object CMakeFiles/local_planner_component.dir/src/nodes/local_planner_node.cpp.o\n'}
+[6.712782] (-) TimerEvent: {}
+[6.812921] (-) TimerEvent: {}
+[6.913061] (-) TimerEvent: {}
+[7.013270] (-) TimerEvent: {}
+[7.113523] (-) TimerEvent: {}
+[7.213667] (-) TimerEvent: {}
+[7.313914] (-) TimerEvent: {}
+[7.414167] (-) TimerEvent: {}
+[7.514413] (-) TimerEvent: {}
+[7.614666] (-) TimerEvent: {}
+[7.714909] (-) TimerEvent: {}
+[7.815182] (-) TimerEvent: {}
+[7.915330] (-) TimerEvent: {}
+[8.015579] (-) TimerEvent: {}
+[8.115746] (-) TimerEvent: {}
+[8.215910] (-) TimerEvent: {}
+[8.316129] (-) TimerEvent: {}
+[8.416286] (-) TimerEvent: {}
+[8.516429] (-) TimerEvent: {}
+[8.616574] (-) TimerEvent: {}
+[8.716737] (-) TimerEvent: {}
+[8.816875] (-) TimerEvent: {}
+[8.917049] (-) TimerEvent: {}
+[9.017186] (-) TimerEvent: {}
+[9.117326] (-) TimerEvent: {}
+[9.217472] (-) TimerEvent: {}
+[9.317628] (-) TimerEvent: {}
+[9.417779] (-) TimerEvent: {}
+[9.517927] (-) TimerEvent: {}
+[9.618095] (-) TimerEvent: {}
+[9.718235] (-) TimerEvent: {}
+[9.818367] (-) TimerEvent: {}
+[9.918501] (-) TimerEvent: {}
+[10.018640] (-) TimerEvent: {}
+[10.118771] (-) TimerEvent: {}
+[10.218904] (-) TimerEvent: {}
+[10.319068] (-) TimerEvent: {}
+[10.419208] (-) TimerEvent: {}
+[10.519336] (-) TimerEvent: {}
+[10.619500] (-) TimerEvent: {}
+[10.719620] (-) TimerEvent: {}
+[10.819743] (-) TimerEvent: {}
+[10.919847] (-) TimerEvent: {}
+[11.019955] (-) TimerEvent: {}
+[11.120115] (-) TimerEvent: {}
+[11.220283] (-) TimerEvent: {}
+[11.320383] (-) TimerEvent: {}
+[11.420500] (-) TimerEvent: {}
+[11.520628] (-) TimerEvent: {}
+[11.620758] (-) TimerEvent: {}
+[11.720888] (-) TimerEvent: {}
+[11.821065] (-) TimerEvent: {}
+[11.921221] (-) TimerEvent: {}
+[12.021376] (-) TimerEvent: {}
+[12.086617] (track_planning) StdoutLine: {'line': b'[100%] Linking CXX shared library liblocal_planner_component.so\n'}
+[12.121658] (-) TimerEvent: {}
+[12.221899] (-) TimerEvent: {}
+[12.322163] (-) TimerEvent: {}
+[12.421141] (track_planning) StdoutLine: {'line': b'[100%] Built target local_planner_component\n'}
+[12.422252] (-) TimerEvent: {}
+[12.430559] (track_planning) CommandEnded: {'returncode': 0}
+[12.430989] (track_planning) JobProgress: {'identifier': 'track_planning', 'progress': 'install'}
+[12.431142] (track_planning) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/aiv/ev_ws/planning/build/track_planning'], 'cwd': '/home/aiv/ev_ws/planning/build/track_planning', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('VSCODE_CWD', '/home/aiv'), ('VSCODE_ESM_ENTRYPOINT', 'vs/workbench/api/node/extensionHostProcess'), ('USER', 'aiv'), ('CLAUDE_CODE_ENTRYPOINT', 'claude-vscode'), ('LC_TIME', 'ko_KR.UTF-8'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}'), ('GIT_EDITOR', 'true'), ('VSCODE_HANDLES_UNCAUGHT_ERRORS', 'true'), ('XDG_SESSION_TYPE', 'x11'), ('CLAUDE_AGENT_SDK_VERSION', '0.2.49'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/aiv/ev_ws/planning/install/track_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_laserscan/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/lidar_interfaces/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('CHROME_DESKTOP', 'code.desktop'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('VSCODE_IPC_HOOK', '/run/user/1000/vscode-b400ee21-1.10-main.sock'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/code.desktop'), ('APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL', '1'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2094'), ('SYSTEMD_EXEC_PID', '2603'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4020'), ('NVM_DIR', '/home/aiv/.nvm'), ('VSCODE_CRASH_REPORTER_PROCESS_TYPE', 'extensionHost'), ('VSCODE_L10N_BUNDLE_LOCATION', ''), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:21696'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('APPLICATIONINSIGHTS_CONFIGURATION_CONTENT', '{}'), ('USERNAME', 'aiv'), ('OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE', 'delta'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('MCP_CONNECTION_NONBLOCKING', 'true'), ('PATH', '/usr/bin:/home/aiv/.local/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.0/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2584,unix/aiv:/tmp/.ICE-unix/2584'), ('INVOCATION_ID', '1744b5a31de14982a42b5a0c06740c92'), ('COREPACK_ENABLE_AUTO_PIN', '0'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':1'), ('NoDefaultCurrentDirectoryInExePath', '1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('ELECTRON_RUN_AS_NODE', '1'), ('GDMSESSION', 'ubuntu'), ('CLAUDE_CODE_ENABLE_SDK_FILE_CHECKPOINTING', 'true'), ('CLAUDECODE', '1'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('VIRTUAL_ENV', '/usr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/track_planning'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('VSCODE_CODE_CACHE_PATH', '/home/aiv/.config/Code/CachedData/591199df409fbf59b4b52d5ad4ee0470152a9b31'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/planning/install/track_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/lidar_interfaces/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/track_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_laserscan:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/lidar_interfaces:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('VSCODE_PID', '4020')]), 'shell': False}
+[12.437999] (track_planning) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[12.438116] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_corridor.so\n'}
+[12.439159] (track_planning) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_corridor.so" to ""\n'}
+[12.439304] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_postprocess.so\n'}
+[12.439329] (track_planning) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/libtrack_planning_postprocess.so" to ""\n'}
+[12.439374] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/lib/track_planning/local_planner_node_exe\n'}
+[12.439475] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/lib/liblocal_planner_component.so\n'}
+[12.445218] (track_planning) StdoutLine: {'line': b'-- Set runtime path of "/home/aiv/ev_ws/planning/install/track_planning/lib/liblocal_planner_component.so" to ""\n'}
+[12.445547] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include\n'}
+[12.445577] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning\n'}
+[12.445640] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor\n'}
+[12.445664] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/corridor_builder.hpp\n'}
+[12.445688] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/virtual_boundary.hpp\n'}
+[12.445711] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/corridor/centerline_builder.hpp\n'}
+[12.445733] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common\n'}
+[12.445756] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/geometry.hpp\n'}
+[12.445779] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/types.hpp\n'}
+[12.445801] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/params.hpp\n'}
+[12.445824] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/common/debug_publish.hpp\n'}
+[12.445846] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/nodes\n'}
+[12.445868] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/nodes/local_planner_node.hpp\n'}
+[12.445889] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/safety\n'}
+[12.445911] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/safety/safety_checker.hpp\n'}
+[12.445932] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party\n'}
+[12.445954] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT\n'}
+[12.445976] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/LICENSE\n'}
+[12.445998] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDT.hpp\n'}
+[12.446019] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDTUtils.hpp\n'}
+[12.446040] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/portable_nth_element.hpp\n'}
+[12.446062] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/Triangulation.h\n'}
+[12.446086] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/predicates.h\n'}
+[12.446109] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/LocatorKDTree.h\n'}
+[12.446162] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/remove_at.hpp\n'}
+[12.446184] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/Triangulation.hpp\n'}
+[12.446203] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDTUtils.h\n'}
+[12.446223] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/KDTree.h\n'}
+[12.446244] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/third_party/CDT/CDT.h\n'}
+[12.446263] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/postprocess\n'}
+[12.446284] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/include/track_planning/postprocess/path_postprocessor.hpp\n'}
+[12.446304] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/config\n'}
+[12.446324] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/config/planning.yaml\n'}
+[12.446343] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/launch\n'}
+[12.446362] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/launch/planning.launch.py\n'}
+[12.446382] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/package_run_dependencies/track_planning\n'}
+[12.446402] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/parent_prefix_path/track_planning\n'}
+[12.446433] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/ament_prefix_path.sh\n'}
+[12.446454] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/ament_prefix_path.dsv\n'}
+[12.446473] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/path.sh\n'}
+[12.446495] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/environment/path.dsv\n'}
+[12.446514] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.bash\n'}
+[12.446535] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.sh\n'}
+[12.446555] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.zsh\n'}
+[12.446576] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/local_setup.dsv\n'}
+[12.446598] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/package.dsv\n'}
+[12.446618] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/packages/track_planning\n'}
+[12.446638] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/ament_index/resource_index/rclcpp_components/track_planning\n'}
+[12.446660] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/cmake/track_planningConfig.cmake\n'}
+[12.446706] (track_planning) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/cmake/track_planningConfig-version.cmake\n'}
+[12.446729] (track_planning) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/track_planning/share/track_planning/package.xml\n'}
+[12.446981] (track_planning) CommandEnded: {'returncode': 0}
+[12.454130] (track_planning) JobEnded: {'identifier': 'track_planning', 'rc': 0}
+[12.454437] (-) EventReactorShutdown: {}

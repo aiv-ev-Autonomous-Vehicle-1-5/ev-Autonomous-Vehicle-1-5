@@ -4,6 +4,37 @@
  *
  * 파이프라인의 각 모듈이 데이터를 주고받을 때 사용하는 구조체와 열거형을 모아놓은 파일.
  * 모든 좌표는 ego 차량 기준 base_link 프레임 (전방 +x, 좌측 +y).
+ *
+ * ┌─────────────────────────────────────────────────────────────────┐
+ * │                    파이프라인 데이터 흐름도                      │
+ * ├─────────────────────────────────────────────────────────────────┤
+ * │                                                                 │
+ * │  Perception Input                                               │
+ * │    ├─ LaneBoundaryArray ─┐                                      │
+ * │    └─ ConeArray ─────────┤                                      │
+ * │                          ▼                                      │
+ * │  (2) CorridorBuilder ──► CorridorPolylines {left, right}        │
+ * │                          ▼                                      │
+ * │  (3) VirtualBoundary ──► VirtualBoundaryResult {boundary}       │
+ * │                          ▼                                      │
+ * │  (5) CenterlineBuilder ► CenterlineResult {center}              │
+ * │                          ▼                                      │
+ * │  (6) PathPostprocessor ► PostprocessResult {path, yaw}          │
+ * │                          ▼                                      │
+ * │  (7) SafetyChecker ────► PlannerState {OK/STOP/INFEASIBLE}      │
+ * │                          ▼                                      │
+ * │  (8) Publish: /planning/path + /planning/status                 │
+ * │                                                                 │
+ * └─────────────────────────────────────────────────────────────────┘
+ *
+ * 참조 파일:
+ *   - params.hpp      : 전체 파라미터 정의 (PlanningParams)
+ *   - geometry.hpp     : 2D 기하 유틸리티 (Point2D 연산, 폴리라인 처리)
+ *   - corridor_builder : CorridorPolylines 생성
+ *   - virtual_boundary : VirtualBoundaryResult 생성
+ *   - centerline_builder: CenterlineResult 생성
+ *   - path_postprocessor: PostprocessResult 생성
+ *   - safety_checker   : PlannerState 판정
  */
 #ifndef TRACK_PLANNING__COMMON__TYPES_HPP_
 #define TRACK_PLANNING__COMMON__TYPES_HPP_

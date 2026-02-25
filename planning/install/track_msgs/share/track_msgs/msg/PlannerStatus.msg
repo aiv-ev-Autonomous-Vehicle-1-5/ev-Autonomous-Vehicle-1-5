@@ -1,12 +1,32 @@
+# =============================================================
 # track_msgs/msg/PlannerStatus.msg
-# Planning pipeline status output
+# =============================================================
+# 플래너 상태 출력 — 로컬 플래너 파이프라인의 현재 상태를 컨트롤러에 전달
+#
+# 토픽: /planning/status
+# 발행: LocalPlannerNode (on_timer 끝에서 매 프레임 발행)
+# 구독: Controller 노드 (속도/조향 명령 결정에 사용)
+#
+# 상태 우선순위 (높은 것부터):
+#   STALE (3)      — 입력 데이터 지연/누락 → 감속 후 정지
+#   INFEASIBLE (2) — 경로 곡률 > 차량 조향 한계 → 추종 불가, 정지
+#   STOP (1)       — 유효한 경로 없음 → 정지
+#   OK (0)         — 정상 주행 가능 → target_speed 적용
+#
+# reason 필드 예시:
+#   "ok"                         — 정상
+#   "input_stale"                — 입력 데이터 타임아웃 초과
+#   "no_valid_path"              — 경로 생성 실패
+#   "curvature_exceeds_r_min"    — 곡률이 최소 회전 반경 초과
+# =============================================================
 
-std_msgs/Header header
+std_msgs/Header header              # 타임스탬프 + 좌표계 프레임 (base_link)
 
-uint8 OK          = 0
-uint8 STOP        = 1
-uint8 INFEASIBLE  = 2
-uint8 STALE       = 3
-uint8 status
+# 상태 상수 정의
+uint8 OK          = 0               # 정상 — 경로 유효, target_speed > 0
+uint8 STOP        = 1               # 정지 — 경로 생성 실패
+uint8 INFEASIBLE  = 2               # 실현불가 — 곡률 초과 (차량 한계)
+uint8 STALE       = 3               # 만료 — 입력 데이터 지연 (perception_ms 초과)
+uint8 status                        # 현재 플래너 상태 (위 상수 중 하나)
 
-string reason                       # Human-readable reason code
+string reason                       # 사람이 읽을 수 있는 상태 설명 문자열 (디버깅/로깅용)
