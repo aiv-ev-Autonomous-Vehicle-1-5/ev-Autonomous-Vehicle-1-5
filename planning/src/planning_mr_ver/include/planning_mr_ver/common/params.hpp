@@ -30,8 +30,11 @@ struct PlanningParams
   //
   // 콘과 차선을 S극 자석으로 모델링하여 costmap을 생성한다.
   // 각 자석의 자력(cost)은 중심에서 가장 강하고, 거리에 따라 감쇠한다.
-  // 감쇠 공식: cost = cost_max / (1 + alpha * d_eff²)
-  //   여기서 d_eff = max(0, 거리 - inner_radius)
+  //
+  // Gaussian 감쇠 (nav2 costmap_2d 방식):
+  //   cost = cost_max · exp(-d_eff² / (2σ²))
+  //   d_eff = max(0, 거리 - inner_radius)
+  //   유효 반경 ≈ 3σ (99.7% 감쇠)
   // ============================================================
   struct Costmap
   {
@@ -41,7 +44,8 @@ struct PlanningParams
     double cone_cost_max = 100.0;  ///< 콘 중심의 최대 cost (S극 자력 세기)
     double lane_cost_max = 50.0;   ///< 차선 경계점의 최대 cost (콘보다 약함)
     double cone_radius = 0.65;     ///< [m] 콘 클러스터 반지름 (이 내부는 cost = max, flat zone)
-    double alpha = 2.0;            ///< 감쇠율 계수. 클수록 빠르게 감쇠 (좁은 영향 범위)
+    double sigma = 1.0;            ///< [m] Gaussian σ (표준편차). 영향 범위 ≈ 3σ = 3m
+                                   ///<     σ↑: 넓고 완만한 감쇠, σ↓: 좁고 급격한 감쇠
     double cost_threshold = 2.0;   ///< cutoff: 이 값 미만이면 0 처리 (연산 절약)
   } costmap;
 
@@ -61,7 +65,7 @@ struct PlanningParams
     // ── APF Local Minima / 역주행 방지 파라미터 ──
     // 참고: Khatib(1986) APF 논문의 local minima 문제 대응
     //       VFH(Borenstein 1991)의 sector 제한 아이디어를 단순화 적용
-    double forward_cone_deg = 120.0;        ///< [deg] 전방 탐색 콘 각도 (180→120: ±60°)
+    double forward_cone_deg = 60.0;        ///< [deg] 전방 탐색 콘 각도 (180→120: ±60°)
                                             ///<       cos(60°)=0.5 이상인 셀만 후보로 선택
     double max_steer_per_step_deg = 30.0;   ///< [deg] 1스텝당 최대 heading 변화각
                                             ///<       이보다 크게 꺾이면 강제 clamp
@@ -171,7 +175,7 @@ struct PlanningParams
     costmap.cone_cost_max  = p("costmap.cone_cost_max",  costmap.cone_cost_max);
     costmap.lane_cost_max  = p("costmap.lane_cost_max",  costmap.lane_cost_max);
     costmap.cone_radius    = p("costmap.cone_radius",    costmap.cone_radius);
-    costmap.alpha          = p("costmap.alpha",           costmap.alpha);
+    costmap.sigma          = p("costmap.sigma",           costmap.sigma);
     costmap.cost_threshold = p("costmap.cost_threshold", costmap.cost_threshold);
 
     // Planner 파라미터 로드
@@ -211,9 +215,9 @@ struct PlanningParams
     // 로드된 핵심 파라미터 로그 출력
     RCLCPP_INFO(
       node->get_logger(),
-      "MR PlanningParams loaded: grid=%.0fx%.0f res=%.3f cone_max=%.0f cone_r=%.2f alpha=%.1f",
+      "MR PlanningParams loaded: grid=%.0fx%.0f res=%.3f cone_max=%.0f cone_r=%.2f sigma=%.2f",
       costmap.size_x, costmap.size_y, costmap.resolution,
-      costmap.cone_cost_max, costmap.cone_radius, costmap.alpha);
+      costmap.cone_cost_max, costmap.cone_radius, costmap.sigma);
   }
 };
 

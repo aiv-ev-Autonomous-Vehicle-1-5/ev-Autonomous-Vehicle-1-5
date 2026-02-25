@@ -15,17 +15,19 @@ mr_planner_node:
     # 콘과 차선을 S극 자석으로 모델링하여 2D 그리드에 자력(cost)을 기록한다.
     # ego(0,0)을 중심으로 size_x × size_y 크기의 그리드를 생성한다.
     #
-    # 감쇠 공식: cost = cost_max / (1 + alpha * d_eff²)
+    # Gaussian 감쇠: cost = cost_max · exp(-d_eff² / (2σ²))
     #   d_eff = max(0, 거리 - inner_radius)
+    #   유효 반경 ≈ 3σ (99.7% 감쇠), σ=1.0 → 3m 밖은 거의 0
     # ============================================================
     costmap:
-      size_x: 16.0           # [m] grid 전체 폭 (ego 중심: -5 ~ +5)
-      size_y: 16.0           # [m] grid 전체 높이 (ego 중심: -5 ~ +5)
-      resolution: 0.05       # [m/cell] 셀 크기 → 200×200 = 40,000 cells
+      size_x: 16.0           # [m] grid 전체 폭 (ego 중심: -8 ~ +8)
+      size_y: 16.0           # [m] grid 전체 높이 (ego 중심: -8 ~ +8)
+      resolution: 0.05       # [m/cell] 셀 크기 → 320×320 cells
       cone_cost_max: 100.0   # 콘 중심 최대 cost (S극 자력, 가장 강함)
       lane_cost_max: 50.0    # 차선 경계점 최대 cost (콘의 절반)
       cone_radius: 0.65      # [m] 콘 flat zone 반지름 (PE 드럼 반지름, 이 내부=최대 cost)
-      alpha: 1.5             # 감쇠율 계수 (클수록 빠르게 감쇠 = 영향 범위 좁아짐)
+      sigma: 1.0             # [m] Gaussian σ (영향 범위 ≈ 3σ = 3m)
+                              #     σ↑: 넓고 완만, σ↓: 좁고 급격
       cost_threshold: 2.0    # cutoff: 이 값 미만이면 0 처리 (연산 절약)
 
     # ============================================================
@@ -41,9 +43,9 @@ mr_planner_node:
       heading_init_y: 0.0    # 초기 heading Y (0 = 직진)
 
       # ── APF 역주행 방지 (Local Minima 대응) ──
-      forward_cone_deg: 120.0        # [deg] 전방 탐색 콘 각도 (±60°, 기존 180°에서 축소)
+      forward_cone_deg: 60.0        # [deg] 전방 탐색 콘 각도 (±60°, 기존 180°에서 축소)
                                      # cos(60°)=0.5 → alignment > 0.5 인 셀만 후보
-      max_steer_per_step_deg: 30.0   # [deg] 1스텝당 최대 heading 변화각 (hard clamp)
+      max_steer_per_step_deg: 10.0   # [deg] 1스텝당 최대 heading 변화각 (hard clamp)
       heading_damping: 0.5           # 이전 heading 유지 비율 (0.5 = old 50% + move 50%)
 
     # ============================================================
