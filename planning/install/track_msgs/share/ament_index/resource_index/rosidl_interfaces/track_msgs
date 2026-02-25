@@ -1,16 +1,1 @@
-msg/Cone.idl
-msg/Cone.msg
-msg/ConeArray.idl
-msg/ConeArray.msg
-msg/LaneBoundary.idl
-msg/LaneBoundary.msg
-msg/LaneBoundaryArray.idl
-msg/LaneBoundaryArray.msg
-msg/Obstacle.idl
-msg/Obstacle.msg
-msg/ObstacleArray.idl
-msg/ObstacleArray.msg
-msg/PlannerStatus.idl
-msg/PlannerStatus.msg
-msg/SystemState.idl
-msg/SystemState.msg
+/home/aiv/ev_ws/planning/build/track_msgs/ament_cmake_index/share/ament_index/resource_index/rosidl_interfaces/track_msgs

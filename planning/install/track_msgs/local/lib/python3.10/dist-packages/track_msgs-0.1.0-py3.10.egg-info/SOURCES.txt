@@ -1,15 +1,1 @@
-setup.py
-track_msgs/__init__.py
-track_msgs.egg-info/PKG-INFO
-track_msgs.egg-info/SOURCES.txt
-track_msgs.egg-info/dependency_links.txt
-track_msgs.egg-info/top_level.txt
-track_msgs/msg/__init__.py
-track_msgs/msg/_cone.py
-track_msgs/msg/_cone_array.py
-track_msgs/msg/_lane_boundary.py
-track_msgs/msg/_lane_boundary_array.py
-track_msgs/msg/_obstacle.py
-track_msgs/msg/_obstacle_array.py
-track_msgs/msg/_planner_status.py
-track_msgs/msg/_system_state.py
+/home/aiv/ev_ws/planning/build/track_msgs/ament_cmake_python/track_msgs/track_msgs.egg-info/SOURCES.txt

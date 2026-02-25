@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/aiv/ev_ws/planning/build/planning_mr_ver/libplanning_mr_postprocess.so" "TARGETS" "planning_mr_postprocess" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

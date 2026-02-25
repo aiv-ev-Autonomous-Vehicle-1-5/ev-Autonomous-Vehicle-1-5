@@ -1,59 +1,81 @@
+# ============================================================================
+# planning_mr.yaml — MR Planner 파라미터 설정 파일
+#
+# 이 파일의 값은 노드 시작 시 params.hpp의 PlanningParams 구조체로 로드된다.
+# 여기서 값을 변경하면 노드 재시작 후 반영된다.
+#
+# 네이밍 규칙: 'mr_planner_node' → launch 파일의 name과 일치해야 함
+# ============================================================================
 mr_planner_node:
   ros__parameters:
 
     # ============================================================
     # Costmap — Magnetic Resistance costmap
+    #
+    # 콘과 차선을 S극 자석으로 모델링하여 2D 그리드에 자력(cost)을 기록한다.
+    # ego(0,0)을 중심으로 size_x × size_y 크기의 그리드를 생성한다.
+    #
+    # 감쇠 공식: cost = cost_max / (1 + alpha * d_eff²)
+    #   d_eff = max(0, 거리 - inner_radius)
     # ============================================================
     costmap:
       size_x: 10.0           # [m] grid 전체 폭 (ego 중심: -5 ~ +5)
-      size_y: 10.0           # [m] grid 전체 높이
-      resolution: 0.05       # [m/cell] 셀 크기 (200x200 = 40,000 cells)
-      cone_cost_max: 100.0   # 콘 중심 최대 cost (S극 자력)
-      lane_cost_max: 50.0    # 차선 경계점 최대 cost
-      cone_radius: 0.65      # [m] 콘 클러스터 반지름 (이 내부는 cost=max)
-      alpha: 2.0             # 감쇠율: cost = max / (1 + α·d_eff²)
-      cost_threshold: 2.0    # cutoff: 이 값 미만이면 0 처리
+      size_y: 10.0           # [m] grid 전체 높이 (ego 중심: -5 ~ +5)
+      resolution: 0.05       # [m/cell] 셀 크기 → 200×200 = 40,000 cells
+      cone_cost_max: 100.0   # 콘 중심 최대 cost (S극 자력, 가장 강함)
+      lane_cost_max: 50.0    # 차선 경계점 최대 cost (콘의 절반)
+      cone_radius: 0.65      # [m] 콘 flat zone 반지름 (PE 드럼 반지름, 이 내부=최대 cost)
+      alpha: 2.0             # 감쇠율 계수 (클수록 빠르게 감쇠 = 영향 범위 좁아짐)
+      cost_threshold: 2.0    # cutoff: 이 값 미만이면 0 처리 (연산 절약)
 
     # ============================================================
     # Planner — Greedy 전진 탐색
+    #
+    # ego(0,0)에서 heading 방향으로 전방 180°를 탐색하며
+    # cost가 가장 낮은 셀로 한 칸씩 이동하여 경로를 생성한다.
     # ============================================================
     planner:
-      search_radius: 0.30    # [m] 전방 180° 탐색 반경
-      max_steps: 200         # 최대 경로 포인트 수
-      heading_init_x: 1.0    # 초기 heading X (+x = 전방)
-      heading_init_y: 0.0    # 초기 heading Y
+      search_radius: 0.30    # [m] 한 스텝당 탐색 반경 (이 원 안에서 최소 cost 셀 선택)
+      max_steps: 200         # 최대 경로 포인트 수 (= 최대 이동 횟수)
+      heading_init_x: 1.0    # 초기 heading X (+x = 전방, 차량 진행 방향)
+      heading_init_y: 0.0    # 초기 heading Y (0 = 직진)
 
     # ============================================================
-    # Vehicle (T870, track_planning과 동일)
+    # Vehicle (T870 전동 카트, track_planning과 동일)
     # ============================================================
     vehicle:
       width: 0.50            # [m] 차폭
-      wheelbase: 0.87        # [m] 축간 거리
-      delta_max: 0.314       # [rad] 최대 조향각 (~18°)
+      wheelbase: 0.87        # [m] 축간 거리 (앞바퀴~뒷바퀴 중심)
+      delta_max: 0.314       # [rad] 최대 조향각 (~18°) → r_min ≈ 2.67m
 
     # ============================================================
-    # Safety
+    # Safety — 안전 마진
     # ============================================================
     safety:
-      margin: 0.10           # [m] 안전 마진
+      margin: 0.10           # [m] 장애물과의 안전 마진
 
     # ============================================================
-    # Speed
+    # Speed — 속도 제한
+    #
+    # 곡선 구간 속도 제한: v = sqrt(a_lat_max / curvature)
+    # 직선 구간: v_max 사용
     # ============================================================
     speed:
       v_max: 1.60            # [m/s] 최대 속도
-      a_lat_max: 2.0         # [m/s²] 최대 횡가속도
+      a_lat_max: 2.0         # [m/s²] 최대 횡가속도 (원심력 기준)
 
     # ============================================================
-    # Postprocess (track_planning과 동일)
+    # Postprocess — 경로 후처리 (track_planning과 동일)
+    #
+    # raw_path → prune → smooth → resample → yaw
     # ============================================================
     postprocess:
       resample_ds: 0.10      # [m] 출력 경로 포인트 간격
-      smooth_window: 5       # 이동 평균 윈도우 크기
+      smooth_window: 5       # 이동 평균 윈도우 크기 (좌2 + 자신 + 우2)
       prune_max_dev: 0.15    # [m] 가지치기 최대 횡편차
 
     # ============================================================
-    # Timeouts
+    # Timeouts — 인식 데이터 타임아웃
     # ============================================================
     timeouts:
-      perception_ms: 300     # [ms] 인식 데이터 타임아웃
+      perception_ms: 300     # [ms] 이 시간 내 미수신 시 STALE 판정

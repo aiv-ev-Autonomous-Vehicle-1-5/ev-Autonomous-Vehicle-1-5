@@ -1,6 +1,20 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd"
   schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--
+  package.xml — planning_mr_ver 패키지 메타데이터
+
+  이 파일은 ROS 2 패키지 시스템(colcon, rosdep)이
+  이 패키지의 의존성과 메타정보를 인식하는 데 사용된다.
+
+  의존성 설명:
+    - rclcpp:            ROS 2 C++ 클라이언트 (노드, 타이머, QoS 등)
+    - rclcpp_components: ComposableNode 등록 (Intra-process 통신용)
+    - nav_msgs:          Path, OccupancyGrid (경로/costmap 메시지)
+    - geometry_msgs:     PoseStamped (경로 점)
+    - std_msgs:          Bool (디버그용)
+    - track_msgs:        커스텀 메시지 (LaneBoundaryArray, ConeArray, PlannerStatus)
+-->
 <package format="3">
   <name>planning_mr_ver</name>
   <version>0.1.0</version>
@@ -8,8 +22,10 @@
   <maintainer email="jjss4824@gmail.com">aiv</maintainer>
   <license>Apache-2.0</license>
 
+  <!-- 빌드 도구: ament_cmake (ROS 2 표준 빌드 시스템) -->
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <!-- 런타임 + 빌드 의존성 (depend = build + exec) -->
   <depend>rclcpp</depend>
   <depend>rclcpp_components</depend>
   <depend>nav_msgs</depend>
@@ -17,6 +33,7 @@
   <depend>std_msgs</depend>
   <depend>track_msgs</depend>
 
+  <!-- 테스트 의존성 -->
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

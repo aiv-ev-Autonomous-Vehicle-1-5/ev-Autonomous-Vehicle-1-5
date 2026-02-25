@@ -1,12 +1,1 @@
-// generated from rosidl_generator_cpp/resource/idl.hpp.em
-// generated code does not contain a copyright notice
-
-#ifndef TRACK_MSGS__MSG__SYSTEM_STATE_HPP_
-#define TRACK_MSGS__MSG__SYSTEM_STATE_HPP_
-
-#include "track_msgs/msg/detail/system_state__struct.hpp"
-#include "track_msgs/msg/detail/system_state__builder.hpp"
-#include "track_msgs/msg/detail/system_state__traits.hpp"
-#include "track_msgs/msg/detail/system_state__type_support.hpp"
-
-#endif  // TRACK_MSGS__MSG__SYSTEM_STATE_HPP_
+/home/aiv/ev_ws/planning/build/track_msgs/rosidl_generator_cpp/track_msgs/msg/system_state.hpp

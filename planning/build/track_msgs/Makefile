@@ -315,17 +315,17 @@ track_msgs__rosidl_typesupport_cpp/fast:
 .PHONY : track_msgs__rosidl_typesupport_cpp/fast
 
 #=============================================================================
-# Target rules for targets named ament_cmake_python_copy_track_msgs
+# Target rules for targets named ament_cmake_python_symlink_track_msgs
 
 # Build rule for target.
-ament_cmake_python_copy_track_msgs: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ament_cmake_python_copy_track_msgs
-.PHONY : ament_cmake_python_copy_track_msgs
+ament_cmake_python_symlink_track_msgs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ament_cmake_python_symlink_track_msgs
+.PHONY : ament_cmake_python_symlink_track_msgs
 
 # fast build rule for target.
-ament_cmake_python_copy_track_msgs/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_copy_track_msgs.dir/build.make CMakeFiles/ament_cmake_python_copy_track_msgs.dir/build
-.PHONY : ament_cmake_python_copy_track_msgs/fast
+ament_cmake_python_symlink_track_msgs/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ament_cmake_python_symlink_track_msgs.dir/build.make CMakeFiles/ament_cmake_python_symlink_track_msgs.dir/build
+.PHONY : ament_cmake_python_symlink_track_msgs/fast
 
 #=============================================================================
 # Target rules for targets named ament_cmake_python_build_track_msgs_egg
@@ -2027,7 +2027,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... ament_cmake_python_build_track_msgs_egg"
-	@echo "... ament_cmake_python_copy_track_msgs"
+	@echo "... ament_cmake_python_symlink_track_msgs"
 	@echo "... track_msgs"
 	@echo "... track_msgs__cpp"
 	@echo "... track_msgs__py"

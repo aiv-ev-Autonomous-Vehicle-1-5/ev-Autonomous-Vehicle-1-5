@@ -1,12 +1,1 @@
-# =============================================================
-# track_msgs/msg/ObstacleArray.msg
-# =============================================================
-# 장애물 배열 — 현재 미사용, 향후 장애물 회피 기능 확장 시 사용 예정
-#
-# 토픽 (예정): /perception/obstacles
-# 발행 (예정): Perception 노드
-# 구독 (예정): 장애물 회피 플래너
-# =============================================================
-
-std_msgs/Header header              # 타임스탬프 + 좌표계 프레임 (base_link)
-Obstacle[] obstacles                # 장애물 배열 (가변 길이)
+/home/aiv/ev_ws/planning/src/track_msgs/msg/ObstacleArray.msg

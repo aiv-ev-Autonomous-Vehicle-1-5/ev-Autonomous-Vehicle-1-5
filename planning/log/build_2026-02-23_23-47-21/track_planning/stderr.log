@@ -1,4 +1,0 @@
-/home/aiv/ev_ws/planning/src/track_planning/src/corridor/corridor_builder.cpp: In member function ‘std::vector<track_planning::Point2D> track_planning::CorridorBuilder::build_one_side(const std::vector<track_planning::Point2D>&, const std::vector<track_planning::Point2D>&, const track_planning::Point2D&, const track_planning::Point2D&, const track_planning::Point2D&, const track_planning::PlanningParams&)’:
-/home/aiv/ev_ws/planning/src/track_planning/src/corridor/corridor_builder.cpp:182:19: warning: unused parameter ‘c_end’ [-Wunused-parameter]
-  182 |   const Point2D & c_end,
-      |   ~~~~~~~~~~~~~~~~^~~~~
