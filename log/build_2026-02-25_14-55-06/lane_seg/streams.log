@@ -1,0 +1,20 @@
+[0.474s] Invoking command in '/home/woonggook/ev_ws/build/lane_seg': PYTHONPATH=/home/woonggook/ev_ws/build/lane_seg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/woonggook/ev_ws/build/lane_seg/build --no-deps symlink_data --force
+[0.660s] running develop
+[0.775s] running egg_info
+[0.775s] writing lane_seg.egg-info/PKG-INFO
+[0.775s] writing dependency_links to lane_seg.egg-info/dependency_links.txt
+[0.775s] writing entry points to lane_seg.egg-info/entry_points.txt
+[0.775s] writing requirements to lane_seg.egg-info/requires.txt
+[0.775s] writing top-level names to lane_seg.egg-info/top_level.txt
+[0.776s] reading manifest file 'lane_seg.egg-info/SOURCES.txt'
+[0.777s] writing manifest file 'lane_seg.egg-info/SOURCES.txt'
+[0.778s] running build_ext
+[0.778s] Creating /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane-seg.egg-link (link to .)
+[0.778s] Installing bev_node script to /home/woonggook/ev_ws/install/lane_seg/lib/lane_seg
+[0.778s] Installing yolo_seg script to /home/woonggook/ev_ws/install/lane_seg/lib/lane_seg
+[0.778s] 
+[0.778s] Installed /home/woonggook/ev_ws/build/lane_seg
+[0.778s] running symlink_data
+[0.779s] symbolically linking /home/woonggook/ev_ws/build/lane_seg/resource/lane_seg -> /home/woonggook/ev_ws/install/lane_seg/share/ament_index/resource_index/packages
+[0.779s] symbolically linking /home/woonggook/ev_ws/build/lane_seg/package.xml -> /home/woonggook/ev_ws/install/lane_seg/share/lane_seg
+[0.795s] Invoked command in '/home/woonggook/ev_ws/build/lane_seg' returned '0': PYTHONPATH=/home/woonggook/ev_ws/build/lane_seg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/woonggook/ev_ws/build/lane_seg/build --no-deps symlink_data --force
