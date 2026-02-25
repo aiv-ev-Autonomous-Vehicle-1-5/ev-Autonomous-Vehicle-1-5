@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/build/lidar_interfaces/rosidl_generator_py/lidar_interfaces/_lidar_interfaces_s.ep.rosidl_typesupport_c.c

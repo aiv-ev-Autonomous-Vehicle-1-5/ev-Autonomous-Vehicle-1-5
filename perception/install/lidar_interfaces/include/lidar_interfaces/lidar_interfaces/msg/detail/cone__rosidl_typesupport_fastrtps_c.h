@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/build/lidar_interfaces/rosidl_typesupport_fastrtps_c/lidar_interfaces/msg/detail/cone__rosidl_typesupport_fastrtps_c.h

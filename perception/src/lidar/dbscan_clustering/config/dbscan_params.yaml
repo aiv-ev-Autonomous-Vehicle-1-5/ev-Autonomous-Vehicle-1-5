@@ -9,10 +9,10 @@ dbscan_clustering:
     queue_size: 1
 
     # ROI
-    roi_min_x: 0.5
+    roi_min_x: -15.0
     roi_max_x: 15.0
-    roi_min_y: -10.0
-    roi_max_y: 10.0
+    roi_min_y: -15.0
+    roi_max_y: 15.0
     roi_min_z: -2.0
     roi_max_z: 2.0
 

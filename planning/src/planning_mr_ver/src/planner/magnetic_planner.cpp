@@ -56,16 +56,21 @@ Point2D MagneticPlanner::grid_to_world(
 }
 
 /**
- * @brief 전방 180° 내에서 가장 낮은 cost의 셀을 탐색
+ * @brief 전방 콘(forward cone) 내에서 가장 낮은 cost의 셀을 탐색
+ *
+ * APF Local Minima / 역주행 방지를 위해 탐색 콘 각도를 제한한다.
+ * 기존 180° → forward_cone_deg (기본 120°, ±60°)
+ *
+ * 참고 문헌:
+ *   - Borenstein & Koren (1991) VFH: sector 기반 탐색 영역 제한
+ *   - 본 구현은 VFH의 sector 제한을 cos(half_angle) threshold로 단순화
  *
  * 탐색 과정:
- *   1. 현재 위치를 그리드 좌표로 변환
- *   2. search_radius에 해당하는 셀 범위(bounding box) 계산
- *   3. bounding box 내 모든 셀을 순회하며:
+ *   1. cos_half_cone = cos(forward_cone_deg / 2) 계산
+ *   2. bounding box 내 셀 순회:
  *      a. 거리 검사: search_radius 이내 + 자기 자신 제외
- *      b. 전방 검사: dot(heading, direction) > 0 (전방 180°)
- *      c. cost 비교: 최소 cost 업데이트
- *      d. 동률 처리: alignment(heading 정렬도) 높은 셀 우선
+ *      b. 전방 콘 검사: alignment > cos_half_cone (120°→cos60°=0.5)
+ *      c. cost 비교 → alignment tie-break
  */
 Point2D MagneticPlanner::find_best_forward_cell(
   const CostmapResult & costmap,
@@ -75,24 +80,28 @@ Point2D MagneticPlanner::find_best_forward_cell(
   bool & found)
 {
   found = false;
-  double best_cost = std::numeric_limits<double>::max();  // 현재까지 최소 cost
-  double best_dot = -1.0;  // tie-breaker: heading 방향과의 정렬도 (cos angle)
+  double best_cost = std::numeric_limits<double>::max();
+  double best_dot = -1.0;
   Point2D best_pos{0.0, 0.0};
 
   const double r = params.planner.search_radius;
-  const double r_sq = r * r;  // 거리 비교용 제곱값 (sqrt 절약)
+  const double r_sq = r * r;
   int r_cells = static_cast<int>(std::ceil(r / costmap.resolution));
 
-  // 현재 위치의 그리드 인덱스
+  // ── Forward Cone 임계값 계산 ──
+  // forward_cone_deg=120° → half=60° → cos(60°)=0.5
+  // alignment(= cos θ) > 0.5 인 셀만 후보 (±60° 이내)
+  const double half_cone_rad = params.planner.forward_cone_deg * 0.5 * M_PI / 180.0;
+  const double cos_half_cone = std::cos(half_cone_rad);
+
   int cur_row, cur_col;
   if (!world_to_grid(current_pos.x, current_pos.y,
       costmap.origin_x, costmap.origin_y,
       costmap.resolution, costmap.rows, costmap.cols,
       cur_row, cur_col)) {
-    return best_pos;  // 그리드 밖이면 탐색 불가
+    return best_pos;
   }
 
-  // 탐색 bounding box (search_radius에 해당하는 셀 범위)
   int row_min = std::max(0, cur_row - r_cells);
   int row_max = std::min(costmap.rows - 1, cur_row + r_cells);
   int col_min = std::max(0, cur_col - r_cells);
@@ -100,37 +109,27 @@ Point2D MagneticPlanner::find_best_forward_cell(
 
   for (int row = row_min; row <= row_max; ++row) {
     for (int col = col_min; col <= col_max; ++col) {
-      // 이 셀의 월드 좌표
       Point2D cell_pos = grid_to_world(
         row, col, costmap.origin_x, costmap.origin_y, costmap.resolution);
 
-      // 현재 위치 → 후보 셀까지의 변위 벡터
       double dx = cell_pos.x - current_pos.x;
       double dy = cell_pos.y - current_pos.y;
       double d_sq = dx * dx + dy * dy;
 
-      // 자기 자신(거리≈0) 또는 search_radius 밖 → 제외
       if (d_sq < 1e-12 || d_sq > r_sq) continue;
 
-      // ── 전방 180° 체크 ──
-      // heading과 변위 벡터의 내적 > 0 이면 전방(같은 반구)
-      // dot ≤ 0 이면 후방 → 제외 (뒤로 가지 않음)
+      double d = std::sqrt(d_sq);
       double dot_val = hdg.x * dx + hdg.y * dy;
-      if (dot_val <= 0.0) continue;
+      double alignment = dot_val / d;  // cos(heading과 이동방향의 각도차)
 
-      // 이 셀의 cost 값
+      // ── Forward Cone 체크 ──
+      // 기존: alignment > 0 (180°)
+      // 변경: alignment > cos_half_cone (120° → ±60° 이내만 허용)
+      // 이로써 heading과 60° 이상 차이나는 방향으로는 이동 불가
+      if (alignment <= cos_half_cone) continue;
+
       double cost = costmap.data[row * costmap.cols + col];
 
-      // heading 방향 정렬도 계산: cos(heading과 이동 방향의 각도 차이)
-      // alignment = 1.0이면 완전히 heading과 같은 방향 (직진)
-      // alignment = 0.0이면 heading과 90° 차이 (최대 꺾임)
-      double d = std::sqrt(d_sq);
-      double alignment = dot_val / d;  // cos(angle) = dot / (||hdg|| * ||dir||), ||hdg||=1
-
-      // ── 최적 셀 선택 ──
-      // 1순위: cost가 더 낮은 셀
-      // 2순위: cost가 같으면 alignment가 높은 셀 (직진 방향 선호)
-      //        → 좌우 대칭인 cost에서 oscillation(좌우 흔들림) 방지
       if (cost < best_cost || (cost == best_cost && alignment > best_dot)) {
         best_cost = cost;
         best_dot = alignment;
@@ -176,9 +175,48 @@ std::vector<Point2D> MagneticPlanner::plan(
 
     if (!found) break;  // 전방에 갈 수 있는 셀이 없음 → 종료
 
-    // heading 업데이트: (직전 위치 → 새 위치) 방향벡터로 갱신
-    Point2D new_hdg = normalize(next_pos - current_pos);
-    if (norm(new_hdg) < 1e-6) break;  // 이동 거리가 거의 0 → 종료
+    // ── Heading 업데이트: Damping + Max Turn Rate Clamp ──
+    //
+    // 2단계로 역주행을 방지한다:
+    //
+    // [1단계] Heading Damping (soft limit)
+    //   new_hdg = normalize(damping * old_hdg + (1-damping) * move_dir)
+    //   이전 heading을 일부 유지하여 급격한 방향 전환을 완화
+    //
+    // [2단계] Max Turn Rate Clamp (hard limit)
+    //   블렌딩 후에도 heading 변화가 max_steer_per_step_deg를 초과하면
+    //   해당 각도로 강제 클램프 → 물리적 조향 한계와 유사한 역할
+    //
+    // 참고: forward cone(120°)이 후보 셀을 제한하고,
+    //       damping + clamp가 heading 갱신을 제한하므로
+    //       3중 안전장치로 역주행을 차단한다.
+
+    Point2D move_dir = normalize(next_pos - current_pos);
+    if (norm(move_dir) < 1e-6) break;
+
+    // [1단계] Heading Damping
+    const double damp = params.planner.heading_damping;
+    Point2D blended{
+      damp * hdg.x + (1.0 - damp) * move_dir.x,
+      damp * hdg.y + (1.0 - damp) * move_dir.y
+    };
+    Point2D new_hdg = normalize(blended);
+
+    // [2단계] Max Turn Rate Clamp
+    // heading 변화각 = atan2(cross, dot) 으로 계산
+    const double max_steer_rad = params.planner.max_steer_per_step_deg * M_PI / 180.0;
+    double delta_angle = std::atan2(
+      cross2(hdg, new_hdg),   // sin(θ): 회전 방향 (+CCW, -CW)
+      dot2(hdg, new_hdg));    // cos(θ): 각도 크기
+
+    if (std::fabs(delta_angle) > max_steer_rad) {
+      // 최대 회전각으로 클램프: hdg를 ±max_steer_rad만큼만 회전
+      double clamped = (delta_angle > 0.0) ? max_steer_rad : -max_steer_rad;
+      double cos_a = std::cos(clamped);
+      double sin_a = std::sin(clamped);
+      new_hdg = {hdg.x * cos_a - hdg.y * sin_a,
+                 hdg.x * sin_a + hdg.y * cos_a};
+    }
 
     hdg = new_hdg;
     current_pos = next_pos;

@@ -3,7 +3,7 @@
 Gazebo's velodyne plugin publishes PointCloud2 directly to /velodyne_points,
 so velodyne_driver and velodyne_transform are not needed.
 
-Pipeline: /velodyne_points -> Patchwork++ -> DBSCAN(GPU) -> ClusterSplitter
+Pipeline: /velodyne_points -> Patchwork++ -> DBSCAN(GPU) -> ClusterSplitter -> MakeCylinder
 """
 
 import os
@@ -31,6 +31,11 @@ def generate_launch_description():
         launch_share_dir, 'config', 'cluster_splitter', 'cluster_splitter_params.yaml')
     with open(splitter_params_file, 'r') as f:
         splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
+
+    cylinder_params_file = os.path.join(
+        launch_share_dir, 'config', 'make_cylinder', 'make_cylinder_params.yaml')
+    with open(cylinder_params_file, 'r') as f:
+        cylinder_params = yaml.safe_load(f)['make_cylinder']['ros__parameters']
 
     container = ComposableNodeContainer(
         name='velodyne_container',
@@ -63,6 +68,14 @@ def generate_launch_description():
                 plugin='cluster_splitter::ClusterSplitterNode',
                 name='cluster_splitter',
                 parameters=[splitter_params],
+                extra_arguments=[{'use_intra_process_comms': True}]),
+
+            # 4. MakeCylinder - PointCloud2 -> ConeArray + MarkerArray
+            ComposableNode(
+                package='make_cylinder',
+                plugin='make_cylinder::MakeCylinderNode',
+                name='make_cylinder',
+                parameters=[cylinder_params],
                 extra_arguments=[{'use_intra_process_comms': True}]),
 
         ],

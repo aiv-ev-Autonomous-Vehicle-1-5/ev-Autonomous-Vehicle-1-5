@@ -32,6 +32,7 @@
   <depend>geometry_msgs</depend>
   <depend>std_msgs</depend>
   <depend>track_msgs</depend>
+  <depend>ev_msgs</depend>
 
   <!-- 테스트 의존성 -->
   <test_depend>ament_lint_auto</test_depend>

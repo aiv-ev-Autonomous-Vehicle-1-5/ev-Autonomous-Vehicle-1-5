@@ -1,0 +1,71 @@
+[0.014s] Invoking command in '/home/aiv/ev_ws/perception/build/make_cylinder': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/make_cylinder -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/make_cylinder
+[0.045s] -- The C compiler identification is GNU 11.4.0
+[0.080s] -- The CXX compiler identification is GNU 11.4.0
+[0.086s] -- Detecting C compiler ABI info
+[0.132s] -- Detecting C compiler ABI info - done
+[0.137s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.137s] -- Detecting C compile features
+[0.137s] -- Detecting C compile features - done
+[0.139s] -- Detecting CXX compiler ABI info
+[0.192s] -- Detecting CXX compiler ABI info - done
+[0.196s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.196s] -- Detecting CXX compile features
+[0.196s] -- Detecting CXX compile features - done
+[0.199s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.300s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.354s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.383s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.409s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.412s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.417s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.425s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.435s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.461s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.463s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.522s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.543s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.568s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.573s] -- Looking for pthread.h
+[0.621s] -- Looking for pthread.h - found
+[0.622s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.671s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.671s] -- Found Threads: TRUE  
+[0.704s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.720s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.738s] -- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)
+[0.749s] -- Found ev_msgs: 0.1.0 (/home/aiv/ev_ws/ev_msgs/install/ev_msgs/share/ev_msgs/cmake)
+[0.800s] -- Configuring done
+[0.811s] -- Generating done
+[0.815s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/make_cylinder
+[0.823s] Invoked command in '/home/aiv/ev_ws/perception/build/make_cylinder' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/make_cylinder -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/make_cylinder
+[0.824s] Invoking command in '/home/aiv/ev_ws/perception/build/make_cylinder': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/make_cylinder -- -j28 -l28
+[0.856s] [ 25%] [32mBuilding CXX object CMakeFiles/make_cylinder_component.dir/src/make_cylinder_node.cpp.o[0m
+[0.857s] [ 50%] [32mBuilding CXX object CMakeFiles/make_cylinder_node.dir/rclcpp_components/node_main_make_cylinder_node.cpp.o[0m
+[4.326s] [ 75%] [32m[1mLinking CXX executable make_cylinder_node[0m
+[4.432s] [ 75%] Built target make_cylinder_node
+[7.955s] [100%] [32m[1mLinking CXX shared library libmake_cylinder_component.so[0m
+[8.351s] [100%] Built target make_cylinder_component
+[8.363s] Invoked command in '/home/aiv/ev_ws/perception/build/make_cylinder' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/make_cylinder -- -j28 -l28
+[8.364s] Invoking command in '/home/aiv/ev_ws/perception/build/make_cylinder': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/make_cylinder
+[8.370s] -- Install configuration: ""
+[8.371s] -- Execute custom install script
+[8.371s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/lib/make_cylinder/make_cylinder_node
+[8.382s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/lib/libmake_cylinder_component.so
+[8.391s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/include/make_cylinder/make_cylinder_node.hpp
+[8.402s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/ament_index/resource_index/package_run_dependencies/make_cylinder
+[8.410s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/ament_index/resource_index/parent_prefix_path/make_cylinder
+[8.421s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/environment/ament_prefix_path.sh
+[8.432s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/environment/ament_prefix_path.dsv
+[8.440s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/environment/path.sh
+[8.451s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/environment/path.dsv
+[8.462s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/local_setup.bash
+[8.472s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/local_setup.sh
+[8.484s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/local_setup.zsh
+[8.491s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/local_setup.dsv
+[8.500s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/package.dsv
+[8.509s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/ament_index/resource_index/packages/make_cylinder
+[8.519s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/ament_index/resource_index/rclcpp_components/make_cylinder
+[8.530s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/cmake/make_cylinderConfig.cmake
+[8.540s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/cmake/make_cylinderConfig-version.cmake
+[8.551s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_cylinder/share/make_cylinder/package.xml
+[8.561s] Invoked command in '/home/aiv/ev_ws/perception/build/make_cylinder' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/make_cylinder

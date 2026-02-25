@@ -19,13 +19,13 @@ mr_planner_node:
     #   d_eff = max(0, 거리 - inner_radius)
     # ============================================================
     costmap:
-      size_x: 10.0           # [m] grid 전체 폭 (ego 중심: -5 ~ +5)
-      size_y: 10.0           # [m] grid 전체 높이 (ego 중심: -5 ~ +5)
+      size_x: 16.0           # [m] grid 전체 폭 (ego 중심: -5 ~ +5)
+      size_y: 16.0           # [m] grid 전체 높이 (ego 중심: -5 ~ +5)
       resolution: 0.05       # [m/cell] 셀 크기 → 200×200 = 40,000 cells
       cone_cost_max: 100.0   # 콘 중심 최대 cost (S극 자력, 가장 강함)
       lane_cost_max: 50.0    # 차선 경계점 최대 cost (콘의 절반)
       cone_radius: 0.65      # [m] 콘 flat zone 반지름 (PE 드럼 반지름, 이 내부=최대 cost)
-      alpha: 2.0             # 감쇠율 계수 (클수록 빠르게 감쇠 = 영향 범위 좁아짐)
+      alpha: 1.5             # 감쇠율 계수 (클수록 빠르게 감쇠 = 영향 범위 좁아짐)
       cost_threshold: 2.0    # cutoff: 이 값 미만이면 0 처리 (연산 절약)
 
     # ============================================================
@@ -39,6 +39,12 @@ mr_planner_node:
       max_steps: 200         # 최대 경로 포인트 수 (= 최대 이동 횟수)
       heading_init_x: 1.0    # 초기 heading X (+x = 전방, 차량 진행 방향)
       heading_init_y: 0.0    # 초기 heading Y (0 = 직진)
+
+      # ── APF 역주행 방지 (Local Minima 대응) ──
+      forward_cone_deg: 120.0        # [deg] 전방 탐색 콘 각도 (±60°, 기존 180°에서 축소)
+                                     # cos(60°)=0.5 → alignment > 0.5 인 셀만 후보
+      max_steer_per_step_deg: 30.0   # [deg] 1스텝당 최대 heading 변화각 (hard clamp)
+      heading_damping: 0.5           # 이전 heading 유지 비율 (0.5 = old 50% + move 50%)
 
     # ============================================================
     # Vehicle (T870 전동 카트, track_planning과 동일)
@@ -73,6 +79,17 @@ mr_planner_node:
       resample_ds: 0.10      # [m] 출력 경로 포인트 간격
       smooth_window: 5       # 이동 평균 윈도우 크기 (좌2 + 자신 + 우2)
       prune_max_dev: 0.15    # [m] 가지치기 최대 횡편차
+
+    # ============================================================
+    # SensorTf — velodyne → base_link 좌표 오프셋
+    #
+    # t870.xacro 기준: velodyne는 base_link로부터 (0.7, 0, 0.7)에 마운트
+    # parse_cones()에서 콘 좌표를 base_link 기준으로 보정할 때 사용
+    # ============================================================
+    sensor_tf:
+      tf_x: 0.0             # [m] 전방 오프셋 (velodyne이 base_link보다 앞에 있음)
+      tf_y: 0.0             # [m] 좌우 오프셋
+      tf_z: 0.7             # [m] 높이 오프셋
 
     # ============================================================
     # Timeouts — 인식 데이터 타임아웃

@@ -40,7 +40,7 @@
         parent_link  = "base_link" 
         sensor_name  = "velodyne"
         visualize    = "false"
-        x            = "0.7"
+        x            = "0.0"
         y            = "0.0"
         z            = "0.7"
         roll         = "0.0"

@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/perception/build/make_cylinder/ament_cmake_environment_hooks/local_setup.sh

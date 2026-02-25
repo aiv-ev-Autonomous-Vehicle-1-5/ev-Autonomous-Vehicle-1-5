@@ -1,0 +1,9 @@
+{
+  "package_name": "ev_msgs",
+  "non_idl_tuples": [
+    "/home/aiv/ev_ws/ev_msgs:msg/Cone.msg",
+    "/home/aiv/ev_ws/ev_msgs:msg/ConeArray.msg",
+    "/home/aiv/ev_ws/ev_msgs:msg/LaneBoundary.msg",
+    "/home/aiv/ev_ws/ev_msgs:msg/LaneBoundaryArray.msg"
+  ]
+}

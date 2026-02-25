@@ -63,7 +63,7 @@ GroundSegmentationServer::GroundSegmentationServer(const rclcpp::NodeOptions &op
   //  rclcpp::QoS qos((rclcpp::SystemDefaultsQoS().keep_last(1).durability_volatile()));
   rclcpp::QoS qos(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default));
   qos.reliability(RMW_QOS_POLICY_RELIABILITY_RELIABLE);
-  qos.durability(RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL);
+  qos.durability(RMW_QOS_POLICY_DURABILITY_VOLATILE);
 
   ground_publisher_ = create_publisher<sensor_msgs::msg::PointCloud2>("/patchworkpp/ground", qos);
   nonground_publisher_ =

@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/build/lidar_interfaces/rosidl_generator_c/lidar_interfaces/msg/cone.h

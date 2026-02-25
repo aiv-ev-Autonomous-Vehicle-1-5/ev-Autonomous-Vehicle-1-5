@@ -42,11 +42,6 @@ def generate_launch_description():
     with open(dbscan_params_file, 'r') as f:
         dbscan_params = yaml.safe_load(f)['dbscan_clustering']['ros__parameters']
 
-    splitter_params_file = os.path.join(
-        launch_share_dir, 'config', 'cluster_splitter', 'cluster_splitter_params.yaml')
-    with open(splitter_params_file, 'r') as f:
-        splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
-
     debug_script = os.path.join(
         launch_share_dir,
         'launch',
@@ -106,13 +101,6 @@ def generate_launch_description():
                     parameters=[dbscan_params],
                     extra_arguments=[{'use_intra_process_comms': True}]),
 
-                # 5. Cluster Splitter - split over-merged cone clusters
-                ComposableNode(
-                    package='cluster_splitter',
-                    plugin='cluster_splitter::ClusterSplitterNode',
-                    name='cluster_splitter',
-                    parameters=[splitter_params],
-                    extra_arguments=[{'use_intra_process_comms': True}]),
             ],
             output='both',
     )

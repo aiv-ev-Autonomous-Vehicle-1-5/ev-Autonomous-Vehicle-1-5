@@ -1,12 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_cone_array_s.c.o"
-  "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_cone_array_s.c.o.d"
-  "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_cone_s.c.o"
-  "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_cone_s.c.o.d"
-  "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_lane_boundary_array_s.c.o"
-  "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_lane_boundary_array_s.c.o.d"
-  "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_lane_boundary_s.c.o"
-  "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_lane_boundary_s.c.o.d"
   "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_obstacle_array_s.c.o"
   "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_obstacle_array_s.c.o.d"
   "CMakeFiles/track_msgs__rosidl_generator_py.dir/rosidl_generator_py/track_msgs/msg/_obstacle_s.c.o"

@@ -135,12 +135,12 @@ CostmapResult CostmapGenerator::generate(
 
   const auto & cm = params.costmap;
   result.resolution = cm.resolution;
-  // 그리드 크기: 10m / 0.05m = 200 cells
+  // 그리드 크기: 16m / 0.05m = 400 cells
   result.cols = static_cast<int>(std::round(cm.size_x / cm.resolution));
   result.rows = static_cast<int>(std::round(cm.size_y / cm.resolution));
-  // origin: ego(0,0)가 그리드 중심이 되도록 좌하단 좌표 설정
-  result.origin_x = -cm.size_x / 2.0;  // -5.0m
-  result.origin_y = -cm.size_y / 2.0;  // -5.0m
+  // origin: ego가 그리드 중심이 되도록 좌하단 좌표 설정
+  result.origin_x = -cm.size_x / 2.0 ; 
+  result.origin_y = -cm.size_y / 2.0;  
 
   // 전체 그리드를 0으로 초기화 (장애물 없는 빈 공간)
   result.data.assign(result.rows * result.cols, 0.0);

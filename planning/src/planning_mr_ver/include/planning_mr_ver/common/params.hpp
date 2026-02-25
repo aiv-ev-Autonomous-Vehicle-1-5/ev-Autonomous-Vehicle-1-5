@@ -53,10 +53,20 @@ struct PlanningParams
   // ============================================================
   struct Planner
   {
-    double search_radius = 0.30;   ///< [m] 전방 180° 탐색 반경 (이 원 안에서 최소 cost 셀 선택)
+    double search_radius = 0.30;   ///< [m] 전방 탐색 반경 (이 원 안에서 최소 cost 셀 선택)
     int max_steps = 200;           ///< 최대 경로 포인트 수 (이 이상이면 탐색 종료)
     double heading_init_x = 1.0;   ///< 초기 heading X (+x = 전방, 차량 진행 방향)
     double heading_init_y = 0.0;   ///< 초기 heading Y (0 = 직진)
+
+    // ── APF Local Minima / 역주행 방지 파라미터 ──
+    // 참고: Khatib(1986) APF 논문의 local minima 문제 대응
+    //       VFH(Borenstein 1991)의 sector 제한 아이디어를 단순화 적용
+    double forward_cone_deg = 120.0;        ///< [deg] 전방 탐색 콘 각도 (180→120: ±60°)
+                                            ///<       cos(60°)=0.5 이상인 셀만 후보로 선택
+    double max_steer_per_step_deg = 30.0;   ///< [deg] 1스텝당 최대 heading 변화각
+                                            ///<       이보다 크게 꺾이면 강제 clamp
+    double heading_damping = 0.5;           ///< 이전 heading 유지 비율 (0=즉시 전환, 1=고정)
+                                            ///<       new_hdg = damping*old + (1-damping)*move_dir
   } planner;
 
   // ============================================================
@@ -110,6 +120,20 @@ struct PlanningParams
   } postprocess;
 
   // ============================================================
+  // SensorTf — velodyne → base_link 좌표 오프셋
+  //
+  // make_cylinder가 발행하는 ConeArray는 velodyne 프레임 기준이다.
+  // costmap은 base_link 프레임 기준이므로, 이 오프셋만큼 보정해야 한다.
+  // t870.xacro: velodyne → base_link = (0.7, 0.0, 0.7)
+  // ============================================================
+  struct SensorTf
+  {
+    double tf_x = 0.7;   ///< [m] velodyne→base_link X 오프셋 (전방)
+    double tf_y = 0.0;   ///< [m] velodyne→base_link Y 오프셋 (좌측)
+    double tf_z = 0.7;   ///< [m] velodyne→base_link Z 오프셋 (상방)
+  } sensor_tf;
+
+  // ============================================================
   // Timeouts — 인식 데이터 타임아웃
   // ============================================================
   struct Timeouts
@@ -155,6 +179,9 @@ struct PlanningParams
     planner.max_steps      = p("planner.max_steps",      planner.max_steps);
     planner.heading_init_x = p("planner.heading_init_x", planner.heading_init_x);
     planner.heading_init_y = p("planner.heading_init_y", planner.heading_init_y);
+    planner.forward_cone_deg       = p("planner.forward_cone_deg",       planner.forward_cone_deg);
+    planner.max_steer_per_step_deg = p("planner.max_steer_per_step_deg", planner.max_steer_per_step_deg);
+    planner.heading_damping        = p("planner.heading_damping",        planner.heading_damping);
 
     // Vehicle 파라미터 로드
     vehicle.width     = p("vehicle.width",     vehicle.width);
@@ -172,6 +199,11 @@ struct PlanningParams
     postprocess.resample_ds   = p("postprocess.resample_ds",   postprocess.resample_ds);
     postprocess.smooth_window = p("postprocess.smooth_window", postprocess.smooth_window);
     postprocess.prune_max_dev = p("postprocess.prune_max_dev", postprocess.prune_max_dev);
+
+    // SensorTf 파라미터 로드
+    sensor_tf.tf_x = p("sensor_tf.tf_x", sensor_tf.tf_x);
+    sensor_tf.tf_y = p("sensor_tf.tf_y", sensor_tf.tf_y);
+    sensor_tf.tf_z = p("sensor_tf.tf_z", sensor_tf.tf_z);
 
     // Timeouts 파라미터 로드
     timeouts.perception_ms = p("timeouts.perception_ms", timeouts.perception_ms);

@@ -1,0 +1,37 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from ev_msgs/msg/LaneBoundary.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Point.idl"
+#include "std_msgs/msg/Header.idl"
+
+module ev_msgs {
+  module msg {
+    module LaneBoundary_Constants {
+      @verbatim (language="comment", text=
+        "좌/우 상수 및 필드" "\n"        "좌측 차선 경계 상수")
+      const uint8 LEFT = 0;
+      @verbatim (language="comment", text=
+        "우측 차선 경계 상수")
+      const uint8 RIGHT = 1;
+    };
+    struct LaneBoundary {
+      @verbatim (language="comment", text=
+        "타임스탬프 + 좌표계 프레임 (base_link)")
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "순서 정렬된 경계점 배열 — 차량에서 가까운 점부터")
+      @unit (value="m")
+      sequence<geometry_msgs::msg::Point> points;
+
+      @verbatim (language="comment", text=
+        "이 경계의 좌/우 구분 (LEFT 또는 RIGHT)")
+      uint8 side;
+
+      @verbatim (language="comment", text=
+        "검출 신뢰도 (0.0 ~ 1.0)")
+      float confidence;
+    };
+  };
+};

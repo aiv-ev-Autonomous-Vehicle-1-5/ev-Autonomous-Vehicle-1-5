@@ -3,15 +3,13 @@
 # ============================================================================
 # 로컬 플래너 파이프라인에서 사용하는 커스텀 ROS 2 메시지 정의 패키지
 #
-# 정의된 메시지 (8종):
-#   - LaneBoundary.msg       : 단일 차선 경계 (좌/우 구분, 포인트 배열)
-#   - LaneBoundaryArray.msg  : 차선 경계 배열 (여러 경계를 한 번에 전달)
-#   - Cone.msg               : 단일 콘 (라바콘/교통콘, 2D 위치 + 분류)
-#   - ConeArray.msg          : 콘 배열
+# 정의된 메시지 (4종):
 #   - Obstacle.msg           : 단일 장애물 (PE 드럼 등, 위치 + 크기)
 #   - ObstacleArray.msg      : 장애물 배열
 #   - PlannerStatus.msg      : 플래너 상태 정보 (모드, 속도, 곡률 등)
 #   - SystemState.msg        : 시스템 전체 상태 (FSM 상태 등)
+#
+# NOTE: Cone, ConeArray, LaneBoundary, LaneBoundaryArray → ev_msgs 공용 패키지로 이전됨
 #
 # 빌드 시 rosidl이 자동으로 C++/Python 바인딩 코드를 생성함
 # ============================================================================
@@ -46,10 +44,6 @@ find_package(std_msgs REQUIRED)
 #   - geometry_msgs : Point (3D 좌표), Pose (위치+방향) 등
 #   - std_msgs      : Header (stamp + frame_id) 등
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/LaneBoundary.msg"        # 차선 경계 (side: LEFT/RIGHT, points[])
-  "msg/LaneBoundaryArray.msg"   # 차선 경계 배열 (header + boundaries[])
-  "msg/Cone.msg"                # 콘 (position, classification)
-  "msg/ConeArray.msg"           # 콘 배열 (header + cones[])
   "msg/Obstacle.msg"            # 장애물 (position, radius)
   "msg/ObstacleArray.msg"       # 장애물 배열 (header + obstacles[])
   "msg/PlannerStatus.msg"       # 플래너 상태 (mode, speed, curvature 등)

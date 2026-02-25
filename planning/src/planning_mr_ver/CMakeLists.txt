@@ -38,6 +38,7 @@ find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(track_msgs REQUIRED)
+find_package(ev_msgs REQUIRED)
 
 # 헤더 파일 경로 (include/ 디렉토리)
 include_directories(include)
@@ -52,7 +53,7 @@ add_library(planning_mr_costmap SHARED
   src/costmap/costmap_generator.cpp
 )
 ament_target_dependencies(planning_mr_costmap
-  rclcpp nav_msgs geometry_msgs track_msgs
+  rclcpp nav_msgs geometry_msgs track_msgs ev_msgs
 )
 install(TARGETS planning_mr_costmap
   ARCHIVE DESTINATION lib
@@ -70,7 +71,7 @@ add_library(planning_mr_planner SHARED
   src/planner/magnetic_planner.cpp
 )
 ament_target_dependencies(planning_mr_planner
-  rclcpp geometry_msgs track_msgs
+  rclcpp geometry_msgs track_msgs ev_msgs
 )
 install(TARGETS planning_mr_planner
   ARCHIVE DESTINATION lib
@@ -88,7 +89,7 @@ add_library(planning_mr_postprocess SHARED
   src/postprocess/path_postprocessor.cpp
 )
 ament_target_dependencies(planning_mr_postprocess
-  rclcpp geometry_msgs track_msgs
+  rclcpp geometry_msgs track_msgs ev_msgs
 )
 install(TARGETS planning_mr_postprocess
   ARCHIVE DESTINATION lib
@@ -117,7 +118,7 @@ target_link_libraries(mr_planner_component
 )
 ament_target_dependencies(mr_planner_component
   rclcpp rclcpp_components
-  nav_msgs geometry_msgs std_msgs track_msgs
+  nav_msgs geometry_msgs std_msgs track_msgs ev_msgs
 )
 
 # ComposableNode 등록 + 단독 실행 바이너리 생성

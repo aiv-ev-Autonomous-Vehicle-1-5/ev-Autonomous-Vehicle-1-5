@@ -42,34 +42,40 @@ MRPlannerNode::MRPlannerNode(const rclcpp::NodeOptions & options)
 {
   params_.load(this);  // YAML → 파라미터 구조체
 
+  // ── QoS 설정: Best Effort ──
+  // Best Effort: 메시지 유실 시 재전송하지 않고 최신 데이터만 사용
+  // 센서 데이터(10Hz)는 이전 프레임 재전송보다 최신 프레임이 더 유용하므로 Best Effort 사용
+  rclcpp::QoS qos_be(1);
+  qos_be.best_effort();
+
   // ── 구독 설정 ──
   // track_planning(CDT 버전)과 동일한 토픽 이름 → drop-in replacement
   // UniquePtr 콜백: Intra-process Zero-copy를 위해 소유권 이전 방식 사용
-  sub_lanes_ = create_subscription<track_msgs::msg::LaneBoundaryArray>(
-    "/perception/lane_boundaries", rclcpp::QoS(1),
-    [this](track_msgs::msg::LaneBoundaryArray::UniquePtr msg) {
+  sub_lanes_ = create_subscription<ev_msgs::msg::LaneBoundaryArray>(
+    "/perception/lane_boundaries", qos_be,
+    [this](ev_msgs::msg::LaneBoundaryArray::UniquePtr msg) {
       stamp_lanes_ = now();            // 수신 시각 기록 (stale 판정용)
       last_lanes_ = std::move(msg);    // 소유권 이전 (메모리 복사 없음)
     });
 
-  sub_cones_ = create_subscription<track_msgs::msg::ConeArray>(
-    "/perception/cones", rclcpp::QoS(1),
-    [this](track_msgs::msg::ConeArray::UniquePtr msg) {
+  sub_cones_ = create_subscription<ev_msgs::msg::ConeArray>(
+    "/perception/cones", qos_be,
+    [this](ev_msgs::msg::ConeArray::UniquePtr msg) {
       stamp_cones_ = now();
       last_cones_ = std::move(msg);
     });
 
   // ── Core publishers ──
   pub_path_ = create_publisher<nav_msgs::msg::Path>(
-    "/planning/path", rclcpp::QoS(1));           // control 노드가 구독
+    "/planning/path", qos_be);           // control 노드가 구독
   pub_status_ = create_publisher<track_msgs::msg::PlannerStatus>(
-    "/planning/status", rclcpp::QoS(1));          // 상태 모니터링
+    "/planning/status", qos_be);          // 상태 모니터링
 
   // ── Debug publishers ──
   pub_dbg_costmap_ = create_publisher<nav_msgs::msg::OccupancyGrid>(
-    "/planning/debug/costmap", rclcpp::QoS(1));   // RViz2에서 costmap 시각화
+    "/planning/debug/costmap", qos_be);   // RViz2에서 costmap 시각화
   pub_dbg_raw_path_ = create_publisher<nav_msgs::msg::Path>(
-    "/planning/debug/raw_path", rclcpp::QoS(1));  // 후처리 전 경로 시각화
+    "/planning/debug/raw_path", qos_be);  // 후처리 전 경로 시각화
 
   // ── 10Hz 타이머 ──
   // wall_timer: 시스템 시간 기준 (sim_time과 무관하게 10Hz 보장)
@@ -104,8 +110,11 @@ void MRPlannerNode::parse_cones(
   std::vector<Point2D> & all_cones) const
 {
   if (!last_cones_) return;  // 아직 콘 데이터를 받지 못함
+  // velodyne 프레임 → base_link 프레임 오프셋 보정
+  const double ox = params_.sensor_tf.tf_x;
+  const double oy = params_.sensor_tf.tf_y;
   for (const auto & c : last_cones_->cones) {
-    all_cones.push_back({c.position.x, c.position.y});
+    all_cones.push_back({c.position.x + ox, c.position.y + oy});
   }
 }
 

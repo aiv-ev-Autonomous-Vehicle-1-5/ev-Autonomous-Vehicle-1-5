@@ -1,0 +1,34 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from ev_msgs/msg/Cone.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Point.idl"
+
+module ev_msgs {
+  module msg {
+    struct Cone {
+      @verbatim (language="comment", text=
+        "클러스터 무게중심 (x, y, z)")
+      @unit (value="m")
+      geometry_msgs::msg::Point position;
+
+      @verbatim (language="comment", text=
+        "원기둥 반지름")
+      @unit (value="m")
+      float radius;
+
+      @verbatim (language="comment", text=
+        "원기둥 높이")
+      @unit (value="m")
+      float height;
+
+      @verbatim (language="comment", text=
+        "시그모이드 정규화 신뢰도 (0.0~1.0)")
+      float confidence;
+
+      @verbatim (language="comment", text=
+        "클러스터 ID")
+      int32 label;
+    };
+  };
+};

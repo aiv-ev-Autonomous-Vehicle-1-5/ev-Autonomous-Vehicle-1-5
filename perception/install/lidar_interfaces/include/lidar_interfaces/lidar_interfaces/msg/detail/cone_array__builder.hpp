@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/build/lidar_interfaces/rosidl_generator_cpp/lidar_interfaces/msg/detail/cone_array__builder.hpp

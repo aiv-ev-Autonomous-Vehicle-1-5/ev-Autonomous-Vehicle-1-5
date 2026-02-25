@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/planning/build/track_msgs/rosidl_generator_c/track_msgs/msg/cone.h

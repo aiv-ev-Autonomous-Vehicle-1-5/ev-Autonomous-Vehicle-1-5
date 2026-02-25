@@ -33,8 +33,8 @@
 #include <nav_msgs/msg/path.hpp>
 #include <nav_msgs/msg/occupancy_grid.hpp>
 #include <std_msgs/msg/bool.hpp>
-#include <track_msgs/msg/lane_boundary_array.hpp>
-#include <track_msgs/msg/cone_array.hpp>
+#include <ev_msgs/msg/lane_boundary_array.hpp>
+#include <ev_msgs/msg/cone_array.hpp>
 #include <track_msgs/msg/planner_status.hpp>
 
 #include <vector>
@@ -92,8 +92,8 @@ private:
 
   // ── Latest input data ──
   // UniquePtr: Intra-process Zero-copy를 위해 소유권 이전 방식 사용
-  track_msgs::msg::LaneBoundaryArray::UniquePtr last_lanes_;  ///< 최근 차선 데이터
-  track_msgs::msg::ConeArray::UniquePtr         last_cones_;  ///< 최근 콘 데이터
+  ev_msgs::msg::LaneBoundaryArray::UniquePtr last_lanes_;  ///< 최근 차선 데이터
+  ev_msgs::msg::ConeArray::UniquePtr         last_cones_;  ///< 최근 콘 데이터
 
   // ── Input timestamps ──
   // 데이터 수신 시각을 기록하여 stale 판정에 사용
@@ -101,8 +101,8 @@ private:
   rclcpp::Time stamp_cones_;  ///< 콘 데이터 수신 시각
 
   // ── Subscriptions ──
-  rclcpp::Subscription<track_msgs::msg::LaneBoundaryArray>::SharedPtr sub_lanes_;
-  rclcpp::Subscription<track_msgs::msg::ConeArray>::SharedPtr sub_cones_;
+  rclcpp::Subscription<ev_msgs::msg::LaneBoundaryArray>::SharedPtr sub_lanes_;
+  rclcpp::Subscription<ev_msgs::msg::ConeArray>::SharedPtr sub_cones_;
 
   // ── Core publishers (track_planning과 동일 토픽 → drop-in replacement) ──
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_path_;                ///< /planning/path

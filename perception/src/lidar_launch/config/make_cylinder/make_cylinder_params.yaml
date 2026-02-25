@@ -1,0 +1,7 @@
+make_cylinder:
+  ros__parameters:
+    input_topic: "/pointcloud/clustered_split"
+    output_topic: "/perception/cones"
+    marker_topic: "/perception/cones_marker"
+    sigmoid_k: 0.3
+    sigmoid_n_mid: 15.0

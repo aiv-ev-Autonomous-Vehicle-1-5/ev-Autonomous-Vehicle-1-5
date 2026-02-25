@@ -358,18 +358,6 @@ include("/home/aiv/ev_ws/planning/build/track_msgs/ament_cmake_symlink_install_t
 # install("TARGETS" "track_msgs__rosidl_typesupport_c__pyext" "DESTINATION" "local/lib/python3.10/dist-packages/track_msgs")
 include("/home/aiv/ev_ws/planning/build/track_msgs/ament_cmake_symlink_install_targets_2_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install(FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/LaneBoundary.idl" "DESTINATION" "share/track_msgs/msg")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/LaneBoundary.idl" "DESTINATION" "share/track_msgs/msg")
-
-# install(FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/LaneBoundaryArray.idl" "DESTINATION" "share/track_msgs/msg")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/LaneBoundaryArray.idl" "DESTINATION" "share/track_msgs/msg")
-
-# install(FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/Cone.idl" "DESTINATION" "share/track_msgs/msg")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/Cone.idl" "DESTINATION" "share/track_msgs/msg")
-
-# install(FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/ConeArray.idl" "DESTINATION" "share/track_msgs/msg")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/ConeArray.idl" "DESTINATION" "share/track_msgs/msg")
-
 # install(FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/Obstacle.idl" "DESTINATION" "share/track_msgs/msg")
 ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/Obstacle.idl" "DESTINATION" "share/track_msgs/msg")
 
@@ -381,18 +369,6 @@ ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILE
 
 # install(FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/SystemState.idl" "DESTINATION" "share/track_msgs/msg")
 ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs/msg/SystemState.idl" "DESTINATION" "share/track_msgs/msg")
-
-# install(FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/LaneBoundary.msg" "DESTINATION" "share/track_msgs/msg")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/LaneBoundary.msg" "DESTINATION" "share/track_msgs/msg")
-
-# install(FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/LaneBoundaryArray.msg" "DESTINATION" "share/track_msgs/msg")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/LaneBoundaryArray.msg" "DESTINATION" "share/track_msgs/msg")
-
-# install(FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/Cone.msg" "DESTINATION" "share/track_msgs/msg")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/Cone.msg" "DESTINATION" "share/track_msgs/msg")
-
-# install(FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/ConeArray.msg" "DESTINATION" "share/track_msgs/msg")
-ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/ConeArray.msg" "DESTINATION" "share/track_msgs/msg")
 
 # install(FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/Obstacle.msg" "DESTINATION" "share/track_msgs/msg")
 ament_cmake_symlink_install_files("/home/aiv/ev_ws/planning/src/track_msgs" FILES "/home/aiv/ev_ws/planning/src/track_msgs/msg/Obstacle.msg" "DESTINATION" "share/track_msgs/msg")

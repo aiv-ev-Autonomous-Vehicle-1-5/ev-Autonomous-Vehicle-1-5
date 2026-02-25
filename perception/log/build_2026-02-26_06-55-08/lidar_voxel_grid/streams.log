@@ -1,0 +1,125 @@
+[0.015s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/lidar_voxel_grid -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/lidar_voxel_grid
+[0.050s] -- The C compiler identification is GNU 11.4.0
+[0.088s] -- The CXX compiler identification is GNU 11.4.0
+[0.094s] -- Detecting C compiler ABI info
+[0.138s] -- Detecting C compiler ABI info - done
+[0.144s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.144s] -- Detecting C compile features
+[0.145s] -- Detecting C compile features - done
+[0.147s] -- Detecting CXX compiler ABI info
+[0.201s] -- Detecting CXX compiler ABI info - done
+[0.207s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.207s] -- Detecting CXX compile features
+[0.207s] -- Detecting CXX compile features - done
+[0.209s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.305s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.342s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.367s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.392s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.395s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.400s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.407s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.417s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.446s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.448s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.513s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.531s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.556s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.561s] -- Looking for pthread.h
+[0.610s] -- Looking for pthread.h - found
+[0.610s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.659s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.660s] -- Found Threads: TRUE  
+[0.690s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.706s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.724s] -- Found pcl_conversions: 2.4.5 (/opt/ros/humble/share/pcl_conversions/cmake)
+[0.751s] -- Checking for module 'eigen3'
+[0.761s] --   Found eigen3, version 3.4.0
+[0.788s] -- Found Eigen: /usr/include/eigen3 (Required is at least version "3.1") 
+[0.788s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[0.821s] -- Checking for module 'flann'
+[0.834s] --   Found flann, version 1.9.1
+[0.863s] -- Found FLANN: /usr/lib/x86_64-linux-gnu/libflann_cpp.so  
+[0.863s] -- FLANN found (include: /usr/include, lib: /usr/lib/x86_64-linux-gnu/libflann_cpp.so)
+[1.726s] -- Checking for module 'libusb-1.0'
+[1.744s] --   Found libusb-1.0, version 1.0.25
+[1.785s] -- Found libusb: /usr/lib/x86_64-linux-gnu/libusb-1.0.so  
+[1.786s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[1.855s] -- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)
+[1.992s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[1.997s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[2.002s] -- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)
+[2.113s] -- Found Qhull version 8.0.2
+[2.247s] -- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)
+[2.366s] -- Found PCL_COMMON: /usr/lib/x86_64-linux-gnu/libpcl_common.so  
+[2.366s] -- Found PCL_KDTREE: /usr/lib/x86_64-linux-gnu/libpcl_kdtree.so  
+[2.367s] -- Found PCL_OCTREE: /usr/lib/x86_64-linux-gnu/libpcl_octree.so  
+[2.368s] -- Found PCL_SEARCH: /usr/lib/x86_64-linux-gnu/libpcl_search.so  
+[2.368s] -- Found PCL_SAMPLE_CONSENSUS: /usr/lib/x86_64-linux-gnu/libpcl_sample_consensus.so  
+[2.369s] -- Found PCL_FILTERS: /usr/lib/x86_64-linux-gnu/libpcl_filters.so  
+[2.369s] -- Found PCL_2D: /usr/include/pcl-1.12  
+[2.369s] -- Found PCL_GEOMETRY: /usr/include/pcl-1.12  
+[2.370s] -- Found PCL_IO: /usr/lib/x86_64-linux-gnu/libpcl_io.so  
+[2.371s] -- Found PCL_FEATURES: /usr/lib/x86_64-linux-gnu/libpcl_features.so  
+[2.371s] -- Found PCL_ML: /usr/lib/x86_64-linux-gnu/libpcl_ml.so  
+[2.372s] -- Found PCL_SEGMENTATION: /usr/lib/x86_64-linux-gnu/libpcl_segmentation.so  
+[2.373s] -- Found PCL_VISUALIZATION: /usr/lib/x86_64-linux-gnu/libpcl_visualization.so  
+[2.373s] -- Found PCL_SURFACE: /usr/lib/x86_64-linux-gnu/libpcl_surface.so  
+[2.373s] -- Found PCL_REGISTRATION: /usr/lib/x86_64-linux-gnu/libpcl_registration.so  
+[2.374s] -- Found PCL_KEYPOINTS: /usr/lib/x86_64-linux-gnu/libpcl_keypoints.so  
+[2.375s] -- Found PCL_TRACKING: /usr/lib/x86_64-linux-gnu/libpcl_tracking.so  
+[2.375s] -- Found PCL_RECOGNITION: /usr/lib/x86_64-linux-gnu/libpcl_recognition.so  
+[2.376s] -- Found PCL_STEREO: /usr/lib/x86_64-linux-gnu/libpcl_stereo.so  
+[2.376s] -- Found PCL_APPS: /usr/lib/x86_64-linux-gnu/libpcl_apps.so  
+[2.377s] -- Found PCL_IN_HAND_SCANNER: /usr/include/pcl-1.12  
+[2.377s] -- Found PCL_MODELER: /usr/include/pcl-1.12  
+[2.377s] -- Found PCL_POINT_CLOUD_EDITOR: /usr/include/pcl-1.12  
+[2.378s] -- Found PCL_OUTOFCORE: /usr/lib/x86_64-linux-gnu/libpcl_outofcore.so  
+[2.378s] -- Found PCL_PEOPLE: /usr/lib/x86_64-linux-gnu/libpcl_people.so  
+[2.397s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.456s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.456s] -- Configured cppcheck include dirs: /home/aiv/ev_ws/perception/src/lidar/lidar_voxel_grid/include
+[2.456s] -- Configured cppcheck exclude dirs and/or files: 
+[2.456s] -- Added test 'flake8' to check Python code syntax and style conventions
+[2.457s] -- Added test 'lint_cmake' to check CMake code style
+[2.457s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[2.458s] -- Added test 'uncrustify' to check C / C++ code style
+[2.458s] -- Configured uncrustify additional arguments: 
+[2.458s] -- Added test 'xmllint' to check XML markup files
+[2.459s] -- Configuring done
+[2.481s] -- Generating done
+[2.487s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/lidar_voxel_grid
+[2.501s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/lidar_voxel_grid -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/lidar_voxel_grid
+[2.502s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/lidar_voxel_grid -- -j28 -l28
+[2.549s] [ 50%] [32mBuilding CXX object CMakeFiles/voxel_grid_node.dir/rclcpp_components/node_main_voxel_grid_node.cpp.o[0m
+[2.549s] [ 50%] [32mBuilding CXX object CMakeFiles/voxel_grid_component.dir/src/voxel_grid_component.cpp.o[0m
+[4.854s] [ 75%] [32m[1mLinking CXX executable voxel_grid_node[0m
+[4.949s] [ 75%] Built target voxel_grid_node
+[12.597s] [100%] [32m[1mLinking CXX shared library libvoxel_grid_component.so[0m
+[13.269s] [100%] Built target voxel_grid_component
+[13.279s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/lidar_voxel_grid -- -j28 -l28
+[13.281s] Invoking command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/lidar_voxel_grid
+[13.286s] -- Install configuration: ""
+[13.286s] -- Execute custom install script
+[13.287s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib/lidar_voxel_grid/voxel_grid_node
+[13.292s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib/libvoxel_grid_component.so
+[13.300s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/include/lidar_voxel_grid/voxel_grid_component.hpp
+[13.306s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/config/voxel_grid_params.yaml
+[13.312s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/launch/voxel_grid.launch.py
+[13.319s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/package_run_dependencies/lidar_voxel_grid
+[13.327s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/parent_prefix_path/lidar_voxel_grid
+[13.332s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/ament_prefix_path.sh
+[13.338s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/ament_prefix_path.dsv
+[13.345s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/path.sh
+[13.352s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/path.dsv
+[13.359s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.bash
+[13.366s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.sh
+[13.372s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.zsh
+[13.377s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.dsv
+[13.385s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/package.dsv
+[13.392s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/packages/lidar_voxel_grid
+[13.398s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/ament_index/resource_index/rclcpp_components/lidar_voxel_grid
+[13.403s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/cmake/lidar_voxel_gridConfig.cmake
+[13.410s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/cmake/lidar_voxel_gridConfig-version.cmake
+[13.416s] -- Symlinking: /home/aiv/ev_ws/perception/install/lidar_voxel_grid/share/lidar_voxel_grid/package.xml
+[13.423s] Invoked command in '/home/aiv/ev_ws/perception/build/lidar_voxel_grid' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/lidar_voxel_grid

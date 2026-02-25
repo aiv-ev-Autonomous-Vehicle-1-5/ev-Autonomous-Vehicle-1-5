@@ -1,1 +1,1 @@
-cluster_splitter:dbscan_clustering:lidar_voxel_grid:patchworkpp:velodyne_driver:velodyne_pointcloud
+cluster_splitter:dbscan_clustering:lidar_voxel_grid:make_cylinder:patchworkpp:velodyne_driver:velodyne_pointcloud

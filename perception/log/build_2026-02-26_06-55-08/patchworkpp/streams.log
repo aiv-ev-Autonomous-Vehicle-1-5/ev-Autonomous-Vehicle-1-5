@@ -1,0 +1,84 @@
+[0.013s] Invoking command in '/home/aiv/ev_ws/perception/build/patchworkpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/patchworkpp
+[0.059s] -- The CXX compiler identification is GNU 11.4.0
+[0.064s] -- Detecting CXX compiler ABI info
+[0.119s] -- Detecting CXX compiler ABI info - done
+[0.124s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.124s] -- Detecting CXX compile features
+[0.124s] -- Detecting CXX compile features - done
+[0.152s] -- The C compiler identification is GNU 11.4.0
+[0.156s] -- Detecting C compiler ABI info
+[0.205s] -- Detecting C compiler ABI info - done
+[0.209s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.209s] -- Detecting C compile features
+[0.209s] -- Detecting C compile features - done
+[0.216s] [0mParent project name: patchworkpp[0m
+[0.217s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.315s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.359s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.379s] -- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+[0.401s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.405s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.410s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.417s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.427s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.460s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.492s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.495s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.562s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.583s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.615s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.623s] -- Looking for C++ include pthread.h
+[0.683s] -- Looking for C++ include pthread.h - found
+[0.683s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.740s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.740s] -- Found Threads: TRUE  
+[0.775s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.800s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.816s] -- Found tf2_ros: 0.25.18 (/opt/ros/humble/share/tf2_ros/cmake)
+[0.937s] -- Configuring done
+[0.952s] -- Generating done
+[0.957s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/patchworkpp
+[0.968s] Invoked command in '/home/aiv/ev_ws/perception/build/patchworkpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/patchworkpp
+[0.969s] Invoking command in '/home/aiv/ev_ws/perception/build/patchworkpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/patchworkpp -- -j28 -l28
+[1.012s] [ 16%] [32mBuilding CXX object CMakeFiles/patchworkpp_node.dir/rclcpp_components/node_main_patchworkpp_node.cpp.o[0m
+[1.013s] [ 33%] [32mBuilding CXX object patchworkpp_cpp/patchworkpp/CMakeFiles/ground_seg_cores.dir/src/patchworkpp.cpp.o[0m
+[3.275s] [ 50%] [32m[1mLinking CXX executable patchworkpp_node[0m
+[3.394s] [ 50%] Built target patchworkpp_node
+[14.497s] [ 66%] [32m[1mLinking CXX static library libground_seg_cores.a[0m
+[14.525s] [ 66%] Built target ground_seg_cores
+[14.540s] [ 83%] [32mBuilding CXX object CMakeFiles/gseg_component.dir/src/GroundSegmentationServer.cpp.o[0m
+[23.408s] [100%] [32m[1mLinking CXX shared library libgseg_component.so[0m
+[23.508s] [100%] Built target gseg_component
+[23.517s] Invoked command in '/home/aiv/ev_ws/perception/build/patchworkpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/patchworkpp -- -j28 -l28
+[23.517s] Invoking command in '/home/aiv/ev_ws/perception/build/patchworkpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/patchworkpp
+[23.522s] -- Install configuration: "Release"
+[23.522s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/include
+[23.522s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/include/patchwork
+[23.523s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/include/patchwork/patchworkpp.h
+[23.523s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/libground_seg_cores.a
+[23.523s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig.cmake
+[23.523s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig-release.cmake
+[23.523s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets.cmake
+[23.523s] -- Installing: /home/aiv/ev_ws/perception/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets-release.cmake
+[23.523s] -- Execute custom install script
+[23.523s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/lib/patchworkpp/patchworkpp_node
+[23.530s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/lib/libgseg_component.so
+[23.536s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//launch/patchworkpp.launch.py
+[23.541s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp//rviz/patchworkpp.rviz
+[23.547s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/package_run_dependencies/patchworkpp
+[23.553s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/parent_prefix_path/patchworkpp
+[23.558s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.sh
+[23.563s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.dsv
+[23.569s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/path.sh
+[23.575s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/environment/path.dsv
+[23.581s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.bash
+[23.586s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.sh
+[23.590s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.zsh
+[23.597s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/local_setup.dsv
+[23.603s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.dsv
+[23.608s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/packages/patchworkpp
+[23.614s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/ament_index/resource_index/rclcpp_components/patchworkpp
+[23.619s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig.cmake
+[23.624s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig-version.cmake
+[23.630s] -- Symlinking: /home/aiv/ev_ws/perception/install/patchworkpp/share/patchworkpp/package.xml
+[23.637s] Invoked command in '/home/aiv/ev_ws/perception/build/patchworkpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/patchworkpp

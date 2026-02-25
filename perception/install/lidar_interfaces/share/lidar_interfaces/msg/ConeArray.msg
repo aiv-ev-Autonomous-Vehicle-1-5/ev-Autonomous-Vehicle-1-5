@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar/lidar_interfaces/msg/ConeArray.msg

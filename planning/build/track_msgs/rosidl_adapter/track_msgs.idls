@@ -1,7 +1,3 @@
-/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs:msg/LaneBoundary.idl
-/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs:msg/LaneBoundaryArray.idl
-/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs:msg/Cone.idl
-/home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs:msg/ConeArray.idl
 /home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs:msg/Obstacle.idl
 /home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs:msg/ObstacleArray.idl
 /home/aiv/ev_ws/planning/build/track_msgs/rosidl_adapter/track_msgs:msg/PlannerStatus.idl
