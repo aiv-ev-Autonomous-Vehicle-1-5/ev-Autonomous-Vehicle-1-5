@@ -1,8 +1,0 @@
-msg/Obstacle.idl
-msg/Obstacle.msg
-msg/ObstacleArray.idl
-msg/ObstacleArray.msg
-msg/PlannerStatus.idl
-msg/PlannerStatus.msg
-msg/SystemState.idl
-msg/SystemState.msg

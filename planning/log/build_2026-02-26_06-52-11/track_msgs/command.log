@@ -1,4 +1,0 @@
-Invoking command in '/home/aiv/ev_ws/planning/build/track_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/track_msgs -- -j28 -l28
-Invoked command in '/home/aiv/ev_ws/planning/build/track_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/track_msgs -- -j28 -l28
-Invoking command in '/home/aiv/ev_ws/planning/build/track_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/track_msgs
-Invoked command in '/home/aiv/ev_ws/planning/build/track_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/track_msgs

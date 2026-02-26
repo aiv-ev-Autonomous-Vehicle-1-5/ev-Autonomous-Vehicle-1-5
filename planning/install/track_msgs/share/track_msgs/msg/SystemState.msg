@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/planning/src/track_msgs/msg/SystemState.msg

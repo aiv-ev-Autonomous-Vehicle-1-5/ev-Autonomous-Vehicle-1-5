@@ -1,9 +1,0 @@
-{
-  "package_name": "track_msgs",
-  "non_idl_tuples": [
-    "/home/aiv/ev_ws/planning/src/track_msgs:msg/Obstacle.msg",
-    "/home/aiv/ev_ws/planning/src/track_msgs:msg/ObstacleArray.msg",
-    "/home/aiv/ev_ws/planning/src/track_msgs:msg/PlannerStatus.msg",
-    "/home/aiv/ev_ws/planning/src/track_msgs:msg/SystemState.msg"
-  ]
-}

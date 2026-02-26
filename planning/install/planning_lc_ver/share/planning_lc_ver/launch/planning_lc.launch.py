@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/planning/src/planning_lc_ver/launch/planning_lc.launch.py

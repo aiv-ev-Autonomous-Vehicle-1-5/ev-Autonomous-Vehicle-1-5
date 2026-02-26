@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/planning/src/planning_mr_ver/include/planning_mr_ver/planner/magnetic_planner.hpp

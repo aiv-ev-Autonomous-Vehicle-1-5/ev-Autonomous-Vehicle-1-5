@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/aiv/ev_ws/planning/build/planning_lc_ver/libplanning_lc_planner.so" "TARGETS" "planning_lc_planner" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
