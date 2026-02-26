@@ -81,10 +81,10 @@ lc_planner_node:
     # 후보가 없으면 search_radius를 step씩 증가시키며 max까지 확장.
     # ============================================================
     chainer:
-      search_radius: 1.0       # [m] 초기 탐색 반경
-      search_radius_step: 0.2  # [m] 반경 증가 스텝
-      search_radius_max: 1.8   # [m] 최대 탐색 반경
-      forward_angle: 2.0    # [rad] 전방 각도 (π/2 = 90°, ±45° cone)
+      search_radius: 2.0       # [m] 초기 탐색 반경
+      search_radius_step: 0.4  # [m] 반경 증가 스텝
+      search_radius_max: 2.2  # [m] 최대 탐색 반경
+      forward_angle: 1.57   # [rad] 전방 각도 (π/2 = 90°, ±45° cone)
       min_regress_pts: 2       # PCA regression 최소 점 수
       max_regress_pts: 4       # PCA regression 최대 점 수
       resample_ds: 0.1         # [m] 체인 리샘플 간격
