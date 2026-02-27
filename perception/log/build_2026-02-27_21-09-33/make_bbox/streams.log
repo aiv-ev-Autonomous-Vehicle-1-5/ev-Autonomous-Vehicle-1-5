@@ -1,0 +1,71 @@
+[0.015s] Invoking command in '/home/aiv/ev_ws/perception/build/make_bbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/make_bbox -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/make_bbox
+[0.048s] -- The C compiler identification is GNU 11.4.0
+[0.088s] -- The CXX compiler identification is GNU 11.4.0
+[0.092s] -- Detecting C compiler ABI info
+[0.138s] -- Detecting C compiler ABI info - done
+[0.142s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.142s] -- Detecting C compile features
+[0.143s] -- Detecting C compile features - done
+[0.144s] -- Detecting CXX compiler ABI info
+[0.196s] -- Detecting CXX compiler ABI info - done
+[0.200s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.200s] -- Detecting CXX compile features
+[0.201s] -- Detecting CXX compile features - done
+[0.202s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.307s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.346s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.373s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.400s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.403s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.408s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.415s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.425s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.452s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.454s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.514s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.530s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.557s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.564s] -- Looking for pthread.h
+[0.610s] -- Looking for pthread.h - found
+[0.610s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.656s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.656s] -- Found Threads: TRUE  
+[0.686s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.701s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.719s] -- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)
+[0.730s] -- Found ev_msgs: 0.1.0 (/home/aiv/ev_ws/install/ev_msgs/share/ev_msgs/cmake)
+[0.778s] -- Configuring done
+[0.785s] -- Generating done
+[0.788s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/make_bbox
+[0.794s] Invoked command in '/home/aiv/ev_ws/perception/build/make_bbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/make_bbox -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/make_bbox
+[0.795s] Invoking command in '/home/aiv/ev_ws/perception/build/make_bbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/make_bbox -- -j28 -l28
+[0.832s] [ 25%] [32mBuilding CXX object CMakeFiles/make_bbox_component.dir/src/make_bbox_node.cpp.o[0m
+[0.837s] [ 50%] [32mBuilding CXX object CMakeFiles/make_bbox_node.dir/rclcpp_components/node_main_make_bbox_node.cpp.o[0m
+[4.070s] [ 75%] [32m[1mLinking CXX executable make_bbox_node[0m
+[4.151s] [ 75%] Built target make_bbox_node
+[9.587s] [100%] [32m[1mLinking CXX shared library libmake_bbox_component.so[0m
+[9.894s] [100%] Built target make_bbox_component
+[9.905s] Invoked command in '/home/aiv/ev_ws/perception/build/make_bbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/make_bbox -- -j28 -l28
+[9.906s] Invoking command in '/home/aiv/ev_ws/perception/build/make_bbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/make_bbox
+[9.912s] -- Install configuration: ""
+[9.913s] -- Execute custom install script
+[9.913s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/lib/make_bbox/make_bbox_node
+[9.919s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/lib/libmake_bbox_component.so
+[9.927s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/include/make_bbox/make_bbox_node.hpp
+[9.935s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/ament_index/resource_index/package_run_dependencies/make_bbox
+[9.942s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/ament_index/resource_index/parent_prefix_path/make_bbox
+[9.948s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/environment/ament_prefix_path.sh
+[9.956s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/environment/ament_prefix_path.dsv
+[9.963s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/environment/path.sh
+[9.969s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/environment/path.dsv
+[9.976s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/local_setup.bash
+[9.984s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/local_setup.sh
+[9.993s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/local_setup.zsh
+[10.001s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/local_setup.dsv
+[10.009s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/package.dsv
+[10.018s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/ament_index/resource_index/packages/make_bbox
+[10.024s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/ament_index/resource_index/rclcpp_components/make_bbox
+[10.030s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/cmake/make_bboxConfig.cmake
+[10.037s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/cmake/make_bboxConfig-version.cmake
+[10.043s] -- Symlinking: /home/aiv/ev_ws/perception/install/make_bbox/share/make_bbox/package.xml
+[10.051s] Invoked command in '/home/aiv/ev_ws/perception/build/make_bbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/make_bbox

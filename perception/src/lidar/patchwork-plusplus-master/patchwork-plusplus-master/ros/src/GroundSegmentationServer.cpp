@@ -55,15 +55,7 @@ GroundSegmentationServer::GroundSegmentationServer(const rclcpp::NodeOptions &op
       rclcpp::SensorDataQoS(),
       std::bind(&GroundSegmentationServer::EstimateGround, this, std::placeholders::_1));
 
-  /*
-   * We use the following QoS setting for reliable ground segmentation.
-   * If you want to run Patchwork++ in real-time and real-world operation,
-   * please change the QoS setting
-   */
-  //  rclcpp::QoS qos((rclcpp::SystemDefaultsQoS().keep_last(1).durability_volatile()));
-  rclcpp::QoS qos(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default));
-  qos.reliability(RMW_QOS_POLICY_RELIABILITY_RELIABLE);
-  qos.durability(RMW_QOS_POLICY_DURABILITY_VOLATILE);
+  auto qos = rclcpp::SensorDataQoS();
 
   ground_publisher_ = create_publisher<sensor_msgs::msg::PointCloud2>("/patchworkpp/ground", qos);
   nonground_publisher_ =

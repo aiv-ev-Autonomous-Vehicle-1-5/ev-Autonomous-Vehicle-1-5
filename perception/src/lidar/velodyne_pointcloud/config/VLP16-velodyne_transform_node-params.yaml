@@ -5,7 +5,7 @@ velodyne_transform_node:
         min_range: 0.1
         max_range: 130.0
         view_direction: 0.0
-        view_width: 3.14159  # π radians = 180 degrees (front view: -90 to +90 degrees)
+        view_width: 5.2360  # 300° = 5π/3 ≈ 5.2360 rad
         fixed_frame: ""
         target_frame: ""
-        organize_cloud: true
+        organize_cloud: false

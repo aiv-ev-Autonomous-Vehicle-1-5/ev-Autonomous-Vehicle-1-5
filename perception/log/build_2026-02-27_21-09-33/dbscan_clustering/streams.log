@@ -1,0 +1,74 @@
+[0.017s] Invoking command in '/home/aiv/ev_ws/perception/build/dbscan_clustering': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/dbscan_clustering -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/dbscan_clustering
+[0.054s] -- The CXX compiler identification is GNU 11.4.0
+[0.591s] -- The CUDA compiler identification is NVIDIA 12.6.85
+[0.596s] -- Detecting CXX compiler ABI info
+[0.643s] -- Detecting CXX compiler ABI info - done
+[0.649s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.650s] -- Detecting CXX compile features
+[0.650s] -- Detecting CXX compile features - done
+[0.652s] -- Detecting CUDA compiler ABI info
+[1.189s] -- Detecting CUDA compiler ABI info - done
+[1.215s] -- Check for working CUDA compiler: /usr/local/cuda-12.6/bin/nvcc - skipped
+[1.215s] -- Detecting CUDA compile features
+[1.215s] -- Detecting CUDA compile features - done
+[1.218s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.361s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.408s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.430s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[1.458s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.461s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.467s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.475s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.486s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.522s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.524s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.593s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[1.620s] -- Found FastRTPS: /opt/ros/humble/include  
+[1.662s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.671s] -- Looking for C++ include pthread.h
+[1.752s] -- Looking for C++ include pthread.h - found
+[1.752s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.834s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[1.836s] -- Found Threads: TRUE  
+[1.891s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[1.920s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.984s] -- Configuring done
+[1.992s] -- Generating done
+[1.994s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/dbscan_clustering
+[2.002s] Invoked command in '/home/aiv/ev_ws/perception/build/dbscan_clustering' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/dbscan_clustering -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/dbscan_clustering
+[2.003s] Invoking command in '/home/aiv/ev_ws/perception/build/dbscan_clustering': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/dbscan_clustering -- -j28 -l28
+[2.045s] [ 16%] [32mBuilding CUDA object CMakeFiles/dbscan_gpu.dir/src/dbscan_gpu.cu.o[0m
+[2.049s] [ 33%] [32mBuilding CXX object CMakeFiles/dbscan_node.dir/rclcpp_components/node_main_dbscan_node.cpp.o[0m
+[3.491s] [ 50%] [32m[1mLinking CUDA shared library libdbscan_gpu.so[0m
+[3.544s] [ 50%] Built target dbscan_gpu
+[3.561s] [ 66%] [32mBuilding CXX object CMakeFiles/dbscan_component.dir/src/dbscan_node.cpp.o[0m
+[4.874s] [ 83%] [32m[1mLinking CXX executable dbscan_node[0m
+[4.988s] [ 83%] Built target dbscan_node
+[10.028s] [100%] [32m[1mLinking CXX shared library libdbscan_component.so[0m
+[10.321s] [100%] Built target dbscan_component
+[10.332s] Invoked command in '/home/aiv/ev_ws/perception/build/dbscan_clustering' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/dbscan_clustering -- -j28 -l28
+[10.334s] Invoking command in '/home/aiv/ev_ws/perception/build/dbscan_clustering': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/dbscan_clustering
+[10.342s] -- Install configuration: ""
+[10.343s] -- Execute custom install script
+[10.343s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/dbscan_clustering/dbscan_node
+[10.353s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/libdbscan_component.so
+[10.362s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/libdbscan_gpu.so
+[10.372s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering//launch/dbscan_clustering.launch.py
+[10.381s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering//config/dbscan_params.yaml
+[10.389s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/package_run_dependencies/dbscan_clustering
+[10.398s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/parent_prefix_path/dbscan_clustering
+[10.408s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.sh
+[10.418s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.dsv
+[10.426s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/path.sh
+[10.434s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/environment/path.dsv
+[10.443s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.bash
+[10.452s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.sh
+[10.459s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.zsh
+[10.465s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/local_setup.dsv
+[10.474s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/package.dsv
+[10.483s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/packages/dbscan_clustering
+[10.491s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/rclcpp_components/dbscan_clustering
+[10.500s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig.cmake
+[10.507s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig-version.cmake
+[10.513s] -- Symlinking: /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering/package.xml
+[10.522s] Invoked command in '/home/aiv/ev_ws/perception/build/dbscan_clustering' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/dbscan_clustering

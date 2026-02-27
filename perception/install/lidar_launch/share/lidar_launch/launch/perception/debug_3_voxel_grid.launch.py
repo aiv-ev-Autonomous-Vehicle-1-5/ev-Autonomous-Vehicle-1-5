@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar_launch/launch/perception/debug_3_voxel_grid.launch.py

@@ -15,7 +15,7 @@
   <exec_depend>lidar_voxel_grid</exec_depend>
   <exec_depend>dbscan_clustering</exec_depend>
   <exec_depend>cluster_splitter</exec_depend>
-  <exec_depend>make_cylinder</exec_depend>
+  <exec_depend>make_bbox</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

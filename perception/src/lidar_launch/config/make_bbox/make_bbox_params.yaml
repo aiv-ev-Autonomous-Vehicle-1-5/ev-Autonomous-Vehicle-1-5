@@ -1,0 +1,12 @@
+make_bbox:
+  ros__parameters:
+    input_topic: "/pointcloud/clustered"
+    output_topic: "/perception/bboxes"
+    marker_topic: "/perception/bboxes_marker"
+    sigmoid_k: 0.3
+    sigmoid_n_mid: 15.0
+
+# 대회 라바콘 규격 :
+#   - 가로(X): 약 0.500 m
+#   - 세로(Y): 약 0.500 m
+#   - 높이(Z): 약 0.840 m

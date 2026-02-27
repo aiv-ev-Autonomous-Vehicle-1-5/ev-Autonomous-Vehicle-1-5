@@ -11,6 +11,8 @@ import ament_index_python.packages
 from launch import LaunchDescription
 from launch_ros.actions import ComposableNodeContainer
 from launch_ros.descriptions import ComposableNode
+from launch.actions import ExecuteProcess
+
 
 
 def generate_launch_description():
@@ -43,11 +45,23 @@ def generate_launch_description():
     with open(splitter_params_file, 'r') as f:
         splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
 
+    bbox_params_file = os.path.join(
+        launch_share_dir, 'config', 'make_bbox', 'make_bbox_params.yaml')
+    with open(bbox_params_file, 'r') as f:
+        bbox_params = yaml.safe_load(f)['make_bbox']['ros__parameters']
+    
+    debug_script = os.path.join(
+        launch_share_dir,
+        'launch',
+        'perception',
+        'debug_scripts',
+        'inspect_bboxes.py',
+    )
     container = ComposableNodeContainer(
             name='velodyne_container',
             namespace='',
             package='rclcpp_components',
-            executable='component_container',
+            executable='component_container_mt',
             composable_node_descriptions=[
                 # 1. Velodyne driver - receives UDP packets
                 ComposableNode(
@@ -55,7 +69,7 @@ def generate_launch_description():
                     plugin='velodyne_driver::VelodyneDriver',
                     name='velodyne_driver_node',
                     parameters=[driver_params],
-                    extra_arguments=[{'use_intra_process_comms': True}]),
+                    ),  # intra-process disabled
 
                 # 2. Velodyne transform - converts packets to point cloud
                 ComposableNode(
@@ -63,7 +77,7 @@ def generate_launch_description():
                     plugin='velodyne_pointcloud::Transform',
                     name='velodyne_transform_node',
                     parameters=[convert_params],
-                    extra_arguments=[{'use_intra_process_comms': True}]),
+                    ),  # intra-process disabled
 
                 # 3. Patchwork++ - ground segmentation
                 ComposableNode(
@@ -74,7 +88,7 @@ def generate_launch_description():
                     remappings=[
                         ('pointcloud_topic', 'velodyne_points'),
                     ],
-                    extra_arguments=[{'use_intra_process_comms': True}]),
+                    ),  # intra-process disabled
 
                 # 4. DBSCAN Clustering - GPU accelerated
                 ComposableNode(
@@ -82,7 +96,7 @@ def generate_launch_description():
                     plugin='dbscan_clustering::DBSCANNode',
                     name='dbscan_clustering',
                     parameters=[dbscan_params],
-                    extra_arguments=[{'use_intra_process_comms': True}]),
+                    ),  # intra-process disabled
 
                 # 5. Cluster Splitter - split over-merged cone clusters
                 ComposableNode(
@@ -90,10 +104,24 @@ def generate_launch_description():
                     plugin='cluster_splitter::ClusterSplitterNode',
                     name='cluster_splitter',
                     parameters=[splitter_params],
-                    extra_arguments=[{'use_intra_process_comms': True}]),
+                    ),  # intra-process disabled
+
+                # 6. make_bbox
+                ComposableNode(
+                    package='make_bbox',
+                    plugin='make_bbox::MakeBBoxNode',
+                    name='make_bbox',
+                    parameters=[bbox_params],
+                    # extra_arguments=[{'use_intra_process_comms': True}],
+                ),
+                    
 
             ],
             output='both',
     )
-
-    return LaunchDescription([container])
+        # ── 디버그: /perception/bboxes 검증 ──
+    debug_bboxes = ExecuteProcess(
+        cmd=['python3', debug_script, '/perception/bboxes'],
+        output='screen',
+    )
+    return LaunchDescription([container,debug_bboxes])

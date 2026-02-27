@@ -30,7 +30,7 @@
 #include <std_msgs/msg/bool.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <ev_msgs/msg/lane_boundary_array.hpp>
-#include <ev_msgs/msg/cone_array.hpp>
+#include <ev_msgs/msg/b_box_array.hpp>
 
 #include <vector>
 
@@ -66,15 +66,15 @@ private:
 
   // ── Latest input data ──
   ev_msgs::msg::LaneBoundaryArray::UniquePtr last_lanes_;
-  ev_msgs::msg::ConeArray::UniquePtr         last_cones_;
+  ev_msgs::msg::BBoxArray::UniquePtr          last_bboxes_;
 
   // ── Input timestamps ──
   rclcpp::Time stamp_lanes_;
-  rclcpp::Time stamp_cones_;
+  rclcpp::Time stamp_bboxes_;
 
   // ── Subscriptions ──
   rclcpp::Subscription<ev_msgs::msg::LaneBoundaryArray>::SharedPtr sub_lanes_;
-  rclcpp::Subscription<ev_msgs::msg::ConeArray>::SharedPtr sub_cones_;
+  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_bboxes_;
 
   // ── Core publishers ──
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_path_;

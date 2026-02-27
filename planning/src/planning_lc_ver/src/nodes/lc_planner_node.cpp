@@ -30,7 +30,7 @@ namespace planning_lc_ver
 LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
 : Node("lc_planner_node", options),
   stamp_lanes_(0, 0, RCL_ROS_TIME),
-  stamp_cones_(0, 0, RCL_ROS_TIME)
+  stamp_bboxes_(0, 0, RCL_ROS_TIME)
 {
   params_.load(this);
 
@@ -45,11 +45,11 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
       last_lanes_ = std::move(msg);
     });
 
-  sub_cones_ = create_subscription<ev_msgs::msg::ConeArray>(
-    "/perception/cones", qos_be,
-    [this](ev_msgs::msg::ConeArray::UniquePtr msg) {
-      stamp_cones_ = now();
-      last_cones_ = std::move(msg);
+  sub_bboxes_ = create_subscription<ev_msgs::msg::BBoxArray>(
+    "/perception/bboxes", qos_be,
+    [this](ev_msgs::msg::BBoxArray::UniquePtr msg) {
+      stamp_bboxes_ = now();
+      last_bboxes_ = std::move(msg);
     });
 
   // ── Core publishers ──
@@ -85,14 +85,14 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
 void LCPlannerNode::parse_input(
   std::vector<ChainedPoint> & all_pts) const
 {
-  // 콘 수집 (velodyne → base_link 오프셋 보정)
-  if (last_cones_) {
+  // bbox 수집 (velodyne → base_link 오프셋 보정)
+  if (last_bboxes_) {
     const double ox = params_.sensor_tf.tf_x;
     const double oy = params_.sensor_tf.tf_y;
-    for (const auto & c : last_cones_->cones) {
+    for (const auto & b : last_bboxes_->bboxes) {
       all_pts.push_back({
-        c.position.x + ox,
-        c.position.y + oy,
+        b.position.x + ox,
+        b.position.y + oy,
         PointType::CONE});
     }
   }
@@ -116,8 +116,8 @@ bool LCPlannerNode::check_stale() const
     const double dt = (t - stamp_lanes_).nanoseconds() * 1e-6;
     if (dt <= params_.timeouts.perception_ms) have_perception = true;
   }
-  if (last_cones_) {
-    const double dt = (t - stamp_cones_).nanoseconds() * 1e-6;
+  if (last_bboxes_) {
+    const double dt = (t - stamp_bboxes_).nanoseconds() * 1e-6;
     if (dt <= params_.timeouts.perception_ms) have_perception = true;
   }
 

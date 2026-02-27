@@ -79,10 +79,10 @@ public:
 
     sub_ = create_subscription<sensor_msgs::msg::PointCloud2>(
       in_topic,
-      rclcpp::QoS(queue_size),
+      rclcpp::SensorDataQoS(),
       std::bind(&DBSCANNode::cloudCallback, this, _1));
 
-    pub_ = create_publisher<sensor_msgs::msg::PointCloud2>(out_topic, rclcpp::QoS(10));
+    pub_ = create_publisher<sensor_msgs::msg::PointCloud2>(out_topic, rclcpp::SensorDataQoS());
 
     RCLCPP_INFO(
       get_logger(),

@@ -3,7 +3,7 @@
 Gazebo's velodyne plugin publishes PointCloud2 directly to /velodyne_points,
 so velodyne_driver and velodyne_transform are not needed.
 
-Pipeline: /velodyne_points -> Patchwork++ -> DBSCAN(GPU) -> ClusterSplitter -> MakeCylinder
+Pipeline: /velodyne_points -> Patchwork++ -> DBSCAN(GPU) -> ClusterSplitter -> MakeBBox
 """
 
 import os
@@ -32,10 +32,10 @@ def generate_launch_description():
     with open(splitter_params_file, 'r') as f:
         splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
 
-    cylinder_params_file = os.path.join(
-        launch_share_dir, 'config', 'make_cylinder', 'make_cylinder_params.yaml')
-    with open(cylinder_params_file, 'r') as f:
-        cylinder_params = yaml.safe_load(f)['make_cylinder']['ros__parameters']
+    bbox_params_file = os.path.join(
+        launch_share_dir, 'config', 'make_bbox', 'make_bbox_params.yaml')
+    with open(bbox_params_file, 'r') as f:
+        bbox_params = yaml.safe_load(f)['make_bbox']['ros__parameters']
 
     container = ComposableNodeContainer(
         name='velodyne_container',
@@ -52,7 +52,7 @@ def generate_launch_description():
                 remappings=[
                     ('pointcloud_topic', 'velodyne_points'),
                 ],
-                extra_arguments=[{'use_intra_process_comms': True}]),
+                ),  # intra-process disabled
 
             # 2. DBSCAN Clustering - GPU accelerated
             ComposableNode(
@@ -60,7 +60,7 @@ def generate_launch_description():
                 plugin='dbscan_clustering::DBSCANNode',
                 name='dbscan_clustering',
                 parameters=[dbscan_params],
-                extra_arguments=[{'use_intra_process_comms': True}]),
+                ),  # intra-process disabled
 
             # 3. Cluster Splitter - split over-merged cone clusters
             ComposableNode(
@@ -68,15 +68,15 @@ def generate_launch_description():
                 plugin='cluster_splitter::ClusterSplitterNode',
                 name='cluster_splitter',
                 parameters=[splitter_params],
-                extra_arguments=[{'use_intra_process_comms': True}]),
+                ),  # intra-process disabled
 
-            # 4. MakeCylinder - PointCloud2 -> ConeArray + MarkerArray
+            # 4. MakeBBox - PointCloud2 -> BBoxArray + MarkerArray
             ComposableNode(
-                package='make_cylinder',
-                plugin='make_cylinder::MakeCylinderNode',
-                name='make_cylinder',
-                parameters=[cylinder_params],
-                extra_arguments=[{'use_intra_process_comms': True}]),
+                package='make_bbox',
+                plugin='make_bbox::MakeBBoxNode',
+                name='make_bbox',
+                parameters=[bbox_params],
+                ),  # intra-process disabled
 
         ],
         output='both',

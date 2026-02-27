@@ -16,7 +16,7 @@ cluster_splitter:
     kmeans_min_centroid_distance_m: 0.507
 
     # 클러스터 중심 간 거리가 near_radius_m 이하면 인접 클러스터끼리 다른 색으로 컬러링
-    enable_near_radius_coloring: true
+    enable_near_radius_coloring: false
     near_radius_m: 2.0
 
     preserve_noise_points: true

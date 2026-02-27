@@ -1,1 +1,6 @@
-/home/aiv/ev_ws/ev_msgs/build/ev_msgs/ament_cmake_python/ev_msgs/ev_msgs.egg-info/SOURCES.txt
+setup.py
+ev_msgs/__init__.py
+ev_msgs.egg-info/PKG-INFO
+ev_msgs.egg-info/SOURCES.txt
+ev_msgs.egg-info/dependency_links.txt
+ev_msgs.egg-info/top_level.txt
