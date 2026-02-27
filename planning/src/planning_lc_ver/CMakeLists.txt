@@ -29,6 +29,7 @@ find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(ev_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 include_directories(include)
 
@@ -36,7 +37,7 @@ include_directories(include)
 # Library 1: planning_lc_chainer — LineChainer 라이브러리 (신규)
 # ============================================================================
 add_library(planning_lc_chainer SHARED
-  src/chainer/line_chainer.cpp
+  src/chainer/direction_chainer.cpp
 )
 ament_target_dependencies(planning_lc_chainer
   rclcpp geometry_msgs
@@ -106,7 +107,7 @@ target_link_libraries(lc_planner_component
 )
 ament_target_dependencies(lc_planner_component
   rclcpp rclcpp_components
-  nav_msgs geometry_msgs std_msgs ev_msgs
+  nav_msgs geometry_msgs std_msgs ev_msgs visualization_msgs
 )
 
 rclcpp_components_register_node(lc_planner_component

@@ -2,15 +2,16 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "libplanning_lc_postprocess.so"
+			"path" : "lc_planner_node_exe"
 		}
 	],
-	"backtrace" : 1,
+	"backtrace" : 2,
 	"backtraceGraph" : 
 	{
 		"commands" : 
 		[
-			"add_library",
+			"add_executable",
+			"rclcpp_components_register_node",
 			"target_link_libraries",
 			"ament_target_dependencies",
 			"add_compile_options",
@@ -19,49 +20,56 @@
 		],
 		"files" : 
 		[
+			"/opt/ros/humble/share/rclcpp_components/cmake/rclcpp_components_register_node.cmake",
 			"CMakeLists.txt",
 			"/opt/ros/humble/share/ament_cmake_target_dependencies/cmake/ament_target_dependencies.cmake"
 		],
 		"nodes" : 
 		[
 			{
-				"file" : 0
-			},
-			{
-				"command" : 0,
-				"file" : 0,
-				"line" : 83,
-				"parent" : 0
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 86,
-				"parent" : 0
+				"file" : 1
 			},
 			{
 				"command" : 1,
 				"file" : 1,
-				"line" : 145,
-				"parent" : 2
+				"line" : 113,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 72,
+				"parent" : 1
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 18,
-				"parent" : 0
+				"line" : 73,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 145,
+				"parent" : 3
 			},
 			{
 				"command" : 4,
-				"file" : 0,
-				"line" : 33,
+				"file" : 1,
+				"line" : 18,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
+				"line" : 34,
+				"parent" : 0
+			},
+			{
+				"command" : 6,
+				"file" : 2,
 				"line" : 141,
-				"parent" : 2
+				"parent" : 3
 			}
 		]
 	},
@@ -71,18 +79,15 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-fPIC"
-				},
-				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"fragment" : "-Wall"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"fragment" : "-Wextra"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 5,
 					"fragment" : "-Wpedantic"
 				},
 				{
@@ -92,166 +97,163 @@
 			"defines" : 
 			[
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"define" : "DEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"define" : "FASTCDR_DYN_LINK"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"define" : "RCUTILS_ENABLE_FAULT_INJECTION"
-				},
-				{
-					"define" : "planning_lc_postprocess_EXPORTS"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 5,
+					"backtrace" : 6,
 					"path" : "/home/aiv/ev_ws/planning/src/planning_lc_ver/include"
 				},
 				{
-					"backtrace" : 6,
-					"isSystem" : true,
-					"path" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/include/ev_msgs"
-				},
-				{
-					"backtrace" : 6,
+					"backtrace" : 7,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rclcpp"
 				},
 				{
-					"backtrace" : 6,
+					"backtrace" : 7,
 					"isSystem" : true,
-					"path" : "/opt/ros/humble/include/geometry_msgs"
+					"path" : "/opt/ros/humble/include/class_loader"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 7,
+					"isSystem" : true,
+					"path" : "/opt/ros/humble/include/rclcpp_components"
+				},
+				{
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/ament_index_cpp"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/libstatistics_collector"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/builtin_interfaces"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_runtime_c"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rcutils"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_typesupport_interface"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/fastcdr"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_runtime_cpp"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_typesupport_fastrtps_cpp"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rmw"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_typesupport_fastrtps_c"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_typesupport_introspection_c"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_typesupport_introspection_cpp"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rcl"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rcl_interfaces"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rcl_logging_interface"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rcl_yaml_param_parser"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/libyaml_vendor"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/tracetools"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rcpputils"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/statistics_msgs"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosgraph_msgs"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_typesupport_cpp"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
 					"path" : "/opt/ros/humble/include/rosidl_typesupport_c"
 				},
 				{
-					"backtrace" : 3,
+					"backtrace" : 4,
 					"isSystem" : true,
-					"path" : "/opt/ros/humble/include/std_msgs"
+					"path" : "/opt/ros/humble/include/composition_interfaces"
 				}
 			],
 			"language" : "CXX",
@@ -259,7 +261,7 @@
 			{
 				"backtraces" : 
 				[
-					3
+					4
 				],
 				"standard" : "17"
 			},
@@ -269,7 +271,7 @@
 			]
 		}
 	],
-	"id" : "planning_lc_postprocess::@6890427a1f51a3e7e1df",
+	"id" : "lc_planner_node_exe::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -279,42 +281,17 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/opt/ros/humble/lib:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib",
+				"fragment" : "-Wl,-rpath,/opt/ros/humble/lib",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
+				"backtrace" : 4,
+				"fragment" : "/opt/ros/humble/lib/libcomponent_manager.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
 				"fragment" : "/opt/ros/humble/lib/librclcpp.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib/libev_msgs__rosidl_typesupport_fastrtps_c.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib/libev_msgs__rosidl_typesupport_introspection_c.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib/libev_msgs__rosidl_typesupport_fastrtps_cpp.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib/libev_msgs__rosidl_typesupport_introspection_cpp.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib/libev_msgs__rosidl_typesupport_cpp.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib/libev_msgs__rosidl_generator_py.so",
 				"role" : "libraries"
 			},
 			{
@@ -330,47 +307,11 @@
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libament_index_cpp.so",
-				"role" : "libraries"
-			},
-			{
 				"fragment" : "/opt/ros/humble/lib/librcl_logging_spdlog.so",
 				"role" : "libraries"
 			},
 			{
 				"fragment" : "/opt/ros/humble/lib/librcl_logging_interface.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_fastrtps_c.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_introspection_c.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_fastrtps_cpp.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_introspection_cpp.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_cpp.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_generator_py.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_c.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_generator_c.so",
 				"role" : "libraries"
 			},
 			{
@@ -450,12 +391,24 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
-				"fragment" : "/opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_fastrtps_c.so",
+				"backtrace" : 4,
+				"fragment" : "/opt/ros/humble/lib/libclass_loader.so",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_fastrtps_c.so",
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libconsole_bridge.so.1.0",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/opt/ros/humble/lib/libament_index_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/opt/ros/humble/lib/libcomposition_interfaces__rosidl_typesupport_fastrtps_c.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_fastrtps_c.so",
 				"role" : "libraries"
 			},
 			{
@@ -467,12 +420,11 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
-				"fragment" : "/opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_introspection_c.so",
+				"fragment" : "/opt/ros/humble/lib/libcomposition_interfaces__rosidl_typesupport_introspection_c.so",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_introspection_c.so",
+				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_introspection_c.so",
 				"role" : "libraries"
 			},
 			{
@@ -480,12 +432,11 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
-				"fragment" : "/opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_fastrtps_cpp.so",
+				"fragment" : "/opt/ros/humble/lib/libcomposition_interfaces__rosidl_typesupport_fastrtps_cpp.so",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_fastrtps_cpp.so",
+				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_fastrtps_cpp.so",
 				"role" : "libraries"
 			},
 			{
@@ -497,20 +448,19 @@
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libfastcdr.so.1.0.29",
-				"role" : "libraries"
-			},
-			{
 				"fragment" : "/opt/ros/humble/lib/librmw.so",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
-				"fragment" : "/opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_introspection_cpp.so",
+				"fragment" : "/opt/ros/humble/lib/libfastcdr.so.1.0.29",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_introspection_cpp.so",
+				"fragment" : "/opt/ros/humble/lib/libcomposition_interfaces__rosidl_typesupport_introspection_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_introspection_cpp.so",
 				"role" : "libraries"
 			},
 			{
@@ -526,12 +476,11 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
-				"fragment" : "/opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_cpp.so",
+				"fragment" : "/opt/ros/humble/lib/libcomposition_interfaces__rosidl_typesupport_cpp.so",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_cpp.so",
+				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_cpp.so",
 				"role" : "libraries"
 			},
 			{
@@ -543,32 +492,11 @@
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
-				"fragment" : "/opt/ros/humble/lib/libgeometry_msgs__rosidl_generator_py.so",
+				"fragment" : "/opt/ros/humble/lib/libcomposition_interfaces__rosidl_generator_py.so",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
-				"fragment" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib/libev_msgs__rosidl_typesupport_c.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/opt/ros/humble/lib/libgeometry_msgs__rosidl_typesupport_c.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib/libev_msgs__rosidl_generator_c.so",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 3,
-				"fragment" : "/opt/ros/humble/lib/libgeometry_msgs__rosidl_generator_c.so",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "/opt/ros/humble/lib/libstd_msgs__rosidl_generator_py.so",
+				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_generator_py.so",
 				"role" : "libraries"
 			},
 			{
@@ -576,7 +504,11 @@
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libstd_msgs__rosidl_typesupport_c.so",
+				"fragment" : "/opt/ros/humble/lib/libcomposition_interfaces__rosidl_typesupport_c.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_typesupport_c.so",
 				"role" : "libraries"
 			},
 			{
@@ -584,7 +516,11 @@
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "/opt/ros/humble/lib/libstd_msgs__rosidl_generator_c.so",
+				"fragment" : "/opt/ros/humble/lib/libcomposition_interfaces__rosidl_generator_c.so",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "/opt/ros/humble/lib/librcl_interfaces__rosidl_generator_c.so",
 				"role" : "libraries"
 			},
 			{
@@ -622,8 +558,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "planning_lc_postprocess",
-	"nameOnDisk" : "libplanning_lc_postprocess.so",
+	"name" : "lc_planner_node_exe",
+	"nameOnDisk" : "lc_planner_node_exe",
 	"paths" : 
 	{
 		"build" : ".",
@@ -642,11 +578,12 @@
 	"sources" : 
 	[
 		{
-			"backtrace" : 1,
+			"backtrace" : 2,
 			"compileGroupIndex" : 0,
-			"path" : "src/postprocess/path_postprocessor.cpp",
+			"isGenerated" : true,
+			"path" : "/home/aiv/ev_ws/planning/build/planning_lc_ver/rclcpp_components/node_main_lc_planner_node_exe.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
-	"type" : "SHARED_LIBRARY"
+	"type" : "EXECUTABLE"
 }

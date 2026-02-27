@@ -35,7 +35,7 @@ lc_planner_node:
     # Vehicle (T870)
     # ============================================================
     vehicle:
-      width: 0.50
+      width: 1.50
       wheelbase: 0.87
       delta_max: 0.314
 
@@ -75,16 +75,44 @@ lc_planner_node:
       perception_ms: 300
 
     # ============================================================
-    # Chainer — LineChainer 파라미터 (신규)
+    # Chainer — DirectionChainer v2 파라미터
     #
-    # DFS 기반 nearest-neighbor 체이닝에서 사용하는 탐색 파라미터.
-    # 후보가 없으면 search_radius를 step씩 증가시키며 max까지 확장.
+    # Component → Backbone → Branch 기반 좌/우 차선 경계 체이닝.
     # ============================================================
     chainer:
-      search_radius: 2.0       # [m] 초기 탐색 반경
-      search_radius_step: 0.4  # [m] 반경 증가 스텝
-      search_radius_max: 2.2  # [m] 최대 탐색 반경
-      forward_angle: 1.57   # [rad] 전방 각도 (π/2 = 90°, ±45° cone)
-      min_regress_pts: 2       # PCA regression 최소 점 수
-      max_regress_pts: 4       # PCA regression 최대 점 수
-      resample_ds: 0.1         # [m] 체인 리샘플 간격
+      # --- Seed 선택 ---
+      side_seed_y: 0.3        # [m] |y| < 이 값이면 seed 후보 제외
+
+      # --- kNN + 게이트 ---
+      k: 8                    # centroid kNN 후보 수
+      d_max: 1.5              # [m] neighbor 최대 거리
+      forward_cone_deg: 120.0 # [deg] 전방 cone 전체 각도 (±60°)
+      lateral_gate: 0.75      # [m] 횡방향 오차 한계
+
+      # --- 비용함수 가중치 ---
+      alpha: 1.0              # 거리 비용
+      beta: 1.2               # 방향 오차 비용
+      gamma: 0.6              # 횡오차 비용
+      delta: 0.2              # 크기 변화 비용 (콘 전용)
+
+      # --- Backbone (greedy chaining) ---
+      lambda_side: 0.5        # side preference 가중치
+
+      # --- Branch ---
+      branch_mode: "backbone_and_branches"
+      max_branch_len: 40      # branch 최대 길이
+
+      # --- 종료/제한 ---
+      max_chain_len: 100      # backbone 최대 길이
+
+      # --- 콘 우선순위 ---
+      cone_priority: true
+
+      # --- 신뢰도 필터 ---
+      min_confidence: 0.1
+
+      # --- 리샘플링 ---
+      resample_ds: 0.1        # [m] component 전체 리샘플 간격
+
+      # --- 디버그 ---
+      publish_debug: true
