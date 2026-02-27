@@ -1,0 +1,121 @@
+# ============================================================================
+# planning_lc.yaml — LC Planner 파라미터 설정 파일
+#
+# planning_mr_ver 기반 + chainer 섹션 추가
+# ============================================================================
+lc_planner_node:
+  ros__parameters:
+
+    # ============================================================
+    # Costmap — Magnetic Resistance costmap
+    # ============================================================
+   
+    costmap:
+      size_x: 16.0
+      size_y: 16.0
+      resolution: 0.05
+      cone_cost_max: 100.0  # cost_ceiling = 100 픽셀은 path로 선택할 수 없음.
+      lane_cost_max: 50.0
+      cone_radius: 0.65
+      sigma: 1.0
+      cost_threshold: 2.0
+
+    # ============================================================
+    # Planner — Greedy 전진 탐색
+    # ============================================================
+    planner:
+      search_radius: 0.30
+      max_steps: 200
+      heading_init_x: 1.0
+      heading_init_y: 0.0
+      forward_cone_deg: 90.0
+      heading_damping: 0.0
+      max_steer_per_step_deg: 40.0
+      cost_ceiling: 100.0        # 이 비용 이상인 셀은 경로 후보에서 제외
+
+    # ============================================================
+    # Vehicle (T870)
+    # ============================================================
+    vehicle:
+      width: 1.50
+      wheelbase: 0.87
+      delta_max: 0.314
+
+    # ============================================================
+    # Safety
+    # ============================================================
+    safety:
+      margin: 0.10
+
+    # ============================================================
+    # Speed
+    # ============================================================
+    speed:
+      v_max: 1.60
+      a_lat_max: 2.0
+
+    # ============================================================
+    # Postprocess
+    # ============================================================
+    postprocess:
+      resample_ds: 0.10
+      smooth_window: 5
+      prune_max_dev: 0.15
+
+    # ============================================================
+    # SensorTf — velodyne → base_link 오프셋
+    # ============================================================
+    sensor_tf:
+      tf_x: 0.0
+      tf_y: 0.0
+      tf_z: 0.7
+
+    # ============================================================
+    # Timeouts
+    # ============================================================
+    timeouts:
+      perception_ms: 300
+
+    # ============================================================
+    # Chainer — DirectionChainer v2 파라미터
+    #
+    # Component → Backbone → Branch 기반 좌/우 차선 경계 체이닝.
+    # ============================================================
+    chainer:
+      # --- Seed 선택 ---
+      side_seed_y: 0.3        # [m] |y| < 이 값이면 seed 후보 제외
+
+      # --- kNN + 게이트 ---
+      k: 8                    # centroid kNN 후보 수
+      d_max: 1.5              # [m] neighbor 최대 거리
+      forward_cone_deg: 120.0 # [deg] 전방 cone 전체 각도 (±60°)
+      lateral_gate: 0.75      # [m] 횡방향 오차 한계
+
+      # --- 비용함수 가중치 ---
+      alpha: 1.0              # 거리 비용
+      beta: 1.2               # 방향 오차 비용
+      gamma: 0.6              # 횡오차 비용
+      delta: 0.2              # 크기 변화 비용 (콘 전용)
+
+      # --- Backbone (greedy chaining) ---
+      lambda_side: 0.5        # side preference 가중치
+
+      # --- Branch ---
+      branch_mode: "backbone_and_branches"
+      max_branch_len: 40      # branch 최대 길이
+
+      # --- 종료/제한 ---
+      max_chain_len: 100      # backbone 최대 길이
+
+      # --- 콘 우선순위 ---
+      cone_priority: true
+
+      # --- 신뢰도 필터 ---
+      min_confidence: 0.1
+
+      # --- 리샘플링 ---
+      resample_ds: 0.1        # [m] component 전체 리샘플 간격
+
+      # --- 디버그 ---
+      publish_debug: true
+      debug_chainer_stats: true   # 리샘플 전 좌/우 콘/차선 개수 로그 출력

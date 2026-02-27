@@ -5,7 +5,6 @@
 /home/aiv/ev_ws/planning/install/planning_lc_ver/lib/planning_lc_ver/lc_planner_node_exe
 /home/aiv/ev_ws/planning/install/planning_lc_ver/lib/liblc_planner_component.so
 /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/chainer/direction_chainer.hpp
-/home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/chainer/line_chainer.hpp
 /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/common/debug_publish.hpp
 /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/common/geometry.hpp
 /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/common/params.hpp
