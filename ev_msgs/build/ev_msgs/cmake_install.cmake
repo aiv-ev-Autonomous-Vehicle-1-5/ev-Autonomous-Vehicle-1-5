@@ -356,11 +356,11 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ev_msgs/msg" TYPE FILE FILES "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/Cone.idl")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ev_msgs/msg" TYPE FILE FILES "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/BBox.idl")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ev_msgs/msg" TYPE FILE FILES "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/ConeArray.idl")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ev_msgs/msg" TYPE FILE FILES "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/BBoxArray.idl")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -372,11 +372,11 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ev_msgs/msg" TYPE FILE FILES "/home/aiv/ev_ws/ev_msgs/msg/Cone.msg")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ev_msgs/msg" TYPE FILE FILES "/home/aiv/ev_ws/ev_msgs/msg/BBox.msg")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ev_msgs/msg" TYPE FILE FILES "/home/aiv/ev_ws/ev_msgs/msg/ConeArray.msg")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ev_msgs/msg" TYPE FILE FILES "/home/aiv/ev_ws/ev_msgs/msg/BBoxArray.msg")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

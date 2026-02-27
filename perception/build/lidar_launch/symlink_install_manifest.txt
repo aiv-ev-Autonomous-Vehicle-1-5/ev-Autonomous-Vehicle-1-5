@@ -13,8 +13,8 @@
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/__pycache__/count_clusters.cpython-310.pyc
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/compare_splitter_clusters.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/count_clusters.py
+/home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_bboxes.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_clustered.py
-/home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_cones.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_raw.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_raw_hex.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/driver.launch.py

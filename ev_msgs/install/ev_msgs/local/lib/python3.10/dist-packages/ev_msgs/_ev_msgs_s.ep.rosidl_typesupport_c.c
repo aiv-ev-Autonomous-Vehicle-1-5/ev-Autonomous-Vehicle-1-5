@@ -24,39 +24,39 @@ static struct PyModuleDef ev_msgs__module = {
 #include "rosidl_runtime_c/message_type_support_struct.h"
 #include "rosidl_runtime_c/service_type_support_struct.h"
 #include "rosidl_runtime_c/action_type_support_struct.h"
-#include "ev_msgs/msg/detail/cone__type_support.h"
-#include "ev_msgs/msg/detail/cone__struct.h"
-#include "ev_msgs/msg/detail/cone__functions.h"
+#include "ev_msgs/msg/detail/b_box__type_support.h"
+#include "ev_msgs/msg/detail/b_box__struct.h"
+#include "ev_msgs/msg/detail/b_box__functions.h"
 
-static void * ev_msgs__msg__cone__create_ros_message(void)
+static void * ev_msgs__msg__b_box__create_ros_message(void)
 {
-  return ev_msgs__msg__Cone__create();
+  return ev_msgs__msg__BBox__create();
 }
 
-static void ev_msgs__msg__cone__destroy_ros_message(void * raw_ros_message)
+static void ev_msgs__msg__b_box__destroy_ros_message(void * raw_ros_message)
 {
-  ev_msgs__msg__Cone * ros_message = (ev_msgs__msg__Cone *)raw_ros_message;
-  ev_msgs__msg__Cone__destroy(ros_message);
+  ev_msgs__msg__BBox * ros_message = (ev_msgs__msg__BBox *)raw_ros_message;
+  ev_msgs__msg__BBox__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool ev_msgs__msg__cone__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool ev_msgs__msg__b_box__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * ev_msgs__msg__cone__convert_to_py(void * raw_ros_message);
+PyObject * ev_msgs__msg__b_box__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(ev_msgs, msg, Cone);
+ROSIDL_GET_MSG_TYPE_SUPPORT(ev_msgs, msg, BBox);
 
 int8_t
-_register_msg_type__msg__cone(PyObject * pymodule)
+_register_msg_type__msg__b_box(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&ev_msgs__msg__cone__create_ros_message,
+    (void *)&ev_msgs__msg__b_box__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -64,7 +64,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__msg__cone",
+    "create_ros_message_msg__msg__b_box",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -75,7 +75,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&ev_msgs__msg__cone__destroy_ros_message,
+    (void *)&ev_msgs__msg__b_box__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -83,7 +83,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__msg__cone",
+    "destroy_ros_message_msg__msg__b_box",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -94,7 +94,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&ev_msgs__msg__cone__convert_from_py,
+    (void *)&ev_msgs__msg__b_box__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -102,7 +102,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__msg__cone",
+    "convert_from_py_msg__msg__b_box",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -113,7 +113,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&ev_msgs__msg__cone__convert_to_py,
+    (void *)&ev_msgs__msg__b_box__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -121,7 +121,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__msg__cone",
+    "convert_to_py_msg__msg__b_box",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -132,7 +132,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(ev_msgs, msg, Cone),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(ev_msgs, msg, BBox),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -140,7 +140,7 @@ _register_msg_type__msg__cone(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__msg__cone",
+    "type_support_msg__msg__b_box",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -163,39 +163,39 @@ _register_msg_type__msg__cone(PyObject * pymodule)
 // #include "rosidl_runtime_c/service_type_support_struct.h"
 // already included above
 // #include "rosidl_runtime_c/action_type_support_struct.h"
-#include "ev_msgs/msg/detail/cone_array__type_support.h"
-#include "ev_msgs/msg/detail/cone_array__struct.h"
-#include "ev_msgs/msg/detail/cone_array__functions.h"
+#include "ev_msgs/msg/detail/b_box_array__type_support.h"
+#include "ev_msgs/msg/detail/b_box_array__struct.h"
+#include "ev_msgs/msg/detail/b_box_array__functions.h"
 
-static void * ev_msgs__msg__cone_array__create_ros_message(void)
+static void * ev_msgs__msg__b_box_array__create_ros_message(void)
 {
-  return ev_msgs__msg__ConeArray__create();
+  return ev_msgs__msg__BBoxArray__create();
 }
 
-static void ev_msgs__msg__cone_array__destroy_ros_message(void * raw_ros_message)
+static void ev_msgs__msg__b_box_array__destroy_ros_message(void * raw_ros_message)
 {
-  ev_msgs__msg__ConeArray * ros_message = (ev_msgs__msg__ConeArray *)raw_ros_message;
-  ev_msgs__msg__ConeArray__destroy(ros_message);
+  ev_msgs__msg__BBoxArray * ros_message = (ev_msgs__msg__BBoxArray *)raw_ros_message;
+  ev_msgs__msg__BBoxArray__destroy(ros_message);
 }
 
 ROSIDL_GENERATOR_C_IMPORT
-bool ev_msgs__msg__cone_array__convert_from_py(PyObject * _pymsg, void * ros_message);
+bool ev_msgs__msg__b_box_array__convert_from_py(PyObject * _pymsg, void * ros_message);
 ROSIDL_GENERATOR_C_IMPORT
-PyObject * ev_msgs__msg__cone_array__convert_to_py(void * raw_ros_message);
+PyObject * ev_msgs__msg__b_box_array__convert_to_py(void * raw_ros_message);
 
 
 ROSIDL_GENERATOR_C_IMPORT
 const rosidl_message_type_support_t *
-ROSIDL_GET_MSG_TYPE_SUPPORT(ev_msgs, msg, ConeArray);
+ROSIDL_GET_MSG_TYPE_SUPPORT(ev_msgs, msg, BBoxArray);
 
 int8_t
-_register_msg_type__msg__cone_array(PyObject * pymodule)
+_register_msg_type__msg__b_box_array(PyObject * pymodule)
 {
   int8_t err;
 
   PyObject * pyobject_create_ros_message = NULL;
   pyobject_create_ros_message = PyCapsule_New(
-    (void *)&ev_msgs__msg__cone_array__create_ros_message,
+    (void *)&ev_msgs__msg__b_box_array__create_ros_message,
     NULL, NULL);
   if (!pyobject_create_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -203,7 +203,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "create_ros_message_msg__msg__cone_array",
+    "create_ros_message_msg__msg__b_box_array",
     pyobject_create_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -214,7 +214,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
 
   PyObject * pyobject_destroy_ros_message = NULL;
   pyobject_destroy_ros_message = PyCapsule_New(
-    (void *)&ev_msgs__msg__cone_array__destroy_ros_message,
+    (void *)&ev_msgs__msg__b_box_array__destroy_ros_message,
     NULL, NULL);
   if (!pyobject_destroy_ros_message) {
     // previously added objects will be removed when the module is destroyed
@@ -222,7 +222,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "destroy_ros_message_msg__msg__cone_array",
+    "destroy_ros_message_msg__msg__b_box_array",
     pyobject_destroy_ros_message);
   if (err) {
     // the created capsule needs to be decremented
@@ -233,7 +233,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
 
   PyObject * pyobject_convert_from_py = NULL;
   pyobject_convert_from_py = PyCapsule_New(
-    (void *)&ev_msgs__msg__cone_array__convert_from_py,
+    (void *)&ev_msgs__msg__b_box_array__convert_from_py,
     NULL, NULL);
   if (!pyobject_convert_from_py) {
     // previously added objects will be removed when the module is destroyed
@@ -241,7 +241,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_from_py_msg__msg__cone_array",
+    "convert_from_py_msg__msg__b_box_array",
     pyobject_convert_from_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -252,7 +252,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
 
   PyObject * pyobject_convert_to_py = NULL;
   pyobject_convert_to_py = PyCapsule_New(
-    (void *)&ev_msgs__msg__cone_array__convert_to_py,
+    (void *)&ev_msgs__msg__b_box_array__convert_to_py,
     NULL, NULL);
   if (!pyobject_convert_to_py) {
     // previously added objects will be removed when the module is destroyed
@@ -260,7 +260,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "convert_to_py_msg__msg__cone_array",
+    "convert_to_py_msg__msg__b_box_array",
     pyobject_convert_to_py);
   if (err) {
     // the created capsule needs to be decremented
@@ -271,7 +271,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
 
   PyObject * pyobject_type_support = NULL;
   pyobject_type_support = PyCapsule_New(
-    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(ev_msgs, msg, ConeArray),
+    (void *)ROSIDL_GET_MSG_TYPE_SUPPORT(ev_msgs, msg, BBoxArray),
     NULL, NULL);
   if (!pyobject_type_support) {
     // previously added objects will be removed when the module is destroyed
@@ -279,7 +279,7 @@ _register_msg_type__msg__cone_array(PyObject * pymodule)
   }
   err = PyModule_AddObject(
     pymodule,
-    "type_support_msg__msg__cone_array",
+    "type_support_msg__msg__b_box_array",
     pyobject_type_support);
   if (err) {
     // the created capsule needs to be decremented
@@ -578,13 +578,13 @@ PyInit_ev_msgs_s__rosidl_typesupport_c(void)
   }
   int8_t err;
 
-  err = _register_msg_type__msg__cone(pymodule);
+  err = _register_msg_type__msg__b_box(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;
   }
 
-  err = _register_msg_type__msg__cone_array(pymodule);
+  err = _register_msg_type__msg__b_box_array(pymodule);
   if (err) {
     Py_XDECREF(pymodule);
     return NULL;

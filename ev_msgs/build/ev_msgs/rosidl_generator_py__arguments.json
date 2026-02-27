@@ -3,8 +3,8 @@
   "output_dir": "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_generator_py/ev_msgs",
   "template_dir": "/opt/ros/humble/share/rosidl_generator_py/cmake/../resource",
   "idl_tuples": [
-    "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs:msg/Cone.idl",
-    "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs:msg/ConeArray.idl",
+    "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs:msg/BBox.idl",
+    "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs:msg/BBoxArray.idl",
     "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs:msg/LaneBoundary.idl",
     "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs:msg/LaneBoundaryArray.idl"
   ],
@@ -88,8 +88,8 @@
     "/opt/ros/humble/share/rosidl_generator_py/cmake/../resource/_msg.py.em",
     "/opt/ros/humble/share/rosidl_generator_py/cmake/../resource/_srv_pkg_typesupport_entry_point.c.em",
     "/opt/ros/humble/share/rosidl_generator_py/cmake/../resource/_srv.py.em",
-    "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/Cone.idl",
-    "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/ConeArray.idl",
+    "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/BBox.idl",
+    "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/BBoxArray.idl",
     "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/LaneBoundary.idl",
     "/home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_adapter/ev_msgs/msg/LaneBoundaryArray.idl",
     "/opt/ros/humble/share/geometry_msgs/msg/Accel.idl",

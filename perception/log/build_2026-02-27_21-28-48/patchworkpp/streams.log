@@ -1,0 +1,51 @@
+[0.013s] Invoking command in '/home/aiv/ev_ws/perception/build/patchworkpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/patchworkpp
+[0.053s] -- The CXX compiler identification is GNU 11.4.0
+[0.057s] -- Detecting CXX compiler ABI info
+[0.116s] -- Detecting CXX compiler ABI info - done
+[0.121s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.121s] -- Detecting CXX compile features
+[0.121s] -- Detecting CXX compile features - done
+[0.148s] -- The C compiler identification is GNU 11.4.0
+[0.152s] -- Detecting C compiler ABI info
+[0.196s] -- Detecting C compiler ABI info - done
+[0.200s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.200s] -- Detecting C compile features
+[0.200s] -- Detecting C compile features - done
+[0.205s] [0mParent project name: patchworkpp[0m
+[0.206s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.301s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.348s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.372s] -- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+[0.394s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.397s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.402s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.409s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.419s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.452s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.474s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.476s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.534s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.553s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.583s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.591s] -- Looking for C++ include pthread.h
+[0.647s] -- Looking for C++ include pthread.h - found
+[0.647s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.701s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.702s] -- Found Threads: TRUE  
+[0.723s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.739s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.749s] -- Found tf2_ros: 0.25.18 (/opt/ros/humble/share/tf2_ros/cmake)
+[0.833s] -- Configuring done
+[0.842s] -- Generating done
+[0.845s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/patchworkpp
+[0.852s] Invoked command in '/home/aiv/ev_ws/perception/build/patchworkpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/patchworkpp
+[0.853s] Invoking command in '/home/aiv/ev_ws/perception/build/patchworkpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/patchworkpp -- -j28 -l28
+[0.889s] [ 16%] [32mBuilding CXX object CMakeFiles/patchworkpp_node.dir/rclcpp_components/node_main_patchworkpp_node.cpp.o[0m
+[0.889s] [ 33%] [32mBuilding CXX object patchworkpp_cpp/patchworkpp/CMakeFiles/ground_seg_cores.dir/src/patchworkpp.cpp.o[0m
+[2.992s] [ 50%] [32m[1mLinking CXX executable patchworkpp_node[0m
+[3.069s] [ 50%] Built target patchworkpp_node
+[9.703s] [ 66%] [32m[1mLinking CXX static library libground_seg_cores.a[0m
+[9.725s] [ 66%] Built target ground_seg_cores
+[9.741s] [ 83%] [32mBuilding CXX object CMakeFiles/gseg_component.dir/src/GroundSegmentationServer.cpp.o[0m
+[17.770s] [100%] [32m[1mLinking CXX shared library libgseg_component.so[0m
+[17.863s] [100%] Built target gseg_component

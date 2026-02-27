@@ -66,8 +66,8 @@ include CMakeFiles/ev_msgs.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/ev_msgs.dir/progress.make
 
-CMakeFiles/ev_msgs: ../../msg/Cone.msg
-CMakeFiles/ev_msgs: ../../msg/ConeArray.msg
+CMakeFiles/ev_msgs: ../../msg/BBox.msg
+CMakeFiles/ev_msgs: ../../msg/BBoxArray.msg
 CMakeFiles/ev_msgs: ../../msg/LaneBoundary.msg
 CMakeFiles/ev_msgs: ../../msg/LaneBoundaryArray.msg
 CMakeFiles/ev_msgs: /opt/ros/humble/share/geometry_msgs/msg/Accel.idl

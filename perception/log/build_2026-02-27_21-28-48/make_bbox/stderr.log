@@ -1,0 +1,9 @@
+In file included from [01m[K/home/aiv/ev_ws/perception/src/lidar/make_bbox/src/make_bbox_node.cpp:1[m[K:
+[01m[K/home/aiv/ev_ws/perception/src/lidar/make_bbox/include/make_bbox/make_bbox_node.hpp:7:10:[m[K [01;31m[Kfatal error: [m[Kev_msgs/msg/b_box_array.hpp: No such file or directory
+    7 | #include [01;31m[K<ev_msgs/msg/b_box_array.hpp>[m[K
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+gmake[2]: *** [CMakeFiles/make_bbox_component.dir/build.make:76: CMakeFiles/make_bbox_component.dir/src/make_bbox_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/make_bbox_component.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+gmake: *** [Makefile:146: all] Error 2
