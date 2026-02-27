@@ -2,7 +2,7 @@ dbscan_clustering:
   ros__parameters:
     input_topic: "/patchworkpp/nonground"
     output_topic: "/pointcloud/clustered"
-    eps: 0.1
+    eps: 0.10
     min_points: 10
     max_neighbors: 1024
     max_points: 500000

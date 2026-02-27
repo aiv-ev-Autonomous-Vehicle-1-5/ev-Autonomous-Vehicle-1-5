@@ -28,7 +28,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -269,7 +269,7 @@ Visualization Manager:
       Enabled: true
       Name: MarkerArray
       Namespaces:
-        bboxes: true
+        {}
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -330,18 +330,18 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 2.712268590927124
-        Y: 5.099175930023193
-        Z: -0.6338279247283936
+        X: 2.554908037185669
+        Y: 0.6828596591949463
+        Z: -1.4072532653808594
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.0397969484329224
+      Pitch: 0.5747973918914795
       Target Frame: base_footprint
       Value: Orbit (rviz)
-      Yaw: 3.4085984230041504
+      Yaw: 3.2485952377319336
     Saved: ~
 Window Geometry:
   Displays:
