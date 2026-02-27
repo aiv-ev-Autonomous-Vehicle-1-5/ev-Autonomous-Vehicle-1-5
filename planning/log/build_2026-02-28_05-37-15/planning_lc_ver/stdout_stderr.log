@@ -28,13 +28,13 @@
 -- Build files have been written to: /home/aiv/ev_ws/planning/build/planning_lc_ver
 Consolidate compiler generated dependencies of target planning_lc_postprocess
 Consolidate compiler generated dependencies of target planning_lc_costmap
+Consolidate compiler generated dependencies of target lc_planner_node_exe
 Consolidate compiler generated dependencies of target planning_lc_chainer
 Consolidate compiler generated dependencies of target planning_lc_planner
-Consolidate compiler generated dependencies of target lc_planner_node_exe
 [ 16%] Built target planning_lc_postprocess
-[ 25%] Building CXX object CMakeFiles/planning_lc_chainer.dir/src/chainer/direction_chainer.cpp.o
-[ 58%] Built target lc_planner_node_exe
-[ 58%] Built target planning_lc_costmap
+[ 33%] Built target planning_lc_costmap
+[ 50%] Built target lc_planner_node_exe
+[ 58%] Building CXX object CMakeFiles/planning_lc_chainer.dir/src/chainer/direction_chainer.cpp.o
 [ 75%] Built target planning_lc_planner
 [ 83%] Linking CXX shared library libplanning_lc_chainer.so
 [ 83%] Built target planning_lc_chainer

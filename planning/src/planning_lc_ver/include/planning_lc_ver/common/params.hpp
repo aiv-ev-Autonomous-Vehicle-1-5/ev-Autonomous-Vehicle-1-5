@@ -132,6 +132,12 @@ struct PlanningParams
     // 0.5 = 이전 heading 50% + 새 heading 50% 혼합 → 적당한 부드러움.
     // 줄이면 장애물 반응 빠름, 높이면 직진 안정성 향상.
     double heading_damping = 0.5;
+
+    // [무차원] 이 비용 이상인 셀은 경로 후보에서 제외.
+    // cone_cost_max=100 일 때 95로 설정하면, 콘 중심 근처(비용 95~100)의
+    // 셀은 절대 경로로 선택되지 않아 콘 위로 경로가 통과하는 것을 방지.
+    // 값을 낮추면 더 보수적(더 넓게 회피), 높이면 콘에 바짝 붙는 경로 허용.
+    double cost_ceiling = 95.0;
   } planner;
 
   // ============================================================
@@ -400,6 +406,10 @@ struct PlanningParams
     // true = RViz2에 디버그용 Marker(체인 시각화 등)를 퍼블리시.
     // 개발/튜닝 중에는 true, 본 대회에서는 false로 연산량 절약.
     bool publish_debug = true;          ///< 디버그 마커 발행 여부
+
+    // true = 리샘플 전 좌/우 component별 콘/차선 개수를 로그에 출력.
+    // 체이닝 결과가 기대와 다를 때 원인 분석용.
+    bool debug_chainer_stats = false;   ///< 리샘플 전 콘/차선 카운트 출력
   } chainer;
 
   // ============================================================
@@ -464,6 +474,7 @@ struct PlanningParams
     planner.forward_cone_deg       = p("planner.forward_cone_deg",       planner.forward_cone_deg);
     planner.max_steer_per_step_deg = p("planner.max_steer_per_step_deg", planner.max_steer_per_step_deg);
     planner.heading_damping        = p("planner.heading_damping",        planner.heading_damping);
+    planner.cost_ceiling           = p("planner.cost_ceiling",           planner.cost_ceiling);
 
     // ── Vehicle 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.vehicle.*
@@ -513,6 +524,7 @@ struct PlanningParams
     chainer.min_confidence    = p("chainer.min_confidence",    chainer.min_confidence);
     chainer.resample_ds       = p("chainer.resample_ds",       chainer.resample_ds);
     chainer.publish_debug     = p("chainer.publish_debug",     chainer.publish_debug);
+    chainer.debug_chainer_stats = p("chainer.debug_chainer_stats", chainer.debug_chainer_stats);
 
     // 로드 완료 시 주요 파라미터를 로그에 출력.
     // 디버깅 시 "yaml 값이 제대로 반영됐는지" 확인하는 데 유용.

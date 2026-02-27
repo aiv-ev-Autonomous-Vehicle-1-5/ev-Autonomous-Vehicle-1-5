@@ -1,0 +1,109 @@
+[0.007s] Invoking command in '/home/aiv/ev_ws/planning/build/planning_lc_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/planning/src/planning_lc_ver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/planning/install/planning_lc_ver
+[0.041s] -- The C compiler identification is GNU 11.4.0
+[0.073s] -- The CXX compiler identification is GNU 11.4.0
+[0.077s] -- Detecting C compiler ABI info
+[0.124s] -- Detecting C compiler ABI info - done
+[0.129s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.129s] -- Detecting C compile features
+[0.130s] -- Detecting C compile features - done
+[0.131s] -- Detecting CXX compiler ABI info
+[0.180s] -- Detecting CXX compiler ABI info - done
+[0.184s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.184s] -- Detecting CXX compile features
+[0.185s] -- Detecting CXX compile features - done
+[0.186s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.280s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.312s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.334s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.361s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.365s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.370s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.378s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.388s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.417s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.420s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.485s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.502s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.526s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.531s] -- Looking for pthread.h
+[0.578s] -- Looking for pthread.h - found
+[0.578s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.625s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.626s] -- Found Threads: TRUE  
+[0.658s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.674s] -- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+[0.691s] -- Found ev_msgs: 0.1.0 (/home/aiv/ev_ws/ev_msgs/install/ev_msgs/share/ev_msgs/cmake)
+[0.700s] -- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)
+[0.731s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.778s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.778s] -- Configured cppcheck include dirs: /home/aiv/ev_ws/planning/src/planning_lc_ver/include
+[0.778s] -- Configured cppcheck exclude dirs and/or files: 
+[0.778s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.779s] -- Added test 'lint_cmake' to check CMake code style
+[0.779s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.780s] -- Added test 'uncrustify' to check C / C++ code style
+[0.780s] -- Configured uncrustify additional arguments: 
+[0.781s] -- Added test 'xmllint' to check XML markup files
+[0.781s] -- Configuring done
+[0.795s] -- Generating done
+[0.800s] -- Build files have been written to: /home/aiv/ev_ws/planning/build/planning_lc_ver
+[0.805s] Invoked command in '/home/aiv/ev_ws/planning/build/planning_lc_ver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/planning/src/planning_lc_ver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/planning/install/planning_lc_ver
+[0.806s] Invoking command in '/home/aiv/ev_ws/planning/build/planning_lc_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/planning_lc_ver -- -j28 -l28
+[0.841s] [ 16%] [32mBuilding CXX object CMakeFiles/lc_planner_node_exe.dir/rclcpp_components/node_main_lc_planner_node_exe.cpp.o[0m
+[0.841s] [ 16%] [32mBuilding CXX object CMakeFiles/planning_lc_postprocess.dir/src/postprocess/path_postprocessor.cpp.o[0m
+[0.841s] [ 25%] [32mBuilding CXX object CMakeFiles/planning_lc_costmap.dir/src/costmap/costmap_generator.cpp.o[0m
+[0.842s] [ 33%] [32mBuilding CXX object CMakeFiles/planning_lc_planner.dir/src/planner/magnetic_planner.cpp.o[0m
+[0.842s] [ 41%] [32mBuilding CXX object CMakeFiles/planning_lc_chainer.dir/src/chainer/direction_chainer.cpp.o[0m
+[1.133s] [ 50%] [32m[1mLinking CXX shared library libplanning_lc_postprocess.so[0m
+[1.215s] [ 50%] Built target planning_lc_postprocess
+[2.297s] [ 58%] [32m[1mLinking CXX shared library libplanning_lc_costmap.so[0m
+[2.317s] [ 66%] [32m[1mLinking CXX shared library libplanning_lc_planner.so[0m
+[2.394s] [ 66%] Built target planning_lc_costmap
+[2.403s] [ 66%] Built target planning_lc_planner
+[2.471s] [ 75%] [32m[1mLinking CXX executable lc_planner_node_exe[0m
+[2.540s] [ 75%] Built target lc_planner_node_exe
+[2.618s] [ 83%] [32m[1mLinking CXX shared library libplanning_lc_chainer.so[0m
+[2.690s] [ 83%] Built target planning_lc_chainer
+[2.705s] [ 91%] [32mBuilding CXX object CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o[0m
+[9.001s] [100%] [32m[1mLinking CXX shared library liblc_planner_component.so[0m
+[9.373s] [100%] Built target lc_planner_component
+[9.380s] Invoked command in '/home/aiv/ev_ws/planning/build/planning_lc_ver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/planning_lc_ver -- -j28 -l28
+[9.385s] Invoking command in '/home/aiv/ev_ws/planning/build/planning_lc_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/planning_lc_ver
+[9.391s] -- Install configuration: ""
+[9.391s] -- Execute custom install script
+[9.391s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/lib/libplanning_lc_chainer.so
+[9.396s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/lib/libplanning_lc_costmap.so
+[9.402s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/lib/libplanning_lc_planner.so
+[9.407s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/lib/libplanning_lc_postprocess.so
+[9.413s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/lib/planning_lc_ver/lc_planner_node_exe
+[9.418s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/lib/liblc_planner_component.so
+[9.423s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/chainer/direction_chainer.hpp
+[9.429s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/chainer/line_chainer.hpp
+[9.433s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/common/debug_publish.hpp
+[9.440s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/common/geometry.hpp
+[9.445s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/common/params.hpp
+[9.449s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/common/types.hpp
+[9.455s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/costmap/costmap_generator.hpp
+[9.460s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/nodes/lc_planner_node.hpp
+[9.467s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/planner/magnetic_planner.hpp
+[9.472s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/postprocess/path_postprocessor.hpp
+[9.477s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/include/planning_lc_ver/safety/safety_checker.hpp
+[9.483s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/config/planning_lc.yaml
+[9.489s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/launch/planning_lc.launch.py
+[9.495s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/ament_index/resource_index/package_run_dependencies/planning_lc_ver
+[9.501s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/ament_index/resource_index/parent_prefix_path/planning_lc_ver
+[9.505s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/environment/ament_prefix_path.sh
+[9.510s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/environment/ament_prefix_path.dsv
+[9.516s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/environment/path.sh
+[9.520s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/environment/path.dsv
+[9.525s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/local_setup.bash
+[9.530s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/local_setup.sh
+[9.534s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/local_setup.zsh
+[9.539s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/local_setup.dsv
+[9.543s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/package.dsv
+[9.548s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/ament_index/resource_index/packages/planning_lc_ver
+[9.554s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/ament_index/resource_index/rclcpp_components/planning_lc_ver
+[9.558s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/cmake/planning_lc_verConfig.cmake
+[9.563s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/cmake/planning_lc_verConfig-version.cmake
+[9.567s] -- Symlinking: /home/aiv/ev_ws/planning/install/planning_lc_ver/share/planning_lc_ver/package.xml
+[9.573s] Invoked command in '/home/aiv/ev_ws/planning/build/planning_lc_ver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/planning_lc_ver

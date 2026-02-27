@@ -9,11 +9,12 @@ lc_planner_node:
     # ============================================================
     # Costmap — Magnetic Resistance costmap
     # ============================================================
+   
     costmap:
       size_x: 16.0
       size_y: 16.0
       resolution: 0.05
-      cone_cost_max: 100.0
+      cone_cost_max: 100.0  # cost_ceiling = 100 픽셀은 path로 선택할 수 없음.
       lane_cost_max: 50.0
       cone_radius: 0.65
       sigma: 1.0
@@ -28,8 +29,9 @@ lc_planner_node:
       heading_init_x: 1.0
       heading_init_y: 0.0
       forward_cone_deg: 90.0
-      max_steer_per_step_deg: 10.0
-      heading_damping: 0.5
+      heading_damping: 0.0
+      max_steer_per_step_deg: 40.0
+      cost_ceiling: 100.0        # 이 비용 이상인 셀은 경로 후보에서 제외
 
     # ============================================================
     # Vehicle (T870)
@@ -116,3 +118,4 @@ lc_planner_node:
 
       # --- 디버그 ---
       publish_debug: true
+      debug_chainer_stats: true   # 리샘플 전 좌/우 콘/차선 개수 로그 출력

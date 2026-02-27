@@ -221,6 +221,10 @@ Point2D MagneticPlanner::find_best_forward_cell(
       // 해당 셀의 비용 값 (row-major 1D 배열 접근)
       double cost = costmap.data[row * costmap.cols + col];
 
+      // 필터 (c): cost_ceiling 이상인 셀은 후보에서 제외
+      // 콘 중심 근처(비용 ≥ 95) 등 위험 영역은 절대 경로로 선택하지 않음
+      if (cost >= params.planner.cost_ceiling) continue;
+
       // ── 셀 선택 (greedy 비교) ──
       // 1차: cost가 더 낮으면 무조건 갱신
       // 2차: cost가 같으면 alignment(heading 정렬도)가 더 높은 쪽을 선택

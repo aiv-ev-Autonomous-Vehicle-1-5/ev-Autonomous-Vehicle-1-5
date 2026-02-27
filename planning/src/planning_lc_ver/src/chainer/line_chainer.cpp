@@ -236,6 +236,19 @@ std::vector<ChainedPoint> LineChainer::chain_one_side(
   // 이 시점에서 chain 배열에는 감염된 모든 점이 들어 있고,
   // edges 배열에는 감염 트리의 모든 간선이 기록되어 있다.
 
+  // ── 디버그: 리샘플 전 콘/차선 개수 출력 ──
+  if (params.chainer.debug_chainer_stats) {
+    int n_cone = 0, n_lane = 0;
+    for (const auto & pt : chain) {
+      if (pt.type == PointType::CONE) ++n_cone;
+      else ++n_lane;
+    }
+    const char * side = (candidates[seed_idx].y > 0.0) ? "LEFT" : "RIGHT";
+    RCLCPP_INFO(rclcpp::get_logger("line_chainer"),
+      "[%s] pre-resample: total=%d  cones=%d  lanes=%d",
+      side, static_cast<int>(chain.size()), n_cone, n_lane);
+  }
+
   // ══════════════════════════════════════════════════════════
   //  [Phase 2] 감염 트리 → 경로(Polyline) 추출 + 리샘플링
   // ══════════════════════════════════════════════════════════
