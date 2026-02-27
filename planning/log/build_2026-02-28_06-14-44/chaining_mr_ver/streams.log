@@ -1,0 +1,108 @@
+[0.007s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_mr_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/planning/src/chaining_mr_ver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/planning/install/chaining_mr_ver
+[0.046s] -- The C compiler identification is GNU 11.4.0
+[0.077s] -- The CXX compiler identification is GNU 11.4.0
+[0.081s] -- Detecting C compiler ABI info
+[0.126s] -- Detecting C compiler ABI info - done
+[0.129s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.130s] -- Detecting C compile features
+[0.130s] -- Detecting C compile features - done
+[0.131s] -- Detecting CXX compiler ABI info
+[0.181s] -- Detecting CXX compiler ABI info - done
+[0.185s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.185s] -- Detecting CXX compile features
+[0.185s] -- Detecting CXX compile features - done
+[0.187s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.271s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.306s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.330s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.357s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.361s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.366s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.374s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.385s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.415s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.417s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.477s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.493s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.517s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.523s] -- Looking for pthread.h
+[0.570s] -- Looking for pthread.h - found
+[0.570s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.618s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.619s] -- Found Threads: TRUE  
+[0.649s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.665s] -- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+[0.682s] -- Found ev_msgs: 0.1.0 (/home/aiv/ev_ws/ev_msgs/install/ev_msgs/share/ev_msgs/cmake)
+[0.691s] -- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)
+[0.723s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.770s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.770s] -- Configured cppcheck include dirs: /home/aiv/ev_ws/planning/src/chaining_mr_ver/include
+[0.771s] -- Configured cppcheck exclude dirs and/or files: 
+[0.771s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.771s] -- Added test 'lint_cmake' to check CMake code style
+[0.772s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.773s] -- Added test 'uncrustify' to check C / C++ code style
+[0.773s] -- Configured uncrustify additional arguments: 
+[0.773s] -- Added test 'xmllint' to check XML markup files
+[0.774s] -- Configuring done
+[0.787s] -- Generating done
+[0.793s] -- Build files have been written to: /home/aiv/ev_ws/planning/build/chaining_mr_ver
+[0.798s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_mr_ver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/planning/src/chaining_mr_ver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/planning/install/chaining_mr_ver
+[0.800s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_mr_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/chaining_mr_ver -- -j28 -l28
+[0.835s] [ 16%] [32mBuilding CXX object CMakeFiles/chaining_mr_costmap.dir/src/costmap/costmap_generator.cpp.o[0m
+[0.835s] [ 16%] [32mBuilding CXX object CMakeFiles/lc_planner_node_exe.dir/rclcpp_components/node_main_lc_planner_node_exe.cpp.o[0m
+[0.835s] [ 25%] [32mBuilding CXX object CMakeFiles/chaining_mr_postprocess.dir/src/postprocess/path_postprocessor.cpp.o[0m
+[0.836s] [ 33%] [32mBuilding CXX object CMakeFiles/chaining_mr_chainer.dir/src/chainer/direction_chainer.cpp.o[0m
+[0.837s] [ 41%] [32mBuilding CXX object CMakeFiles/chaining_mr_planner.dir/src/planner/magnetic_planner.cpp.o[0m
+[1.123s] [ 50%] [32m[1mLinking CXX shared library libchaining_mr_postprocess.so[0m
+[1.204s] [ 50%] Built target chaining_mr_postprocess
+[2.350s] [ 58%] [32m[1mLinking CXX shared library libchaining_mr_costmap.so[0m
+[2.352s] [ 66%] [32m[1mLinking CXX shared library libchaining_mr_planner.so[0m
+[2.447s] [ 66%] Built target chaining_mr_planner
+[2.455s] [ 66%] Built target chaining_mr_costmap
+[2.523s] [ 75%] [32m[1mLinking CXX executable lc_planner_node_exe[0m
+[2.595s] [ 75%] Built target lc_planner_node_exe
+[2.670s] [ 83%] [32m[1mLinking CXX shared library libchaining_mr_chainer.so[0m
+[2.741s] [ 83%] Built target chaining_mr_chainer
+[2.756s] [ 91%] [32mBuilding CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o[0m
+[9.268s] [100%] [32m[1mLinking CXX shared library liblc_planner_component.so[0m
+[9.659s] [100%] Built target lc_planner_component
+[9.666s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_mr_ver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/chaining_mr_ver -- -j28 -l28
+[9.672s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_mr_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/chaining_mr_ver
+[9.676s] -- Install configuration: ""
+[9.676s] -- Execute custom install script
+[9.676s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_chainer.so
+[9.682s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_costmap.so
+[9.687s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_planner.so
+[9.692s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_postprocess.so
+[9.698s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/chaining_mr_ver/lc_planner_node_exe
+[9.704s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/liblc_planner_component.so
+[9.709s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/chainer/direction_chainer.hpp
+[9.715s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/common/debug_publish.hpp
+[9.720s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/common/geometry.hpp
+[9.726s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/common/params.hpp
+[9.731s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/common/types.hpp
+[9.736s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/costmap/costmap_generator.hpp
+[9.741s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/nodes/chaining_mr_ver_node.hpp
+[9.747s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/planner/magnetic_planner.hpp
+[9.752s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/postprocess/path_postprocessor.hpp
+[9.758s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/safety/safety_checker.hpp
+[9.764s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/config/chaining_mr_ver.yaml
+[9.770s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/launch/chaining_mr_ver.py
+[9.776s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/ament_index/resource_index/package_run_dependencies/chaining_mr_ver
+[9.782s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/ament_index/resource_index/parent_prefix_path/chaining_mr_ver
+[9.787s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/environment/ament_prefix_path.sh
+[9.793s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/environment/ament_prefix_path.dsv
+[9.800s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/environment/path.sh
+[9.805s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/environment/path.dsv
+[9.810s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/local_setup.bash
+[9.816s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/local_setup.sh
+[9.821s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/local_setup.zsh
+[9.828s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/local_setup.dsv
+[9.833s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/package.dsv
+[9.838s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/ament_index/resource_index/packages/chaining_mr_ver
+[9.843s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/ament_index/resource_index/rclcpp_components/chaining_mr_ver
+[9.848s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/cmake/chaining_mr_verConfig.cmake
+[9.854s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/cmake/chaining_mr_verConfig-version.cmake
+[9.859s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/package.xml
+[9.865s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_mr_ver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/chaining_mr_ver

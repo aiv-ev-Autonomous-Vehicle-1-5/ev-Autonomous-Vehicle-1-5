@@ -97,7 +97,7 @@ install(TARGETS chaining_mr_postprocess
 # Component: lc_planner_component — 메인 노드 (ComposableNode)
 # ============================================================================
 add_library(lc_planner_component SHARED
-  src/nodes/lc_planner_node.cpp
+  src/nodes/chaining_mr_ver_node.cpp
 )
 target_link_libraries(lc_planner_component
   chaining_mr_chainer

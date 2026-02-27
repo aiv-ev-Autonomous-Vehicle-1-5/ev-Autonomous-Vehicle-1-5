@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o"
-  "CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o.d"
+  "CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o"
+  "CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o.d"
   "liblc_planner_component.pdb"
   "liblc_planner_component.so"
 )

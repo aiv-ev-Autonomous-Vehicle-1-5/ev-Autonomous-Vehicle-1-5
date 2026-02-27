@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/planning/src/planning_lc_ver/include/planning_lc_ver/nodes/lc_planner_node.hpp

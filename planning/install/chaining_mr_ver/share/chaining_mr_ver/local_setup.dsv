@@ -1,2 +1,1 @@
-source;share/chaining_mr_ver/environment/ament_prefix_path.sh
-source;share/chaining_mr_ver/environment/path.sh
+/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_environment_hooks/local_setup.dsv

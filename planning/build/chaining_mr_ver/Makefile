@@ -347,29 +347,29 @@ src/costmap/costmap_generator.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_costmap.dir/build.make CMakeFiles/chaining_mr_costmap.dir/src/costmap/costmap_generator.cpp.s
 .PHONY : src/costmap/costmap_generator.cpp.s
 
-src/nodes/lc_planner_node.o: src/nodes/lc_planner_node.cpp.o
-.PHONY : src/nodes/lc_planner_node.o
+src/nodes/chaining_mr_ver_node.o: src/nodes/chaining_mr_ver_node.cpp.o
+.PHONY : src/nodes/chaining_mr_ver_node.o
 
 # target to build an object file
-src/nodes/lc_planner_node.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lc_planner_component.dir/build.make CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o
-.PHONY : src/nodes/lc_planner_node.cpp.o
+src/nodes/chaining_mr_ver_node.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lc_planner_component.dir/build.make CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o
+.PHONY : src/nodes/chaining_mr_ver_node.cpp.o
 
-src/nodes/lc_planner_node.i: src/nodes/lc_planner_node.cpp.i
-.PHONY : src/nodes/lc_planner_node.i
+src/nodes/chaining_mr_ver_node.i: src/nodes/chaining_mr_ver_node.cpp.i
+.PHONY : src/nodes/chaining_mr_ver_node.i
 
 # target to preprocess a source file
-src/nodes/lc_planner_node.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lc_planner_component.dir/build.make CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.i
-.PHONY : src/nodes/lc_planner_node.cpp.i
+src/nodes/chaining_mr_ver_node.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lc_planner_component.dir/build.make CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.i
+.PHONY : src/nodes/chaining_mr_ver_node.cpp.i
 
-src/nodes/lc_planner_node.s: src/nodes/lc_planner_node.cpp.s
-.PHONY : src/nodes/lc_planner_node.s
+src/nodes/chaining_mr_ver_node.s: src/nodes/chaining_mr_ver_node.cpp.s
+.PHONY : src/nodes/chaining_mr_ver_node.s
 
 # target to generate assembly for a file
-src/nodes/lc_planner_node.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/lc_planner_component.dir/build.make CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.s
-.PHONY : src/nodes/lc_planner_node.cpp.s
+src/nodes/chaining_mr_ver_node.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lc_planner_component.dir/build.make CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.s
+.PHONY : src/nodes/chaining_mr_ver_node.cpp.s
 
 src/planner/magnetic_planner.o: src/planner/magnetic_planner.cpp.o
 .PHONY : src/planner/magnetic_planner.o
@@ -449,9 +449,9 @@ help:
 	@echo "... src/costmap/costmap_generator.o"
 	@echo "... src/costmap/costmap_generator.i"
 	@echo "... src/costmap/costmap_generator.s"
-	@echo "... src/nodes/lc_planner_node.o"
-	@echo "... src/nodes/lc_planner_node.i"
-	@echo "... src/nodes/lc_planner_node.s"
+	@echo "... src/nodes/chaining_mr_ver_node.o"
+	@echo "... src/nodes/chaining_mr_ver_node.i"
+	@echo "... src/nodes/chaining_mr_ver_node.s"
 	@echo "... src/planner/magnetic_planner.o"
 	@echo "... src/planner/magnetic_planner.i"
 	@echo "... src/planner/magnetic_planner.s"

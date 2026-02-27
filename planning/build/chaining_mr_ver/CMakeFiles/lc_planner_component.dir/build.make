@@ -69,28 +69,28 @@ include CMakeFiles/lc_planner_component.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/lc_planner_component.dir/flags.make
 
-CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o: CMakeFiles/lc_planner_component.dir/flags.make
-CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o: /home/aiv/ev_ws/planning/src/chaining_mr_ver/src/nodes/lc_planner_node.cpp
-CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o: CMakeFiles/lc_planner_component.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aiv/ev_ws/planning/build/chaining_mr_ver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o -MF CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o.d -o CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o -c /home/aiv/ev_ws/planning/src/chaining_mr_ver/src/nodes/lc_planner_node.cpp
+CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o: CMakeFiles/lc_planner_component.dir/flags.make
+CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o: /home/aiv/ev_ws/planning/src/chaining_mr_ver/src/nodes/chaining_mr_ver_node.cpp
+CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o: CMakeFiles/lc_planner_component.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/aiv/ev_ws/planning/build/chaining_mr_ver/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o -MF CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o.d -o CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o -c /home/aiv/ev_ws/planning/src/chaining_mr_ver/src/nodes/chaining_mr_ver_node.cpp
 
-CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aiv/ev_ws/planning/src/chaining_mr_ver/src/nodes/lc_planner_node.cpp > CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.i
+CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/aiv/ev_ws/planning/src/chaining_mr_ver/src/nodes/chaining_mr_ver_node.cpp > CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.i
 
-CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aiv/ev_ws/planning/src/chaining_mr_ver/src/nodes/lc_planner_node.cpp -o CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.s
+CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/aiv/ev_ws/planning/src/chaining_mr_ver/src/nodes/chaining_mr_ver_node.cpp -o CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.s
 
 # Object files for target lc_planner_component
 lc_planner_component_OBJECTS = \
-"CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o"
+"CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o"
 
 # External object files for target lc_planner_component
 lc_planner_component_EXTERNAL_OBJECTS =
 
-liblc_planner_component.so: CMakeFiles/lc_planner_component.dir/src/nodes/lc_planner_node.cpp.o
+liblc_planner_component.so: CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o
 liblc_planner_component.so: CMakeFiles/lc_planner_component.dir/build.make
 liblc_planner_component.so: libchaining_mr_chainer.so
 liblc_planner_component.so: libchaining_mr_costmap.so
