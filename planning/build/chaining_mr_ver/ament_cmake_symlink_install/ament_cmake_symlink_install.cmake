@@ -313,20 +313,17 @@ message(STATUS "Execute custom install script")
 # install("TARGETS" "chaining_mr_chainer" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
 include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install("TARGETS" "chaining_mr_costmap" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
+# install("TARGETS" "chaining_mr_cdt_planner" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
 include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_symlink_install_targets_1_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install("TARGETS" "chaining_mr_planner" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
+# install("TARGETS" "chaining_mr_postprocess" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
 include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_symlink_install_targets_2_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install("TARGETS" "chaining_mr_postprocess" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
+# install("TARGETS" "lc_planner_node_exe" "DESTINATION" "lib/chaining_mr_ver")
 include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_symlink_install_targets_3_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install("TARGETS" "lc_planner_node_exe" "DESTINATION" "lib/chaining_mr_ver")
-include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_symlink_install_targets_4_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
-
 # install("TARGETS" "lc_planner_component" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
-include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_symlink_install_targets_5_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
+include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_symlink_install_targets_4_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
 # install(DIRECTORY "include/" "DESTINATION" "include")
 ament_cmake_symlink_install_directory("/home/aiv/ev_ws/planning/src/chaining_mr_ver" DIRECTORY "include/" "DESTINATION" "include")

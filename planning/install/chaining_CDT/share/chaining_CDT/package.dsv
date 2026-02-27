@@ -1,0 +1,11 @@
+source;share/chaining_CDT/hook/cmake_prefix_path.ps1
+source;share/chaining_CDT/hook/cmake_prefix_path.dsv
+source;share/chaining_CDT/hook/cmake_prefix_path.sh
+source;share/chaining_CDT/hook/ld_library_path_lib.ps1
+source;share/chaining_CDT/hook/ld_library_path_lib.dsv
+source;share/chaining_CDT/hook/ld_library_path_lib.sh
+source;share/chaining_CDT/local_setup.bash
+source;share/chaining_CDT/local_setup.dsv
+source;share/chaining_CDT/local_setup.ps1
+source;share/chaining_CDT/local_setup.sh
+source;share/chaining_CDT/local_setup.zsh

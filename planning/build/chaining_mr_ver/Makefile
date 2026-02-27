@@ -211,30 +211,17 @@ chaining_mr_chainer/fast:
 .PHONY : chaining_mr_chainer/fast
 
 #=============================================================================
-# Target rules for targets named chaining_mr_costmap
+# Target rules for targets named chaining_mr_cdt_planner
 
 # Build rule for target.
-chaining_mr_costmap: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 chaining_mr_costmap
-.PHONY : chaining_mr_costmap
+chaining_mr_cdt_planner: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 chaining_mr_cdt_planner
+.PHONY : chaining_mr_cdt_planner
 
 # fast build rule for target.
-chaining_mr_costmap/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_costmap.dir/build.make CMakeFiles/chaining_mr_costmap.dir/build
-.PHONY : chaining_mr_costmap/fast
-
-#=============================================================================
-# Target rules for targets named chaining_mr_planner
-
-# Build rule for target.
-chaining_mr_planner: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 chaining_mr_planner
-.PHONY : chaining_mr_planner
-
-# fast build rule for target.
-chaining_mr_planner/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_planner.dir/build.make CMakeFiles/chaining_mr_planner.dir/build
-.PHONY : chaining_mr_planner/fast
+chaining_mr_cdt_planner/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_cdt_planner.dir/build.make CMakeFiles/chaining_mr_cdt_planner.dir/build
+.PHONY : chaining_mr_cdt_planner/fast
 
 #=============================================================================
 # Target rules for targets named chaining_mr_postprocess
@@ -323,30 +310,6 @@ src/chainer/direction_chainer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_chainer.dir/build.make CMakeFiles/chaining_mr_chainer.dir/src/chainer/direction_chainer.cpp.s
 .PHONY : src/chainer/direction_chainer.cpp.s
 
-src/costmap/costmap_generator.o: src/costmap/costmap_generator.cpp.o
-.PHONY : src/costmap/costmap_generator.o
-
-# target to build an object file
-src/costmap/costmap_generator.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_costmap.dir/build.make CMakeFiles/chaining_mr_costmap.dir/src/costmap/costmap_generator.cpp.o
-.PHONY : src/costmap/costmap_generator.cpp.o
-
-src/costmap/costmap_generator.i: src/costmap/costmap_generator.cpp.i
-.PHONY : src/costmap/costmap_generator.i
-
-# target to preprocess a source file
-src/costmap/costmap_generator.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_costmap.dir/build.make CMakeFiles/chaining_mr_costmap.dir/src/costmap/costmap_generator.cpp.i
-.PHONY : src/costmap/costmap_generator.cpp.i
-
-src/costmap/costmap_generator.s: src/costmap/costmap_generator.cpp.s
-.PHONY : src/costmap/costmap_generator.s
-
-# target to generate assembly for a file
-src/costmap/costmap_generator.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_costmap.dir/build.make CMakeFiles/chaining_mr_costmap.dir/src/costmap/costmap_generator.cpp.s
-.PHONY : src/costmap/costmap_generator.cpp.s
-
 src/nodes/chaining_mr_ver_node.o: src/nodes/chaining_mr_ver_node.cpp.o
 .PHONY : src/nodes/chaining_mr_ver_node.o
 
@@ -371,29 +334,29 @@ src/nodes/chaining_mr_ver_node.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lc_planner_component.dir/build.make CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.s
 .PHONY : src/nodes/chaining_mr_ver_node.cpp.s
 
-src/planner/magnetic_planner.o: src/planner/magnetic_planner.cpp.o
-.PHONY : src/planner/magnetic_planner.o
+src/planner/cdt_centerline.o: src/planner/cdt_centerline.cpp.o
+.PHONY : src/planner/cdt_centerline.o
 
 # target to build an object file
-src/planner/magnetic_planner.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_planner.dir/build.make CMakeFiles/chaining_mr_planner.dir/src/planner/magnetic_planner.cpp.o
-.PHONY : src/planner/magnetic_planner.cpp.o
+src/planner/cdt_centerline.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_cdt_planner.dir/build.make CMakeFiles/chaining_mr_cdt_planner.dir/src/planner/cdt_centerline.cpp.o
+.PHONY : src/planner/cdt_centerline.cpp.o
 
-src/planner/magnetic_planner.i: src/planner/magnetic_planner.cpp.i
-.PHONY : src/planner/magnetic_planner.i
+src/planner/cdt_centerline.i: src/planner/cdt_centerline.cpp.i
+.PHONY : src/planner/cdt_centerline.i
 
 # target to preprocess a source file
-src/planner/magnetic_planner.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_planner.dir/build.make CMakeFiles/chaining_mr_planner.dir/src/planner/magnetic_planner.cpp.i
-.PHONY : src/planner/magnetic_planner.cpp.i
+src/planner/cdt_centerline.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_cdt_planner.dir/build.make CMakeFiles/chaining_mr_cdt_planner.dir/src/planner/cdt_centerline.cpp.i
+.PHONY : src/planner/cdt_centerline.cpp.i
 
-src/planner/magnetic_planner.s: src/planner/magnetic_planner.cpp.s
-.PHONY : src/planner/magnetic_planner.s
+src/planner/cdt_centerline.s: src/planner/cdt_centerline.cpp.s
+.PHONY : src/planner/cdt_centerline.s
 
 # target to generate assembly for a file
-src/planner/magnetic_planner.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_planner.dir/build.make CMakeFiles/chaining_mr_planner.dir/src/planner/magnetic_planner.cpp.s
-.PHONY : src/planner/magnetic_planner.cpp.s
+src/planner/cdt_centerline.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chaining_mr_cdt_planner.dir/build.make CMakeFiles/chaining_mr_cdt_planner.dir/src/planner/cdt_centerline.cpp.s
+.PHONY : src/planner/cdt_centerline.cpp.s
 
 src/postprocess/path_postprocessor.o: src/postprocess/path_postprocessor.cpp.o
 .PHONY : src/postprocess/path_postprocessor.o
@@ -434,9 +397,8 @@ help:
 	@echo "... test"
 	@echo "... chaining_mr_ver_uninstall"
 	@echo "... uninstall"
+	@echo "... chaining_mr_cdt_planner"
 	@echo "... chaining_mr_chainer"
-	@echo "... chaining_mr_costmap"
-	@echo "... chaining_mr_planner"
 	@echo "... chaining_mr_postprocess"
 	@echo "... lc_planner_component"
 	@echo "... lc_planner_node_exe"
@@ -446,15 +408,12 @@ help:
 	@echo "... src/chainer/direction_chainer.o"
 	@echo "... src/chainer/direction_chainer.i"
 	@echo "... src/chainer/direction_chainer.s"
-	@echo "... src/costmap/costmap_generator.o"
-	@echo "... src/costmap/costmap_generator.i"
-	@echo "... src/costmap/costmap_generator.s"
 	@echo "... src/nodes/chaining_mr_ver_node.o"
 	@echo "... src/nodes/chaining_mr_ver_node.i"
 	@echo "... src/nodes/chaining_mr_ver_node.s"
-	@echo "... src/planner/magnetic_planner.o"
-	@echo "... src/planner/magnetic_planner.i"
-	@echo "... src/planner/magnetic_planner.s"
+	@echo "... src/planner/cdt_centerline.o"
+	@echo "... src/planner/cdt_centerline.i"
+	@echo "... src/planner/cdt_centerline.s"
 	@echo "... src/postprocess/path_postprocessor.o"
 	@echo "... src/postprocess/path_postprocessor.i"
 	@echo "... src/postprocess/path_postprocessor.s"

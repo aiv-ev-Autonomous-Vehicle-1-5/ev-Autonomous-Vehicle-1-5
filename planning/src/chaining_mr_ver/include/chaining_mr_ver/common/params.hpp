@@ -7,8 +7,7 @@
  *
  * ── 전체 구조 ──
  *   PlanningParams (최상위 구조체)
- *     ├── Costmap      : 2D 그리드 맵 위에 장애물/차선 비용을 그리는 설정
- *     ├── Planner      : Costmap 위에서 Greedy 전진 탐색으로 경로를 생성하는 설정
+ *     ├── CDTPlanner   : CDT 기반 Centerline 추출 파라미터
  *     ├── Vehicle       : T870 전동 카트의 물리적 제원 (폭, 축거, 최대 조향각)
  *     ├── Safety        : 장애물과의 안전 마진
  *     ├── Speed         : 최대 속도 및 횡가속도 제한
@@ -35,110 +34,43 @@ namespace chaining_mr_ver
 struct PlanningParams
 {
   // ============================================================
-  // Costmap — Magnetic Resistance costmap 파라미터
+  // CDTPlanner — CDT 기반 Centerline 추출 파라미터
   //
-  // 차량 주변에 2D 그리드(격자) 맵을 만들고, 장애물(콘)과 차선에
-  // "자기 반발력(Magnetic Resistance)" 형태의 비용을 부여한다.
-  // Planner는 이 비용이 낮은 곳을 따라 경로를 생성한다.
+  // 좌/우 경계 체인에 Constrained Delaunay Triangulation(CDT)을 수행하고,
+  // 삼각형의 외심(circumcenter)을 기하학적으로 필터링하여 centerline을 추출한다.
+  // DTR 논문(Delaunay Triangulation-based Racing)에서 영감을 받은 방식.
   //
-  // 좌표계: base_link 기준. x가 전방, y가 좌측.
-  // 맵 원점은 차량 중심이며, 맵은 [-size_x/2, +size_x/2] x [-size_y/2, +size_y/2] 범위.
+  // 격자(costmap) 없이 기하학적으로 중심선 추출 → 해상도 제약 없음, 계산량 감소.
   // ============================================================
-  struct Costmap
+  struct CDTPlanner
   {
-    // --- 맵 크기 ---
-    // [m] costmap의 x방향(전후) 전체 길이.
-    // 값을 키우면 더 먼 거리까지 비용을 계산하지만, 셀 수가 늘어나 연산량 증가.
-    // yaml에서는 16.0 으로 설정 → 전방 8m + 후방 8m 범위.
-    double size_x = 10.0;
+    // --- 삼각형 필터 (DTR 논문 heuristics) ---
 
-    // [m] costmap의 y방향(좌우) 전체 길이.
-    // 차로 폭이 1.5m이므로 양쪽 여유를 두고 충분히 넓게 설정해야 한다.
-    double size_y = 10.0;
+    // [무차원] Isosceles-like 조건: sides[1]/sides[2] < 이 값
+    // 변 길이를 오름차순 정렬 후, 두 긴 변의 비율이 이 값 이하면 통과.
+    // 낮추면 더 이등변에 가까운 삼각형만 허용 (엄격), 높이면 느슨.
+    double iso_ratio_max = 1.4;
 
-    // [m/cell] 그리드 한 칸의 물리적 크기.
-    // 0.05 = 5cm 해상도. 작을수록 정밀하지만 메모리 & 연산량 급증.
-    // 그리드 총 셀 수 = (size_x / resolution) * (size_y / resolution).
-    // 예: 16m / 0.05 = 320칸 → 320 x 320 = 102,400 셀.
-    double resolution = 0.05;
+    // [무차원] Pointedness 조건: sides[2]/sides[0] > 이 값
+    // 가장 긴 변 / 가장 짧은 변 비율. 높으면 뾰족한 삼각형 → 도로 방향 삼각형.
+    // 높이면 도로 방향 삼각형만 허용, 낮추면 더 많은 삼각형 통과.
+    double pointed_ratio_min = 2.0;
 
-    // --- 비용 크기 ---
-    // [무차원] 콘(장애물)이 중심에서 가지는 최대 비용값.
-    // 높일수록 Planner가 콘을 더 강하게 회피한다.
-    double cone_cost_max = 100.0;
+    // [m²] 면적 조건. 삼각형 면적이 이 값 이상이면 필터 통과.
+    // DTR 조건: (isosceles AND pointedness) OR (area > area_min)
+    double area_min = 0.3;
 
-    // [무차원] 차선 경계가 중심에서 가지는 최대 비용값.
-    // cone_cost_max보다 작으면 → 콘 회피 > 차선 회피 우선순위.
-    // 즉, 콘을 피하기 위해 차선을 약간 침범하는 것을 허용.
-    double lane_cost_max = 50.0;
+    // --- centerline 연결 ---
 
-    // --- 비용 확산 ---
-    // [m] 콘 주변에 비용이 퍼지는 물리적 반경.
-    // PE 드럼 직경이 500mm(반지름 250mm)이므로, 0.65m = 드럼 가장자리 + 40cm 마진.
-    double cone_radius = 0.65;
+    // [m] 외심 간 최대 연결 거리. Greedy nearest-neighbor 시 이 거리 이내만 연결.
+    // 크게 하면 듬성듬성한 외심도 연결, 작게 하면 가까운 것만 연결.
+    double max_circumcenter_dist = 2.0;
 
-    // [m] 가우시안 확산의 표준편차. 비용이 중심에서 얼마나 부드럽게 감소하는지 결정.
-    // 작을수록 비용이 장애물 가까이에만 집중, 클수록 넓게 퍼짐.
-    double sigma = 1.0;
-
-    // [무차원] 이 값 이하의 비용은 0으로 잘라냄(clamp).
-    // 너무 작은 비용은 무시하여 연산량 감소 + 노이즈 제거.
-    double cost_threshold = 2.0;
-  } costmap;
-
-  // ============================================================
-  // Planner — Greedy 전진 탐색 파라미터
-  //
-  // Costmap 위에서 "탐욕적 전진 탐색(Greedy Forward Search)"으로 경로를 생성.
-  // 현재 위치에서 search_radius 만큼 전방을 탐색하여
-  // 비용이 가장 낮은 다음 지점을 선택하는 것을 max_steps번 반복한다.
-  //
-  // 동작 원리:
-  //   1. 현재 heading(진행 방향) 기준으로 forward_cone 안의 후보 셀을 탐색
-  //   2. 비용이 최소인 셀을 다음 경유점으로 선택
-  //   3. heading을 갱신 (heading_damping으로 급격한 방향 전환 억제)
-  //   4. max_steps번 반복하거나 맵 밖으로 나가면 종료
-  // ============================================================
-  struct Planner
-  {
-    // [m] 매 스텝에서 다음 경유점을 탐색하는 반경.
-    // 작을수록 세밀한 경로, 클수록 대략적이지만 빠른 경로.
-    // resolution(0.05m)보다 충분히 커야 의미 있는 탐색이 됨.
-    double search_radius = 0.30;
-
-    // [회] 최대 탐색 반복 횟수. 경로의 최대 길이를 결정.
-    // 최대 경로 길이 ≈ search_radius * max_steps = 0.3 * 200 = 60m.
-    // 코스가 긴 경우 늘려야 하고, 너무 크면 연산 시간 증가.
-    int max_steps = 200;
-
-    // [무차원] 초기 heading(진행 방향) 벡터의 x, y 성분.
-    // (1.0, 0.0) = 차량 전방(+x)을 향해 출발.
-    // 좌회전 코스라면 (0.7, 0.7) 등으로 초기 방향을 틀 수 있음.
-    double heading_init_x = 1.0;
-    double heading_init_y = 0.0;
-
-    // [deg] 전방 탐색 원뿔(cone)의 전체 각도.
-    // 60° → 좌우 ±30° 범위만 탐색. 좁을수록 직진 성향 강화.
-    // yaml에서 90°로 설정 → 좌우 ±45°.
-    double forward_cone_deg = 60.0;
-
-    // [deg] 한 스텝에서 heading이 바뀔 수 있는 최대 각도.
-    // 실제 차량의 조향 한계를 반영. 작을수록 부드러운 경로.
-    // yaml에서 10°로 설정 → 한 스텝당 최대 10° 꺾임.
-    double max_steer_per_step_deg = 30.0;
-
-    // [0.0 ~ 1.0] heading 갱신 시 이전 heading을 얼마나 유지할지.
-    // 0.0 = 완전히 새 방향, 1.0 = 이전 방향 유지(직진만 함).
-    // 0.5 = 이전 heading 50% + 새 heading 50% 혼합 → 적당한 부드러움.
-    // 줄이면 장애물 반응 빠름, 높이면 직진 안정성 향상.
-    double heading_damping = 0.5;
-
-    // [무차원] 이 비용 이상인 셀은 경로 후보에서 제외.
-    // cone_cost_max=100 일 때 95로 설정하면, 콘 중심 근처(비용 95~100)의
-    // 셀은 절대 경로로 선택되지 않아 콘 위로 경로가 통과하는 것을 방지.
-    // 값을 낮추면 더 보수적(더 넓게 회피), 높이면 콘에 바짝 붙는 경로 허용.
-    double cost_ceiling = 95.0;
-  } planner;
+    // [무차원] 전방 검사: dot(heading, to_next) > 이 값이어야 다음 외심으로 이동.
+    // -0.3 = 약간 뒤로 가는 것도 허용 (곡선 구간 대응).
+    // 0.0 = 완전히 전방만 허용. -1.0 = 모든 방향 허용.
+    double forward_dot_min = -0.3;
+  } cdt_planner;
 
   // ============================================================
   // Vehicle — T870 전동 카트 제원
@@ -454,27 +386,13 @@ struct PlanningParams
       return node->get_parameter(name).get_value<decltype(default_val)>();
     };
 
-    // ── Costmap 파라미터 로드 ──
-    // yaml 경로: lc_planner_node.ros__parameters.costmap.*
-    costmap.size_x         = p("costmap.size_x",         costmap.size_x);
-    costmap.size_y         = p("costmap.size_y",         costmap.size_y);
-    costmap.resolution     = p("costmap.resolution",     costmap.resolution);
-    costmap.cone_cost_max  = p("costmap.cone_cost_max",  costmap.cone_cost_max);
-    costmap.lane_cost_max  = p("costmap.lane_cost_max",  costmap.lane_cost_max);
-    costmap.cone_radius    = p("costmap.cone_radius",    costmap.cone_radius);
-    costmap.sigma          = p("costmap.sigma",           costmap.sigma);
-    costmap.cost_threshold = p("costmap.cost_threshold", costmap.cost_threshold);
-
-    // ── Planner 파라미터 로드 ──
-    // yaml 경로: lc_planner_node.ros__parameters.planner.*
-    planner.search_radius  = p("planner.search_radius",  planner.search_radius);
-    planner.max_steps      = p("planner.max_steps",      planner.max_steps);
-    planner.heading_init_x = p("planner.heading_init_x", planner.heading_init_x);
-    planner.heading_init_y = p("planner.heading_init_y", planner.heading_init_y);
-    planner.forward_cone_deg       = p("planner.forward_cone_deg",       planner.forward_cone_deg);
-    planner.max_steer_per_step_deg = p("planner.max_steer_per_step_deg", planner.max_steer_per_step_deg);
-    planner.heading_damping        = p("planner.heading_damping",        planner.heading_damping);
-    planner.cost_ceiling           = p("planner.cost_ceiling",           planner.cost_ceiling);
+    // ── CDTPlanner 파라미터 로드 ──
+    // yaml 경로: lc_planner_node.ros__parameters.cdt_planner.*
+    cdt_planner.iso_ratio_max        = p("cdt_planner.iso_ratio_max",        cdt_planner.iso_ratio_max);
+    cdt_planner.pointed_ratio_min    = p("cdt_planner.pointed_ratio_min",    cdt_planner.pointed_ratio_min);
+    cdt_planner.area_min             = p("cdt_planner.area_min",             cdt_planner.area_min);
+    cdt_planner.max_circumcenter_dist = p("cdt_planner.max_circumcenter_dist", cdt_planner.max_circumcenter_dist);
+    cdt_planner.forward_dot_min      = p("cdt_planner.forward_dot_min",      cdt_planner.forward_dot_min);
 
     // ── Vehicle 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.vehicle.*
@@ -530,9 +448,9 @@ struct PlanningParams
     // 디버깅 시 "yaml 값이 제대로 반영됐는지" 확인하는 데 유용.
     RCLCPP_INFO(
       node->get_logger(),
-      "LC PlanningParams loaded: grid=%.0fx%.0f res=%.3f d_max=%.1f lat_gate=%.2f lambda=%.2f",
-      costmap.size_x, costmap.size_y, costmap.resolution,
-      chainer.d_max, chainer.lateral_gate, chainer.lambda_side);
+      "LC PlanningParams loaded: CDT(iso=%.1f pointed=%.1f area=%.1f) d_max=%.1f lat_gate=%.2f",
+      cdt_planner.iso_ratio_max, cdt_planner.pointed_ratio_min, cdt_planner.area_min,
+      chainer.d_max, chainer.lateral_gate);
   }
 };
 

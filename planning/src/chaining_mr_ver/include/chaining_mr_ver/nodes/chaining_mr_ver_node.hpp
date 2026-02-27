@@ -27,8 +27,8 @@
  *     - /planning/path   : 최종 후처리된 경로 (nav_msgs/Path)
  *     - /planning/status : 플래너 상태 문자열 (std_msgs/String)
  *   Debug (lazy publishing — 구독자가 있을 때만 발행):
- *     - /planning/debug/costmap      : 자력장 costmap (OccupancyGrid)
- *     - /planning/debug/raw_path     : 후처리 전 원시 경로
+ *     - /planning/debug/centerline      : CDT 외심 연결 centerline (Path)
+ *     - /planning/debug/circumcenters   : 필터 통과한 외심 점 (MarkerArray)
  *     - /planning/debug/left_chain   : 왼쪽 backbone 체인 (Path)
  *     - /planning/debug/right_chain  : 오른쪽 backbone 체인 (Path)
  *     - /chaining/debug/left_branches  : 왼쪽 branch 시각화 (MarkerArray)
@@ -54,12 +54,9 @@
  *       연결된 포인트 그룹(component)을 찾고, 주 경로(backbone)와
  *       갈래(branch)로 분리한다.
  *
- *   Stage 3: Costmap Generation (비용 맵 생성)
- *     → ChainPoint를 ChainedPoint로 변환 후 CostmapGenerator에 전달.
- *       좌/우 체인의 component 점들로부터 인력/척력 자력장을 생성한다.
- *
- *   Stage 4: Magnetic Planner (자력장 기반 경로 탐색)
- *     → Greedy 전진 탐색으로 costmap 위에서 최적 경로를 찾는다.
+ *   Stage 3: CDT Centerline Extraction (CDT 기반 중심선 추출)
+ *     → 좌/우 경계 체인에 Constrained Delaunay Triangulation을 수행하고,
+ *       외심(circumcenter)을 기하학적으로 필터링하여 centerline을 추출한다.
  *
  *   Stage 5: Postprocess (후처리)
  *     → prune(이상치 제거) → smooth(스무딩) → resample(등간격 리샘플링)
@@ -90,13 +87,11 @@
 #include "chaining_mr_ver/common/types.hpp"
 #include "chaining_mr_ver/common/params.hpp"
 #include "chaining_mr_ver/chainer/direction_chainer.hpp"
-#include "chaining_mr_ver/costmap/costmap_generator.hpp"
-#include "chaining_mr_ver/planner/magnetic_planner.hpp"
+#include "chaining_mr_ver/planner/cdt_centerline.hpp"
 #include "chaining_mr_ver/postprocess/path_postprocessor.hpp"
 
 #include <rclcpp/rclcpp.hpp>
 #include <nav_msgs/msg/path.hpp>
-#include <nav_msgs/msg/occupancy_grid.hpp>
 #include <std_msgs/msg/bool.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <visualization_msgs/msg/marker_array.hpp>
@@ -182,19 +177,6 @@ private:
    */
   bool check_stale() const;
 
-  /**
-   * @brief ChainPoint → ChainedPoint 변환 헬퍼
-   *
-   * CostmapGenerator는 ChainedPoint를 입력으로 받는다.
-   * DirectionChainer의 component 결과(ChainPoint)를 costmap 단계에
-   * 전달하기 위해 타입 변환이 필요하다.
-   *
-   * @param pts  변환할 ChainPoint 벡터
-   * @return     변환된 ChainedPoint 벡터
-   */
-  static std::vector<ChainedPoint> to_chained_points(
-    const std::vector<ChainPoint> & pts);
-
   // ══════════════════════════════════════════════════════════════
   //  멤버 변수
   // ══════════════════════════════════════════════════════════════
@@ -206,10 +188,9 @@ private:
 
   // ── 파이프라인 모듈들 ──
   // 각 모듈은 stateless에 가깝게 설계되어, 매 콜백마다 params와 입력을 받아 처리
-  DirectionChainer   direction_chainer_;   ///< Stage 2: 방향 기반 체이닝
-  CostmapGenerator   costmap_generator_;   ///< Stage 3: 자력장 costmap 생성
-  MagneticPlanner    magnetic_planner_;    ///< Stage 4: Greedy 전진 경로 탐색
-  PathPostprocessor  postprocessor_;       ///< Stage 5: prune→smooth→resample→yaw
+  DirectionChainer        direction_chainer_;   ///< Stage 2: 방향 기반 체이닝
+  CDTCenterlineExtractor  cdt_extractor_;       ///< Stage 3: CDT 기반 centerline 추출
+  PathPostprocessor       postprocessor_;       ///< Stage 5: prune→smooth→resample→yaw
 
   // ── 최신 입력 데이터 (콜백에서 갱신) ──
   // UniquePtr을 사용하여 소유권 이동(move)으로 복사 비용을 없앤다
@@ -232,8 +213,8 @@ private:
   // ── Debug 퍼블리셔 (구독자가 있을 때만 발행 = lazy publishing) ──
   // lazy publishing: get_subscription_count() > 0 일 때만 메시지를 생성/발행
   // → RViz2에서 해당 토픽을 구독하지 않으면 CPU/메모리 낭비를 방지
-  rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr pub_dbg_costmap_;     ///< costmap 시각화 (OccupancyGrid)
-  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_path_;             ///< 후처리 전 원시 경로
+  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_centerline_;           ///< CDT 외심 연결 centerline
+  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_circumcenters_;  ///< 필터 통과한 외심 점
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_left_chain_;           ///< 왼쪽 backbone 체인
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_right_chain_;          ///< 오른쪽 backbone 체인
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_left_branches_;   ///< 왼쪽 branch 시각화

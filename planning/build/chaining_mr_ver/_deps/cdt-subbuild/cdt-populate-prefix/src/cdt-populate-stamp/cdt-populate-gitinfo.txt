@@ -1,0 +1,3 @@
+repository='https://github.com/artem-ogre/CDT.git'
+module=''
+tag='origin'

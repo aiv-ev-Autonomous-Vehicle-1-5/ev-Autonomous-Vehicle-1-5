@@ -11,7 +11,7 @@
 # 빌드 명령:
 #   cd ~/ev_ws/planning && colcon build --packages-select chaining_mr_ver
 # ============================================================================
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.14)
 project(chaining_mr_ver)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -20,6 +20,19 @@ endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# ── CDT 라이브러리 (artem-ogre/CDT, MPL-2.0) ──
+# Constrained Delaunay Triangulation 라이브러리.
+# header-only 모드로 사용 (컴파일 라이브러리 불필요).
+# SOURCE_SUBDIR CDT: 리포지토리 루트가 아닌 CDT/ 서브디렉토리에 CMakeLists.txt가 있음.
+include(FetchContent)
+FetchContent_Declare(CDT
+  GIT_REPOSITORY https://github.com/artem-ogre/CDT.git
+  GIT_TAG        master
+  SOURCE_SUBDIR  CDT
+)
+set(CDT_USE_AS_COMPILED_LIBRARY OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(CDT)
 
 # ── ROS 2 의존성 패키지 찾기 ──
 find_package(ament_cmake REQUIRED)
@@ -49,30 +62,16 @@ install(TARGETS chaining_mr_chainer
 )
 
 # ============================================================================
-# Library 2: chaining_mr_costmap — costmap 생성 라이브러리
+# Library 2: chaining_mr_cdt_planner — CDT 기반 Centerline 추출 라이브러리
 # ============================================================================
-add_library(chaining_mr_costmap SHARED
-  src/costmap/costmap_generator.cpp
+add_library(chaining_mr_cdt_planner SHARED
+  src/planner/cdt_centerline.cpp
 )
-ament_target_dependencies(chaining_mr_costmap
-  rclcpp nav_msgs geometry_msgs ev_msgs
+target_link_libraries(chaining_mr_cdt_planner CDT::CDT)
+ament_target_dependencies(chaining_mr_cdt_planner
+  rclcpp geometry_msgs
 )
-install(TARGETS chaining_mr_costmap
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
-
-# ============================================================================
-# Library 3: chaining_mr_planner — Greedy 전진 탐색 플래너 라이브러리
-# ============================================================================
-add_library(chaining_mr_planner SHARED
-  src/planner/magnetic_planner.cpp
-)
-ament_target_dependencies(chaining_mr_planner
-  rclcpp geometry_msgs ev_msgs
-)
-install(TARGETS chaining_mr_planner
+install(TARGETS chaining_mr_cdt_planner
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
@@ -101,8 +100,7 @@ add_library(lc_planner_component SHARED
 )
 target_link_libraries(lc_planner_component
   chaining_mr_chainer
-  chaining_mr_costmap
-  chaining_mr_planner
+  chaining_mr_cdt_planner
   chaining_mr_postprocess
 )
 ament_target_dependencies(lc_planner_component

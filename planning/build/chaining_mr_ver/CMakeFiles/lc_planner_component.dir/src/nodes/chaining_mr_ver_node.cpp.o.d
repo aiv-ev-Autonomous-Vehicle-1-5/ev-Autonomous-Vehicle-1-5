@@ -624,8 +624,7 @@ CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o: \
  /opt/ros/humble/include/rclcpp/rclcpp/wait_set_policies/detail/write_preferring_read_write_lock.hpp \
  /opt/ros/humble/include/rclcpp/rclcpp/wait_set_template.hpp \
  /home/aiv/ev_ws/planning/src/chaining_mr_ver/include/chaining_mr_ver/chainer/direction_chainer.hpp \
- /home/aiv/ev_ws/planning/src/chaining_mr_ver/include/chaining_mr_ver/costmap/costmap_generator.hpp \
- /home/aiv/ev_ws/planning/src/chaining_mr_ver/include/chaining_mr_ver/planner/magnetic_planner.hpp \
+ /home/aiv/ev_ws/planning/src/chaining_mr_ver/include/chaining_mr_ver/planner/cdt_centerline.hpp \
  /home/aiv/ev_ws/planning/src/chaining_mr_ver/include/chaining_mr_ver/postprocess/path_postprocessor.hpp \
  /opt/ros/humble/include/nav_msgs/nav_msgs/msg/path.hpp \
  /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__struct.hpp \
@@ -643,13 +642,6 @@ CMakeFiles/lc_planner_component.dir/src/nodes/chaining_mr_ver_node.cpp.o: \
  /opt/ros/humble/include/geometry_msgs/geometry_msgs/msg/detail/quaternion__traits.hpp \
  /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/path__type_support.hpp \
  /opt/ros/humble/include/nav_msgs/nav_msgs/msg/rosidl_generator_cpp__visibility_control.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/occupancy_grid.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/occupancy_grid__struct.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/map_meta_data__struct.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/occupancy_grid__builder.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/occupancy_grid__traits.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/map_meta_data__traits.hpp \
- /opt/ros/humble/include/nav_msgs/nav_msgs/msg/detail/occupancy_grid__type_support.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/bool.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/bool__struct.hpp \
  /opt/ros/humble/include/std_msgs/std_msgs/msg/detail/bool__builder.hpp \

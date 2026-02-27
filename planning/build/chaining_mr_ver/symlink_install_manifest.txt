@@ -1,6 +1,5 @@
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_chainer.so
-/home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_costmap.so
-/home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_planner.so
+/home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_cdt_planner.so
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/libchaining_mr_postprocess.so
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/chaining_mr_ver/lc_planner_node_exe
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/lib/liblc_planner_component.so
@@ -9,9 +8,8 @@
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/common/geometry.hpp
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/common/params.hpp
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/common/types.hpp
-/home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/costmap/costmap_generator.hpp
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/nodes/chaining_mr_ver_node.hpp
-/home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/planner/magnetic_planner.hpp
+/home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/planner/cdt_centerline.hpp
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/postprocess/path_postprocessor.hpp
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/include/chaining_mr_ver/safety/safety_checker.hpp
 /home/aiv/ev_ws/planning/install/chaining_mr_ver/share/chaining_mr_ver/config/chaining_mr_ver.yaml

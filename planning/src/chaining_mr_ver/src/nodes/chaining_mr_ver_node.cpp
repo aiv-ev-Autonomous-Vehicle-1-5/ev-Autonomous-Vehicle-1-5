@@ -16,10 +16,8 @@
  *                           (LiDAR bbox는 sensor_tf 오프셋 보정)
  *    Stage 2: DirectionChainer — Component→Backbone→Branch + 리샘플
  *                                (포인트를 좌/우 체인으로 분류·연결)
- *    Stage 3: Costmap Generation — component 기반 자력장(magnetic field) costmap
- *                                  (좌/우 체인 사이에 인력, 바깥에 척력)
- *    Stage 4: Magnetic Planner — Greedy 전진 탐색 → raw_path
- *                                (costmap에서 가장 낮은 비용 방향으로 전진)
+ *    Stage 3: CDT Centerline — CDT 기반 외심(circumcenter) centerline 추출
+ *                              (좌/우 체인에 CDT → 외심 필터링 → greedy 연결)
  *    Stage 5: Postprocess — prune → smooth → resample → yaw
  *                           (경로 정제: 이상치 제거, 스무딩, 등간격화, 방향각)
  *    Stage 6: Safety Check — 곡률/속도 검사
@@ -98,10 +96,10 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
   // 구독자가 없으면 메시지 생성을 건너뛰어 CPU/메모리를 절약한다.
   // → on_timer()에서 get_subscription_count() > 0 체크 후 발행.
 
-  pub_dbg_costmap_ = create_publisher<nav_msgs::msg::OccupancyGrid>(
-    "/planning/debug/costmap", qos_be);       // 자력장 costmap (OccupancyGrid로 시각화)
-  pub_dbg_raw_path_ = create_publisher<nav_msgs::msg::Path>(
-    "/planning/debug/raw_path", qos_be);      // 후처리 전 원시 경로 (비교용)
+  pub_dbg_centerline_ = create_publisher<nav_msgs::msg::Path>(
+    "/planning/debug/centerline", qos_be);        // CDT 외심 연결 centerline
+  pub_dbg_circumcenters_ = create_publisher<visualization_msgs::msg::MarkerArray>(
+    "/planning/debug/circumcenters", qos_be);     // 필터 통과한 외심 점
   pub_dbg_left_chain_ = create_publisher<nav_msgs::msg::Path>(
     "/planning/debug/left_chain", qos_be);    // 왼쪽 backbone 체인 (Path)
   pub_dbg_right_chain_ = create_publisher<nav_msgs::msg::Path>(
@@ -120,7 +118,7 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     std::chrono::milliseconds(100),
     std::bind(&LCPlannerNode::on_timer, this));
 
-  RCLCPP_INFO(get_logger(), "LCPlannerNode initialized (10 Hz, DirectionChainer v2 + MR costmap)");
+  RCLCPP_INFO(get_logger(), "LCPlannerNode initialized (10 Hz, DirectionChainer v2 + CDT centerline)");
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -231,40 +229,6 @@ bool LCPlannerNode::check_stale() const
 }
 
 // ══════════════════════════════════════════════════════════════
-//  v2 → v1 호환 레이어: ChainPoint → ChainedPoint 변환
-// ══════════════════════════════════════════════════════════════
-/**
- * @brief ChainPoint 벡터 → ChainedPoint 벡터 변환 (v2 → v1 어댑터)
- *
- * [왜 필요한가?]
- *   DirectionChainer(v2)는 ChainPoint를 출력하지만,
- *   CostmapGenerator(v1)는 ChainedPoint(x, y, type만)를 입력으로 받는다.
- *   이 함수가 둘 사이의 어댑터(adapter) 역할을 한다.
- *
- *   ChainPoint에서 ChainedPoint로 변환 시 버려지는 필드:
- *     confidence, label, size_x, size_y
- *   → costmap은 점의 위치(x,y)와 타입(CONE/LANE)만 사용하므로 OK.
- *
- * [static 함수인 이유]
- *   멤버 변수에 접근하지 않는 순수 변환 함수이므로 static으로 선언.
- *   → 객체 없이도 호출 가능: LCPlannerNode::to_chained_points(...)
- *
- * @param pts  DirectionChainer가 출력한 ChainPoint 벡터 (component 전체)
- * @return     CostmapGenerator에 전달할 ChainedPoint 벡터
- */
-std::vector<ChainedPoint> LCPlannerNode::to_chained_points(
-  const std::vector<ChainPoint> & pts)
-{
-  std::vector<ChainedPoint> out;
-  out.reserve(pts.size());  // 미리 메모리 확보 → push_back 시 재할당 방지
-  for (const auto & p : pts) {
-    // ChainPoint::to_chained_point()는 {x, y, type}만 복사한다
-    out.push_back(p.to_chained_point());
-  }
-  return out;  // NRVO(Named Return Value Optimization)로 복사 없이 반환
-}
-
-// ══════════════════════════════════════════════════════════════
 //  on_timer() — 10Hz 메인 루프: 8단계 파이프라인
 // ══════════════════════════════════════════════════════════════
 void LCPlannerNode::on_timer()
@@ -297,19 +261,12 @@ void LCPlannerNode::on_timer()
   // 를 생성한다. 결과는 dc_result.left / dc_result.right에 저장.
   auto dc_result = direction_chainer_.chain(all_pts, params_);
 
-  // ======== Stage 3: Costmap Generation ========
-  // ChainPoint → ChainedPoint 타입 변환 (CostmapGenerator 인터페이스 호환)
-  // 좌/우 component 점들로부터 자력장(magnetic field) costmap을 생성한다.
-  // 차선/콘 사이에는 인력(낮은 비용), 바깥에는 척력(높은 비용) 분포.
-  auto left_chained = to_chained_points(dc_result.left.component);
-  auto right_chained = to_chained_points(dc_result.right.component);
-  auto costmap = costmap_generator_.generate(left_chained, right_chained, params_);
-
-  // ======== Stage 4: Magnetic Planner ========
-  // Greedy 전진 탐색: 시작점(base_link 원점 근처)에서 출발하여
-  // costmap 위에서 비용이 가장 낮은 방향으로 한 걸음씩 전진하며 경로를 만든다.
+  // ======== Stage 3: CDT Centerline Extraction ========
+  // 좌/우 경계 체인에 Constrained Delaunay Triangulation(CDT)을 수행하고,
+  // 삼각형의 외심(circumcenter)을 기하학적으로 필터링하여 centerline을 추출한다.
   // 결과: raw_path (후처리 전 원시 경로, Point2D 벡터)
-  auto raw_path = magnetic_planner_.plan(costmap, params_);
+  auto raw_path = cdt_extractor_.extract(
+    dc_result.left.component, dc_result.right.component, params_);
 
   // ======== Stage 5: Postprocess ========
   // 원시 경로를 4단계로 정제한다:
@@ -346,34 +303,35 @@ void LCPlannerNode::on_timer()
   status_msg->data = safety.reason;
   pub_status_->publish(std::move(status_msg));
 
-  // ── Debug: costmap (OccupancyGrid) ──
-  // RViz2에서 /planning/debug/costmap 토픽을 구독하면 자력장을 2D 격자로 시각화.
-  // 각 셀의 값: 0(비용 낮음, 경로가 지나가기 좋음) ~ 100(비용 높음, 장애물 근처)
-  // lazy publishing: 구독자가 없으면 OccupancyGrid 생성을 건너뛴다.
-  if (pub_dbg_costmap_->get_subscription_count() > 0 && costmap.valid) {
-    auto grid_msg = std::make_unique<nav_msgs::msg::OccupancyGrid>();
-    grid_msg->header.stamp = stamp;
-    grid_msg->header.frame_id = frame_id;
-    grid_msg->info.resolution = static_cast<float>(costmap.resolution);  // 셀 해상도 [m/cell]
-    grid_msg->info.width = costmap.cols;      // 격자 가로 셀 수
-    grid_msg->info.height = costmap.rows;     // 격자 세로 셀 수
-    grid_msg->info.origin.position.x = costmap.origin_x;  // 격자 좌하단 x [m]
-    grid_msg->info.origin.position.y = costmap.origin_y;  // 격자 좌하단 y [m]
-    grid_msg->info.origin.orientation.w = 1.0;             // 회전 없음 (단위 쿼터니언)
-    grid_msg->data.resize(costmap.rows * costmap.cols);
-    // costmap 데이터를 int8_t [0~100] 범위로 변환 (OccupancyGrid 규격)
-    for (size_t i = 0; i < costmap.data.size(); ++i) {
-      grid_msg->data[i] = static_cast<int8_t>(
-        std::clamp(costmap.data[i], 0.0, 100.0));
-    }
-    pub_dbg_costmap_->publish(std::move(grid_msg));
+  // ── Debug: centerline (CDT 외심 연결 결과) ──
+  // RViz2에서 CDT 기반 centerline을 Path로 시각화.
+  if (pub_dbg_centerline_->get_subscription_count() > 0) {
+    pub_dbg_centerline_->publish(std::make_unique<nav_msgs::msg::Path>(
+      to_path_msg(raw_path, frame_id, stamp)));
   }
 
-  // ── Debug: raw path (후처리 전 원시 경로) ──
-  // RViz2에서 후처리 전/후 경로를 비교하여 prune/smooth 효과를 확인할 수 있다.
-  if (pub_dbg_raw_path_->get_subscription_count() > 0) {
-    pub_dbg_raw_path_->publish(std::make_unique<nav_msgs::msg::Path>(
-      to_path_msg(raw_path, frame_id, stamp)));
+  // ── Debug: circumcenters (필터 통과한 외심 점들) ──
+  // raw_path의 각 점을 SPHERE 마커로 시각화하여 외심 분포를 확인.
+  if (pub_dbg_circumcenters_->get_subscription_count() > 0) {
+    visualization_msgs::msg::MarkerArray ma;
+    int cc_id = 0;
+    for (const auto & pt : raw_path) {
+      visualization_msgs::msg::Marker m;
+      m.header.stamp = stamp;
+      m.header.frame_id = frame_id;
+      m.ns = "circumcenters";
+      m.id = cc_id++;
+      m.type = visualization_msgs::msg::Marker::SPHERE;
+      m.action = visualization_msgs::msg::Marker::ADD;
+      m.scale.x = m.scale.y = m.scale.z = 0.08;
+      m.color.r = 1.0f; m.color.g = 1.0f; m.color.b = 0.0f; m.color.a = 0.9f;
+      m.pose.position.x = pt.x;
+      m.pose.position.y = pt.y;
+      m.pose.orientation.w = 1.0;
+      ma.markers.push_back(m);
+    }
+    pub_dbg_circumcenters_->publish(
+      std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
   }
 
   // ── Debug: left/right backbone (Path) ──

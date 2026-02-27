@@ -42,6 +42,11 @@ if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/_deps/cdt-build/cmake_install.cmake")
+endif()
+
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   include("/home/aiv/ev_ws/planning/build/chaining_mr_ver/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
