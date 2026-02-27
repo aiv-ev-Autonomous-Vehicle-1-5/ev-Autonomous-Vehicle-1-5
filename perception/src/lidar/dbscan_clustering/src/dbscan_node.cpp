@@ -38,10 +38,6 @@ public:
     declare_parameter<double>("roi_min_z", -2.0);
     declare_parameter<double>("roi_max_z", 2.0);
 
-    declare_parameter<bool>("enable_ring_ground_removal", false);
-    declare_parameter<double>("ground_min_range", 2.0);
-    declare_parameter<double>("ground_z_threshold", 0.20);
-    declare_parameter<int>("ground_azimuth_bins", 360);
     declare_parameter<bool>("enable_azimuth_ground_suppression", true);
     declare_parameter<double>("azimuth_ground_min_range", 2.0);
     declare_parameter<double>("azimuth_ground_z_threshold", 0.12);
@@ -65,10 +61,6 @@ public:
     roi_min_z_ = get_parameter("roi_min_z").as_double();
     roi_max_z_ = get_parameter("roi_max_z").as_double();
 
-    enable_ring_ground_removal_ = get_parameter("enable_ring_ground_removal").as_bool();
-    ground_min_range_ = get_parameter("ground_min_range").as_double();
-    ground_z_threshold_ = get_parameter("ground_z_threshold").as_double();
-    ground_azimuth_bins_ = std::max(8, static_cast<int>(get_parameter("ground_azimuth_bins").as_int()));
     enable_azimuth_ground_suppression_ = get_parameter("enable_azimuth_ground_suppression").as_bool();
     azimuth_ground_min_range_ = get_parameter("azimuth_ground_min_range").as_double();
     azimuth_ground_z_threshold_ = get_parameter("azimuth_ground_z_threshold").as_double();
@@ -86,10 +78,9 @@ public:
 
     RCLCPP_INFO(
       get_logger(),
-      "dbscan_clustering started in:%s out:%s eps:%.3f min_points:%d ROI x[%.1f,%.1f] y[%.1f,%.1f] z[%.1f,%.1f] ring_ground:%s az_ground:%s xy_only:%s",
+      "dbscan_clustering started in:%s out:%s eps:%.3f min_points:%d ROI x[%.1f,%.1f] y[%.1f,%.1f] z[%.1f,%.1f] az_ground:%s xy_only:%s",
       in_topic.c_str(), out_topic.c_str(), eps_, min_points_,
       roi_min_x_, roi_max_x_, roi_min_y_, roi_max_y_, roi_min_z_, roi_max_z_,
-      enable_ring_ground_removal_ ? "on" : "off",
       enable_azimuth_ground_suppression_ ? "on" : "off",
       cluster_xy_only_ ? "on" : "off");
   }
@@ -100,7 +91,6 @@ private:
     float x;
     float y;
     float z;
-    uint16_t ring;
   };
 
   struct FieldMeta
@@ -130,27 +120,6 @@ private:
     return false;
   }
 
-  static bool read_ring_field(
-    const uint8_t * point_ptr,
-    const FieldMeta & meta,
-    uint16_t & out)
-  {
-    if (meta.offset < 0) {
-      return false;
-    }
-    if (meta.datatype == sensor_msgs::msg::PointField::UINT16) {
-      std::memcpy(&out, point_ptr + meta.offset, sizeof(uint16_t));
-      return true;
-    }
-    if (meta.datatype == sensor_msgs::msg::PointField::UINT8) {
-      uint8_t tmp = 0;
-      std::memcpy(&tmp, point_ptr + meta.offset, sizeof(uint8_t));
-      out = static_cast<uint16_t>(tmp);
-      return true;
-    }
-    return false;
-  }
-
   void cloudCallback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
   {
     int n_points = static_cast<int>(msg->width * msg->height);
@@ -164,7 +133,6 @@ private:
     FieldMeta meta_x;
     FieldMeta meta_y;
     FieldMeta meta_z;
-    FieldMeta meta_ring;
 
     for (const auto & f : msg->fields) {
       if (f.name == "x") {
@@ -176,9 +144,6 @@ private:
       } else if (f.name == "z") {
         meta_z.offset = static_cast<int>(f.offset);
         meta_z.datatype = f.datatype;
-      } else if (f.name == "ring") {
-        meta_ring.offset = static_cast<int>(f.offset);
-        meta_ring.datatype = f.datatype;
       }
     }
 
@@ -220,99 +185,14 @@ private:
         continue;
       }
 
-      uint16_t ring = 0;
-      if (!read_ring_field(point_ptr, meta_ring, ring)) {
-        ring = 0;
-      }
-
-      roi_points.push_back({x, y, z, ring});
+      roi_points.push_back({x, y, z});
     }
 
     if (roi_points.empty()) {
       return;
     }
 
-    std::vector<CandidatePoint> nonground_points;
-    nonground_points.reserve(roi_points.size());
-
-    const bool can_use_ring = (meta_ring.offset >= 0) &&
-      (meta_ring.datatype == sensor_msgs::msg::PointField::UINT16 ||
-      meta_ring.datatype == sensor_msgs::msg::PointField::UINT8);
-
-    if (!enable_ring_ground_removal_ || !can_use_ring) {
-      nonground_points = roi_points;
-      if (enable_ring_ground_removal_ && !can_use_ring) {
-        RCLCPP_WARN_THROTTLE(
-          get_logger(), *get_clock(), 3000,
-          "ring field missing/unsupported; skip ring ground removal");
-      }
-    } else {
-      uint16_t max_ring = 0;
-      for (const auto & p : roi_points) {
-        if (p.ring > max_ring) {
-          max_ring = p.ring;
-        }
-      }
-
-      const size_t ring_count = static_cast<size_t>(max_ring) + 1;
-      const size_t bins = static_cast<size_t>(ground_azimuth_bins_);
-      std::vector<float> min_z_by_ring_bin(
-        ring_count * bins, std::numeric_limits<float>::infinity());
-
-      const float two_pi = 2.0F * static_cast<float>(M_PI);
-      for (const auto & p : roi_points) {
-        const float range_xy = std::hypot(p.x, p.y);
-        if (range_xy < static_cast<float>(ground_min_range_)) {
-          continue;
-        }
-        float az = std::atan2(p.y, p.x);
-        if (az < 0.0F) {
-          az += two_pi;
-        }
-        int bin = static_cast<int>((az / two_pi) * static_cast<float>(bins));
-        if (bin < 0) {
-          bin = 0;
-        }
-        if (bin >= static_cast<int>(bins)) {
-          bin = static_cast<int>(bins) - 1;
-        }
-        const size_t idx = static_cast<size_t>(p.ring) * bins + static_cast<size_t>(bin);
-        if (p.z < min_z_by_ring_bin[idx]) {
-          min_z_by_ring_bin[idx] = p.z;
-        }
-      }
-
-      for (const auto & p : roi_points) {
-        const float range_xy = std::hypot(p.x, p.y);
-        if (range_xy < static_cast<float>(ground_min_range_)) {
-          nonground_points.push_back(p);
-          continue;
-        }
-
-        float az = std::atan2(p.y, p.x);
-        if (az < 0.0F) {
-          az += two_pi;
-        }
-        int bin = static_cast<int>((az / two_pi) * static_cast<float>(bins));
-        if (bin < 0) {
-          bin = 0;
-        }
-        if (bin >= static_cast<int>(bins)) {
-          bin = static_cast<int>(bins) - 1;
-        }
-
-        const size_t idx = static_cast<size_t>(p.ring) * bins + static_cast<size_t>(bin);
-        const float z_ref = min_z_by_ring_bin[idx];
-        if (!std::isfinite(z_ref)) {
-          nonground_points.push_back(p);
-          continue;
-        }
-
-        if (p.z > z_ref + static_cast<float>(ground_z_threshold_)) {
-          nonground_points.push_back(p);
-        }
-      }
-    }
+    std::vector<CandidatePoint> nonground_points = roi_points;
 
     if (enable_azimuth_ground_suppression_ && !nonground_points.empty()) {
       const size_t bins = static_cast<size_t>(azimuth_ground_bins_);
@@ -517,10 +397,6 @@ private:
   double roi_min_z_{-2.0};
   double roi_max_z_{2.0};
 
-  bool enable_ring_ground_removal_{false};
-  double ground_min_range_{2.0};
-  double ground_z_threshold_{0.20};
-  int ground_azimuth_bins_{360};
   bool enable_azimuth_ground_suppression_{true};
   double azimuth_ground_min_range_{2.0};
   double azimuth_ground_z_threshold_{0.12};

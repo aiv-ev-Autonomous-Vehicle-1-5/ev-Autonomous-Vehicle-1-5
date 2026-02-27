@@ -1,3 +1,0 @@
-/home/aiv/ev_ws/perception/install/velodyne_laserscan/lib/libvelodyne_laserscan.so
-/home/aiv/ev_ws/perception/install/velodyne_laserscan/share/velodyne_laserscan/cmake/velodyne_laserscanExport.cmake
-/home/aiv/ev_ws/perception/install/velodyne_laserscan/share/velodyne_laserscan/cmake/velodyne_laserscanExport-noconfig.cmake

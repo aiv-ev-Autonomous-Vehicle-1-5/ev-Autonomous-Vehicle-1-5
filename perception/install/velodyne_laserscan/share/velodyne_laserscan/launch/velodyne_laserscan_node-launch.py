@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar/velodyne_laserscan/launch/velodyne_laserscan_node-launch.py
