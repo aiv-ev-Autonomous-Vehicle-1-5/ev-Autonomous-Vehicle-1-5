@@ -1,0 +1,128 @@
+[0.007s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_CDT': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/planning/src/chaining_CDT -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/planning/install/chaining_CDT
+[0.045s] -- The C compiler identification is GNU 11.4.0
+[0.075s] -- The CXX compiler identification is GNU 11.4.0
+[0.080s] -- Detecting C compiler ABI info
+[0.123s] -- Detecting C compiler ABI info - done
+[0.127s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.127s] -- Detecting C compile features
+[0.127s] -- Detecting C compile features - done
+[0.129s] -- Detecting CXX compiler ABI info
+[0.180s] -- Detecting CXX compiler ABI info - done
+[0.184s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.184s] -- Detecting CXX compile features
+[0.184s] -- Detecting CXX compile features - done
+[6.181s] -- CDT_USE_AS_COMPILED_LIBRARY is OFF
+[6.181s] -- CDT_USE_64_BIT_INDEX_TYPE is OFF
+[6.181s] -- CDT_ENABLE_CALLBACK_HANDLER is OFF
+[6.182s] -- CDT_ENABLE_TESTING is OFF
+[6.182s] -- CDT_USE_STRONG_TYPING is OFF
+[6.182s] -- CDT_DEVELOPER_BUILD is OFF
+[6.182s] -- CDT_DISABLE_EXCEPTIONS is OFF
+[6.184s] -- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) (Required is at least version "1.9")
+[6.185s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[6.277s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[6.311s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[6.335s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[6.364s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[6.368s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[6.374s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[6.382s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[6.393s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[6.423s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[6.425s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[6.490s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[6.511s] -- Found FastRTPS: /opt/ros/humble/include  
+[6.537s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[6.544s] -- Looking for pthread.h
+[6.591s] -- Looking for pthread.h - found
+[6.591s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[6.638s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[6.639s] -- Found Threads: TRUE  
+[6.671s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[6.689s] -- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+[6.705s] -- Found ev_msgs: 0.1.0 (/home/aiv/ev_ws/ev_msgs/install/ev_msgs/share/ev_msgs/cmake)
+[6.714s] -- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)
+[6.745s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[6.775s] WARNING: Package name "chaining_CDT" does not follow the naming conventions. It should start with a lower case letter and only contain lower case letters, digits, underscores, and dashes.
+[6.792s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[6.793s] -- Configured cppcheck include dirs: /home/aiv/ev_ws/planning/src/chaining_CDT/include
+[6.793s] -- Configured cppcheck exclude dirs and/or files: 
+[6.793s] -- Added test 'flake8' to check Python code syntax and style conventions
+[6.794s] -- Added test 'lint_cmake' to check CMake code style
+[6.794s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[6.795s] -- Added test 'uncrustify' to check C / C++ code style
+[6.795s] -- Configured uncrustify additional arguments: 
+[6.795s] -- Added test 'xmllint' to check XML markup files
+[6.796s] -- Configuring done
+[6.808s] -- Generating done
+[6.815s] -- Build files have been written to: /home/aiv/ev_ws/planning/build/chaining_CDT
+[6.822s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_CDT' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/planning/src/chaining_CDT -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/planning/install/chaining_CDT
+[6.823s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_CDT': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/chaining_CDT -- -j28 -l28
+[6.860s] [ 10%] [32mBuilding CXX object CMakeFiles/lc_planner_node_exe.dir/rclcpp_components/node_main_lc_planner_node_exe.cpp.o[0m
+[6.862s] [ 40%] [32mBuilding CXX object CMakeFiles/chaining_cdt_chainer.dir/src/chainer/direction_chainer.cpp.o[0m
+[6.862s] [ 40%] [32mBuilding CXX object CMakeFiles/chaining_cdt_planner.dir/src/planner/cdt_centerline.cpp.o[0m
+[6.862s] [ 40%] [32mBuilding CXX object CMakeFiles/chaining_cdt_postprocess.dir/src/postprocess/path_postprocessor.cpp.o[0m
+[7.157s] [ 50%] [32m[1mLinking CXX shared library libchaining_cdt_postprocess.so[0m
+[7.234s] [ 50%] Built target chaining_cdt_postprocess
+[8.644s] [ 60%] [32m[1mLinking CXX executable lc_planner_node_exe[0m
+[8.725s] [ 60%] Built target lc_planner_node_exe
+[8.830s] [ 70%] [32m[1mLinking CXX shared library libchaining_cdt_chainer.so[0m
+[8.914s] [ 70%] Built target chaining_cdt_chainer
+[9.657s] [ 80%] [32m[1mLinking CXX shared library libchaining_cdt_planner.so[0m
+[9.758s] [ 80%] Built target chaining_cdt_planner
+[9.775s] [ 90%] [32mBuilding CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_CDT_node.cpp.o[0m
+[16.066s] [100%] [32m[1mLinking CXX shared library liblc_planner_component.so[0m
+[16.450s] [100%] Built target lc_planner_component
+[16.458s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_CDT' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/chaining_CDT -- -j28 -l28
+[16.463s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_CDT': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/chaining_CDT
+[16.469s] -- Install configuration: ""
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/CDT.hpp
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/CDTUtils.hpp
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/portable_nth_element.hpp
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/Triangulation.h
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/predicates.h
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/LocatorKDTree.h
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/remove_at.hpp
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/Triangulation.hpp
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/CDTUtils.h
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/KDTree.h
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/CDT.h
+[16.469s] -- Up-to-date: /home/aiv/ev_ws/planning/install/chaining_CDT/include
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/VerifyTopology.h
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/InitializeWithGrid.h
+[16.469s] -- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/cmake/CDTConfig.cmake
+[16.470s] -- Execute custom install script
+[16.470s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/libchaining_cdt_chainer.so
+[16.474s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/libchaining_cdt_planner.so
+[16.480s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/libchaining_cdt_postprocess.so
+[16.485s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/chaining_CDT/lc_planner_node_exe
+[16.491s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/liblc_planner_component.so
+[16.497s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/chainer/direction_chainer.hpp
+[16.502s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/common/debug_publish.hpp
+[16.507s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/common/geometry.hpp
+[16.512s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/common/params.hpp
+[16.518s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/common/types.hpp
+[16.522s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/nodes/chaining_CDT_node.hpp
+[16.529s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/planner/cdt_centerline.hpp
+[16.533s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/postprocess/path_postprocessor.hpp
+[16.538s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/safety/safety_checker.hpp
+[16.544s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/config/chaining_CDT.yaml
+[16.549s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/launch/chaining_CDT.launch.py
+[16.556s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/ament_index/resource_index/package_run_dependencies/chaining_CDT
+[16.561s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/ament_index/resource_index/parent_prefix_path/chaining_CDT
+[16.567s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/environment/ament_prefix_path.sh
+[16.572s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/environment/ament_prefix_path.dsv
+[16.577s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/environment/path.sh
+[16.583s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/environment/path.dsv
+[16.588s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/local_setup.bash
+[16.594s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/local_setup.sh
+[16.599s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/local_setup.zsh
+[16.604s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/local_setup.dsv
+[16.608s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/package.dsv
+[16.614s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/ament_index/resource_index/packages/chaining_CDT
+[16.620s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/ament_index/resource_index/rclcpp_components/chaining_CDT
+[16.626s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/cmake/chaining_CDTConfig.cmake
+[16.632s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/cmake/chaining_CDTConfig-version.cmake
+[16.637s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/package.xml
+[16.643s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_CDT' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/chaining_CDT

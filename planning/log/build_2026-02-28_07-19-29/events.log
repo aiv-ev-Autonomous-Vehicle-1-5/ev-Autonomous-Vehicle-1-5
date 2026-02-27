@@ -1,0 +1,302 @@
+[0.000000] (-) TimerEvent: {}
+[0.000385] (chaining_CDT) JobQueued: {'identifier': 'chaining_CDT', 'dependencies': OrderedDict()}
+[0.000416] (chaining_CDT) JobStarted: {'identifier': 'chaining_CDT'}
+[0.006462] (chaining_CDT) JobProgress: {'identifier': 'chaining_CDT', 'progress': 'cmake'}
+[0.006772] (chaining_CDT) Command: {'cmd': ['/usr/bin/cmake', '/home/aiv/ev_ws/planning/src/chaining_CDT', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/planning/install/chaining_CDT'], 'cwd': '/home/aiv/ev_ws/planning/build/chaining_CDT', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('USER', 'aiv'), ('LC_TIME', 'ko_KR.UTF-8'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/planning_lc_ver/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2077'), ('SYSTEMD_EXEC_PID', '2973'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator23558193cd9818af7fe4d2c2f5bd9d00f'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4681'), ('NVM_DIR', '/home/aiv/.nvm'), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/planning/install:/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/ev_msgs/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:4780'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'aiv'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/usr/local/cuda-12.6/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.1/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2942,unix/aiv:/tmp/.ICE-unix/2942'), ('INVOCATION_ID', '4d02e125c3df4cda9b3b91398ff974c6'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/planning_lc_ver:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:afd08a68-557c-4158-b206-8cfcdefb43ca'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/chaining_CDT'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/ev_msgs/install/ev_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/planning_lc_ver:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble')]), 'shell': False}
+[0.045179] (chaining_CDT) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.075788] (chaining_CDT) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.079931] (chaining_CDT) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.099708] (-) TimerEvent: {}
+[0.123372] (chaining_CDT) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.127177] (chaining_CDT) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.127322] (chaining_CDT) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.127535] (chaining_CDT) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.129113] (chaining_CDT) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.180040] (chaining_CDT) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.183915] (chaining_CDT) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.184038] (chaining_CDT) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.184289] (chaining_CDT) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.199781] (-) TimerEvent: {}
+[0.299968] (-) TimerEvent: {}
+[0.400164] (-) TimerEvent: {}
+[0.500381] (-) TimerEvent: {}
+[0.600594] (-) TimerEvent: {}
+[0.700798] (-) TimerEvent: {}
+[0.801062] (-) TimerEvent: {}
+[0.901258] (-) TimerEvent: {}
+[1.001451] (-) TimerEvent: {}
+[1.101656] (-) TimerEvent: {}
+[1.201840] (-) TimerEvent: {}
+[1.302078] (-) TimerEvent: {}
+[1.402343] (-) TimerEvent: {}
+[1.502574] (-) TimerEvent: {}
+[1.602794] (-) TimerEvent: {}
+[1.703033] (-) TimerEvent: {}
+[1.803268] (-) TimerEvent: {}
+[1.903439] (-) TimerEvent: {}
+[2.003640] (-) TimerEvent: {}
+[2.103836] (-) TimerEvent: {}
+[2.204031] (-) TimerEvent: {}
+[2.304258] (-) TimerEvent: {}
+[2.404438] (-) TimerEvent: {}
+[2.504635] (-) TimerEvent: {}
+[2.604832] (-) TimerEvent: {}
+[2.705033] (-) TimerEvent: {}
+[2.805253] (-) TimerEvent: {}
+[2.905440] (-) TimerEvent: {}
+[3.005645] (-) TimerEvent: {}
+[3.105851] (-) TimerEvent: {}
+[3.206080] (-) TimerEvent: {}
+[3.306276] (-) TimerEvent: {}
+[3.406478] (-) TimerEvent: {}
+[3.506679] (-) TimerEvent: {}
+[3.606906] (-) TimerEvent: {}
+[3.707100] (-) TimerEvent: {}
+[3.807332] (-) TimerEvent: {}
+[3.907550] (-) TimerEvent: {}
+[4.007747] (-) TimerEvent: {}
+[4.107990] (-) TimerEvent: {}
+[4.208181] (-) TimerEvent: {}
+[4.308394] (-) TimerEvent: {}
+[4.408589] (-) TimerEvent: {}
+[4.508799] (-) TimerEvent: {}
+[4.609020] (-) TimerEvent: {}
+[4.709214] (-) TimerEvent: {}
+[4.809460] (-) TimerEvent: {}
+[4.909648] (-) TimerEvent: {}
+[5.009887] (-) TimerEvent: {}
+[5.110133] (-) TimerEvent: {}
+[5.210342] (-) TimerEvent: {}
+[5.310591] (-) TimerEvent: {}
+[5.410850] (-) TimerEvent: {}
+[5.511033] (-) TimerEvent: {}
+[5.611255] (-) TimerEvent: {}
+[5.711446] (-) TimerEvent: {}
+[5.811650] (-) TimerEvent: {}
+[5.911849] (-) TimerEvent: {}
+[6.012056] (-) TimerEvent: {}
+[6.112269] (-) TimerEvent: {}
+[6.181755] (chaining_CDT) StdoutLine: {'line': b'-- CDT_USE_AS_COMPILED_LIBRARY is OFF\n'}
+[6.181879] (chaining_CDT) StdoutLine: {'line': b'-- CDT_USE_64_BIT_INDEX_TYPE is OFF\n'}
+[6.181910] (chaining_CDT) StdoutLine: {'line': b'-- CDT_ENABLE_CALLBACK_HANDLER is OFF\n'}
+[6.181935] (chaining_CDT) StdoutLine: {'line': b'-- CDT_ENABLE_TESTING is OFF\n'}
+[6.181961] (chaining_CDT) StdoutLine: {'line': b'-- CDT_USE_STRONG_TYPING is OFF\n'}
+[6.181986] (chaining_CDT) StdoutLine: {'line': b'-- CDT_DEVELOPER_BUILD is OFF\n'}
+[6.182011] (chaining_CDT) StdoutLine: {'line': b'-- CDT_DISABLE_EXCEPTIONS is OFF\n'}
+[6.184356] (chaining_CDT) StdoutLine: {'line': b'-- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) (Required is at least version "1.9")\n'}
+[6.185827] (chaining_CDT) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[6.212350] (-) TimerEvent: {}
+[6.277216] (chaining_CDT) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[6.311696] (chaining_CDT) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[6.312419] (-) TimerEvent: {}
+[6.335781] (chaining_CDT) StdoutLine: {'line': b'-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[6.364505] (chaining_CDT) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[6.368527] (chaining_CDT) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[6.374310] (chaining_CDT) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[6.382279] (chaining_CDT) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[6.392998] (chaining_CDT) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[6.412506] (-) TimerEvent: {}
+[6.423445] (chaining_CDT) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[6.425783] (chaining_CDT) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[6.490160] (chaining_CDT) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[6.511609] (chaining_CDT) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[6.512560] (-) TimerEvent: {}
+[6.537621] (chaining_CDT) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[6.544020] (chaining_CDT) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[6.591502] (chaining_CDT) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[6.591650] (chaining_CDT) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[6.612657] (-) TimerEvent: {}
+[6.638607] (chaining_CDT) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[6.639282] (chaining_CDT) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[6.671462] (chaining_CDT) StdoutLine: {'line': b'-- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)\n'}
+[6.688864] (chaining_CDT) StdoutLine: {'line': b'-- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)\n'}
+[6.705252] (chaining_CDT) StdoutLine: {'line': b'-- Found ev_msgs: 0.1.0 (/home/aiv/ev_ws/ev_msgs/install/ev_msgs/share/ev_msgs/cmake)\n'}
+[6.712723] (-) TimerEvent: {}
+[6.714596] (chaining_CDT) StdoutLine: {'line': b'-- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)\n'}
+[6.745278] (chaining_CDT) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[6.775392] (chaining_CDT) StderrLine: {'line': b'WARNING: Package name "chaining_CDT" does not follow the naming conventions. It should start with a lower case letter and only contain lower case letters, digits, underscores, and dashes.\n'}
+[6.792807] (chaining_CDT) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[6.792981] (chaining_CDT) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/aiv/ev_ws/planning/src/chaining_CDT/include\n'}
+[6.793035] (chaining_CDT) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[6.793477] (chaining_CDT) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[6.793956] (chaining_CDT) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[6.794328] (chaining_CDT) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[6.795255] (chaining_CDT) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[6.795312] (chaining_CDT) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[6.795661] (chaining_CDT) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[6.796684] (chaining_CDT) StdoutLine: {'line': b'-- Configuring done\n'}
+[6.808593] (chaining_CDT) StdoutLine: {'line': b'-- Generating done\n'}
+[6.812787] (-) TimerEvent: {}
+[6.815863] (chaining_CDT) StdoutLine: {'line': b'-- Build files have been written to: /home/aiv/ev_ws/planning/build/chaining_CDT\n'}
+[6.822506] (chaining_CDT) CommandEnded: {'returncode': 0}
+[6.822927] (chaining_CDT) JobProgress: {'identifier': 'chaining_CDT', 'progress': 'build'}
+[6.823382] (chaining_CDT) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/aiv/ev_ws/planning/build/chaining_CDT', '--', '-j28', '-l28'], 'cwd': '/home/aiv/ev_ws/planning/build/chaining_CDT', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('USER', 'aiv'), ('LC_TIME', 'ko_KR.UTF-8'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/planning_lc_ver/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2077'), ('SYSTEMD_EXEC_PID', '2973'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator23558193cd9818af7fe4d2c2f5bd9d00f'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4681'), ('NVM_DIR', '/home/aiv/.nvm'), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/planning/install:/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/ev_msgs/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:4780'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'aiv'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/usr/local/cuda-12.6/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.1/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2942,unix/aiv:/tmp/.ICE-unix/2942'), ('INVOCATION_ID', '4d02e125c3df4cda9b3b91398ff974c6'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/planning_lc_ver:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:afd08a68-557c-4158-b206-8cfcdefb43ca'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/chaining_CDT'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/ev_msgs/install/ev_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/planning_lc_ver:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble')]), 'shell': False}
+[6.860830] (chaining_CDT) StdoutLine: {'line': b'[ 10%] \x1b[32mBuilding CXX object CMakeFiles/lc_planner_node_exe.dir/rclcpp_components/node_main_lc_planner_node_exe.cpp.o\x1b[0m\n'}
+[6.862279] (chaining_CDT) StdoutLine: {'line': b'[ 40%] \x1b[32mBuilding CXX object CMakeFiles/chaining_cdt_chainer.dir/src/chainer/direction_chainer.cpp.o\x1b[0m\n'}
+[6.862328] (chaining_CDT) StdoutLine: {'line': b'[ 40%] \x1b[32mBuilding CXX object CMakeFiles/chaining_cdt_planner.dir/src/planner/cdt_centerline.cpp.o\x1b[0m\n'}
+[6.862368] (chaining_CDT) StdoutLine: {'line': b'[ 40%] \x1b[32mBuilding CXX object CMakeFiles/chaining_cdt_postprocess.dir/src/postprocess/path_postprocessor.cpp.o\x1b[0m\n'}
+[6.912882] (-) TimerEvent: {}
+[7.013094] (-) TimerEvent: {}
+[7.113307] (-) TimerEvent: {}
+[7.157843] (chaining_CDT) StdoutLine: {'line': b'[ 50%] \x1b[32m\x1b[1mLinking CXX shared library libchaining_cdt_postprocess.so\x1b[0m\n'}
+[7.213515] (-) TimerEvent: {}
+[7.234545] (chaining_CDT) StdoutLine: {'line': b'[ 50%] Built target chaining_cdt_postprocess\n'}
+[7.313614] (-) TimerEvent: {}
+[7.413891] (-) TimerEvent: {}
+[7.514169] (-) TimerEvent: {}
+[7.614454] (-) TimerEvent: {}
+[7.714751] (-) TimerEvent: {}
+[7.815046] (-) TimerEvent: {}
+[7.915341] (-) TimerEvent: {}
+[8.015655] (-) TimerEvent: {}
+[8.115956] (-) TimerEvent: {}
+[8.216258] (-) TimerEvent: {}
+[8.316567] (-) TimerEvent: {}
+[8.416872] (-) TimerEvent: {}
+[8.517195] (-) TimerEvent: {}
+[8.617464] (-) TimerEvent: {}
+[8.643970] (chaining_CDT) StdoutLine: {'line': b'[ 60%] \x1b[32m\x1b[1mLinking CXX executable lc_planner_node_exe\x1b[0m\n'}
+[8.717563] (-) TimerEvent: {}
+[8.725563] (chaining_CDT) StdoutLine: {'line': b'[ 60%] Built target lc_planner_node_exe\n'}
+[8.817662] (-) TimerEvent: {}
+[8.830265] (chaining_CDT) StdoutLine: {'line': b'[ 70%] \x1b[32m\x1b[1mLinking CXX shared library libchaining_cdt_chainer.so\x1b[0m\n'}
+[8.913939] (chaining_CDT) StdoutLine: {'line': b'[ 70%] Built target chaining_cdt_chainer\n'}
+[8.917717] (-) TimerEvent: {}
+[9.017881] (-) TimerEvent: {}
+[9.118077] (-) TimerEvent: {}
+[9.218283] (-) TimerEvent: {}
+[9.318449] (-) TimerEvent: {}
+[9.418677] (-) TimerEvent: {}
+[9.518880] (-) TimerEvent: {}
+[9.619138] (-) TimerEvent: {}
+[9.657712] (chaining_CDT) StdoutLine: {'line': b'[ 80%] \x1b[32m\x1b[1mLinking CXX shared library libchaining_cdt_planner.so\x1b[0m\n'}
+[9.719221] (-) TimerEvent: {}
+[9.758462] (chaining_CDT) StdoutLine: {'line': b'[ 80%] Built target chaining_cdt_planner\n'}
+[9.775025] (chaining_CDT) StdoutLine: {'line': b'[ 90%] \x1b[32mBuilding CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_CDT_node.cpp.o\x1b[0m\n'}
+[9.819306] (-) TimerEvent: {}
+[9.919518] (-) TimerEvent: {}
+[10.019723] (-) TimerEvent: {}
+[10.119958] (-) TimerEvent: {}
+[10.220157] (-) TimerEvent: {}
+[10.320355] (-) TimerEvent: {}
+[10.420573] (-) TimerEvent: {}
+[10.520768] (-) TimerEvent: {}
+[10.620971] (-) TimerEvent: {}
+[10.721200] (-) TimerEvent: {}
+[10.821467] (-) TimerEvent: {}
+[10.921666] (-) TimerEvent: {}
+[11.021899] (-) TimerEvent: {}
+[11.122097] (-) TimerEvent: {}
+[11.222322] (-) TimerEvent: {}
+[11.322531] (-) TimerEvent: {}
+[11.422739] (-) TimerEvent: {}
+[11.522957] (-) TimerEvent: {}
+[11.623205] (-) TimerEvent: {}
+[11.723404] (-) TimerEvent: {}
+[11.823602] (-) TimerEvent: {}
+[11.923799] (-) TimerEvent: {}
+[12.023999] (-) TimerEvent: {}
+[12.124231] (-) TimerEvent: {}
+[12.224446] (-) TimerEvent: {}
+[12.324670] (-) TimerEvent: {}
+[12.424876] (-) TimerEvent: {}
+[12.525106] (-) TimerEvent: {}
+[12.625314] (-) TimerEvent: {}
+[12.725510] (-) TimerEvent: {}
+[12.825774] (-) TimerEvent: {}
+[12.925974] (-) TimerEvent: {}
+[13.026161] (-) TimerEvent: {}
+[13.126383] (-) TimerEvent: {}
+[13.226583] (-) TimerEvent: {}
+[13.326796] (-) TimerEvent: {}
+[13.427035] (-) TimerEvent: {}
+[13.527224] (-) TimerEvent: {}
+[13.627492] (-) TimerEvent: {}
+[13.727694] (-) TimerEvent: {}
+[13.827926] (-) TimerEvent: {}
+[13.928153] (-) TimerEvent: {}
+[14.028355] (-) TimerEvent: {}
+[14.128590] (-) TimerEvent: {}
+[14.228835] (-) TimerEvent: {}
+[14.329073] (-) TimerEvent: {}
+[14.429274] (-) TimerEvent: {}
+[14.529448] (-) TimerEvent: {}
+[14.629711] (-) TimerEvent: {}
+[14.729937] (-) TimerEvent: {}
+[14.830189] (-) TimerEvent: {}
+[14.930417] (-) TimerEvent: {}
+[15.030612] (-) TimerEvent: {}
+[15.130800] (-) TimerEvent: {}
+[15.231020] (-) TimerEvent: {}
+[15.331247] (-) TimerEvent: {}
+[15.431490] (-) TimerEvent: {}
+[15.531685] (-) TimerEvent: {}
+[15.631907] (-) TimerEvent: {}
+[15.732104] (-) TimerEvent: {}
+[15.832317] (-) TimerEvent: {}
+[15.932532] (-) TimerEvent: {}
+[16.032754] (-) TimerEvent: {}
+[16.066816] (chaining_CDT) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library liblc_planner_component.so\x1b[0m\n'}
+[16.132838] (-) TimerEvent: {}
+[16.233049] (-) TimerEvent: {}
+[16.333256] (-) TimerEvent: {}
+[16.433492] (-) TimerEvent: {}
+[16.450435] (chaining_CDT) StdoutLine: {'line': b'[100%] Built target lc_planner_component\n'}
+[16.458318] (chaining_CDT) CommandEnded: {'returncode': 0}
+[16.458677] (chaining_CDT) JobProgress: {'identifier': 'chaining_CDT', 'progress': 'install'}
+[16.463615] (chaining_CDT) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/aiv/ev_ws/planning/build/chaining_CDT'], 'cwd': '/home/aiv/ev_ws/planning/build/chaining_CDT', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('USER', 'aiv'), ('LC_TIME', 'ko_KR.UTF-8'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/planning_lc_ver/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64'), ('HOME', '/home/aiv'), ('OLDPWD', '/home/aiv/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('NVM_BIN', '/home/aiv/.nvm/versions/node/v24.13.1/bin'), ('NVM_INC', '/home/aiv/.nvm/versions/node/v24.13.1/include/node'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'ko_KR.UTF-8'), ('MANAGERPID', '2077'), ('SYSTEMD_EXEC_PID', '2973'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator23558193cd9818af7fe4d2c2f5bd9d00f'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '4681'), ('NVM_DIR', '/home/aiv/.nvm'), ('COLCON_PREFIX_PATH', '/home/aiv/ev_ws/planning/install:/home/aiv/ev_ws/perception/install:/home/aiv/ev_ws/ev_msgs/install:/home/aiv/ev_ws/carsa_gazebo/install:/home/aiv/ev_ws/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'aiv'), ('JOURNAL_STREAM', '8:4780'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'aiv'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/usr/local/cuda-12.6/bin:/usr/local/cuda-12.6/bin:/home/aiv/.local/bin:/opt/ros/humble/bin:/home/aiv/.nvm/versions/node/v24.13.1/bin:/usr/local/cuda-12.6/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/aiv:@/tmp/.ICE-unix/2942,unix/aiv:/tmp/.ICE-unix/2942'), ('INVOCATION_ID', '4d02e125c3df4cda9b3b91398ff974c6'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'ko_KR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'ko_KR.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/planning_lc_ver:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'ko_KR.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:afd08a68-557c-4158-b206-8cfcdefb43ca'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LC_MEASUREMENT', 'ko_KR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'ko_KR.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/aiv/ev_ws/planning/build/chaining_CDT'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('NVM_CD_FLAGS', ''), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/aiv/ev_ws/ev_msgs/install/ev_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/home/aiv/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'ko_KR.UTF-8'), ('LC_PAPER', 'ko_KR.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('EDITOR', 'code --wait'), ('CMAKE_PREFIX_PATH', '/home/aiv/ev_ws/planning/install/chaining_mr_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/planning_lc_ver:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble')]), 'shell': False}
+[16.469067] (chaining_CDT) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[16.469153] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include\n'}
+[16.469223] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/CDT.hpp\n'}
+[16.469276] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/CDTUtils.hpp\n'}
+[16.469310] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/portable_nth_element.hpp\n'}
+[16.469342] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/Triangulation.h\n'}
+[16.469390] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/predicates.h\n'}
+[16.469443] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/LocatorKDTree.h\n'}
+[16.469479] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/remove_at.hpp\n'}
+[16.469511] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/Triangulation.hpp\n'}
+[16.469584] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/CDTUtils.h\n'}
+[16.469622] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/KDTree.h\n'}
+[16.469655] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/CDT.h\n'}
+[16.469704] (chaining_CDT) StdoutLine: {'line': b'-- Up-to-date: /home/aiv/ev_ws/planning/install/chaining_CDT/include\n'}
+[16.469736] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/VerifyTopology.h\n'}
+[16.469768] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/include/InitializeWithGrid.h\n'}
+[16.469819] (chaining_CDT) StdoutLine: {'line': b'-- Installing: /home/aiv/ev_ws/planning/install/chaining_CDT/cmake/CDTConfig.cmake\n'}
+[16.470081] (chaining_CDT) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[16.470202] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/libchaining_cdt_chainer.so\n'}
+[16.474661] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/libchaining_cdt_planner.so\n'}
+[16.480732] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/libchaining_cdt_postprocess.so\n'}
+[16.485774] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/chaining_CDT/lc_planner_node_exe\n'}
+[16.491243] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/lib/liblc_planner_component.so\n'}
+[16.497243] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/chainer/direction_chainer.hpp\n'}
+[16.502781] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/common/debug_publish.hpp\n'}
+[16.507175] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/common/geometry.hpp\n'}
+[16.512114] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/common/params.hpp\n'}
+[16.518104] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/common/types.hpp\n'}
+[16.522716] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/nodes/chaining_CDT_node.hpp\n'}
+[16.528994] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/planner/cdt_centerline.hpp\n'}
+[16.533311] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/postprocess/path_postprocessor.hpp\n'}
+[16.533527] (-) TimerEvent: {}
+[16.538651] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/include/chaining_CDT/safety/safety_checker.hpp\n'}
+[16.544166] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/config/chaining_CDT.yaml\n'}
+[16.549598] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/launch/chaining_CDT.launch.py\n'}
+[16.556191] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/ament_index/resource_index/package_run_dependencies/chaining_CDT\n'}
+[16.560950] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/ament_index/resource_index/parent_prefix_path/chaining_CDT\n'}
+[16.567274] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/environment/ament_prefix_path.sh\n'}
+[16.572453] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/environment/ament_prefix_path.dsv\n'}
+[16.577073] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/environment/path.sh\n'}
+[16.583594] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/environment/path.dsv\n'}
+[16.588097] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/local_setup.bash\n'}
+[16.593998] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/local_setup.sh\n'}
+[16.599164] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/local_setup.zsh\n'}
+[16.604113] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/local_setup.dsv\n'}
+[16.608317] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/package.dsv\n'}
+[16.614422] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/ament_index/resource_index/packages/chaining_CDT\n'}
+[16.620413] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/ament_index/resource_index/rclcpp_components/chaining_CDT\n'}
+[16.626706] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/cmake/chaining_CDTConfig.cmake\n'}
+[16.632789] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/cmake/chaining_CDTConfig-version.cmake\n'}
+[16.633585] (-) TimerEvent: {}
+[16.637551] (chaining_CDT) StdoutLine: {'line': b'-- Symlinking: /home/aiv/ev_ws/planning/install/chaining_CDT/share/chaining_CDT/package.xml\n'}
+[16.643665] (chaining_CDT) CommandEnded: {'returncode': 0}
+[16.652643] (chaining_CDT) JobEnded: {'identifier': 'chaining_CDT', 'rc': 0}
+[16.652926] (-) EventReactorShutdown: {}

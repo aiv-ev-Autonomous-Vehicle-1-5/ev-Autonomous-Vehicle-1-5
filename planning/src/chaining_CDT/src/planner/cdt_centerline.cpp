@@ -143,9 +143,25 @@ std::vector<Point2D> CDTCenterlineExtractor::extract(
   }
 
   // ================================================================
+  // Step 1.5: 중복 정점 제거 + 간선 인덱스 재매핑
+  // ================================================================
+  // 체이닝 리샘플 과정에서 동일 좌표의 점이 생길 수 있다.
+  // CDT 라이브러리는 중복 정점을 허용하지 않으므로 (DuplicateVertexError),
+  // 내장 유틸리티로 제거하고 제약 간선 인덱스를 자동 재매핑한다.
+  CDT::RemoveDuplicatesAndRemapEdges(vertices, edges);
+
+  // 중복 제거 후 정점이 3개 미만이면 CDT 불가
+  if (vertices.size() < 3) {
+    return {};
+  }
+
+  // ================================================================
   // Step 2: CDT 수행
   // ================================================================
-  CDT::Triangulation<double> cdt;
+  CDT::Triangulation<double> cdt(
+    CDT::VertexInsertionOrder::Auto,
+    CDT::IntersectingConstraintEdges::TryResolve,
+    0.0);
   cdt.insertVertices(vertices);
   cdt.insertEdges(edges);
   cdt.eraseOuterTrianglesAndHoles();  // 제약 외부 삼각형 제거
