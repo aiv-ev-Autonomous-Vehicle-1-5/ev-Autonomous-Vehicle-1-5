@@ -1,0 +1,12 @@
+/home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp: In member function ‘void chaining_costmap_ver::LCPlannerNode::on_timer()’:
+/home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp:292:40: error: ‘static void chaining_costmap_ver::CostmapGenerator::apply_entry_walls(chaining_costmap_ver::CostmapResult&, const chaining_costmap_ver::Point2D&, const chaining_costmap_ver::Point2D&, const chaining_costmap_ver::PlanningParams&)’ is private within this context
+  292 |     CostmapGenerator::apply_entry_walls(costmap, left_seed, right_seed, params_);
+      |     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/aiv/ev_ws/planning/src/chaining_costmap_ver/include/chaining_costmap_ver/nodes/chaining_costmap_ver_node.hpp:90,
+                 from /home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp:30:
+/home/aiv/ev_ws/planning/src/chaining_costmap_ver/include/chaining_costmap_ver/costmap/costmap_generator.hpp:72:15: note: declared private here
+   72 |   static void apply_entry_walls(
+      |               ^~~~~~~~~~~~~~~~~
+gmake[2]: *** [CMakeFiles/lc_planner_component.dir/build.make:76: CMakeFiles/lc_planner_component.dir/src/nodes/chaining_costmap_ver_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:254: CMakeFiles/lc_planner_component.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

@@ -18,6 +18,7 @@ lc_planner_node:
       cone_radius: 1.025         # cone_radius를 늘리기: 0.65 → 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
       sigma: 1.0                # [m] 가우시안 확산
       cost_threshold: 2.0       # 이 이하 비용 무시
+      entry_wall_ego_y: 1.3     # [m] ego 양옆 가상 콘 시작점 횡방향 오프셋
 
     # ============================================================
     # A* — 격자 경로 탐색
@@ -101,9 +102,6 @@ lc_planner_node:
 
       # --- 종료/제한 ---
       max_chain_len: 100      # backbone 최대 길이
-
-      # --- 콘 우선순위 ---
-      cone_priority: true
 
       # --- 신뢰도 필터 ---
       min_confidence: 0.1

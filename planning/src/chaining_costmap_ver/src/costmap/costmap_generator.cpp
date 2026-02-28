@@ -160,4 +160,39 @@ CostmapResult CostmapGenerator::generate(
   return result;
 }
 
+// ============================================================================
+// apply_entry_walls — ego 양옆→시드까지 가상 콘을 샘플링하여 입구 유도
+// ============================================================================
+void CostmapGenerator::apply_entry_walls(
+  CostmapResult & costmap,
+  const Point2D & left_seed,
+  const Point2D & right_seed,
+  const PlanningParams & params)
+{
+  const auto & cm = params.costmap;
+  const double step = cm.resolution * 2.0;  // 콘 간격 (resolution의 2배)
+
+  // from→to 라인을 따라 가상 콘을 샘플링 (실제 콘과 동일한 비용 파라미터)
+  auto sample_cones = [&](const Point2D & from, const Point2D & to) {
+    double dx = to.x - from.x;
+    double dy = to.y - from.y;
+    double len = std::sqrt(dx * dx + dy * dy);
+    if (len < step) return;
+    int n = static_cast<int>(std::ceil(len / step));
+    for (int i = 0; i <= n; ++i) {
+      double t = static_cast<double>(i) / n;
+      Point2D pt = {from.x + t * dx, from.y + t * dy};
+      apply_source(
+        costmap.data, costmap.rows, costmap.cols,
+        costmap.resolution, costmap.origin_x, costmap.origin_y,
+        pt, cm.cone_cost_max, cm.sigma, cm.cost_threshold, cm.cone_radius);
+    }
+  };
+
+  // 좌측: ego 왼쪽(0, +ego_y) → left seed
+  sample_cones({0.0, +cm.entry_wall_ego_y}, left_seed);
+  // 우측: ego 오른쪽(0, -ego_y) → right seed
+  sample_cones({0.0, -cm.entry_wall_ego_y}, right_seed);
+}
+
 }  // namespace chaining_costmap_ver

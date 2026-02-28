@@ -85,6 +85,10 @@ struct PlanningParams
     // [무차원] 비용 임계값. 이 값 이하의 비용은 0으로 처리.
     // 2.0 = 가우시안 꼬리의 미세한 비용을 무시 → 연산량 절감.
     double cost_threshold = 2.0;
+
+    // [m] ego 쪽 가상 콘 시작점의 횡방향 오프셋.
+    // ego 좌측(0, +ego_y)→left_seed, ego 우측(0, -ego_y)→right_seed
+    double entry_wall_ego_y = 0.3;
   } costmap;
 
   // ============================================================
@@ -441,6 +445,7 @@ struct PlanningParams
     costmap.cone_radius    = p("costmap.cone_radius",    costmap.cone_radius);
     costmap.sigma          = p("costmap.sigma",          costmap.sigma);
     costmap.cost_threshold = p("costmap.cost_threshold", costmap.cost_threshold);
+    costmap.entry_wall_ego_y  = p("costmap.entry_wall_ego_y",  costmap.entry_wall_ego_y);
 
     // ── AStar 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.astar.*

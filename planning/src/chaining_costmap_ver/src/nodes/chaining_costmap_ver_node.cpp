@@ -279,6 +279,19 @@ void LCPlannerNode::on_timer()
   auto costmap = costmap_generator_.generate(
     left_chained, right_chained, unchained_chained, params_);
 
+  // 3b-2. Entry walls: 시드→ego 양옆까지 벽을 그려서 입구 유도
+  // 양쪽 backbone이 있을 때만 적용 (한쪽만 있으면 벽을 만들 수 없음)
+  if (costmap.valid &&
+      !dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
+    Point2D left_seed = {
+      dc_result.left.backbone.front().x,
+      dc_result.left.backbone.front().y};
+    Point2D right_seed = {
+      dc_result.right.backbone.front().x,
+      dc_result.right.backbone.front().y};
+    CostmapGenerator::apply_entry_walls(costmap, left_seed, right_seed, params_);
+  }
+
   // 3c. Goal 계산: 좌/우 체인 끝점의 중점
   Point2D goal = {0.0, 0.0};
   bool have_goal = false;

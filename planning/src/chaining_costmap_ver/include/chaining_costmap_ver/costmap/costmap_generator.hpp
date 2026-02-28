@@ -48,6 +48,18 @@ public:
     const std::vector<ChainedPoint> & unchained,
     const PlanningParams & params);
 
+  /**
+   * @brief 시드→ego 양옆까지 cone_cost_max 벽을 그려서 입구로 유도
+   *
+   * 좌/우 시드에서 ego(x=0)까지 벽을 연장하여
+   * A*가 시드 사이(입구)로만 진입할 수 있게 한다.
+   */
+  static void apply_entry_walls(
+    CostmapResult & costmap,
+    const Point2D & left_seed,
+    const Point2D & right_seed,
+    const PlanningParams & params);
+
 private:
   /**
    * @brief 단일 경계점의 가우시안 비용장을 그리드에 적용 (max-merge)
