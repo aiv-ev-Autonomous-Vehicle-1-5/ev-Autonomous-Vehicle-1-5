@@ -5,14 +5,14 @@ dbscan_clustering:
     eps: 0.10
     min_points: 10
     max_neighbors: 1024
-    max_points: 50000
+    max_points: 80000
     queue_size: 1
 
     # ROI
-    roi_min_x: -5.0
+    roi_min_x: 0.0
     roi_max_x: 10.0
-    roi_min_y: -10.0
-    roi_max_y: 10.0
+    roi_min_y: -7.0
+    roi_max_y: 7.0
     roi_min_z: -2.0
     roi_max_z: 0.5
 
