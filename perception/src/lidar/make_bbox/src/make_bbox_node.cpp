@@ -50,6 +50,9 @@ MakeBBoxNode::MakeBBoxNode(const rclcpp::NodeOptions & options)
   auto marker_topic = declare_parameter<std::string>("marker_topic", "/perception/bboxes_marker");
   sigmoid_k_     = declare_parameter<double>("sigmoid_k", 0.3);
   sigmoid_n_mid_ = declare_parameter<double>("sigmoid_n_mid", 15.0);
+  max_size_x_    = static_cast<float>(declare_parameter<double>("max_size_x", 0.55));
+  max_size_y_    = static_cast<float>(declare_parameter<double>("max_size_y", 0.55));
+  max_size_z_    = static_cast<float>(declare_parameter<double>("max_size_z", 0.89));
 
   auto qos = rclcpp::SensorDataQoS();
 
@@ -133,6 +136,11 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     const float size_x = s.max_x - s.min_x;
     const float size_y = s.max_y - s.min_y;
     const float size_z = s.max_z - s.min_z;
+
+    // 크기 상한 필터: 라바콘보다 큰 물체 탈락
+    if (size_x > max_size_x_ || size_y > max_size_y_ || size_z > max_size_z_) {
+      continue;
+    }
 
     // 바운딩박스 중심
     const float cx = (s.min_x + s.max_x) * 0.5F;

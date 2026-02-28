@@ -19,6 +19,7 @@
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_raw_hex.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/driver.launch.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/make_bbox.launch.py
+/home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/make_bbox_rosbag.launch.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/my_velodyne_VLP16-composed-launch.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/patchworkpp.launch.py
 /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/sim_velodyne_VLP16-composed-launch.py

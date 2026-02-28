@@ -1,0 +1,66 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/aiv/ev_ws/perception/build/lidar_launch
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/__pycache__/debug_1_driver.launch.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/__pycache__/debug_2_patchworkpp.launch.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/__pycache__/debug_3_voxel_grid.launch.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/__pycache__/debug_4_clustering.launch.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/__pycache__/debug_5_cluster_splitter.launch.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/__pycache__/debug_6_make_cylinder.launch.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/__pycache__/my_velodyne_VLP16-composed-launch.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/__pycache__/sim_velodyne_VLP16-composed-launch.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/cluster_splitter.launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/clustering.launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/__pycache__/compare_splitter_clusters.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/__pycache__/count_clustering.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/__pycache__/count_clusters.cpython-310.pyc
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/compare_splitter_clusters.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/count_clusters.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_bboxes.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_clustered.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_raw.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/debug_scripts/inspect_raw_hex.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/driver.launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/make_bbox.launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/make_bbox_rosbag.launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/my_velodyne_VLP16-composed-launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/patchworkpp.launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/sim_velodyne_VLP16-composed-launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/launch/perception/voxel_grid.launch.py
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/config/cluster_splitter/cluster_splitter_params.yaml
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/config/dbscan_clustering/dbscan_params.yaml
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/config/lidar_voxel_grid/voxel_grid_params.yaml
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/config/make_bbox/make_bbox_params.yaml
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/config/patchworkpp/patchworkpp_params.yaml
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/ament_index/resource_index/package_run_dependencies/lidar_launch
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/ament_index/resource_index/parent_prefix_path/lidar_launch
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/environment/ament_prefix_path.sh
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/environment/ament_prefix_path.dsv
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/environment/path.sh
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/environment/path.dsv
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/local_setup.bash
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/local_setup.sh
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/local_setup.zsh
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/local_setup.dsv
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/package.dsv
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/ament_index/resource_index/packages/lidar_launch
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/cmake/lidar_launchConfig.cmake
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/cmake/lidar_launchConfig-version.cmake
+-- Symlinking: /home/aiv/ev_ws/perception/install/lidar_launch/share/lidar_launch/package.xml

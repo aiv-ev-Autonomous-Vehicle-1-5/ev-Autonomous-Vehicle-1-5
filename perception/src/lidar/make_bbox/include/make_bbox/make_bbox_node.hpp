@@ -23,6 +23,9 @@ private:
 
   double sigmoid_k_;
   double sigmoid_n_mid_;
+  float max_size_x_;
+  float max_size_y_;
+  float max_size_z_;
 };
 
 }  // namespace make_bbox

@@ -1,0 +1,154 @@
+[0.008s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud': CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_CDT:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/chaining_CDT/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64 /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/velodyne_pointcloud -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/velodyne_pointcloud
+[0.055s] -- The C compiler identification is GNU 11.4.0
+[0.099s] -- The CXX compiler identification is GNU 11.4.0
+[0.105s] -- Detecting C compiler ABI info
+[0.162s] -- Detecting C compiler ABI info - done
+[0.168s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.168s] -- Detecting C compile features
+[0.169s] -- Detecting C compile features - done
+[0.171s] -- Detecting CXX compiler ABI info
+[0.238s] -- Detecting CXX compiler ABI info - done
+[0.244s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.244s] -- Detecting CXX compile features
+[0.245s] -- Detecting CXX compile features - done
+[0.247s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.385s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.426s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.446s] -- Found angles: 1.15.0 (/opt/ros/humble/share/angles/cmake)
+[0.449s] -- Found diagnostic_updater: 4.0.6 (/opt/ros/humble/share/diagnostic_updater/cmake)
+[0.475s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.478s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.483s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.490s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.500s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.546s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.548s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.611s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.628s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.656s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.661s] -- Looking for pthread.h
+[0.720s] -- Looking for pthread.h - found
+[0.720s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.782s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.782s] -- Found Threads: TRUE  
+[0.810s] -- Found geometry_msgs: 4.9.0 (/opt/ros/humble/share/geometry_msgs/cmake)
+[0.817s] -- Found message_filters: 4.3.11 (/opt/ros/humble/share/message_filters/cmake)
+[0.828s] -- Checking for module 'eigen3'
+[0.840s] --   Found eigen3, version 3.4.0
+[0.867s] -- Found Eigen: /usr/include/eigen3 (Required is at least version "3.1") 
+[0.867s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[0.887s] -- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.65.0") found components: system filesystem date_time iostreams serialization 
+[0.888s] -- looking for PCL_COMMON
+[0.889s] -- Found PCL_COMMON: /usr/lib/x86_64-linux-gnu/libpcl_common.so  
+[0.889s] -- Found PCL: pcl_common;Boost::system;Boost::filesystem;Boost::date_time;Boost::iostreams;Boost::serialization  
+[0.891s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.915s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.928s] -- Found tf2: 0.25.18 (/opt/ros/humble/share/tf2/cmake)
+[0.931s] -- Found tf2_ros: 0.25.18 (/opt/ros/humble/share/tf2_ros/cmake)
+[0.967s] -- Found velodyne_msgs: 2.5.1 (/home/aiv/ev_ws/perception/install/velodyne_msgs/share/velodyne_msgs/cmake)
+[0.975s] -- Found yaml_cpp_vendor: 8.0.2 (/opt/ros/humble/share/yaml_cpp_vendor/cmake)
+[0.979s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.040s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[1.049s] -- Added test 'copyright' to check source files copyright and LICENSE
+[1.051s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.051s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/aiv/ev_ws/perception/src/lidar/velodyne_pointcloud/include>
+[1.052s] -- Configured cppcheck exclude dirs and/or files: 
+[1.054s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[1.054s] -- Configured cpplint exclude dirs and/or files: 
+[1.054s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.055s] -- Added test 'lint_cmake' to check CMake code style
+[1.056s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.058s] -- Added test 'uncrustify' to check C / C++ code style
+[1.058s] -- Configured uncrustify additional arguments: 
+[1.062s] -- Configuring done
+[1.095s] -- Generating done
+[1.107s] -- Build files have been written to: /home/aiv/ev_ws/perception/build/velodyne_pointcloud
+[1.120s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud' returned '0': CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_CDT:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/chaining_CDT/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64 /usr/bin/cmake /home/aiv/ev_ws/perception/src/lidar/velodyne_pointcloud -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/perception/install/velodyne_pointcloud
+[1.120s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud': CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_CDT:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/chaining_CDT/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64 /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/velodyne_pointcloud -- -j28 -l28
+[1.170s] [ 33%] [32mBuilding CXX object CMakeFiles/velodyne_cloud_types.dir/src/lib/pointcloudXYZIRT.cpp.o[0m
+[1.170s] [ 33%] [32mBuilding CXX object CMakeFiles/velodyne_cloud_types.dir/src/lib/organized_cloudXYZIRT.cpp.o[0m
+[1.170s] [ 33%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[1.170s] [ 33%] [32mBuilding CXX object CMakeFiles/velodyne_rawdata.dir/src/lib/rawdata.cpp.o[0m
+[1.170s] [ 33%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[1.170s] [ 33%] [32mBuilding CXX object CMakeFiles/velodyne_rawdata.dir/src/lib/calibration.cpp.o[0m
+[1.597s] [ 38%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[1.627s] [ 38%] Built target gtest_main
+[3.609s] [ 44%] [32m[1mLinking CXX static library libgtest.a[0m
+[3.661s] [ 44%] Built target gtest
+[3.680s] [ 50%] [32mBuilding CXX object tests/CMakeFiles/test_row_step.dir/test_row_step.cpp.o[0m
+[4.060s] [ 55%] [32m[1mLinking CXX shared library libvelodyne_cloud_types.so[0m
+[4.175s] [ 55%] Built target velodyne_cloud_types
+[5.136s] [ 61%] [32m[1mLinking CXX shared library libvelodyne_rawdata.so[0m
+[5.225s] [ 61%] Built target velodyne_rawdata
+[5.243s] [ 66%] [32mBuilding CXX object tests/CMakeFiles/test_calibration.dir/test_calibration.cpp.o[0m
+[5.244s] [ 72%] [32mBuilding CXX object CMakeFiles/transform.dir/src/conversions/transform.cpp.o[0m
+[5.822s] [ 77%] [32m[1mLinking CXX executable test_calibration[0m
+[5.936s] [ 77%] Built target test_calibration
+[6.639s] [ 83%] [32m[1mLinking CXX executable test_row_step[0m
+[6.776s] [ 83%] Built target test_row_step
+[11.201s] [ 88%] [32m[1mLinking CXX shared library libtransform.so[0m
+[11.490s] [ 88%] Built target transform
+[11.503s] [ 94%] [32mBuilding CXX object CMakeFiles/velodyne_transform_node.dir/src/conversions/transform_node.cpp.o[0m
+[14.104s] [100%] [32m[1mLinking CXX executable velodyne_transform_node[0m
+[14.256s] [100%] Built target velodyne_transform_node
+[14.265s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud' returned '0': CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_CDT:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/chaining_CDT/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64 /usr/bin/cmake --build /home/aiv/ev_ws/perception/build/velodyne_pointcloud -- -j28 -l28
+[14.266s] Invoking command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud': CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_CDT:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/chaining_CDT/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64 /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/velodyne_pointcloud
+[14.272s] -- Install configuration: ""
+[14.272s] -- Execute custom install script
+[14.272s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/velodyne_pointcloud/velodyne_transform_node
+[14.279s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/calibration.hpp
+[14.284s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/datacontainerbase.hpp
+[14.290s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/organized_cloudXYZIRT.hpp
+[14.295s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/pointcloudXYZIRT.hpp
+[14.300s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/rawdata.hpp
+[14.304s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/include/velodyne_pointcloud/transform.hpp
+[14.309s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/config/VLP16-velodyne_transform_node-params.yaml
+[14.314s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/config/VLP32C-velodyne_transform_node-params.yaml
+[14.319s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/config/VLS128-velodyne_transform_node-params.yaml
+[14.324s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLP16-composed-launch.py
+[14.329s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLP16-launch.py
+[14.335s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLP32C-composed-launch.py
+[14.340s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLP32C-launch.py
+[14.346s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLS128-composed-launch.py
+[14.351s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/launch/velodyne_transform_node-VLS128-launch.py
+[14.356s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/32db.yaml
+[14.362s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/64e_s2.1-sztaki.yaml
+[14.367s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/64e_s3-xiesc.yaml
+[14.374s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/64e_utexas.yaml
+[14.378s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/VLP16_hires_db.yaml
+[14.383s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/VLP16db.yaml
+[14.388s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/VLS128.yaml
+[14.392s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/VeloView-VLP-32C.yaml
+[14.397s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/issue_84_float_intensities.yaml
+[14.402s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/params/rviz_points.vcg
+[14.407s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/library_path.sh
+[14.413s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/library_path.dsv
+[14.418s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/ament_index/resource_index/package_run_dependencies/velodyne_pointcloud
+[14.424s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/ament_index/resource_index/parent_prefix_path/velodyne_pointcloud
+[14.430s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/ament_prefix_path.sh
+[14.434s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/ament_prefix_path.dsv
+[14.440s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/path.sh
+[14.446s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/environment/path.dsv
+[14.451s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/local_setup.bash
+[14.457s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/local_setup.sh
+[14.462s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/local_setup.zsh
+[14.466s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/local_setup.dsv
+[14.471s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/package.dsv
+[14.476s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/ament_index/resource_index/packages/velodyne_pointcloud
+[14.481s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/ament_index/resource_index/rclcpp_components/velodyne_pointcloud
+[14.486s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/ament_cmake_export_include_directories-extras.cmake
+[14.491s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/ament_cmake_export_dependencies-extras.cmake
+[14.497s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/ament_cmake_export_libraries-extras.cmake
+[14.503s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/ament_cmake_export_targets-extras.cmake
+[14.508s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/velodyne_pointcloudConfig.cmake
+[14.513s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/velodyne_pointcloudConfig-version.cmake
+[14.519s] -- Symlinking: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/package.xml
+[14.524s] -- Installing: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libvelodyne_cloud_types.so
+[14.524s] -- Set runtime path of "/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libvelodyne_cloud_types.so" to ""
+[14.524s] -- Installing: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libvelodyne_rawdata.so
+[14.524s] -- Set runtime path of "/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libvelodyne_rawdata.so" to ""
+[14.524s] -- Installing: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libtransform.so
+[14.528s] -- Set runtime path of "/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib/libtransform.so" to ""
+[14.528s] -- Installing: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/velodyne_pointcloudExport.cmake
+[14.528s] -- Installing: /home/aiv/ev_ws/perception/install/velodyne_pointcloud/share/velodyne_pointcloud/cmake/velodyne_pointcloudExport-noconfig.cmake
+[14.530s] Invoked command in '/home/aiv/ev_ws/perception/build/velodyne_pointcloud' returned '0': CMAKE_PREFIX_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_CDT:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/usr/local/cuda-12.6/lib64:/home/aiv/ev_ws/ev_msgs/install/ev_msgs/lib:/home/aiv/ev_ws/planning/install/chaining_CDT/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_serial/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_util/lib:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs/lib:/home/aiv/ev_ws/perception/install/velodyne_pointcloud/lib:/home/aiv/ev_ws/perception/install/velodyne_driver/lib:/home/aiv/ev_ws/perception/install/velodyne_cropbox/lib:/home/aiv/ev_ws/perception/install/patchworkpp/lib:/home/aiv/ev_ws/perception/install/make_bbox/lib:/home/aiv/ev_ws/perception/install/lidar_voxel_grid/lib:/home/aiv/ev_ws/perception/install/dbscan_clustering/lib:/home/aiv/ev_ws/perception/install/cluster_splitter/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/cuda-12.6/lib64 /usr/bin/cmake --install /home/aiv/ev_ws/perception/build/velodyne_pointcloud

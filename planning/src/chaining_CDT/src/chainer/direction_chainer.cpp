@@ -292,8 +292,8 @@ int DirectionChainer::find_seed(
   const int n = static_cast<int>(points.size());
 
   for (int i = 0; i < n; ++i) {
-    // 전방 필터: x < 0 (후방)인 점은 seed 후보에서 제외
-    if (points[i].x < 0.0) continue;
+    // x < -1 (후방)인 점은 seed 후보에서 제외
+    if (points[i].x < -2.0) continue;
 
     // side_seed_y 가드: 중심선 부근 점 제외
     // 좌측: y가 side_seed_y 미만이면 중심선에 너무 가까움 → 제외
