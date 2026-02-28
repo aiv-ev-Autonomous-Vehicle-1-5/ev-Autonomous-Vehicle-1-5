@@ -14,9 +14,9 @@ dbscan_clustering:
     roi_min_y: -10.0
     roi_max_y: 10.0
     roi_min_z: -2.0
-    roi_max_z: 0.0
+    roi_max_z: 1.5
 
-    enable_azimuth_ground_suppression: true
+    enable_azimuth_ground_suppression: false
     azimuth_ground_min_range: 2.0
     azimuth_ground_z_threshold: 0.15
     azimuth_ground_bins: 720

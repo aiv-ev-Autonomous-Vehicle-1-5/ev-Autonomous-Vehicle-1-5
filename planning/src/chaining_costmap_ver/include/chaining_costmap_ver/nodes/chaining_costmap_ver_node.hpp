@@ -94,7 +94,6 @@
 #include <rclcpp/rclcpp.hpp>
 #include <nav_msgs/msg/path.hpp>
 #include <nav_msgs/msg/occupancy_grid.hpp>
-#include <std_msgs/msg/bool.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <visualization_msgs/msg/marker_array.hpp>
 #include <ev_msgs/msg/lane_boundary_array.hpp>

@@ -29,14 +29,6 @@ class CostmapGenerator
 {
 public:
   /**
-   * @brief 좌/우 체인으로부터 costmap 생성
-   */
-  CostmapResult generate(
-    const std::vector<ChainedPoint> & left_chain,
-    const std::vector<ChainedPoint> & right_chain,
-    const PlanningParams & params);
-
-  /**
    * @brief 좌/우 체인 + unchained 포인트로 costmap 생성
    *
    * unchained 포인트는 체이닝에 실패한 점들로,

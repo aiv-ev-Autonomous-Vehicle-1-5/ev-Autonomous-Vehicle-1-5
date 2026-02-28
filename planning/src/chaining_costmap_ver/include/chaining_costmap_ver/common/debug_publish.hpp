@@ -2,14 +2,13 @@
  * @file debug_publish.hpp
  * @brief 디버그용 ROS 2 메시지 변환 헬퍼 함수
  *
- * 내부 자료구조(Point2D 등)를 ROS 2 표준 메시지(nav_msgs::msg::Path,
- * std_msgs::msg::Bool)로 변환하는 인라인 유틸리티 함수 모음.
+ * 내부 자료구조(Point2D 등)를 ROS 2 표준 메시지(nav_msgs::msg::Path)로
+ * 변환하는 인라인 유틸리티 함수 모음.
  *
  * ── 사용 위치 ──
  *   lc_planner_node.cpp  Stage 7 (Publish) 에서 호출된다.
  *     - to_path_msg() : 최종 경로, raw 경로, 좌/우 backbone 체인을
  *                       nav_msgs/Path로 변환하여 RViz2에서 시각화.
- *     - to_bool_msg() : 단순 bool 플래그를 std_msgs/Bool로 래핑.
  *
  * ── 왜 inline 인가? ──
  *   헤더 전용(header-only) 유틸이므로 .cpp 없이 여러 TU에서 include해도
@@ -23,11 +22,9 @@
 // ── ROS 2 메시지 헤더 ──
 // geometry_msgs/PoseStamped : Path 안에 들어가는 개별 pose 요소
 // nav_msgs/Path            : PoseStamped 배열 → RViz2 "Path" 디스플레이로 시각화 가능
-// std_msgs/Bool            : 단일 bool 값을 퍼블리시할 때 사용
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <nav_msgs/msg/path.hpp>
 #include <rclcpp/rclcpp.hpp>
-#include <std_msgs/msg/bool.hpp>
 
 #include <string>
 #include <vector>
@@ -93,30 +90,6 @@ inline nav_msgs::msg::Path to_path_msg(
   return msg;
 }
 
-// ============================================================================
-// to_bool_msg  — bool → std_msgs::msg::Bool 변환
-// ============================================================================
-/**
- * @brief C++ bool 값을 std_msgs::msg::Bool 메시지로 래핑한다.
- *
- * 단순 래핑 함수지만, 매번 msg 생성 + data 대입 보일러플레이트를
- * 한 줄로 줄여준다.
- *
- * ── std_msgs::msg::Bool 메시지 구조 ──
- *   data: bool   (true / false)
- *
- * ── 사용 예시 ──
- *   플래너 상태 플래그(정지/진행 등)를 토픽으로 내보낼 때 활용 가능.
- *
- * @param value  퍼블리시할 bool 값
- * @return       변환된 std_msgs::msg::Bool 메시지
- */
-inline std_msgs::msg::Bool to_bool_msg(bool value)
-{
-  std_msgs::msg::Bool msg;
-  msg.data = value;   // bool 값 대입
-  return msg;
-}
 
 }  // namespace chaining_costmap_ver
 

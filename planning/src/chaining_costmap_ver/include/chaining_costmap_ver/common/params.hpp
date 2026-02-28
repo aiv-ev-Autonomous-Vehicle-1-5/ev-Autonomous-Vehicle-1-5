@@ -363,13 +363,6 @@ struct PlanningParams
     // costmap size에 맞춰 조절. 맵이 16m이면 8m 전방까지 = 80개면 충분.
     int max_chain_len = 100;            ///< backbone 최대 길이
 
-    // ── 콘 우선순위 ──
-    // 동일 영역에 콘(장애물)과 차선 점이 공존할 때의 처리.
-    // true  = 콘이 있으면 그 근처의 차선 점을 제거 (콘이 더 신뢰성 높음).
-    // false = 둘 다 유지 (차선 점도 살림).
-    // 경진대회에서는 콘이 물리적 장애물이므로 우선시하는 것이 안전.
-    bool cone_priority = true;          ///< 동일 영역에 콘+차선 공존 시 차선 제거
-
     // ── 신뢰도 필터 ──
     // [0.0 ~ 1.0] 인식 결과의 최소 신뢰도(confidence) 컷오프.
     // 이 값 미만의 BBox/LaneBoundary는 체이닝에서 제외.
@@ -498,7 +491,6 @@ struct PlanningParams
     chainer.branch_mode       = p("chainer.branch_mode",       chainer.branch_mode);
     chainer.max_branch_len    = p("chainer.max_branch_len",    chainer.max_branch_len);
     chainer.max_chain_len     = p("chainer.max_chain_len",     chainer.max_chain_len);
-    chainer.cone_priority     = p("chainer.cone_priority",     chainer.cone_priority);
     chainer.min_confidence    = p("chainer.min_confidence",    chainer.min_confidence);
     chainer.resample_ds       = p("chainer.resample_ds",       chainer.resample_ds);
     chainer.publish_debug     = p("chainer.publish_debug",     chainer.publish_debug);

@@ -322,11 +322,7 @@ int DirectionChainer::find_seed(
     }
   }  // for
 
-  // // 콘 후보가 있으면 콘을 우선 seed로 선택 (위치 정확도가 높으므로)
-  // if (cp.cone_priority && best_cone >= 0) {
-  //   return best_cone;
-  // }
-  // 콘이 없으면 전체 최근접 점을 seed로 사용 (차선점 포함)
+  // 전체 최근접 점을 seed로 사용 (차선점 포함)
   return best;
 }
 

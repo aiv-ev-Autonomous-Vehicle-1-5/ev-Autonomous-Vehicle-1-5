@@ -91,19 +91,7 @@ void CostmapGenerator::apply_source(
 }
 
 // ============================================================================
-// generate (2-chain version)
-// ============================================================================
-CostmapResult CostmapGenerator::generate(
-  const std::vector<ChainedPoint> & left_chain,
-  const std::vector<ChainedPoint> & right_chain,
-  const PlanningParams & params)
-{
-  // unchained 없는 버전: 빈 벡터로 3-arg 버전 호출
-  return generate(left_chain, right_chain, {}, params);
-}
-
-// ============================================================================
-// generate (3-chain version, with unchained)
+// generate (with unchained)
 // ============================================================================
 CostmapResult CostmapGenerator::generate(
   const std::vector<ChainedPoint> & left_chain,

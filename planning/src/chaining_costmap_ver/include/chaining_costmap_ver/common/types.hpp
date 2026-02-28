@@ -234,22 +234,6 @@ struct ChainedPoint
   Point2D to_point2d() const { return {x, y}; }
 };
 
-/**
- * @brief 좌/우 체인 결과 (CostmapGenerator 입력용)
- *
- * left_chain: 좌측 corridor
- * right_chain: 우측 corridor
- * 리샘플링까지 완료된 상태로 CostmapGenerator에 전달된다.
- */
-struct ChainResult
-{
-  std::vector<ChainedPoint> left_chain;   ///< 좌측 경계 체인 (리샘플 완료)
-                                           ///< left_chain[0]이 차량에 가장 가까운 점
-  std::vector<ChainedPoint> right_chain;  ///< 우측 경계 체인 (리샘플 완료)
-                                           ///< right_chain[0]이 차량에 가장 가까운 점
-  bool valid = false;                      ///< 최소 한쪽 체인이라도 생성되었으면 true
-};
-
 // ============================================================================
 // DirectionChainer v2 타입 (Component → Backbone → Branch)
 // — 방향성 greedy kNN 체이닝 시스템
