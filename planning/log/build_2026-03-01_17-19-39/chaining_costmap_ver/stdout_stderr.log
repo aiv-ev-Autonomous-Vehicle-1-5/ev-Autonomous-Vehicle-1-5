@@ -1,0 +1,28 @@
+[ 16%] Built target chaining_costmap_astar
+[ 33%] Built target chaining_costmap_postprocess
+[ 50%] Built target lc_planner_node_exe
+[ 66%] Built target chaining_costmap_chainer
+[ 83%] Built target chaining_costmap_costmap
+Consolidate compiler generated dependencies of target lc_planner_component
+[ 91%] Building CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_costmap_ver_node.cpp.o
+In file included from /opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21,
+                 from /opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155,
+                 from /home/aiv/ev_ws/planning/src/chaining_costmap_ver/include/chaining_costmap_ver/common/params.hpp:29,
+                 from /home/aiv/ev_ws/planning/src/chaining_costmap_ver/include/chaining_costmap_ver/nodes/chaining_costmap_ver_node.hpp:88,
+                 from /home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp:30:
+/home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp: In member function ‘void chaining_costmap_ver::LCPlannerNode::on_timer()’:
+/home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp:375:35: error: ‘struct chaining_costmap_ver::safety_checker::SafetyResult’ has no member named ‘v_safe’
+  375 |     safety.reason.c_str(), safety.v_safe);
+      |                                   ^~~~~~
+gmake[2]: *** [CMakeFiles/lc_planner_component.dir/build.make:76: CMakeFiles/lc_planner_component.dir/src/nodes/chaining_costmap_ver_node.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:254: CMakeFiles/lc_planner_component.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

@@ -1,0 +1,49 @@
+[0.008s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_costmap_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/chaining_costmap_ver -- -j28 -l28
+[0.043s] [ 33%] Built target chaining_costmap_astar
+[0.043s] [ 33%] Built target chaining_costmap_postprocess
+[0.043s] [ 50%] Built target chaining_costmap_chainer
+[0.043s] [ 66%] Built target lc_planner_node_exe
+[0.045s] [ 83%] Built target chaining_costmap_costmap
+[0.057s] Consolidate compiler generated dependencies of target lc_planner_component
+[0.066s] [ 91%] Building CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_costmap_ver_node.cpp.o
+[6.473s] [100%] Linking CXX shared library liblc_planner_component.so
+[6.844s] [100%] Built target lc_planner_component
+[6.852s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_costmap_ver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/chaining_costmap_ver -- -j28 -l28
+[6.857s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_costmap_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/chaining_costmap_ver
+[6.862s] -- Install configuration: ""
+[6.862s] -- Execute custom install script
+[6.862s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_chainer.so
+[6.863s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_costmap.so
+[6.863s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_astar.so
+[6.863s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_postprocess.so
+[6.863s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/lib/chaining_costmap_ver/lc_planner_node_exe
+[6.863s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/lib/liblc_planner_component.so
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/chainer/direction_chainer.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common/debug_publish.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common/geometry.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common/params.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common/types.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/costmap/costmap_generator.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/nodes/chaining_costmap_ver_node.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/planner/astar_planner.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/postprocess/path_postprocessor.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/safety/safety_checker.hpp
+[6.864s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/config/chaining_costmap_ver.yaml
+[6.865s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/launch/chaining_costmap_ver.launch.py
+[6.865s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/ament_index/resource_index/package_run_dependencies/chaining_costmap_ver
+[6.865s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/ament_index/resource_index/parent_prefix_path/chaining_costmap_ver
+[6.865s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/ament_prefix_path.sh
+[6.865s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/ament_prefix_path.dsv
+[6.865s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/path.sh
+[6.865s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/path.dsv
+[6.865s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.bash
+[6.866s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.sh
+[6.866s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.zsh
+[6.866s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.dsv
+[6.866s] -- Symlinking: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/package.dsv
+[6.870s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/ament_index/resource_index/packages/chaining_costmap_ver
+[6.870s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/ament_index/resource_index/rclcpp_components/chaining_costmap_ver
+[6.871s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/cmake/chaining_costmap_verConfig.cmake
+[6.871s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/cmake/chaining_costmap_verConfig-version.cmake
+[6.871s] -- Up-to-date symlink: /home/aiv/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/package.xml
+[6.871s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_costmap_ver' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/planning/build/chaining_costmap_ver

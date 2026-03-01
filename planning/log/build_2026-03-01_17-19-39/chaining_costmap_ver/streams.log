@@ -1,0 +1,30 @@
+[0.007s] Invoking command in '/home/aiv/ev_ws/planning/build/chaining_costmap_ver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/chaining_costmap_ver -- -j28 -l28
+[0.046s] [ 16%] Built target chaining_costmap_astar
+[0.047s] [ 33%] Built target chaining_costmap_postprocess
+[0.047s] [ 50%] Built target lc_planner_node_exe
+[0.048s] [ 66%] Built target chaining_costmap_chainer
+[0.048s] [ 83%] Built target chaining_costmap_costmap
+[0.060s] Consolidate compiler generated dependencies of target lc_planner_component
+[0.069s] [ 91%] Building CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_costmap_ver_node.cpp.o
+[1.302s] In file included from /opt/ros/humble/include/rclcpp/rclcpp/logging.hpp:24,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25,
+[1.302s]                  from /opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21,
+[1.303s]                  from /opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155,
+[1.303s]                  from /home/aiv/ev_ws/planning/src/chaining_costmap_ver/include/chaining_costmap_ver/common/params.hpp:29,
+[1.303s]                  from /home/aiv/ev_ws/planning/src/chaining_costmap_ver/include/chaining_costmap_ver/nodes/chaining_costmap_ver_node.hpp:88,
+[1.303s]                  from /home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp:30:
+[1.303s] /home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp: In member function ‘void chaining_costmap_ver::LCPlannerNode::on_timer()’:
+[1.303s] /home/aiv/ev_ws/planning/src/chaining_costmap_ver/src/nodes/chaining_costmap_ver_node.cpp:375:35: error: ‘struct chaining_costmap_ver::safety_checker::SafetyResult’ has no member named ‘v_safe’
+[1.303s]   375 |     safety.reason.c_str(), safety.v_safe);
+[1.303s]       |                                   ^~~~~~
+[3.145s] gmake[2]: *** [CMakeFiles/lc_planner_component.dir/build.make:76: CMakeFiles/lc_planner_component.dir/src/nodes/chaining_costmap_ver_node.cpp.o] Error 1
+[3.145s] gmake[1]: *** [CMakeFiles/Makefile2:254: CMakeFiles/lc_planner_component.dir/all] Error 2
+[3.146s] gmake: *** [Makefile:146: all] Error 2
+[3.147s] Invoked command in '/home/aiv/ev_ws/planning/build/chaining_costmap_ver' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/planning/build/chaining_costmap_ver -- -j28 -l28

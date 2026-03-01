@@ -247,6 +247,8 @@ void LCPlannerNode::on_timer()
   // 오래된 데이터로 경로를 생성하면 이미 지나간 장애물을 회피하거나,
   // 사라진 차선을 따라가는 등 위험한 동작을 할 수 있다.
   if (check_stale()) {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
+      "[Stage0] STALE — perception timeout");
     auto status_msg = std::make_unique<std_msgs::msg::String>();
     status_msg->data = "STALE";
     pub_status_->publish(std::move(status_msg));
@@ -349,6 +351,16 @@ void LCPlannerNode::on_timer()
   //   - 그 외             → OK, 안전 속도 = min(v_max, sqrt(a_lat_max / κ_max))
   auto safety = safety_checker::check(pp_result, params_);
 
+  // ── 상태 로그 (INFO 레벨) ──
+  if (safety.reason == "ok") {
+    RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 1000,
+      "[Planner] OK — path:%zu pts, speed=%.2f m/s",
+      pp_result.path.size(), safety.target_speed);
+  } else {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 1000,
+      "[Planner] FAIL — %s", safety.reason.c_str());
+  }
+
   // ======== Stage 7: Publish (발행) ========
   // Core 토픽은 항상 발행하고, Debug 토픽은 구독자가 있을 때만 발행한다.
 
@@ -436,6 +448,15 @@ void LCPlannerNode::on_timer()
       const std::string & ns) -> visualization_msgs::msg::MarkerArray  // 네임스페이스
     {
       visualization_msgs::msg::MarkerArray ma;
+
+      // 이전 프레임의 잔여 마커를 모두 삭제 (잔상 방지)
+      visualization_msgs::msg::Marker del;
+      del.header.stamp = stamp;
+      del.header.frame_id = frame_id;
+      del.ns = ns;
+      del.action = visualization_msgs::msg::Marker::DELETEALL;
+      ma.markers.push_back(del);
+
       int id = 0;  // 각 마커의 고유 ID (RViz2에서 구분용)
       for (const auto & br : branches) {
         // 빈 branch이거나 parent 인덱스가 범위 밖이면 건너뛴다
