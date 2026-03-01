@@ -353,15 +353,48 @@ private:
     fcluster.datatype = sensor_msgs::msg::PointField::INT32;
     fcluster.count = 1;
 
-    out->fields = {fx, fy, fz, fcluster};
-    out->point_step = 16;
+    sensor_msgs::msg::PointField frgb;
+    frgb.name = "rgb";
+    frgb.offset = 16;
+    frgb.datatype = sensor_msgs::msg::PointField::FLOAT32;
+    frgb.count = 1;
+
+    out->fields = {fx, fy, fz, fcluster, frgb};
+    out->point_step = 20;
     out->row_step = out->point_step * out->width;
     out->data.resize(static_cast<size_t>(out->row_step));
+
+    // cluster_id별 색상 팔레트 생성 (HSV 색상환에서 균등 분배)
+    std::vector<uint32_t> palette(std::max(cluster_id, 1));
+    for (int c = 0; c < cluster_id; ++c) {
+      float h = static_cast<float>(c) / static_cast<float>(std::max(cluster_id, 1));
+      // HSV → RGB (S=1, V=1)
+      float r = 0.0F, g = 0.0F, b = 0.0F;
+      int hi = static_cast<int>(h * 6.0F) % 6;
+      float f = h * 6.0F - static_cast<float>(hi);
+      switch (hi) {
+        case 0: r = 1.0F; g = f;        b = 0.0F;        break;
+        case 1: r = 1.0F - f; g = 1.0F; b = 0.0F;        break;
+        case 2: r = 0.0F;     g = 1.0F; b = f;            break;
+        case 3: r = 0.0F;     g = 1.0F - f; b = 1.0F;    break;
+        case 4: r = f;        g = 0.0F; b = 1.0F;         break;
+        case 5: r = 1.0F;     g = 0.0F; b = 1.0F - f;    break;
+      }
+      uint8_t ri = static_cast<uint8_t>(r * 255.0F);
+      uint8_t gi = static_cast<uint8_t>(g * 255.0F);
+      uint8_t bi = static_cast<uint8_t>(b * 255.0F);
+      palette[static_cast<size_t>(c)] = (static_cast<uint32_t>(ri) << 16) |
+                                         (static_cast<uint32_t>(gi) << 8) |
+                                         static_cast<uint32_t>(bi);
+    }
+    // 노이즈(cluster_id=-1)용 회색
+    const uint32_t noise_rgb = (128u << 16) | (128u << 8) | 128u;
 
     sensor_msgs::PointCloud2Iterator<float> out_x(*out, "x");
     sensor_msgs::PointCloud2Iterator<float> out_y(*out, "y");
     sensor_msgs::PointCloud2Iterator<float> out_z(*out, "z");
     sensor_msgs::PointCloud2Iterator<int32_t> out_cluster(*out, "cluster_id");
+    sensor_msgs::PointCloud2Iterator<float> out_rgb(*out, "rgb");
 
     for (int i = 0; i < m; ++i) {
       const auto & p = nonground_points[static_cast<size_t>(i)];
@@ -371,6 +404,13 @@ private:
       *out_y = p.y; ++out_y;
       *out_z = p.z; ++out_z;
       *out_cluster = lbl; ++out_cluster;
+
+      // cluster_id → rgb 색상 매핑
+      uint32_t packed = (lbl >= 0 && lbl < cluster_id)
+        ? palette[static_cast<size_t>(lbl)] : noise_rgb;
+      float rgb_float;
+      std::memcpy(&rgb_float, &packed, sizeof(float));
+      *out_rgb = rgb_float; ++out_rgb;
     }
 
     pub_->publish(std::move(out));

@@ -292,27 +292,34 @@ void LCPlannerNode::on_timer()
     CostmapGenerator::apply_entry_walls(costmap, left_seed, right_seed, params_);
   }
 
-  // 3c. Goal 계산: 좌/우 체인 끝점의 중점
+  // ── 3c. Goal 계산 ──
+  // A* 탐색의 목표점(local_goal)을 결정한다.
+  // 좌/우 backbone의 끝점(.back())을 기준으로 트랙 중앙을 추정한다.
+  //
+  // Case 1: 양쪽 backbone 모두 존재
+  //   goal = 좌/우 끝점의 중점 ((lx+rx)/2, (ly+ry)/2)
+  //
+  // Case 2/3: 한쪽만 존재
+  //   goal.x = 해당 끝점.x
+  //   goal.y = 해당 끝점.y × 0.5       ← y를 절반으로 줄여 중앙 쪽으로 보정
+  //   (좌측 y>0, 우측 y<0 이므로 ×0.5는 항상 중심선 방향)
   Point2D goal = {0.0, 0.0};
   bool have_goal = false;
   if (!dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
-    // 양쪽 다 있는 경우: min_x에서의 좌/우 y 좌표 중점
     double lx = dc_result.left.backbone.back().x;
     double rx = dc_result.right.backbone.back().x;
-    double min_x = std::min(lx, rx);
     double ly = dc_result.left.backbone.back().y;
     double ry = dc_result.right.backbone.back().y;
-    // min_x에 가까운 쪽의 y 좌표 사용, 먼 쪽은 backbone 끝의 y 그대로
-    goal.x = min_x;
-    goal.y = (ly + ry) / 2.0;
+    goal.x = (lx + rx) / 2.0;
+    goal.y = (ly + ry) / 2.0; // 양쪽 끝점의 중점
     have_goal = true;
   } else if (!dc_result.left.backbone.empty()) {
     goal.x = dc_result.left.backbone.back().x;
-    goal.y = dc_result.left.backbone.back().y * 0.5;  // 좌측만 → 중앙 쪽으로 보정
+    goal.y = dc_result.left.backbone.back().y * 0.5;
     have_goal = true;
   } else if (!dc_result.right.backbone.empty()) {
     goal.x = dc_result.right.backbone.back().x;
-    goal.y = dc_result.right.backbone.back().y * 0.5;  // 우측만 → 중앙 쪽으로 보정
+    goal.y = dc_result.right.backbone.back().y * 0.5;
     have_goal = true;
   }
 

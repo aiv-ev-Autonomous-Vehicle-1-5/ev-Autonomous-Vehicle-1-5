@@ -200,7 +200,7 @@
           </geometry>
         </visual>
         <visual name='base_footprint_fixed_joint_lump__velodyne_visual_3'>
-          <pose>0.7 0 0.9775 0 -0 0</pose>
+          <pose>0 0 0.9775 0 -0 0</pose>
           <geometry>
             <cylinder>
               <length>0.015</length>
@@ -215,7 +215,7 @@
           </material>
         </visual>
         <visual name='base_footprint_fixed_joint_lump__velodyne_visual_4'>
-          <pose>0.7 0 1.0475 0 -0 0</pose>
+          <pose>0 0 1.0475 0 -0 0</pose>
           <geometry>
             <cylinder>
               <length>0.015</length>
@@ -230,7 +230,7 @@
           </material>
         </visual>
         <visual name='base_footprint_fixed_joint_lump__velodyne_optical_visual_5'>
-          <pose>0.7 0 1.0125 0 -0 0</pose>
+          <pose>0 0 1.0125 0 -0 0</pose>
           <geometry>
             <cylinder>
               <length>0.055</length>
@@ -284,7 +284,7 @@
             <min_range>1.0</min_range>
             <max_range>50.0</max_range>
           </plugin>
-          <pose>0.7 0 1.0125 0 -0 0</pose>
+          <pose>0 0 1.0125 0 -0 0</pose>
         </sensor>
         <self_collide>0</self_collide>
         <enable_wind>0</enable_wind>
@@ -762,67 +762,678 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>-0.002233 -0.012121 0 0 -0 0</pose>
+      <pose>-7.99058 0.956665 0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o_clone'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-8 -1 -0 0 -1e-06 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_0'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-6 -1 -0 0 -1e-06 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_1'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-6 1 -0 0 -1e-06 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_2'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-4 1 -0 0 -1e-06 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_3'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-4 -1 -0 0 -1e-06 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_4'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-2 -1 -0 0 -1e-06 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_5'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-2 1 -0 0 -1e-06 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_6'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>0 1 -0 0 -1e-06 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_7'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>0 -1 -0 0 -1e-06 0</pose>
     </model>
     <state world_name='empty'>
-      <sim_time>250 835000000</sim_time>
-      <real_time>251 222416222</real_time>
-      <wall_time>1771592701 881090454</wall_time>
-      <iterations>250835</iterations>
+      <sim_time>226 72000000</sim_time>
+      <real_time>181 607704512</real_time>
+      <wall_time>1772349430 175970675</wall_time>
+      <iterations>181035</iterations>
       <model name='Construction Cone o'>
-        <pose>-0.002233 -0.012121 -0 0 -1e-06 0</pose>
+        <pose>-7.99058 0.956665 -4e-06 3e-06 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>-0.002233 -0.012121 -0 0 -1e-06 0</pose>
+          <pose>-7.99058 0.956665 -4e-06 3e-06 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone'>
+        <pose>-8.01596 -2.08866 -0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-8.01596 -2.08866 -0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 -1e-06 8.74363 -2.36069 -0.586064 -1e-06</acceleration>
+          <wrench>-0 -1e-06 8.74363 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_0'>
+        <pose>-6 -1.97658 -0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-6 -1.97658 -0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 -0 -0.008512 -2.58585 1.13682 3.14159</acceleration>
+          <wrench>0 -0 -0.008512 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_1'>
+        <pose>-6 1 -0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-6 1 -0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_2'>
+        <pose>-4 1 -1e-05 -1e-06 0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-4 1 -1e-05 -1e-06 0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_3'>
+        <pose>-4.03214 -2.00861 -0 0 -1e-06 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-4.03214 -2.00861 -0 0 -1e-06 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0.008512 2.58585 -1.13682 -3.14159</acceleration>
+          <wrench>-0 0 0.008512 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_4'>
+        <pose>-1.95205 -2.08867 -8e-06 1e-06 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-1.95205 -2.08867 -8e-06 1e-06 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_5'>
+        <pose>-2 1 -0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-2 1 -0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 -0.005121 -0.026965 0.010033 0</acceleration>
+          <wrench>-0 0 -0.005121 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6'>
+        <pose>-0 1 -0 0 -1e-06 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-0 1 -0 0 -1e-06 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0.008512 2.58585 -1.13682 -3.14159</acceleration>
+          <wrench>-0 0 0.008512 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6_clone'>
+        <pose>-1 1 -0 -0 -0 -0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-1 1 -0 -0 -0 -0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-1e-06 -1e-06 8.07312 -2.78384 -1.14595 -1e-06</acceleration>
+          <wrench>-1e-06 -1e-06 8.07312 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6_clone_0'>
+        <pose>-3 1 -0 0 -1e-06 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-3 1 -0 0 -1e-06 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 0 0.008512 2.58585 -1.13682 -3.14159</acceleration>
+          <wrench>-0 0 0.008512 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6_clone_1'>
+        <pose>-5 1 -0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-5 1 -0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 -1e-06 8.85589 -2.33318 -0.4351 -1e-06</acceleration>
+          <wrench>-0 -1e-06 8.85589 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6_clone_2'>
+        <pose>-7 1 -6e-06 2e-06 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-7 1 -6e-06 2e-06 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6_clone_3'>
+        <pose>-7 -2 -8e-06 0 2e-06 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-7 -2 -8e-06 0 2e-06 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6_clone_4'>
+        <pose>-5 -2 -0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-5 -2 -0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0 -0 -9.79994 1.6e-05 1.1e-05 -0</acceleration>
+          <wrench>-0 -0 -9.79994 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6_clone_5'>
+        <pose>-3 -2 -0 -0 -0 -0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-3 -2 -0 -0 -0 -0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-1e-06 -1e-06 8.46748 -2.48858 -0.876788 -1e-06</acceleration>
+          <wrench>-1e-06 -1e-06 8.46748 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_6_clone_6'>
+        <pose>-1 -2 -0 -0 -0 -0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-1 -2 -0 -0 -0 -0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0.047219 -0.210176 0.032244 0</acceleration>
+          <wrench>0 0 0.047219 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='Construction Cone o_clone_7'>
+        <pose>-0.096049 -2.00863 -0 0 -1e-06 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>-0.096049 -2.00863 -0 0 -1e-06 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>-0 0 0.008512 2.58585 -1.13682 -3.14159</acceleration>
           <wrench>-0 0 0.008512 0 -0 0</wrench>
         </link>
       </model>
       <model name='erp42'>
-        <pose>-10.7376 0.018602 -8.5e-05 -0 0.000164 -0.000894</pose>
+        <pose>-10.2262 -0.586265 -8.5e-05 -1e-06 0.000165 0.005783</pose>
         <scale>1 1 1</scale>
         <link name='base_footprint'>
-          <pose>-10.7376 0.018602 -8.5e-05 -0 0.000164 -0.000894</pose>
-          <velocity>0.00013 0.001674 0.000906 0.007383 0.005057 0.000373</velocity>
-          <acceleration>-0.033163 -0.402453 5.44582 -0.769103 -0.758042 -2.58759</acceleration>
-          <wrench>-5.30604 -64.3925 871.33 0 -0 0</wrench>
+          <pose>-10.2262 -0.586265 -8.5e-05 -1e-06 0.000165 0.005783</pose>
+          <velocity>1.7e-05 2.8e-05 -0.001017 -1.2e-05 0.002005 6.1e-05</velocity>
+          <acceleration>-0.000134 0.000633 1.32801 3.13806 -0.794778 3.13365</acceleration>
+          <wrench>-0.021453 0.101274 212.481 0 -0 0</wrench>
         </link>
         <link name='front_left_steering_hub'>
-          <pose>-10.2171 0.510638 0.270068 -9e-06 0.000164 0.001024</pose>
-          <velocity>0.001554 0.000535 0.013728 -0.005045 0.005033 -0.000207</velocity>
-          <acceleration>0.031219 1.0286 68.4601 -0.68711 -0.705774 2.96262</acceleration>
-          <wrench>0.003122 0.10286 6.84601 0 -0 0</wrench>
+          <pose>-9.70906 -0.090765 0.270069 -1.2e-05 0.000164 0.005684</pose>
+          <velocity>0.000521 0.000567 0.015371 -0.002339 0.00198 -3e-06</velocity>
+          <acceleration>-0.007603 0.866147 67.1808 -0.954566 -0.729431 3.09552</acceleration>
+          <wrench>-0.00076 0.086615 6.71808 0 -0 0</wrench>
         </link>
         <link name='front_left_wheel'>
-          <pose>-10.2171 0.510637 0.270001 -1.3e-05 1.10045 0.001012</pose>
-          <velocity>0.001482 0.000351 0.010275 -0.0013 0.005485 -7.4e-05</velocity>
-          <acceleration>-0.069442 0.710219 51.9885 1.91958 -0.019301 -0.017927</acceleration>
-          <wrench>-0.486096 4.97153 363.919 0 -0 0</wrench>
+          <pose>-9.70906 -0.090765 0.270001 -1e-05 0.496533 0.005679</pose>
+          <velocity>0.000524 0.000426 0.010312 -0.001579 0.001939 3e-06</velocity>
+          <acceleration>-0.00405 0.622153 48.6941 -2.77366 -0.02322 -0.039555</acceleration>
+          <wrench>-0.02835 4.35507 340.859 0 -0 0</wrench>
         </link>
         <link name='front_right_steering_hub'>
-          <pose>-10.218 -0.474364 0.270069 4e-06 0.000164 0.000434</pose>
-          <velocity>0.00147 -0.000623 0.016735 -0.000364 0.005058 -0.000134</velocity>
-          <acceleration>-0.058928 -0.672744 65.9219 -0.105841 -0.794035 3.03565</acceleration>
-          <wrench>-0.005893 -0.067274 6.59219 0 -0 0</wrench>
+          <pose>-9.70336 -1.07575 0.270068 1e-06 0.000165 0.005683</pose>
+          <velocity>0.000596 -0.0006 0.01537 0.002385 0.00203 -3e-06</velocity>
+          <acceleration>0.007439 -0.837976 67.0747 -0.367038 -0.851356 3.09572</acceleration>
+          <wrench>0.000744 -0.083798 6.70747 0 -0 0</wrench>
         </link>
         <link name='front_right_wheel'>
-          <pose>-10.218 -0.474363 0.270001 3.14159 1.09927 0.000434</pose>
-          <velocity>0.001531 -0.000487 0.010343 0.001804 0.005674 -4.4e-05</velocity>
-          <acceleration>0.030301 -0.513618 45.9179 0.176323 -0.113698 0.011343</acceleration>
-          <wrench>0.212107 -3.59533 321.426 0 -0 0</wrench>
+          <pose>-9.70336 -1.07575 0.270001 3.14159 0.517604 0.005682</pose>
+          <velocity>0.000593 -0.000418 0.010311 0.001547 0.002198 3e-06</velocity>
+          <acceleration>0.004204 -0.603665 48.6175 1.76534 0.015091 -0.039697</acceleration>
+          <wrench>0.029426 -4.22566 340.323 0 -0 0</wrench>
         </link>
         <link name='rear_left_wheel'>
-          <pose>-11.2571 0.511565 0.27 -1.7e-05 1.09109 -0.000909</pose>
-          <velocity>0.001318 -0.000708 0.007354 0.002623 0.004891 0.000135</velocity>
-          <acceleration>-0.298108 -1.06432 14.9152 2.98484 -1.05539 0.36136</acceleration>
-          <wrench>-2.08676 -7.45022 104.406 0 -0 0</wrench>
+          <pose>-10.749 -0.096781 0.27 -1e-05 0.494412 0.005778</pose>
+          <velocity>0.000528 1e-05 -1.2e-05 -1.3e-05 0.002071 6.2e-05</velocity>
+          <acceleration>0.002278 0.032397 -0.022991 -0.125162 0.143898 -0.00491</acceleration>
+          <wrench>0.015949 0.226781 -0.160934 0 -0 0</wrench>
         </link>
         <link name='rear_right_wheel'>
-          <pose>-11.258 -0.473433 0.27 3.14159 1.08743 -0.000896</pose>
-          <velocity>0.001667 -0.000793 -0.000376 0.002979 0.006059 0.000348</velocity>
-          <acceleration>0.229817 -0.829226 -0.207065 -0.561128 0.810729 0.589231</acceleration>
-          <wrench>1.60872 -5.80458 -1.44946 0 -0 0</wrench>
+          <pose>-10.7433 -1.08176 0.270001 -3.14159 0.512741 0.005786</pose>
+          <velocity>0.000589 -8e-06 -5e-06 8e-06 0.002098 6.2e-05</velocity>
+          <acceleration>-0.003253 -0.022416 -0.005794 0.087835 -0.117316 -0.004468</acceleration>
+          <wrench>-0.022774 -0.156912 -0.040555 0 -0 0</wrench>
         </link>
       </model>
       <model name='ground_plane'>
@@ -841,10 +1452,402 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-2.66043 -1.72656 40.0669 3.14159 1.57079 3.14159</pose>
+        <pose>-5.93274 -1.15546 9.4892 3.14159 1.57079 3.14159</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
+    <model name='Construction Cone o_clone_6_clone'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-1 1 -0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_6_clone_0'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-3 1 -0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_6_clone_1'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-5 1 -0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_6_clone_2'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-7 1 -0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_6_clone_3'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-7 -2 -0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_6_clone_4'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-5 -2 -0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_6_clone_5'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-3 -2 -0 0 -0 0</pose>
+    </model>
+    <model name='Construction Cone o_clone_6_clone_6'>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <scale>10 10 10</scale>
+              <uri>model://construction_cone_o/meshes/construction_cone.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+          <mass>1</mass>
+        </inertial>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>-1 -2 -0 0 -0 0</pose>
+    </model>
   </world>
 </sdf>
