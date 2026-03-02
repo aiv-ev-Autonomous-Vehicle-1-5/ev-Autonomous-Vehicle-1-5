@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-1963d3504a7c820ae6bb.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "gps_localization",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "gps_localization_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gps_localization_uninstall-5edd9833ab0b7328eaf0.json",
+					"name" : "gps_localization_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-26d32a7c6f833d4da206.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "utm_localizer_lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-utm_localizer_lib-0968999b647725bf2f46.json",
+					"name" : "utm_localizer_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "utm_localizer_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-utm_localizer_node-2a0e2362619550b44f7c.json",
+					"name" : "utm_localizer_node",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization",
+		"source" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

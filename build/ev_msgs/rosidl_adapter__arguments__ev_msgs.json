@@ -1,0 +1,9 @@
+{
+  "package_name": "ev_msgs",
+  "non_idl_tuples": [
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs:msg/BBox.msg",
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs:msg/BBoxArray.msg",
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs:msg/LaneBoundary.msg",
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs:msg/LaneBoundaryArray.msg"
+  ]
+}

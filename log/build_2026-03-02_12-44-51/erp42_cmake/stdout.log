@@ -1,0 +1,5 @@
+-- Found ament_cmake_auto: 1.3.12 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake

@@ -1,0 +1,953 @@
+[0.044s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.044s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=10, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0xffff7dfa8400>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff7df261d0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff7df261d0>>, mixin_verb=('build',))
+[0.104s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.104s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.104s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.104s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.104s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.104s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.104s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5'
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.104s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extensions ['ignore', 'ignore_ament_install']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extension 'ignore'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extension 'ignore_ament_install'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extensions ['colcon_pkg']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extension 'colcon_pkg'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extensions ['colcon_meta']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extension 'colcon_meta'
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extensions ['ros']
+[0.117s] Level 1:colcon.colcon_core.package_identification:_identify(carsa_gazebo) by extension 'ros'
+[0.120s] DEBUG:colcon.colcon_core.package_identification:Package 'carsa_gazebo' with type 'ros.ament_cmake' and name 'carsa_gazebo'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extensions ['ignore', 'ignore_ament_install']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extension 'ignore'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extension 'ignore_ament_install'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extensions ['colcon_pkg']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extension 'colcon_pkg'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extensions ['colcon_meta']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extension 'colcon_meta'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extensions ['ros']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extension 'ros'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extensions ['cmake', 'python']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extension 'cmake'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extension 'python'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extensions ['python_setup_py']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros) by extension 'python_setup_py'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extensions ['ignore', 'ignore_ament_install']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extension 'ignore'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extension 'ignore_ament_install'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extensions ['colcon_pkg']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extension 'colcon_pkg'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extensions ['colcon_meta']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extension 'colcon_meta'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extensions ['ros']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extension 'ros'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extensions ['cmake', 'python']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extension 'cmake'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extension 'python'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extensions ['python_setup_py']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/docker) by extension 'python_setup_py'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extensions ['ignore', 'ignore_ament_install']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extension 'ignore'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extension 'ignore_ament_install'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extensions ['colcon_pkg']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extension 'colcon_pkg'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extensions ['colcon_meta']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extension 'colcon_meta'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extensions ['ros']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extension 'ros'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extensions ['cmake', 'python']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extension 'cmake'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extension 'python'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extensions ['python_setup_py']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src) by extension 'python_setup_py'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extensions ['ignore', 'ignore_ament_install']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extension 'ignore'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extension 'ignore_ament_install'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extensions ['colcon_pkg']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extension 'colcon_pkg'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extensions ['colcon_meta']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extension 'colcon_meta'
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extensions ['ros']
+[0.120s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_cmake) by extension 'ros'
+[0.121s] DEBUG:colcon.colcon_core.package_identification:Package 'erp42_ros/src/erp42_cmake' with type 'ros.ament_cmake' and name 'erp42_cmake'
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extensions ['ignore', 'ignore_ament_install']
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extension 'ignore'
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extension 'ignore_ament_install'
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extensions ['colcon_pkg']
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extension 'colcon_pkg'
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extensions ['colcon_meta']
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extension 'colcon_meta'
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extensions ['ros']
+[0.121s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_description) by extension 'ros'
+[0.121s] DEBUG:colcon.colcon_core.package_identification:Package 'erp42_ros/src/erp42_description' with type 'ros.ament_cmake' and name 'erp42_description'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extensions ['ignore', 'ignore_ament_install']
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extension 'ignore'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extension 'ignore_ament_install'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extensions ['colcon_pkg']
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extension 'colcon_pkg'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extensions ['colcon_meta']
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extension 'colcon_meta'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extensions ['ros']
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_gazebo) by extension 'ros'
+[0.122s] DEBUG:colcon.colcon_core.package_identification:Package 'erp42_ros/src/erp42_gazebo' with type 'ros.ament_cmake' and name 'erp42_gazebo'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extensions ['ignore', 'ignore_ament_install']
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extension 'ignore'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extension 'ignore_ament_install'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extensions ['colcon_pkg']
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extension 'colcon_pkg'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extensions ['colcon_meta']
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extension 'colcon_meta'
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extensions ['ros']
+[0.122s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_msgs) by extension 'ros'
+[0.123s] DEBUG:colcon.colcon_core.package_identification:Package 'erp42_ros/src/erp42_msgs' with type 'ros.ament_cmake' and name 'erp42_msgs'
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extensions ['ignore', 'ignore_ament_install']
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extension 'ignore'
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extension 'ignore_ament_install'
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extensions ['colcon_pkg']
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extension 'colcon_pkg'
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extensions ['colcon_meta']
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extension 'colcon_meta'
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extensions ['ros']
+[0.123s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_rqt_plugin) by extension 'ros'
+[0.124s] DEBUG:colcon.colcon_core.package_identification:Package 'erp42_ros/src/erp42_rqt_plugin' with type 'ros.ament_cmake' and name 'erp42_rqt_plugin'
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extensions ['ignore', 'ignore_ament_install']
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extension 'ignore'
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extension 'ignore_ament_install'
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extensions ['colcon_pkg']
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extension 'colcon_pkg'
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extensions ['colcon_meta']
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extension 'colcon_meta'
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extensions ['ros']
+[0.124s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_serial) by extension 'ros'
+[0.125s] DEBUG:colcon.colcon_core.package_identification:Package 'erp42_ros/src/erp42_serial' with type 'ros.ament_cmake' and name 'erp42_serial'
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extensions ['ignore', 'ignore_ament_install']
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extension 'ignore'
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extension 'ignore_ament_install'
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extensions ['colcon_pkg']
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extension 'colcon_pkg'
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extensions ['colcon_meta']
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extension 'colcon_meta'
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extensions ['ros']
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(erp42_ros/src/erp42_util) by extension 'ros'
+[0.125s] DEBUG:colcon.colcon_core.package_identification:Package 'erp42_ros/src/erp42_util' with type 'ros.ament_cmake' and name 'erp42_util'
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extensions ['ignore', 'ignore_ament_install']
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extension 'ignore'
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extension 'ignore_ament_install'
+[0.125s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extensions ['colcon_pkg']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extension 'colcon_pkg'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extensions ['colcon_meta']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extension 'colcon_meta'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extensions ['ros']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(ev_msgs) by extension 'ros'
+[0.126s] DEBUG:colcon.colcon_core.package_identification:Package 'ev_msgs' with type 'ros.ament_cmake' and name 'ev_msgs'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extension 'ignore_ament_install'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extensions ['colcon_pkg']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extension 'colcon_pkg'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extensions ['colcon_meta']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extension 'colcon_meta'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extensions ['ros']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extension 'ros'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extensions ['cmake', 'python']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extension 'cmake'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extension 'python'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extensions ['python_setup_py']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization) by extension 'python_setup_py'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/build) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/build) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/build) ignored
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/install) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/install) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/install) ignored
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/log) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/log) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/log) ignored
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extensions ['ignore', 'ignore_ament_install']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extension 'ignore'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extension 'ignore_ament_install'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extensions ['colcon_pkg']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extension 'colcon_pkg'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extensions ['colcon_meta']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extension 'colcon_meta'
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extensions ['ros']
+[0.126s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extension 'ros'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extensions ['cmake', 'python']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extension 'cmake'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extension 'python'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extensions ['python_setup_py']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src) by extension 'python_setup_py'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extensions ['ignore', 'ignore_ament_install']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extension 'ignore'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extension 'ignore_ament_install'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extensions ['colcon_pkg']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extension 'colcon_pkg'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extensions ['colcon_meta']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extension 'colcon_meta'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extensions ['ros']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(localization/src/gps_localization) by extension 'ros'
+[0.127s] DEBUG:colcon.colcon_core.package_identification:Package 'localization/src/gps_localization' with type 'ros.ament_cmake' and name 'gps_localization'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['ignore', 'ignore_ament_install']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'ignore'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'ignore_ament_install'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['colcon_pkg']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'colcon_pkg'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['colcon_meta']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'colcon_meta'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['ros']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'ros'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['cmake', 'python']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'cmake'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'python'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extensions ['python_setup_py']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception) by extension 'python_setup_py'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/build) by extensions ['ignore', 'ignore_ament_install']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/build) by extension 'ignore'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/build) ignored
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/install) by extensions ['ignore', 'ignore_ament_install']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/install) by extension 'ignore'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/install) ignored
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/log) by extensions ['ignore', 'ignore_ament_install']
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/log) by extension 'ignore'
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/log) ignored
+[0.127s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extensions ['ignore', 'ignore_ament_install']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extension 'ignore'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extension 'ignore_ament_install'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extensions ['colcon_pkg']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extension 'colcon_pkg'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extensions ['colcon_meta']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extension 'colcon_meta'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extensions ['ros']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extension 'ros'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extensions ['cmake', 'python']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extension 'cmake'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extension 'python'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extensions ['python_setup_py']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src) by extension 'python_setup_py'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extensions ['ignore', 'ignore_ament_install']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extension 'ignore'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extension 'ignore_ament_install'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extensions ['colcon_pkg']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extension 'colcon_pkg'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extensions ['colcon_meta']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extension 'colcon_meta'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extensions ['ros']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extension 'ros'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extensions ['cmake', 'python']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extension 'cmake'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extension 'python'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extensions ['python_setup_py']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar) by extension 'python_setup_py'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extensions ['ignore', 'ignore_ament_install']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extension 'ignore'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extension 'ignore_ament_install'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extensions ['colcon_pkg']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extension 'colcon_pkg'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extensions ['colcon_meta']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extension 'colcon_meta'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extensions ['ros']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/cluster_splitter) by extension 'ros'
+[0.128s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/cluster_splitter' with type 'ros.ament_cmake' and name 'cluster_splitter'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extensions ['ignore', 'ignore_ament_install']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extension 'ignore'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extension 'ignore_ament_install'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extensions ['colcon_pkg']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extension 'colcon_pkg'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extensions ['colcon_meta']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extension 'colcon_meta'
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extensions ['ros']
+[0.128s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/dbscan_clustering) by extension 'ros'
+[0.129s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/dbscan_clustering' with type 'ros.ament_cmake' and name 'dbscan_clustering'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extensions ['ignore', 'ignore_ament_install']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extension 'ignore'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extension 'ignore_ament_install'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extensions ['colcon_pkg']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extension 'colcon_pkg'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extensions ['colcon_meta']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extension 'colcon_meta'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extensions ['ros']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/lidar_voxel_grid) by extension 'ros'
+[0.129s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/lidar_voxel_grid' with type 'ros.ament_cmake' and name 'lidar_voxel_grid'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extensions ['ignore', 'ignore_ament_install']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extension 'ignore'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extension 'ignore_ament_install'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extensions ['colcon_pkg']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extension 'colcon_pkg'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extensions ['colcon_meta']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extension 'colcon_meta'
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extensions ['ros']
+[0.129s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/make_bbox) by extension 'ros'
+[0.130s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/make_bbox' with type 'ros.ament_cmake' and name 'make_bbox'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extensions ['ignore', 'ignore_ament_install']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extension 'ignore'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extension 'ignore_ament_install'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extensions ['colcon_pkg']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extension 'colcon_pkg'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extensions ['colcon_meta']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extension 'colcon_meta'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extensions ['ros']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extension 'ros'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extensions ['cmake', 'python']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extension 'cmake'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extension 'python'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extensions ['python_setup_py']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master) by extension 'python_setup_py'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extensions ['ignore', 'ignore_ament_install']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extension 'ignore'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extension 'ignore_ament_install'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extensions ['colcon_pkg']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extension 'colcon_pkg'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extensions ['colcon_meta']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extension 'colcon_meta'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extensions ['ros']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extension 'ros'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extensions ['cmake', 'python']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extension 'cmake'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extension 'python'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extensions ['python_setup_py']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master) by extension 'python_setup_py'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp) by extensions ['ignore', 'ignore_ament_install']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp) by extension 'ignore'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp) ignored
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extensions ['ignore', 'ignore_ament_install']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extension 'ignore'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extension 'ignore_ament_install'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extensions ['colcon_pkg']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extension 'colcon_pkg'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extensions ['colcon_meta']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extension 'colcon_meta'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extensions ['ros']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extension 'ros'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extensions ['cmake', 'python']
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extension 'cmake'
+[0.130s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extension 'python'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extensions ['python_setup_py']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/data) by extension 'python_setup_py'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extensions ['ignore', 'ignore_ament_install']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extension 'ignore'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extension 'ignore_ament_install'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extensions ['colcon_pkg']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extension 'colcon_pkg'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extensions ['colcon_meta']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extension 'colcon_meta'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extensions ['ros']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extension 'ros'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extensions ['cmake', 'python']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extension 'cmake'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extension 'python'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extensions ['python_setup_py']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/pictures) by extension 'python_setup_py'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/python) by extensions ['ignore', 'ignore_ament_install']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/python) by extension 'ignore'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/python) ignored
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extensions ['ignore', 'ignore_ament_install']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extension 'ignore'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extension 'ignore_ament_install'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extensions ['colcon_pkg']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extension 'colcon_pkg'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extensions ['colcon_meta']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extension 'colcon_meta'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extensions ['ros']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros) by extension 'ros'
+[0.131s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros' with type 'ros.ament_cmake' and name 'patchworkpp'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extensions ['ignore', 'ignore_ament_install']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extension 'ignore'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extension 'ignore_ament_install'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extensions ['colcon_pkg']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extension 'colcon_pkg'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extensions ['colcon_meta']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extension 'colcon_meta'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extensions ['ros']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extension 'ros'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extensions ['cmake', 'python']
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extension 'cmake'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extension 'python'
+[0.131s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extensions ['python_setup_py']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/scripts) by extension 'python_setup_py'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extensions ['ignore', 'ignore_ament_install']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extension 'ignore'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extension 'ignore_ament_install'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extensions ['colcon_pkg']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extension 'colcon_pkg'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extensions ['colcon_meta']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extension 'colcon_meta'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extensions ['ros']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne) by extension 'ros'
+[0.132s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/velodyne' with type 'ros.ament_cmake' and name 'velodyne'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extensions ['ignore', 'ignore_ament_install']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extension 'ignore'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extension 'ignore_ament_install'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extensions ['colcon_pkg']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extension 'colcon_pkg'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extensions ['colcon_meta']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extension 'colcon_meta'
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extensions ['ros']
+[0.132s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_cropbox) by extension 'ros'
+[0.133s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/velodyne_cropbox' with type 'ros.ament_cmake' and name 'velodyne_cropbox'
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extensions ['ignore', 'ignore_ament_install']
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extension 'ignore'
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extension 'ignore_ament_install'
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extensions ['colcon_pkg']
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extension 'colcon_pkg'
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extensions ['colcon_meta']
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extension 'colcon_meta'
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extensions ['ros']
+[0.133s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_driver) by extension 'ros'
+[0.133s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/velodyne_driver' with type 'ros.ament_cmake' and name 'velodyne_driver'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extensions ['ignore', 'ignore_ament_install']
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extension 'ignore'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extension 'ignore_ament_install'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extensions ['colcon_pkg']
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extension 'colcon_pkg'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extensions ['colcon_meta']
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extension 'colcon_meta'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extensions ['ros']
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_msgs) by extension 'ros'
+[0.134s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/velodyne_msgs' with type 'ros.ament_cmake' and name 'velodyne_msgs'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extensions ['ignore', 'ignore_ament_install']
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extension 'ignore'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extension 'ignore_ament_install'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extensions ['colcon_pkg']
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extension 'colcon_pkg'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extensions ['colcon_meta']
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extension 'colcon_meta'
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extensions ['ros']
+[0.134s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar/velodyne_pointcloud) by extension 'ros'
+[0.135s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar/velodyne_pointcloud' with type 'ros.ament_cmake' and name 'velodyne_pointcloud'
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extensions ['ignore', 'ignore_ament_install']
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extension 'ignore'
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extension 'ignore_ament_install'
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extensions ['colcon_pkg']
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extension 'colcon_pkg'
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extensions ['colcon_meta']
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extension 'colcon_meta'
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extensions ['ros']
+[0.135s] Level 1:colcon.colcon_core.package_identification:_identify(perception/src/lidar_launch) by extension 'ros'
+[0.135s] DEBUG:colcon.colcon_core.package_identification:Package 'perception/src/lidar_launch' with type 'ros.ament_cmake' and name 'lidar_launch'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['ignore', 'ignore_ament_install']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'ignore'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'ignore_ament_install'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['colcon_pkg']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'colcon_pkg'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['colcon_meta']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'colcon_meta'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['ros']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'ros'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['cmake', 'python']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'cmake'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'python'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extensions ['python_setup_py']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning) by extension 'python_setup_py'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/build) by extensions ['ignore', 'ignore_ament_install']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/build) by extension 'ignore'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/build) ignored
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/install) by extensions ['ignore', 'ignore_ament_install']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/install) by extension 'ignore'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/install) ignored
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/log) by extensions ['ignore', 'ignore_ament_install']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/log) by extension 'ignore'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/log) ignored
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extensions ['ignore', 'ignore_ament_install']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extension 'ignore'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extension 'ignore_ament_install'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extensions ['colcon_pkg']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extension 'colcon_pkg'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extensions ['colcon_meta']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extension 'colcon_meta'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extensions ['ros']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extension 'ros'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extensions ['cmake', 'python']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extension 'cmake'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extension 'python'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extensions ['python_setup_py']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src) by extension 'python_setup_py'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extensions ['ignore', 'ignore_ament_install']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extension 'ignore'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extension 'ignore_ament_install'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extensions ['colcon_pkg']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extension 'colcon_pkg'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extensions ['colcon_meta']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extension 'colcon_meta'
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extensions ['ros']
+[0.136s] Level 1:colcon.colcon_core.package_identification:_identify(planning/src/chaining_costmap_ver) by extension 'ros'
+[0.136s] DEBUG:colcon.colcon_core.package_identification:Package 'planning/src/chaining_costmap_ver' with type 'ros.ament_cmake' and name 'chaining_costmap_ver'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extensions ['ignore', 'ignore_ament_install']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extension 'ignore'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extension 'ignore_ament_install'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extensions ['colcon_pkg']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extension 'colcon_pkg'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extensions ['colcon_meta']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extension 'colcon_meta'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extensions ['ros']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extension 'ros'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extensions ['cmake', 'python']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extension 'cmake'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extension 'python'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extensions ['python_setup_py']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros) by extension 'python_setup_py'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extensions ['ignore', 'ignore_ament_install']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extension 'ignore'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extension 'ignore_ament_install'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extensions ['colcon_pkg']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extension 'colcon_pkg'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extensions ['colcon_meta']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extension 'colcon_meta'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extensions ['ros']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extension 'ros'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extensions ['cmake', 'python']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extension 'cmake'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extension 'python'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extensions ['python_setup_py']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/docker) by extension 'python_setup_py'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extensions ['ignore', 'ignore_ament_install']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extension 'ignore'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extension 'ignore_ament_install'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extensions ['colcon_pkg']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extension 'colcon_pkg'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extensions ['colcon_meta']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extension 'colcon_meta'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extensions ['ros']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extension 'ros'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extensions ['cmake', 'python']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extension 'cmake'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extension 'python'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extensions ['python_setup_py']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src) by extension 'python_setup_py'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extensions ['ignore', 'ignore_ament_install']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extension 'ignore'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extension 'ignore_ament_install'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extensions ['colcon_pkg']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extension 'colcon_pkg'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extensions ['colcon_meta']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extension 'colcon_meta'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extensions ['ros']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_cmake) by extension 'ros'
+[0.137s] DEBUG:colcon.colcon_core.package_identification:Package 't870_ros/src/t870_cmake' with type 'ros.ament_cmake' and name 't870_cmake'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extensions ['ignore', 'ignore_ament_install']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extension 'ignore'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extension 'ignore_ament_install'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extensions ['colcon_pkg']
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extension 'colcon_pkg'
+[0.137s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extensions ['colcon_meta']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extension 'colcon_meta'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extensions ['ros']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_msgs) by extension 'ros'
+[0.138s] DEBUG:colcon.colcon_core.package_identification:Package 't870_ros/src/t870_msgs' with type 'ros.ament_cmake' and name 't870_msgs'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extensions ['ignore', 'ignore_ament_install']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extension 'ignore'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extension 'ignore_ament_install'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extensions ['colcon_pkg']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extension 'colcon_pkg'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extensions ['colcon_meta']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extension 'colcon_meta'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extensions ['ros']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_rqt_plugin) by extension 'ros'
+[0.138s] DEBUG:colcon.colcon_core.package_identification:Package 't870_ros/src/t870_rqt_plugin' with type 'ros.ament_cmake' and name 't870_rqt_plugin'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extensions ['ignore', 'ignore_ament_install']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extension 'ignore'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extension 'ignore_ament_install'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extensions ['colcon_pkg']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extension 'colcon_pkg'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extensions ['colcon_meta']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extension 'colcon_meta'
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extensions ['ros']
+[0.138s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_serial) by extension 'ros'
+[0.139s] DEBUG:colcon.colcon_core.package_identification:Package 't870_ros/src/t870_serial' with type 'ros.ament_cmake' and name 't870_serial'
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extensions ['ignore', 'ignore_ament_install']
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extension 'ignore'
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extension 'ignore_ament_install'
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extensions ['colcon_pkg']
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extension 'colcon_pkg'
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extensions ['colcon_meta']
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extension 'colcon_meta'
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extensions ['ros']
+[0.139s] Level 1:colcon.colcon_core.package_identification:_identify(t870_ros/src/t870_util) by extension 'ros'
+[0.139s] DEBUG:colcon.colcon_core.package_identification:Package 't870_ros/src/t870_util' with type 'ros.ament_cmake' and name 't870_util'
+[0.139s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.139s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.139s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.139s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.139s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.147s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.147s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.148s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 277 installed packages in /opt/ros/humble
+[0.148s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'cmake_args' from command line to 'None'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'cmake_target' from command line to 'None'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'cmake_clean_cache' from command line to 'False'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'cmake_clean_first' from command line to 'False'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'cmake_force_configure' from command line to 'False'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'ament_cmake_args' from command line to 'None'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'catkin_cmake_args' from command line to 'None'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'carsa_gazebo' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.161s] DEBUG:colcon.colcon_core.verb:Building package 'carsa_gazebo' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/carsa_gazebo', 'symlink_install': False, 'test_result_base': None}
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'cmake_args' from command line to 'None'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'cmake_target' from command line to 'None'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'cmake_clean_cache' from command line to 'False'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'cmake_clean_first' from command line to 'False'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'cmake_force_configure' from command line to 'False'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'ament_cmake_args' from command line to 'None'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'catkin_cmake_args' from command line to 'None'
+[0.161s] Level 5:colcon.colcon_core.verb:set package 'cluster_splitter' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.161s] DEBUG:colcon.colcon_core.verb:Building package 'cluster_splitter' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/cluster_splitter', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/cluster_splitter', 'symlink_install': False, 'test_result_base': None}
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'cmake_target' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'cmake_clean_cache' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'cmake_clean_first' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'cmake_force_configure' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'ament_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'catkin_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'dbscan_clustering' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.162s] DEBUG:colcon.colcon_core.verb:Building package 'dbscan_clustering' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/dbscan_clustering', 'symlink_install': False, 'test_result_base': None}
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'cmake_target' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'cmake_clean_cache' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'cmake_clean_first' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'cmake_force_configure' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'ament_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'catkin_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_cmake' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.162s] DEBUG:colcon.colcon_core.verb:Building package 'erp42_cmake' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_cmake', 'symlink_install': False, 'test_result_base': None}
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'cmake_target' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'erp42_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.162s] DEBUG:colcon.colcon_core.verb:Building package 'erp42_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_msgs', 'symlink_install': False, 'test_result_base': None}
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'cmake_target' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'ev_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.162s] DEBUG:colcon.colcon_core.verb:Building package 'ev_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/ev_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs', 'symlink_install': False, 'test_result_base': None}
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'cmake_target' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'cmake_clean_cache' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'cmake_clean_first' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'cmake_force_configure' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'ament_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'catkin_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'gps_localization' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.162s] DEBUG:colcon.colcon_core.verb:Building package 'gps_localization' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization', 'symlink_install': False, 'test_result_base': None}
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'cmake_target' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'cmake_clean_cache' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'cmake_clean_first' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'cmake_force_configure' from command line to 'False'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'ament_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'catkin_cmake_args' from command line to 'None'
+[0.162s] Level 5:colcon.colcon_core.verb:set package 'lidar_voxel_grid' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.162s] DEBUG:colcon.colcon_core.verb:Building package 'lidar_voxel_grid' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/lidar_voxel_grid', 'symlink_install': False, 'test_result_base': None}
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'cmake_target' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'cmake_clean_cache' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'cmake_clean_first' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'cmake_force_configure' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'ament_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'catkin_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'patchworkpp' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.163s] DEBUG:colcon.colcon_core.verb:Building package 'patchworkpp' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros', 'symlink_install': False, 'test_result_base': None}
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'cmake_target' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'cmake_clean_cache' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'cmake_clean_first' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'cmake_force_configure' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'ament_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'catkin_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_cmake' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.163s] DEBUG:colcon.colcon_core.verb:Building package 't870_cmake' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_cmake', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_cmake', 'symlink_install': False, 'test_result_base': None}
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'cmake_target' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 't870_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.163s] DEBUG:colcon.colcon_core.verb:Building package 't870_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_msgs', 'symlink_install': False, 'test_result_base': None}
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'cmake_target' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'cmake_clean_cache' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'cmake_clean_first' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'cmake_force_configure' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'ament_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'catkin_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_cropbox' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.163s] DEBUG:colcon.colcon_core.verb:Building package 'velodyne_cropbox' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_cropbox', 'symlink_install': False, 'test_result_base': None}
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'cmake_target' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'velodyne_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.163s] DEBUG:colcon.colcon_core.verb:Building package 'velodyne_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_msgs', 'symlink_install': False, 'test_result_base': None}
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'cmake_target' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'cmake_clean_cache' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'cmake_clean_first' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'cmake_force_configure' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'ament_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'catkin_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'chaining_costmap_ver' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.163s] DEBUG:colcon.colcon_core.verb:Building package 'chaining_costmap_ver' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/chaining_costmap_ver', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/chaining_costmap_ver', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/planning/src/chaining_costmap_ver', 'symlink_install': False, 'test_result_base': None}
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'cmake_target' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'cmake_clean_cache' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'cmake_clean_first' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'cmake_force_configure' from command line to 'False'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'ament_cmake_args' from command line to 'None'
+[0.163s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'catkin_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.164s] DEBUG:colcon.colcon_core.verb:Building package 'erp42_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_description', 'symlink_install': False, 'test_result_base': None}
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'cmake_target' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'cmake_clean_cache' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'cmake_clean_first' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'cmake_force_configure' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'ament_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'catkin_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_util' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.164s] DEBUG:colcon.colcon_core.verb:Building package 'erp42_util' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_util', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_util', 'symlink_install': False, 'test_result_base': None}
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'cmake_target' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'cmake_clean_cache' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'cmake_clean_first' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'cmake_force_configure' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'ament_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'catkin_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'make_bbox' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.164s] DEBUG:colcon.colcon_core.verb:Building package 'make_bbox' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/make_bbox', 'symlink_install': False, 'test_result_base': None}
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'cmake_target' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'cmake_clean_cache' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'cmake_clean_first' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'cmake_force_configure' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'ament_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'catkin_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 't870_util' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.164s] DEBUG:colcon.colcon_core.verb:Building package 't870_util' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_util', 'symlink_install': False, 'test_result_base': None}
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'cmake_target' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'cmake_clean_cache' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'cmake_clean_first' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'cmake_force_configure' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'ament_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'catkin_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_driver' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.164s] DEBUG:colcon.colcon_core.verb:Building package 'velodyne_driver' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_driver', 'symlink_install': False, 'test_result_base': None}
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'cmake_target' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'cmake_clean_cache' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'cmake_clean_first' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'cmake_force_configure' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'ament_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'catkin_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'velodyne_pointcloud' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.164s] DEBUG:colcon.colcon_core.verb:Building package 'velodyne_pointcloud' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_pointcloud', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_pointcloud', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_pointcloud', 'symlink_install': False, 'test_result_base': None}
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'cmake_target' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'cmake_clean_cache' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'cmake_clean_first' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'cmake_force_configure' from command line to 'False'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'ament_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'catkin_cmake_args' from command line to 'None'
+[0.164s] Level 5:colcon.colcon_core.verb:set package 'erp42_gazebo' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.164s] DEBUG:colcon.colcon_core.verb:Building package 'erp42_gazebo' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_gazebo', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_gazebo', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_gazebo', 'symlink_install': False, 'test_result_base': None}
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'cmake_target' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'cmake_clean_cache' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'cmake_clean_first' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'cmake_force_configure' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'ament_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'catkin_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_rqt_plugin' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.165s] DEBUG:colcon.colcon_core.verb:Building package 'erp42_rqt_plugin' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_rqt_plugin', 'symlink_install': False, 'test_result_base': None}
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'cmake_target' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'cmake_clean_cache' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'cmake_clean_first' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'cmake_force_configure' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'ament_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'catkin_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'erp42_serial' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.165s] DEBUG:colcon.colcon_core.verb:Building package 'erp42_serial' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_serial', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_serial', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_serial', 'symlink_install': False, 'test_result_base': None}
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'cmake_target' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'cmake_clean_cache' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'cmake_clean_first' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'cmake_force_configure' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'ament_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'catkin_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'lidar_launch' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.165s] DEBUG:colcon.colcon_core.verb:Building package 'lidar_launch' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_launch', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_launch', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar_launch', 'symlink_install': False, 'test_result_base': None}
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'cmake_target' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'cmake_clean_cache' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'cmake_clean_first' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'cmake_force_configure' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'ament_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'catkin_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_rqt_plugin' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.165s] DEBUG:colcon.colcon_core.verb:Building package 't870_rqt_plugin' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_rqt_plugin', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_rqt_plugin', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_rqt_plugin', 'symlink_install': False, 'test_result_base': None}
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'cmake_target' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'cmake_clean_cache' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'cmake_clean_first' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'cmake_force_configure' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'ament_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'catkin_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 't870_serial' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.165s] DEBUG:colcon.colcon_core.verb:Building package 't870_serial' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_serial', 'symlink_install': False, 'test_result_base': None}
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'cmake_target' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'cmake_clean_cache' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'cmake_clean_first' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'cmake_force_configure' from command line to 'False'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'ament_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'catkin_cmake_args' from command line to 'None'
+[0.165s] Level 5:colcon.colcon_core.verb:set package 'velodyne' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.165s] DEBUG:colcon.colcon_core.verb:Building package 'velodyne' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne', 'merge_install': False, 'path': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne', 'symlink_install': False, 'test_result_base': None}
+[0.166s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.166s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.166s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_cmake' with build type 'ament_cmake'
+[0.166s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_cmake'
+[0.167s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.167s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.167s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.168s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_msgs' with build type 'ament_cmake'
+[0.168s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_msgs'
+[0.168s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.168s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.170s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_msgs' with build type 'ament_cmake'
+[0.170s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_msgs'
+[0.170s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.170s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.171s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs' with build type 'ament_cmake'
+[0.171s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs'
+[0.171s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.171s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.172s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_cmake' with build type 'ament_cmake'
+[0.172s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_cmake'
+[0.172s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.172s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.173s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_msgs' with build type 'ament_cmake'
+[0.173s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_msgs'
+[0.173s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.173s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.174s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/cluster_splitter' with build type 'ament_cmake'
+[0.174s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/cluster_splitter'
+[0.174s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.174s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.175s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/dbscan_clustering' with build type 'ament_cmake'
+[0.175s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/dbscan_clustering'
+[0.175s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.175s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.177s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/lidar_voxel_grid' with build type 'ament_cmake'
+[0.177s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/lidar_voxel_grid'
+[0.177s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.177s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.178s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros' with build type 'ament_cmake'
+[0.178s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros'
+[0.178s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.178s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.183s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_cmake -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake
+[0.184s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_msgs -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs
+[0.185s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_msgs -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs
+[0.186s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/ev_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs
+[0.188s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_cmake': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_cmake -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake
+[0.189s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_msgs -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs
+[0.191s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/cluster_splitter': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/cluster_splitter -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter
+[0.192s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/dbscan_clustering -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering
+[0.193s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/lidar_voxel_grid -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid
+[0.208s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp
+[0.370s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering' returned '1': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/dbscan_clustering -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering
+[0.374s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_cmake' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_cmake -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake
+[0.375s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_cmake': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_cmake -- -j10 -l10
+[0.375s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(dbscan_clustering)
+[0.377s] Level 1:colcon.colcon_core.environment:checking '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering' for CMake module files
+[0.377s] Level 1:colcon.colcon_core.environment:checking '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering' for CMake config files
+[0.377s] Level 1:colcon.colcon_core.environment:checking '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/bin'
+[0.377s] Level 1:colcon.colcon_core.environment:checking '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/lib/pkgconfig/dbscan_clustering.pc'
+[0.377s] Level 1:colcon.colcon_core.environment:checking '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/lib/python3.10/site-packages'
+[0.378s] Level 1:colcon.colcon_core.environment:checking '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/bin'
+[0.378s] INFO:colcon.colcon_core.shell:Creating package script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.ps1'
+[0.378s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.dsv'
+[0.378s] INFO:colcon.colcon_core.shell:Creating package script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.sh'
+[0.378s] INFO:colcon.colcon_core.shell:Creating package script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.bash'
+[0.379s] INFO:colcon.colcon_core.shell:Creating package script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.zsh'
+[0.379s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/colcon-core/packages/dbscan_clustering)
+[1.644s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[1.644s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[1.644s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '1'
+[1.644s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[1.647s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[1.647s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[1.647s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[1.656s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[1.656s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/local_setup.ps1'
+[1.657s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/_local_setup_util_ps1.py'
+[1.657s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/setup.ps1'
+[1.658s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/local_setup.sh'
+[1.658s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/_local_setup_util_sh.py'
+[1.658s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/setup.sh'
+[1.658s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/local_setup.bash'
+[1.658s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/setup.bash'
+[1.659s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/local_setup.zsh'
+[1.659s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/setup.zsh'

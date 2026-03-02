@@ -1,0 +1,1 @@
+Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/ev_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/ev_msgs -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs

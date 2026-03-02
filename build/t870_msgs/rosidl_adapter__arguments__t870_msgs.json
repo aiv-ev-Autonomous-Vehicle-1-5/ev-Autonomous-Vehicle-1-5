@@ -1,0 +1,8 @@
+{
+  "package_name": "t870_msgs",
+  "non_idl_tuples": [
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_msgs:msg/ControlCommand.msg",
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_msgs:msg/Feedback.msg",
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_msgs:srv/ModeCommand.srv"
+  ]
+}

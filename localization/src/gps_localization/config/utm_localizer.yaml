@@ -1,0 +1,8 @@
+utm_localizer:
+  ros__parameters:
+    gps_topic: "/ublox_gps_node/fix"
+    pose_topic: "/local_pose"
+    map_frame: "map"
+    base_frame: "base_link"
+    use_fix_only_origin: true
+    required_status: 0   # STATUS_FIX(0). RTK 기준으로 바꾸면 2 등으로 조정

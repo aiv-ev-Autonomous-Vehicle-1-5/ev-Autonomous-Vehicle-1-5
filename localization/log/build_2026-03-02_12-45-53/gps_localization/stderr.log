@@ -1,0 +1,7 @@
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/src/utm_localizer.cpp:[m[K In member function ‘[01m[Kvoid UtmLocalizer::latLonToUTM(double, double, double&, double&)[m[K’:
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/src/utm_localizer.cpp:58:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KT[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   58 |     double [01;35m[KT[m[K = pow(tan(latRad), 2);
+      |            [01;35m[K^[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/src/utm_localizer.cpp:59:12:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[KC[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+   59 |     double [01;35m[KC[m[K = pow(e * cos(latRad), 2);
+      |            [01;35m[K^[m[K
