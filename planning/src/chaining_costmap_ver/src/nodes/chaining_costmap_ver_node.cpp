@@ -114,6 +114,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/chaining/debug/seeds", qos_dbg);
   pub_dbg_local_goal_ = create_publisher<visualization_msgs::msg::MarkerArray>(
     "/planning/debug/local_goal", qos_dbg);
+  pub_dbg_obstacle_wall_ = create_publisher<visualization_msgs::msg::MarkerArray>(
+    "/planning/debug/obstacle_wall", qos_dbg);
 
   // ── 10Hz 타이머 ──
   // wall timer: 시뮬레이션 시간이 아닌 실제 시계(wall clock) 기준
@@ -325,7 +327,21 @@ void LCPlannerNode::on_timer()
     have_goal = true;
   }
 
-  // 3d. A* 경로 탐색
+  // 3d. Goal을 costmap 경계 안쪽으로 clamp (방향 유지, 거리만 축소)
+  //   backbone이 costmap보다 멀리 뻗어있으면 goal이 격자 밖에 놓여
+  //   A*가 즉시 빈 경로를 반환한다. 이를 방지하기 위해
+  //   costmap 유효 범위 안쪽 1셀 마진으로 clamp한다.
+  if (have_goal && costmap.valid) {
+    const double margin = costmap.resolution;  // 1셀 마진
+    const double x_min = costmap.origin_x + margin;
+    const double x_max = costmap.origin_x + costmap.cols * costmap.resolution - margin;
+    const double y_min = costmap.origin_y + margin;
+    const double y_max = costmap.origin_y + costmap.rows * costmap.resolution - margin;
+    goal.x = std::clamp(goal.x, x_min, x_max);
+    goal.y = std::clamp(goal.y, y_min, y_max);
+  }
+
+  // 3e. A* 경로 탐색
   std::vector<Point2D> raw_path;
   if (have_goal && costmap.valid) {
     raw_path = astar_planner_.plan(costmap, {0.0, 0.0}, goal, params_);
@@ -398,6 +414,42 @@ void LCPlannerNode::on_timer()
     pub_dbg_costmap_->publish(std::move(grid_msg));
   }
 
+  // ── Debug: obstacle_wall (obstacle_cost 이상인 셀을 빨간색 CUBE로 표시) ──
+  if (pub_dbg_obstacle_wall_->get_subscription_count() > 0 && costmap.valid) {
+    visualization_msgs::msg::MarkerArray ma;
+    visualization_msgs::msg::Marker m;
+    m.header.stamp = stamp;
+    m.header.frame_id = frame_id;
+    m.ns = "obstacle_wall";
+    m.id = 0;
+    m.type = visualization_msgs::msg::Marker::CUBE_LIST;
+    m.action = visualization_msgs::msg::Marker::ADD;
+    m.scale.x = costmap.resolution;
+    m.scale.y = costmap.resolution;
+    m.scale.z = 0.005; // 극히 얇은 바닥면
+    m.color.r = 1.0f;
+    m.color.g = 0.0f;
+    m.color.b = 0.0f;
+    m.color.a = 0.6f;
+    m.pose.orientation.w = 1.0;
+
+    const double thresh = params_.astar.obstacle_cost;
+    for (int r = 0; r < costmap.rows; ++r) {
+      for (int c = 0; c < costmap.cols; ++c) {
+        if (costmap.data[r * costmap.cols + c] >= thresh) {
+          geometry_msgs::msg::Point pt;
+          pt.x = costmap.origin_x + (c + 0.5) * costmap.resolution;
+          pt.y = costmap.origin_y + (r + 0.5) * costmap.resolution;
+          pt.z = -0.01;  // chain(z=0)보다 아래에 렌더링
+          m.points.push_back(pt);
+        }
+      }
+    }
+    ma.markers.push_back(m);
+    pub_dbg_obstacle_wall_->publish(
+      std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
+  }
+
   // ── Debug: raw_path (A* 원시 경로, 후처리 전) ──
   if (pub_dbg_raw_path_->get_subscription_count() > 0) {
     pub_dbg_raw_path_->publish(std::make_unique<nav_msgs::msg::Path>(
@@ -454,6 +506,7 @@ void LCPlannerNode::on_timer()
       del.header.stamp = stamp;
       del.header.frame_id = frame_id;
       del.ns = ns;
+      del.id = -1;  // DELETEALL용 고유 ID (branch id=0과 충돌 방지)
       del.action = visualization_msgs::msg::Marker::DELETEALL;
       ma.markers.push_back(del);
 

@@ -230,6 +230,53 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 
 ---
 
+## 콘솔 로그 메시지 (디버그)
+
+### 초기화 시 (1회)
+
+| 레벨 | 메시지 | 출처 | 설명 |
+|------|--------|------|------|
+| INFO | `LCPlannerNode initialized (10 Hz, DirectionChainer v2 + Costmap + A*)` | 생성자 | 노드 정상 기동 확인 |
+| INFO | `LC PlanningParams loaded: Costmap(10x10 res=0.15) AStar(iter=10000 tol=0.3) d_max=2.0 lat_gate=1.50` | params.hpp | yaml 파라미터 로드 결과 (값은 설정에 따라 다름) |
+
+### 런타임 (throttle 적용 — 주기적 출력)
+
+| 레벨 | 메시지 패턴 | 주기 | Stage | 설명 |
+|------|------------|------|-------|------|
+| WARN | `[Stage0] STALE — perception timeout` | 2초 | Stage 0 | perception 데이터가 `perception_ms` (300ms) 동안 갱신되지 않음. 파이프라인 중단, `/planning/status`에 `"STALE"` 발행 |
+| INFO | `[Planner] OK — path:N pts, speed=X.XX m/s` | 1초 | Stage 6 | 정상 경로 생성 완료. N=waypoint 수, speed=안전 속도 |
+| WARN | `[Planner] FAIL — <reason>` | 1초 | Stage 6 | 경로 생성 실패. reason: `"no_valid_path"` (A* 실패), `"curvature_exceeds_r_min"` (곡률 초과) 등 |
+| INFO | `chain: L_comp=N L_bb=N L_br=N  R_comp=N R_bb=N R_br=N` | 2초 | Stage 7 | 체이닝 결과 요약. L/R=좌/우, comp=component 점 수, bb=backbone 점 수, br=branch 개수 |
+
+### 조건부 디버그 (파라미터로 활성화)
+
+| 레벨 | 메시지 패턴 | 활성화 조건 | 출처 | 설명 |
+|------|------------|------------|------|------|
+| INFO | `[LEFT] pre-resample: total=N  cones=N  lanes=N` | `chainer.debug_chainer_stats: true` | direction_chainer.cpp | 왼쪽 component의 리샘플 전 포인트 통계 (콘/차선 분류) |
+| INFO | `[RIGHT] pre-resample: total=N  cones=N  lanes=N` | `chainer.debug_chainer_stats: true` | direction_chainer.cpp | 오른쪽 component의 리샘플 전 포인트 통계 |
+
+### 로그 해석 가이드
+
+**정상 동작 시 터미널 출력 예시:**
+```
+[INFO] [lc_planner_node]: LCPlannerNode initialized (10 Hz, DirectionChainer v2 + Costmap + A*)
+[INFO] [lc_planner_node]: LC PlanningParams loaded: Costmap(10x10 res=0.15) AStar(iter=10000 tol=0.3) d_max=2.0 lat_gate=1.50
+[INFO] [lc_planner_node]: [Planner] OK — path:47 pts, speed=1.60 m/s
+[INFO] [lc_planner_node]: chain: L_comp=12 L_bb=8 L_br=2  R_comp=15 R_bb=10 R_br=3
+```
+
+**문제 상황별 대응:**
+
+| 증상 | 로그 메시지 | 원인 | 대응 |
+|------|-----------|------|------|
+| 경로 없음 | `[Stage0] STALE` | perception 노드 중단 또는 토픽 미발행 | `ros2 topic hz /perception/bboxes` 로 발행 확인 |
+| 경로 없음 | `[Planner] FAIL — no_valid_path` | A* 탐색 실패 (목표점 도달 불가) | costmap 시각화로 장애물 배치 확인, `max_iterations` 증가 검토 |
+| 경로 불안정 | `[Planner] FAIL — curvature_exceeds_r_min` | 생성된 경로의 곡률이 차량 한계 초과 | `cone_radius`, `sigma` 조정으로 코스트맵 완화 |
+| 체이닝 편향 | `chain: L_comp=0 ...` | 한쪽 경계점이 없음 | seed 파라미터(`side_seed_y`) 또는 perception 확인 |
+| 속도 느림 | `speed=0.XX m/s` (v_max보다 낮음) | 곡률이 커서 횡가속도 제한 적용 | 경로 곡률 완화 또는 `a_lat_max` 상향 검토 |
+
+---
+
 ## 빌드 & 실행
 
 ```bash

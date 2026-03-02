@@ -223,6 +223,7 @@ private:
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_right_branches_;  ///< 오른쪽 branch 시각화
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_seeds_;            ///< 시드/골 마커 시각화
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_local_goal_;      ///< A* goal 시각화
+  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_obstacle_wall_;  ///< obstacle_cost 이상 셀 (빨간색)
 
   // ── 타이머 ──
   // 100ms(10Hz) 주기의 wall timer — on_timer() 콜백을 호출

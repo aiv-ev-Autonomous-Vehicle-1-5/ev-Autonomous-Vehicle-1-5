@@ -138,7 +138,7 @@ struct PlanningParams
     // [m] 축거(앞바퀴 중심 ~ 뒷바퀴 중심 거리).
     // Ackermann 기구학에서 최소 회전 반경 계산에 사용.
     // 0.87m = T870 카트의 실측값.
-    double wheelbase = 0.87;
+    double wheelbase = 0.73;
 
     // [rad] 앞바퀴 최대 조향각.
     // 0.314 rad ≈ 18° (π/10).
