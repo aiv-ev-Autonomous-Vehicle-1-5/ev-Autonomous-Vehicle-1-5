@@ -4,8 +4,7 @@
 #include "sensor_msgs/msg/nav_sat_fix.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
-class UtmLocalizer : public rclcpp::Node
-{
+class UtmLocalizer : public rclcpp::Node{
 public:
     UtmLocalizer();
 
@@ -19,4 +18,11 @@ private:
     bool origin_set_;
     double origin_x_;
     double origin_y_;
+
+    double prev_x_;
+    double prev_y_;
+    bool has_prev_;
+    double jump_threshold_;
+
+    double covariance_threshold_;
 };
