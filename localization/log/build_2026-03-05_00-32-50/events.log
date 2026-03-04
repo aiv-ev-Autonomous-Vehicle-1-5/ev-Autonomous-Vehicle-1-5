@@ -1,0 +1,242 @@
+[0.000000] (-) TimerEvent: {}
+[0.002201] (gps_localization) JobQueued: {'identifier': 'gps_localization', 'dependencies': OrderedDict()}
+[0.002270] (gps_localization) JobStarted: {'identifier': 'gps_localization'}
+[0.012186] (gps_localization) JobProgress: {'identifier': 'gps_localization', 'progress': 'cmake'}
+[0.012918] (gps_localization) Command: {'cmd': ['/usr/bin/cmake', '/home/kimsohee/ev-1-5/ev_ws/localization/src/gps_localization', '-DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization'], 'cwd': '/home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kimsohee'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee/ev-1-5/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1183'), ('SYSTEMD_EXEC_PID', '1333'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '7496'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:2653'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/usr/local/MATLAB/R2024b/bin:/opt/ros/humble/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee-960XHA:@/tmp/.ICE-unix/1308,unix/kimsohee-960XHA:/tmp/.ICE-unix/1308'), ('INVOCATION_ID', '976e21e13ded480785e5408ac0faa1e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.LGQGL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:be66ba71-e907-4e33-b1d9-5776ba69e829'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble')]), 'shell': False}
+[0.103848] (-) TimerEvent: {}
+[0.106045] (gps_localization) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.203729] (gps_localization) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.203993] (-) TimerEvent: {}
+[0.215515] (gps_localization) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.304134] (-) TimerEvent: {}
+[0.333145] (gps_localization) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.341226] (gps_localization) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.344706] (gps_localization) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.344844] (gps_localization) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.346524] (gps_localization) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.404250] (-) TimerEvent: {}
+[0.465983] (gps_localization) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.476909] (gps_localization) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.477377] (gps_localization) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.478078] (gps_localization) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.481391] (gps_localization) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.505032] (-) TimerEvent: {}
+[0.605574] (-) TimerEvent: {}
+[0.705955] (-) TimerEvent: {}
+[0.720162] (gps_localization) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[0.806108] (-) TimerEvent: {}
+[0.848116] (gps_localization) StdoutLine: {'line': b'-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.906232] (-) TimerEvent: {}
+[0.907890] (gps_localization) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.915305] (gps_localization) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.927723] (gps_localization) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.945264] (gps_localization) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.968646] (gps_localization) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[1.006358] (-) TimerEvent: {}
+[1.034112] (gps_localization) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[1.037096] (gps_localization) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[1.106484] (-) TimerEvent: {}
+[1.176962] (gps_localization) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[1.207209] (-) TimerEvent: {}
+[1.221153] (gps_localization) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[1.282273] (gps_localization) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[1.295155] (gps_localization) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[1.307306] (-) TimerEvent: {}
+[1.407665] (-) TimerEvent: {}
+[1.412093] (gps_localization) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[1.412780] (gps_localization) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[1.507796] (-) TimerEvent: {}
+[1.518780] (gps_localization) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[1.521045] (gps_localization) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[1.601152] (gps_localization) StdoutLine: {'line': b'-- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[1.607998] (-) TimerEvent: {}
+[1.645802] (gps_localization) StdoutLine: {'line': b'-- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)\n'}
+[1.708117] (-) TimerEvent: {}
+[1.799031] (gps_localization) StdoutLine: {'line': b'-- Configuring done\n'}
+[1.808215] (-) TimerEvent: {}
+[1.809795] (gps_localization) StdoutLine: {'line': b'-- Generating done\n'}
+[1.816380] (gps_localization) StdoutLine: {'line': b'-- Build files have been written to: /home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization\n'}
+[1.827217] (gps_localization) CommandEnded: {'returncode': 0}
+[1.829535] (gps_localization) JobProgress: {'identifier': 'gps_localization', 'progress': 'build'}
+[1.829755] (gps_localization) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization', '--', '-j8', '-l8'], 'cwd': '/home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kimsohee'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee/ev-1-5/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1183'), ('SYSTEMD_EXEC_PID', '1333'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '7496'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:2653'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/usr/local/MATLAB/R2024b/bin:/opt/ros/humble/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee-960XHA:@/tmp/.ICE-unix/1308,unix/kimsohee-960XHA:/tmp/.ICE-unix/1308'), ('INVOCATION_ID', '976e21e13ded480785e5408ac0faa1e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.LGQGL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:be66ba71-e907-4e33-b1d9-5776ba69e829'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble')]), 'shell': False}
+[1.907030] (gps_localization) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/utm_localizer_lib.dir/src/utm_localizer.cpp.o\x1b[0m\n'}
+[1.908289] (-) TimerEvent: {}
+[2.008588] (-) TimerEvent: {}
+[2.109065] (-) TimerEvent: {}
+[2.209626] (-) TimerEvent: {}
+[2.310168] (-) TimerEvent: {}
+[2.414224] (-) TimerEvent: {}
+[2.515044] (-) TimerEvent: {}
+[2.615421] (-) TimerEvent: {}
+[2.715902] (-) TimerEvent: {}
+[2.816372] (-) TimerEvent: {}
+[2.916836] (-) TimerEvent: {}
+[3.018047] (-) TimerEvent: {}
+[3.118393] (-) TimerEvent: {}
+[3.220145] (-) TimerEvent: {}
+[3.320534] (-) TimerEvent: {}
+[3.421108] (-) TimerEvent: {}
+[3.521576] (-) TimerEvent: {}
+[3.622106] (-) TimerEvent: {}
+[3.722493] (-) TimerEvent: {}
+[3.822963] (-) TimerEvent: {}
+[3.923434] (-) TimerEvent: {}
+[4.023920] (-) TimerEvent: {}
+[4.124381] (-) TimerEvent: {}
+[4.224783] (-) TimerEvent: {}
+[4.325270] (-) TimerEvent: {}
+[4.425746] (-) TimerEvent: {}
+[4.526223] (-) TimerEvent: {}
+[4.626611] (-) TimerEvent: {}
+[4.727064] (-) TimerEvent: {}
+[4.827426] (-) TimerEvent: {}
+[4.927803] (-) TimerEvent: {}
+[5.028293] (-) TimerEvent: {}
+[5.128680] (-) TimerEvent: {}
+[5.229457] (-) TimerEvent: {}
+[5.330021] (-) TimerEvent: {}
+[5.430412] (-) TimerEvent: {}
+[5.530778] (-) TimerEvent: {}
+[5.631224] (-) TimerEvent: {}
+[5.731680] (-) TimerEvent: {}
+[5.832135] (-) TimerEvent: {}
+[5.932590] (-) TimerEvent: {}
+[6.033075] (-) TimerEvent: {}
+[6.133542] (-) TimerEvent: {}
+[6.234024] (-) TimerEvent: {}
+[6.334612] (-) TimerEvent: {}
+[6.435159] (-) TimerEvent: {}
+[6.535530] (-) TimerEvent: {}
+[6.636019] (-) TimerEvent: {}
+[6.737059] (-) TimerEvent: {}
+[6.838576] (-) TimerEvent: {}
+[6.942697] (-) TimerEvent: {}
+[7.043041] (-) TimerEvent: {}
+[7.143393] (-) TimerEvent: {}
+[7.243869] (-) TimerEvent: {}
+[7.344355] (-) TimerEvent: {}
+[7.444863] (-) TimerEvent: {}
+[7.545355] (-) TimerEvent: {}
+[7.645819] (-) TimerEvent: {}
+[7.746294] (-) TimerEvent: {}
+[7.846791] (-) TimerEvent: {}
+[7.947291] (-) TimerEvent: {}
+[8.047785] (-) TimerEvent: {}
+[8.148237] (-) TimerEvent: {}
+[8.248676] (-) TimerEvent: {}
+[8.349115] (-) TimerEvent: {}
+[8.449574] (-) TimerEvent: {}
+[8.550043] (-) TimerEvent: {}
+[8.650500] (-) TimerEvent: {}
+[8.750958] (-) TimerEvent: {}
+[8.851419] (-) TimerEvent: {}
+[8.951881] (-) TimerEvent: {}
+[9.053696] (-) TimerEvent: {}
+[9.154120] (-) TimerEvent: {}
+[9.254467] (-) TimerEvent: {}
+[9.354916] (-) TimerEvent: {}
+[9.455373] (-) TimerEvent: {}
+[9.555818] (-) TimerEvent: {}
+[9.656296] (-) TimerEvent: {}
+[9.757042] (-) TimerEvent: {}
+[9.857388] (-) TimerEvent: {}
+[9.957838] (-) TimerEvent: {}
+[10.058307] (-) TimerEvent: {}
+[10.158751] (-) TimerEvent: {}
+[10.259216] (-) TimerEvent: {}
+[10.359591] (-) TimerEvent: {}
+[10.460056] (-) TimerEvent: {}
+[10.560436] (-) TimerEvent: {}
+[10.660883] (-) TimerEvent: {}
+[10.761262] (-) TimerEvent: {}
+[10.862775] (-) TimerEvent: {}
+[10.963258] (-) TimerEvent: {}
+[11.063730] (-) TimerEvent: {}
+[11.164093] (-) TimerEvent: {}
+[11.264446] (-) TimerEvent: {}
+[11.364809] (-) TimerEvent: {}
+[11.465160] (-) TimerEvent: {}
+[11.565525] (-) TimerEvent: {}
+[11.665965] (-) TimerEvent: {}
+[11.766454] (-) TimerEvent: {}
+[11.866866] (-) TimerEvent: {}
+[11.967579] (-) TimerEvent: {}
+[12.067960] (-) TimerEvent: {}
+[12.169041] (-) TimerEvent: {}
+[12.275894] (-) TimerEvent: {}
+[12.376240] (-) TimerEvent: {}
+[12.440775] (gps_localization) StdoutLine: {'line': b'[ 50%] \x1b[32m\x1b[1mLinking CXX static library libutm_localizer_lib.a\x1b[0m\n'}
+[12.476376] (-) TimerEvent: {}
+[12.577198] (-) TimerEvent: {}
+[12.619283] (gps_localization) StdoutLine: {'line': b'[ 50%] Built target utm_localizer_lib\n'}
+[12.647340] (gps_localization) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/utm_localizer_node.dir/src/utm_localizer_node.cpp.o\x1b[0m\n'}
+[12.677305] (-) TimerEvent: {}
+[12.777593] (-) TimerEvent: {}
+[12.878054] (-) TimerEvent: {}
+[12.978529] (-) TimerEvent: {}
+[13.078994] (-) TimerEvent: {}
+[13.179439] (-) TimerEvent: {}
+[13.279809] (-) TimerEvent: {}
+[13.380181] (-) TimerEvent: {}
+[13.480630] (-) TimerEvent: {}
+[13.581989] (-) TimerEvent: {}
+[13.682347] (-) TimerEvent: {}
+[13.782846] (-) TimerEvent: {}
+[13.883324] (-) TimerEvent: {}
+[13.983784] (-) TimerEvent: {}
+[14.084247] (-) TimerEvent: {}
+[14.184720] (-) TimerEvent: {}
+[14.285226] (-) TimerEvent: {}
+[14.385677] (-) TimerEvent: {}
+[14.486143] (-) TimerEvent: {}
+[14.586619] (-) TimerEvent: {}
+[14.687077] (-) TimerEvent: {}
+[14.787540] (-) TimerEvent: {}
+[14.888014] (-) TimerEvent: {}
+[14.988493] (-) TimerEvent: {}
+[15.088996] (-) TimerEvent: {}
+[15.189473] (-) TimerEvent: {}
+[15.289956] (-) TimerEvent: {}
+[15.390453] (-) TimerEvent: {}
+[15.490919] (-) TimerEvent: {}
+[15.591408] (-) TimerEvent: {}
+[15.691890] (-) TimerEvent: {}
+[15.792270] (-) TimerEvent: {}
+[15.892772] (-) TimerEvent: {}
+[15.993146] (-) TimerEvent: {}
+[16.036055] (gps_localization) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable utm_localizer_node\x1b[0m\n'}
+[16.094180] (-) TimerEvent: {}
+[16.194751] (-) TimerEvent: {}
+[16.295319] (-) TimerEvent: {}
+[16.395790] (-) TimerEvent: {}
+[16.496264] (-) TimerEvent: {}
+[16.594249] (gps_localization) StdoutLine: {'line': b'[100%] Built target utm_localizer_node\n'}
+[16.596357] (-) TimerEvent: {}
+[16.608706] (gps_localization) CommandEnded: {'returncode': 0}
+[16.609248] (gps_localization) JobProgress: {'identifier': 'gps_localization', 'progress': 'install'}
+[16.620518] (gps_localization) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization'], 'cwd': '/home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kimsohee'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee/ev-1-5/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1183'), ('SYSTEMD_EXEC_PID', '1333'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '7496'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:2653'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/usr/local/MATLAB/R2024b/bin:/opt/ros/humble/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee-960XHA:@/tmp/.ICE-unix/1308,unix/kimsohee-960XHA:/tmp/.ICE-unix/1308'), ('INVOCATION_ID', '976e21e13ded480785e5408ac0faa1e1'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.LGQGL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:be66ba71-e907-4e33-b1d9-5776ba69e829'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble')]), 'shell': False}
+[16.635408] (gps_localization) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[16.635707] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/lib/gps_localization/libutm_localizer_lib.a\n'}
+[16.644155] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/lib/gps_localization/utm_localizer_node\n'}
+[16.647208] (gps_localization) StdoutLine: {'line': b'-- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/lib/gps_localization/utm_localizer_node" to ""\n'}
+[16.647402] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/include/\n'}
+[16.647539] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/include//gps_localization\n'}
+[16.647643] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/include//gps_localization/utm_localizer.hpp\n'}
+[16.647746] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/ament_index/resource_index/package_run_dependencies/gps_localization\n'}
+[16.647811] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/ament_index/resource_index/parent_prefix_path/gps_localization\n'}
+[16.647904] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/environment/ament_prefix_path.sh\n'}
+[16.648008] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/environment/ament_prefix_path.dsv\n'}
+[16.648109] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/environment/path.sh\n'}
+[16.648214] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/environment/path.dsv\n'}
+[16.648368] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/local_setup.bash\n'}
+[16.648498] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/local_setup.sh\n'}
+[16.648622] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/local_setup.zsh\n'}
+[16.648730] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/local_setup.dsv\n'}
+[16.648822] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/package.dsv\n'}
+[16.648933] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/ament_index/resource_index/packages/gps_localization\n'}
+[16.649043] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/cmake/gps_localizationConfig.cmake\n'}
+[16.649137] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/cmake/gps_localizationConfig-version.cmake\n'}
+[16.649221] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/localization/install/gps_localization/share/gps_localization/package.xml\n'}
+[16.652119] (gps_localization) CommandEnded: {'returncode': 0}
+[16.671804] (gps_localization) JobEnded: {'identifier': 'gps_localization', 'rc': 0}
+[16.672717] (-) EventReactorShutdown: {}
