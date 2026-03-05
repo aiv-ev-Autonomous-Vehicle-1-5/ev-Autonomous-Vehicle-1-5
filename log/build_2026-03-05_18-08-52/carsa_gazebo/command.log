@@ -1,0 +1,6 @@
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/carsa_gazebo -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/carsa_gazebo -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo -- -j8 -l8
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo -- -j8 -l8
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo

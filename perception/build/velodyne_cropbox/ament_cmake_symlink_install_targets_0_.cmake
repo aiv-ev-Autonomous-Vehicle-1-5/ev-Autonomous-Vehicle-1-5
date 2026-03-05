@@ -1,1 +1,1 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/aiv/ev_ws/perception/build/velodyne_cropbox/libcropbox_component.so" "TARGETS" "cropbox_component" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_cropbox/libcropbox_component.so" "TARGETS" "cropbox_component" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

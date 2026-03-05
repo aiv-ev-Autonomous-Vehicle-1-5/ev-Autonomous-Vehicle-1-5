@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aiv/ev_ws/perception/build/patchworkpp
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/aiv/ev_ws/perception/build/patchworkpp && $(CMAKE_COMMAND) -E cmake_progress_start /home/aiv/ev_ws/perception/build/patchworkpp/CMakeFiles /home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp//CMakeFiles/progress.marks
-	cd /home/aiv/ev_ws/perception/build/patchworkpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 patchworkpp_cpp/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aiv/ev_ws/perception/build/patchworkpp/CMakeFiles 0
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp && $(CMAKE_COMMAND) -E cmake_progress_start /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/CMakeFiles /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp//CMakeFiles/progress.marks
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 patchworkpp_cpp/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/aiv/ev_ws/perception/build/patchworkpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 patchworkpp_cpp/clean
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 patchworkpp_cpp/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,17 +158,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/aiv/ev_ws/perception/build/patchworkpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 patchworkpp_cpp/preinstall
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 patchworkpp_cpp/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/aiv/ev_ws/perception/build/patchworkpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 patchworkpp_cpp/preinstall
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 patchworkpp_cpp/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/aiv/ev_ws/perception/build/patchworkpp && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -195,6 +195,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/aiv/ev_ws/perception/build/patchworkpp && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

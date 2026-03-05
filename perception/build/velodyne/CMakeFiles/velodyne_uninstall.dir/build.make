@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aiv/ev_ws/perception/src/lidar/velodyne
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aiv/ev_ws/perception/build/velodyne
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne
 
 # Utility rule file for velodyne_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/velodyne_uninstall.dir/compiler_depend.make
 include CMakeFiles/velodyne_uninstall.dir/progress.make
 
 CMakeFiles/velodyne_uninstall:
-	/usr/bin/cmake -P /home/aiv/ev_ws/perception/build/velodyne/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 velodyne_uninstall: CMakeFiles/velodyne_uninstall
 velodyne_uninstall: CMakeFiles/velodyne_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/velodyne_uninstall.dir/clean:
 .PHONY : CMakeFiles/velodyne_uninstall.dir/clean
 
 CMakeFiles/velodyne_uninstall.dir/depend:
-	cd /home/aiv/ev_ws/perception/build/velodyne && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aiv/ev_ws/perception/src/lidar/velodyne /home/aiv/ev_ws/perception/src/lidar/velodyne /home/aiv/ev_ws/perception/build/velodyne /home/aiv/ev_ws/perception/build/velodyne /home/aiv/ev_ws/perception/build/velodyne/CMakeFiles/velodyne_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne/CMakeFiles/velodyne_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/velodyne_uninstall.dir/depend
 

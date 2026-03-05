@@ -1,1 +1,1 @@
-/home/aiv/ev_ws/perception/src/lidar/velodyne_msgs/msg/VelodyneScan.msg
+/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_msgs/msg/VelodyneScan.msg

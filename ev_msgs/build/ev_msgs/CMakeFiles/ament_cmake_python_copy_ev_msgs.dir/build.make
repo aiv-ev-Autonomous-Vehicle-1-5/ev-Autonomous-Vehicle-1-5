@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aiv/ev_ws/ev_msgs
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/ev_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aiv/ev_ws/ev_msgs/build/ev_msgs
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs
 
 # Utility rule file for ament_cmake_python_copy_ev_msgs.
 
@@ -67,7 +67,7 @@ include CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/compiler_depend.make
 include CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/progress.make
 
 CMakeFiles/ament_cmake_python_copy_ev_msgs:
-	/usr/bin/cmake -E copy_directory /home/aiv/ev_ws/ev_msgs/build/ev_msgs/rosidl_generator_py/ev_msgs /home/aiv/ev_ws/ev_msgs/build/ev_msgs/ament_cmake_python/ev_msgs/ev_msgs
+	/usr/bin/cmake -E copy_directory /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs/rosidl_generator_py/ev_msgs /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs/ament_cmake_python/ev_msgs/ev_msgs
 
 ament_cmake_python_copy_ev_msgs: CMakeFiles/ament_cmake_python_copy_ev_msgs
 ament_cmake_python_copy_ev_msgs: CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/clean:
 .PHONY : CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/clean
 
 CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/depend:
-	cd /home/aiv/ev_ws/ev_msgs/build/ev_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aiv/ev_ws/ev_msgs /home/aiv/ev_ws/ev_msgs /home/aiv/ev_ws/ev_msgs/build/ev_msgs /home/aiv/ev_ws/ev_msgs/build/ev_msgs /home/aiv/ev_ws/ev_msgs/build/ev_msgs/CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kimsohee/ev-1-5/ev_ws/ev_msgs /home/kimsohee/ev-1-5/ev_ws/ev_msgs /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs/CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ament_cmake_python_copy_ev_msgs.dir/depend
 

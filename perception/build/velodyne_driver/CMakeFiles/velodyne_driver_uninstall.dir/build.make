@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aiv/ev_ws/perception/src/lidar/velodyne_driver
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_driver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aiv/ev_ws/perception/build/velodyne_driver
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver
 
 # Utility rule file for velodyne_driver_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/velodyne_driver_uninstall.dir/compiler_depend.make
 include CMakeFiles/velodyne_driver_uninstall.dir/progress.make
 
 CMakeFiles/velodyne_driver_uninstall:
-	/usr/bin/cmake -P /home/aiv/ev_ws/perception/build/velodyne_driver/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 velodyne_driver_uninstall: CMakeFiles/velodyne_driver_uninstall
 velodyne_driver_uninstall: CMakeFiles/velodyne_driver_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/velodyne_driver_uninstall.dir/clean:
 .PHONY : CMakeFiles/velodyne_driver_uninstall.dir/clean
 
 CMakeFiles/velodyne_driver_uninstall.dir/depend:
-	cd /home/aiv/ev_ws/perception/build/velodyne_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aiv/ev_ws/perception/src/lidar/velodyne_driver /home/aiv/ev_ws/perception/src/lidar/velodyne_driver /home/aiv/ev_ws/perception/build/velodyne_driver /home/aiv/ev_ws/perception/build/velodyne_driver /home/aiv/ev_ws/perception/build/velodyne_driver/CMakeFiles/velodyne_driver_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_driver /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_driver /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/CMakeFiles/velodyne_driver_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/velodyne_driver_uninstall.dir/depend
 

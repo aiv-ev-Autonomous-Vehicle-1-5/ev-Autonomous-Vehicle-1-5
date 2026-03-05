@@ -23,10 +23,9 @@ function _colcon_prefix_chain_powershell_source_script {
 
 # source chained prefixes
 _colcon_prefix_chain_powershell_source_script "/opt/ros/humble\local_setup.ps1"
-_colcon_prefix_chain_powershell_source_script "/home/aiv/ev_ws/erp42_ros/install\local_setup.ps1"
-_colcon_prefix_chain_powershell_source_script "/home/aiv/ev_ws/carsa_gazebo/install\local_setup.ps1"
-_colcon_prefix_chain_powershell_source_script "/home/aiv/ev_ws/ev_msgs/install\local_setup.ps1"
-_colcon_prefix_chain_powershell_source_script "/home/aiv/ev_ws/planning/install\local_setup.ps1"
+_colcon_prefix_chain_powershell_source_script "/home/kimsohee/ev-1-5/ev_ws/install\local_setup.ps1"
+_colcon_prefix_chain_powershell_source_script "/home/kimsohee/workspace/ros2/erp42_ros/install\local_setup.ps1"
+_colcon_prefix_chain_powershell_source_script "/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install\local_setup.ps1"
 
 # source this prefix
 $env:COLCON_CURRENT_PREFIX=(Split-Path $PSCommandPath -Parent)

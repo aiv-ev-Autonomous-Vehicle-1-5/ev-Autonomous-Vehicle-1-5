@@ -1,1 +1,1 @@
-/home/aiv/ev_ws/perception/src/lidar_launch/launch/perception/debug_scripts/inspect_clustered.py
+/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar_launch/launch/perception/debug_scripts/inspect_clustered.py

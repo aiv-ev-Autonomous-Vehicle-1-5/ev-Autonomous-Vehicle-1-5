@@ -1,8 +1,8 @@
-# Install script for directory: /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp
+# Install script for directory: /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/aiv/ev_ws/perception/install/patchworkpp")
+  set(CMAKE_INSTALL_PREFIX "/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/cmake_install.cmake")
+  include("/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/cmake_install.cmake")
 
 endif()
 

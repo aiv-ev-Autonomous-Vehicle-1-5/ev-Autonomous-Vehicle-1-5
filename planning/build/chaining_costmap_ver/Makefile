@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aiv/ev_ws/planning/src/chaining_costmap_ver
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/planning/src/chaining_costmap_ver
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aiv/ev_ws/planning/build/chaining_costmap_ver
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,9 +142,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aiv/ev_ws/planning/build/chaining_costmap_ver/CMakeFiles /home/aiv/ev_ws/planning/build/chaining_costmap_ver//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver/CMakeFiles /home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aiv/ev_ws/planning/build/chaining_costmap_ver/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aiv/ev_ws/perception/src/lidar/velodyne_pointcloud
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_pointcloud
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aiv/ev_ws/perception/build/velodyne_pointcloud
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_pointcloud
 
 # Utility rule file for velodyne_pointcloud_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/velodyne_pointcloud_uninstall.dir/compiler_depend.make
 include CMakeFiles/velodyne_pointcloud_uninstall.dir/progress.make
 
 CMakeFiles/velodyne_pointcloud_uninstall:
-	/usr/bin/cmake -P /home/aiv/ev_ws/perception/build/velodyne_pointcloud/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_pointcloud/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 velodyne_pointcloud_uninstall: CMakeFiles/velodyne_pointcloud_uninstall
 velodyne_pointcloud_uninstall: CMakeFiles/velodyne_pointcloud_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/velodyne_pointcloud_uninstall.dir/clean:
 .PHONY : CMakeFiles/velodyne_pointcloud_uninstall.dir/clean
 
 CMakeFiles/velodyne_pointcloud_uninstall.dir/depend:
-	cd /home/aiv/ev_ws/perception/build/velodyne_pointcloud && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aiv/ev_ws/perception/src/lidar/velodyne_pointcloud /home/aiv/ev_ws/perception/src/lidar/velodyne_pointcloud /home/aiv/ev_ws/perception/build/velodyne_pointcloud /home/aiv/ev_ws/perception/build/velodyne_pointcloud /home/aiv/ev_ws/perception/build/velodyne_pointcloud/CMakeFiles/velodyne_pointcloud_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_pointcloud && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_pointcloud /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_pointcloud /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_pointcloud /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_pointcloud /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_pointcloud/CMakeFiles/velodyne_pointcloud_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/velodyne_pointcloud_uninstall.dir/depend
 

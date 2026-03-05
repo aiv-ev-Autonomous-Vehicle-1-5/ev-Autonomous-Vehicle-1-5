@@ -1,8 +1,8 @@
-# Install script for directory: /home/aiv/ev_ws/ev_msgs/build/ev_msgs/ev_msgs__py
+# Install script for directory: /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs/ev_msgs__py
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/aiv/ev_ws/ev_msgs/install/ev_msgs")
+  set(CMAKE_INSTALL_PREFIX "/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

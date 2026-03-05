@@ -1,0 +1,66 @@
+[0.028s] Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/carsa_gazebo -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo
+[0.134s] -- The C compiler identification is GNU 11.4.0
+[0.255s] -- The CXX compiler identification is GNU 11.4.0
+[0.271s] -- Detecting C compiler ABI info
+[0.421s] -- Detecting C compiler ABI info - done
+[0.437s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.437s] -- Detecting C compile features
+[0.437s] -- Detecting C compile features - done
+[0.441s] -- Detecting CXX compiler ABI info
+[0.579s] -- Detecting CXX compiler ABI info - done
+[0.590s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.590s] -- Detecting CXX compile features
+[0.594s] -- Detecting CXX compile features - done
+[0.595s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.851s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.161s] -- Configuring done
+[1.164s] -- Generating done
+[1.167s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo
+[1.172s] Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/carsa_gazebo -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo
+[1.174s] Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo -- -j8 -l8
+[1.257s] Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo -- -j8 -l8
+[1.276s] Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo
+[1.296s] -- Install configuration: ""
+[1.296s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//launch
+[1.296s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//launch/empty.launch.py
+[1.297s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//launch/kcity.launch.py
+[1.298s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes
+[1.298s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_c920.dae
+[1.301s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes/gps_antenna.dae
+[1.306s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_c930.dae
+[1.308s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_camera_lens.dae
+[1.308s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//rviz
+[1.308s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//rviz/planning.rviz
+[1.309s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//rviz/erp42.rviz
+[1.309s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//rviz/t870.rviz
+[1.309s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf
+[1.312s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/erp42.xacro
+[1.312s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/xsens_mti3.xacro
+[1.312s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/logitech_c930.xacro
+[1.312s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/velodyne_vlp_32c.xacro
+[1.312s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/velodyne_vlp_16c.xacro
+[1.312s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/t870.xacro
+[1.312s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/logitech_c920.xacro
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/ublox_zed_f9p.xacro
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/planning_test.world
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/kcity.world
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/10m.world
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/empty.world
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/rubber-cone-1-rail.world
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/ament_index/resource_index/package_run_dependencies/carsa_gazebo
+[1.313s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/ament_index/resource_index/parent_prefix_path/carsa_gazebo
+[1.317s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/environment/ament_prefix_path.sh
+[1.317s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/environment/ament_prefix_path.dsv
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/environment/path.sh
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/environment/path.dsv
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/local_setup.bash
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/local_setup.sh
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/local_setup.zsh
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/local_setup.dsv
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/package.dsv
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/ament_index/resource_index/packages/carsa_gazebo
+[1.319s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/cmake/carsa_gazeboConfig.cmake
+[1.320s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/cmake/carsa_gazeboConfig-version.cmake
+[1.320s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/package.xml
+[1.322s] Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo

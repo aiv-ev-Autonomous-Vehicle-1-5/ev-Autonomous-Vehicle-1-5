@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aiv/ev_ws/perception/src/lidar/make_bbox
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/make_bbox
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aiv/ev_ws/perception/build/make_bbox
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox
 
 # Utility rule file for make_bbox_uninstall.
 
@@ -67,7 +67,7 @@ include CMakeFiles/make_bbox_uninstall.dir/compiler_depend.make
 include CMakeFiles/make_bbox_uninstall.dir/progress.make
 
 CMakeFiles/make_bbox_uninstall:
-	/usr/bin/cmake -P /home/aiv/ev_ws/perception/build/make_bbox/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
+	/usr/bin/cmake -P /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox/ament_cmake_uninstall_target/ament_cmake_uninstall_target.cmake
 
 make_bbox_uninstall: CMakeFiles/make_bbox_uninstall
 make_bbox_uninstall: CMakeFiles/make_bbox_uninstall.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/make_bbox_uninstall.dir/clean:
 .PHONY : CMakeFiles/make_bbox_uninstall.dir/clean
 
 CMakeFiles/make_bbox_uninstall.dir/depend:
-	cd /home/aiv/ev_ws/perception/build/make_bbox && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aiv/ev_ws/perception/src/lidar/make_bbox /home/aiv/ev_ws/perception/src/lidar/make_bbox /home/aiv/ev_ws/perception/build/make_bbox /home/aiv/ev_ws/perception/build/make_bbox /home/aiv/ev_ws/perception/build/make_bbox/CMakeFiles/make_bbox_uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/make_bbox /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/make_bbox /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox/CMakeFiles/make_bbox_uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/make_bbox_uninstall.dir/depend
 

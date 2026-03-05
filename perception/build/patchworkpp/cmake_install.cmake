@@ -1,8 +1,8 @@
-# Install script for directory: /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros
+# Install script for directory: /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/aiv/ev_ws/perception/install/patchworkpp")
+  set(CMAKE_INSTALL_PREFIX "/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -44,11 +44,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/cmake_install.cmake")
+  include("/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/cmake_install.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/aiv/ev_ws/perception/build/patchworkpp/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  include("/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -59,5 +59,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/aiv/ev_ws/perception/build/patchworkpp/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

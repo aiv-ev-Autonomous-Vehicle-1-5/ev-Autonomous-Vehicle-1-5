@@ -1,1 +1,2 @@
-/home/aiv/ev_ws/planning/build/chaining_costmap_ver/ament_cmake_environment_hooks/local_setup.dsv
+source;share/chaining_costmap_ver/environment/ament_prefix_path.sh
+source;share/chaining_costmap_ver/environment/path.sh

@@ -1,0 +1,6 @@
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/ev_msgs -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/ev_msgs -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs -- -j8 -l8
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs -- -j8 -l8
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/ev_msgs/build/ev_msgs

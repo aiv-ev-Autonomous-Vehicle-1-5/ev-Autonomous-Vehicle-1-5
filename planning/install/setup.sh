@@ -7,7 +7,7 @@
 # since a plain shell script can't determine its own path when being sourced
 # either use the provided COLCON_CURRENT_PREFIX
 # or fall back to the build time prefix (if it exists)
-_colcon_prefix_chain_sh_COLCON_CURRENT_PREFIX=/home/aiv/ev_ws/planning/install
+_colcon_prefix_chain_sh_COLCON_CURRENT_PREFIX=/home/kimsohee/ev-1-5/ev_ws/planning/install
 if [ ! -z "$COLCON_CURRENT_PREFIX" ]; then
   _colcon_prefix_chain_sh_COLCON_CURRENT_PREFIX="$COLCON_CURRENT_PREFIX"
 elif [ ! -d "$_colcon_prefix_chain_sh_COLCON_CURRENT_PREFIX" ]; then
@@ -35,19 +35,15 @@ COLCON_CURRENT_PREFIX="/opt/ros/humble"
 _colcon_prefix_chain_sh_source_script "$COLCON_CURRENT_PREFIX/local_setup.sh"
 
 # setting COLCON_CURRENT_PREFIX avoids relying on the build time prefix of the sourced script
-COLCON_CURRENT_PREFIX="/home/aiv/ev_ws/erp42_ros/install"
+COLCON_CURRENT_PREFIX="/home/kimsohee/workspace/ros2/erp42_ros/install"
 _colcon_prefix_chain_sh_source_script "$COLCON_CURRENT_PREFIX/local_setup.sh"
 
 # setting COLCON_CURRENT_PREFIX avoids relying on the build time prefix of the sourced script
-COLCON_CURRENT_PREFIX="/home/aiv/ev_ws/carsa_gazebo/install"
+COLCON_CURRENT_PREFIX="/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install"
 _colcon_prefix_chain_sh_source_script "$COLCON_CURRENT_PREFIX/local_setup.sh"
 
 # setting COLCON_CURRENT_PREFIX avoids relying on the build time prefix of the sourced script
-COLCON_CURRENT_PREFIX="/home/aiv/ev_ws/ev_msgs/install"
-_colcon_prefix_chain_sh_source_script "$COLCON_CURRENT_PREFIX/local_setup.sh"
-
-# setting COLCON_CURRENT_PREFIX avoids relying on the build time prefix of the sourced script
-COLCON_CURRENT_PREFIX="/home/aiv/ev_ws/perception/install"
+COLCON_CURRENT_PREFIX="/home/kimsohee/ev-1-5/ev_ws/perception/install"
 _colcon_prefix_chain_sh_source_script "$COLCON_CURRENT_PREFIX/local_setup.sh"
 
 

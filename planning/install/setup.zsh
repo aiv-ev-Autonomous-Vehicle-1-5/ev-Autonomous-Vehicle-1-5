@@ -22,16 +22,13 @@ _colcon_prefix_chain_zsh_source_script() {
 COLCON_CURRENT_PREFIX="/opt/ros/humble"
 _colcon_prefix_chain_zsh_source_script "$COLCON_CURRENT_PREFIX/local_setup.zsh"
 # setting COLCON_CURRENT_PREFIX avoids determining the prefix in the sourced script
-COLCON_CURRENT_PREFIX="/home/aiv/ev_ws/erp42_ros/install"
+COLCON_CURRENT_PREFIX="/home/kimsohee/workspace/ros2/erp42_ros/install"
 _colcon_prefix_chain_zsh_source_script "$COLCON_CURRENT_PREFIX/local_setup.zsh"
 # setting COLCON_CURRENT_PREFIX avoids determining the prefix in the sourced script
-COLCON_CURRENT_PREFIX="/home/aiv/ev_ws/carsa_gazebo/install"
+COLCON_CURRENT_PREFIX="/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install"
 _colcon_prefix_chain_zsh_source_script "$COLCON_CURRENT_PREFIX/local_setup.zsh"
 # setting COLCON_CURRENT_PREFIX avoids determining the prefix in the sourced script
-COLCON_CURRENT_PREFIX="/home/aiv/ev_ws/ev_msgs/install"
-_colcon_prefix_chain_zsh_source_script "$COLCON_CURRENT_PREFIX/local_setup.zsh"
-# setting COLCON_CURRENT_PREFIX avoids determining the prefix in the sourced script
-COLCON_CURRENT_PREFIX="/home/aiv/ev_ws/perception/install"
+COLCON_CURRENT_PREFIX="/home/kimsohee/ev-1-5/ev_ws/perception/install"
 _colcon_prefix_chain_zsh_source_script "$COLCON_CURRENT_PREFIX/local_setup.zsh"
 
 # source this prefix

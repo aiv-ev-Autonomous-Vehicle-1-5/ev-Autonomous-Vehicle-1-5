@@ -2,7 +2,7 @@
 
 # since this file is sourced use either the provided AMENT_CURRENT_PREFIX
 # or fall back to the destination set at configure time
-: ${AMENT_CURRENT_PREFIX:="/home/aiv/ev_ws/planning/install/chaining_costmap_ver"}
+: ${AMENT_CURRENT_PREFIX:="/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver"}
 if [ ! -d "$AMENT_CURRENT_PREFIX" ]; then
   if [ -z "$COLCON_CURRENT_PREFIX" ]; then
     echo "The compile time prefix path '$AMENT_CURRENT_PREFIX' doesn't " \

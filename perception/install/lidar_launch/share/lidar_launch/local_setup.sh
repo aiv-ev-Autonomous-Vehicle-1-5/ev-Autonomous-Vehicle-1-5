@@ -1,1 +1,1 @@
-/home/aiv/ev_ws/perception/build/lidar_launch/ament_cmake_environment_hooks/local_setup.sh
+/home/kimsohee/ev-1-5/ev_ws/perception/build/lidar_launch/ament_cmake_environment_hooks/local_setup.sh

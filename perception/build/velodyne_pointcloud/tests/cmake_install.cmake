@@ -1,8 +1,8 @@
-# Install script for directory: /home/aiv/ev_ws/perception/src/lidar/velodyne_pointcloud/tests
+# Install script for directory: /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_pointcloud/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/aiv/ev_ws/perception/install/velodyne_pointcloud")
+  set(CMAKE_INSTALL_PREFIX "/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/aiv/ev_ws/perception/build/velodyne_pointcloud/gtest/cmake_install.cmake")
+  include("/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_pointcloud/gtest/cmake_install.cmake")
 
 endif()
 

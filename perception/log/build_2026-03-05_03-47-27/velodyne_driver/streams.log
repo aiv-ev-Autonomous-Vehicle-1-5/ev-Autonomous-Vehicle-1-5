@@ -1,0 +1,116 @@
+[0.019s] Invoking command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_driver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver
+[0.162s] -- The C compiler identification is GNU 11.4.0
+[0.284s] -- The CXX compiler identification is GNU 11.4.0
+[0.307s] -- Detecting C compiler ABI info
+[0.477s] -- Detecting C compiler ABI info - done
+[0.493s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.494s] -- Detecting C compile features
+[0.495s] -- Detecting C compile features - done
+[0.503s] -- Detecting CXX compiler ABI info
+[0.694s] -- Detecting CXX compiler ABI info - done
+[0.715s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.715s] -- Detecting CXX compile features
+[0.718s] -- Detecting CXX compile features - done
+[0.724s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[1.080s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.234s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.301s] -- Found diagnostic_updater: 4.0.6 (/opt/ros/humble/share/diagnostic_updater/cmake)
+[1.424s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.443s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.458s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.482s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.510s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.680s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.686s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.859s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[1.906s] -- Found FastRTPS: /opt/ros/humble/include  
+[1.988s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.005s] -- Looking for pthread.h
+[2.175s] -- Looking for pthread.h - found
+[2.175s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[2.301s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[2.301s] -- Found Threads: TRUE  
+[2.385s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[2.446s] -- Found tf2_ros: 0.25.18 (/opt/ros/humble/share/tf2_ros/cmake)
+[2.594s] -- Found velodyne_msgs: 2.5.1 (/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/share/velodyne_msgs/cmake)
+[2.619s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.857s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[2.885s] -- Added test 'copyright' to check source files copyright and LICENSE
+[2.888s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.892s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_driver/include>
+[2.892s] -- Configured cppcheck exclude dirs and/or files: 
+[2.892s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[2.892s] -- Configured cpplint exclude dirs and/or files: 
+[2.894s] -- Added test 'flake8' to check Python code syntax and style conventions
+[2.896s] -- Added test 'lint_cmake' to check CMake code style
+[2.897s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[2.901s] -- Added test 'uncrustify' to check C / C++ code style
+[2.901s] -- Configured uncrustify additional arguments: 
+[2.903s] -- Added test 'xmllint' to check XML markup files
+[2.908s] -- Configuring done
+[2.971s] -- Generating done
+[2.985s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver
+[3.005s] Invoked command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_driver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver
+[3.015s] Invoking command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver -- -j8 -l8
+[3.367s] [  8%] [32mBuilding CXX object CMakeFiles/velodyne_input.dir/src/lib/input.cpp.o[0m
+[3.367s] [ 16%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[3.367s] [ 25%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[4.827s] [ 33%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[4.981s] [ 33%] Built target gtest_main
+[10.295s] [ 41%] [32m[1mLinking CXX shared library libvelodyne_input.so[0m
+[10.692s] [ 41%] Built target velodyne_input
+[10.757s] [ 50%] [32mBuilding CXX object CMakeFiles/velodyne_driver.dir/src/driver/driver.cpp.o[0m
+[12.070s] [ 58%] [32m[1mLinking CXX static library libgtest.a[0m
+[12.270s] [ 58%] Built target gtest
+[12.331s] [ 66%] [32mBuilding CXX object CMakeFiles/time_test.dir/tests/timeconversiontest.cpp.o[0m
+[18.325s] [ 75%] [32m[1mLinking CXX executable time_test[0m
+[18.625s] [ 75%] Built target time_test
+[26.946s] [ 83%] [32m[1mLinking CXX shared library libvelodyne_driver.so[0m
+[27.774s] [ 83%] Built target velodyne_driver
+[27.812s] [ 91%] [32mBuilding CXX object CMakeFiles/velodyne_driver_node.dir/src/driver/velodyne_node.cpp.o[0m
+[32.054s] [100%] [32m[1mLinking CXX executable velodyne_driver_node[0m
+[32.400s] [100%] Built target velodyne_driver_node
+[32.419s] Invoked command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver -- -j8 -l8
+[32.421s] Invoking command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver
+[32.432s] -- Install configuration: ""
+[32.432s] -- Execute custom install script
+[32.433s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib/velodyne_driver/velodyne_driver_node
+[32.445s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/include/velodyne_driver/driver.hpp
+[32.458s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/include/velodyne_driver/input.hpp
+[32.470s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/include/velodyne_driver/time_conversion.hpp
+[32.484s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/config/VLP16-velodyne_driver_node-params.yaml
+[32.507s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/config/VLP32C-velodyne_driver_node-params.yaml
+[32.518s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/config/VLS128-velodyne_driver_node-params.yaml
+[32.531s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLP16-composed-launch.py
+[32.544s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLP16-launch.py
+[32.556s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLP32C-composed-launch.py
+[32.570s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLP32C-launch.py
+[32.586s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLS128-composed-launch.py
+[32.617s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLS128-launch.py
+[32.643s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib/velodyne_driver/vdump
+[32.657s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/ament_index/resource_index/package_run_dependencies/velodyne_driver
+[32.670s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/ament_index/resource_index/parent_prefix_path/velodyne_driver
+[32.684s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/environment/ament_prefix_path.sh
+[32.706s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/environment/ament_prefix_path.dsv
+[32.721s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/environment/path.sh
+[32.734s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/environment/path.dsv
+[32.747s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/local_setup.bash
+[32.760s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/local_setup.sh
+[32.774s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/local_setup.zsh
+[32.788s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/local_setup.dsv
+[32.812s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/package.dsv
+[32.827s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/ament_index/resource_index/packages/velodyne_driver
+[32.840s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/ament_index/resource_index/rclcpp_components/velodyne_driver
+[32.853s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/ament_cmake_export_include_directories-extras.cmake
+[32.866s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/ament_cmake_export_targets-extras.cmake
+[32.879s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/ament_cmake_export_dependencies-extras.cmake
+[32.892s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverConfig.cmake
+[32.906s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverConfig-version.cmake
+[32.917s] -- Symlinking: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/package.xml
+[32.929s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib/libvelodyne_input.so
+[32.929s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib/libvelodyne_input.so" to ""
+[32.929s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib/libvelodyne_driver.so
+[32.936s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib/libvelodyne_driver.so" to ""
+[32.937s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverExport.cmake
+[32.937s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverExport-noconfig.cmake
+[32.944s] Invoked command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver

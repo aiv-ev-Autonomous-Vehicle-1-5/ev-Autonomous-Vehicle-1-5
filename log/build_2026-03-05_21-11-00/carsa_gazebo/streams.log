@@ -1,0 +1,47 @@
+[0.026s] Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo -- -j8 -l8
+[0.121s] Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo -- -j8 -l8
+[0.139s] Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo
+[0.153s] -- Install configuration: ""
+[0.157s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//launch
+[0.157s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//launch/empty.launch.py
+[0.157s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//launch/kcity.launch.py
+[0.157s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes
+[0.157s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_c920.dae
+[0.157s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes/gps_antenna.dae
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_c930.dae
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_camera_lens.dae
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//rviz
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//rviz/planning.rviz
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//rviz/erp42.rviz
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//rviz/t870.rviz
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/erp42.xacro
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/xsens_mti3.xacro
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/logitech_c930.xacro
+[0.158s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/velodyne_vlp_32c.xacro
+[0.158s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/velodyne_vlp_16c.xacro
+[0.159s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/t870.xacro
+[0.159s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/logitech_c920.xacro
+[0.159s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//urdf/ublox_zed_f9p.xacro
+[0.159s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds
+[0.159s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/planning_test.world
+[0.159s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/kcity.world
+[0.159s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/10m.world
+[0.159s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/empty.world
+[0.160s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo//worlds/rubber-cone-1-rail.world
+[0.160s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/ament_index/resource_index/package_run_dependencies/carsa_gazebo
+[0.160s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/ament_index/resource_index/parent_prefix_path/carsa_gazebo
+[0.161s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/environment/ament_prefix_path.sh
+[0.161s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/environment/ament_prefix_path.dsv
+[0.161s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/environment/path.sh
+[0.161s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/environment/path.dsv
+[0.161s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/local_setup.bash
+[0.161s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/local_setup.sh
+[0.161s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/local_setup.zsh
+[0.161s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/local_setup.dsv
+[0.161s] -- Installing: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/package.dsv
+[0.162s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/ament_index/resource_index/packages/carsa_gazebo
+[0.162s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/cmake/carsa_gazeboConfig.cmake
+[0.162s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/cmake/carsa_gazeboConfig-version.cmake
+[0.162s] -- Up-to-date: /home/kimsohee/ev-1-5/ev_ws/install/carsa_gazebo/share/carsa_gazebo/package.xml
+[0.163s] Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/build/carsa_gazebo

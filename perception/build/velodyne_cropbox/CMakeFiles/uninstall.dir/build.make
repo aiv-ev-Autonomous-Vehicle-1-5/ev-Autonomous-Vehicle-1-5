@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/aiv/ev_ws/perception/src/lidar/velodyne_cropbox
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_cropbox
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/aiv/ev_ws/perception/build/velodyne_cropbox
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_cropbox
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/aiv/ev_ws/perception/build/velodyne_cropbox && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/aiv/ev_ws/perception/src/lidar/velodyne_cropbox /home/aiv/ev_ws/perception/src/lidar/velodyne_cropbox /home/aiv/ev_ws/perception/build/velodyne_cropbox /home/aiv/ev_ws/perception/build/velodyne_cropbox /home/aiv/ev_ws/perception/build/velodyne_cropbox/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_cropbox && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_cropbox /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_cropbox /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_cropbox /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_cropbox /home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_cropbox/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

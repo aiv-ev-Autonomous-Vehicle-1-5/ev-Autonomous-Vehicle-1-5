@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-8f34a059cb4aae7bcdb4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "make_bbox",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "make_bbox_component::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-make_bbox_component-f9f4d659a401931d9dfc.json",
+					"name" : "make_bbox_component",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "make_bbox_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-make_bbox_node-e9f49ab2f45e7ea34412.json",
+					"name" : "make_bbox_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "make_bbox_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-make_bbox_uninstall-9334868045451932f09a.json",
+					"name" : "make_bbox_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-d223c6a2341b689c1e8d.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox",
+		"source" : "/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/make_bbox"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

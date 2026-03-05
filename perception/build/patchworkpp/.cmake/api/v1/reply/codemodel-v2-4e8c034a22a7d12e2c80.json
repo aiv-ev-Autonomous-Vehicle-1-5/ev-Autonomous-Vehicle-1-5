@@ -1,0 +1,148 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-79faad6e707f48de74a1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"build" : "patchworkpp_cpp",
+					"childIndexes" : 
+					[
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-patchworkpp_cpp-Release-7d49286afd03ace7ffac.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.11"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp"
+				},
+				{
+					"build" : "patchworkpp_cpp/patchworkpp",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-patchworkpp_cpp.patchworkpp-Release-9091e67a5f6423ce85bd.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.11"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp/patchworkpp",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "patchworkpp",
+					"targetIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "patchworkpp_src",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 2,
+					"id" : "ground_seg_cores::@8667304aefeb979c40fc",
+					"jsonFile" : "target-ground_seg_cores-Release-c5e4ad107a616829c022.json",
+					"name" : "ground_seg_cores",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gseg_component::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gseg_component-Release-f75a3908d63d34b2e46b.json",
+					"name" : "gseg_component",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "patchworkpp_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-patchworkpp_node-Release-2244f504d5e7f17a93c3.json",
+					"name" : "patchworkpp_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "patchworkpp_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-patchworkpp_uninstall-Release-4112aedee5b2c79c6cfa.json",
+					"name" : "patchworkpp_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-Release-46a089df95c42b649379.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp",
+		"source" : "/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/ros"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

@@ -45,7 +45,7 @@ unset(_expectedTargets)
 add_library(patchworkpp::ground_seg_cores STATIC IMPORTED)
 
 set_target_properties(patchworkpp::ground_seg_cores PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/include;/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp/patchworkpp/include"
+  INTERFACE_INCLUDE_DIRECTORIES "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/include;/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp/patchworkpp/include"
   INTERFACE_LINK_LIBRARIES "Eigen3::Eigen"
 )
 
@@ -53,7 +53,7 @@ set_target_properties(patchworkpp::ground_seg_cores PROPERTIES
 set_property(TARGET patchworkpp::ground_seg_cores APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(patchworkpp::ground_seg_cores PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
-  IMPORTED_LOCATION_RELEASE "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/libground_seg_cores.a"
+  IMPORTED_LOCATION_RELEASE "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/libground_seg_cores.a"
   )
 
 # This file does not depend on other imported targets which have

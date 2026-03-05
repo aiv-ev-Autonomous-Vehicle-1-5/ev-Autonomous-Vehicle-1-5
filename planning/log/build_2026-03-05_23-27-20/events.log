@@ -1,0 +1,550 @@
+[0.000000] (-) TimerEvent: {}
+[0.003060] (chaining_costmap_ver) JobQueued: {'identifier': 'chaining_costmap_ver', 'dependencies': OrderedDict()}
+[0.003156] (chaining_costmap_ver) JobStarted: {'identifier': 'chaining_costmap_ver'}
+[0.014423] (chaining_costmap_ver) JobProgress: {'identifier': 'chaining_costmap_ver', 'progress': 'cmake'}
+[0.018578] (chaining_costmap_ver) Command: {'cmd': ['/usr/bin/cmake', '/home/kimsohee/ev-1-5/ev_ws/planning/src/chaining_costmap_ver', '-DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver'], 'cwd': '/home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kimsohee'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter/lib:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee/ev-1-5/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1167'), ('SYSTEMD_EXEC_PID', '1316'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '3678'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install:/home/kimsohee/ev-1-5/ev_ws/perception/install:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install:/home/kimsohee/workspace/ros2/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:12700'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/usr/local/MATLAB/R2024b/bin:/opt/ros/humble/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee-960XHA:@/tmp/.ICE-unix/1286,unix/kimsohee-960XHA:/tmp/.ICE-unix/1286'), ('INVOCATION_ID', '06f17983da8f4c10a25f5838f64882c0'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.MPYHL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:9bb629bb-ec7d-4d04-aea7-aacfeca0f045'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('GAZEBO_PLUGIN_PATH', ':/opt/ros/humble/lib'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs/local/lib/python3.10/dist-packages:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble')]), 'shell': False}
+[0.099976] (-) TimerEvent: {}
+[0.201065] (-) TimerEvent: {}
+[0.208196] (chaining_costmap_ver) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.301272] (-) TimerEvent: {}
+[0.370285] (chaining_costmap_ver) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.398147] (chaining_costmap_ver) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.401374] (-) TimerEvent: {}
+[0.503700] (-) TimerEvent: {}
+[0.564601] (chaining_costmap_ver) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.585498] (chaining_costmap_ver) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.596635] (chaining_costmap_ver) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.596915] (chaining_costmap_ver) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.603829] (-) TimerEvent: {}
+[0.608066] (chaining_costmap_ver) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.703955] (-) TimerEvent: {}
+[0.775276] (chaining_costmap_ver) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.793145] (chaining_costmap_ver) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.793390] (chaining_costmap_ver) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.793477] (chaining_costmap_ver) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.804077] (-) TimerEvent: {}
+[0.807081] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.906068] (-) TimerEvent: {}
+[1.006718] (-) TimerEvent: {}
+[1.109062] (-) TimerEvent: {}
+[1.147060] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[1.209211] (-) TimerEvent: {}
+[1.309754] (-) TimerEvent: {}
+[1.387159] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[1.409883] (-) TimerEvent: {}
+[1.510280] (-) TimerEvent: {}
+[1.511424] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[1.526896] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[1.548540] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[1.593150] (chaining_costmap_ver) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[1.611277] (-) TimerEvent: {}
+[1.646697] (chaining_costmap_ver) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[1.711449] (-) TimerEvent: {}
+[1.772781] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[1.782162] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[1.815072] (-) TimerEvent: {}
+[1.916067] (-) TimerEvent: {}
+[2.005975] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[2.016501] (-) TimerEvent: {}
+[2.069428] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[2.117094] (-) TimerEvent: {}
+[2.154851] (chaining_costmap_ver) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[2.188148] (chaining_costmap_ver) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[2.218946] (-) TimerEvent: {}
+[2.322942] (-) TimerEvent: {}
+[2.378258] (chaining_costmap_ver) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[2.378563] (chaining_costmap_ver) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[2.424188] (-) TimerEvent: {}
+[2.526609] (-) TimerEvent: {}
+[2.545260] (chaining_costmap_ver) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[2.548244] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[2.626772] (-) TimerEvent: {}
+[2.676974] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)\n'}
+[2.726887] (-) TimerEvent: {}
+[2.744644] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)\n'}
+[2.809084] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found ev_msgs: 0.1.0 (/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs/share/ev_msgs/cmake)\n'}
+[2.828022] (-) TimerEvent: {}
+[2.844849] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)\n'}
+[2.928151] (-) TimerEvent: {}
+[2.947746] (chaining_costmap_ver) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[3.032839] (-) TimerEvent: {}
+[3.136179] (-) TimerEvent: {}
+[3.179073] (chaining_costmap_ver) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[3.181009] (chaining_costmap_ver) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/kimsohee/ev-1-5/ev_ws/planning/src/chaining_costmap_ver/include\n'}
+[3.181140] (chaining_costmap_ver) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[3.181677] (chaining_costmap_ver) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[3.186654] (chaining_costmap_ver) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[3.187777] (chaining_costmap_ver) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[3.193607] (chaining_costmap_ver) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[3.193822] (chaining_costmap_ver) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[3.195547] (chaining_costmap_ver) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[3.200879] (chaining_costmap_ver) StdoutLine: {'line': b'-- Configuring done\n'}
+[3.244058] (-) TimerEvent: {}
+[3.257585] (chaining_costmap_ver) StdoutLine: {'line': b'-- Generating done\n'}
+[3.275608] (chaining_costmap_ver) StdoutLine: {'line': b'-- Build files have been written to: /home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver\n'}
+[3.288351] (chaining_costmap_ver) CommandEnded: {'returncode': 0}
+[3.290134] (chaining_costmap_ver) JobProgress: {'identifier': 'chaining_costmap_ver', 'progress': 'build'}
+[3.290177] (chaining_costmap_ver) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver', '--', '-j8', '-l8'], 'cwd': '/home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kimsohee'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter/lib:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee/ev-1-5/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1167'), ('SYSTEMD_EXEC_PID', '1316'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '3678'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install:/home/kimsohee/ev-1-5/ev_ws/perception/install:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install:/home/kimsohee/workspace/ros2/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:12700'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/usr/local/MATLAB/R2024b/bin:/opt/ros/humble/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee-960XHA:@/tmp/.ICE-unix/1286,unix/kimsohee-960XHA:/tmp/.ICE-unix/1286'), ('INVOCATION_ID', '06f17983da8f4c10a25f5838f64882c0'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.MPYHL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:9bb629bb-ec7d-4d04-aea7-aacfeca0f045'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('GAZEBO_PLUGIN_PATH', ':/opt/ros/humble/lib'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs/local/lib/python3.10/dist-packages:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble')]), 'shell': False}
+[3.344170] (-) TimerEvent: {}
+[3.395142] (chaining_costmap_ver) StdoutLine: {'line': b'[  8%] \x1b[32mBuilding CXX object CMakeFiles/chaining_costmap_chainer.dir/src/chainer/direction_chainer.cpp.o\x1b[0m\n'}
+[3.444291] (-) TimerEvent: {}
+[3.544671] (-) TimerEvent: {}
+[3.646059] (-) TimerEvent: {}
+[3.746416] (-) TimerEvent: {}
+[3.848724] (-) TimerEvent: {}
+[3.949058] (-) TimerEvent: {}
+[4.049423] (-) TimerEvent: {}
+[4.150104] (-) TimerEvent: {}
+[4.250491] (-) TimerEvent: {}
+[4.354237] (-) TimerEvent: {}
+[4.454601] (-) TimerEvent: {}
+[4.554972] (-) TimerEvent: {}
+[4.655358] (-) TimerEvent: {}
+[4.755750] (-) TimerEvent: {}
+[4.856146] (-) TimerEvent: {}
+[4.956523] (-) TimerEvent: {}
+[5.056900] (-) TimerEvent: {}
+[5.157307] (-) TimerEvent: {}
+[5.257681] (-) TimerEvent: {}
+[5.360192] (-) TimerEvent: {}
+[5.460568] (-) TimerEvent: {}
+[5.560953] (-) TimerEvent: {}
+[5.661371] (-) TimerEvent: {}
+[5.761755] (-) TimerEvent: {}
+[5.862134] (-) TimerEvent: {}
+[5.962503] (-) TimerEvent: {}
+[6.064188] (-) TimerEvent: {}
+[6.164596] (-) TimerEvent: {}
+[6.264989] (-) TimerEvent: {}
+[6.365856] (-) TimerEvent: {}
+[6.467276] (-) TimerEvent: {}
+[6.567705] (-) TimerEvent: {}
+[6.668077] (-) TimerEvent: {}
+[6.768824] (-) TimerEvent: {}
+[6.871072] (-) TimerEvent: {}
+[6.971496] (-) TimerEvent: {}
+[7.072067] (-) TimerEvent: {}
+[7.175022] (-) TimerEvent: {}
+[7.275421] (-) TimerEvent: {}
+[7.376039] (-) TimerEvent: {}
+[7.476800] (-) TimerEvent: {}
+[7.577850] (-) TimerEvent: {}
+[7.679479] (-) TimerEvent: {}
+[7.779877] (-) TimerEvent: {}
+[7.881118] (-) TimerEvent: {}
+[7.983011] (-) TimerEvent: {}
+[8.083478] (-) TimerEvent: {}
+[8.188053] (-) TimerEvent: {}
+[8.288386] (-) TimerEvent: {}
+[8.333677] (chaining_costmap_ver) StdoutLine: {'line': b'[ 16%] \x1b[32m\x1b[1mLinking CXX shared library libchaining_costmap_chainer.so\x1b[0m\n'}
+[8.388500] (-) TimerEvent: {}
+[8.496061] (-) TimerEvent: {}
+[8.596428] (-) TimerEvent: {}
+[8.683330] (chaining_costmap_ver) StdoutLine: {'line': b'[ 16%] Built target chaining_costmap_chainer\n'}
+[8.696529] (-) TimerEvent: {}
+[8.725664] (chaining_costmap_ver) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/lc_planner_node_exe.dir/rclcpp_components/node_main_lc_planner_node_exe.cpp.o\x1b[0m\n'}
+[8.796651] (-) TimerEvent: {}
+[8.897790] (-) TimerEvent: {}
+[9.001176] (-) TimerEvent: {}
+[9.101546] (-) TimerEvent: {}
+[9.202639] (-) TimerEvent: {}
+[9.303023] (-) TimerEvent: {}
+[9.406183] (-) TimerEvent: {}
+[9.506574] (-) TimerEvent: {}
+[9.606994] (-) TimerEvent: {}
+[9.707381] (-) TimerEvent: {}
+[9.807789] (-) TimerEvent: {}
+[9.908181] (-) TimerEvent: {}
+[10.008585] (-) TimerEvent: {}
+[10.108967] (-) TimerEvent: {}
+[10.209351] (-) TimerEvent: {}
+[10.312199] (-) TimerEvent: {}
+[10.412599] (-) TimerEvent: {}
+[10.513013] (-) TimerEvent: {}
+[10.613400] (-) TimerEvent: {}
+[10.713781] (-) TimerEvent: {}
+[10.814175] (-) TimerEvent: {}
+[10.914566] (-) TimerEvent: {}
+[11.016199] (-) TimerEvent: {}
+[11.116601] (-) TimerEvent: {}
+[11.216993] (-) TimerEvent: {}
+[11.317363] (-) TimerEvent: {}
+[11.418929] (-) TimerEvent: {}
+[11.519365] (-) TimerEvent: {}
+[11.620185] (-) TimerEvent: {}
+[11.722226] (-) TimerEvent: {}
+[11.822646] (-) TimerEvent: {}
+[11.927238] (-) TimerEvent: {}
+[12.029095] (-) TimerEvent: {}
+[12.130062] (-) TimerEvent: {}
+[12.230438] (-) TimerEvent: {}
+[12.330843] (-) TimerEvent: {}
+[12.432183] (-) TimerEvent: {}
+[12.534227] (-) TimerEvent: {}
+[12.634569] (-) TimerEvent: {}
+[12.734932] (-) TimerEvent: {}
+[12.835316] (-) TimerEvent: {}
+[12.935684] (-) TimerEvent: {}
+[12.950046] (chaining_costmap_ver) StdoutLine: {'line': b'[ 33%] \x1b[32m\x1b[1mLinking CXX executable lc_planner_node_exe\x1b[0m\n'}
+[13.036297] (-) TimerEvent: {}
+[13.136666] (-) TimerEvent: {}
+[13.217896] (chaining_costmap_ver) StdoutLine: {'line': b'[ 33%] Built target lc_planner_node_exe\n'}
+[13.237541] (-) TimerEvent: {}
+[13.262273] (chaining_costmap_ver) StdoutLine: {'line': b'[ 41%] \x1b[32mBuilding CXX object CMakeFiles/chaining_costmap_postprocess.dir/src/postprocess/path_postprocessor.cpp.o\x1b[0m\n'}
+[13.338406] (-) TimerEvent: {}
+[13.439500] (-) TimerEvent: {}
+[13.539892] (-) TimerEvent: {}
+[13.640298] (-) TimerEvent: {}
+[13.743181] (-) TimerEvent: {}
+[13.843556] (-) TimerEvent: {}
+[13.943943] (-) TimerEvent: {}
+[14.044348] (-) TimerEvent: {}
+[14.064399] (chaining_costmap_ver) StdoutLine: {'line': b'[ 50%] \x1b[32m\x1b[1mLinking CXX shared library libchaining_costmap_postprocess.so\x1b[0m\n'}
+[14.144471] (-) TimerEvent: {}
+[14.244861] (-) TimerEvent: {}
+[14.284052] (chaining_costmap_ver) StdoutLine: {'line': b'[ 50%] Built target chaining_costmap_postprocess\n'}
+[14.316762] (chaining_costmap_ver) StdoutLine: {'line': b'[ 58%] \x1b[32mBuilding CXX object CMakeFiles/chaining_costmap_astar.dir/src/planner/astar_planner.cpp.o\x1b[0m\n'}
+[14.344980] (-) TimerEvent: {}
+[14.445352] (-) TimerEvent: {}
+[14.545722] (-) TimerEvent: {}
+[14.646056] (-) TimerEvent: {}
+[14.746422] (-) TimerEvent: {}
+[14.848164] (-) TimerEvent: {}
+[14.948512] (-) TimerEvent: {}
+[15.049321] (-) TimerEvent: {}
+[15.149676] (-) TimerEvent: {}
+[15.253097] (-) TimerEvent: {}
+[15.353449] (-) TimerEvent: {}
+[15.453802] (-) TimerEvent: {}
+[15.554172] (-) TimerEvent: {}
+[15.654548] (-) TimerEvent: {}
+[15.754922] (-) TimerEvent: {}
+[15.855304] (-) TimerEvent: {}
+[15.958232] (-) TimerEvent: {}
+[16.058602] (-) TimerEvent: {}
+[16.158997] (-) TimerEvent: {}
+[16.259434] (-) TimerEvent: {}
+[16.359828] (-) TimerEvent: {}
+[16.462183] (-) TimerEvent: {}
+[16.562581] (-) TimerEvent: {}
+[16.664483] (-) TimerEvent: {}
+[16.764872] (-) TimerEvent: {}
+[16.865246] (-) TimerEvent: {}
+[16.965646] (-) TimerEvent: {}
+[17.066065] (-) TimerEvent: {}
+[17.166437] (-) TimerEvent: {}
+[17.266999] (-) TimerEvent: {}
+[17.367371] (-) TimerEvent: {}
+[17.467740] (-) TimerEvent: {}
+[17.568119] (-) TimerEvent: {}
+[17.675070] (-) TimerEvent: {}
+[17.775414] (-) TimerEvent: {}
+[17.875784] (-) TimerEvent: {}
+[17.976143] (-) TimerEvent: {}
+[18.076966] (-) TimerEvent: {}
+[18.119327] (chaining_costmap_ver) StdoutLine: {'line': b'[ 66%] \x1b[32m\x1b[1mLinking CXX shared library libchaining_costmap_astar.so\x1b[0m\n'}
+[18.177060] (-) TimerEvent: {}
+[18.277410] (-) TimerEvent: {}
+[18.328209] (chaining_costmap_ver) StdoutLine: {'line': b'[ 66%] Built target chaining_costmap_astar\n'}
+[18.377582] (chaining_costmap_ver) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/chaining_costmap_costmap.dir/src/costmap/costmap_generator.cpp.o\x1b[0m\n'}
+[18.377810] (-) TimerEvent: {}
+[18.479056] (-) TimerEvent: {}
+[18.579428] (-) TimerEvent: {}
+[18.679878] (-) TimerEvent: {}
+[18.780316] (-) TimerEvent: {}
+[18.883197] (-) TimerEvent: {}
+[18.983581] (-) TimerEvent: {}
+[19.083964] (-) TimerEvent: {}
+[19.184350] (-) TimerEvent: {}
+[19.284729] (-) TimerEvent: {}
+[19.385075] (-) TimerEvent: {}
+[19.485455] (-) TimerEvent: {}
+[19.586060] (-) TimerEvent: {}
+[19.690215] (-) TimerEvent: {}
+[19.790590] (-) TimerEvent: {}
+[19.890967] (-) TimerEvent: {}
+[19.991375] (-) TimerEvent: {}
+[20.091758] (-) TimerEvent: {}
+[20.192144] (-) TimerEvent: {}
+[20.292540] (-) TimerEvent: {}
+[20.392936] (-) TimerEvent: {}
+[20.493332] (-) TimerEvent: {}
+[20.593726] (-) TimerEvent: {}
+[20.694128] (-) TimerEvent: {}
+[20.795509] (-) TimerEvent: {}
+[20.897843] (-) TimerEvent: {}
+[20.998272] (-) TimerEvent: {}
+[21.098782] (-) TimerEvent: {}
+[21.201076] (-) TimerEvent: {}
+[21.301467] (-) TimerEvent: {}
+[21.402774] (-) TimerEvent: {}
+[21.503159] (-) TimerEvent: {}
+[21.603579] (-) TimerEvent: {}
+[21.703974] (-) TimerEvent: {}
+[21.806075] (-) TimerEvent: {}
+[21.906474] (-) TimerEvent: {}
+[22.009653] (-) TimerEvent: {}
+[22.059040] (chaining_costmap_ver) StdoutLine: {'line': b'[ 83%] \x1b[32m\x1b[1mLinking CXX shared library libchaining_costmap_costmap.so\x1b[0m\n'}
+[22.109766] (-) TimerEvent: {}
+[22.210118] (-) TimerEvent: {}
+[22.263570] (chaining_costmap_ver) StdoutLine: {'line': b'[ 83%] Built target chaining_costmap_costmap\n'}
+[22.309175] (chaining_costmap_ver) StdoutLine: {'line': b'[ 91%] \x1b[32mBuilding CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_costmap_ver_node.cpp.o\x1b[0m\n'}
+[22.310357] (-) TimerEvent: {}
+[22.410722] (-) TimerEvent: {}
+[22.511070] (-) TimerEvent: {}
+[22.615551] (-) TimerEvent: {}
+[22.715937] (-) TimerEvent: {}
+[22.816344] (-) TimerEvent: {}
+[22.916762] (-) TimerEvent: {}
+[23.019070] (-) TimerEvent: {}
+[23.119472] (-) TimerEvent: {}
+[23.223244] (-) TimerEvent: {}
+[23.323669] (-) TimerEvent: {}
+[23.424086] (-) TimerEvent: {}
+[23.527936] (-) TimerEvent: {}
+[23.628314] (-) TimerEvent: {}
+[23.728711] (-) TimerEvent: {}
+[23.829466] (-) TimerEvent: {}
+[23.931320] (-) TimerEvent: {}
+[24.032741] (-) TimerEvent: {}
+[24.133183] (-) TimerEvent: {}
+[24.235650] (-) TimerEvent: {}
+[24.336760] (-) TimerEvent: {}
+[24.437183] (-) TimerEvent: {}
+[24.537619] (-) TimerEvent: {}
+[24.640212] (-) TimerEvent: {}
+[24.740593] (-) TimerEvent: {}
+[24.843541] (-) TimerEvent: {}
+[24.943961] (-) TimerEvent: {}
+[25.044371] (-) TimerEvent: {}
+[25.146067] (-) TimerEvent: {}
+[25.246499] (-) TimerEvent: {}
+[25.346929] (-) TimerEvent: {}
+[25.451242] (-) TimerEvent: {}
+[25.555245] (-) TimerEvent: {}
+[25.655825] (-) TimerEvent: {}
+[25.756385] (-) TimerEvent: {}
+[25.861079] (-) TimerEvent: {}
+[25.961491] (-) TimerEvent: {}
+[26.061899] (-) TimerEvent: {}
+[26.162338] (-) TimerEvent: {}
+[26.265076] (-) TimerEvent: {}
+[26.365481] (-) TimerEvent: {}
+[26.465890] (-) TimerEvent: {}
+[26.567428] (-) TimerEvent: {}
+[26.668011] (-) TimerEvent: {}
+[26.773068] (-) TimerEvent: {}
+[26.873534] (-) TimerEvent: {}
+[26.977070] (-) TimerEvent: {}
+[27.077475] (-) TimerEvent: {}
+[27.180077] (-) TimerEvent: {}
+[27.280474] (-) TimerEvent: {}
+[27.380855] (-) TimerEvent: {}
+[27.481282] (-) TimerEvent: {}
+[27.581694] (-) TimerEvent: {}
+[27.682079] (-) TimerEvent: {}
+[27.782468] (-) TimerEvent: {}
+[27.883888] (-) TimerEvent: {}
+[27.984532] (-) TimerEvent: {}
+[28.085566] (-) TimerEvent: {}
+[28.186694] (-) TimerEvent: {}
+[28.287363] (-) TimerEvent: {}
+[28.387828] (-) TimerEvent: {}
+[28.488332] (-) TimerEvent: {}
+[28.589175] (-) TimerEvent: {}
+[28.690076] (-) TimerEvent: {}
+[28.790477] (-) TimerEvent: {}
+[28.891486] (-) TimerEvent: {}
+[28.994643] (-) TimerEvent: {}
+[29.095043] (-) TimerEvent: {}
+[29.196109] (-) TimerEvent: {}
+[29.296659] (-) TimerEvent: {}
+[29.399223] (-) TimerEvent: {}
+[29.501891] (-) TimerEvent: {}
+[29.602292] (-) TimerEvent: {}
+[29.702732] (-) TimerEvent: {}
+[29.806072] (-) TimerEvent: {}
+[29.907357] (-) TimerEvent: {}
+[30.010077] (-) TimerEvent: {}
+[30.110608] (-) TimerEvent: {}
+[30.211015] (-) TimerEvent: {}
+[30.311429] (-) TimerEvent: {}
+[30.411956] (-) TimerEvent: {}
+[30.512834] (-) TimerEvent: {}
+[30.613280] (-) TimerEvent: {}
+[30.715594] (-) TimerEvent: {}
+[30.815998] (-) TimerEvent: {}
+[30.916477] (-) TimerEvent: {}
+[31.020103] (-) TimerEvent: {}
+[31.120593] (-) TimerEvent: {}
+[31.221077] (-) TimerEvent: {}
+[31.321533] (-) TimerEvent: {}
+[31.423173] (-) TimerEvent: {}
+[31.523569] (-) TimerEvent: {}
+[31.624435] (-) TimerEvent: {}
+[31.725073] (-) TimerEvent: {}
+[31.825522] (-) TimerEvent: {}
+[31.926328] (-) TimerEvent: {}
+[32.026756] (-) TimerEvent: {}
+[32.127920] (-) TimerEvent: {}
+[32.228358] (-) TimerEvent: {}
+[32.331282] (-) TimerEvent: {}
+[32.433199] (-) TimerEvent: {}
+[32.533923] (-) TimerEvent: {}
+[32.634349] (-) TimerEvent: {}
+[32.738153] (-) TimerEvent: {}
+[32.838561] (-) TimerEvent: {}
+[32.939070] (-) TimerEvent: {}
+[33.039828] (-) TimerEvent: {}
+[33.140700] (-) TimerEvent: {}
+[33.241106] (-) TimerEvent: {}
+[33.341993] (-) TimerEvent: {}
+[33.442393] (-) TimerEvent: {}
+[33.545414] (-) TimerEvent: {}
+[33.645827] (-) TimerEvent: {}
+[33.746267] (-) TimerEvent: {}
+[33.847120] (-) TimerEvent: {}
+[33.949075] (-) TimerEvent: {}
+[34.049494] (-) TimerEvent: {}
+[34.149901] (-) TimerEvent: {}
+[34.250434] (-) TimerEvent: {}
+[34.353271] (-) TimerEvent: {}
+[34.453838] (-) TimerEvent: {}
+[34.556074] (-) TimerEvent: {}
+[34.656486] (-) TimerEvent: {}
+[34.756904] (-) TimerEvent: {}
+[34.857323] (-) TimerEvent: {}
+[34.957745] (-) TimerEvent: {}
+[35.058209] (-) TimerEvent: {}
+[35.158619] (-) TimerEvent: {}
+[35.259875] (-) TimerEvent: {}
+[35.366072] (-) TimerEvent: {}
+[35.466501] (-) TimerEvent: {}
+[35.567017] (-) TimerEvent: {}
+[35.667437] (-) TimerEvent: {}
+[35.770070] (-) TimerEvent: {}
+[35.870479] (-) TimerEvent: {}
+[35.974099] (-) TimerEvent: {}
+[36.074562] (-) TimerEvent: {}
+[36.174971] (-) TimerEvent: {}
+[36.275393] (-) TimerEvent: {}
+[36.376319] (-) TimerEvent: {}
+[36.476846] (-) TimerEvent: {}
+[36.578590] (-) TimerEvent: {}
+[36.680938] (-) TimerEvent: {}
+[36.781382] (-) TimerEvent: {}
+[36.881831] (-) TimerEvent: {}
+[36.986134] (-) TimerEvent: {}
+[37.091249] (-) TimerEvent: {}
+[37.193225] (-) TimerEvent: {}
+[37.294494] (-) TimerEvent: {}
+[37.394918] (-) TimerEvent: {}
+[37.498073] (-) TimerEvent: {}
+[37.598993] (-) TimerEvent: {}
+[37.700244] (-) TimerEvent: {}
+[37.801262] (-) TimerEvent: {}
+[37.901821] (-) TimerEvent: {}
+[38.004261] (-) TimerEvent: {}
+[38.104765] (-) TimerEvent: {}
+[38.205160] (-) TimerEvent: {}
+[38.307071] (-) TimerEvent: {}
+[38.407468] (-) TimerEvent: {}
+[38.508073] (-) TimerEvent: {}
+[38.610996] (-) TimerEvent: {}
+[38.711382] (-) TimerEvent: {}
+[38.811776] (-) TimerEvent: {}
+[38.913568] (-) TimerEvent: {}
+[39.016067] (-) TimerEvent: {}
+[39.116827] (-) TimerEvent: {}
+[39.217369] (-) TimerEvent: {}
+[39.321263] (-) TimerEvent: {}
+[39.421737] (-) TimerEvent: {}
+[39.522269] (-) TimerEvent: {}
+[39.622647] (-) TimerEvent: {}
+[39.724332] (-) TimerEvent: {}
+[39.830084] (-) TimerEvent: {}
+[39.930490] (-) TimerEvent: {}
+[40.034090] (-) TimerEvent: {}
+[40.134492] (-) TimerEvent: {}
+[40.234892] (-) TimerEvent: {}
+[40.335293] (-) TimerEvent: {}
+[40.435722] (-) TimerEvent: {}
+[40.536585] (-) TimerEvent: {}
+[40.638774] (-) TimerEvent: {}
+[40.739408] (-) TimerEvent: {}
+[40.839859] (-) TimerEvent: {}
+[40.940374] (-) TimerEvent: {}
+[41.033659] (chaining_costmap_ver) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library liblc_planner_component.so\x1b[0m\n'}
+[41.040486] (-) TimerEvent: {}
+[41.140829] (-) TimerEvent: {}
+[41.241184] (-) TimerEvent: {}
+[41.341533] (-) TimerEvent: {}
+[41.441904] (-) TimerEvent: {}
+[41.542275] (-) TimerEvent: {}
+[41.645147] (-) TimerEvent: {}
+[41.745495] (-) TimerEvent: {}
+[41.845836] (-) TimerEvent: {}
+[41.946205] (-) TimerEvent: {}
+[42.047755] (-) TimerEvent: {}
+[42.148058] (-) TimerEvent: {}
+[42.209340] (chaining_costmap_ver) StdoutLine: {'line': b'[100%] Built target lc_planner_component\n'}
+[42.236178] (chaining_costmap_ver) CommandEnded: {'returncode': 0}
+[42.236722] (chaining_costmap_ver) JobProgress: {'identifier': 'chaining_costmap_ver', 'progress': 'install'}
+[42.248161] (-) TimerEvent: {}
+[42.254279] (chaining_costmap_ver) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver'], 'cwd': '/home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kimsohee'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter/lib:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util/lib:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee/ev-1-5/ev_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1167'), ('SYSTEMD_EXEC_PID', '1316'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '3678'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('COLCON_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install:/home/kimsohee/ev-1-5/ev_ws/perception/install:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install:/home/kimsohee/workspace/ros2/erp42_ros/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:12700'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/usr/local/MATLAB/R2024b/bin:/opt/ros/humble/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee-960XHA:@/tmp/.ICE-unix/1286,unix/kimsohee-960XHA:/tmp/.ICE-unix/1286'), ('INVOCATION_ID', '06f17983da8f4c10a25f5838f64882c0'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.MPYHL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('TERMINATOR_UUID', 'urn:uuid:9bb629bb-ec7d-4d04-aea7-aacfeca0f045'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev_ws/planning/build/chaining_costmap_ver'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('GAZEBO_PLUGIN_PATH', ':/opt/ros/humble/lib'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/local/lib/python3.10/dist-packages:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs/local/lib/python3.10/dist-packages:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_pointcloud:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_cropbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp:/home/kimsohee/ev-1-5/ev_ws/perception/install/make_bbox:/home/kimsohee/ev-1-5/ev_ws/perception/install/lidar_voxel_grid:/home/kimsohee/ev-1-5/ev_ws/perception/install/cluster_splitter:/home/kimsohee/ev-1-5/ev_ws/ev_msgs/install/ev_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_serial:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_rqt_plugin:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_gazebo:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_util:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_msgs:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_description:/home/kimsohee/workspace/ros2/erp42_ros/install/erp42_cmake:/opt/ros/humble')]), 'shell': False}
+[42.273426] (chaining_costmap_ver) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[42.273683] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_chainer.so\n'}
+[42.274289] (chaining_costmap_ver) StdoutLine: {'line': b'-- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_chainer.so" to ""\n'}
+[42.274518] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_costmap.so\n'}
+[42.274684] (chaining_costmap_ver) StdoutLine: {'line': b'-- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_costmap.so" to ""\n'}
+[42.274824] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_astar.so\n'}
+[42.275405] (chaining_costmap_ver) StdoutLine: {'line': b'-- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_astar.so" to ""\n'}
+[42.275522] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_postprocess.so\n'}
+[42.280909] (chaining_costmap_ver) StdoutLine: {'line': b'-- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/libchaining_costmap_postprocess.so" to ""\n'}
+[42.281067] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/chaining_costmap_ver/lc_planner_node_exe\n'}
+[42.281145] (chaining_costmap_ver) StdoutLine: {'line': b'-- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/chaining_costmap_ver/lc_planner_node_exe" to ""\n'}
+[42.281212] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/liblc_planner_component.so\n'}
+[42.300058] (chaining_costmap_ver) StdoutLine: {'line': b'-- Set runtime path of "/home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/lib/liblc_planner_component.so" to ""\n'}
+[42.300269] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include\n'}
+[42.300369] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver\n'}
+[42.300472] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/safety\n'}
+[42.300651] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/safety/safety_checker.hpp\n'}
+[42.300717] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common\n'}
+[42.300776] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common/geometry.hpp\n'}
+[42.300839] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common/params.hpp\n'}
+[42.300898] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common/types.hpp\n'}
+[42.300961] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/common/debug_publish.hpp\n'}
+[42.301029] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/planner\n'}
+[42.301090] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/planner/astar_planner.hpp\n'}
+[42.301148] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/nodes\n'}
+[42.301205] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/nodes/chaining_costmap_ver_node.hpp\n'}
+[42.301262] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/costmap\n'}
+[42.301479] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/costmap/costmap_generator.hpp\n'}
+[42.301558] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/chainer\n'}
+[42.301623] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/chainer/direction_chainer.hpp\n'}
+[42.301684] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/postprocess\n'}
+[42.301742] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/include/chaining_costmap_ver/postprocess/path_postprocessor.hpp\n'}
+[42.301807] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/config\n'}
+[42.301863] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/config/chaining_costmap_ver.yaml\n'}
+[42.301916] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/launch\n'}
+[42.301975] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/launch/chaining_costmap_ver.launch.py\n'}
+[42.303128] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/ament_index/resource_index/package_run_dependencies/chaining_costmap_ver\n'}
+[42.303212] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/ament_index/resource_index/parent_prefix_path/chaining_costmap_ver\n'}
+[42.303274] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/ament_prefix_path.sh\n'}
+[42.303331] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/ament_prefix_path.dsv\n'}
+[42.303386] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/path.sh\n'}
+[42.303439] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/path.dsv\n'}
+[42.303492] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.bash\n'}
+[42.303566] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.sh\n'}
+[42.303682] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.zsh\n'}
+[42.303759] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.dsv\n'}
+[42.303822] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/package.dsv\n'}
+[42.303884] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/ament_index/resource_index/packages/chaining_costmap_ver\n'}
+[42.303943] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/ament_index/resource_index/rclcpp_components/chaining_costmap_ver\n'}
+[42.304010] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/cmake/chaining_costmap_verConfig.cmake\n'}
+[42.304074] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/cmake/chaining_costmap_verConfig-version.cmake\n'}
+[42.304131] (chaining_costmap_ver) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev_ws/planning/install/chaining_costmap_ver/share/chaining_costmap_ver/package.xml\n'}
+[42.305697] (chaining_costmap_ver) CommandEnded: {'returncode': 0}
+[42.347888] (chaining_costmap_ver) JobEnded: {'identifier': 'chaining_costmap_ver', 'rc': 0}
+[42.348425] (-) TimerEvent: {}
+[42.352523] (-) EventReactorShutdown: {}

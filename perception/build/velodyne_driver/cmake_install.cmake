@@ -1,8 +1,8 @@
-# Install script for directory: /home/aiv/ev_ws/perception/src/lidar/velodyne_driver
+# Install script for directory: /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/velodyne_driver
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/aiv/ev_ws/perception/install/velodyne_driver")
+  set(CMAKE_INSTALL_PREFIX "/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_driver")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,7 +43,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/aiv/ev_ws/perception/build/velodyne_driver/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  include("/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -53,12 +53,12 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_input.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/aiv/ev_ws/perception/build/velodyne_driver/libvelodyne_input.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/libvelodyne_input.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_input.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_input.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_input.so"
-         OLD_RPATH "/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/opt/ros/humble/lib:"
+         OLD_RPATH "/opt/ros/humble/lib:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_input.so")
@@ -76,12 +76,12 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_driver.so"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/aiv/ev_ws/perception/build/velodyne_driver/libvelodyne_driver.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/libvelodyne_driver.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_driver.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_driver.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_driver.so"
-         OLD_RPATH "/home/aiv/ev_ws/perception/build/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs/lib:/opt/ros/humble/lib:"
+         OLD_RPATH "/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver:/home/kimsohee/ev-1-5/ev_ws/perception/install/velodyne_msgs/lib:/opt/ros/humble/lib:"
          NEW_RPATH "")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libvelodyne_driver.so")
@@ -96,7 +96,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/share/velodyne_driver/cmake/velodyne_driverExport.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/share/velodyne_driver/cmake/velodyne_driverExport.cmake"
-         "/home/aiv/ev_ws/perception/build/velodyne_driver/CMakeFiles/Export/share/velodyne_driver/cmake/velodyne_driverExport.cmake")
+         "/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/CMakeFiles/Export/share/velodyne_driver/cmake/velodyne_driverExport.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/share/velodyne_driver/cmake/velodyne_driverExport-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -105,15 +105,15 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/velodyne_driver/cmake" TYPE FILE FILES "/home/aiv/ev_ws/perception/build/velodyne_driver/CMakeFiles/Export/share/velodyne_driver/cmake/velodyne_driverExport.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/velodyne_driver/cmake" TYPE FILE FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/CMakeFiles/Export/share/velodyne_driver/cmake/velodyne_driverExport.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^()$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/velodyne_driver/cmake" TYPE FILE FILES "/home/aiv/ev_ws/perception/build/velodyne_driver/CMakeFiles/Export/share/velodyne_driver/cmake/velodyne_driverExport-noconfig.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/velodyne_driver/cmake" TYPE FILE FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/CMakeFiles/Export/share/velodyne_driver/cmake/velodyne_driverExport-noconfig.cmake")
   endif()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/aiv/ev_ws/perception/build/velodyne_driver/gtest/cmake_install.cmake")
+  include("/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/gtest/cmake_install.cmake")
 
 endif()
 
@@ -125,5 +125,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/aiv/ev_ws/perception/build/velodyne_driver/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/kimsohee/ev-1-5/ev_ws/perception/build/velodyne_driver/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

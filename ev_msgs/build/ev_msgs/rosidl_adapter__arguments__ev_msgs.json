@@ -1,9 +1,9 @@
 {
   "package_name": "ev_msgs",
   "non_idl_tuples": [
-    "/home/aiv/ev_ws/ev_msgs:msg/BBox.msg",
-    "/home/aiv/ev_ws/ev_msgs:msg/BBoxArray.msg",
-    "/home/aiv/ev_ws/ev_msgs:msg/LaneBoundary.msg",
-    "/home/aiv/ev_ws/ev_msgs:msg/LaneBoundaryArray.msg"
+    "/home/kimsohee/ev-1-5/ev_ws/ev_msgs:msg/BBox.msg",
+    "/home/kimsohee/ev-1-5/ev_ws/ev_msgs:msg/BBoxArray.msg",
+    "/home/kimsohee/ev-1-5/ev_ws/ev_msgs:msg/LaneBoundary.msg",
+    "/home/kimsohee/ev-1-5/ev_ws/ev_msgs:msg/LaneBoundaryArray.msg"
   ]
 }

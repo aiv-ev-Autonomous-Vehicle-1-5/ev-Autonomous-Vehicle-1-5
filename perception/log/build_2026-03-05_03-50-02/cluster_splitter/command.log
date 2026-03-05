@@ -1,0 +1,4 @@
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/cluster_splitter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/perception/build/cluster_splitter -- -j8 -l8
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/cluster_splitter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/perception/build/cluster_splitter -- -j8 -l8
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/cluster_splitter': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/perception/build/cluster_splitter
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/cluster_splitter' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/perception/build/cluster_splitter

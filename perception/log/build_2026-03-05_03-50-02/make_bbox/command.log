@@ -1,0 +1,4 @@
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox -- -j8 -l8
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox -- -j8 -l8
+Invoking command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox
+Invoked command in '/home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/perception/build/make_bbox

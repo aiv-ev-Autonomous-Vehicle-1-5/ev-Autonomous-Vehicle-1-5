@@ -1,8 +1,8 @@
-# Install script for directory: /home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp/patchworkpp
+# Install script for directory: /home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp/patchworkpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/aiv/ev_ws/perception/install/patchworkpp")
+  set(CMAKE_INSTALL_PREFIX "/home/kimsohee/ev-1-5/ev_ws/perception/install/patchworkpp")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,18 +43,18 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/aiv/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp/patchworkpp/include/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/kimsohee/ev-1-5/ev_ws/perception/src/lidar/patchwork-plusplus-master/patchwork-plusplus-master/cpp/patchworkpp/include/")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/libground_seg_cores.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/libground_seg_cores.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp/patchworkppConfig.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp/patchworkppConfig.cmake"
-         "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppConfig.cmake")
+         "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppConfig.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp/patchworkppConfig-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -63,9 +63,9 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp" TYPE FILE FILES "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppConfig.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp" TYPE FILE FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppConfig.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp" TYPE FILE FILES "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppConfig-release.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp" TYPE FILE FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppConfig-release.cmake")
   endif()
 endif()
 
@@ -73,7 +73,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp/patchworkppTargets.cmake")
     file(DIFFERENT EXPORT_FILE_CHANGED FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp/patchworkppTargets.cmake"
-         "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppTargets.cmake")
+         "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppTargets.cmake")
     if(EXPORT_FILE_CHANGED)
       file(GLOB OLD_CONFIG_FILES "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp/patchworkppTargets-*.cmake")
       if(OLD_CONFIG_FILES)
@@ -82,9 +82,9 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
       endif()
     endif()
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp" TYPE FILE FILES "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppTargets.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp" TYPE FILE FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppTargets.cmake")
   if("${CMAKE_INSTALL_CONFIG_NAME}" MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp" TYPE FILE FILES "/home/aiv/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppTargets-release.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/patchworkpp" TYPE FILE FILES "/home/kimsohee/ev-1-5/ev_ws/perception/build/patchworkpp/patchworkpp_cpp/patchworkpp/CMakeFiles/Export/lib/cmake/patchworkpp/patchworkppTargets-release.cmake")
   endif()
 endif()
 
