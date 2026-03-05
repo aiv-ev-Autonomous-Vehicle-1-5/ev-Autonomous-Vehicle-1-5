@@ -1,0 +1,52 @@
+[0.071s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_util -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util
+[0.103s] -- The C compiler identification is GNU 11.4.0
+[0.135s] -- The CXX compiler identification is GNU 11.4.0
+[0.141s] -- Detecting C compiler ABI info
+[0.188s] -- Detecting C compiler ABI info - done
+[0.192s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.192s] -- Detecting C compile features
+[0.192s] -- Detecting C compile features - done
+[0.194s] -- Detecting CXX compiler ABI info
+[0.250s] -- Detecting CXX compiler ABI info - done
+[0.251s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.251s] -- Detecting CXX compile features
+[0.251s] -- Detecting CXX compile features - done
+[0.251s] -- Found t870_cmake: 0.0.0 (/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake/share/t870_cmake/cmake)
+[0.251s] -- Found ament_cmake_auto: 1.3.12 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+[0.354s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.483s] -- Configuring done
+[0.483s] -- Generating done
+[0.483s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util
+[0.489s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_util -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util
+[0.505s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util -- -j10 -l10
+[0.679s] [ 50%] [32mBuilding CXX object CMakeFiles/t870_util.dir/src/log.cpp.o[0m
+[0.685s] [100%] [32m[1mLinking CXX shared library libt870_util.so[0m
+[0.713s] [100%] Built target t870_util
+[0.719s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util -- -j10 -l10
+[0.719s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util
+[0.728s] -- Install configuration: ""
+[0.728s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/include/t870_util
+[0.730s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/include/t870_util/t870_util
+[0.730s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/include/t870_util/t870_util/log.hpp
+[0.731s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/include/t870_util/t870_util/exception.hpp
+[0.731s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/library_path.sh
+[0.731s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/library_path.dsv
+[0.731s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib/libt870_util.so
+[0.731s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/ament_index/resource_index/package_run_dependencies/t870_util
+[0.731s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/ament_index/resource_index/parent_prefix_path/t870_util
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/ament_prefix_path.sh
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/ament_prefix_path.dsv
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/path.sh
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/path.dsv
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/local_setup.bash
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/local_setup.sh
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/local_setup.zsh
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/local_setup.dsv
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/package.dsv
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/ament_index/resource_index/packages/t870_util
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/cmake/ament_cmake_export_libraries-extras.cmake
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/cmake/t870_utilConfig.cmake
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/cmake/t870_utilConfig-version.cmake
+[0.733s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/package.xml
+[0.749s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util

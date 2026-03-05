@@ -1,0 +1,103 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Ublox zed f9p GPS -->
+    <xacro:macro name="ublox_zed_f9p" params="parent_link sensor_name x y z roll pitch yaw">
+
+        <!-- Link -->
+        <link name="${sensor_name}">
+
+            <!-- Mesh -->
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <mesh filename="file://$(find carsa_gazebo)/meshes/gps_antenna.dae" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </visual>
+
+        </link>
+
+        <!-- Joint -->
+        <joint name="${sensor_name}_joint" type="fixed">
+
+            <!-- Origin -->
+            <origin xyz="${x} ${y} ${z}" rpy="${radians(roll)} ${radians(pitch)} ${radians(yaw)}" />
+
+            <!-- Frame ID -->
+            <parent link="${parent_link}" />
+            <child link="${sensor_name}" />
+            
+        </joint>
+
+        <!-- Gazebo plugin -->
+        <gazebo reference="${sensor_name}">
+
+            <!-- Sensor properties -->
+            <sensor name="${sensor_name}" type="gps">
+
+                <always_on>true</always_on>
+                <update_rate>10</update_rate>
+                <visualize>false</visualize>
+
+                <!-- Data formats -->
+                <gps>
+
+                    <!-- Position sensing -->
+                    <position_sensing>
+
+                        <!-- Horizontal -->
+                        <horizontal>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>0.0014</stddev>
+                            </noise>
+                        </horizontal>
+
+                        <!-- Vertical -->
+                        <vertical>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>0.0014</stddev>
+                            </noise>
+                        </vertical>
+
+                    </position_sensing>
+
+                    <!-- Velocity sensing -->
+                    <velocity_sensing>
+
+                        <!-- Horizontal -->
+                        <horizontal>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>0.0014</stddev>
+                            </noise>
+                        </horizontal>
+
+                        <!-- Vertical -->
+                        <vertical>
+                            <noise type="gaussian">
+                                <mean>0.0</mean>
+                                <stddev>0.0014</stddev>
+                            </noise>
+                        </vertical>
+
+                    </velocity_sensing>
+
+                </gps>
+
+                <!-- Gazebo ROS plugin -->
+                <plugin name="${sensor_name}_plugin" filename="libgazebo_ros_gps_sensor.so">
+                    <ros>
+                        <remapping>~/out:=${sensor_name}/fix</remapping>
+                        <remapping>~/vel:=${sensor_name}/velocity</remapping>
+                    </ros>
+                    <frame_name>${sensor_name}</frame_name>
+                </plugin>
+
+            </sensor>
+            
+        </gazebo>
+
+    </xacro:macro>
+</robot>

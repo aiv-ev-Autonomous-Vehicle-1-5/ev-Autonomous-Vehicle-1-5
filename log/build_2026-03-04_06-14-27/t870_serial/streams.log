@@ -1,0 +1,46 @@
+[0.029s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_serial -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial
+[0.244s] -- The C compiler identification is GNU 11.4.0
+[0.244s] -- The CXX compiler identification is GNU 11.4.0
+[0.244s] -- Detecting C compiler ABI info
+[0.244s] -- Detecting C compiler ABI info - done
+[0.244s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.244s] -- Detecting C compile features
+[0.244s] -- Detecting C compile features - done
+[0.244s] -- Detecting CXX compiler ABI info
+[0.244s] -- Detecting CXX compiler ABI info - done
+[0.244s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.244s] -- Detecting CXX compile features
+[0.244s] -- Detecting CXX compile features - done
+[0.244s] -- Found t870_cmake: 0.0.0 (/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake/share/t870_cmake/cmake)
+[0.244s] -- Found ament_cmake_auto: 1.3.12 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+[0.346s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.489s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.491s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.495s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.501s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.507s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.543s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.545s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.933s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.977s] -- Found FastRTPS: /opt/ros/humble/include  
+[1.043s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.050s] -- Looking for pthread.h
+[1.298s] -- Looking for pthread.h - found
+[1.298s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.415s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[1.415s] -- Found Threads: TRUE  
+[1.519s] -- Configuring done
+[1.523s] -- Generating done
+[1.527s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial
+[1.552s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_serial -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial
+[1.553s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial -- -j10 -l10
+[1.870s] [ 14%] [32mBuilding CXX object CMakeFiles/t870_serial.dir/src/serial_port.cpp.o[0m
+[1.870s] [ 28%] [32mBuilding CXX object CMakeFiles/serial_bridge_composable.dir/rclcpp_components/node_main_serial_bridge_composable.cpp.o[0m
+[1.882s] [ 42%] [32mBuilding CXX object CMakeFiles/t870_serial.dir/src/serial_bridge.cpp.o[0m
+[22.989s] [ 57%] [32m[1mLinking CXX executable serial_bridge_composable[0m
+[23.102s] [ 57%] Built target serial_bridge_composable
+[28.139s] [ 71%] [32m[1mLinking CXX shared library libt870_serial.so[0m
+[28.467s] [ 71%] Built target t870_serial
+[28.498s] [ 85%] [32mBuilding CXX object CMakeFiles/serial_bridge.dir/node/serial_bridge_node.cpp.o[0m
+[29.878s] [100%] [32m[1mLinking CXX executable serial_bridge[0m
+[29.990s] [100%] Built target serial_bridge

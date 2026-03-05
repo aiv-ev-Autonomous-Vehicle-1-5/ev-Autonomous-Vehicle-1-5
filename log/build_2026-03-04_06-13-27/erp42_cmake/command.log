@@ -1,0 +1,3 @@
+Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake -- -j10 -l10
+Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake -- -j10 -l10
+Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake

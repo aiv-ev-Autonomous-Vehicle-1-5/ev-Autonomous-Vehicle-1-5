@@ -1,0 +1,6 @@
+[ 25%] [32mBuilding CXX object CMakeFiles/cluster_splitter_node.dir/rclcpp_components/node_main_cluster_splitter_node.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/cluster_splitter_component.dir/src/cluster_splitter_node.cpp.o[0m
+[ 75%] [32m[1mLinking CXX executable cluster_splitter_node[0m
+[ 75%] Built target cluster_splitter_node
+[100%] [32m[1mLinking CXX shared library libcluster_splitter_component.so[0m
+[100%] Built target cluster_splitter_component

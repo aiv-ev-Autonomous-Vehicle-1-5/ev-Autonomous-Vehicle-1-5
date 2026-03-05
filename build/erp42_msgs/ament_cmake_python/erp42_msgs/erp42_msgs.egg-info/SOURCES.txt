@@ -1,0 +1,11 @@
+setup.py
+erp42_msgs/__init__.py
+erp42_msgs.egg-info/PKG-INFO
+erp42_msgs.egg-info/SOURCES.txt
+erp42_msgs.egg-info/dependency_links.txt
+erp42_msgs.egg-info/top_level.txt
+erp42_msgs/msg/__init__.py
+erp42_msgs/msg/_control_command.py
+erp42_msgs/msg/_feedback.py
+erp42_msgs/srv/__init__.py
+erp42_msgs/srv/_mode_command.py

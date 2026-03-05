@@ -1,0 +1,118 @@
+[0.014s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_driver -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver
+[0.140s] -- The C compiler identification is GNU 11.4.0
+[0.140s] -- The CXX compiler identification is GNU 11.4.0
+[0.140s] -- Detecting C compiler ABI info
+[0.151s] -- Detecting C compiler ABI info - done
+[0.154s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.154s] -- Detecting C compile features
+[0.155s] -- Detecting C compile features - done
+[0.156s] -- Detecting CXX compiler ABI info
+[0.248s] -- Detecting CXX compiler ABI info - done
+[0.252s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.252s] -- Detecting CXX compile features
+[0.252s] -- Detecting CXX compile features - done
+[0.254s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[0.372s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.422s] -- Found diagnostic_updater: 4.0.6 (/opt/ros/humble/share/diagnostic_updater/cmake)
+[0.444s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.446s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.450s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.456s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.463s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.516s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.519s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.560s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.570s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.590s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.595s] -- Looking for pthread.h
+[0.629s] -- Looking for pthread.h - found
+[0.629s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.665s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.665s] -- Found Threads: TRUE  
+[0.684s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.725s] -- Found tf2_ros: 0.25.18 (/opt/ros/humble/share/tf2_ros/cmake)
+[0.809s] -- Found velodyne_msgs: 2.5.1 (/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/share/velodyne_msgs/cmake)
+[0.816s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.875s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[0.881s] -- Added test 'copyright' to check source files copyright and LICENSE
+[0.882s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.882s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_driver/include>
+[0.882s] -- Configured cppcheck exclude dirs and/or files: 
+[0.884s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[0.884s] -- Configured cpplint exclude dirs and/or files: 
+[0.884s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.885s] -- Added test 'lint_cmake' to check CMake code style
+[0.885s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.886s] -- Added test 'uncrustify' to check C / C++ code style
+[0.886s] -- Configured uncrustify additional arguments: 
+[0.887s] -- Added test 'xmllint' to check XML markup files
+[0.890s] -- Configuring done
+[0.908s] -- Generating done
+[0.913s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver
+[0.928s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_driver -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver
+[0.929s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver -- -j10 -l10
+[1.058s] [  8%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[1.058s] [ 16%] [32mBuilding CXX object CMakeFiles/velodyne_input.dir/src/lib/input.cpp.o[0m
+[1.058s] [ 25%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[1.482s] [ 33%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[1.648s] [ 33%] Built target gtest_main
+[4.821s] [ 41%] [32m[1mLinking CXX shared library libvelodyne_input.so[0m
+[6.685s] [ 41%] Built target velodyne_input
+[6.927s] [ 50%] [32mBuilding CXX object CMakeFiles/velodyne_driver.dir/src/driver/driver.cpp.o[0m
+[15.958s] [ 58%] [32m[1mLinking CXX static library libgtest.a[0m
+[16.100s] [ 58%] Built target gtest
+[16.153s] [ 66%] [32mBuilding CXX object CMakeFiles/time_test.dir/tests/timeconversiontest.cpp.o[0m
+[17.330s] [ 75%] [32m[1mLinking CXX shared library libvelodyne_driver.so[0m
+[18.425s] [ 75%] Built target velodyne_driver
+[19.498s] [ 83%] [32m[1mLinking CXX executable time_test[0m
+[19.690s] [ 83%] Built target time_test
+[19.722s] [ 91%] [32mBuilding CXX object CMakeFiles/velodyne_driver_node.dir/src/driver/velodyne_node.cpp.o[0m
+[21.520s] [100%] [32m[1mLinking CXX executable velodyne_driver_node[0m
+[21.678s] [100%] Built target velodyne_driver_node
+[22.104s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver -- -j10 -l10
+[22.358s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver
+[28.316s] -- Install configuration: ""
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/lib/libvelodyne_input.so
+[28.316s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/lib/libvelodyne_input.so" to ""
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/lib/libvelodyne_driver.so
+[28.316s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/lib/libvelodyne_driver.so" to ""
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/lib/velodyne_driver/velodyne_driver_node
+[28.316s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/lib/velodyne_driver/velodyne_driver_node" to ""
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/include/velodyne_driver
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/include/velodyne_driver/driver.hpp
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/include/velodyne_driver/input.hpp
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/include/velodyne_driver/time_conversion.hpp
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/config
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/config/VLS128-velodyne_driver_node-params.yaml
+[28.316s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/config/VLP16-velodyne_driver_node-params.yaml
+[28.318s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/config/VLP32C-velodyne_driver_node-params.yaml
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/launch
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLP32C-composed-launch.py
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLS128-launch.py
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLP32C-launch.py
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLP16-composed-launch.py
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLS128-composed-launch.py
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/launch/velodyne_driver_node-VLP16-launch.py
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/lib/velodyne_driver/vdump
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/ament_index/resource_index/package_run_dependencies/velodyne_driver
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/ament_index/resource_index/parent_prefix_path/velodyne_driver
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/environment/ament_prefix_path.sh
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/environment/ament_prefix_path.dsv
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/environment/path.sh
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/environment/path.dsv
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/local_setup.bash
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/local_setup.sh
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/local_setup.zsh
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/local_setup.dsv
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/package.dsv
+[28.319s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/ament_index/resource_index/packages/velodyne_driver
+[28.323s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/ament_index/resource_index/rclcpp_components/velodyne_driver
+[28.323s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverExport.cmake
+[28.324s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverExport-noconfig.cmake
+[28.324s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/cmake/ament_cmake_export_include_directories-extras.cmake
+[28.324s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/cmake/ament_cmake_export_targets-extras.cmake
+[28.324s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/cmake/ament_cmake_export_dependencies-extras.cmake
+[28.324s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverConfig.cmake
+[28.324s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverConfig-version.cmake
+[28.339s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/package.xml
+[28.739s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver

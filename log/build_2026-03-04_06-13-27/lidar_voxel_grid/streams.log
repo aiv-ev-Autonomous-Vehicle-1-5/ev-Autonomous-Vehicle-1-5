@@ -1,0 +1,7 @@
+[0.034s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid -- -j10 -l10
+[0.088s] [ 25%] [32mBuilding CXX object CMakeFiles/voxel_grid_component.dir/src/voxel_grid_component.cpp.o[0m
+[0.196s] [ 50%] [32mBuilding CXX object CMakeFiles/voxel_grid_node.dir/rclcpp_components/node_main_voxel_grid_node.cpp.o[0m
+[3.972s] [ 75%] [32m[1mLinking CXX executable voxel_grid_node[0m
+[4.130s] [ 75%] Built target voxel_grid_node
+[8.035s] [100%] [32m[1mLinking CXX shared library libvoxel_grid_component.so[0m
+[8.643s] [100%] Built target voxel_grid_component

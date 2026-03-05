@@ -1,0 +1,36 @@
+[0.016s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid -- -j10 -l10
+[0.075s] [35m[1mConsolidate compiler generated dependencies of target voxel_grid_component[0m
+[0.078s] [35m[1mConsolidate compiler generated dependencies of target voxel_grid_node[0m
+[0.087s] [ 50%] Built target voxel_grid_node
+[0.091s] [100%] Built target voxel_grid_component
+[0.157s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid -- -j10 -l10
+[0.159s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid
+[0.188s] -- Install configuration: ""
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/lib/lidar_voxel_grid/voxel_grid_node
+[0.188s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/lib/lidar_voxel_grid/voxel_grid_node" to ""
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/lib/libvoxel_grid_component.so
+[0.188s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/lib/libvoxel_grid_component.so" to ""
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/include
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/include/lidar_voxel_grid
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/include/lidar_voxel_grid/voxel_grid_component.hpp
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/config
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/config/voxel_grid_params.yaml
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/launch
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/launch/voxel_grid.launch.py
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/ament_index/resource_index/package_run_dependencies/lidar_voxel_grid
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/ament_index/resource_index/parent_prefix_path/lidar_voxel_grid
+[0.188s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/ament_prefix_path.sh
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/ament_prefix_path.dsv
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/path.sh
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/environment/path.dsv
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.bash
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.sh
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.zsh
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/local_setup.dsv
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/package.dsv
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/ament_index/resource_index/packages/lidar_voxel_grid
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/ament_index/resource_index/rclcpp_components/lidar_voxel_grid
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/cmake/lidar_voxel_gridConfig.cmake
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/cmake/lidar_voxel_gridConfig-version.cmake
+[0.189s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/package.xml
+[0.220s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/lidar_voxel_grid

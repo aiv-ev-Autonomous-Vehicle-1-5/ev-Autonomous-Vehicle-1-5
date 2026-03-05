@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="erp42_scmc">
+
+    <!-- Include files -->
+    <xacro:include filename="$(find erp42_gazebo)/urdf/erp42_gazebo_control.xacro"/>
+    <xacro:include filename="$(find carsa_gazebo)/urdf/xsens_mti3.xacro"/>
+    <xacro:include filename="$(find carsa_gazebo)/urdf/ublox_zed_f9p.xacro"/>
+    <xacro:include filename="$(find carsa_gazebo)/urdf/velodyne_vlp_32c.xacro"/>
+    <xacro:include filename="$(find carsa_gazebo)/urdf/logitech_c930.xacro"/>
+    <xacro:include filename="$(find carsa_gazebo)/urdf/logitech_c920.xacro"/>
+    
+    <!-- ERP42 model description and gazebo control settings -->
+    <xacro:erp42_gazebo_control publish_odometry = "true"/>
+
+    <!-- Xsens IMU -->
+    <xacro:xsens_mti3 
+        parent_link = "base_link" 
+        sensor_name = "xsens" 
+        x           = "0.0" 
+        y           = "0.0" 
+        z           = "0.5"
+        roll        = "0.0"
+        pitch       = "0.0"
+        yaw         = "0.0"
+    />
+
+    <!-- Ublox zed f9p GPS -->
+    <xacro:ublox_zed_f9p 
+        parent_link = "base_link" 
+        sensor_name = "ublox_gps" 
+        x           = "0.0" 
+        y           = "0.0" 
+        z           = "1.2"
+        roll        = "0.0"
+        pitch       = "0.0"
+        yaw         = "0.0"
+    />
+
+    <!-- Velodyne LiDAR -->
+    <xacro:velodyne_vlp_32c 
+        parent_link  = "base_link" 
+        sensor_name  = "velodyne"
+        visualize    = "false"
+        x            = "0.0"
+        y            = "0.0"
+        z            = "1.0"
+        roll         = "0.0"
+        pitch        = "0.0"
+        yaw          = "0.0"
+    />
+
+    <!-- Logitech C920 camera : traffic_light -->
+    <xacro:logitech_c920
+        parent_link  = "base_link" 
+        sensor_name  = "logitech_c920_traffic_light" 
+        visualize    = "true"
+        x            = "0.25"
+        y            = "0.0"
+        z            = "0.75"
+        roll         = "0.0"
+        pitch        = "-20.0"
+        yaw          = "0.0"
+    />
+
+    <!-- Logitech C930 camera : left side -->
+    <xacro:logitech_c930 
+        parent_link  = "base_link" 
+        sensor_name  = "logitech_c930_left" 
+        visualize    = "true"
+        x            = "0.0"
+        y            = "0.40"
+        z            = "0.75"
+        roll         = "0.0" 
+        pitch        = "0.0"
+        yaw          = "30.0"
+    />
+
+    <!-- Logitech C930 camera : right side -->
+    <xacro:logitech_c930 
+        parent_link  = "base_link" 
+        sensor_name  = "logitech_c930_right"
+        visualize    = "true"
+        x            = "0.0"
+        y            = "-0.40"
+        z            = "0.75"
+        roll         = "0.0" 
+        pitch        = "0.0" 
+        yaw          = "-30.0"
+    />
+
+</robot>

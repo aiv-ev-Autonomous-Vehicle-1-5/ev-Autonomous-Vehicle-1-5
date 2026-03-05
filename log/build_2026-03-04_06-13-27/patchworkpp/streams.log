@@ -1,0 +1,10 @@
+[0.036s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp -- -j10 -l10
+[0.099s] [ 16%] [32mBuilding CXX object patchworkpp_cpp/patchworkpp/CMakeFiles/ground_seg_cores.dir/src/patchworkpp.cpp.o[0m
+[0.132s] [ 33%] [32mBuilding CXX object CMakeFiles/patchworkpp_node.dir/rclcpp_components/node_main_patchworkpp_node.cpp.o[0m
+[4.067s] [ 50%] [32m[1mLinking CXX executable patchworkpp_node[0m
+[4.123s] [ 50%] Built target patchworkpp_node
+[9.600s] [ 66%] [32m[1mLinking CXX static library libground_seg_cores.a[0m
+[9.614s] [ 66%] Built target ground_seg_cores
+[9.623s] [ 83%] [32mBuilding CXX object CMakeFiles/gseg_component.dir/src/GroundSegmentationServer.cpp.o[0m
+[16.547s] [100%] [32m[1mLinking CXX shared library libgseg_component.so[0m
+[16.644s] [100%] Built target gseg_component

@@ -1,0 +1,81 @@
+[0.018s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_rqt_plugin -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin
+[0.072s] -- The C compiler identification is GNU 11.4.0
+[0.074s] -- The CXX compiler identification is GNU 11.4.0
+[0.077s] -- Detecting C compiler ABI info
+[0.140s] -- Detecting C compiler ABI info - done
+[0.147s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.147s] -- Detecting C compile features
+[0.147s] -- Detecting C compile features - done
+[0.147s] -- Detecting CXX compiler ABI info
+[0.209s] -- Detecting CXX compiler ABI info - done
+[0.213s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.213s] -- Detecting CXX compile features
+[0.213s] -- Detecting CXX compile features - done
+[0.214s] -- Found erp42_cmake: 0.0.0 (/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/cmake)
+[0.214s] -- Found ament_cmake_auto: 1.3.12 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+[0.304s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.467s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.469s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.473s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.478s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.485s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.537s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.539s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.888s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.914s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.967s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.974s] -- Looking for pthread.h
+[1.250s] -- Looking for pthread.h - found
+[1.250s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.442s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[1.442s] -- Found Threads: TRUE  
+[1.589s] -- Configuring done
+[1.613s] -- Generating done
+[1.616s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin
+[1.636s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_rqt_plugin -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin
+[1.636s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin -- -j10 -l10
+[21.462s] [ 11%] [34m[1mGenerating ui_feedback_monitor.h[0m
+[21.471s] [ 22%] [34m[1mGenerating include/erp42_rqt_plugin/moc_control_panel_plugin.cpp[0m
+[21.471s] [ 33%] [34m[1mGenerating include/erp42_rqt_plugin/moc_feedback_monitor_plugin.cpp[0m
+[21.471s] [ 44%] [34m[1mGenerating ui_control_panel.h[0m
+[21.472s] [ 66%] [32mBuilding CXX object CMakeFiles/erp42_rqt_plugin.dir/include/erp42_rqt_plugin/moc_control_panel_plugin.cpp.o[0m
+[21.472s] [ 77%] [32mBuilding CXX object CMakeFiles/erp42_rqt_plugin.dir/src/control_panel_plugin.cpp.o[0m
+[21.472s] [ 77%] [32mBuilding CXX object CMakeFiles/erp42_rqt_plugin.dir/src/feedback_monitor_plugin.cpp.o[0m
+[21.472s] [ 88%] [32mBuilding CXX object CMakeFiles/erp42_rqt_plugin.dir/include/erp42_rqt_plugin/moc_feedback_monitor_plugin.cpp.o[0m
+[27.066s] [100%] [32m[1mLinking CXX shared library liberp42_rqt_plugin.so[0m
+[27.559s] [100%] Built target erp42_rqt_plugin
+[27.738s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin -- -j10 -l10
+[27.778s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_rqt_plugin
+[27.808s] -- Install configuration: ""
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/plugin.xml
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/include/erp42_rqt_plugin
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/include/erp42_rqt_plugin/erp42_rqt_plugin
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/include/erp42_rqt_plugin/erp42_rqt_plugin/feedback_monitor_plugin.hpp
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/include/erp42_rqt_plugin/erp42_rqt_plugin/control_panel_plugin.hpp
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/library_path.sh
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/library_path.dsv
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/lib/liberp42_rqt_plugin.so
+[27.816s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/lib/liberp42_rqt_plugin.so" to ""
+[27.816s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/ament_index/resource_index/package_run_dependencies/erp42_rqt_plugin
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/ament_index/resource_index/parent_prefix_path/erp42_rqt_plugin
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/ament_prefix_path.sh
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/ament_prefix_path.dsv
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/path.sh
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/path.dsv
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/local_setup.bash
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/local_setup.sh
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/local_setup.zsh
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/local_setup.dsv
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/package.dsv
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/ament_index/resource_index/packages/erp42_rqt_plugin
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/ament_index/resource_index/rqt_gui__pluginlib__plugin/erp42_rqt_plugin
+[27.817s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/ament_cmake_export_dependencies-extras.cmake
+[27.818s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/ament_cmake_export_include_directories-extras.cmake
+[27.818s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/ament_cmake_export_libraries-extras.cmake
+[27.818s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/erp42_rqt_pluginConfig.cmake
+[27.818s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/erp42_rqt_pluginConfig-version.cmake
+[27.818s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/package.xml
+[27.818s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/plugin.xml
+[27.818s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/ui
+[27.818s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/ui/feedback_monitor.ui
+[27.818s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/ui/control_panel.ui

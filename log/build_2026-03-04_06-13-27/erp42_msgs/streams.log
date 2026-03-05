@@ -1,0 +1,72 @@
+[0.025s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_msgs': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_msgs -- -j10 -l10
+[0.077s] [  2%] [34m[1mGenerating C code for ROS interfaces[0m
+[0.080s] [  4%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[0.142s] [  4%] Built target ament_cmake_python_copy_erp42_msgs
+[0.474s] running egg_info
+[0.474s] creating erp42_msgs.egg-info
+[0.474s] writing erp42_msgs.egg-info/PKG-INFO
+[0.475s] writing dependency_links to erp42_msgs.egg-info/dependency_links.txt
+[0.475s] writing top-level names to erp42_msgs.egg-info/top_level.txt
+[0.475s] writing manifest file 'erp42_msgs.egg-info/SOURCES.txt'
+[0.476s] reading manifest file 'erp42_msgs.egg-info/SOURCES.txt'
+[0.476s] writing manifest file 'erp42_msgs.egg-info/SOURCES.txt'
+[0.514s] [  4%] Built target ament_cmake_python_build_erp42_msgs_egg
+[0.783s] [  4%] Built target erp42_msgs__cpp
+[0.812s] [  6%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[0.833s] [  8%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[0.857s] [ 10%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[0.986s] [ 12%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_c.dir/rosidl_generator_c/erp42_msgs/msg/detail/control_command__functions.c.o[0m
+[1.017s] [ 14%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_c.dir/rosidl_generator_c/erp42_msgs/msg/detail/feedback__functions.c.o[0m
+[1.029s] [ 17%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_c.dir/rosidl_generator_c/erp42_msgs/srv/detail/mode_command__functions.c.o[0m
+[1.249s] [ 19%] [32m[1mLinking C shared library liberp42_msgs__rosidl_generator_c.so[0m
+[1.337s] [ 19%] Built target erp42_msgs__rosidl_generator_c
+[1.371s] [ 21%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[1.393s] [ 23%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[1.430s] [ 25%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[1.759s] [ 27%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/erp42_msgs/msg/control_command__type_support.cpp.o[0m
+[1.779s] [ 29%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/erp42_msgs/srv/mode_command__type_support.cpp.o[0m
+[1.782s] [ 31%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/erp42_msgs/msg/feedback__type_support.cpp.o[0m
+[2.058s] [ 34%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/erp42_msgs/msg/detail/dds_fastrtps/control_command__type_support.cpp.o[0m
+[2.105s] [ 36%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/erp42_msgs/msg/detail/dds_fastrtps/feedback__type_support.cpp.o[0m
+[2.121s] [ 38%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/erp42_msgs/srv/detail/dds_fastrtps/mode_command__type_support.cpp.o[0m
+[2.241s] [ 40%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/erp42_msgs/msg/detail/control_command__type_support.cpp.o[0m
+[2.349s] [ 42%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/erp42_msgs/msg/detail/feedback__type_support.cpp.o[0m
+[2.374s] [ 44%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/erp42_msgs/srv/detail/mode_command__type_support.cpp.o[0m
+[2.385s] [ 46%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/erp42_msgs/msg/detail/control_command__type_support_c.cpp.o[0m
+[2.466s] [ 48%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_cpp.so[0m
+[2.494s] [ 51%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/erp42_msgs/msg/detail/control_command__type_support.c.o[0m
+[2.633s] [ 53%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/erp42_msgs/msg/detail/feedback__type_support.c.o[0m
+[2.692s] [ 53%] Built target erp42_msgs__rosidl_typesupport_cpp
+[2.704s] [ 55%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/erp42_msgs/msg/control_command__type_support.cpp.o[0m
+[2.734s] [ 57%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/erp42_msgs/msg/feedback__type_support.cpp.o[0m
+[2.783s] [ 59%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/erp42_msgs/srv/detail/mode_command__type_support.c.o[0m
+[2.809s] [ 61%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/erp42_msgs/srv/mode_command__type_support.cpp.o[0m
+[2.853s] [ 63%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/erp42_msgs/msg/detail/feedback__type_support_c.cpp.o[0m
+[2.866s] [ 65%] [32m[1mLinking C shared library liberp42_msgs__rosidl_typesupport_introspection_c.so[0m
+[2.881s] [ 68%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/erp42_msgs/srv/detail/mode_command__type_support_c.cpp.o[0m
+[2.963s] [ 70%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_c.so[0m
+[2.968s] [ 72%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[2.980s] [ 74%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[2.984s] [ 74%] Built target erp42_msgs__rosidl_typesupport_introspection_c
+[3.061s] [ 74%] Built target erp42_msgs__rosidl_typesupport_introspection_cpp
+[3.114s] [ 74%] Built target erp42_msgs__rosidl_typesupport_c
+[3.154s] [ 74%] Built target erp42_msgs__rosidl_typesupport_fastrtps_cpp
+[3.267s] [ 76%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_fastrtps_c.so[0m
+[3.388s] [ 76%] Built target erp42_msgs__rosidl_typesupport_fastrtps_c
+[3.420s] [ 76%] Built target erp42_msgs
+[3.443s] [ 78%] [34m[1mGenerating Python code for ROS interfaces[0m
+[4.084s] [ 78%] Built target erp42_msgs__py
+[4.143s] [ 80%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_py.dir/rosidl_generator_py/erp42_msgs/msg/_control_command_s.c.o[0m
+[4.148s] [ 82%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_py.dir/rosidl_generator_py/erp42_msgs/msg/_feedback_s.c.o[0m
+[4.152s] [ 85%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_py.dir/rosidl_generator_py/erp42_msgs/srv/_mode_command_s.c.o[0m
+[4.229s] [ 87%] [32m[1mLinking C shared library rosidl_generator_py/erp42_msgs/liberp42_msgs__rosidl_generator_py.so[0m
+[4.251s] [ 87%] Built target erp42_msgs__rosidl_generator_py
+[4.262s] [ 89%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[4.270s] [ 91%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_c.c.o[0m
+[4.300s] [ 93%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[4.319s] [ 95%] [32m[1mLinking C shared library rosidl_generator_py/erp42_msgs/erp42_msgs_s__rosidl_typesupport_c.cpython-310-aarch64-linux-gnu.so[0m
+[4.325s] [ 97%] [32m[1mLinking C shared library rosidl_generator_py/erp42_msgs/erp42_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-aarch64-linux-gnu.so[0m
+[4.335s] [ 97%] Built target erp42_msgs__rosidl_typesupport_c__pyext
+[4.346s] [ 97%] Built target erp42_msgs__rosidl_typesupport_fastrtps_c__pyext
+[4.350s] [100%] [32m[1mLinking C shared library rosidl_generator_py/erp42_msgs/erp42_msgs_s__rosidl_typesupport_introspection_c.cpython-310-aarch64-linux-gnu.so[0m
+[4.370s] [100%] Built target erp42_msgs__rosidl_typesupport_introspection_c__pyext

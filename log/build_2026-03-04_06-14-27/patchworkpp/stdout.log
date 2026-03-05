@@ -1,0 +1,39 @@
+[35m[1mConsolidate compiler generated dependencies of target ground_seg_cores[0m
+[35m[1mConsolidate compiler generated dependencies of target patchworkpp_node[0m
+[ 33%] Built target ground_seg_cores
+[ 66%] Built target patchworkpp_node
+[35m[1mConsolidate compiler generated dependencies of target gseg_component[0m
+[100%] Built target gseg_component
+-- Install configuration: "Release"
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/include
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/include/patchwork
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/include/patchwork/patchworkpp.h
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/libground_seg_cores.a
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig-release.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets-release.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/patchworkpp/patchworkpp_node
+-- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/patchworkpp/patchworkpp_node" to ""
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/libgseg_component.so
+-- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/libgseg_component.so" to ""
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp//launch
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp//launch/patchworkpp.launch.py
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp//rviz
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp//rviz/patchworkpp.rviz
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/ament_index/resource_index/package_run_dependencies/patchworkpp
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/ament_index/resource_index/parent_prefix_path/patchworkpp
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/environment/path.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/environment/path.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/local_setup.bash
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/local_setup.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/local_setup.zsh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/local_setup.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/package.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/ament_index/resource_index/packages/patchworkpp
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/ament_index/resource_index/rclcpp_components/patchworkpp
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig-version.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/package.xml

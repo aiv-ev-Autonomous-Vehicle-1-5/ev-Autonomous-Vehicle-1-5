@@ -1,0 +1,2 @@
+/usr/bin/ar qc libutm_localizer_lib.a CMakeFiles/utm_localizer_lib.dir/src/utm_localizer.cpp.o
+/usr/bin/ranlib libutm_localizer_lib.a

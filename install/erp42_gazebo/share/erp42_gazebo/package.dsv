@@ -1,0 +1,5 @@
+source;share/erp42_gazebo/local_setup.bash
+source;share/erp42_gazebo/local_setup.dsv
+source;share/erp42_gazebo/local_setup.ps1
+source;share/erp42_gazebo/local_setup.sh
+source;share/erp42_gazebo/local_setup.zsh

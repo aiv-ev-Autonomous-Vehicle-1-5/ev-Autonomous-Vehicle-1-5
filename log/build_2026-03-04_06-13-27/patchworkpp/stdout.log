@@ -1,0 +1,9 @@
+[ 16%] [32mBuilding CXX object patchworkpp_cpp/patchworkpp/CMakeFiles/ground_seg_cores.dir/src/patchworkpp.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/patchworkpp_node.dir/rclcpp_components/node_main_patchworkpp_node.cpp.o[0m
+[ 50%] [32m[1mLinking CXX executable patchworkpp_node[0m
+[ 50%] Built target patchworkpp_node
+[ 66%] [32m[1mLinking CXX static library libground_seg_cores.a[0m
+[ 66%] Built target ground_seg_cores
+[ 83%] [32mBuilding CXX object CMakeFiles/gseg_component.dir/src/GroundSegmentationServer.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library libgseg_component.so[0m
+[100%] Built target gseg_component

@@ -1,0 +1,10 @@
+[ 25%] [32mBuilding CXX object CMakeFiles/cluster_splitter_node.dir/rclcpp_components/node_main_cluster_splitter_node.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/cluster_splitter_component.dir/src/cluster_splitter_node.cpp.o[0m
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/cluster_splitter/src/cluster_splitter_node.cpp:[m[K In function ‘[01m[Kstd::pair<double, double> cluster_splitter::{anonymous}::centroid_xy(const std::vector<cluster_splitter::ClusterSplitterNode::PointRecord>&, const std::vector<long unsigned int>&)[m[K’:
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/cluster_splitter/src/cluster_splitter_node.cpp:34:38:[m[K [01;36m[Knote: [m[Kparameter passing for argument of type ‘[01m[Kstd::pair<double, double>[m[K’ when C++17 is enabled changed to match C++14 ]8;;https://gcc.gnu.org/gcc-10/changes.html#empty_basein GCC 10.1]8;;
+   34 |   const std::vector<size_t> & indices[01;36m[K)[m[K
+      |                                      [01;36m[K^[m[K
+[ 75%] [32m[1mLinking CXX executable cluster_splitter_node[0m
+[ 75%] Built target cluster_splitter_node
+[100%] [32m[1mLinking CXX shared library libcluster_splitter_component.so[0m
+[100%] Built target cluster_splitter_component

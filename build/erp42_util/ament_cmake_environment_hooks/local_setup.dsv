@@ -1,0 +1,3 @@
+source;share/erp42_util/environment/ament_prefix_path.sh
+source;share/erp42_util/environment/library_path.sh
+source;share/erp42_util/environment/path.sh

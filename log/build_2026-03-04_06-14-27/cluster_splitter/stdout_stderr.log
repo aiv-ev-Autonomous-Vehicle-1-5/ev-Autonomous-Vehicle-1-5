@@ -1,0 +1,32 @@
+[35m[1mConsolidate compiler generated dependencies of target cluster_splitter_component[0m
+[35m[1mConsolidate compiler generated dependencies of target cluster_splitter_node[0m
+[ 50%] Built target cluster_splitter_component
+[100%] Built target cluster_splitter_node
+-- Install configuration: ""
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/lib/cluster_splitter/cluster_splitter_node
+-- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/lib/cluster_splitter/cluster_splitter_node" to ""
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/lib/libcluster_splitter_component.so
+-- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/lib/libcluster_splitter_component.so" to ""
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/include
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/include/cluster_splitter
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/include/cluster_splitter/cluster_splitter_node.hpp
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/config
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/config/cluster_splitter_params.yaml
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/launch
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/launch/cluster_splitter.launch.py
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/ament_index/resource_index/package_run_dependencies/cluster_splitter
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/ament_index/resource_index/parent_prefix_path/cluster_splitter
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/environment/ament_prefix_path.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/environment/ament_prefix_path.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/environment/path.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/environment/path.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/local_setup.bash
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/local_setup.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/local_setup.zsh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/local_setup.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/package.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/ament_index/resource_index/packages/cluster_splitter
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/ament_index/resource_index/rclcpp_components/cluster_splitter
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/cmake/cluster_splitterConfig.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/cmake/cluster_splitterConfig-version.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/package.xml
