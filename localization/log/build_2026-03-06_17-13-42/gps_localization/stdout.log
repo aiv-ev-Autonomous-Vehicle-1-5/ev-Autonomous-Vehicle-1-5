@@ -1,0 +1,5 @@
+[35m[1mConsolidate compiler generated dependencies of target utm_localizer_lib[0m
+[ 25%] [32mBuilding CXX object CMakeFiles/utm_localizer_lib.dir/src/utm_localizer.cpp.o[0m
+[ 50%] [32m[1mLinking CXX static library libutm_localizer_lib.a[0m
+[ 50%] Built target utm_localizer_lib
+[ 75%] [32mBuilding CXX object CMakeFiles/utm_localizer_node.dir/src/utm_localizer_node.cpp.o[0m

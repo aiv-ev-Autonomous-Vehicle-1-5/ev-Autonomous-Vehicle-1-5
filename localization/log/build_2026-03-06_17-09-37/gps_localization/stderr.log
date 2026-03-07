@@ -1,0 +1,40 @@
+In file included from [01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/src/utm_localizer.cpp:1[m[K:
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:107:50:[m[K [01;31m[Kerror: [m[Kredeclaration of ‘[01m[Krclcpp::Time gps_localization::UtmLocalizer::last_fix_stamp_[m[K’
+  107 |   rclcpp::Time last_fix_stamp_{0, 0, RCL_ROS_TIME[01;31m[K}[m[K;
+      |                                                  [01;31m[K^[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:75:16:[m[K [01;36m[Knote: [m[Kprevious declaration ‘[01m[Krclcpp::Time gps_localization::UtmLocalizer::last_fix_stamp_[m[K’
+   75 |   rclcpp::Time [01;36m[Klast_fix_stamp_[m[K;
+      |                [01;36m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:111:29:[m[K [01;31m[Kerror: [m[Kredeclaration of ‘[01m[Kdouble gps_localization::UtmLocalizer::jump_threshold_[m[K’
+  111 |   double jump_threshold_{2.0[01;31m[K}[m[K;             // 2m 이상 점프면 무시 (GPS 튐 필터)
+      |                             [01;31m[K^[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:81:10:[m[K [01;36m[Knote: [m[Kprevious declaration ‘[01m[Kdouble gps_localization::UtmLocalizer::jump_threshold_[m[K’
+   81 |   double [01;36m[Kjump_threshold_[m[K{2.0};
+      |          [01;36m[K^~~~~~~~~~~~~~~[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:112:35:[m[K [01;31m[Kerror: [m[Kredeclaration of ‘[01m[Kdouble gps_localization::UtmLocalizer::covariance_threshold_[m[K’
+  112 |   double covariance_threshold_{0.5[01;31m[K}[m[K;       // sigma_xy (m) 기준 (환경에 맞게 튜닝)
+      |                                   [01;31m[K^[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:82:10:[m[K [01;36m[Knote: [m[Kprevious declaration ‘[01m[Kdouble gps_localization::UtmLocalizer::covariance_threshold_[m[K’
+   82 |   double [01;36m[Kcovariance_threshold_[m[K{0.5};
+      |          [01;36m[K^~~~~~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:115:15:[m[K [01;31m[Kerror: [m[Kredeclaration of ‘[01m[Kstd::string gps_localization::UtmLocalizer::waypoint_file_[m[K’
+  115 |   std::string [01;31m[Kwaypoint_file_[m[K;  // 파라미터로 받기
+      |               [01;31m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:79:15:[m[K [01;36m[Knote: [m[Kprevious declaration ‘[01m[Kstd::string gps_localization::UtmLocalizer::waypoint_file_[m[K’
+   79 |   std::string [01;36m[Kwaypoint_file_[m[K;
+      |               [01;36m[K^~~~~~~~~~~~~~[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:129:26:[m[K [01;31m[Kerror: [m[Kredeclaration of ‘[01m[Kdouble gps_localization::UtmLocalizer::lookahead_m_[m[K’
+  129 |   double lookahead_m_{6.0[01;31m[K}[m[K;         // pure pursuit용 lookahead 거리 느낌으로 쓰기 좋음
+      |                          [01;31m[K^[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:84:10:[m[K [01;36m[Knote: [m[Kprevious declaration ‘[01m[Kdouble gps_localization::UtmLocalizer::lookahead_m_[m[K’
+   84 |   double [01;36m[Klookahead_m_[m[K{6.0};
+      |          [01;36m[K^~~~~~~~~~~~[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:130:22:[m[K [01;31m[Kerror: [m[Kredeclaration of ‘[01m[Kint gps_localization::UtmLocalizer::path_points_[m[K’
+  130 |   int path_points_{30[01;31m[K}[m[K;             // /local_path에 넣을 점 개수
+      |                      [01;31m[K^[m[K
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization/include/gps_localization/utm_localizer.hpp:85:7:[m[K [01;36m[Knote: [m[Kprevious declaration ‘[01m[Kint gps_localization::UtmLocalizer::path_points_[m[K’
+   85 |   int [01;36m[Kpath_points_[m[K{30};
+      |       [01;36m[K^~~~~~~~~~~~[m[K
+gmake[2]: *** [CMakeFiles/utm_localizer_lib.dir/build.make:76: CMakeFiles/utm_localizer_lib.dir/src/utm_localizer.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:139: CMakeFiles/utm_localizer_lib.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

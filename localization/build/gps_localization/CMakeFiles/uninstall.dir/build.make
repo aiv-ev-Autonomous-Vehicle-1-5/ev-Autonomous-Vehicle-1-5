@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev_ws/localization/src/gps_localization
+CMAKE_SOURCE_DIR = /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization
+CMAKE_BINARY_DIR = /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kimsohee/ev-1-5/ev_ws/localization/src/gps_localization /home/kimsohee/ev-1-5/ev_ws/localization/src/gps_localization /home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization /home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization /home/kimsohee/ev-1-5/ev_ws/localization/build/gps_localization/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

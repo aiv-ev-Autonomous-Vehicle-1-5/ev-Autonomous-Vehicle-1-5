@@ -1,0 +1,40 @@
+[0.005s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization -- -j10 -l10
+[0.020s] [35m[1mConsolidate compiler generated dependencies of target utm_localizer_lib[0m
+[0.027s] [ 25%] [32mBuilding CXX object CMakeFiles/utm_localizer_lib.dir/src/utm_localizer.cpp.o[0m
+[3.133s] [ 50%] [32m[1mLinking CXX static library libutm_localizer_lib.a[0m
+[3.189s] [ 50%] Built target utm_localizer_lib
+[3.193s] [35m[1mConsolidate compiler generated dependencies of target utm_localizer_node[0m
+[3.201s] [ 75%] [32mBuilding CXX object CMakeFiles/utm_localizer_node.dir/src/utm_localizer_node.cpp.o[0m
+[4.228s] [100%] [32m[1mLinking CXX executable utm_localizer_node[0m
+[4.490s] [100%] Built target utm_localizer_node
+[4.493s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization -- -j10 -l10
+[4.496s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization
+[4.499s] -- Install configuration: ""
+[4.499s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/lib/gps_localization/libutm_localizer_lib.a
+[4.503s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/lib/gps_localization/utm_localizer_node
+[4.506s] -- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/lib/gps_localization/utm_localizer_node" to ""
+[4.506s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/config
+[4.506s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/config/utm_localizer.yaml
+[4.506s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/launch
+[4.506s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/launch/utm_localizer.launch.py
+[4.506s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/waypoints
+[4.506s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/waypoints/최종2025_국제_E-mobility_전시회_1_5_자율주행_레이싱_대회_경로.xlsx
+[4.507s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/include/
+[4.507s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/include//gps_localization
+[4.507s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/include//gps_localization/utm_localizer.hpp
+[4.507s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/ament_index/resource_index/package_run_dependencies/gps_localization
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/ament_index/resource_index/parent_prefix_path/gps_localization
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/environment/ament_prefix_path.sh
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/environment/ament_prefix_path.dsv
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/environment/path.sh
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/environment/path.dsv
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/local_setup.bash
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/local_setup.sh
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/local_setup.zsh
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/local_setup.dsv
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/package.dsv
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/ament_index/resource_index/packages/gps_localization
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/cmake/gps_localizationConfig.cmake
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/cmake/gps_localizationConfig-version.cmake
+[4.508s] -- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/package.xml
+[4.510s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/build/gps_localization

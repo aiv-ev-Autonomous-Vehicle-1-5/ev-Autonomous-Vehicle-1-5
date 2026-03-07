@@ -1,0 +1,36 @@
+[35m[1mConsolidate compiler generated dependencies of target utm_localizer_lib[0m
+[ 25%] [32mBuilding CXX object CMakeFiles/utm_localizer_lib.dir/src/utm_localizer.cpp.o[0m
+[ 50%] [32m[1mLinking CXX static library libutm_localizer_lib.a[0m
+[ 50%] Built target utm_localizer_lib
+[35m[1mConsolidate compiler generated dependencies of target utm_localizer_node[0m
+[ 75%] [32mBuilding CXX object CMakeFiles/utm_localizer_node.dir/src/utm_localizer_node.cpp.o[0m
+[100%] [32m[1mLinking CXX executable utm_localizer_node[0m
+[100%] Built target utm_localizer_node
+-- Install configuration: ""
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/lib/gps_localization/libutm_localizer_lib.a
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/lib/gps_localization/utm_localizer_node
+-- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/lib/gps_localization/utm_localizer_node" to ""
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/config
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/config/utm_localizer.yaml
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/launch
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/launch/utm_localizer.launch.py
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/waypoints
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/waypoints/최종2025_국제_E-mobility_전시회_1_5_자율주행_레이싱_대회_경로.xlsx
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/include/
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/include//gps_localization
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/include//gps_localization/utm_localizer.hpp
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/ament_index/resource_index/package_run_dependencies/gps_localization
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/ament_index/resource_index/parent_prefix_path/gps_localization
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/environment/ament_prefix_path.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/environment/ament_prefix_path.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/environment/path.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/environment/path.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/local_setup.bash
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/local_setup.sh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/local_setup.zsh
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/local_setup.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/package.dsv
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/ament_index/resource_index/packages/gps_localization
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/cmake/gps_localizationConfig.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/cmake/gps_localizationConfig-version.cmake
+-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/install/gps_localization/share/gps_localization/package.xml

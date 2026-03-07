@@ -1,0 +1,148 @@
+[0.000000] (-) TimerEvent: {}
+[0.000140] (-) JobUnselected: {'identifier': 'carsa_gazebo'}
+[0.000159] (-) JobUnselected: {'identifier': 'chaining_costmap_ver'}
+[0.000184] (-) JobUnselected: {'identifier': 'cluster_splitter'}
+[0.000190] (-) JobUnselected: {'identifier': 'dbscan_clustering'}
+[0.000196] (-) JobUnselected: {'identifier': 'erp42_cmake'}
+[0.000207] (-) JobUnselected: {'identifier': 'erp42_description'}
+[0.000214] (-) JobUnselected: {'identifier': 'erp42_gazebo'}
+[0.000227] (-) JobUnselected: {'identifier': 'erp42_msgs'}
+[0.000236] (-) JobUnselected: {'identifier': 'erp42_rqt_plugin'}
+[0.000244] (-) JobUnselected: {'identifier': 'erp42_serial'}
+[0.000253] (-) JobUnselected: {'identifier': 'erp42_util'}
+[0.000262] (-) JobUnselected: {'identifier': 'ev_msgs'}
+[0.000275] (-) JobUnselected: {'identifier': 'lidar_launch'}
+[0.000283] (-) JobUnselected: {'identifier': 'lidar_voxel_grid'}
+[0.000290] (-) JobUnselected: {'identifier': 'make_bbox'}
+[0.000298] (-) JobUnselected: {'identifier': 'patchworkpp'}
+[0.000306] (-) JobUnselected: {'identifier': 't870_cmake'}
+[0.000317] (-) JobUnselected: {'identifier': 't870_msgs'}
+[0.000324] (-) JobUnselected: {'identifier': 't870_rqt_plugin'}
+[0.000333] (-) JobUnselected: {'identifier': 't870_serial'}
+[0.000341] (-) JobUnselected: {'identifier': 't870_util'}
+[0.000349] (-) JobUnselected: {'identifier': 'velodyne'}
+[0.000356] (-) JobUnselected: {'identifier': 'velodyne_cropbox'}
+[0.000364] (-) JobUnselected: {'identifier': 'velodyne_driver'}
+[0.000371] (-) JobUnselected: {'identifier': 'velodyne_msgs'}
+[0.000378] (-) JobUnselected: {'identifier': 'velodyne_pointcloud'}
+[0.000386] (gps_localization) JobQueued: {'identifier': 'gps_localization', 'dependencies': OrderedDict()}
+[0.000396] (gps_localization) JobStarted: {'identifier': 'gps_localization'}
+[0.004387] (gps_localization) JobProgress: {'identifier': 'gps_localization', 'progress': 'cmake'}
+[0.004613] (gps_localization) Command: {'cmd': ['/usr/bin/cmake', '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/localization/src/gps_localization', '-DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization'], 'cwd': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en'), ('USER', 'kimsohee'), ('LC_TIME', 'en_US.UTF-8'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'en_US.UTF-8'), ('MANAGERPID', '2467'), ('SYSTEMD_EXEC_PID', '2573'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '3072'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:46454'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/home/kimsohee/.local/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee:@/tmp/.ICE-unix/2548,unix/kimsohee:/tmp/.ICE-unix/2548'), ('INVOCATION_ID', '2073eef928cf46db9873c13544baf45b'), ('PAPERSIZE', 'letter'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'en_US.UTF-8'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'en_US.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.E3LDL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'en_US.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:47cbb75e-e5f5-4da0-a110-c063c5db87f0'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'en_US.UTF-8'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'en_US.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'en_US.UTF-8'), ('LC_PAPER', 'en_US.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.074071] (gps_localization) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.102191] (-) TimerEvent: {}
+[0.124027] (gps_localization) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.131674] (gps_localization) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.163382] (gps_localization) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.166500] (gps_localization) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.166783] (gps_localization) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.167544] (gps_localization) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.169496] (gps_localization) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.201715] (gps_localization) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.202329] (-) TimerEvent: {}
+[0.205053] (gps_localization) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.205162] (gps_localization) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.205413] (gps_localization) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.208131] (gps_localization) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.273093] (gps_localization) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[0.302431] (-) TimerEvent: {}
+[0.324555] (gps_localization) StdoutLine: {'line': b'-- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.359841] (gps_localization) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.363822] (gps_localization) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.371111] (gps_localization) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.381055] (gps_localization) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.392215] (gps_localization) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.402508] (-) TimerEvent: {}
+[0.422326] (gps_localization) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.424355] (gps_localization) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.467376] (gps_localization) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[0.479685] (gps_localization) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[0.496544] (gps_localization) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.502576] (-) TimerEvent: {}
+[0.503524] (gps_localization) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[0.529776] (gps_localization) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[0.529882] (gps_localization) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[0.558110] (gps_localization) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[0.558620] (gps_localization) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[0.593552] (gps_localization) StdoutLine: {'line': b'-- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[0.603150] (-) TimerEvent: {}
+[0.612760] (gps_localization) StdoutLine: {'line': b'-- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)\n'}
+[0.660408] (gps_localization) StdoutLine: {'line': b'-- Configuring done\n'}
+[0.666628] (gps_localization) StdoutLine: {'line': b'-- Generating done\n'}
+[0.668602] (gps_localization) StdoutLine: {'line': b'-- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization\n'}
+[0.672920] (gps_localization) CommandEnded: {'returncode': 0}
+[0.673871] (gps_localization) JobProgress: {'identifier': 'gps_localization', 'progress': 'build'}
+[0.673896] (gps_localization) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization', '--', '-j10', '-l10'], 'cwd': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en'), ('USER', 'kimsohee'), ('LC_TIME', 'en_US.UTF-8'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'en_US.UTF-8'), ('MANAGERPID', '2467'), ('SYSTEMD_EXEC_PID', '2573'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '3072'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:46454'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/home/kimsohee/.local/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee:@/tmp/.ICE-unix/2548,unix/kimsohee:/tmp/.ICE-unix/2548'), ('INVOCATION_ID', '2073eef928cf46db9873c13544baf45b'), ('PAPERSIZE', 'letter'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'en_US.UTF-8'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'en_US.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.E3LDL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'en_US.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:47cbb75e-e5f5-4da0-a110-c063c5db87f0'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'en_US.UTF-8'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'en_US.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'en_US.UTF-8'), ('LC_PAPER', 'en_US.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.690080] (gps_localization) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/utm_localizer_lib.dir/src/utm_localizer.cpp.o\x1b[0m\n'}
+[0.703883] (-) TimerEvent: {}
+[0.804921] (-) TimerEvent: {}
+[0.905933] (-) TimerEvent: {}
+[1.006950] (-) TimerEvent: {}
+[1.110094] (-) TimerEvent: {}
+[1.210536] (-) TimerEvent: {}
+[1.314904] (-) TimerEvent: {}
+[1.415190] (-) TimerEvent: {}
+[1.519508] (-) TimerEvent: {}
+[1.623793] (-) TimerEvent: {}
+[1.728016] (-) TimerEvent: {}
+[1.832526] (-) TimerEvent: {}
+[1.933327] (-) TimerEvent: {}
+[2.033566] (-) TimerEvent: {}
+[2.138011] (-) TimerEvent: {}
+[2.241205] (-) TimerEvent: {}
+[2.341987] (-) TimerEvent: {}
+[2.446755] (-) TimerEvent: {}
+[2.551320] (-) TimerEvent: {}
+[2.656149] (-) TimerEvent: {}
+[2.756744] (-) TimerEvent: {}
+[2.861202] (-) TimerEvent: {}
+[2.965491] (-) TimerEvent: {}
+[3.069790] (-) TimerEvent: {}
+[3.173263] (-) TimerEvent: {}
+[3.274079] (-) TimerEvent: {}
+[3.378719] (-) TimerEvent: {}
+[3.434419] (gps_localization) StdoutLine: {'line': b'[ 50%] \x1b[32m\x1b[1mLinking CXX static library libutm_localizer_lib.a\x1b[0m\n'}
+[3.480109] (-) TimerEvent: {}
+[3.486729] (gps_localization) StdoutLine: {'line': b'[ 50%] Built target utm_localizer_lib\n'}
+[3.493499] (gps_localization) StdoutLine: {'line': b'[ 75%] \x1b[32mBuilding CXX object CMakeFiles/utm_localizer_node.dir/src/utm_localizer_node.cpp.o\x1b[0m\n'}
+[3.580226] (-) TimerEvent: {}
+[3.681738] (-) TimerEvent: {}
+[3.785957] (-) TimerEvent: {}
+[3.889250] (-) TimerEvent: {}
+[3.989855] (-) TimerEvent: {}
+[4.094261] (-) TimerEvent: {}
+[4.194479] (-) TimerEvent: {}
+[4.294700] (-) TimerEvent: {}
+[4.399126] (-) TimerEvent: {}
+[4.438906] (gps_localization) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable utm_localizer_node\x1b[0m\n'}
+[4.501258] (-) TimerEvent: {}
+[4.605905] (-) TimerEvent: {}
+[4.660202] (gps_localization) StdoutLine: {'line': b'[100%] Built target utm_localizer_node\n'}
+[4.663707] (gps_localization) CommandEnded: {'returncode': 0}
+[4.664041] (gps_localization) JobProgress: {'identifier': 'gps_localization', 'progress': 'install'}
+[4.666821] (gps_localization) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization'], 'cwd': '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization', 'env': OrderedDict([('GJS_DEBUG_TOPICS', 'JS ERROR;JS LOG'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en'), ('USER', 'kimsohee'), ('LC_TIME', 'en_US.UTF-8'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/kimsohee'), ('OLDPWD', '/home/kimsohee'), ('DESKTOP_SESSION', 'ubuntu'), ('GIO_LAUNCHED_DESKTOP_FILE', '/usr/share/applications/terminator.desktop'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'en_US.UTF-8'), ('MANAGERPID', '2467'), ('SYSTEMD_EXEC_PID', '2573'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('TERMINATOR_DBUS_NAME', 'net.tenshu.Terminator25ef4b219e3b005583550f2b0f9f990c3'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '3072'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'kimsohee'), ('JOURNAL_STREAM', '8:46454'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kimsohee'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/home/kimsohee/.local/bin:/home/kimsohee/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/kimsohee:@/tmp/.ICE-unix/2548,unix/kimsohee:/tmp/.ICE-unix/2548'), ('INVOCATION_ID', '2073eef928cf46db9873c13544baf45b'), ('PAPERSIZE', 'letter'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'en_US.UTF-8'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('TERMINATOR_DBUS_PATH', '/net/tenshu/Terminator2'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('IBUS_DISABLE_SNOOPER', '1'), ('LC_TELEPHONE', 'en_US.UTF-8'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.E3LDL3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'en_US.UTF-8'), ('TERMINATOR_UUID', 'urn:uuid:47cbb75e-e5f5-4da0-a110-c063c5db87f0'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'en_US.UTF-8'), ('GJS_DEBUG_OUTPUT', 'stderr'), ('LC_IDENTIFICATION', 'en_US.UTF-8'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'en_US.UTF-8'), ('LC_PAPER', 'en_US.UTF-8'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[4.669188] (gps_localization) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[4.669293] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/lib/gps_localization/libutm_localizer_lib.a\n'}
+[4.673478] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/lib/gps_localization/utm_localizer_node\n'}
+[4.674989] (gps_localization) StdoutLine: {'line': b'-- Set runtime path of "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/lib/gps_localization/utm_localizer_node" to ""\n'}
+[4.675069] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/include/\n'}
+[4.675098] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/include//gps_localization\n'}
+[4.675129] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/include//gps_localization/utm_localizer.hpp\n'}
+[4.675248] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/ament_index/resource_index/package_run_dependencies/gps_localization\n'}
+[4.675294] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/ament_index/resource_index/parent_prefix_path/gps_localization\n'}
+[4.675332] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/environment/ament_prefix_path.sh\n'}
+[4.675429] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/environment/ament_prefix_path.dsv\n'}
+[4.675477] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/environment/path.sh\n'}
+[4.675505] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/environment/path.dsv\n'}
+[4.675564] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/local_setup.bash\n'}
+[4.675600] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/local_setup.sh\n'}
+[4.675657] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/local_setup.zsh\n'}
+[4.675686] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/local_setup.dsv\n'}
+[4.675716] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/package.dsv\n'}
+[4.675740] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/ament_index/resource_index/packages/gps_localization\n'}
+[4.675831] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/cmake/gps_localizationConfig.cmake\n'}
+[4.675864] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/cmake/gps_localizationConfig-version.cmake\n'}
+[4.675884] (gps_localization) StdoutLine: {'line': b'-- Installing: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/gps_localization/share/gps_localization/package.xml\n'}
+[4.676752] (gps_localization) CommandEnded: {'returncode': 0}
+[4.687439] (gps_localization) JobEnded: {'identifier': 'gps_localization', 'rc': 0}
+[4.687556] (-) EventReactorShutdown: {}
