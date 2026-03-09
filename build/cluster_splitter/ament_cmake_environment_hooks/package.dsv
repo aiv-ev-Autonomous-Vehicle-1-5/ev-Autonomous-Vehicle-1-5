@@ -1,4 +1,0 @@
-source;share/cluster_splitter/local_setup.bash
-source;share/cluster_splitter/local_setup.dsv
-source;share/cluster_splitter/local_setup.sh
-source;share/cluster_splitter/local_setup.zsh

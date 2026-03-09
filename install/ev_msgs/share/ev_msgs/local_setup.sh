@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/ev_msgs/ament_cmake_environment_hooks/local_setup.sh

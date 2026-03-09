@@ -650,12 +650,14 @@ void LCPlannerNode::on_timer()
   // L_comp/R_comp: 좌/우 component 점 수
   // L_bb/R_bb: 좌/우 backbone 점 수
   // L_br/R_br: 좌/우 branch 개수
-  RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 2000,
-    "chain: L_comp=%zu L_bb=%zu L_br=%zu  R_comp=%zu R_bb=%zu R_br=%zu",
-    dc_result.left.component.size(), dc_result.left.backbone.size(),
-    dc_result.left.branches.size(),
-    dc_result.right.component.size(), dc_result.right.backbone.size(),
-    dc_result.right.branches.size());
+  if (params_.chainer.debug_chainer_stats) {
+    RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 2000,
+      "chain: L_comp=%zu L_bb=%zu L_br=%zu  R_comp=%zu R_bb=%zu R_br=%zu",
+      dc_result.left.component.size(), dc_result.left.backbone.size(),
+      dc_result.left.branches.size(),
+      dc_result.right.component.size(), dc_result.right.backbone.size(),
+      dc_result.right.branches.size());
+  }
 }
 
 }  // namespace chaining_costmap_ver

@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/aiv/ev_ws/build/erp42_gazebo/liberp42_gazebo.so" "TARGETS" "erp42_gazebo" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

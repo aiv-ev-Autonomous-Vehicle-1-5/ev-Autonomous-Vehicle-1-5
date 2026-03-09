@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/aiv/ev_ws/build/dbscan_clustering/libdbscan_component.so" "/home/aiv/ev_ws/build/dbscan_clustering/libdbscan_gpu.so" "TARGETS" "dbscan_component" "dbscan_gpu" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

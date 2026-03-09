@@ -1,4 +1,0 @@
-source;share/t870_serial/local_setup.bash
-source;share/t870_serial/local_setup.dsv
-source;share/t870_serial/local_setup.sh
-source;share/t870_serial/local_setup.zsh

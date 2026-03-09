@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/t870_serial/ament_cmake_environment_hooks/local_setup.zsh

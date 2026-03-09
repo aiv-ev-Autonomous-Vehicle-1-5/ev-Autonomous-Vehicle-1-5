@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/t870_msgs/rosidl_generator_py/t870_msgs/_t870_msgs_s.ep.rosidl_typesupport_c.c

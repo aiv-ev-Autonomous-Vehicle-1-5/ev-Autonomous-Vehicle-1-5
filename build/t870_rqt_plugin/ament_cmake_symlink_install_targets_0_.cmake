@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/aiv/ev_ws/build/t870_rqt_plugin/libt870_rqt_plugin.so" "TARGETS" "t870_rqt_plugin" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")

@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/erp42_msgs/rosidl_generator_py/erp42_msgs/msg/__init__.py

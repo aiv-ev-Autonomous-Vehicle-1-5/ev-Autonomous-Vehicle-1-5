@@ -1,8 +1,0 @@
-{
-  "package_name": "t870_msgs",
-  "non_idl_tuples": [
-    "/home/aiv/ev_ws/t870_ros/src/t870_msgs:msg/ControlCommand.msg",
-    "/home/aiv/ev_ws/t870_ros/src/t870_msgs:msg/Feedback.msg",
-    "/home/aiv/ev_ws/t870_ros/src/t870_msgs:srv/ModeCommand.srv"
-  ]
-}

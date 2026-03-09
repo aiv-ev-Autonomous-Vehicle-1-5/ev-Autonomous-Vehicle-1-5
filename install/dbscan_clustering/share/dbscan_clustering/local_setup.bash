@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/dbscan_clustering/ament_cmake_environment_hooks/local_setup.bash

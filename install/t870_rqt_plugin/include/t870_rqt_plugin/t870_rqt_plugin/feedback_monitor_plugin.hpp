@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/t870_ros/src/t870_rqt_plugin/include/t870_rqt_plugin/feedback_monitor_plugin.hpp

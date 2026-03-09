@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/t870_ros/src/t870_serial/launch/serial_bridge.launch.py

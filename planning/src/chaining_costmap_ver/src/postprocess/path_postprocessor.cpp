@@ -284,7 +284,7 @@ std::vector<Point2D> PathPostprocessor::curvature_clamp(
       if (la < 1e-12 || lb < 1e-12 || lc < 1e-12) continue;
 
       // Menger 곡률: kappa = 2 * |cross| / (la * lb * lc)
-      double kappa = area2 / (la * lb * lc);
+      double kappa = 2.0 * area2 / (la * lb * lc);
 
       if (kappa <= kappa_max) continue;
 
@@ -345,6 +345,12 @@ PostprocessResult PathPostprocessor::process(
   //    → 제어기가 일정 간격 waypoint를 기대하므로 필수 단계
   // ────────────────────────────────────────────
   result.path = resample_polyline(smoothed, resample_ds);
+
+  // resample 후 curvature_clamp 재적용
+  // resample의 lerp 보간 + 끝점 강제 추가가 새로운 급커브를 생성할 수 있으므로
+  if (kappa_max > 0.0 && result.path.size() >= 3) {
+    result.path = curvature_clamp(result.path, kappa_max);
+  }
 
   // 리샘플 결과가 2점 미만이면 yaw 계산 불가
   if (result.path.size() < 2) return result;

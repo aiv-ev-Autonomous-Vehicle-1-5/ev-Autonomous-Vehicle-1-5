@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar_launch/launch/perception/debug_scripts/inspect_raw_hex.py

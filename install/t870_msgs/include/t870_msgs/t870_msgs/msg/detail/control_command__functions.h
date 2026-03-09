@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/t870_msgs/rosidl_generator_c/t870_msgs/msg/detail/control_command__functions.h

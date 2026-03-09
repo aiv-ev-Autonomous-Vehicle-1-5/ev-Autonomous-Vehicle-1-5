@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/erp42_msgs/rosidl_typesupport_introspection_c/erp42_msgs/msg/detail/control_command__rosidl_typesupport_introspection_c.h

@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/velodyne_pointcloud/ament_cmake_environment_hooks/local_setup.bash

@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/erp42_ros/src/erp42_gazebo/include/erp42_gazebo/gazebo_bridge.hpp

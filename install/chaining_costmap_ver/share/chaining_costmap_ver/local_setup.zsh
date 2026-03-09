@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/build/chaining_costmap_ver/ament_cmake_environment_hooks/local_setup.zsh

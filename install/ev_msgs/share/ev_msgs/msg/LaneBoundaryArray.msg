@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/ev_msgs/msg/LaneBoundaryArray.msg

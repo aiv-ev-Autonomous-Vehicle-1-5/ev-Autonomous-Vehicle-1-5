@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/erp42_ros/src/erp42_serial/include/erp42_serial/serial_packet.hpp

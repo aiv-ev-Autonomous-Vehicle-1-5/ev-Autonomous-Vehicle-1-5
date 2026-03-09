@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar/velodyne_pointcloud/include/velodyne_pointcloud/organized_cloudXYZIRT.hpp

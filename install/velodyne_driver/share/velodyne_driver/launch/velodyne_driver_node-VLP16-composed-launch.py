@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar/velodyne_driver/launch/velodyne_driver_node-VLP16-composed-launch.py
