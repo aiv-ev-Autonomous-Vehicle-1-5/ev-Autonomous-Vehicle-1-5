@@ -128,7 +128,7 @@ DirectionChainResult DirectionChainer::chain(
   }
 
   // ── 디버그: 리샘플 전 좌/우 component별 콘/차선 개수 출력 ──
-  if (cp.debug_chainer_stats) {
+  if (cp.publish_debug) {
     auto count_types = [&](const std::vector<int> & comp, const char * label) {
       int n_cone = 0, n_lane = 0;
       for (int idx : comp) {

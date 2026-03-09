@@ -29,10 +29,10 @@
  Stage 3b: AStarPlanner  ──→  raw grid path
     │
     ▼
- Stage 5: PathPostprocessor  ──→  smooth + resample + yaw
+ Stage 5: PathPostprocessor  ──→  prune + smooth + curvature_clamp + resample + curvature_clamp + yaw
     │
     ▼
- Stage 6: SafetyChecker  ──→  curvature/speed 검증
+ Stage 6: SafetyChecker  ──→  curvature 검증
     │
     ▼
  Stage 7: Publish
@@ -57,7 +57,7 @@
 | Topic | Message Type | 설명 |
 |-------|-------------|------|
 | `/planning/path` | `nav_msgs::msg::Path` | 최종 후처리된 경로 (controller 입력) |
-| `/planning/status` | `std_msgs::msg::String` | 플래너 상태: `"ok"`, `"STALE"`, `"INFEASIBLE"` 등 |
+| `/planning/status` | `std_msgs::msg::String` | 플래너 상태: `"ok"`, `"STALE"`, `"no_valid_path"`, `"curvature_exceeds_r_min"` 등 |
 
 ### Publications (Outputs) — Debug (구독자 있을 때만 발행)
 
@@ -71,18 +71,22 @@
 | `/chaining/debug/right_branches` | `visualization_msgs::msg::MarkerArray` | 오른쪽 branch 시각화 (분홍색) |
 | `/chaining/debug/seeds` | `visualization_msgs::msg::MarkerArray` | 체이닝 시드 (초록/빨강 SPHERE) + 골 (파랑) |
 | `/planning/debug/local_goal` | `visualization_msgs::msg::MarkerArray` | A* 목표점 (노랑 SPHERE) |
+| `/planning/debug/obstacle_wall` | `visualization_msgs::msg::MarkerArray` | obstacle_cost 이상 셀 (빨간색 CUBE_LIST, 바닥면) |
+| `/planning/debug/curvature` | `visualization_msgs::msg::MarkerArray` | 곡률 초과 지점 (노란→빨강 그라데이션 SPHERE) |
 
 ---
 
-## 8-Stage Pipeline 상세
+## 7-Stage Pipeline 상세
 
 ### Stage 0: Stale Gate
 - perception_ms (기본 300ms) 이내에 데이터 수신 여부 확인
+- 차선 OR bbox 중 하나라도 fresh하면 통과 (OR 조건)
 - 타임아웃 시 `"STALE"` 상태 발행 후 리턴
 
 ### Stage 1: Input Parse
 - BBoxArray → ChainPoint[] 변환 (sensor_tf 오프셋 적용 → base_link 좌표계)
 - LaneBoundaryArray → ChainPoint[] 변환 (이미 base_link 기준)
+- 좌/우 분류는 하지 않음 (Stage 2에서 seed 기반으로 결정)
 
 ### Stage 2: DirectionChainer (7-step)
 
@@ -119,37 +123,49 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
   ```
 - **Unchained 포인트**: 콘으로 취급 (보수적 처리)
 - **Entry walls**: seed → ego 방향 가상 벽 (A* 경로를 안쪽으로 유도)
+  - 양쪽 backbone이 있을 때만 적용
 
 ### Stage 3b: AStarPlanner
 - **8방향 그리드 탐색** (상하좌우 + 대각선)
 - **시작점**: (0, 0) — 차량 위치
-- **목표점**: 좌/우 backbone 끝점의 중점
+- **목표점 결정**:
+  - 양쪽 backbone 존재 → 좌/우 끝점의 중점
+  - 한쪽만 존재 → 해당 끝점의 x 그대로, y × 0.5 (중앙 방향 보정)
+- **Goal clamp**: costmap 경계 안쪽 1셀 마진으로 clamp (격자 밖 goal 방지)
 - **f(n) = g(n) + h(n)**
   - g(n): 누적 비용 = g(parent) + 이동비용 + costmap_cost × cost_weight
   - h(n): 유클리드 거리 (admissible heuristic)
-- **장애물**: cost ≥ obstacle_cost (기본 80) → 통과 불가
+- **장애물**: cost ≥ obstacle_cost (기본 100) → 통과 불가
 - **종료**: goal_tolerance (0.3m) 이내 도달 또는 max_iterations 초과
 
-### Stage 5: PathPostprocessor (4-step)
+### Stage 5: PathPostprocessor (5-step)
 
 | Step | 이름 | 알고리즘 | 설명 |
 |------|------|---------|------|
 | 1 | Prune | Greedy shortcutting | 직선 구간의 불필요한 점 제거 |
 | 2 | Smooth | Moving average (window=5) | 그리드 지그재그 아티팩트 제거 |
-| 2.5 | Curvature Clamp | 원 중심 방향으로 중점 이동 | κ > κ_max인 구간 완화 |
+| 2.5 | Curvature Clamp | 중점 방향 이동 (반복 수렴) | κ > κ_max×0.95인 구간 완화 |
 | 3 | Resample | 선형 보간 (ds=0.10m) | 균일 간격 waypoint 생성 |
+| 3.5 | Curvature Clamp (2차) | 중점 방향 이동 (반복 수렴) | resample의 lerp/끝점 추가로 생긴 급커브 재보정 |
 | 4 | Yaw Calc | atan2(dy, dx) | 각 waypoint의 heading 각도 |
+
+**Curvature Clamp 상세:**
+- **5% 마진**: kappa > kappa_max × 0.95 이면 보정 시작 (safety_checker 경계 FAIL 방지)
+- **보정 방식**: P_i를 P_{i-1}과 P_{i+1}의 중점 방향으로 이동
+- **이동 비율**: `ratio = 1.0 - 0.95*(kappa_max / kappa)`, 최대 70%
+- **수렴 반복**: violations == 0이 되면 조기 종료
 
 ### Stage 6: SafetyChecker
 - **Menger 곡률**: κ = 2|cross(BA, CB)| / (|AB|·|BC|·|AC|)
-- **최소 회전 반경**: r_min = wheelbase / tan(δ_max) ≈ 2.68m
-- **곡률 한계**: κ_limit = 1/r_min ≈ 0.373 rad/m
-- **속도 제한**: v_safe = min(v_max, √(a_lat_max / κ_max))
-- **결과**: OK / STOP / INFEASIBLE
+- **최소 회전 반경**: r_min = wheelbase / tan(δ_max) ≈ 2.17m
+- **곡률 한계**: κ_limit = 1/r_min ≈ 0.461 rad/m
+- **결과**: OK / STOP (no_valid_path) / INFEASIBLE (curvature_exceeds_r_min)
+- **속도 계산 없음**: SafetyChecker는 곡률만 검사, 속도 제한은 제어기 측에서 처리
 
 ### Stage 7: Publish
 - Core 토픽 항상 발행
-- Debug 토픽은 구독자 존재 시에만 (lazy publishing)
+- Debug 토픽 중 costmap/raw_path/obstacle_wall/curvature는 항상 lazy publish
+- Debug 토픽 중 chainer 관련 (chains/branches/seeds/local_goal)은 `publish_debug` 파라미터가 true일 때만 발행
 
 ---
 
@@ -162,11 +178,11 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | size_y | 10.0 | m | 좌우 범위 |
 | resolution | 0.15 | m/cell | 셀 크기 (차로 1.5m = ~10셀) |
 | cone_cost_max | 100.0 | — | 콘 중심 코스트 |
-| lane_cost_max | 50.0 | — | 차선 경계 코스트 |
-| cone_radius | 1.025 | m | 콘 flat zone 반경 |
+| lane_cost_max | 50.0 | — | 차선 경계 코스트 (콘보다 낮아서 A*가 필요시 차선 넘을 수 있음) |
+| cone_radius | 1.025 | m | 콘 flat zone 반경 (0.65 + width/2 ≈ 1.025) |
 | sigma | 1.0 | m | Gaussian 표준편차 |
 | cost_threshold | 2.0 | — | 코스트 하한 (이하 = 0) |
-| entry_wall_ego_y | 1.3 | m | entry wall 측면 오프셋 |
+| entry_wall_ego_y | 2.5 | m | entry wall 측면 오프셋 |
 
 ### astar
 | Parameter | 기본값 | 단위 | 설명 |
@@ -174,19 +190,27 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | max_iterations | 10000 | — | 최대 반복 횟수 |
 | goal_tolerance | 0.3 | m | 목표 도달 허용치 |
 | cost_weight | 0.05 | — | 코스트맵 비용 가중치 |
-| obstacle_cost | 100.0 | — | 장애물 판정 임계값 |
+| obstacle_cost | 100.0 | — | 장애물 판정 임계값 (= cone_cost_max → 콘 중심은 통과 불가) |
 
 ### vehicle
 | Parameter | 기본값 | 단위 | 설명 |
 |-----------|--------|------|------|
-| width | 0.75 | m | T870 차폭 |
-| wheelbase | 0.87 | m | 축거 |
-| delta_max | 0.314 | rad | 최대 조향각 (~18°) |
+| width | 0.79 | m | 차폭 |
+| wheelbase | 0.73 | m | 축거 |
+| delta_max | 0.3249 | rad | 최대 조향각 (≈18.6°, tan(18°)=0.32491) |
 
-### safety / speed
+**파생값:**
+- r_min = wheelbase / tan(delta_max) = 0.73 / tan(0.3249) ≈ **2.17m**
+- κ_limit = 1 / r_min ≈ **0.461 rad/m**
+
+### safety
 | Parameter | 기본값 | 단위 | 설명 |
 |-----------|--------|------|------|
 | margin | 0.10 | m | 안전 마진 |
+
+### speed
+| Parameter | 기본값 | 단위 | 설명 |
+|-----------|--------|------|------|
 | v_max | 1.60 | m/s | 최대 속도 (~5.76 km/h) |
 | a_lat_max | 2.0 | m/s² | 최대 횡가속도 |
 
@@ -196,6 +220,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | resample_ds | 0.10 | m | 리샘플 간격 |
 | smooth_window | 5 | — | 이동평균 윈도우 크기 |
 | prune_max_dev | 0.15 | m | 프루닝 최대 편차 |
+| curvature_clamp_max_iter | 100 | — | 곡률 제한 최대 반복 횟수 |
 
 ### sensor_tf
 | Parameter | 기본값 | 단위 | 설명 |
@@ -222,6 +247,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | max_chain_len | 100 | — | 최대 backbone 길이 |
 | min_confidence | 0.0 | — | 신뢰도 하한 |
 | resample_ds | 0.1 | m | 체인 리샘플 간격 |
+| publish_debug | true | — | chainer 디버그 마커 + 체인 통계 로그 발행 여부 |
 
 ### timeouts
 | Parameter | 기본값 | 단위 | 설명 |
@@ -243,17 +269,18 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 
 | 레벨 | 메시지 패턴 | 주기 | Stage | 설명 |
 |------|------------|------|-------|------|
-| WARN | `[Stage0] STALE — perception timeout` | 2초 | Stage 0 | perception 데이터가 `perception_ms` (300ms) 동안 갱신되지 않음. 파이프라인 중단, `/planning/status`에 `"STALE"` 발행 |
-| INFO | `[Planner] OK — path:N pts, speed=X.XX m/s` | 1초 | Stage 6 | 정상 경로 생성 완료. N=waypoint 수, speed=안전 속도 |
-| WARN | `[Planner] FAIL — <reason>` | 1초 | Stage 6 | 경로 생성 실패. reason: `"no_valid_path"` (A* 실패), `"curvature_exceeds_r_min"` (곡률 초과) 등 |
-| INFO | `chain: L_comp=N L_bb=N L_br=N  R_comp=N R_bb=N R_br=N` | 2초 | Stage 7 | 체이닝 결과 요약. L/R=좌/우, comp=component 점 수, bb=backbone 점 수, br=branch 개수 |
+| WARN | `[Stage0] STALE — perception timeout` | 2초 | Stage 0 | perception 데이터가 `perception_ms` (300ms) 동안 갱신되지 않음 |
+| INFO | `[Planner] OK — path:N pts, kappa=X.XXX (r=X.XXm), limit=X.XXX (r_min=X.XXm, delta_max=XX.X°)` | 1초 | Stage 6 | 정상 경로 생성 완료. kappa=최대곡률, r=실제반경, limit=한계곡률 |
+| WARN | `[Planner] FAIL — curvature_exceeds_r_min: kappa=X.XXX (r=X.XXm) > limit=X.XXX (r_min=X.XXm, delta_max=XX.X°)` | 1초 | Stage 6 | 곡률이 차량 최소 회전 반경 초과 |
+| WARN | `[Planner] FAIL — <reason>` | 1초 | Stage 6 | 기타 실패 (reason: `"no_valid_path"` 등) |
 
-### 조건부 디버그 (파라미터로 활성화)
+### 조건부 디버그 (`publish_debug: true` 일 때 출력)
 
-| 레벨 | 메시지 패턴 | 활성화 조건 | 출처 | 설명 |
-|------|------------|------------|------|------|
-| INFO | `[LEFT] pre-resample: total=N  cones=N  lanes=N` | `chainer.debug_chainer_stats: true` | direction_chainer.cpp | 왼쪽 component의 리샘플 전 포인트 통계 (콘/차선 분류) |
-| INFO | `[RIGHT] pre-resample: total=N  cones=N  lanes=N` | `chainer.debug_chainer_stats: true` | direction_chainer.cpp | 오른쪽 component의 리샘플 전 포인트 통계 |
+| 레벨 | 메시지 패턴 | 주기 | 출처 | 설명 |
+|------|------------|------|------|------|
+| INFO | `chain: L_comp=N L_bb=N L_br=N  R_comp=N R_bb=N R_br=N` | 2초 | on_timer() | 체이닝 결과 요약. L/R=좌/우, comp=component 점 수, bb=backbone 점 수, br=branch 개수 |
+| INFO | `[LEFT] pre-resample: total=N  cones=N  lanes=N` | 매 호출 | direction_chainer.cpp | 왼쪽 component의 리샘플 전 포인트 통계 |
+| INFO | `[RIGHT] pre-resample: total=N  cones=N  lanes=N` | 매 호출 | direction_chainer.cpp | 오른쪽 component의 리샘플 전 포인트 통계 |
 
 ### 로그 해석 가이드
 
@@ -261,8 +288,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 ```
 [INFO] [lc_planner_node]: LCPlannerNode initialized (10 Hz, DirectionChainer v2 + Costmap + A*)
 [INFO] [lc_planner_node]: LC PlanningParams loaded: Costmap(10x10 res=0.15) AStar(iter=10000 tol=0.3) d_max=2.0 lat_gate=1.50
-[INFO] [lc_planner_node]: [Planner] OK — path:47 pts, speed=1.60 m/s
-[INFO] [lc_planner_node]: chain: L_comp=12 L_bb=8 L_br=2  R_comp=15 R_bb=10 R_br=3
+[INFO] [lc_planner_node]: [Planner] OK — path:47 pts, kappa=0.312 (r=3.21m), limit=0.461 (r_min=2.17m, delta_max=18.6°)
 ```
 
 **문제 상황별 대응:**
@@ -271,9 +297,9 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 |------|-----------|------|------|
 | 경로 없음 | `[Stage0] STALE` | perception 노드 중단 또는 토픽 미발행 | `ros2 topic hz /perception/bboxes` 로 발행 확인 |
 | 경로 없음 | `[Planner] FAIL — no_valid_path` | A* 탐색 실패 (목표점 도달 불가) | costmap 시각화로 장애물 배치 확인, `max_iterations` 증가 검토 |
-| 경로 불안정 | `[Planner] FAIL — curvature_exceeds_r_min` | 생성된 경로의 곡률이 차량 한계 초과 | `cone_radius`, `sigma` 조정으로 코스트맵 완화 |
-| 체이닝 편향 | `chain: L_comp=0 ...` | 한쪽 경계점이 없음 | seed 파라미터(`side_seed_y`) 또는 perception 확인 |
-| 속도 느림 | `speed=0.XX m/s` (v_max보다 낮음) | 곡률이 커서 횡가속도 제한 적용 | 경로 곡률 완화 또는 `a_lat_max` 상향 검토 |
+| 경로 불안정 | `[Planner] FAIL — curvature_exceeds_r_min` | 생성된 경로의 곡률이 차량 한계 초과 | `curvature_clamp_max_iter` 증가, `cone_radius`/`sigma` 조정 |
+| 체이닝 편향 | chain 로그에서 `L_comp=0` | 한쪽 경계점이 없음 | seed 파라미터(`side_seed_y`) 또는 perception 확인 |
+| 곡률 초과 빈번 | curvature 마커 다수 표시 | 급커브 구간, costmap 과밀 | `curvature_clamp_max_iter` 증가, postprocess 파라미터 조정 |
 
 ---
 
@@ -309,7 +335,9 @@ planning/src/chaining_costmap_ver/
 ├── include/chaining_costmap_ver/
 │   ├── common/
 │   │   ├── types.hpp                      ← 자료구조 정의
-│   │   └── geometry.hpp                   ← 기하 유틸리티
+│   │   ├── geometry.hpp                   ← 기하 유틸리티
+│   │   ├── params.hpp                     ← 파라미터 구조체 + load()
+│   │   └── debug_publish.hpp              ← 디버그 시각화 헬퍼
 │   ├── nodes/
 │   │   └── chaining_costmap_ver_node.hpp  ← 메인 노드 헤더
 │   ├── chainer/
@@ -324,7 +352,7 @@ planning/src/chaining_costmap_ver/
 │       └── safety_checker.hpp
 └── src/
     ├── nodes/
-    │   └── chaining_costmap_ver_node.cpp  ← 메인 노드 (8-stage pipeline)
+    │   └── chaining_costmap_ver_node.cpp  ← 메인 노드 (7-stage pipeline)
     ├── chainer/
     │   └── direction_chainer.cpp          ← 7-step 체이닝
     ├── costmap/
@@ -332,5 +360,5 @@ planning/src/chaining_costmap_ver/
     ├── planner/
     │   └── astar_planner.cpp              ← A* 경로탐색
     └── postprocess/
-        └── path_postprocessor.cpp         ← 후처리
+        └── path_postprocessor.cpp         ← 후처리 (5-step)
 ```

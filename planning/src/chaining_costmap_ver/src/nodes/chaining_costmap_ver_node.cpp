@@ -531,6 +531,10 @@ void LCPlannerNode::on_timer()
       to_path_msg(raw_path, frame_id, stamp)));
   }
 
+  // ── Debug: chainer 시각화 (backbone, branches, seeds) ──
+  // publish_debug 파라미터가 false이면 chainer 관련 시각화를 완전히 건너뛴다.
+  if (params_.chainer.publish_debug) {
+
   // ── Debug: left/right backbone (Path) ──
   // backbone: DirectionChainer가 생성한 주 경로(체인)의 핵심 점들.
   // RViz2에서 Path 타입으로 시각화하여 좌/우 체인이 올바르게 생성되었는지 확인.
@@ -564,9 +568,6 @@ void LCPlannerNode::on_timer()
   // 색상 규칙:
   //   왼쪽 branch: 연두색 (r=0.5, g=1.0, b=0.5) — ns="left_branches"
   //   오른쪽 branch: 연분홍 (r=1.0, g=0.5, b=0.5) — ns="right_branches"
-  //
-  // publish_debug 파라미터가 false이면 branch/seed 시각화를 완전히 건너뛴다.
-  if (params_.chainer.publish_debug) {
     // branch 마커 생성 람다 — 좌/우 공통 로직을 재사용하기 위해 람다로 추출
     auto make_branch_markers = [&](
       const std::vector<BranchInfo> & branches,      // branch 정보 벡터
@@ -717,15 +718,12 @@ void LCPlannerNode::on_timer()
       pub_dbg_local_goal_->publish(
         std::make_unique<visualization_msgs::msg::MarkerArray>(goal_ma));
     }
-  }
-
   // ── 디버그 로그 (2초마다 출력) ──
   // RCLCPP_INFO_THROTTLE: 지정된 주기(2000ms)마다 한 번만 로그 출력
   // → 10Hz 콜백에서 매번 출력하면 로그가 범람하므로 throttle로 제한
   // L_comp/R_comp: 좌/우 component 점 수
   // L_bb/R_bb: 좌/우 backbone 점 수
   // L_br/R_br: 좌/우 branch 개수
-  if (params_.chainer.debug_chainer_stats) {
     RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 2000,
       "chain: L_comp=%zu L_bb=%zu L_br=%zu  R_comp=%zu R_bb=%zu R_br=%zu",
       dc_result.left.component.size(), dc_result.left.backbone.size(),
