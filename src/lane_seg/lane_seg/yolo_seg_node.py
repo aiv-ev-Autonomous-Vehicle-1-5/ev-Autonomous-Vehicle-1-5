@@ -56,21 +56,31 @@ class YoloSegNode(Node):
             lane_msg = LaneCoords()
 
             if result.masks is not None:
+                # 모든 마스크를 하나로 합침
+                combined_mask = np.zeros((h, w), dtype=np.float32)
                 masks = result.masks.data.cpu().numpy()
                 for mask in masks:
                     mask_resized = cv2.resize(mask, (w, h))
-                    color_mask[mask_resized > 0.5] = [255, 0, 0]
-                    
-                    indices = np.where(mask_resized > 0.5)
-                    rows, cols = indices[0], indices[1]
+                    combined_mask = np.maximum(combined_mask, mask_resized)
 
-                    for k in range(0, len(rows), 10):
-                        i, j = rows[k], cols[k]
-                        
-                        real_y = float((self.car_y_px - i) * self.interval)  # 범퍼 기준 전방 거리 (m)
-                        real_x = float((self.car_x_px - j) * self.interval) # 좌(+) / 우(-) (m)
-                        
-                        # 🎯 각각의 배열에 깔끔하게 나누어서 집어넣기!
+                color_mask[combined_mask > 0.5] = [255, 0, 0]
+
+                # 행(row)별로 중심점 추출
+                unique_rows = np.where(np.any(combined_mask > 0.5, axis=1))[0]
+                for row in unique_rows[::10]:  # 10행 간격
+                    cols_in_row = np.where(combined_mask[row] > 0.5)[0]
+                    if len(cols_in_row) == 0:
+                        continue
+
+                    # x값 정렬 후 100px 이상 차이나는 구간에서 그룹 분리
+                    sorted_cols = np.sort(cols_in_row)
+                    gaps = np.where(np.diff(sorted_cols) > 100)[0]
+                    groups = np.split(sorted_cols, gaps + 1)
+
+                    for group in groups:
+                        center_x = int(np.mean(group))
+                        real_y = float((self.car_y_px - row) * self.interval)
+                        real_x = float((self.car_x_px - center_x) * self.interval)
                         lane_msg.line_x.append(real_x)
                         lane_msg.line_y.append(real_y)
 
