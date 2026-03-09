@@ -352,11 +352,6 @@ struct PlanningParams
     double lambda_side = 0.5;           ///< side preference 가중치
 
     // ── Branch ──
-    // branch 모드 설정.
-    // "backbone_and_branches" = backbone + 갈라지는 branch 둘 다 추적.
-    // "backbone_only"         = backbone만 (분기 무시).
-    std::string branch_mode = "backbone_and_branches";
-
     // [개] 하나의 branch에서 최대로 연결할 포인트 수.
     // branch가 너무 길어지면 잘못된 연결일 가능성 → 제한.
     // 40 = 리샘플 간격 0.1m 기준 최대 4m 길이의 branch.
@@ -367,14 +362,6 @@ struct PlanningParams
     // 100 = 리샘플 간격 0.1m 기준 최대 10m의 backbone.
     // costmap size에 맞춰 조절. 맵이 16m이면 8m 전방까지 = 80개면 충분.
     int max_chain_len = 100;            ///< backbone 최대 길이
-
-    // ── 신뢰도 필터 ──
-    // [0.0 ~ 1.0] 인식 결과의 최소 신뢰도(confidence) 컷오프.
-    // 이 값 미만의 BBox/LaneBoundary는 체이닝에서 제외.
-    // 0.1 = 10% 이상이면 사용. 매우 느슨한 필터.
-    // 높이면 확실한 탐지만 사용 (안전하지만 데이터 부족 가능),
-    // 낮추면 노이즈가 많은 탐지도 포함.
-    double min_confidence = 0.1;        ///< BBox/LaneBoundary 최소 신뢰도 컷오프
 
     // ── 리샘플링 ──
     // [m] 체이닝 결과를 일정 간격으로 리샘플링하는 거리.
@@ -491,10 +478,8 @@ struct PlanningParams
     chainer.gamma             = p("chainer.gamma",             chainer.gamma);
     chainer.delta             = p("chainer.delta",             chainer.delta);
     chainer.lambda_side       = p("chainer.lambda_side",       chainer.lambda_side);
-    chainer.branch_mode       = p("chainer.branch_mode",       chainer.branch_mode);
     chainer.max_branch_len    = p("chainer.max_branch_len",    chainer.max_branch_len);
     chainer.max_chain_len     = p("chainer.max_chain_len",     chainer.max_chain_len);
-    chainer.min_confidence    = p("chainer.min_confidence",    chainer.min_confidence);
     chainer.resample_ds       = p("chainer.resample_ds",       chainer.resample_ds);
     chainer.publish_debug     = p("chainer.publish_debug",     chainer.publish_debug);
 

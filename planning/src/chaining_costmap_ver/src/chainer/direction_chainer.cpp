@@ -1,13 +1,12 @@
 /**
  * @file direction_chainer.cpp
- * @brief DirectionChainer — 7단계 파이프라인 구현부
+ * @brief DirectionChainer — 6단계 파이프라인 구현부
  *
  * [파일 구조]
  *   이 파일은 direction_chainer.hpp에 선언된 DirectionChainer 클래스의
  *   모든 멤버 함수를 구현한다. 각 함수는 파이프라인의 한 단계에 대응한다.
  *
- * [7단계 파이프라인 요약]
- *   0단계: preprocess()          — 신뢰도 필터로 노이즈 제거
+ * [6단계 파이프라인 요약]
  *   1단계: find_seed()           — 좌/우 시작점 선택 (콘 우선)
  *   2단계: build_graph()         — kNN + G1,G3 게이트로 undirected 그래프 구성
  *   3단계: extract_component()   — BFS로 seed 연결 성분 추출 (visited 공유)
@@ -35,15 +34,12 @@ namespace chaining_costmap_ver
 {
 
 // ============================================================================
-// 메인 chain() — 7단계 파이프라인 통합 실행
+// 메인 chain() — 6단계 파이프라인 통합 실행
 // ============================================================================
 //
 // [전체 흐름 다이어그램]
 //
 //   입력: ChainPoint[] (콘+차선 혼합)
-//     │
-//     ▼
-//   0단계: preprocess() → 저신뢰 점 제거
 //     │
 //     ▼
 //   1단계: find_seed() × 2 → 좌측/우측 seed 선택
@@ -72,10 +68,9 @@ DirectionChainResult DirectionChainer::chain(
   DirectionChainResult result;
   const auto & cp = params.chainer;
 
-  // ── 0단계: 전처리 ──
-  // 신뢰도(confidence)가 낮은 점을 제거하여 노이즈/오탐을 사전 차단한다.
-  // 필터링 후 점이 2개 미만이면 체이닝 자체가 불가능하므로 조기 반환.
-  auto filtered = preprocess(points, cp);
+  // ── 0단계: 입력 검사 ──
+  // 점이 2개 미만이면 체이닝 자체가 불가능하므로 조기 반환.
+  const auto & filtered = points;
   if (filtered.size() < 2) return result;
 
   // ── 1단계: Seed 선택 ──
@@ -183,13 +178,10 @@ DirectionChainResult DirectionChainer::chain(
     }
 
     // ━━━ 5단계: Branch 추출 ━━━
-    // branch_mode가 "backbone_and_branches"일 때만 실행.
     // 잔여 노드를 BFS로 가장 가까운 backbone 노드에 연결하여
     // 가지(branch)를 구성한다.
-    if (cp.branch_mode == "backbone_and_branches") {
-      side.branches = extract_branches(
-        graph, filtered, comp_ids, backbone_ids, cp);
-    }
+    side.branches = extract_branches(
+      graph, filtered, comp_ids, backbone_ids, cp);
 
     // ━━━ 6단계: Component 리샘플링 ━━━
     // backbone + branch의 모든 edge를 resample_ds 간격으로 보간한다.
@@ -217,41 +209,6 @@ DirectionChainResult DirectionChainer::chain(
   result.valid = (!result.left.backbone.empty() ||
                   !result.right.backbone.empty());
   return result;
-}
-
-// ============================================================================
-// 0단계: 전처리 (Preprocess)
-// ============================================================================
-//
-// [목적]
-//   BBox 검출기나 차선 인식기가 출력한 경계점 중 신뢰도가 낮은 것을 제거한다.
-//   신뢰도가 낮은 점은 오탐(false positive)일 가능성이 높으므로,
-//   그래프에 포함시키면 잘못된 연결이 생길 수 있다.
-//
-// [동작]
-//   - confidence >= min_confidence 인 점만 새 배열에 복사
-//   - 인덱스가 재배열됨 (이후 단계는 이 필터된 배열의 인덱스 사용)
-//
-// [파라미터]
-//   min_confidence: 최소 신뢰도 컷오프 (기본값 0.1)
-//   → 너무 높게 설정하면 유효한 점도 제거됨 → 경계 누락
-//   → 너무 낮게 설정하면 노이즈가 그대로 통과 → 잘못된 체이닝
-//
-// ============================================================================
-
-std::vector<ChainPoint> DirectionChainer::preprocess(
-  const std::vector<ChainPoint> & points,
-  const PlanningParams::Chainer & cp) const
-{
-  std::vector<ChainPoint> out;
-  out.reserve(points.size());  // 메모리 미리 확보 (재할당 방지)
-  for (const auto & p : points) {
-    // 신뢰도 필터: min_confidence 미만인 점은 제외
-    if (p.confidence >= cp.min_confidence) {
-      out.push_back(p);
-    }
-  }
-  return out;
 }
 
 // ============================================================================

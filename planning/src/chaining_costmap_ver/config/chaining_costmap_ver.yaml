@@ -51,20 +51,16 @@ lc_planner_node:
       lambda_side: 0.5        # side preference 가중치
 
       # --- Branch ---
-      branch_mode: "backbone_and_branches"
       max_branch_len: 40      # branch 최대 길이
 
       # --- 종료/제한 ---
       max_chain_len: 100      # backbone 최대 길이
 
-      # --- 신뢰도 필터 ---
-      min_confidence: 0.0
-
       # --- 리샘플링 ---
       resample_ds: 0.1        # [m] component 전체 리샘플 간격
 
       # --- 디버그 ---
-      publish_debug: true
+      publish_debug: true     # rviz2 시각화용 디버깅 토픽 발행 
 
     # ============================================================
     # [Stage 3] Costmap — 가우시안 비용 지도 생성
