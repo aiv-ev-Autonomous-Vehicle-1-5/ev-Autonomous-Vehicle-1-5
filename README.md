@@ -7,9 +7,16 @@ cd ~/ev_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
-
 > 빌드 중 PC가 멈출 수 있음 (메모리 부족). 재부팅 후 다시 시도.
 > 병렬 제한: `colcon build --symlink-install --parallel-workers 2`
+
+## 주의!
+새 터미널 프로세스 실행할때마다 
+```bash 
+source install/setup.bash 
+```
+안 하고 안 된다고 뇌절 ㄴㄴ
+
 
 ## 실행
 
