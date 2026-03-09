@@ -1,4 +1,0 @@
-source;share/lane_seg_msgs/local_setup.bash
-source;share/lane_seg_msgs/local_setup.dsv
-source;share/lane_seg_msgs/local_setup.sh
-source;share/lane_seg_msgs/local_setup.zsh
