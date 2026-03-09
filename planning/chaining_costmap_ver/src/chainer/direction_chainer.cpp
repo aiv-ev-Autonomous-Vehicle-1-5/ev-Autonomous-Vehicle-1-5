@@ -122,22 +122,6 @@ DirectionChainResult DirectionChainer::chain(
       l_component = extract_component(graph, left_seed, visited);
   }
 
-  // ── 디버그: 리샘플 전 좌/우 component별 콘/차선 개수 출력 ──
-  if (cp.publish_debug) {
-    auto count_types = [&](const std::vector<int> & comp, const char * label) {
-      int n_cone = 0, n_lane = 0;
-      for (int idx : comp) {
-        if (filtered[idx].type == PointType::CONE) ++n_cone;
-        else ++n_lane;
-      }
-      RCLCPP_INFO(rclcpp::get_logger("direction_chainer"),
-        "[%s] pre-resample: total=%d  cones=%d  lanes=%d",
-        label, static_cast<int>(comp.size()), n_cone, n_lane);
-    };
-    count_types(l_component, "LEFT");
-    count_types(r_component, "RIGHT");
-  }
-
   // ── 4~6단계: 각 side별 backbone/branch/resample 처리 ──
   //
   // 좌/우 각각 동일한 과정을 거친다:

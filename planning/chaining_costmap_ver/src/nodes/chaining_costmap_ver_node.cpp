@@ -718,18 +718,6 @@ void LCPlannerNode::on_timer()
       pub_dbg_local_goal_->publish(
         std::make_unique<visualization_msgs::msg::MarkerArray>(goal_ma));
     }
-  // ── 디버그 로그 (2초마다 출력) ──
-  // RCLCPP_INFO_THROTTLE: 지정된 주기(2000ms)마다 한 번만 로그 출력
-  // → 10Hz 콜백에서 매번 출력하면 로그가 범람하므로 throttle로 제한
-  // L_comp/R_comp: 좌/우 component 점 수
-  // L_bb/R_bb: 좌/우 backbone 점 수
-  // L_br/R_br: 좌/우 branch 개수
-    RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 2000,
-      "chain: L_comp=%zu L_bb=%zu L_br=%zu  R_comp=%zu R_bb=%zu R_br=%zu",
-      dc_result.left.component.size(), dc_result.left.backbone.size(),
-      dc_result.left.branches.size(),
-      dc_result.right.component.size(), dc_result.right.backbone.size(),
-      dc_result.right.branches.size());
   }
 }
 

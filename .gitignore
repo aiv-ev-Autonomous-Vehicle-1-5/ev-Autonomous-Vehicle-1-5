@@ -1,4 +1,3 @@
-# rosbag은 파일이 너무 커서 제외하기로 함
 rosbag/
 build/
 install/
