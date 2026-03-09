@@ -49,13 +49,13 @@ UtmLocalizer::UtmLocalizer()
   filter_forward_only_ = get_parameter("filter_forward_only").as_bool();
   forward_min_x_ = get_parameter("forward_min_x").as_double();
 
-  // 1) /fix 구독 (너가 실제로 쓰는 토픽이 /ublox_gps_node/fix라면 여기만 바꿈)
+  // 1) /fix 구독 (너가 실제로 쓰는 토픽이 /ublox_gps_node/fix라면 여기만 바꿈
   gps_sub_ = create_subscription<sensor_msgs::msg::NavSatFix>(
     fix_topic_, rclcpp::QoS(10),
     std::bind(&UtmLocalizer::gpsCallback, this, _1));
 
   // 2) /local_pose 퍼블리시 (frame=map)
-  pose_pub_ = create_publisher<geometry_msgs::msg::PoseStamped>("/local_pose", rclcpp::QoS(10));
+  pose_pub_ = create_publisher<geometry_msgs::msg::PoseStamped>("/gps_pose", rclcpp::QoS(10));
 
   // 3) /local_path 퍼블리시 (frame=base_link)  -> 컨트롤 입력
   path_pub_ = create_publisher<nav_msgs::msg::Path>("/local_path", rclcpp::QoS(10));
@@ -91,7 +91,7 @@ UtmLocalizer::UtmLocalizer()
 void UtmLocalizer::gpsCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg){
 
   // timeout 감시용 stamp 갱신
-  last_fix_stamp_ = now();
+  last_fix_stamp_ = now();   // 수신 시각 기준으로 timeout 판단
   has_fix_stamp_ = true;
 
   // ------------------------------------------------------------

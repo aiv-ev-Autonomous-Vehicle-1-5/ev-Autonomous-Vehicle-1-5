@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_pointcloud/velodyne_transform_node" "TARGETS" "velodyne_transform_node" "DESTINATION" "lib/velodyne_pointcloud")

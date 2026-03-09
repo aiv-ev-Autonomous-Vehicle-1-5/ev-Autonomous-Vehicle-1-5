@@ -1,6 +1,0 @@
-Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/erp42_ros/src/erp42_gazebo -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/install/erp42_gazebo
-Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev_ws/erp42_ros/src/erp42_gazebo -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev_ws/install/erp42_gazebo
-Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo -- -j8 -l8
-Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo -- -j8 -l8
-Invoking command in '/home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo
-Invoked command in '/home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev_ws/build/erp42_gazebo

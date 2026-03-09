@@ -1,0 +1,4 @@
+source;share/t870_cmake/local_setup.bash
+source;share/t870_cmake/local_setup.dsv
+source;share/t870_cmake/local_setup.sh
+source;share/t870_cmake/local_setup.zsh

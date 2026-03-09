@@ -1,0 +1,7 @@
+{
+  "package_name": "velodyne_msgs",
+  "non_idl_tuples": [
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_msgs:msg/VelodynePacket.msg",
+    "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_msgs:msg/VelodyneScan.msg"
+  ]
+}

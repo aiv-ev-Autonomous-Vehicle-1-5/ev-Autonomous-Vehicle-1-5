@@ -1,2 +1,1 @@
-source;share/gps_localization/environment/ament_prefix_path.sh
-source;share/gps_localization/environment/path.sh
+/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization/ament_cmake_environment_hooks/local_setup.dsv

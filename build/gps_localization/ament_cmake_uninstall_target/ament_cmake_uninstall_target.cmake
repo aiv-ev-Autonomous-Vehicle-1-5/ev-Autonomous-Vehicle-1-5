@@ -55,3 +55,6 @@ endforeach()
 message(STATUS "Execute custom uninstall script")
 
 # begin of custom uninstall code
+
+# uninstall files installed using the symlink install functions
+include("/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/gps_localization/ament_cmake_symlink_install/ament_cmake_symlink_install_uninstall_script.cmake")

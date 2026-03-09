@@ -1,2 +1,1 @@
-source;share/carsa_gazebo/environment/ament_prefix_path.sh
-source;share/carsa_gazebo/environment/path.sh
+/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo/ament_cmake_environment_hooks/local_setup.dsv
