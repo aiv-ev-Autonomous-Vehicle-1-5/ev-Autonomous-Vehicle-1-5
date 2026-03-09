@@ -10,7 +10,7 @@ class MouseClickNode(Node):
         # camera1의 원본 영상을 구독합니다.
         self.subscription = self.create_subscription(
             Image,
-            '/camera1/image_raw',
+            '/bev_image',
             self.image_callback,
             10)
         self.bridge = CvBridge()

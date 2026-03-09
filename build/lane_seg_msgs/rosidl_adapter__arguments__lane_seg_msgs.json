@@ -1,0 +1,6 @@
+{
+  "package_name": "lane_seg_msgs",
+  "non_idl_tuples": [
+    "/home/woonggook/ev_ws/src/lane_seg_msgs:msg/LaneCoords.msg"
+  ]
+}

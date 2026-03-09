@@ -5,7 +5,7 @@ import os
 home_dir = os.path.expanduser('~')
 
 # 1. 설정: 동영상 파일 경로와 저장할 폴더 이름
-VIDEO_NAME = 'track_record.avi'  # 돌리실 영상 이름으로 계속 바꿔주시면 됩니다!
+VIDEO_NAME = 'track_record_20260225_170320.avi'  # 돌리실 영상 이름으로 계속 바꿔주시면 됩니다!
 VIDEO_PATH = os.path.join(home_dir, 'Desktop', 'test_videos', VIDEO_NAME)
 
 OUTPUT_DIR = os.path.join(home_dir, 'Desktop', 'real_datasets')

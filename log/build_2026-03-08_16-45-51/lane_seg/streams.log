@@ -1,0 +1,35 @@
+[0.429s] Invoking command in '/home/woonggook/ev_ws/src/lane_seg': AMENT_PREFIX_PATH=/home/woonggook/ev_ws/install/lane_seg_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/woonggook/ev_ws/install/lane_seg_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/woonggook/ev_ws/install/lane_seg_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/woonggook/ev_ws/build/lane_seg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages:/home/woonggook/ev_ws/install/lane_seg_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/lane_seg build --build-base /home/woonggook/ev_ws/build/lane_seg/build install --record /home/woonggook/ev_ws/build/lane_seg/install.log --single-version-externally-managed install_data
+[0.579s] running egg_info
+[0.580s] writing ../../build/lane_seg/lane_seg.egg-info/PKG-INFO
+[0.580s] writing dependency_links to ../../build/lane_seg/lane_seg.egg-info/dependency_links.txt
+[0.580s] writing entry points to ../../build/lane_seg/lane_seg.egg-info/entry_points.txt
+[0.580s] writing requirements to ../../build/lane_seg/lane_seg.egg-info/requires.txt
+[0.580s] writing top-level names to ../../build/lane_seg/lane_seg.egg-info/top_level.txt
+[0.582s] reading manifest file '../../build/lane_seg/lane_seg.egg-info/SOURCES.txt'
+[0.582s] writing manifest file '../../build/lane_seg/lane_seg.egg-info/SOURCES.txt'
+[0.582s] running build
+[0.582s] running build_py
+[0.583s] copying lane_seg/yolo_seg_node.py -> /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg
+[0.583s] copying lane_seg/bev_node.py -> /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg
+[0.583s] copying lane_seg/utils/get_points.py -> /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/utils
+[0.583s] copying lane_seg/utils/bev_cali.py -> /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/utils
+[0.583s] running install
+[0.583s] running install_lib
+[0.584s] copying /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/yolo_seg_node.py -> /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg
+[0.584s] copying /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/bev_node.py -> /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg
+[0.585s] copying /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/utils/get_points.py -> /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/utils
+[0.585s] copying /home/woonggook/ev_ws/build/lane_seg/build/lib/lane_seg/utils/bev_cali.py -> /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/utils
+[0.586s] byte-compiling /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/yolo_seg_node.py to yolo_seg_node.cpython-310.pyc
+[0.587s] byte-compiling /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/bev_node.py to bev_node.cpython-310.pyc
+[0.587s] byte-compiling /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/utils/get_points.py to get_points.cpython-310.pyc
+[0.588s] byte-compiling /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg/utils/bev_cali.py to bev_cali.cpython-310.pyc
+[0.589s] running install_data
+[0.589s] copying package.xml -> /home/woonggook/ev_ws/install/lane_seg/share/lane_seg
+[0.589s] running install_egg_info
+[0.591s] removing '/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg-0.0.0-py3.10.egg-info' (and everything under it)
+[0.592s] Copying ../../build/lane_seg/lane_seg.egg-info to /home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages/lane_seg-0.0.0-py3.10.egg-info
+[0.592s] running install_scripts
+[0.605s] Installing bev_node script to /home/woonggook/ev_ws/install/lane_seg/lib/lane_seg
+[0.605s] Installing yolo_seg script to /home/woonggook/ev_ws/install/lane_seg/lib/lane_seg
+[0.605s] writing list of installed files to '/home/woonggook/ev_ws/build/lane_seg/install.log'
+[0.620s] Invoked command in '/home/woonggook/ev_ws/src/lane_seg' returned '0': AMENT_PREFIX_PATH=/home/woonggook/ev_ws/install/lane_seg_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/woonggook/ev_ws/install/lane_seg_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/woonggook/ev_ws/install/lane_seg_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/woonggook/ev_ws/build/lane_seg/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/woonggook/ev_ws/install/lane_seg/lib/python3.10/site-packages:/home/woonggook/ev_ws/install/lane_seg_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/lane_seg build --build-base /home/woonggook/ev_ws/build/lane_seg/build install --record /home/woonggook/ev_ws/build/lane_seg/install.log --single-version-externally-managed install_data

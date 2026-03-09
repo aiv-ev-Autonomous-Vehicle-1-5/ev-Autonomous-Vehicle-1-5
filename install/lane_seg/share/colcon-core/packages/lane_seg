@@ -1,1 +1,1 @@
-cv_bridge:rclpy:sensor_msgs
+cv_bridge:lane_seg_msgs:rclpy:sensor_msgs

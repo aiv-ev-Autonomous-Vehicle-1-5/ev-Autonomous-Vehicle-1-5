@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
@@ -7,92 +8,96 @@ import numpy as np
 import os
 from ultralytics import YOLO
 
-class YoloLaneSegNode(Node):
+# 🎯 방금 우리가 직접 만든 커스텀 메시지 임포트!
+from lane_seg_msgs.msg import LaneCoords  # 🎯 새로 만드신 패키지 이름으로 변경! 
+
+class YoloSegNode(Node):
     def __init__(self):
-        super().__init__('yolo_lane_seg_node')
-        
-        # 1. 구독자(Subscriber)와 발행자(Publisher) 설정
-        self.subscription = self.create_subscription(
-            Image,
-            '/bev_image',  # 아까 쫙 펴놓은 BEV 도화지 토픽
-            self.image_callback,
-            10)
-        
-        self.publisher = self.create_publisher(Image, '/yolo_result_image', 10)
-        
-        # 🔥 아까 실수로 지워졌던 핵심 코드 복구!
+        super().__init__('yolo_seg_node')
         self.bridge = CvBridge()
         
-        # 2. config 폴더에 있는 'first_best.pt' 모델 절대 경로로 로드
-        home_dir = os.path.expanduser('~')
-        model_path = os.path.join(home_dir, 'ev_ws', 'src', 'lane_seg', 'config', 'first_best.pt')
+        self.subscription = self.create_subscription(
+            Image, '/bev_image', self.image_callback, 10)
         
-        self.get_logger().info(f'🚀 YOLO11 모델 로딩 중... 경로: {model_path}')
+        self.img_publisher = self.create_publisher(Image, '/yolo_seg_image', 10)
         
-        if not os.path.exists(model_path):
-            self.get_logger().error('❌ 모델 파일이 없습니다! 경로를 다시 확인해주세요.')
-            return
-            
-        # 노트북 CPU 환경에 맞게 최적화 (버벅임 방지)
-        self.model = YOLO(model_path)
-        self.get_logger().info('✅ 모델 로딩 완료! 차선 인식을 시작합니다.')
+        # 🎯 커스텀 메시지 타입으로 토픽 발행
+        self.coord_publisher = self.create_publisher(LaneCoords, '/lane_coordinates', 10)
+        
+        self.world_y_max = 4.0
+        self.world_x_max = 1.2
+        self.interval = 0.01
+
+        self.get_logger().info("⏳ YOLO 모델 로딩 중...")
+        model_path = os.path.expanduser('~/ev_ws/src/lane_seg/config/second_best.pt')
+        
+        try:
+            self.model = YOLO(model_path)
+        except Exception as e:
+            self.get_logger().error(f"❌ YOLO 모델 로드 실패: {e}")
+            raise e
+
+        self.get_logger().info("🚀 YOLO 노드 (커스텀 메시지 LaneCoords 적용) 가동!")
 
     def image_callback(self, msg):
-        # ROS 2 이미지 -> OpenCV 이미지로 변환
-        cv_img = self.bridge.imgmsg_to_cv2(msg, 'bgr8')
-        annotated_img = cv_img.copy()
+        try:
+            bev_frame = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+            h, w = bev_frame.shape[:2]
 
-        # 3. YOLO 추론 실행 (CPU 강제 지정, 로그 숨기기)
-        results = self.model.predict(source=cv_img, conf=0.5, device='cpu', verbose=False)
-        
-        if results and len(results) > 0:
+            results = self.model.predict(bev_frame, conf=0.7, imgsz=320, verbose=False)
             result = results[0]
             
-            # 마스크(세그멘테이션 영역)가 감지되었을 때만 실행
+            color_mask = np.zeros_like(bev_frame)
+            
+            # 🎯 우리가 만든 커스텀 메시지 빈 껍데기 소환
+            lane_msg = LaneCoords()
+
             if result.masks is not None:
-                masks = result.masks.xy  # 폴리곤(다각형) 좌표 리스트
-                boxes = result.boxes     # 바운딩 박스 및 신뢰도 정보
-
-                for mask, box in zip(masks, boxes):
-                    # --- 1) 파란색 마스크 칠하기 ---
-                    pts = np.int32([mask])
-                    overlay = annotated_img.copy()
+                masks = result.masks.data.cpu().numpy()
+                for mask in masks:
+                    mask_resized = cv2.resize(mask, (w, h))
+                    color_mask[mask_resized > 0.5] = [255, 0, 0]
                     
-                    # BGR 포맷이므로 파란색은 (255, 0, 0)
-                    cv2.fillPoly(overlay, pts, color=(255, 0, 0)) 
-                    # 원본 이미지와 50% 비율로 섞어서 반투명하게 만듦
-                    cv2.addWeighted(overlay, 0.5, annotated_img, 0.5, 0, annotated_img)
-                    
-                    # 마스크 테두리도 파란색 실선으로 뚜렷하게 그리기
-                    cv2.polylines(annotated_img, pts, isClosed=True, color=(255, 0, 0), thickness=2)
+                    indices = np.where(mask_resized > 0.5)
+                    rows, cols = indices[0], indices[1]
 
-                    # --- 2) 신뢰도 (0.88 형식) 띄우기 ---
-                    conf = float(box.conf[0])
-                    conf_text = f"{conf:.2f}" # 소수점 2자리까지만 포맷팅
-                    
-                    # 텍스트 띄울 위치 계산 (폴리곤의 맨 위쪽 근처)
-                    text_x = int(np.min(pts[0][:, 0]))
-                    text_y = int(np.min(pts[0][:, 1])) - 10
-                    text_y = max(20, text_y) # 화면 위로 글씨가 짤리지 않게 보정
+                    for k in range(0, len(rows), 10):
+                        i, j = rows[k], cols[k]
+                        
+                        real_y = float(self.world_y_max - (i * self.interval))
+                        real_x = float(self.world_x_max - (j * self.interval))
+                        
+                        # 🎯 각각의 배열에 깔끔하게 나누어서 집어넣기!
+                        lane_msg.line_x.append(real_x)
+                        lane_msg.line_y.append(real_y)
 
-                    cv2.putText(annotated_img, conf_text, (text_x, text_y), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2, cv2.LINE_AA)
+            # 4. 꽉 찬 커스텀 메시지 발행
+            self.coord_publisher.publish(lane_msg)
 
-        # 4. 결과 이미지를 다시 ROS 2 토픽으로 발행
-        out_msg = self.bridge.cv2_to_imgmsg(annotated_img, 'bgr8')
-        self.publisher.publish(out_msg)
+            # 5. 시각화 처리
+            final_result = cv2.addWeighted(bev_frame, 1, color_mask, 0.5, 0)
+            
+            if result.boxes is not None:
+                for box in result.boxes.data.cpu().numpy():
+                    conf, x1, y1 = box[4], int(box[0]), int(box[1])
+                    cv2.putText(final_result, f"{conf*100:.1f}%", (x1, max(30, y1-10)), 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 2)
 
+            img_msg = self.bridge.cv2_to_imgmsg(final_result, encoding='bgr8')
+            img_msg.header = msg.header
+            self.img_publisher.publish(img_msg)
+            
+        except Exception as e:
+            self.get_logger().error(f"오류 발생: {e}")
 
 def main(args=None):
     rclpy.init(args=args)
-    node = YoloLaneSegNode()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
+    node = YoloSegNode()
+    try: rclpy.spin(node)
+    except KeyboardInterrupt: pass
     finally:
         node.destroy_node()
+        cv2.destroyAllWindows()
         rclpy.shutdown()
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__main__': main()
