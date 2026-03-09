@@ -367,18 +367,19 @@ void LCPlannerNode::on_timer()
   // ======== Stage 6: Safety Check ========
   // Menger 곡률 공식으로 후처리된 경로의 최대 곡률(κ_max)을 계산하고:
   //   - κ_max > 1/r_min  → INFEASIBLE (물리적으로 추종 불가)
-  //   - 그 외             → OK, 안전 속도 = min(v_max, sqrt(a_lat_max / κ_max))
+  //   - 그 외             → OK
   auto safety = safety_checker::check(pp_result, params_);
 
   // ── 상태 로그 (INFO 레벨) ──
+  const double r_min = params_.vehicle.r_min();
+  const double kappa_limit = 1.0 / r_min;
+  const double r_actual = (safety.max_curvature > 1e-6) ? 1.0 / safety.max_curvature : 999.0;
   if (safety.reason == "ok") {
     RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 1000,
-      "[Planner] OK — path:%zu pts, speed=%.2f m/s",
-      pp_result.path.size(), safety.target_speed);
+      "[Planner] OK — path:%zu pts, kappa=%.3f (r=%.2fm), limit=%.3f (r_min=%.2fm, delta_max=%.1f°)",
+      pp_result.path.size(), safety.max_curvature, r_actual,
+      kappa_limit, r_min, params_.vehicle.delta_max * 180.0 / M_PI);
   } else if (safety.reason == "curvature_exceeds_r_min") {
-    const double r_min = params_.vehicle.r_min();
-    const double kappa_limit = 1.0 / r_min;
-    const double r_actual = (safety.max_curvature > 1e-6) ? 1.0 / safety.max_curvature : 999.0;
     RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 1000,
       "[Planner] FAIL — curvature_exceeds_r_min: "
       "kappa=%.3f (r=%.2fm) > limit=%.3f (r_min=%.2fm, delta_max=%.1f°)",

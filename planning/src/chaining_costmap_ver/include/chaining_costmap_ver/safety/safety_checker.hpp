@@ -1,21 +1,18 @@
 /**
  * @file safety_checker.hpp
- * @brief 안전 검사 모듈 — 곡률(curvature) 검사 및 속도 제한
+ * @brief 안전 검사 모듈 — 곡률(curvature) 검사
  *
  * ──────────────────────────────────────────────────────────────
  * [목적]
- *   경로(path)의 기하학적 실현 가능성과 안전 속도를 판별한다.
+ *   경로(path)의 기하학적 실현 가능성을 판별한다.
  *
  *   1) Menger 곡률 공식으로 경로 상 최대 곡률(κ_max)을 계산한다.
  *   2) κ_max가 차량의 최소 회전 반경(r_min)으로 결정되는 한계 곡률을
  *      초과하면 → INFEASIBLE (물리적으로 추종 불가능한 경로).
- *   3) 곡률이 한계 내이면, 횡가속도(lateral acceleration) 제한으로부터
- *      안전 속도를 역산한다:  v = sqrt(a_lat_max / κ)
  *
  * [반환값]
- *   SafetyResult { state, target_speed, max_curvature, reason }
+ *   SafetyResult { state, max_curvature, reason }
  *     - state: OK / STOP / INFEASIBLE (PlannerState enum)
- *     - target_speed: 추종 가능한 최대 속도 [m/s]
  *     - max_curvature: 경로 상 최대 곡률 [1/m]
  *     - reason: 사람이 읽을 수 있는 판정 사유 문자열
  * ──────────────────────────────────────────────────────────────
@@ -42,14 +39,12 @@ namespace safety_checker
  * @brief 안전 검사 결과를 담는 구조체
  *
  * - state:          플래너 상태 (OK=정상, STOP=정지 필요, INFEASIBLE=물리적 불가)
- * - target_speed:   이 경로에서 허용 가능한 최대 속도 [m/s]
  * - max_curvature:  경로 전체에서 측정된 최대 곡률 [1/m]
  * - reason:         판정 사유를 설명하는 문자열 (로그/디버그용)
  */
 struct SafetyResult
 {
   PlannerState state = PlannerState::STOP;   ///< 기본값은 STOP (안전 최우선)
-  double target_speed = 0.0;                 ///< 목표 속도 [m/s]
   double max_curvature = 0.0;                ///< 경로 상 최대 곡률 [1/m]
   std::string reason;                        ///< 판정 사유 문자열
 };
@@ -150,14 +145,7 @@ inline double compute_max_curvature(const std::vector<Point2D> & path)
  *      - κ_max > κ_limit 이면 → INFEASIBLE
  *        (스티어링을 최대로 꺾어도 이 곡률을 따라갈 수 없다)
  *
- *   4) 횡가속도 기반 속도 제한:
- *      - 원운동에서:  a_lat = v² · κ
- *      - 허용 횡가속도 제한:  a_lat ≤ a_lat_max
- *      - 이를 v에 대해 풀면:  v ≤ sqrt(a_lat_max / κ)
- *      - 따라서 안전 속도:  v_curve = sqrt(a_lat_max / κ_max)
- *      - v_target = min(v_max, v_curve)
- *
- *   5) 최종 클램핑:  v_target을 [0, v_max] 범위로 제한
+ *   4) 곡률 검사 통과 → OK
  *
  * @param path  후처리 결과 (PostprocessResult)
  * @param p     플래너 파라미터 (차량 사양, 속도 제한 등)
@@ -174,7 +162,6 @@ inline SafetyResult check(
   if (!path.valid || path.path.size() < 2) {
     result.state = PlannerState::STOP;
     result.reason = "no_valid_path";
-    result.target_speed = 0.0;
     return result;
   }
 
@@ -190,28 +177,12 @@ inline SafetyResult check(
   // 경로의 최대 곡률이 한계를 초과하면 → 물리적으로 추종 불가능
   if (result.max_curvature > kappa_limit) {
     result.state = PlannerState::INFEASIBLE;
-    result.target_speed = 0.0;
     result.reason = "curvature_exceeds_r_min";
     return result;
   }
 
-  // ── 4) 횡가속도 기반 안전 속도 계산 ──
-  // 초기값: 최대 허용 속도
-  double v_target = p.speed.v_max;
-
-  // 곡률이 유의미한 크기(>1e-6)이면 속도 제한을 적용
-  // 원운동 공식: a_lat = v² * κ  →  v = sqrt(a_lat_max / κ)
-  // 이 속도를 초과하면 차가 미끄러진다 (타이어 그립 한계 초과)
-  if (result.max_curvature > 1e-6) {
-    const double v_curve = std::sqrt(p.speed.a_lat_max / result.max_curvature);
-    v_target = std::min(v_target, v_curve);
-  }
-
-  // ── 5) 최종 클램핑: [0, v_max] 범위로 제한 ──
-  v_target = std::max(0.0, std::min(v_target, p.speed.v_max));
-
+  // ── 4) 곡률 검사 통과 → OK ──
   result.state = PlannerState::OK;
-  result.target_speed = v_target;
   result.reason = "ok";
   return result;
 }
