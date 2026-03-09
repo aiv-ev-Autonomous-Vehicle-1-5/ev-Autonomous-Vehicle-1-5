@@ -116,6 +116,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/local_goal", qos_dbg);
   pub_dbg_obstacle_wall_ = create_publisher<visualization_msgs::msg::MarkerArray>(
     "/planning/debug/obstacle_wall", qos_dbg);
+  pub_dbg_curvature_ = create_publisher<visualization_msgs::msg::MarkerArray>(
+    "/planning/debug/curvature", qos_dbg);
 
   // ── 10Hz 타이머 ──
   // wall timer: 시뮬레이션 시간이 아닌 실제 시계(wall clock) 기준
@@ -359,7 +361,8 @@ void LCPlannerNode::on_timer()
     params_.postprocess.prune_max_dev,
     params_.postprocess.smooth_window,
     params_.postprocess.resample_ds,
-    1.0 / params_.vehicle.r_min());  // kappa_max = 1/R_min
+    1.0 / params_.vehicle.r_min(),  // kappa_max = 1/R_min
+    params_.postprocess.curvature_clamp_max_iter);
 
   // ======== Stage 6: Safety Check ========
   // Menger 곡률 공식으로 후처리된 경로의 최대 곡률(κ_max)을 계산하고:
@@ -372,6 +375,16 @@ void LCPlannerNode::on_timer()
     RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 1000,
       "[Planner] OK — path:%zu pts, speed=%.2f m/s",
       pp_result.path.size(), safety.target_speed);
+  } else if (safety.reason == "curvature_exceeds_r_min") {
+    const double r_min = params_.vehicle.r_min();
+    const double kappa_limit = 1.0 / r_min;
+    const double r_actual = (safety.max_curvature > 1e-6) ? 1.0 / safety.max_curvature : 999.0;
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 1000,
+      "[Planner] FAIL — curvature_exceeds_r_min: "
+      "kappa=%.3f (r=%.2fm) > limit=%.3f (r_min=%.2fm, delta_max=%.1f°)",
+      safety.max_curvature, r_actual,
+      kappa_limit, r_min,
+      params_.vehicle.delta_max * 180.0 / M_PI);
   } else {
     RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 1000,
       "[Planner] FAIL — %s", safety.reason.c_str());
@@ -447,6 +460,67 @@ void LCPlannerNode::on_timer()
     }
     ma.markers.push_back(m);
     pub_dbg_obstacle_wall_->publish(
+      std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
+  }
+
+  // ── Debug: curvature (곡률 초과 지점 — 노란색 구) ──
+  if (pub_dbg_curvature_->get_subscription_count() > 0 && pp_result.path.size() >= 3) {
+    const double r_min = params_.vehicle.r_min();
+    const double kappa_limit = (r_min > 1e-6) ? (1.0 / r_min) : 1e6;
+
+    visualization_msgs::msg::MarkerArray ma;
+
+    // DELETEALL로 이전 프레임 마커 제거
+    visualization_msgs::msg::Marker del;
+    del.header.stamp = stamp;
+    del.header.frame_id = frame_id;
+    del.ns = "curvature_exceed";
+    del.id = -1;
+    del.action = visualization_msgs::msg::Marker::DELETEALL;
+    ma.markers.push_back(del);
+
+    int marker_id = 0;
+    for (size_t i = 0; i + 2 < pp_result.path.size(); ++i) {
+      const auto & a = pp_result.path[i];
+      const auto & b = pp_result.path[i + 1];
+      const auto & c = pp_result.path[i + 2];
+
+      const double ab = dist(a, b);
+      const double bc = dist(b, c);
+      const double ac = dist(a, c);
+      const double denom = ab * bc * ac;
+      if (denom < 1e-12) continue;
+
+      const Point2D ba = b - a;
+      const Point2D cb = c - b;
+      const double kappa = 2.0 * std::abs(cross2(ba, cb)) / denom;
+
+      if (kappa > kappa_limit) {
+        visualization_msgs::msg::Marker m;
+        m.header.stamp = stamp;
+        m.header.frame_id = frame_id;
+        m.ns = "curvature_exceed";
+        m.id = marker_id++;
+        m.type = visualization_msgs::msg::Marker::SPHERE;
+        m.action = visualization_msgs::msg::Marker::ADD;
+        m.pose.position.x = b.x;
+        m.pose.position.y = b.y;
+        m.pose.position.z = 0.15;
+        m.pose.orientation.w = 1.0;
+        m.scale.x = 0.15;
+        m.scale.y = 0.15;
+        m.scale.z = 0.15;
+        // 초과량에 따라 노란색→빨간색 그라데이션
+        const double ratio = std::min((kappa / kappa_limit - 1.0) * 2.0, 1.0);
+        m.color.r = 1.0f;
+        m.color.g = static_cast<float>(1.0 - ratio);  // 초과 많을수록 빨강
+        m.color.b = 0.0f;
+        m.color.a = 0.9f;
+        m.lifetime = rclcpp::Duration::from_seconds(0.2);
+        ma.markers.push_back(m);
+      }
+    }
+    pub_dbg_curvature_->publish(
       std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
   }
 

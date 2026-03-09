@@ -215,6 +215,11 @@ struct PlanningParams
     // 스무딩된 점이 원본 경로에서 이 거리 이상 벗어나면 제거.
     // 0.15m = 15cm. 스무딩이 과도하게 경로를 밀어낸 경우를 보정.
     double prune_max_dev = 0.15;
+
+    // [회] curvature_clamp 반복 횟수 상한.
+    // 곡률 초과 지점을 반복적으로 완화하는 최대 횟수.
+    // 30 = 대부분의 경우 10회 내로 수렴하지만, 급커브가 많으면 더 필요.
+    int curvature_clamp_max_iter = 30;
   } postprocess;
 
   // ============================================================
@@ -465,6 +470,7 @@ struct PlanningParams
     postprocess.resample_ds   = p("postprocess.resample_ds",   postprocess.resample_ds);
     postprocess.smooth_window = p("postprocess.smooth_window", postprocess.smooth_window);
     postprocess.prune_max_dev = p("postprocess.prune_max_dev", postprocess.prune_max_dev);
+    postprocess.curvature_clamp_max_iter = p("postprocess.curvature_clamp_max_iter", postprocess.curvature_clamp_max_iter);
 
     // ── SensorTf 파라미터 로드 ──
     // 주의: 코드 기본값(tf_x=0.7)과 yaml 값(tf_x=0.0)이 다를 수 있음.

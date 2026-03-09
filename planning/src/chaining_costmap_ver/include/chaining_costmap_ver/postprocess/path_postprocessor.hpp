@@ -94,7 +94,8 @@ public:
     double prune_max_dev,
     int smooth_window,
     double resample_ds,
-    double kappa_max = 0.0);
+    double kappa_max = 0.0,
+    int curvature_clamp_max_iter = 30);
 
 private:
   /**
@@ -156,7 +157,7 @@ private:
    * @return 곡률이 제한된 경로
    */
   static std::vector<Point2D> curvature_clamp(
-    const std::vector<Point2D> & pts, double kappa_max);
+    const std::vector<Point2D> & pts, double kappa_max, int max_iter = 30);
 };
 
 }  // namespace chaining_costmap_ver

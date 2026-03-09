@@ -252,55 +252,52 @@ std::vector<Point2D> PathPostprocessor::smooth(
 //
 // ============================================================================
 std::vector<Point2D> PathPostprocessor::curvature_clamp(
-  const std::vector<Point2D> & pts, double kappa_max)
+  const std::vector<Point2D> & pts, double kappa_max, int max_iter)
 {
   if (pts.size() < 3 || kappa_max <= 0.0) return pts;
 
   std::vector<Point2D> result = pts;
 
-  // 반복 적용 (수렴용)
-  for (int iter = 0; iter < 3; ++iter) {
+  for (int iter = 0; iter < max_iter; ++iter) {
+    int violations = 0;
+
     for (size_t i = 1; i + 1 < result.size(); ++i) {
       const auto & p0 = result[i - 1];
       const auto & p1 = result[i];
       const auto & p2 = result[i + 1];
 
-      // 벡터 a = P1 - P0, b = P2 - P0
       double ax = p1.x - p0.x, ay = p1.y - p0.y;
       double bx = p2.x - p0.x, by = p2.y - p0.y;
 
-      // 외적 (2D cross product) = 삼각형 면적의 2배
       double cross = ax * by - ay * bx;
       double area2 = std::abs(cross);
+      if (area2 < 1e-12) continue;
 
-      if (area2 < 1e-12) continue;  // 세 점이 일직선
-
-      // 변 길이
       double la = std::sqrt(ax * ax + ay * ay);
       double lb = std::sqrt(bx * bx + by * by);
-      double cx = p2.x - p1.x, cy = p2.y - p1.y;
-      double lc = std::sqrt(cx * cx + cy * cy);
-
+      double cx_v = p2.x - p1.x, cy_v = p2.y - p1.y;
+      double lc = std::sqrt(cx_v * cx_v + cy_v * cy_v);
       if (la < 1e-12 || lb < 1e-12 || lc < 1e-12) continue;
 
-      // Menger 곡률: kappa = 2 * |cross| / (la * lb * lc)
       double kappa = 2.0 * area2 / (la * lb * lc);
+      // 5% 마진을 두어 safety_checker 경계에서 FAIL 방지
+      if (kappa <= kappa_max * 0.95) continue;
 
-      if (kappa <= kappa_max) continue;
+      ++violations;
 
-      // 곡률 원 중심 방향 = P0→P2 중점에서 P1 방향과 수직
-      // 간소화: P1을 P0-P2 중점 방향으로 약간 이동
+      // P1을 P0-P2 중점 방향으로 이동하여 곡률을 낮춤
       double mx = (p0.x + p2.x) * 0.5;
       double my = (p0.y + p2.y) * 0.5;
 
-      // 이동 비율: 초과 곡률에 비례하되 보수적으로
-      double ratio = 1.0 - (kappa_max / kappa);
-      ratio = std::min(ratio, 0.5);  // 한 번에 최대 50%만 이동
+      // 이동 비율: 초과량에 비례, 한 번에 최대 70%
+      double ratio = 1.0 - 0.95*(kappa_max / kappa);
+      ratio = std::min(ratio, 0.7);
 
-      // P1을 중점(midpoint) 방향으로 이동
       result[i].x = p1.x + ratio * (mx - p1.x);
       result[i].y = p1.y + ratio * (my - p1.y);
     }
+
+    if (violations == 0) break;  // 모든 곡률이 한계 이내 → 수렴 완료
   }
 
   return result;
@@ -311,7 +308,8 @@ PostprocessResult PathPostprocessor::process(
   double prune_max_dev,
   int smooth_window,
   double resample_ds,
-  double kappa_max)
+  double kappa_max,
+  int curvature_clamp_max_iter)
 {
   PostprocessResult result;
 
@@ -334,7 +332,7 @@ PostprocessResult PathPostprocessor::process(
   //    Menger 곡률이 kappa_max를 초과하는 지점을 수정
   // ────────────────────────────────────────────
   if (kappa_max > 0.0) {
-    smoothed = curvature_clamp(smoothed, kappa_max);
+    smoothed = curvature_clamp(smoothed, kappa_max, curvature_clamp_max_iter);
   }
 
   // ────────────────────────────────────────────
@@ -349,7 +347,7 @@ PostprocessResult PathPostprocessor::process(
   // resample 후 curvature_clamp 재적용
   // resample의 lerp 보간 + 끝점 강제 추가가 새로운 급커브를 생성할 수 있으므로
   if (kappa_max > 0.0 && result.path.size() >= 3) {
-    result.path = curvature_clamp(result.path, kappa_max);
+    result.path = curvature_clamp(result.path, kappa_max, curvature_clamp_max_iter);
   }
 
   // 리샘플 결과가 2점 미만이면 yaw 계산 불가
