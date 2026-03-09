@@ -1,9 +1,0 @@
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/uninstall.dir
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/lidar_launch_uninstall.dir
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/test.dir
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/edit_cache.dir
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/rebuild_cache.dir
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/list_install_components.dir
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/install.dir
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/install/local.dir
-/home/aiv/ev_ws/perception/build/lidar_launch/CMakeFiles/install/strip.dir

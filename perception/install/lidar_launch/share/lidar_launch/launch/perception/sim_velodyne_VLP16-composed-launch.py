@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar_launch/launch/perception/sim_velodyne_VLP16-composed-launch.py

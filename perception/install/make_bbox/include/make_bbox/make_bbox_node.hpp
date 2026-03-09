@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar/make_bbox/include/make_bbox/make_bbox_node.hpp

@@ -1,4 +1,0 @@
-/home/aiv/ev_ws/perception/install/velodyne_driver/lib/libvelodyne_input.so
-/home/aiv/ev_ws/perception/install/velodyne_driver/lib/libvelodyne_driver.so
-/home/aiv/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverExport.cmake
-/home/aiv/ev_ws/perception/install/velodyne_driver/share/velodyne_driver/cmake/velodyne_driverExport-noconfig.cmake

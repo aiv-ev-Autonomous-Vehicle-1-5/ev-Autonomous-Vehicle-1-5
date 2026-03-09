@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar/dbscan_clustering/launch/dbscan_clustering.launch.py

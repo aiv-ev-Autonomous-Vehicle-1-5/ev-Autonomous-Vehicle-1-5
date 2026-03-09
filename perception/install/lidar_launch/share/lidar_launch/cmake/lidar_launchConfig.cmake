@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/build/lidar_launch/ament_cmake_core/lidar_launchConfig.cmake

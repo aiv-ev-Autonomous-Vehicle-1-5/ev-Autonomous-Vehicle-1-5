@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/src/lidar/lidar_voxel_grid/launch/voxel_grid.launch.py

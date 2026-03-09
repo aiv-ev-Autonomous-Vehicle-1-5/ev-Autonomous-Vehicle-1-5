@@ -1,1 +1,0 @@
-/home/aiv/ev_ws/perception/build/velodyne_cropbox/ament_cmake_environment_hooks/local_setup.zsh
