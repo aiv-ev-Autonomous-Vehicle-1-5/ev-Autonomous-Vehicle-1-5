@@ -310,10 +310,10 @@ message(STATUS "Execute custom install script")
 
 # begin of custom install code
 
-# install("TARGETS" "dbscan_node" "DESTINATION" "lib/dbscan_clustering")
+# install("TARGETS" "dbscan_component" "dbscan_gpu" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
 include("/home/aiv/ev_ws/perception/build/dbscan_clustering/ament_cmake_symlink_install_targets_0_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
-# install("TARGETS" "dbscan_component" "dbscan_gpu" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "bin")
+# install("TARGETS" "dbscan_node" "DESTINATION" "lib/dbscan_clustering")
 include("/home/aiv/ev_ws/perception/build/dbscan_clustering/ament_cmake_symlink_install_targets_1_${CMAKE_INSTALL_CONFIG_NAME}.cmake")
 
 # install(DIRECTORY "launch" "config" "DESTINATION" "share/dbscan_clustering/")

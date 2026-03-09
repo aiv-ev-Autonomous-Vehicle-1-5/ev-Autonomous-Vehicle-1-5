@@ -1,0 +1,32 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from erp42_msgs/srv/ModeCommand.srv
+// generated code does not contain a copyright notice
+
+
+module erp42_msgs {
+  module srv {
+    module ModeCommand_Request_Constants {
+      @verbatim (language="comment", text=
+        "Gear (Drive / Neutral / Reverse)")
+      const uint8 GEAR_DRIVE = 0;
+      const uint8 GEAR_NEUTRAL = 1;
+      const uint8 GEAR_REVERSE = 2;
+    };
+    @verbatim (language="comment", text=
+      "erp42_msgs/srv/ModeCommand.srv")
+    struct ModeCommand_Request {
+      @verbatim (language="comment", text=
+        "Control mode (Manual / Auto)")
+      boolean manual_mode;
+
+      @verbatim (language="comment", text=
+        "Emergency stop (ON / OFF)")
+      boolean emergency_stop;
+
+      uint8 gear;
+    };
+    struct ModeCommand_Response {
+      boolean success;
+    };
+  };
+};

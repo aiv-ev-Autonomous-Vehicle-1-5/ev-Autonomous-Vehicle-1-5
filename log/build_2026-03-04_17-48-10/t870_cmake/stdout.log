@@ -1,0 +1,25 @@
+-- Found ament_cmake_auto: 1.3.12 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/aiv/ev_ws/build/t870_cmake
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/cmake/t870_cmake_config_extras.cmake
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/ament_index/resource_index/package_run_dependencies/t870_cmake
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/ament_index/resource_index/parent_prefix_path/t870_cmake
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/environment/ament_prefix_path.sh
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/environment/ament_prefix_path.dsv
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/environment/path.sh
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/environment/path.dsv
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/local_setup.bash
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/local_setup.sh
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/local_setup.zsh
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/local_setup.dsv
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/package.dsv
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/ament_index/resource_index/packages/t870_cmake
+-- Up-to-date symlink: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/cmake/t870_cmake_config_extras.cmake
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/cmake/t870_cmakeConfig.cmake
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/cmake/t870_cmakeConfig-version.cmake
+-- Symlinking: /home/aiv/ev_ws/install/t870_cmake/share/t870_cmake/package.xml

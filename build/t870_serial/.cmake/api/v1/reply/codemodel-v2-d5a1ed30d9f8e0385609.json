@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-8b24678963386bf6034c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "t870_serial",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "serial_bridge::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-serial_bridge-fd1e03a7f18290f5ef94.json",
+					"name" : "serial_bridge",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "serial_bridge_composable::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-serial_bridge_composable-507093dd3e2bb073414b.json",
+					"name" : "serial_bridge_composable",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "t870_serial::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-t870_serial-24f0c448869b495b4064.json",
+					"name" : "t870_serial",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "t870_serial_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-t870_serial_uninstall-d8e27ee39c928a9741e5.json",
+					"name" : "t870_serial_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-afd47c6334b2ca2b4607.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/aiv/ev_ws/build/t870_serial",
+		"source" : "/home/aiv/ev_ws/t870_ros/src/t870_serial"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

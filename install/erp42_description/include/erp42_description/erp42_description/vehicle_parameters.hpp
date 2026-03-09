@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/erp42_ros/src/erp42_description/include/erp42_description/vehicle_parameters.hpp

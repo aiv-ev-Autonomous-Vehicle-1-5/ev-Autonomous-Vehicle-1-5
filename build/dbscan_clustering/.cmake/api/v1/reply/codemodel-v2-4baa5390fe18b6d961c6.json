@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-333cd0a6d2fb1528d49a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "dbscan_clustering",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_clustering_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_clustering_uninstall-616668739559e1d15987.json",
+					"name" : "dbscan_clustering_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_component::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_component-be26dbceebbcb6b67a63.json",
+					"name" : "dbscan_component",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_gpu::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_gpu-67ae366c5924ab665ed9.json",
+					"name" : "dbscan_gpu",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_node-65d9d303a1b4ecf7fff8.json",
+					"name" : "dbscan_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-a44c72881c79364945fd.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/aiv/ev_ws/build/dbscan_clustering",
+		"source" : "/home/aiv/ev_ws/perception/src/lidar/dbscan_clustering"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

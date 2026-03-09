@@ -198,19 +198,6 @@ dbscan_clustering_uninstall/fast:
 .PHONY : dbscan_clustering_uninstall/fast
 
 #=============================================================================
-# Target rules for targets named dbscan_gpu
-
-# Build rule for target.
-dbscan_gpu: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dbscan_gpu
-.PHONY : dbscan_gpu
-
-# fast build rule for target.
-dbscan_gpu/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/dbscan_gpu.dir/build.make CMakeFiles/dbscan_gpu.dir/build
-.PHONY : dbscan_gpu/fast
-
-#=============================================================================
 # Target rules for targets named dbscan_component
 
 # Build rule for target.
@@ -222,6 +209,19 @@ dbscan_component: cmake_check_build_system
 dbscan_component/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dbscan_component.dir/build.make CMakeFiles/dbscan_component.dir/build
 .PHONY : dbscan_component/fast
+
+#=============================================================================
+# Target rules for targets named dbscan_gpu
+
+# Build rule for target.
+dbscan_gpu: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dbscan_gpu
+.PHONY : dbscan_gpu
+
+# fast build rule for target.
+dbscan_gpu/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dbscan_gpu.dir/build.make CMakeFiles/dbscan_gpu.dir/build
+.PHONY : dbscan_gpu/fast
 
 #=============================================================================
 # Target rules for targets named dbscan_node

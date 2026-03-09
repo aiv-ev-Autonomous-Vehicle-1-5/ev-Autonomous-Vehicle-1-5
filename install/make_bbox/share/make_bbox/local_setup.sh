@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/build/make_bbox/ament_cmake_environment_hooks/local_setup.sh

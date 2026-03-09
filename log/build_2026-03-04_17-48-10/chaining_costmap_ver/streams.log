@@ -1,0 +1,108 @@
+[0.011s] Invoking command in '/home/aiv/ev_ws/build/chaining_costmap_ver': AMENT_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_costmap_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/aiv/ev_ws/planning/src/chaining_costmap_ver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/install/chaining_costmap_ver
+[0.049s] -- The C compiler identification is GNU 11.4.0
+[0.087s] -- The CXX compiler identification is GNU 11.4.0
+[0.093s] -- Detecting C compiler ABI info
+[0.150s] -- Detecting C compiler ABI info - done
+[0.157s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.157s] -- Detecting C compile features
+[0.157s] -- Detecting C compile features - done
+[0.160s] -- Detecting CXX compiler ABI info
+[0.227s] -- Detecting CXX compiler ABI info - done
+[0.234s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.234s] -- Detecting CXX compile features
+[0.234s] -- Detecting CXX compile features - done
+[0.238s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.345s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.405s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.435s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.472s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.477s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.484s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.494s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.508s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.547s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.550s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.617s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.640s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.679s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.690s] -- Looking for pthread.h
+[0.752s] -- Looking for pthread.h - found
+[0.752s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.807s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.807s] -- Found Threads: TRUE  
+[0.854s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.885s] -- Found nav_msgs: 4.9.0 (/opt/ros/humble/share/nav_msgs/cmake)
+[0.915s] -- Found ev_msgs: 0.1.0 (/home/aiv/ev_ws/install/ev_msgs/share/ev_msgs/cmake)
+[0.932s] -- Found visualization_msgs: 4.9.0 (/opt/ros/humble/share/visualization_msgs/cmake)
+[0.988s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.111s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.111s] -- Configured cppcheck include dirs: /home/aiv/ev_ws/planning/src/chaining_costmap_ver/include
+[1.111s] -- Configured cppcheck exclude dirs and/or files: 
+[1.117s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.118s] -- Added test 'lint_cmake' to check CMake code style
+[1.118s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.120s] -- Added test 'uncrustify' to check C / C++ code style
+[1.120s] -- Configured uncrustify additional arguments: 
+[1.121s] -- Added test 'xmllint' to check XML markup files
+[1.126s] -- Configuring done
+[1.155s] -- Generating done
+[1.160s] -- Build files have been written to: /home/aiv/ev_ws/build/chaining_costmap_ver
+[1.172s] Invoked command in '/home/aiv/ev_ws/build/chaining_costmap_ver' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_costmap_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/aiv/ev_ws/planning/src/chaining_costmap_ver -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/install/chaining_costmap_ver
+[1.172s] Invoking command in '/home/aiv/ev_ws/build/chaining_costmap_ver': AMENT_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_costmap_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/build/chaining_costmap_ver -- -j28 -l28
+[1.222s] [  8%] [32mBuilding CXX object CMakeFiles/lc_planner_node_exe.dir/rclcpp_components/node_main_lc_planner_node_exe.cpp.o[0m
+[1.230s] [ 16%] [32mBuilding CXX object CMakeFiles/chaining_costmap_chainer.dir/src/chainer/direction_chainer.cpp.o[0m
+[1.230s] [ 25%] [32mBuilding CXX object CMakeFiles/chaining_costmap_astar.dir/src/planner/astar_planner.cpp.o[0m
+[1.230s] [ 33%] [32mBuilding CXX object CMakeFiles/chaining_costmap_costmap.dir/src/costmap/costmap_generator.cpp.o[0m
+[1.235s] [ 41%] [32mBuilding CXX object CMakeFiles/chaining_costmap_postprocess.dir/src/postprocess/path_postprocessor.cpp.o[0m
+[1.763s] [ 50%] [32m[1mLinking CXX shared library libchaining_costmap_postprocess.so[0m
+[1.926s] [ 50%] Built target chaining_costmap_postprocess
+[4.425s] [ 58%] [32m[1mLinking CXX shared library libchaining_costmap_astar.so[0m
+[4.653s] [ 58%] Built target chaining_costmap_astar
+[4.907s] [ 66%] [32m[1mLinking CXX shared library libchaining_costmap_costmap.so[0m
+[5.058s] [ 66%] Built target chaining_costmap_costmap
+[5.167s] [ 75%] [32m[1mLinking CXX shared library libchaining_costmap_chainer.so[0m
+[5.285s] [ 83%] [32m[1mLinking CXX executable lc_planner_node_exe[0m
+[5.307s] [ 83%] Built target chaining_costmap_chainer
+[5.331s] [ 91%] [32mBuilding CXX object CMakeFiles/lc_planner_component.dir/src/nodes/chaining_costmap_ver_node.cpp.o[0m
+[5.443s] [ 91%] Built target lc_planner_node_exe
+[13.630s] [100%] [32m[1mLinking CXX shared library liblc_planner_component.so[0m
+[14.002s] [100%] Built target lc_planner_component
+[14.008s] Invoked command in '/home/aiv/ev_ws/build/chaining_costmap_ver' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_costmap_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/aiv/ev_ws/build/chaining_costmap_ver -- -j28 -l28
+[14.009s] Invoking command in '/home/aiv/ev_ws/build/chaining_costmap_ver': AMENT_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_costmap_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/build/chaining_costmap_ver
+[14.012s] -- Install configuration: ""
+[14.012s] -- Execute custom install script
+[14.013s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/lib/libchaining_costmap_chainer.so
+[14.019s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/lib/libchaining_costmap_costmap.so
+[14.025s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/lib/libchaining_costmap_astar.so
+[14.032s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/lib/libchaining_costmap_postprocess.so
+[14.038s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/lib/chaining_costmap_ver/lc_planner_node_exe
+[14.044s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/lib/liblc_planner_component.so
+[14.051s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/chainer/direction_chainer.hpp
+[14.057s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/common/debug_publish.hpp
+[14.061s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/common/geometry.hpp
+[14.066s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/common/params.hpp
+[14.072s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/common/types.hpp
+[14.078s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/costmap/costmap_generator.hpp
+[14.084s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/nodes/chaining_costmap_ver_node.hpp
+[14.089s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/planner/astar_planner.hpp
+[14.093s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/postprocess/path_postprocessor.hpp
+[14.098s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/include/chaining_costmap_ver/safety/safety_checker.hpp
+[14.105s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/config/chaining_costmap_ver.yaml
+[14.111s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/launch/chaining_costmap_ver.launch.py
+[14.116s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/ament_index/resource_index/package_run_dependencies/chaining_costmap_ver
+[14.122s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/ament_index/resource_index/parent_prefix_path/chaining_costmap_ver
+[14.127s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/ament_prefix_path.sh
+[14.133s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/ament_prefix_path.dsv
+[14.138s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/path.sh
+[14.144s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/environment/path.dsv
+[14.150s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.bash
+[14.156s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.sh
+[14.162s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.zsh
+[14.166s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/local_setup.dsv
+[14.171s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/package.dsv
+[14.177s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/ament_index/resource_index/packages/chaining_costmap_ver
+[14.183s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/ament_index/resource_index/rclcpp_components/chaining_costmap_ver
+[14.188s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/cmake/chaining_costmap_verConfig.cmake
+[14.192s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/cmake/chaining_costmap_verConfig-version.cmake
+[14.198s] -- Symlinking: /home/aiv/ev_ws/install/chaining_costmap_ver/share/chaining_costmap_ver/package.xml
+[14.206s] Invoked command in '/home/aiv/ev_ws/build/chaining_costmap_ver' returned '0': AMENT_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/aiv/ev_ws/install/ev_msgs:/home/aiv/ev_ws/carsa_gazebo/install/carsa_gazebo:/home/aiv/ev_ws/planning/install/chaining_costmap_ver:/home/aiv/ev_ws/ev_msgs/install/ev_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_serial:/home/aiv/ev_ws/erp42_ros/install/erp42_rqt_plugin:/home/aiv/ev_ws/erp42_ros/install/erp42_gazebo:/home/aiv/ev_ws/erp42_ros/install/erp42_util:/home/aiv/ev_ws/erp42_ros/install/erp42_msgs:/home/aiv/ev_ws/erp42_ros/install/erp42_description:/home/aiv/ev_ws/erp42_ros/install/erp42_cmake:/home/aiv/ev_ws/perception/install/velodyne:/home/aiv/ev_ws/perception/install/lidar_launch:/home/aiv/ev_ws/perception/install/velodyne_pointcloud:/home/aiv/ev_ws/perception/install/velodyne_driver:/home/aiv/ev_ws/perception/install/velodyne_msgs:/home/aiv/ev_ws/perception/install/velodyne_cropbox:/home/aiv/ev_ws/perception/install/patchworkpp:/home/aiv/ev_ws/perception/install/make_bbox:/home/aiv/ev_ws/perception/install/lidar_voxel_grid:/home/aiv/ev_ws/perception/install/dbscan_clustering:/home/aiv/ev_ws/perception/install/cluster_splitter:/opt/ros/humble LD_LIBRARY_PATH=/home/aiv/ev_ws/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/aiv/ev_ws/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/aiv/ev_ws/build/chaining_costmap_ver

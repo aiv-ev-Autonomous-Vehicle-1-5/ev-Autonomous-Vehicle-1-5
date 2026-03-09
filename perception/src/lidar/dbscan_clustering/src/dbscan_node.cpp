@@ -8,7 +8,11 @@
 #include <string>
 #include <vector>
 
-#include "dbscan_clustering/dbscan_gpu.cuh"
+#ifdef DBSCAN_USE_CUDA
+  #include "dbscan_clustering/dbscan_gpu.cuh"
+#else
+  #include "dbscan_clustering/dbscan_cpu.hpp"
+#endif
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/point_cloud2.hpp"
 #include "sensor_msgs/msg/point_field.hpp"
@@ -83,6 +87,12 @@ public:
       roi_min_x_, roi_max_x_, roi_min_y_, roi_max_y_, roi_min_z_, roi_max_z_,
       enable_azimuth_ground_suppression_ ? "on" : "off",
       cluster_xy_only_ ? "on" : "off");
+
+#ifdef DBSCAN_USE_CUDA
+    RCLCPP_INFO(get_logger(), "Neighbor search: GPU (CUDA)");
+#else
+    RCLCPP_INFO(get_logger(), "Neighbor search: CPU (nanoflann KD-Tree)");
+#endif
   }
 
 private:
@@ -262,7 +272,11 @@ private:
     }
     std::vector<int> neighbors(static_cast<size_t>(m) * static_cast<size_t>(max_neighbors_), -1);
     std::vector<int> neighbor_counts(static_cast<size_t>(m), 0);
+#ifdef DBSCAN_USE_CUDA
     dbscan_gpu_query_neighbors(
+#else
+    dbscan_cpu_query_neighbors(
+#endif
       xyz.data(), m, static_cast<float>(eps_), max_neighbors_,
       neighbors.data(), neighbor_counts.data());
 

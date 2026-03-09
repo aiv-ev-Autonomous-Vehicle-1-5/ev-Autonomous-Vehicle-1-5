@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/perception/src/lidar/velodyne/launch/velodyne-all-nodes-VLP32C-composed-launch.py

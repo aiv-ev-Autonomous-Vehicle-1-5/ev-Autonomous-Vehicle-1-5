@@ -1,0 +1,12 @@
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/uninstall.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/erp42_serial_uninstall.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/erp42_serial.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/serial_bridge_composable.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/serial_bridge.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/test.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/edit_cache.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/rebuild_cache.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/list_install_components.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/install.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/install/local.dir
+/home/aiv/ev_ws/build/erp42_serial/CMakeFiles/install/strip.dir

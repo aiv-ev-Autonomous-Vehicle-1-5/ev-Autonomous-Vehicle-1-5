@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/build/lidar_launch/ament_cmake_environment_hooks/local_setup.bash

@@ -1,0 +1,2 @@
+# Hashes of file build rules.
+d3fb07393651eacbbdb3ba191443ca40 CMakeFiles/erp42_serial_uninstall

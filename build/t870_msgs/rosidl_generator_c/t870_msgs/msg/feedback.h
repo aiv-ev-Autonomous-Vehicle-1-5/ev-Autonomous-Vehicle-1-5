@@ -1,0 +1,12 @@
+// generated from rosidl_generator_c/resource/idl.h.em
+// with input from t870_msgs:msg/Feedback.idl
+// generated code does not contain a copyright notice
+
+#ifndef T870_MSGS__MSG__FEEDBACK_H_
+#define T870_MSGS__MSG__FEEDBACK_H_
+
+#include "t870_msgs/msg/detail/feedback__struct.h"
+#include "t870_msgs/msg/detail/feedback__functions.h"
+#include "t870_msgs/msg/detail/feedback__type_support.h"
+
+#endif  // T870_MSGS__MSG__FEEDBACK_H_

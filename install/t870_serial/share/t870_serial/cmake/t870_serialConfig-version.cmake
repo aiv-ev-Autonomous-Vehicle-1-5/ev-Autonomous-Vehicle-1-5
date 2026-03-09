@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/build/t870_serial/ament_cmake_core/t870_serialConfig-version.cmake

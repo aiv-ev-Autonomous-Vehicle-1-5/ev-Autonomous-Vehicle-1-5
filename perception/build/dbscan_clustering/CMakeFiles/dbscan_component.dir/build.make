@@ -92,13 +92,13 @@ dbscan_component_EXTERNAL_OBJECTS =
 
 libdbscan_component.so: CMakeFiles/dbscan_component.dir/src/dbscan_node.cpp.o
 libdbscan_component.so: CMakeFiles/dbscan_component.dir/build.make
-libdbscan_component.so: libdbscan_gpu.so
 libdbscan_component.so: /opt/ros/humble/lib/libcomponent_manager.so
 libdbscan_component.so: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_fastrtps_c.so
 libdbscan_component.so: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_fastrtps_cpp.so
 libdbscan_component.so: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_introspection_c.so
 libdbscan_component.so: /opt/ros/humble/lib/libsensor_msgs__rosidl_typesupport_introspection_cpp.so
 libdbscan_component.so: /opt/ros/humble/lib/libsensor_msgs__rosidl_generator_py.so
+libdbscan_component.so: libdbscan_gpu.so
 libdbscan_component.so: /opt/ros/humble/lib/librclcpp.so
 libdbscan_component.so: /opt/ros/humble/lib/liblibstatistics_collector.so
 libdbscan_component.so: /opt/ros/humble/lib/librcl.so

@@ -1,6 +1,6 @@
-/home/aiv/ev_ws/perception/install/dbscan_clustering/lib/dbscan_clustering/dbscan_node
 /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/libdbscan_component.so
 /home/aiv/ev_ws/perception/install/dbscan_clustering/lib/libdbscan_gpu.so
+/home/aiv/ev_ws/perception/install/dbscan_clustering/lib/dbscan_clustering/dbscan_node
 /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering//launch/dbscan_clustering.launch.py
 /home/aiv/ev_ws/perception/install/dbscan_clustering/share/dbscan_clustering//config/dbscan_params.yaml
 /home/aiv/ev_ws/perception/install/dbscan_clustering/share/ament_index/resource_index/package_run_dependencies/dbscan_clustering

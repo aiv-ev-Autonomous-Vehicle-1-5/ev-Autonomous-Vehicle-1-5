@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/build/erp42_gazebo/ament_cmake_environment_hooks/local_setup.sh

@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/build/t870_msgs/rosidl_generator_py/t870_msgs/srv/_mode_command.py

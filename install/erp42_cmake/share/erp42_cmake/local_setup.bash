@@ -1,0 +1,1 @@
+/home/aiv/ev_ws/build/erp42_cmake/ament_cmake_environment_hooks/local_setup.bash

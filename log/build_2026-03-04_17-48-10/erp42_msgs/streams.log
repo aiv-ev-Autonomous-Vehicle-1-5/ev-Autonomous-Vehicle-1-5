@@ -1,0 +1,258 @@
+[0.025s] Invoking command in '/home/aiv/ev_ws/build/erp42_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/erp42_ros/src/erp42_msgs -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/install/erp42_msgs
+[0.059s] -- The C compiler identification is GNU 11.4.0
+[0.091s] -- The CXX compiler identification is GNU 11.4.0
+[0.097s] -- Detecting C compiler ABI info
+[0.136s] -- Detecting C compiler ABI info - done
+[0.142s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.142s] -- Detecting C compile features
+[0.143s] -- Detecting C compile features - done
+[0.145s] -- Detecting CXX compiler ABI info
+[0.202s] -- Detecting CXX compiler ABI info - done
+[0.208s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.208s] -- Detecting CXX compile features
+[0.209s] -- Detecting CXX compile features - done
+[0.212s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.315s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.351s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.389s] -- Found std_msgs: 4.9.0 (/opt/ros/humble/share/std_msgs/cmake)
+[0.412s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.415s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.422s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.428s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.439s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.454s] -- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[0.629s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[0.869s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.961s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.980s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") 
+[0.983s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[1.002s] -- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") 
+[1.002s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[1.002s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+[1.002s] -- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+[1.016s] -- Found PythonExtra: .so  
+[1.070s] -- Configuring done
+[1.097s] -- Generating done
+[1.107s] -- Build files have been written to: /home/aiv/ev_ws/build/erp42_msgs
+[1.114s] Invoked command in '/home/aiv/ev_ws/build/erp42_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake /home/aiv/ev_ws/erp42_ros/src/erp42_msgs -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/aiv/ev_ws/install/erp42_msgs
+[1.116s] Invoking command in '/home/aiv/ev_ws/build/erp42_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/build/erp42_msgs -- -j28 -l28
+[1.148s] [  2%] [34m[1mGenerating C code for ROS interfaces[0m
+[1.154s] [  4%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[1.162s] [  4%] Built target ament_cmake_python_symlink_erp42_msgs
+[1.347s] running egg_info
+[1.348s] creating erp42_msgs.egg-info
+[1.348s] writing erp42_msgs.egg-info/PKG-INFO
+[1.348s] writing dependency_links to erp42_msgs.egg-info/dependency_links.txt
+[1.348s] writing top-level names to erp42_msgs.egg-info/top_level.txt
+[1.348s] writing manifest file 'erp42_msgs.egg-info/SOURCES.txt'
+[1.351s] reading manifest file 'erp42_msgs.egg-info/SOURCES.txt'
+[1.351s] writing manifest file 'erp42_msgs.egg-info/SOURCES.txt'
+[1.377s] [  4%] Built target ament_cmake_python_build_erp42_msgs_egg
+[1.662s] [  4%] Built target erp42_msgs__cpp
+[1.672s] [ 17%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[1.672s] [ 17%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_c.dir/rosidl_generator_c/erp42_msgs/srv/detail/mode_command__functions.c.o[0m
+[1.673s] [ 17%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_c.dir/rosidl_generator_c/erp42_msgs/msg/detail/control_command__functions.c.o[0m
+[1.673s] [ 17%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[1.673s] [ 17%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[1.673s] [ 17%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_c.dir/rosidl_generator_c/erp42_msgs/msg/detail/feedback__functions.c.o[0m
+[1.732s] [ 19%] [32m[1mLinking C shared library liberp42_msgs__rosidl_generator_c.so[0m
+[1.782s] [ 19%] Built target erp42_msgs__rosidl_generator_c
+[1.796s] [ 21%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[1.805s] [ 23%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[1.807s] [ 25%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[2.194s] [ 27%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/erp42_msgs/msg/detail/control_command__type_support.cpp.o[0m
+[2.195s] [ 29%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/erp42_msgs/msg/detail/feedback__type_support.cpp.o[0m
+[2.207s] [ 31%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/erp42_msgs/srv/detail/mode_command__type_support.cpp.o[0m
+[2.218s] [ 34%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/erp42_msgs/srv/mode_command__type_support.cpp.o[0m
+[2.226s] [ 36%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/erp42_msgs/msg/control_command__type_support.cpp.o[0m
+[2.229s] [ 38%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/erp42_msgs/msg/feedback__type_support.cpp.o[0m
+[2.322s] [ 40%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/erp42_msgs/msg/detail/dds_fastrtps/feedback__type_support.cpp.o[0m
+[2.325s] [ 42%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/erp42_msgs/msg/detail/dds_fastrtps/control_command__type_support.cpp.o[0m
+[2.332s] [ 44%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/erp42_msgs/srv/detail/dds_fastrtps/mode_command__type_support.cpp.o[0m
+[2.397s] [ 46%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/erp42_msgs/msg/detail/control_command__type_support_c.cpp.o[0m
+[2.404s] [ 48%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/erp42_msgs/srv/detail/mode_command__type_support_c.cpp.o[0m
+[2.407s] [ 51%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/erp42_msgs/msg/detail/feedback__type_support_c.cpp.o[0m
+[2.717s] [ 53%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/erp42_msgs/msg/control_command__type_support.cpp.o[0m
+[2.718s] [ 55%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/erp42_msgs/msg/feedback__type_support.cpp.o[0m
+[2.719s] [ 57%] [32mBuilding CXX object CMakeFiles/erp42_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/erp42_msgs/srv/mode_command__type_support.cpp.o[0m
+[2.766s] [ 59%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_c.so[0m
+[2.828s] [ 61%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/erp42_msgs/msg/detail/control_command__type_support.c.o[0m
+[2.831s] [ 63%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/erp42_msgs/msg/detail/feedback__type_support.c.o[0m
+[2.839s] [ 65%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/erp42_msgs/srv/detail/mode_command__type_support.c.o[0m
+[2.840s] [ 65%] Built target erp42_msgs__rosidl_typesupport_c
+[2.863s] [ 68%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_cpp.so[0m
+[2.875s] [ 70%] [32m[1mLinking C shared library liberp42_msgs__rosidl_typesupport_introspection_c.so[0m
+[2.907s] [ 70%] Built target erp42_msgs__rosidl_typesupport_introspection_c
+[2.907s] [ 70%] Built target erp42_msgs__rosidl_typesupport_cpp
+[2.919s] [ 72%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[2.940s] [ 74%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_fastrtps_c.so[0m
+[2.977s] [ 74%] Built target erp42_msgs__rosidl_typesupport_introspection_cpp
+[2.993s] [ 74%] Built target erp42_msgs__rosidl_typesupport_fastrtps_c
+[3.016s] [ 76%] [32m[1mLinking CXX shared library liberp42_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[3.071s] [ 76%] Built target erp42_msgs__rosidl_typesupport_fastrtps_cpp
+[3.089s] [ 76%] Built target erp42_msgs
+[3.106s] [ 78%] [34m[1mGenerating Python code for ROS interfaces[0m
+[3.758s] [ 78%] Built target erp42_msgs__py
+[3.775s] [ 80%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_py.dir/rosidl_generator_py/erp42_msgs/srv/_mode_command_s.c.o[0m
+[3.776s] [ 82%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_py.dir/rosidl_generator_py/erp42_msgs/msg/_feedback_s.c.o[0m
+[3.777s] [ 85%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_generator_py.dir/rosidl_generator_py/erp42_msgs/msg/_control_command_s.c.o[0m
+[3.861s] [ 87%] [32m[1mLinking C shared library rosidl_generator_py/erp42_msgs/liberp42_msgs__rosidl_generator_py.so[0m
+[3.895s] [ 87%] Built target erp42_msgs__rosidl_generator_py
+[3.912s] [ 89%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[3.914s] [ 93%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[3.914s] [ 93%] [32mBuilding C object CMakeFiles/erp42_msgs__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_c.c.o[0m
+[3.983s] [ 95%] [32m[1mLinking C shared library rosidl_generator_py/erp42_msgs/erp42_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so[0m
+[4.004s] [ 97%] [32m[1mLinking C shared library rosidl_generator_py/erp42_msgs/erp42_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so[0m
+[4.005s] [100%] [32m[1mLinking C shared library rosidl_generator_py/erp42_msgs/erp42_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so[0m
+[4.015s] [100%] Built target erp42_msgs__rosidl_typesupport_fastrtps_c__pyext
+[4.030s] [100%] Built target erp42_msgs__rosidl_typesupport_c__pyext
+[4.034s] [100%] Built target erp42_msgs__rosidl_typesupport_introspection_c__pyext
+[4.043s] Invoked command in '/home/aiv/ev_ws/build/erp42_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/aiv/ev_ws/build/erp42_msgs -- -j28 -l28
+[4.044s] Invoking command in '/home/aiv/ev_ws/build/erp42_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/build/erp42_msgs
+[4.051s] -- Install configuration: ""
+[4.051s] -- Execute custom install script
+[4.051s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/ament_index/resource_index/rosidl_interfaces/erp42_msgs
+[4.060s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/control_command.h
+[4.067s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__functions.h
+[4.075s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__struct.h
+[4.083s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__type_support.h
+[4.088s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__functions.h
+[4.095s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__struct.h
+[4.101s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__type_support.h
+[4.109s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/feedback.h
+[4.116s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/rosidl_generator_c__visibility_control.h
+[4.123s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__functions.h
+[4.131s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__struct.h
+[4.139s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__type_support.h
+[4.148s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/mode_command.h
+[4.158s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/environment/library_path.sh
+[4.165s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/environment/library_path.dsv
+[4.171s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__rosidl_typesupport_fastrtps_c.h
+[4.176s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__rosidl_typesupport_fastrtps_c.h
+[4.183s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[4.190s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__rosidl_typesupport_fastrtps_c.h
+[4.197s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/control_command.hpp
+[4.202s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__builder.hpp
+[4.210s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__struct.hpp
+[4.216s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__traits.hpp
+[4.224s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__type_support.hpp
+[4.232s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__builder.hpp
+[4.240s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__struct.hpp
+[4.245s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__traits.hpp
+[4.251s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__type_support.hpp
+[4.258s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/feedback.hpp
+[4.263s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+[4.269s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__builder.hpp
+[4.275s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__struct.hpp
+[4.281s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__traits.hpp
+[4.288s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__type_support.hpp
+[4.294s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/mode_command.hpp
+[4.300s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__rosidl_typesupport_fastrtps_cpp.hpp
+[4.305s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__rosidl_typesupport_fastrtps_cpp.hpp
+[4.311s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[4.319s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__rosidl_typesupport_fastrtps_cpp.hpp
+[4.324s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__rosidl_typesupport_introspection_c.h
+[4.332s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__rosidl_typesupport_introspection_c.h
+[4.340s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[4.346s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__rosidl_typesupport_introspection_c.h
+[4.353s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/control_command__rosidl_typesupport_introspection_cpp.hpp
+[4.361s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/msg/detail/feedback__rosidl_typesupport_introspection_cpp.hpp
+[4.368s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/include/erp42_msgs/erp42_msgs/srv/detail/mode_command__rosidl_typesupport_introspection_cpp.hpp
+[4.375s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/environment/pythonpath.sh
+[4.381s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/environment/pythonpath.dsv
+[4.387s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs-0.0.0-py3.10.egg-info/PKG-INFO
+[4.392s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs-0.0.0-py3.10.egg-info/SOURCES.txt
+[4.399s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs-0.0.0-py3.10.egg-info/dependency_links.txt
+[4.405s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs-0.0.0-py3.10.egg-info/top_level.txt
+[4.414s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/__init__.py
+[4.422s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_c.c
+[4.430s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_fastrtps_c.c
+[4.438s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/_erp42_msgs_s.ep.rosidl_typesupport_introspection_c.c
+[4.446s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/erp42_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[4.453s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/erp42_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[4.458s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/erp42_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[4.467s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/liberp42_msgs__rosidl_generator_py.so
+[4.473s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg/__init__.py
+[4.479s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg/_control_command.py
+[4.485s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg/_control_command_s.c
+[4.491s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg/_feedback.py
+[4.498s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg/_feedback_s.c
+[4.506s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/srv/__init__.py
+[4.513s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/srv/_mode_command.py
+[4.520s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/srv/_mode_command_s.c
+[4.527s] -- Up-to-date symlink: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/erp42_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[4.527s] -- Up-to-date symlink: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/erp42_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[4.527s] -- Up-to-date symlink: /home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/erp42_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[4.527s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/msg/ControlCommand.idl
+[4.535s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/msg/Feedback.idl
+[4.541s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/srv/ModeCommand.idl
+[4.549s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/msg/ControlCommand.msg
+[4.555s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/msg/Feedback.msg
+[4.561s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/srv/ModeCommand.srv
+[4.570s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/srv/ModeCommand_Request.msg
+[4.577s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/srv/ModeCommand_Response.msg
+[4.582s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/ament_index/resource_index/package_run_dependencies/erp42_msgs
+[4.587s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/ament_index/resource_index/parent_prefix_path/erp42_msgs
+[4.595s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/environment/ament_prefix_path.sh
+[4.601s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/environment/ament_prefix_path.dsv
+[4.607s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/environment/path.sh
+[4.612s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/environment/path.dsv
+[4.619s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/local_setup.bash
+[4.625s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/local_setup.sh
+[4.631s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/local_setup.zsh
+[4.636s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/local_setup.dsv
+[4.642s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/package.dsv
+[4.648s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/ament_index/resource_index/packages/erp42_msgs
+[4.654s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/rosidl_cmake-extras.cmake
+[4.660s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/ament_cmake_export_dependencies-extras.cmake
+[4.667s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/ament_cmake_export_include_directories-extras.cmake
+[4.674s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/ament_cmake_export_libraries-extras.cmake
+[4.679s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/ament_cmake_export_targets-extras.cmake
+[4.687s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[4.693s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[4.702s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgsConfig.cmake
+[4.708s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgsConfig-version.cmake
+[4.714s] -- Symlinking: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/package.xml
+[4.721s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_generator_c.so
+[4.721s] -- Set runtime path of "/home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_generator_c.so" to ""
+[4.721s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_fastrtps_c.so
+[4.721s] -- Set runtime path of "/home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_fastrtps_c.so" to ""
+[4.721s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_fastrtps_cpp.so
+[4.721s] -- Set runtime path of "/home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""
+[4.721s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_introspection_c.so
+[4.722s] -- Set runtime path of "/home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_introspection_c.so" to ""
+[4.722s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_c.so
+[4.722s] -- Set runtime path of "/home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_c.so" to ""
+[4.722s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_introspection_cpp.so
+[4.722s] -- Set runtime path of "/home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_introspection_cpp.so" to ""
+[4.722s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_cpp.so
+[4.723s] -- Set runtime path of "/home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_typesupport_cpp.so" to ""
+[4.757s] Listing '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs'...
+[4.757s] Compiling '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/__init__.py'...
+[4.757s] Listing '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg'...
+[4.757s] Compiling '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg/__init__.py'...
+[4.757s] Compiling '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg/_control_command.py'...
+[4.757s] Compiling '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/msg/_feedback.py'...
+[4.757s] Listing '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/srv'...
+[4.757s] Compiling '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/srv/__init__.py'...
+[4.757s] Compiling '/home/aiv/ev_ws/install/erp42_msgs/local/lib/python3.10/dist-packages/erp42_msgs/srv/_mode_command.py'...
+[4.762s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_generator_py.so
+[4.762s] -- Set runtime path of "/home/aiv/ev_ws/install/erp42_msgs/lib/liberp42_msgs__rosidl_generator_py.so" to ""
+[4.762s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_generator_cExport.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_generator_cExport-noconfig.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_typesupport_fastrtps_cExport.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_generator_cppExport.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_typesupport_fastrtps_cppExport.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgs__rosidl_typesupport_introspection_cExport.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgs__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgs__rosidl_typesupport_cExport.cmake
+[4.763s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgs__rosidl_typesupport_cExport-noconfig.cmake
+[4.764s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgs__rosidl_typesupport_introspection_cppExport.cmake
+[4.764s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgs__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[4.764s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgs__rosidl_typesupport_cppExport.cmake
+[4.764s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/erp42_msgs__rosidl_typesupport_cppExport-noconfig.cmake
+[4.764s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_generator_pyExport.cmake
+[4.764s] -- Installing: /home/aiv/ev_ws/install/erp42_msgs/share/erp42_msgs/cmake/export_erp42_msgs__rosidl_generator_pyExport-noconfig.cmake
+[4.767s] Invoked command in '/home/aiv/ev_ws/build/erp42_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/aiv/ev_ws/build/erp42_msgs
