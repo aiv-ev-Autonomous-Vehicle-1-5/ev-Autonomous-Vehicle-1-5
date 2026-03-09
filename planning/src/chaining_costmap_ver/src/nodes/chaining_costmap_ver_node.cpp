@@ -1,27 +1,27 @@
 /**
  * @file lc_planner_node.cpp
- * @brief LC Planner 메인 노드 구현 — DirectionChainer v2 8단계 파이프라인
+ * @brief LC Planner 메인 노드 구현 — DirectionChainer v2 7단계 파이프라인
  *
  * ══════════════════════════════════════════════════════════════
  *  이 파일은 lc_planner_node.hpp에 선언된 LCPlannerNode를 구현한다.
  *
  *  핵심 구조:
  *    생성자 — 파라미터 로드, QoS 설정, 구독/발행 생성, 타이머 시작
- *    on_timer() — 10Hz로 호출되는 메인 루프 (8단계 파이프라인)
+ *    on_timer() — 10Hz로 호출되는 메인 루프 (7단계 파이프라인)
  *
- *  8단계 파이프라인 (on_timer 콜백):
+ *  7단계 파이프라인 (on_timer 콜백):
  *    Stage 0: Stale Gate — perception 데이터 타임아웃 검사
  *                          (오래된 데이터로 경로 생성 방지)
  *    Stage 1: Input Parse — 콘/차선 ROS 메시지 → 단일 ChainPoint 벡터
  *                           (LiDAR bbox는 sensor_tf 오프셋 보정)
  *    Stage 2: DirectionChainer — Component→Backbone→Branch + 리샘플
  *                                (포인트를 좌/우 체인으로 분류·연결)
- *    Stage 3: CDT Centerline — CDT 기반 외심(circumcenter) centerline 추출
- *                              (좌/우 체인에 CDT → 외심 필터링 → greedy 연결)
- *    Stage 5: Postprocess — prune → smooth → resample → yaw
- *                           (경로 정제: 이상치 제거, 스무딩, 등간격화, 방향각)
- *    Stage 6: Safety Check — 곡률/속도 검사
- *                            (Menger 곡률 → 실현 가능성 + 안전 속도)
+ *    Stage 3: Costmap + A* — 가우시안 코스트맵 생성 + A* 경로 탐색
+ *                            (좌/우 체인 → 코스트맵 → A* 경로 계획)
+ *    Stage 5: Postprocess — prune → smooth → curvature_clamp → resample → curvature_clamp → yaw
+ *                           (경로 정제: 이상치 제거, 스무딩, 곡률 제한, 등간격화, 방향각)
+ *    Stage 6: Safety Check — 곡률 검사
+ *                            (Menger 곡률 → 경로 실현 가능성 판정)
  *    Stage 7: Publish — 경로, 상태, 디버그 토픽 발행
  *                       (Core: 항상 발행, Debug: 구독자 있을 때만)
  * ══════════════════════════════════════════════════════════════
@@ -30,7 +30,7 @@
 #include "chaining_costmap_ver/nodes/chaining_costmap_ver_node.hpp"   // LCPlannerNode 클래스 선언
 #include "chaining_costmap_ver/common/geometry.hpp"          // dist(), cross2(), to_path_msg() 등 기하 유틸
 #include "chaining_costmap_ver/common/debug_publish.hpp"     // 디버그 시각화 헬퍼
-#include "chaining_costmap_ver/safety/safety_checker.hpp"    // safety_checker::check() — 곡률/속도 검사
+#include "chaining_costmap_ver/safety/safety_checker.hpp"    // safety_checker::check() — 곡률 검사
 
 // ── ROS 2 컴포넌트 등록 매크로 ──
 // 이 매크로를 통해 이 노드를 shared library(.so)로 빌드하고,
@@ -56,7 +56,7 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
   stamp_bboxes_(0, 0, RCL_ROS_TIME)
 {
   // yaml 파라미터 파일에서 모든 설정값을 로드한다
-  // (vehicle, speed, sensor_tf, chainer, costmap, postprocess, timeouts 등)
+  // (vehicle, sensor_tf, chainer, costmap, postprocess, timeouts 등)
   params_.load(this);
 
   // ── QoS 설정: Best Effort, depth=1 ──
@@ -237,7 +237,7 @@ bool LCPlannerNode::check_stale() const
 }
 
 // ══════════════════════════════════════════════════════════════
-//  on_timer() — 10Hz 메인 루프: 8단계 파이프라인
+//  on_timer() — 10Hz 메인 루프: 7단계 파이프라인
 // ══════════════════════════════════════════════════════════════
 void LCPlannerNode::on_timer()
 {

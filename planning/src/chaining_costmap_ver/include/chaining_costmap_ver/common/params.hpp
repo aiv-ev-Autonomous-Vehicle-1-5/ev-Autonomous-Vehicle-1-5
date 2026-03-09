@@ -10,8 +10,6 @@
  *     ├── Costmap      : 가우시안 비용 지도 생성 파라미터
  *     ├── AStar        : A* 경로 탐색 파라미터
  *     ├── Vehicle       : T870 전동 카트의 물리적 제원 (폭, 축거, 최대 조향각)
- *     ├── Safety        : 장애물과의 안전 마진
- *     ├── Speed         : 최대 속도 및 횡가속도 제한
  *     ├── Postprocess   : 생성된 경로의 리샘플링 / 스무딩 / 가지치기
  *     ├── SensorTf      : LiDAR → base_link 좌표 변환 오프셋
  *     ├── Timeouts      : 인식 데이터 유효 시간
@@ -152,42 +150,6 @@ struct PlanningParams
     // 실제 차량이 따라갈 수 없으므로 경로를 수정해야 한다.
     double r_min() const { return wheelbase / std::tan(delta_max); }
   } vehicle;
-
-  // ============================================================
-  // Safety — 안전 마진
-  //
-  // 차량 외곽에서 추가로 확보하는 여유 거리.
-  // 실제 충돌 판정 범위 = vehicle.width/2 + safety.margin.
-  // ============================================================
-  struct Safety
-  {
-    // [m] 장애물과 차량 사이 최소 여유 거리.
-    // 0.10m = 10cm. 차체 폭(50cm)에 양쪽 10cm씩 추가하면
-    // 총 70cm 통로가 있어야 통과 가능.
-    // 좁은 콘 배치 구간에서는 줄여야 할 수 있지만,
-    // 너무 작으면 센서 오차 시 충돌 위험.
-    double margin = 0.10;
-  } safety;
-
-  // ============================================================
-  // Speed — 속도 제한
-  //
-  // 경로의 곡률에 따라 속도를 조절하기 위한 파라미터.
-  // 커브 구간에서는 v = sqrt(a_lat_max / curvature) 로 감속.
-  // ============================================================
-  struct Speed
-  {
-    // [m/s] 직선 구간 최대 속도.
-    // 1.60 m/s ≈ 5.76 km/h. 경진대회 안전 규정에 맞춰 설정.
-    // 높이면 빨라지지만, 제어 지연으로 장애물 회피 실패 가능.
-    double v_max = 1.60;
-
-    // [m/s^2] 허용 최대 횡가속도(centripetal acceleration).
-    // 커브에서 v^2 / R ≤ a_lat_max 이 되도록 속도를 제한.
-    // 2.0 m/s^2 = 약 0.2G. 전동 카트 타이어 그립 한계 고려.
-    // 높이면 커브에서 빠르지만 미끄러질 위험.
-    double a_lat_max = 2.0;
-  } speed;
 
   // ============================================================
   // Postprocess — 경로 후처리
@@ -442,13 +404,6 @@ struct PlanningParams
     vehicle.width     = p("vehicle.width",     vehicle.width);
     vehicle.wheelbase = p("vehicle.wheelbase", vehicle.wheelbase);
     vehicle.delta_max = p("vehicle.delta_max", vehicle.delta_max);
-
-    // ── Safety 파라미터 로드 ──
-    safety.margin = p("safety.margin", safety.margin);
-
-    // ── Speed 파라미터 로드 ──
-    speed.v_max     = p("speed.v_max",     speed.v_max);
-    speed.a_lat_max = p("speed.a_lat_max", speed.a_lat_max);
 
     // ── Postprocess 파라미터 로드 ──
     postprocess.resample_ds   = p("postprocess.resample_ds",   postprocess.resample_ds);

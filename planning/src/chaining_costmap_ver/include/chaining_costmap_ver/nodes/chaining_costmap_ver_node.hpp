@@ -1,6 +1,6 @@
 /**
  * @file lc_planner_node.hpp
- * @brief LC Planner 메인 ROS 2 노드 — DirectionChainer v2 8단계 파이프라인
+ * @brief LC Planner 메인 ROS 2 노드 — DirectionChainer v2 7단계 파이프라인
  *
  * ══════════════════════════════════════════════════════════════
  *  LC Planner 아키텍처 개요
@@ -27,8 +27,6 @@
  *     - /planning/path   : 최종 후처리된 경로 (nav_msgs/Path)
  *     - /planning/status : 플래너 상태 문자열 (std_msgs/String)
  *   Debug (lazy publishing — 구독자가 있을 때만 발행):
- *     - /planning/debug/centerline      : CDT 외심 연결 centerline (Path)
- *     - /planning/debug/circumcenters   : 필터 통과한 외심 점 (MarkerArray)
  *     - /planning/debug/left_chain   : 왼쪽 backbone 체인 (Path)
  *     - /planning/debug/right_chain  : 오른쪽 backbone 체인 (Path)
  *     - /chaining/debug/left_branches  : 왼쪽 branch 시각화 (MarkerArray)
@@ -36,7 +34,7 @@
  *     - /chaining/debug/seeds          : 체이닝 시드/골 마커 (MarkerArray)
  *
  * ──────────────────────────────────────────────────────────────
- *  8단계 파이프라인 (on_timer 콜백에서 순차 실행)
+ *  7단계 파이프라인 (on_timer 콜백에서 순차 실행)
  * ──────────────────────────────────────────────────────────────
  *
  *   Stage 0: Stale Gate (신선도 검사)
@@ -54,17 +52,18 @@
  *       연결된 포인트 그룹(component)을 찾고, 주 경로(backbone)와
  *       갈래(branch)로 분리한다.
  *
- *   Stage 3: CDT Centerline Extraction (CDT 기반 중심선 추출)
- *     → 좌/우 경계 체인에 Constrained Delaunay Triangulation을 수행하고,
- *       외심(circumcenter)을 기하학적으로 필터링하여 centerline을 추출한다.
+ *   Stage 3: Costmap Generation + A* Path Planning (코스트맵 생성 + A* 경로 탐색)
+ *     → 좌/우 체인 포인트로 가우시안 코스트맵을 생성하고,
+ *       A* 알고리즘으로 시작점(ego)에서 목표점(local_goal)까지 경로를 탐색한다.
  *
  *   Stage 5: Postprocess (후처리)
- *     → prune(이상치 제거) → smooth(스무딩) → resample(등간격 리샘플링)
+ *     → prune(이상치 제거) → smooth(스무딩) → curvature_clamp(곡률 제한)
+ *       → resample(등간격 리샘플링) → curvature_clamp(곡률 제한)
  *       → yaw(방향각 계산) 순서로 경로를 정제한다.
  *
  *   Stage 6: Safety Check (안전 검사)
  *     → Menger 곡률 공식으로 최대 곡률을 계산하고,
- *       차량의 최소 회전 반경/횡가속도 제한에 따라 속도를 결정한다.
+ *       차량의 최소 회전 반경 제한에 따라 경로 실현 가능성(곡률 검사)을 판정한다.
  *
  *   Stage 7: Publish (발행)
  *     → Core: 최종 경로 + 플래너 상태
@@ -108,7 +107,7 @@ namespace chaining_costmap_ver
  * @class LCPlannerNode
  * @brief LC Planner 메인 ROS 2 노드
  *
- * rclcpp::Node을 상속하여 8단계 파이프라인을 10Hz로 실행한다.
+ * rclcpp::Node을 상속하여 7단계 파이프라인을 10Hz로 실행한다.
  * 컴포넌트(composable node)로 등록되어 있어, 같은 프로세스에서
  * 다른 노드와 함께 로딩하여 Intra-process 통신이 가능하다.
  */
@@ -127,7 +126,7 @@ public:
 
 private:
   /**
-   * @brief 10Hz 타이머 콜백 — 8단계 파이프라인을 순차 실행
+   * @brief 10Hz 타이머 콜백 — 7단계 파이프라인을 순차 실행
    *
    * Stage 0~7을 순서대로 호출하며, Stage 0에서 데이터가 stale이면
    * "STALE" 상태만 발행하고 즉시 반환(early return)한다.
@@ -184,7 +183,7 @@ private:
 
   // ── 파라미터 ──
   // yaml에서 로드한 모든 플래너 파라미터를 담는 구조체
-  // (vehicle, speed, sensor_tf, chainer, costmap, postprocess, timeouts 등)
+  // (sensor_tf, timeouts, chainer, costmap, astar, postprocess, vehicle)
   PlanningParams params_;
 
   // ── 파이프라인 모듈들 ──

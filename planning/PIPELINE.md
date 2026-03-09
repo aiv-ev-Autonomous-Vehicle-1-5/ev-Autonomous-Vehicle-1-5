@@ -88,11 +88,10 @@
 - LaneBoundaryArray → ChainPoint[] 변환 (이미 base_link 기준)
 - 좌/우 분류는 하지 않음 (Stage 2에서 seed 기반으로 결정)
 
-### Stage 2: DirectionChainer (7-step)
+### Stage 2: DirectionChainer (6-step)
 
 | Step | 이름 | 설명 |
 |------|------|------|
-| 0 | Preprocess | confidence < min_confidence인 포인트 제거 |
 | 1 | Seed Selection | 좌/우 각각 ego에서 가장 가까운 전방 포인트 선택 (\|y\| > side_seed_y) |
 | 2 | Graph Building | k-NN + 거리(G1) + 측면(G3) 게이트로 무방향 그래프 생성 |
 | 3 | Component Extraction | 각 seed에서 BFS로 연결 컴포넌트 추출 |
@@ -138,16 +137,16 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 - **장애물**: cost ≥ obstacle_cost (기본 100) → 통과 불가
 - **종료**: goal_tolerance (0.3m) 이내 도달 또는 max_iterations 초과
 
-### Stage 5: PathPostprocessor (5-step)
+### Stage 5: PathPostprocessor (6-step)
 
 | Step | 이름 | 알고리즘 | 설명 |
 |------|------|---------|------|
 | 1 | Prune | Greedy shortcutting | 직선 구간의 불필요한 점 제거 |
 | 2 | Smooth | Moving average (window=5) | 그리드 지그재그 아티팩트 제거 |
-| 2.5 | Curvature Clamp | 중점 방향 이동 (반복 수렴) | κ > κ_max×0.95인 구간 완화 |
-| 3 | Resample | 선형 보간 (ds=0.10m) | 균일 간격 waypoint 생성 |
-| 3.5 | Curvature Clamp (2차) | 중점 방향 이동 (반복 수렴) | resample의 lerp/끝점 추가로 생긴 급커브 재보정 |
-| 4 | Yaw Calc | atan2(dy, dx) | 각 waypoint의 heading 각도 |
+| 3 | Curvature Clamp | 중점 방향 이동 (반복 수렴) | κ > κ_max×0.95인 구간 완화 |
+| 4 | Resample | 선형 보간 (ds=0.10m) | 균일 간격 waypoint 생성 |
+| 5 | Curvature Clamp (2차) | 중점 방향 이동 (반복 수렴) | resample의 lerp/끝점 추가로 생긴 급커브 재보정 |
+| 6 | Yaw Calc | atan2(dy, dx) | 각 waypoint의 heading 각도 |
 
 **Curvature Clamp 상세:**
 - **5% 마진**: kappa > kappa_max × 0.95 이면 보정 시작 (safety_checker 경계 FAIL 방지)
@@ -165,11 +164,41 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 ### Stage 7: Publish
 - Core 토픽 항상 발행
 - Debug 토픽 중 costmap/raw_path/obstacle_wall/curvature는 항상 lazy publish
-- Debug 토픽 중 chainer 관련 (chains/branches/seeds/local_goal)은 `publish_debug` 파라미터가 true일 때만 발행
+- Debug 토픽 중 chainer 관련 (chains/branches/seeds/local_goal + chain stats 로그)은 `publish_debug` 파라미터가 true일 때만 발행
 
 ---
 
 ## Parameters (chaining_costmap_ver.yaml)
+
+### sensor_tf
+| Parameter | 기본값 | 단위 | 설명 |
+|-----------|--------|------|------|
+| tf_x | 0.0 | m | LiDAR → base_link 전방 오프셋 |
+| tf_y | 0.0 | m | LiDAR → base_link 측면 오프셋 |
+| tf_z | 0.7 | m | LiDAR 높이 |
+
+### timeouts
+| Parameter | 기본값 | 단위 | 설명 |
+|-----------|--------|------|------|
+| perception_ms | 300 | ms | 센서 데이터 타임아웃 |
+
+### chainer
+| Parameter | 기본값 | 단위 | 설명 |
+|-----------|--------|------|------|
+| side_seed_y | 0.3 | m | 시드 선택 \|y\| 최소값 |
+| k | 8 | — | k-NN 후보 수 |
+| d_max | 2.0 | m | 최대 이웃 거리 |
+| forward_cone_deg | 120.0 | deg | 전방 콘 반각 (±60°) |
+| lateral_gate | 1.5 | m | 측면 오차 게이트 |
+| α (alpha) | 1.0 | — | 거리 비용 가중치 |
+| β (beta) | 1.2 | — | 방향 오차 가중치 |
+| γ (gamma) | 0.6 | — | 측면 편차 가중치 |
+| δ (delta) | 0.2 | — | 콘 크기 변화 가중치 |
+| λ_side (lambda_side) | 0.5 | — | 좌우 교차 패널티 |
+| max_branch_len | 40 | — | 최대 브랜치 길이 |
+| max_chain_len | 100 | — | 최대 backbone 길이 |
+| resample_ds | 0.1 | m | 체인 리샘플 간격 |
+| publish_debug | true | — | chainer 디버그 마커 + 체인 통계 로그 발행 여부 |
 
 ### costmap
 | Parameter | 기본값 | 단위 | 설명 |
@@ -192,6 +221,14 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | cost_weight | 0.05 | — | 코스트맵 비용 가중치 |
 | obstacle_cost | 100.0 | — | 장애물 판정 임계값 (= cone_cost_max → 콘 중심은 통과 불가) |
 
+### postprocess
+| Parameter | 기본값 | 단위 | 설명 |
+|-----------|--------|------|------|
+| resample_ds | 0.10 | m | 리샘플 간격 |
+| smooth_window | 5 | — | 이동평균 윈도우 크기 |
+| prune_max_dev | 0.15 | m | 프루닝 최대 편차 |
+| curvature_clamp_max_iter | 100 | — | 곡률 제한 최대 반복 횟수 |
+
 ### vehicle
 | Parameter | 기본값 | 단위 | 설명 |
 |-----------|--------|------|------|
@@ -202,57 +239,6 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 **파생값:**
 - r_min = wheelbase / tan(delta_max) = 0.73 / tan(0.3249) ≈ **2.17m**
 - κ_limit = 1 / r_min ≈ **0.461 rad/m**
-
-### safety
-| Parameter | 기본값 | 단위 | 설명 |
-|-----------|--------|------|------|
-| margin | 0.10 | m | 안전 마진 |
-
-### speed
-| Parameter | 기본값 | 단위 | 설명 |
-|-----------|--------|------|------|
-| v_max | 1.60 | m/s | 최대 속도 (~5.76 km/h) |
-| a_lat_max | 2.0 | m/s² | 최대 횡가속도 |
-
-### postprocess
-| Parameter | 기본값 | 단위 | 설명 |
-|-----------|--------|------|------|
-| resample_ds | 0.10 | m | 리샘플 간격 |
-| smooth_window | 5 | — | 이동평균 윈도우 크기 |
-| prune_max_dev | 0.15 | m | 프루닝 최대 편차 |
-| curvature_clamp_max_iter | 100 | — | 곡률 제한 최대 반복 횟수 |
-
-### sensor_tf
-| Parameter | 기본값 | 단위 | 설명 |
-|-----------|--------|------|------|
-| tf_x | 0.0 | m | LiDAR → base_link 전방 오프셋 |
-| tf_y | 0.0 | m | LiDAR → base_link 측면 오프셋 |
-| tf_z | 0.7 | m | LiDAR 높이 |
-
-### chainer
-| Parameter | 기본값 | 단위 | 설명 |
-|-----------|--------|------|------|
-| side_seed_y | 0.3 | m | 시드 선택 \|y\| 최소값 |
-| k | 8 | — | k-NN 후보 수 |
-| d_max | 2.0 | m | 최대 이웃 거리 |
-| forward_cone_deg | 120.0 | deg | 전방 콘 반각 (±60°) |
-| lateral_gate | 1.5 | m | 측면 오차 게이트 |
-| α (alpha) | 1.0 | — | 거리 비용 가중치 |
-| β (beta) | 1.2 | — | 방향 오차 가중치 |
-| γ (gamma) | 0.6 | — | 측면 편차 가중치 |
-| δ (delta) | 0.2 | — | 콘 크기 변화 가중치 |
-| λ_side (lambda_side) | 0.5 | — | 좌우 교차 패널티 |
-| branch_mode | "backbone_and_branches" | — | 브랜치 추출 전략 |
-| max_branch_len | 40 | — | 최대 브랜치 길이 |
-| max_chain_len | 100 | — | 최대 backbone 길이 |
-| min_confidence | 0.0 | — | 신뢰도 하한 |
-| resample_ds | 0.1 | m | 체인 리샘플 간격 |
-| publish_debug | true | — | chainer 디버그 마커 + 체인 통계 로그 발행 여부 |
-
-### timeouts
-| Parameter | 기본값 | 단위 | 설명 |
-|-----------|--------|------|------|
-| perception_ms | 300 | ms | 센서 데이터 타임아웃 |
 
 ---
 
@@ -339,9 +325,9 @@ planning/src/chaining_costmap_ver/
 │   │   ├── params.hpp                     ← 파라미터 구조체 + load()
 │   │   └── debug_publish.hpp              ← 디버그 시각화 헬퍼
 │   ├── nodes/
-│   │   └── chaining_costmap_ver_node.hpp  ← 메인 노드 헤더
+│   │   └── chaining_costmap_ver_node.hpp  ← 메인 노드 헤더 (7-stage pipeline)
 │   ├── chainer/
-│   │   └── direction_chainer.hpp
+│   │   └── direction_chainer.hpp          ← 6-step 체이닝
 │   ├── costmap/
 │   │   └── costmap_generator.hpp
 │   ├── planner/
@@ -354,11 +340,11 @@ planning/src/chaining_costmap_ver/
     ├── nodes/
     │   └── chaining_costmap_ver_node.cpp  ← 메인 노드 (7-stage pipeline)
     ├── chainer/
-    │   └── direction_chainer.cpp          ← 7-step 체이닝
+    │   └── direction_chainer.cpp          ← 6-step 체이닝
     ├── costmap/
     │   └── costmap_generator.cpp          ← Gaussian 코스트맵
     ├── planner/
     │   └── astar_planner.cpp              ← A* 경로탐색
     └── postprocess/
-        └── path_postprocessor.cpp         ← 후처리 (5-step)
+        └── path_postprocessor.cpp         ← 후처리 (6-step)
 ```
