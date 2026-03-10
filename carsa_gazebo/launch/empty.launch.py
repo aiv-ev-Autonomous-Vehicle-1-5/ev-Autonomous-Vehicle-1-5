@@ -27,12 +27,12 @@ def generate_launch_description():
 
             # World file
             'world_file': PathJoinSubstitution([
-                FindPackageShare('carsa_gazebo'), 'worlds', 'empty.world'
+                FindPackageShare('carsa_gazebo'), 'worlds', 'planning_test.world'
             ]),
 
             # Spawn location
-            'spawn_x'    : '-10.0',
-            'spawn_y'    : '0.0',
+            'spawn_x'    : '-11.84',
+            'spawn_y'    : '5.58',
             'spawn_z'    : '0.0',
             'spawn_roll' : '0.0',
             'spawn_pitch': '0.0',
