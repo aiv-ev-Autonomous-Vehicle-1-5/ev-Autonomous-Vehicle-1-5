@@ -25,9 +25,82 @@
 #include <cmath>      // std::abs, std::atan2
 #include <iostream>
 #include <numeric>
+#include <limits>
+#include <string>
 
 namespace chaining_costmap_ver
 {
+
+namespace
+{
+
+int normalize_window_odd(int window)
+{
+  if (window < 1) {
+    return 1;
+  }
+  if (window % 2 == 0) {
+    return window + 1;
+  }
+  return window;
+}
+
+double sanitize_positive(double value, double fallback)
+{
+  if (!std::isfinite(value) || value <= 0.0) {
+    return fallback;
+  }
+  return value;
+}
+
+int sanitize_positive_int(int value, int fallback)
+{
+  if (value <= 0) {
+    return fallback;
+  }
+  return value;
+}
+
+void warn_adjust(const std::string & name, const std::string & msg)
+{
+  std::cerr << "[Postprocess][WARN] " << name << " " << msg << std::endl;
+}
+
+void ensure_yaw_size_matches_path(
+  std::vector<double> & yaw,
+  size_t target_size)
+{
+  if (target_size == 0) {
+    yaw.clear();
+    return;
+  }
+
+  if (yaw.empty()) {
+    yaw.assign(target_size, 0.0);
+    return;
+  }
+
+  if (yaw.size() < target_size) {
+    yaw.resize(target_size, yaw.back());
+  } else if (yaw.size() > target_size) {
+    yaw.resize(target_size);
+  }
+}
+
+double path_length(const std::vector<Point2D> & pts)
+{
+  if (pts.size() < 2) {
+    return 0.0;
+  }
+
+  double total = 0.0;
+  for (size_t i = 1; i < pts.size(); ++i) {
+    total += dist(pts[i - 1], pts[i]);
+  }
+  return total;
+}
+
+}  // namespace
 
 // ============================================================================
 // ① Prune 단계 — Douglas-Peucker 유사 탐욕적 경로 단순화
@@ -322,30 +395,57 @@ std::vector<double> PathPostprocessor::compute_yaw_from_path(
 {
   std::vector<double> yaw;
 
-  if (pts.size() < 2) {
+  if (pts.empty()) {
     return yaw;
   }
 
   yaw.resize(pts.size(), 0.0);
 
-  for (size_t i = 0; i + 1 < pts.size(); ++i) {
-    const double dx = pts[i + 1].x - pts[i].x;
-    const double dy = pts[i + 1].y - pts[i].y;
-    const double ds = std::sqrt(dx * dx + dy * dy);
-
-    if (ds < min_segment_len) {
-      if (i == 0) {
-        yaw[i] = 0.0;
-      } else {
-        yaw[i] = yaw[i - 1];
-      }
-      continue;
-    }
-
-    yaw[i] = std::atan2(dy, dx);
+  // 점이 1개면 진행 방향을 계산할 수 없으므로 0으로 둠
+  if (pts.size() == 1) {
+    return yaw;
   }
 
-  yaw.back() = yaw[yaw.size() - 2];
+  if (!std::isfinite(min_segment_len) || min_segment_len <= 0.0) {
+    min_segment_len = 0.05;
+  }
+
+  double last_valid_yaw = 0.0;
+  bool has_valid_yaw = false;
+
+  for (size_t i = 0; i < pts.size(); ++i) {
+    bool found = false;
+
+    // i에서 min_segment_len 이상 떨어진 "다음 유효 점" 찾기
+    for (size_t j = i + 1; j < pts.size(); ++j) {
+      const double dx = pts[j].x - pts[i].x;
+      const double dy = pts[j].y - pts[i].y;
+      const double ds = std::sqrt(dx * dx + dy * dy);
+
+      if (ds >= min_segment_len) {
+        yaw[i] = std::atan2(dy, dx);
+        last_valid_yaw = yaw[i];
+        has_valid_yaw = true;
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      // 유효 segment를 못 찾은 경우 fallback
+      if (has_valid_yaw) {
+        yaw[i] = last_valid_yaw;
+      } else {
+        yaw[i] = 0.0;
+      }
+    }
+  }
+
+  // 마지막 yaw는 직전 yaw로 채움
+  if (yaw.size() >= 2) {
+    yaw.back() = yaw[yaw.size() - 2];
+  }
+
   return yaw;
 }
 
@@ -353,13 +453,36 @@ std::vector<double> PathPostprocessor::smooth_yaw(
   const std::vector<double> & yaw,
   int window)
 {
-  if (yaw.empty() || window <= 1) {
+  if (yaw.empty()) {
+    return yaw;
+  }
+
+  window = normalize_window_odd(window);
+
+  // yaw가 너무 짧으면 smoothing 이득이 거의 없음
+  if (yaw.size() < 3 || window <= 1) {
+    return yaw;
+  }
+
+  // window가 yaw size보다 크면 가능한 최대 홀수로 줄임
+  if (window > static_cast<int>(yaw.size())) {
+    window = static_cast<int>(yaw.size());
+    if (window % 2 == 0) {
+      window -= 1;
+    }
+    if (window < 1) {
+      window = 1;
+    }
+  }
+
+  if (window <= 1) {
     return yaw;
   }
 
   const int half = window / 2;
   std::vector<double> unwrapped = yaw;
 
+  // unwrap
   for (size_t i = 1; i < unwrapped.size(); ++i) {
     double diff = unwrapped[i] - unwrapped[i - 1];
 
@@ -393,6 +516,11 @@ std::vector<double> PathPostprocessor::smooth_yaw(
     smoothed[i] = sum / static_cast<double>(count);
   }
 
+  // endpoint 처리: 시작/끝은 원본을 유지하는 방식이 더 안전함
+  smoothed.front() = unwrapped.front();
+  smoothed.back() = unwrapped.back();
+
+  // wrap back
   for (auto & a : smoothed) {
     a = wrap_angle(a);
   }
@@ -410,92 +538,194 @@ PostprocessResult PathPostprocessor::process(
   int yaw_smooth_window,
   double yaw_min_segment_len)
 {
+  PostprocessResult result;
 
   std::cout << "[Postprocess] raw_path size = " << raw_path.size() << std::endl;
 
-  PostprocessResult result;
+  // ------------------------------------------------------------------
+  // 0) 입력 path 방어
+  // ------------------------------------------------------------------
+  if (raw_path.empty()) {
+    warn_adjust("raw_path", "is empty -> return invalid result");
+    return result;
+  }
 
-  // 경로가 2점 미만이면 의미 있는 후처리 불가
-  if (raw_path.size() < 2) return result;
+  if (raw_path.size() == 1) {
+    warn_adjust("raw_path", "has only 1 point -> return single-point path");
+    result.path = raw_path;
+    result.yaw = {0.0};
+    result.valid = true;
+    return result;
+  }
 
-  // ────────────────────────────────────────────
-  // ① Prune: 직선 구간의 중간점 제거 (점 수 대폭 감소)
-  // ────────────────────────────────────────────
+  // ------------------------------------------------------------------
+  // 1) 파라미터 자동 보정
+  // ------------------------------------------------------------------
+  if (!std::isfinite(prune_max_dev) || prune_max_dev < 0.0) {
+    warn_adjust("prune_max_dev", "invalid -> fallback to 0.15");
+    prune_max_dev = 0.15;
+  }
+
+  if (smooth_window <= 0) {
+    warn_adjust("smooth_window", "invalid -> fallback to 1");
+    smooth_window = 1;
+  }
+
+  if (!std::isfinite(resample_ds) || resample_ds <= 0.0) {
+    warn_adjust("resample_ds", "invalid -> fallback to 0.10");
+    resample_ds = 0.10;
+  }
+
+  if (!std::isfinite(kappa_max) || kappa_max < 0.0) {
+    warn_adjust("kappa_max", "invalid -> fallback to 0.0");
+    kappa_max = 0.0;
+  }
+
+  if (curvature_clamp_max_iter <= 0) {
+    warn_adjust("curvature_clamp_max_iter", "invalid -> fallback to 30");
+    curvature_clamp_max_iter = 30;
+  }
+
+  if (yaw_smooth_window <= 0) {
+    warn_adjust("yaw_smooth_window", "invalid -> fallback to 1");
+    yaw_smooth_window = 1;
+  }
+
+  const int original_yaw_window = yaw_smooth_window;
+  yaw_smooth_window = normalize_window_odd(yaw_smooth_window);
+  if (yaw_smooth_window != original_yaw_window) {
+    warn_adjust(
+      "yaw_smooth_window",
+      "was even -> adjusted to odd value " + std::to_string(yaw_smooth_window));
+  }
+
+  if (!std::isfinite(yaw_min_segment_len) || yaw_min_segment_len <= 0.0) {
+    warn_adjust("yaw_min_segment_len", "invalid -> fallback to 0.05");
+    yaw_min_segment_len = 0.05;
+  }
+
+  // ------------------------------------------------------------------
+  // 2) prune
+  // ------------------------------------------------------------------
   auto pruned = prune(raw_path, prune_max_dev);
   std::cout << "[Postprocess] after prune size = " << pruned.size() << std::endl;
-  // ────────────────────────────────────────────
-  // ② Smooth: 이동 평균 필터로 잔여 꺾임 완화
-  // ────────────────────────────────────────────
+
+  if (pruned.empty()) {
+    warn_adjust("prune", "result is empty -> fallback to raw_path");
+    pruned = raw_path;
+  }
+
+  // ------------------------------------------------------------------
+  // 3) smooth
+  // ------------------------------------------------------------------
   auto smoothed = smooth(pruned, smooth_window);
   std::cout << "[Postprocess] after smooth size = " << smoothed.size() << std::endl;
 
-  // ────────────────────────────────────────────
-  // ②½ Curvature Clamp: 최대 곡률 제한 (kappa_max > 0 일 때만)
-  //    차량의 최소 회전 반경을 보장하기 위해
-  //    Menger 곡률이 kappa_max를 초과하는 지점을 수정
-  // ────────────────────────────────────────────
-  if (kappa_max > 0.0) {
+  if (smoothed.empty()) {
+    warn_adjust("smooth", "result is empty -> fallback to pruned");
+    smoothed = pruned;
+  }
+
+  // ------------------------------------------------------------------
+  // 4) curvature clamp
+  // ------------------------------------------------------------------
+  if (kappa_max > 0.0 && smoothed.size() >= 3) {
     std::cout << "[Postprocess] before curvature clamp size = "
               << smoothed.size() << std::endl;
+
     smoothed = curvature_clamp(smoothed, kappa_max, curvature_clamp_max_iter);
-    
+
     std::cout << "[Postprocess] after curvature clamp size = "
               << smoothed.size() << std::endl;
   }
 
-  // ────────────────────────────────────────────
-  // ③ Resample: 등간격(ds) 리샘플링
-  //    geometry.hpp의 resample_polyline() 사용
-  //    → 폴리라인을 따라 ds 간격으로 선형 보간(lerp)하여 점을 재배치
-  //    → smooth 후 불균등해진 점 간격을 균일하게 만듦
-  //    → 제어기가 일정 간격 waypoint를 기대하므로 필수 단계
-  // ────────────────────────────────────────────
+  // ------------------------------------------------------------------
+  // 5) resample
+  // ------------------------------------------------------------------
   result.path = resample_polyline(smoothed, resample_ds);
   std::cout << "[Postprocess] after resample size = "
             << result.path.size() << std::endl;
 
-  // resample 후 curvature_clamp 재적용
-  // resample의 lerp 보간 + 끝점 강제 추가가 새로운 급커브를 생성할 수 있으므로
+  if (result.path.empty()) {
+    warn_adjust("resample", "result is empty -> fallback to smoothed");
+    result.path = smoothed;
+  }
+
+  // resample 후 curvature clamp 재적용
   if (kappa_max > 0.0 && result.path.size() >= 3) {
     std::cout << "[Postprocess] before curvature clamp (resample) size = "
               << result.path.size() << std::endl;
+
     result.path = curvature_clamp(result.path, kappa_max, curvature_clamp_max_iter);
-    
+
     std::cout << "[Postprocess] after curvature clamp (resample) size = "
               << result.path.size() << std::endl;
   }
 
-  // 리샘플 결과가 2점 미만이면 yaw 계산 불가
-  if (result.path.size() < 2) return result;
+  // ------------------------------------------------------------------
+  // 6) path 길이/점 수 기반 yaw smoothing 생략 조건
+  // ------------------------------------------------------------------
+  if (result.path.empty()) {
+    warn_adjust("result.path", "is empty after postprocess -> invalid");
+    return result;
+  }
 
-  // ────────────────────────────────────────────
-  // ④ Yaw 계산: 접선 벡터(tangent vector) → 헤딩 각도
-  //
-  // [접선 벡터란?]
-  //   각 waypoint에서 "다음 점을 향하는 방향"을 나타내는 단위벡터.
-  //   polyline_tangents()는 다음과 같이 계산한다:
-  //     tangent[i] = normalize(path[i+1] - path[i])
-  //     tangent[마지막] = tangent[마지막-1]  (다음 점 없으므로 복사)
-  //
-  // [yaw = atan2(tangent.y, tangent.x)]
-  //   접선 벡터의 방향을 라디안 각도로 변환한 것이 yaw이다.
-  //   - yaw = 0      → 양의 x 방향 (차량 전방)
-  //   - yaw = π/2    → 양의 y 방향 (좌측)
-  //   - yaw = -π/2   → 음의 y 방향 (우측)
-  //   이 값은 차량 제어기가 목표 헤딩으로 사용한다.
-  //
-  // [왜 접선 벡터로 yaw를 구하는가?]
-  //   경로 위의 각 점에서 차량이 바라봐야 할 방향은
-  //   "경로가 진행하는 방향"이다.
-  //   인접한 두 점을 잇는 벡터가 바로 그 진행 방향이므로,
-  //   이것의 각도가 목표 yaw가 된다.
-  // ────────────────────────────────────────────
+  if (result.path.size() == 1) {
+    warn_adjust("result.path", "has only 1 point -> yaw set to 0");
+    result.yaw = {0.0};
+    result.valid = true;
+    return result;
+  }
+
+  // ------------------------------------------------------------------
+  // 7) yaw 계산
+  // ------------------------------------------------------------------
   result.yaw = compute_yaw_from_path(result.path, yaw_min_segment_len);
-  result.yaw = smooth_yaw(result.yaw, yaw_smooth_window);
+
+  // yaw/path size mismatch 방어
+  if (result.yaw.size() != result.path.size()) {
+    warn_adjust(
+      "yaw_size",
+      "mismatch with path size -> auto resize from " +
+      std::to_string(result.yaw.size()) + " to " +
+      std::to_string(result.path.size()));
+    ensure_yaw_size_matches_path(result.yaw, result.path.size());
+  }
+
+  // path가 너무 짧으면 yaw smoothing 생략
+  const double total_len = path_length(result.path);
+  const bool skip_yaw_smoothing =
+    (result.path.size() < 3) ||
+    (total_len < std::max(resample_ds * 2.0, yaw_min_segment_len * 2.0)) ||
+    (yaw_smooth_window <= 1);
+
+  if (skip_yaw_smoothing) {
+    std::cout << "[Postprocess] skip yaw smoothing "
+              << "(path_size=" << result.path.size()
+              << ", path_length=" << total_len
+              << ", yaw_window=" << yaw_smooth_window << ")"
+              << std::endl;
+  } else {
+    result.yaw = smooth_yaw(result.yaw, yaw_smooth_window);
+  }
+
+  // smoothing 후 size mismatch 재확인
+  if (result.yaw.size() != result.path.size()) {
+    warn_adjust(
+      "yaw_size",
+      "mismatch after smoothing -> auto resize from " +
+      std::to_string(result.yaw.size()) + " to " +
+      std::to_string(result.path.size()));
+    ensure_yaw_size_matches_path(result.yaw, result.path.size());
+  }
+
+  // 마지막 yaw를 직전 yaw로 한 번 더 보장
+  if (result.yaw.size() >= 2) {
+    result.yaw.back() = result.yaw[result.yaw.size() - 2];
+  }
 
   std::cout << "[Postprocess] yaw size = " << result.yaw.size() << std::endl;
-  
-  // 모든 단계 성공 → 유효한 결과
+
   result.valid = true;
   return result;
 }
