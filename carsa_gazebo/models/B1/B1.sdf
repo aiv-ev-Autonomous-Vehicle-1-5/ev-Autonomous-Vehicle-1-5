@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<sdf version="1.6">
+<model name="B1">
+  <static>true</static>
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://checkerboard_plane/meshes/B1.dae</uri><!--A1 ui ro ha meon an dem-->
+            <scale>0.5 0.5 0.5</scale> <!-- Scale value as needed -->
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/BlackWhite</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://checkerboard_plane/meshes/B1.dae</uri>
+            <scale>0.5 0.5 0.5</scale> <!-- Scale value as needed -->
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

@@ -1,17 +1,20 @@
 # EV 자율주행 시스템
 
 ## 빌드
+### 방법 1
+    carsa_gazebo, perception, planning 등등 하위 패키지별로 각각 build 한 후에 setup.bash 모두 source해서 사용하는게 나중에 모듈별로 디버깅하기 편함. 그걸 권장. 그냥 간단하게 처음 받아봤을때 돌아가는지 테스트해보고 싶으면 방법2로 ㄱㄱ
+### 방법 2
 
 ```bash
 cd ~/ev_ws
-colcon build --symlink-install
+colcon build --symlink-install --parallel-workers 2
 source install/setup.bash
 ```
-> 빌드 중 PC가 멈출 수 있음 (메모리 부족). 재부팅 후 다시 시도.
-> 병렬 제한: `colcon build --symlink-install --parallel-workers 2`
+    그냥 빌드하면 PC가 멈추므로 다음 명령어로 빌드해야함. 
+    병렬 제한: `colcon build --symlink-install --parallel-workers 2`
 
 ## 주의!
-새 터미널 프로세스 실행할때마다 
+새 터미널 프로세스 실행할 때마다 
 ```bash 
 source install/setup.bash 
 ```

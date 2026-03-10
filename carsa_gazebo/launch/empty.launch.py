@@ -1,7 +1,7 @@
 # carsa_gazebo_kcity.launch.py
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import AppendEnvironmentVariable, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
@@ -27,7 +27,7 @@ def generate_launch_description():
 
             # World file
             'world_file': PathJoinSubstitution([
-                FindPackageShare('carsa_gazebo'), 'worlds', 'planning_test.world'
+                FindPackageShare('carsa_gazebo'), 'worlds', 'empty.world'
             ]),
 
             # Spawn location
