@@ -45,21 +45,6 @@ int normalize_window_odd(int window)
   return window;
 }
 
-double sanitize_positive(double value, double fallback)
-{
-  if (!std::isfinite(value) || value <= 0.0) {
-    return fallback;
-  }
-  return value;
-}
-
-int sanitize_positive_int(int value, int fallback)
-{
-  if (value <= 0) {
-    return fallback;
-  }
-  return value;
-}
 
 void warn_adjust(const std::string & name, const std::string & msg)
 {
@@ -571,6 +556,14 @@ PostprocessResult PathPostprocessor::process(
     smooth_window = 1;
   }
 
+  const int original_smooth_window = smooth_window;
+  smooth_window = normalize_window_odd(smooth_window);
+  if (smooth_window != original_smooth_window) {
+    warn_adjust(
+      "smooth_window",
+      "was even -> adjusted to odd value " + std::to_string(smooth_window));
+}
+
   if (!std::isfinite(resample_ds) || resample_ds <= 0.0) {
     warn_adjust("resample_ds", "invalid -> fallback to 0.10");
     resample_ds = 0.10;
@@ -725,6 +718,23 @@ PostprocessResult PathPostprocessor::process(
   }
 
   std::cout << "[Postprocess] yaw size = " << result.yaw.size() << std::endl;
+
+  // ------------------------------------------------------------------
+  // 8) 최종 validity check
+  // ------------------------------------------------------------------
+  if (result.path.empty()) {
+    warn_adjust("result", "final path is empty -> invalid");
+    result.valid = false;
+    return result;
+  }
+
+  if (result.yaw.size() != result.path.size()) {
+    warn_adjust(
+      "result",
+      "final yaw/path size mismatch -> invalid");
+    result.valid = false;
+    return result;
+  }
 
   result.valid = true;
   return result;
