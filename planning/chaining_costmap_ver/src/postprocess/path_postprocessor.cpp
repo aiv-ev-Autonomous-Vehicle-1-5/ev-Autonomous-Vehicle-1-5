@@ -85,6 +85,43 @@ double path_length(const std::vector<Point2D> & pts)
   return total;
 }
 
+std::vector<Point2D> remove_near_duplicates(
+  const std::vector<Point2D> & pts,
+  double min_dist)
+{
+  if (pts.empty()) {
+    return pts;
+  }
+
+  if (!std::isfinite(min_dist) || min_dist <= 0.0) {
+    min_dist = 1e-4;
+  }
+
+  std::vector<Point2D> out;
+  out.reserve(pts.size());
+  out.push_back(pts.front());
+
+  for (size_t i = 1; i < pts.size(); ++i) {
+    const double dx = pts[i].x - out.back().x;
+    const double dy = pts[i].y - out.back().y;
+    const double ds = std::hypot(dx, dy);
+
+    if (ds >= min_dist) {
+      out.push_back(pts[i]);
+    }
+  }
+
+  if (out.size() == 1 && pts.size() > 1) {
+    const double dx = pts.back().x - out.back().x;
+    const double dy = pts.back().y - out.back().y;
+    if (std::hypot(dx, dy) > 0.0) {
+      out.push_back(pts.back());
+    }
+  }
+
+  return out;
+}
+
 }  // namespace
 
 // ============================================================================
@@ -603,6 +640,9 @@ PostprocessResult PathPostprocessor::process(
   auto pruned = prune(raw_path, prune_max_dev);
   std::cout << "[Postprocess] after prune size = " << pruned.size() << std::endl;
 
+  pruned = remove_near_duplicates(pruned, 1e-4);
+  std::cout << "[Postprocess] after prune dedup size = " << pruned.size() << std::endl;
+  
   if (pruned.empty()) {
     warn_adjust("prune", "result is empty -> fallback to raw_path");
     pruned = raw_path;
@@ -611,8 +651,22 @@ PostprocessResult PathPostprocessor::process(
   // ------------------------------------------------------------------
   // 3) smooth
   // ------------------------------------------------------------------
-  auto smoothed = smooth(pruned, smooth_window);
+  
+  std::vector<Point2D> smoothed;
+  if (pruned.size() < 3 || smooth_window <= 1) {
+    std::cout << "[Postprocess] skip path smoothing "
+              << "(path_size=" << pruned.size()
+              << ", smooth_window=" << smooth_window << ")"
+              << std::endl;
+    smoothed = pruned;
+  } else {
+    smoothed = smooth(pruned, smooth_window);
+  }
+
   std::cout << "[Postprocess] after smooth size = " << smoothed.size() << std::endl;
+
+  smoothed = remove_near_duplicates(smoothed, 1e-4);
+  std::cout << "[Postprocess] after smooth dedup size = " << smoothed.size() << std::endl;
 
   if (smoothed.empty()) {
     warn_adjust("smooth", "result is empty -> fallback to pruned");
@@ -637,6 +691,10 @@ PostprocessResult PathPostprocessor::process(
   // ------------------------------------------------------------------
   result.path = resample_polyline(smoothed, resample_ds);
   std::cout << "[Postprocess] after resample size = "
+            << result.path.size() << std::endl;
+
+  result.path = remove_near_duplicates(result.path, 1e-4);
+  std::cout << "[Postprocess] after resample dedup size = "
             << result.path.size() << std::endl;
 
   if (result.path.empty()) {
@@ -718,7 +776,8 @@ PostprocessResult PathPostprocessor::process(
   }
 
   std::cout << "[Postprocess] yaw size = " << result.yaw.size() << std::endl;
-
+  const double final_len = path_length(result.path);
+  std::cout << "[Postprocess] final path length = " << final_len << std::endl;
   // ------------------------------------------------------------------
   // 8) 최종 validity check
   // ------------------------------------------------------------------
