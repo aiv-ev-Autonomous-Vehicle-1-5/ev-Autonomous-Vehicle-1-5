@@ -362,7 +362,9 @@ void LCPlannerNode::on_timer()
     params_.postprocess.smooth_window,
     params_.postprocess.resample_ds,
     1.0 / params_.vehicle.r_min(),  // kappa_max = 1/R_min
-    params_.postprocess.curvature_clamp_max_iter);
+    params_.postprocess.curvature_clamp_max_iter,
+    params_.postprocess.yaw_smooth_window,
+    params_.postprocess.yaw_min_segment_len);
 
   // ======== Stage 6: Safety Check ========
   // Menger 곡률 공식으로 후처리된 경로의 최대 곡률(κ_max)을 계산하고:

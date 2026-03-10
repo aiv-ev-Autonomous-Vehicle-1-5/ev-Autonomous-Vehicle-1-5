@@ -93,7 +93,8 @@ lc_planner_node:
       smooth_window: 5               # 이동 평균 윈도우 크기 (앞뒤 2개씩 총 5개 평균)
       prune_max_dev: 0.15            # [m] prune 허용 최대 수직 편차 (이내면 직선으로 간주, 중간점 제거)
       curvature_clamp_max_iter: 100  # 곡률 제한 최대 반복 횟수 (kappa > kappa_max인 점을 중점 방향으로 이동)
-
+      yaw_smooth_window: 5
+      yaw_min_segment_len: 0.05
     # ============================================================
     # [Stage 5-6] Vehicle (T870) — 차량 제원 (postprocess + safety에서 사용)
     # ============================================================

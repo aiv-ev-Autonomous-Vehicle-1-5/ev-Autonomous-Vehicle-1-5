@@ -95,7 +95,9 @@ public:
     int smooth_window,
     double resample_ds,
     double kappa_max = 0.0,
-    int curvature_clamp_max_iter = 30);
+    int curvature_clamp_max_iter = 30,
+    int yaw_smooth_window = 1,
+    double yaw_min_segment_len = 0.05);
 
 private:
   /**
@@ -158,6 +160,16 @@ private:
    */
   static std::vector<Point2D> curvature_clamp(
     const std::vector<Point2D> & pts, double kappa_max, int max_iter = 30);
+  
+  static double wrap_angle(double a);
+
+  static std::vector<double> compute_yaw_from_path(
+    const std::vector<Point2D> & pts,
+    double min_segment_len);
+
+  static std::vector<double> smooth_yaw(
+    const std::vector<double> & yaw,
+    int window);
 };
 
 }  // namespace chaining_costmap_ver

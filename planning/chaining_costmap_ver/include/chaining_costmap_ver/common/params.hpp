@@ -182,6 +182,8 @@ struct PlanningParams
     // 곡률 초과 지점을 반복적으로 완화하는 최대 횟수.
     // 30 = 대부분의 경우 10회 내로 수렴하지만, 급커브가 많으면 더 필요.
     int curvature_clamp_max_iter = 30;
+    int yaw_smooth_window = 5;
+    double yaw_min_segment_len = 0.05;
   } postprocess;
 
   // ============================================================
@@ -410,7 +412,8 @@ struct PlanningParams
     postprocess.smooth_window = p("postprocess.smooth_window", postprocess.smooth_window);
     postprocess.prune_max_dev = p("postprocess.prune_max_dev", postprocess.prune_max_dev);
     postprocess.curvature_clamp_max_iter = p("postprocess.curvature_clamp_max_iter", postprocess.curvature_clamp_max_iter);
-
+    postprocess.yaw_smooth_window = p("postprocess.yaw_smooth_window", postprocess.yaw_smooth_window);
+    postprocess.yaw_min_segment_len = p("postprocess.yaw_min_segment_len", postprocess.yaw_min_segment_len);
     // ── SensorTf 파라미터 로드 ──
     // 주의: 코드 기본값(tf_x=0.7)과 yaml 값(tf_x=0.0)이 다를 수 있음.
     // yaml이 로드되면 yaml 값이 우선.

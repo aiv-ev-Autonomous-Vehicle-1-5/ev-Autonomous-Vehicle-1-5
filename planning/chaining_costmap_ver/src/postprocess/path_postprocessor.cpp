@@ -23,6 +23,8 @@
 
 #include <algorithm>  // std::max, std::min
 #include <cmath>      // std::abs, std::atan2
+#include <iostream>
+#include <numeric>
 
 namespace chaining_costmap_ver
 {
@@ -303,14 +305,114 @@ std::vector<Point2D> PathPostprocessor::curvature_clamp(
   return result;
 }
 
+double PathPostprocessor::wrap_angle(double a)
+{
+  while (a > M_PI) {
+    a -= 2.0 * M_PI;
+  }
+  while (a < -M_PI) {
+    a += 2.0 * M_PI;
+  }
+  return a;
+}
+
+std::vector<double> PathPostprocessor::compute_yaw_from_path(
+  const std::vector<Point2D> & pts,
+  double min_segment_len)
+{
+  std::vector<double> yaw;
+
+  if (pts.size() < 2) {
+    return yaw;
+  }
+
+  yaw.resize(pts.size(), 0.0);
+
+  for (size_t i = 0; i + 1 < pts.size(); ++i) {
+    const double dx = pts[i + 1].x - pts[i].x;
+    const double dy = pts[i + 1].y - pts[i].y;
+    const double ds = std::sqrt(dx * dx + dy * dy);
+
+    if (ds < min_segment_len) {
+      if (i == 0) {
+        yaw[i] = 0.0;
+      } else {
+        yaw[i] = yaw[i - 1];
+      }
+      continue;
+    }
+
+    yaw[i] = std::atan2(dy, dx);
+  }
+
+  yaw.back() = yaw[yaw.size() - 2];
+  return yaw;
+}
+
+std::vector<double> PathPostprocessor::smooth_yaw(
+  const std::vector<double> & yaw,
+  int window)
+{
+  if (yaw.empty() || window <= 1) {
+    return yaw;
+  }
+
+  const int half = window / 2;
+  std::vector<double> unwrapped = yaw;
+
+  for (size_t i = 1; i < unwrapped.size(); ++i) {
+    double diff = unwrapped[i] - unwrapped[i - 1];
+
+    while (diff > M_PI) {
+      unwrapped[i] -= 2.0 * M_PI;
+      diff = unwrapped[i] - unwrapped[i - 1];
+    }
+
+    while (diff < -M_PI) {
+      unwrapped[i] += 2.0 * M_PI;
+      diff = unwrapped[i] - unwrapped[i - 1];
+    }
+  }
+
+  std::vector<double> smoothed(unwrapped.size(), 0.0);
+
+  for (size_t i = 0; i < unwrapped.size(); ++i) {
+    const int begin = std::max<int>(0, static_cast<int>(i) - half);
+    const int end = std::min<int>(
+      static_cast<int>(unwrapped.size()) - 1,
+      static_cast<int>(i) + half);
+
+    double sum = 0.0;
+    int count = 0;
+
+    for (int j = begin; j <= end; ++j) {
+      sum += unwrapped[j];
+      ++count;
+    }
+
+    smoothed[i] = sum / static_cast<double>(count);
+  }
+
+  for (auto & a : smoothed) {
+    a = wrap_angle(a);
+  }
+
+  return smoothed;
+}
+
 PostprocessResult PathPostprocessor::process(
   const std::vector<Point2D> & raw_path,
   double prune_max_dev,
   int smooth_window,
   double resample_ds,
   double kappa_max,
-  int curvature_clamp_max_iter)
+  int curvature_clamp_max_iter,
+  int yaw_smooth_window,
+  double yaw_min_segment_len)
 {
+
+  std::cout << "[Postprocess] raw_path size = " << raw_path.size() << std::endl;
+
   PostprocessResult result;
 
   // 경로가 2점 미만이면 의미 있는 후처리 불가
@@ -320,11 +422,12 @@ PostprocessResult PathPostprocessor::process(
   // ① Prune: 직선 구간의 중간점 제거 (점 수 대폭 감소)
   // ────────────────────────────────────────────
   auto pruned = prune(raw_path, prune_max_dev);
-
+  std::cout << "[Postprocess] after prune size = " << pruned.size() << std::endl;
   // ────────────────────────────────────────────
   // ② Smooth: 이동 평균 필터로 잔여 꺾임 완화
   // ────────────────────────────────────────────
   auto smoothed = smooth(pruned, smooth_window);
+  std::cout << "[Postprocess] after smooth size = " << smoothed.size() << std::endl;
 
   // ────────────────────────────────────────────
   // ②½ Curvature Clamp: 최대 곡률 제한 (kappa_max > 0 일 때만)
@@ -332,7 +435,12 @@ PostprocessResult PathPostprocessor::process(
   //    Menger 곡률이 kappa_max를 초과하는 지점을 수정
   // ────────────────────────────────────────────
   if (kappa_max > 0.0) {
+    std::cout << "[Postprocess] before curvature clamp size = "
+              << smoothed.size() << std::endl;
     smoothed = curvature_clamp(smoothed, kappa_max, curvature_clamp_max_iter);
+    
+    std::cout << "[Postprocess] after curvature clamp size = "
+              << smoothed.size() << std::endl;
   }
 
   // ────────────────────────────────────────────
@@ -343,11 +451,18 @@ PostprocessResult PathPostprocessor::process(
   //    → 제어기가 일정 간격 waypoint를 기대하므로 필수 단계
   // ────────────────────────────────────────────
   result.path = resample_polyline(smoothed, resample_ds);
+  std::cout << "[Postprocess] after resample size = "
+            << result.path.size() << std::endl;
 
   // resample 후 curvature_clamp 재적용
   // resample의 lerp 보간 + 끝점 강제 추가가 새로운 급커브를 생성할 수 있으므로
   if (kappa_max > 0.0 && result.path.size() >= 3) {
+    std::cout << "[Postprocess] before curvature clamp (resample) size = "
+              << result.path.size() << std::endl;
     result.path = curvature_clamp(result.path, kappa_max, curvature_clamp_max_iter);
+    
+    std::cout << "[Postprocess] after curvature clamp (resample) size = "
+              << result.path.size() << std::endl;
   }
 
   // 리샘플 결과가 2점 미만이면 yaw 계산 불가
@@ -375,13 +490,11 @@ PostprocessResult PathPostprocessor::process(
   //   인접한 두 점을 잇는 벡터가 바로 그 진행 방향이므로,
   //   이것의 각도가 목표 yaw가 된다.
   // ────────────────────────────────────────────
-  auto tangents = polyline_tangents(result.path);
-  result.yaw.resize(result.path.size());
-  for (size_t i = 0; i < tangents.size(); ++i) {
-    // heading() = atan2(y, x) — geometry.hpp에 정의
-    result.yaw[i] = heading(tangents[i]);
-  }
+  result.yaw = compute_yaw_from_path(result.path, yaw_min_segment_len);
+  result.yaw = smooth_yaw(result.yaw, yaw_smooth_window);
 
+  std::cout << "[Postprocess] yaw size = " << result.yaw.size() << std::endl;
+  
   // 모든 단계 성공 → 유효한 결과
   result.valid = true;
   return result;
