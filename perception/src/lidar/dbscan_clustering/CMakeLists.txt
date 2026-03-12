@@ -6,6 +6,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ── CUDA auto-detection ──
 # CUDA가 있으면 GPU 이웃 검색, 없으면 CPU KD-Tree fallback
+# 최신 CUDA toolkit 자동 탐색 (sm_90 PTX 지원을 위해 12.x 우선)
+if(NOT CMAKE_CUDA_COMPILER)
+  find_program(_nvcc_latest nvcc
+    PATHS /usr/local/cuda-12.5/bin /usr/local/cuda-12/bin /usr/local/cuda/bin
+    NO_DEFAULT_PATH)
+  if(_nvcc_latest)
+    set(CMAKE_CUDA_COMPILER "${_nvcc_latest}")
+    message(STATUS "[dbscan_clustering] Found newer nvcc: ${_nvcc_latest}")
+  endif()
+endif()
 include(CheckLanguage)
 check_language(CUDA)
 
@@ -18,7 +28,11 @@ if(CMAKE_CUDA_COMPILER)
     cmake_policy(SET CMP0104 NEW)
   endif()
   if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
-    set(CMAKE_CUDA_ARCHITECTURES 60 61 70 75 80 86 CACHE STRING "CUDA architectures" FORCE)
+    set(_dbscan_cuda_architectures 60-real 61-real 70-real 75-real 80-real 86-real)
+    if(CMAKE_CUDA_COMPILER_VERSION VERSION_GREATER_EQUAL 11.8)
+      list(APPEND _dbscan_cuda_architectures 90)
+    endif()
+    set(CMAKE_CUDA_ARCHITECTURES "${_dbscan_cuda_architectures}" CACHE STRING "CUDA architectures" FORCE)
   endif()
   set(CMAKE_CUDA_STANDARD 14)
   set(CMAKE_CUDA_STANDARD_REQUIRED ON)
@@ -44,7 +58,7 @@ if(DBSCAN_USE_CUDA)
   add_library(dbscan_gpu SHARED src/dbscan_gpu.cu)
   target_include_directories(dbscan_gpu PRIVATE include)
   set_target_properties(dbscan_gpu PROPERTIES POSITION_INDEPENDENT_CODE ON)
-  set_target_properties(dbscan_gpu PROPERTIES CUDA_ARCHITECTURES "60;61;70;75;80;86")
+  set_target_properties(dbscan_gpu PROPERTIES CUDA_ARCHITECTURES "${CMAKE_CUDA_ARCHITECTURES}")
   target_link_libraries(dbscan_component dbscan_gpu)
   target_compile_definitions(dbscan_component PRIVATE DBSCAN_USE_CUDA)
 

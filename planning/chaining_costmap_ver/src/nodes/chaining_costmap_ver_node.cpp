@@ -102,6 +102,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/costmap", qos_dbg);
   pub_dbg_raw_path_ = create_publisher<nav_msgs::msg::Path>(
     "/planning/debug/raw_path", qos_dbg);
+  pub_dbg_pruned_path_ = create_publisher<nav_msgs::msg::Path>(
+    "/planning/debug/pruned_path", qos_dbg);
   pub_dbg_left_chain_ = create_publisher<nav_msgs::msg::Path>(
     "/planning/debug/left_chain", qos_dbg);
   pub_dbg_right_chain_ = create_publisher<nav_msgs::msg::Path>(
@@ -529,6 +531,13 @@ void LCPlannerNode::on_timer()
   if (pub_dbg_raw_path_->get_subscription_count() > 0) {
     pub_dbg_raw_path_->publish(std::make_unique<nav_msgs::msg::Path>(
       to_path_msg(raw_path, frame_id, stamp)));
+  }
+
+  // ── Debug: pruned_path (prune 직후, smooth/curvature_clamp 전) ──
+  if (pub_dbg_pruned_path_->get_subscription_count() > 0 &&
+      !pp_result.pruned.empty()) {
+    pub_dbg_pruned_path_->publish(std::make_unique<nav_msgs::msg::Path>(
+      to_path_msg(pp_result.pruned, frame_id, stamp)));
   }
 
   // ── Debug: chainer 시각화 (backbone, branches, seeds) ──

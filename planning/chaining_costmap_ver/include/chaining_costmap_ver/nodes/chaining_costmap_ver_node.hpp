@@ -216,6 +216,7 @@ private:
   // → RViz2에서 해당 토픽을 구독하지 않으면 CPU/메모리 낭비를 방지
   rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr pub_dbg_costmap_;       ///< costmap 시각화 (OccupancyGrid)
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_path_;             ///< A* 원시 경로 (후처리 전)
+  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_pruned_path_;          ///< prune 직후 경로 (디버그용)
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_left_chain_;           ///< 왼쪽 backbone 체인
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_right_chain_;          ///< 오른쪽 backbone 체인
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_left_branches_;   ///< 왼쪽 branch 시각화

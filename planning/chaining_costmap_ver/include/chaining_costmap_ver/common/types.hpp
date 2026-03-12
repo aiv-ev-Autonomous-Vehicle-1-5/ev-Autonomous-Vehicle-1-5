@@ -154,6 +154,9 @@ struct PostprocessResult
                                ///< atan2(dy, dx) 기준, -π ~ +π 범위
                                ///< path와 같은 크기(size)를 가짐
   bool valid = false;          ///< true: 후처리 성공, false: 입력 경로 부족 등
+
+  // --- 디버깅용 중간 결과 ---
+  std::vector<Point2D> pruned;  ///< prune 직후 결과 (디버그 시각화용)
 };
 
 // ============================================================================

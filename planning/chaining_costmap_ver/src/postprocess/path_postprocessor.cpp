@@ -322,6 +322,7 @@ PostprocessResult PathPostprocessor::process(
   // ① Prune: 직선 구간의 중간점 제거 (점 수 대폭 감소)
   // ────────────────────────────────────────────
   auto pruned = prune(raw_path, prune_max_dev);
+  result.pruned = pruned;  // 디버그용 중간 결과 저장
 
   // ────────────────────────────────────────────
   // ② Smooth: 이동 평균 필터로 잔여 꺾임 완화
