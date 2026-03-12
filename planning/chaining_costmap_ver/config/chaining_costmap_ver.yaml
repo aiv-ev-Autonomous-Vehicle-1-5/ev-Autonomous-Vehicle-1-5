@@ -84,6 +84,7 @@ lc_planner_node:
       goal_tolerance: 0.3       # [m]
       cost_weight: 0.05         # costmap 비용 가중치
       obstacle_cost: 100.0       # 통과 불가 비용 임계값
+      goal_max_cost: 100.0        # local goal 허용 최대 비용 (이 미만인 픽셀만 goal 후보)
 
     # ============================================================
     # [Stage 5] Postprocess — prune → smooth → curvature_clamp → resample → yaw

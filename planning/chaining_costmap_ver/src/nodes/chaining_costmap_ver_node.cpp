@@ -302,24 +302,77 @@ void LCPlannerNode::on_timer()
 
   // ── 3c. Goal 계산 ──
   // A* 탐색의 목표점(local_goal)을 결정한다.
-  // 좌/우 backbone의 끝점(.back())을 기준으로 트랙 중앙을 추정한다.
+  // 좌/우 backbone 끝점을 잇는 선분 위에서 통과 가능한 점을 선택한다.
   //
   // Case 1: 양쪽 backbone 모두 존재
-  //   goal = 좌/우 끝점의 중점 ((lx+rx)/2, (ly+ry)/2)
+  //   1) 좌/우 끝점을 잇는 선분 위의 픽셀들을 costmap resolution 간격으로 샘플링
+  //   2) 중점 픽셀의 cost가 obstacle_cost 미만이면 → 중점을 goal로 사용
+  //   3) 중점이 장애물이면 → 선분 위에서 cost < obstacle_cost인 점 중
+  //      중점에 가장 가까운 점을 goal로 사용
   //
   // Case 2/3: 한쪽만 존재
   //   goal.x = 해당 끝점.x
-  //   goal.y = 해당 끝점.y × 0.5       ← y를 절반으로 줄여 중앙 쪽으로 보정
-  //   (좌측 y>0, 우측 y<0 이므로 ×0.5는 항상 중심선 방향)
+  //   goal.y = 해당 끝점.y × 0.5 (중앙 쪽으로 보정)
   Point2D goal = {0.0, 0.0};
   bool have_goal = false;
   if (!dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
-    double lx = dc_result.left.backbone.back().x;
-    double rx = dc_result.right.backbone.back().x;
-    double ly = dc_result.left.backbone.back().y;
-    double ry = dc_result.right.backbone.back().y;
-    goal.x = (lx + rx) / 2.0;
-    goal.y = (ly + ry) / 2.0; // 양쪽 끝점의 중점
+    const double lx = dc_result.left.backbone.back().x;
+    const double rx = dc_result.right.backbone.back().x;
+    const double ly = dc_result.left.backbone.back().y;
+    const double ry = dc_result.right.backbone.back().y;
+
+    // 선분 중점
+    const double mx = (lx + rx) / 2.0;
+    const double my = (ly + ry) / 2.0;
+
+    // costmap에서 world→grid 변환 람다
+    auto world_to_cost = [&](double wx, double wy) -> double {
+      if (!costmap.valid) return 999.0;
+      int col = static_cast<int>((wx - costmap.origin_x) / costmap.resolution);
+      int row = static_cast<int>((wy - costmap.origin_y) / costmap.resolution);
+      if (row < 0 || row >= costmap.rows || col < 0 || col >= costmap.cols)
+        return 999.0;
+      return costmap.data[row * costmap.cols + col];
+    };
+
+    const double goal_max_cost = params_.astar.goal_max_cost;
+
+    // 중점의 cost가 goal_max_cost 미만이면 바로 사용
+    if (world_to_cost(mx, my) < goal_max_cost) {
+      goal.x = mx;
+      goal.y = my;
+    } else {
+      // 선분 위 픽셀을 resolution 간격으로 샘플링하여
+      // cost < goal_max_cost인 점 중 중점에 가장 가까운 점 탐색
+      const double seg_dx = rx - lx;
+      const double seg_dy = ry - ly;
+      const double seg_len = std::hypot(seg_dx, seg_dy);
+      const double step = costmap.valid ? costmap.resolution : 0.05;
+      const int n_samples = std::max(2, static_cast<int>(seg_len / step) + 1);
+
+      double best_dist2 = std::numeric_limits<double>::infinity();
+      bool found = false;
+
+      for (int i = 0; i <= n_samples; ++i) {
+        const double t = static_cast<double>(i) / n_samples;
+        const double sx = lx + seg_dx * t;
+        const double sy = ly + seg_dy * t;
+        if (world_to_cost(sx, sy) < goal_max_cost) {
+          const double d2 = (sx - mx) * (sx - mx) + (sy - my) * (sy - my);
+          if (d2 < best_dist2) {
+            best_dist2 = d2;
+            goal.x = sx;
+            goal.y = sy;
+            found = true;
+          }
+        }
+      }
+      // 선분 위에 free 셀이 없으면 중점을 폴백으로 사용
+      if (!found) {
+        goal.x = mx;
+        goal.y = my;
+      }
+    }
     have_goal = true;
   } else if (!dc_result.left.backbone.empty()) {
     goal.x = dc_result.left.backbone.back().x;

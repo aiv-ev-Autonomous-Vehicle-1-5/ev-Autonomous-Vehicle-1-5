@@ -116,6 +116,12 @@ struct PlanningParams
     // 80.0 = cone_cost_max(100)보다 낮아서 콘 중심 근처는 통과 불가.
     // lane_cost_max(50)보다 높아서 차선은 통과 가능.
     double obstacle_cost = 80.0;
+
+    // [무차원] local goal 허용 최대 비용.
+    // 좌/우 backbone 끝점 선분 위에서 goal 후보를 선택할 때,
+    // 이 값 미만인 픽셀만 goal 후보로 허용한다.
+    // obstacle_cost와 동일하게 설정하면 벽이 아닌 모든 셀을 허용.
+    double goal_max_cost = 80.0;
   } astar;
 
   // ============================================================
@@ -399,6 +405,7 @@ struct PlanningParams
     astar.goal_tolerance  = p("astar.goal_tolerance",  astar.goal_tolerance);
     astar.cost_weight     = p("astar.cost_weight",     astar.cost_weight);
     astar.obstacle_cost   = p("astar.obstacle_cost",   astar.obstacle_cost);
+    astar.goal_max_cost   = p("astar.goal_max_cost",   astar.goal_max_cost);
 
     // ── Vehicle 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.vehicle.*
