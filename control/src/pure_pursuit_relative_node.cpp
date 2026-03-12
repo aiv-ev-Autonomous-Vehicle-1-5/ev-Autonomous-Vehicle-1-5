@@ -3,7 +3,7 @@
 // ============================================================================
 //
 // [개요]
-//   상대좌표(base_link 기준) Path를 입력받아 Pure Pursuit 알고리즘으로
+//   상대좌표(base_link 기준) Marker(POINTS)를 입력받아 Pure Pursuit 알고리즘으로
 //   ERP42 차량의 조향각(steering)과 속도(speed)를 계산하는 제어 노드.
 //
 // [Pure Pursuit 알고리즘 요약]
@@ -26,7 +26,7 @@
 //   이는 대회 규정상 차선 구간에서 GPS 사용이 금지되어 있기 때문에 중요하다.
 //
 // [데이터 흐름]
-//   /planning/path (nav_msgs/Path, base_link 기준 상대좌표)
+//   /planning/path (visualization_msgs/Marker POINTS, base_link 기준 상대좌표)
 //     → [이 노드: Pure Pursuit 계산]
 //       → /erp42/control_command (erp42_msgs/ControlCommand)
 //

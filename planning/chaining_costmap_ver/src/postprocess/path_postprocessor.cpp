@@ -325,33 +325,30 @@ PostprocessResult PathPostprocessor::process(
   result.pruned = pruned;  // 디버그용 중간 결과 저장
 
   // ────────────────────────────────────────────
-  // ② Smooth: 이동 평균 필터로 잔여 꺾임 완화
+  // ② Resample: 등간격(ds) 리샘플링
+  //    prune 후 불균등해진 점 간격을 ds 간격으로 균일하게 재배치
+  //    → smooth가 균등한 간격의 점에서 동작해야 편향 없는 평활화 가능
+  //    → 제어기가 일정 간격 waypoint를 기대하므로 필수 단계
   // ────────────────────────────────────────────
-  auto smoothed = smooth(pruned, smooth_window);
+  auto resampled = resample_polyline(pruned, resample_ds);
 
   // ────────────────────────────────────────────
-  // ②½ Curvature Clamp: 최대 곡률 제한 (kappa_max > 0 일 때만)
+  // ③ Smooth: 이동 평균 필터로 잔여 꺾임 완화
+  //    등간격 리샘플링된 점에 대해 적용하므로
+  //    윈도우 내 각 점의 가중치가 균등하여 편향 없는 평활화
+  // ────────────────────────────────────────────
+  auto smoothed = smooth(resampled, smooth_window);
+
+  // ────────────────────────────────────────────
+  // ④ Curvature Clamp: 최대 곡률 제한
   //    차량의 최소 회전 반경을 보장하기 위해
   //    Menger 곡률이 kappa_max를 초과하는 지점을 수정
   // ────────────────────────────────────────────
-  if (kappa_max > 0.0) {
+  if (kappa_max > 0.0 && smoothed.size() >= 3) {
     smoothed = curvature_clamp(smoothed, kappa_max, curvature_clamp_max_iter);
   }
 
-  // ────────────────────────────────────────────
-  // ③ Resample: 등간격(ds) 리샘플링
-  //    geometry.hpp의 resample_polyline() 사용
-  //    → 폴리라인을 따라 ds 간격으로 선형 보간(lerp)하여 점을 재배치
-  //    → smooth 후 불균등해진 점 간격을 균일하게 만듦
-  //    → 제어기가 일정 간격 waypoint를 기대하므로 필수 단계
-  // ────────────────────────────────────────────
-  result.path = resample_polyline(smoothed, resample_ds);
-
-  // resample 후 curvature_clamp 재적용
-  // resample의 lerp 보간 + 끝점 강제 추가가 새로운 급커브를 생성할 수 있으므로
-  if (kappa_max > 0.0 && result.path.size() >= 3) {
-    result.path = curvature_clamp(result.path, kappa_max, curvature_clamp_max_iter);
-  }
+  result.path = smoothed;
 
   // 리샘플 결과가 2점 미만이면 yaw 계산 불가
   if (result.path.size() < 2) return result;

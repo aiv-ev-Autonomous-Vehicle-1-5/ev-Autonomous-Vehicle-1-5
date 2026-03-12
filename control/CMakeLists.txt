@@ -14,7 +14,7 @@ add_executable(pure_pursuit_relative_node src/pure_pursuit_relative_node.cpp)
 
 ament_target_dependencies(pure_pursuit_relative_node
   rclcpp
-  nav_msgs
+  visualization_msgs
   erp42_msgs
 )
 
