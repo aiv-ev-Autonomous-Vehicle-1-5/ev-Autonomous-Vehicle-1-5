@@ -45,10 +45,7 @@ namespace chaining_costmap_ver
  *   - 결과 < 0 → 두 벡터가 반대 방향 (θ > 90°)
  *
  * 사용처:
- *   - MagneticPlanner: 현재 heading과 새 heading 사이의 cos(θ) 계산
- *     → atan2(cross2, dot2)로 정확한 회전 각도 δ를 구할 때 사용
  *   - DirectionChainer: 방향 정렬도(cos_angle) 계산 시 사용
- *   - regress_direction: PCA 결과의 부호 보정 (hint_dir과의 방향 비교)
  */
 inline double dot2(const Point2D & a, const Point2D & b)
 {
@@ -68,10 +65,9 @@ inline double dot2(const Point2D & a, const Point2D & b)
  *   - |cross2|는 두 벡터로 만든 평행사변형의 넓이와 같다
  *
  * 사용처:
- *   - MagneticPlanner: heading 변화의 부호 있는 각도 계산
- *     → atan2(cross2(hdg, new_hdg), dot2(hdg, new_hdg))으로 δ 계산
  *   - SafetyChecker: 연속 3점(a→b→c)의 곡률 계산
  *     → κ = 2|cross(b-a, c-b)| / (|ab| * |bc| * |ac|)
+ *   - LCPlannerNode: 디버그 곡률 시각화에서 곡률 계산
  */
 inline double cross2(const Point2D & a, const Point2D & b)
 {
@@ -86,8 +82,6 @@ inline double cross2(const Point2D & a, const Point2D & b)
  *
  * 사용처:
  *   - normalize() 내부에서 단위벡터 변환 전 크기 계산
- *   - MagneticPlanner: 이동 방향 벡터의 크기가 0인지 확인
- *     → norm(move_dir) < 1e-6이면 이동 불가로 판단하여 루프 종료
  */
 inline double norm(const Point2D & v)
 {
@@ -135,10 +129,7 @@ inline Point2D operator-(const Point2D & a, const Point2D & b)
  * |v|가 1e-12 미만이면 영벡터를 반환한다 (0으로 나누기 방지).
  *
  * 사용처:
- *   - MagneticPlanner: heading 벡터를 단위벡터로 유지
- *     → heading_init, move_dir, blended heading 모두 normalize 적용
  *   - polyline_tangents(): 폴리라인의 각 점에서 접선 단위벡터 계산
- *   - regress_direction(): PCA 결과 및 hint_dir을 단위벡터로 변환
  */
 inline Point2D normalize(const Point2D & v)
 {

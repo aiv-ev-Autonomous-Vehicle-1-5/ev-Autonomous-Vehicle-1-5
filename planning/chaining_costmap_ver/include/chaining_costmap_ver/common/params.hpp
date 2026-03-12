@@ -2,7 +2,6 @@
  * @file params.hpp
  * @brief LC 플래너 파이프라인의 모든 파라미터를 관리하는 구조체
  *
- * planning_mr_ver 기반 + Chainer 섹션 추가.
  * planning_lc.yaml에서 로드되는 파라미터들을 구조체로 관리한다.
  *
  * ── 전체 구조 ──
@@ -154,11 +153,14 @@ struct PlanningParams
   // ============================================================
   // Postprocess — 경로 후처리
   //
-  // Planner가 생성한 "raw 경로"를 제어기(Pure Pursuit 등)가
-  // 사용할 수 있도록 정리하는 3단계 처리:
-  //   1. Resample  : 불균등한 간격의 경유점을 일정 간격(ds)으로 재배치
-  //   2. Smooth    : 이동 평균(Moving Average)으로 지그재그 제거
-  //   3. Prune     : 원래 경로에서 너무 벗어난 점을 제거(과도한 스무딩 보정)
+  // AStarPlanner가 생성한 "raw 경로"를 제어기(Pure Pursuit 등)가
+  // 사용할 수 있도록 정리하는 6단계 처리:
+  //   1. Prune           : Douglas-Peucker 유사 단순화로 직선 구간 중간점 제거
+  //   2. Smooth          : 이동 평균(Moving Average)으로 지그재그 완화
+  //   3. Curvature Clamp : 최대 곡률 제한 (1차, 차량 최소 회전 반경 보장)
+  //   4. Resample        : 불균등한 간격의 경유점을 일정 간격(ds)으로 재배치
+  //   5. Curvature Clamp : 최대 곡률 제한 (2차, resample 후 재적용)
+  //   6. Yaw             : 접선 벡터 → atan2 헤딩 각도 계산
   // ============================================================
   struct Postprocess
   {

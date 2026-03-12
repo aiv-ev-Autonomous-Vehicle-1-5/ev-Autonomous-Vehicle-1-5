@@ -2,10 +2,10 @@
  * @file types.hpp
  * @brief chaining_costmap_ver 패키지 전체에서 사용하는 공통 자료구조 정의
  *
- * planning_mr_ver 기반 타입 확장:
+ * chaining_costmap_ver 패키지 공통 타입:
  *   - PointType: 콘/차선 구분
  *   - ChainedPoint: 체이닝된 점 (타입 정보 포함)
- *   - ChainResult: 좌/우 체인 결과
+ *   - DirectionChainResult: 좌/우 체인 결과
  *
  * ──────────────────────────────────────────────────────────────────
  * [파이프라인 전체 흐름과 타입 매핑]
@@ -25,8 +25,8 @@
  *     - 콘/차선 타입에 따라 서로 다른 cost 파라미터 적용
  *     - 출력: CostmapResult (2D grid 비용 지도)
  *
- *  4) MagneticPlanner (경로 탐색)
- *     - CostmapResult 위에서 greedy forward search
+ *  4) AStarPlanner (경로 탐색)
+ *     - CostmapResult 위에서 8방향 A* 탐색
  *     - 출력: Point2D[] (최소 비용 경로 좌표열)
  *
  *  5) PathPostprocessor (후처리)
@@ -60,7 +60,7 @@ namespace chaining_costmap_ver
  *   y = 좌측(+) / 우측(-)
  *
  * [왜 Point2D가 필요한가?]
- * - CostmapGenerator, MagneticPlanner, PathPostprocessor 등
+ * - CostmapGenerator, AStarPlanner, PathPostprocessor 등
  *   "센서 타입에 무관하게" 좌표만 다루는 모듈에서 사용됨.
  * - ChainedPoint나 ChainPoint는 센서 메타정보(type, confidence 등)를
  *   포함하지만, planner 이후 단계에서는 순수 좌표만 필요하므로
@@ -74,7 +74,7 @@ struct Point2D
 
 // ============================================================================
 // 코스트맵 결과 (Costmap Output)
-// — CostmapGenerator → MagneticPlanner 사이의 인터페이스
+// — CostmapGenerator → AStarPlanner 사이의 인터페이스
 // ============================================================================
 
 /**
@@ -82,13 +82,13 @@ struct Point2D
  *
  * [역할]
  * 좌/우 경계 체인(ChainedPoint[])으로부터 2D 그리드 비용 지도를 생성한 결과.
- * MagneticPlanner가 이 코스트맵 위에서 greedy forward search를 수행한다.
+ * AStarPlanner가 이 코스트맵 위에서 8방향 A* 탐색을 수행한다.
  *
- * [비용 지도의 원리 — 자기장 저항 모델]
- * - 각 경계점(콘/차선)을 "자석"처럼 취급하여, 가까울수록 비용(저항)이 높다.
+ * [비용 지도의 원리 — 가우시안 비용장 모델]
+ * - 각 경계점(콘/차선)에서 가우시안 비용을 방사하여, 가까울수록 비용이 높다.
  * - 콘은 물리적 크기가 있으므로 flat zone(반지름 내 최대 비용)이 적용되고,
  *   차선은 점 형태라 flat zone 없이 거리 기반 감쇠만 적용된다.
- * - 플래너는 비용이 낮은 셀을 따라가므로, 자연스럽게 경계 사이의
+ * - A*는 비용이 낮은 셀을 따라가므로, 자연스럽게 경계 사이의
  *   중앙(차로 중심)으로 경로가 유도된다.
  *
  * [데이터 레이아웃]
@@ -132,11 +132,13 @@ struct CostmapResult
  * @brief PathPostprocessor의 출력 결과를 담는 구조체
  *
  * [역할]
- * MagneticPlanner가 출력한 raw 경로는 격자 단위라 지그재그가 심하다.
- * PostprocessResult는 아래 3단계 후처리를 거친 최종 경로:
- *   1) Prune  — 불필요한 중복/역방향 점 제거
- *   2) Smooth — 저역통과 필터(이동 평균 등)로 부드럽게
- *   3) Resample — 일정 간격으로 재샘플링 (제어기가 등간격 경로를 기대하므로)
+ * A* Planner가 출력한 raw 경로는 격자 단위라 지그재그가 심하다.
+ * PostprocessResult는 아래 후처리를 거친 최종 경로:
+ *   1) Prune           — 직선 구간의 중간점 제거
+ *   2) Smooth          — 이동 평균 필터로 잔여 꺾임 완화
+ *   2.5) Curvature Clamp — 최대 곡률 제한
+ *   3) Resample        — 일정 간격으로 재샘플링 (제어기가 등간격 경로를 기대하므로)
+ *   2.5) Curvature Clamp — 리샘플 후 재적용
  *
  * [path와 yaw의 관계]
  * path[i]와 yaw[i]는 1:1 대응. yaw[i]는 path[i]에서 path[i+1] 방향의

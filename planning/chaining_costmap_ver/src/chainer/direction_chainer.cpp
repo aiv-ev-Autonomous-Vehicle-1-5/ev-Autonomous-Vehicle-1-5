@@ -7,7 +7,7 @@
  *   모든 멤버 함수를 구현한다. 각 함수는 파이프라인의 한 단계에 대응한다.
  *
  * [6단계 파이프라인 요약]
- *   1단계: find_seed()           — 좌/우 시작점 선택 (콘 우선)
+ *   1단계: find_seed()           — 좌/우 시작점 선택 (최근접점 기반)
  *   2단계: build_graph()         — kNN + G1,G3 게이트로 undirected 그래프 구성
  *   3단계: extract_component()   — BFS로 seed 연결 성분 추출 (visited 공유)
  *   4단계: extract_backbone()    — greedy chaining으로 주 경계선 추출
@@ -205,8 +205,8 @@ DirectionChainResult DirectionChainer::chain(
 //
 // [seed 선택 전략]
 //
-//   1) 전방 필터: x ≥ 0 인 점만 후보
-//      → 후방 점에서 시작하면 체인이 뒤로 뻗어 무의미
+//   1) 전방 필터: x ≥ -2.0 인 점만 후보
+//      → 후방 2m 이상 점에서 시작하면 체인이 뒤로 뻗어 무의미
 //
 //   2) side_seed_y 가드:
 //      ┌────────────────────────────┐
@@ -220,10 +220,7 @@ DirectionChainResult DirectionChainer::chain(
 //
 //   3) ego 최근접: 후보 중 원점(ego)에서 거리가 가장 가까운 점 선택
 //      → 가까운 점일수록 좌/우 구분이 확실함
-//
-//   4) cone_priority: 콘이 있으면 콘을 우선 seed로 사용
-//      → 콘(PE 드럼)은 크기가 일정하고 위치 정확도가 높음
-//      → 차선점보다 안정적인 시작점이 됨
+//      → 콘/차선 구분 없이 가장 가까운 점을 seed로 사용
 //
 // [반환값]
 //   seed 인덱스 (후보 없으면 -1)
@@ -240,7 +237,7 @@ int DirectionChainer::find_seed(
   const int n = static_cast<int>(points.size());
 
   for (int i = 0; i < n; ++i) {
-    // x < -1 (후방)인 점은 seed 후보에서 제외
+    // x < -2.0 (후방 2m 이상)인 점은 seed 후보에서 제외
     if (points[i].x < -2.0) continue;
 
     // side_seed_y 가드: 중심선 부근 점 제외

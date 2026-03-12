@@ -1,11 +1,11 @@
 /**
  * @file path_postprocessor.hpp
- * @brief 경로 후처리기 — prune, smooth, resample, yaw 4단계 파이프라인
+ * @brief 경로 후처리기 — 6단계 파이프라인 (prune → smooth → curvature_clamp → resample → curvature_clamp → yaw)
  *
  * ──────────────────────────────────────────────────────────────────
  * [전체 파이프라인에서의 위치]
  *
- *   MagneticPlanner가 costmap 위에서 greedy forward search로 생성한
+ *   AStarPlanner가 costmap 위에서 A* 탐색으로 생성한
  *   "원시 경로(raw path)"는 다음과 같은 문제를 가진다:
  *
  *   (1) 격자 해상도에 의한 지그재그 — costmap grid cell 단위로 이동하므로
@@ -13,15 +13,16 @@
  *   (2) 불필요한 중간점 — 거의 직선인 구간에도 매 cell마다 점이 존재한다.
  *   (3) 불균등한 점 간격 — 격자 대각선 vs 직교 이동에 따라 간격이 다르다.
  *   (4) yaw(헤딩) 정보 없음 — 차량 제어에는 각 waypoint의 목표 헤딩이 필요하다.
+ *   (5) 곡률 초과 — 격자 경로의 급커브가 차량 최소 회전 반경을 위반할 수 있다.
  *
- *   PathPostprocessor는 이 4가지 문제를 순차적으로 해결하여,
+ *   PathPostprocessor는 이 문제들을 순차적으로 해결하여,
  *   차량 제어기(Pure Pursuit, Stanley 등)에 적합한
  *   "깨끗하고 균등한 경로 + yaw 배열"을 출력한다.
  *
  * ──────────────────────────────────────────────────────────────────
- * [4단계 파이프라인 요약]
+ * [6단계 파이프라인 요약]
  *
- *   raw_path (MagneticPlanner 출력)
+ *   raw_path (AStarPlanner 출력)
  *       │
  *       ▼
  *   ① Prune (Douglas-Peucker 유사 단순화)
@@ -32,11 +33,18 @@
  *       │  - 남은 꺾임을 윈도우 크기 만큼의 이웃 평균으로 완화
  *       │  - 시작점/끝점은 보존하여 경로 연속성 유지
  *       ▼
- *   ③ Resample (등간격 리샘플링)
- *       │  - smoothing 후 불균등해진 점 간격을 ds 간격으로 균일하게 재배치
+ *   ③ Curvature Clamp (1차 곡률 제한)
+ *       │  - Menger 곡률이 kappa_max 초과 시 중간점을 이동하여 곡률 저감
+ *       │  - 차량 최소 회전 반경 보장
+ *       ▼
+ *   ④ Resample (등간격 리샘플링)
+ *       │  - 불균등해진 점 간격을 ds 간격으로 균일하게 재배치
  *       │  - 제어기가 일정 간격 waypoint를 기대하므로 필수
  *       ▼
- *   ④ Yaw (접선 벡터 → 헤딩 각도)
+ *   ⑤ Curvature Clamp (2차 곡률 제한)
+ *       │  - resample의 lerp 보간이 새로운 급커브를 생성할 수 있으므로 재적용
+ *       ▼
+ *   ⑥ Yaw (접선 벡터 → 헤딩 각도)
  *       │  - 각 waypoint에서의 진행 방향(접선)을 구하고
  *       │  - atan2(dy, dx)로 yaw 각도 [rad]를 계산
  *       ▼
@@ -57,7 +65,7 @@ namespace chaining_costmap_ver
 
 /**
  * @class PathPostprocessor
- * @brief MagneticPlanner가 생성한 원시 경로를 차량 제어에 적합한 형태로 변환
+ * @brief AStarPlanner가 생성한 원시 경로를 차량 제어에 적합한 형태로 변환
  *
  * [사용 방법]
  *   PathPostprocessor pp;
@@ -70,9 +78,9 @@ class PathPostprocessor
 {
 public:
   /**
-   * @brief 4단계 파이프라인 실행: prune → smooth → resample → yaw 계산
+   * @brief 6단계 파이프라인 실행: prune → smooth → curvature_clamp → resample → curvature_clamp → yaw
    *
-   * @param raw_path       MagneticPlanner가 출력한 원시 경로 (Point2D 배열)
+   * @param raw_path       AStarPlanner가 출력한 원시 경로 (Point2D 배열)
    * @param prune_max_dev  [m] prune 단계에서 허용하는 최대 수직 편차
    *                       - 값이 클수록 더 공격적으로 점을 제거 (직선화)
    *                       - 값이 작을수록 원본 형태를 더 보존

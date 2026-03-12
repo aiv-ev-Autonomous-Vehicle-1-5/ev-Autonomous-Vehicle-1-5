@@ -52,27 +52,313 @@
 | `/perception/lane_boundaries` | `ev_msgs::msg::LaneBoundaryArray` | BestEffort, depth=1 | 카메라 차선 경계점 |
 | `/perception/bboxes` | `ev_msgs::msg::BBoxArray` | BestEffort, depth=1 | LiDAR 장애물 (콘/드럼) |
 
+#### `/perception/bboxes` — LiDAR 장애물 바운딩 박스
+
+- **발행자**: `make_bbox` 노드 (perception 패키지)
+- **주기**: LiDAR 스캔 주기 (~10Hz)
+- **좌표계**: `velodyne` (노드 내부에서 `sensor_tf` 오프셋으로 `base_link`로 변환)
+- **사용 Stage**: Stage 1 (Input Parse) → ChainPoint(type=CONE)로 변환
+
+**메시지 구조:**
+```
+ev_msgs/BBoxArray
+├── header
+│   ├── stamp        # 타임스탬프
+│   └── frame_id     # "velodyne"
+└── bboxes[]         # BBox 배열
+    ├── position     # geometry_msgs/Point — 바운딩박스 중심 (x, y, z) [m]
+    ├── size_x       # float32 — X 크기 [m]
+    ├── size_y       # float32 — Y 크기 [m]
+    ├── size_z       # float32 — 높이 [m]
+    ├── confidence   # float32 — 시그모이드 정규화 신뢰도 (0.0~1.0)
+    └── label        # int32 — DBSCAN 클러스터 ID
+```
+
+**Planning 노드에서의 사용:**
+- `position.x + tf_x`, `position.y + tf_y` → base_link 좌표로 변환
+- `size_x`, `size_y` → 체이닝 비용 함수 C_size에 사용
+- `label` → 같은 클러스터 식별용
+- `confidence` → ChainPoint에 복사 (현재 체이닝에서 미사용)
+
+#### `/perception/lane_boundaries` — 카메라 차선 경계
+
+- **발행자**: 카메라 차선 인식 노드 (perception 패키지)
+- **좌표계**: `base_link` (TF 보정 불필요)
+- **사용 Stage**: Stage 1 (Input Parse) → ChainPoint(type=LANE)로 변환
+
+**메시지 구조:**
+```
+ev_msgs/LaneBoundaryArray
+├── header
+│   ├── stamp        # 타임스탬프
+│   └── frame_id     # "base_link"
+└── boundaries[]     # LaneBoundary 배열
+    ├── header       # 개별 헤더
+    ├── points[]     # geometry_msgs/Point[] — 순서 정렬된 경계점 (차량에서 가까운 점부터)
+    └── confidence   # float32 — 검출 신뢰도 (0.0~1.0)
+```
+
+**Planning 노드에서의 사용:**
+- `points[].x`, `points[].y` → ChainPoint 좌표로 직접 사용 (이미 base_link 기준)
+- `confidence` → ChainPoint에 복사
+- `label = -1` (차선에는 클러스터 라벨 없음)
+
+#### QoS 설정 — Best Effort, depth=1
+
+```cpp
+rclcpp::QoS qos_be(1);  // depth=1: 큐에 최대 1개만 보관
+qos_be.best_effort();    // 메시지 손실 허용, 최신 데이터만 수신
+```
+
+| 항목 | 설정 | 이유 |
+|------|------|------|
+| Reliability | Best Effort | 인지 데이터는 실시간성이 핵심. 재전송보다 최신 데이터 우선 |
+| History depth | 1 | 오래된 데이터 누적 방지 — 항상 최신 1건만 처리 |
+| Durability | Volatile | 구독 전 발행된 데이터 불필요 |
+
+> **주의**: perception 노드가 Reliable QoS로 발행하면 QoS 불일치로 연결이 안 됨.
+> perception 측도 Best Effort로 맞춰야 한다.
+
+#### Stale 판정 (Stage 0)
+
+```
+현재시각 - 마지막_수신시각 > perception_ms (기본 300ms)  →  STALE
+```
+
+- 차선 **OR** bbox 중 하나라도 fresh → 파이프라인 진행
+- 둘 다 stale 또는 한 번도 수신 안 함 → `"STALE"` 상태 발행, 경로 미발행
+- OR 조건 이유: 직선 구간(차선만), 장애물 구간(콘만) 등 상황별로 한쪽만 유효할 수 있음
+
+---
+
 ### Publications (Outputs) — Core
 
-| Topic | Message Type | 설명 |
-|-------|-------------|------|
-| `/planning/path` | `nav_msgs::msg::Path` | 최종 후처리된 경로 (controller 입력) |
-| `/planning/status` | `std_msgs::msg::String` | 플래너 상태: `"ok"`, `"STALE"`, `"no_valid_path"`, `"curvature_exceeds_r_min"` 등 |
+| Topic | Message Type | QoS | 설명 |
+|-------|-------------|-----|------|
+| `/planning/path` | `nav_msgs::msg::Path` | BestEffort, depth=1 | 최종 후처리된 경로 (controller 입력) |
+| `/planning/status` | `std_msgs::msg::String` | BestEffort, depth=1 | 플래너 상태 문자열 |
 
-### Publications (Outputs) — Debug (구독자 있을 때만 발행)
+#### `/planning/path` — 최종 경로
 
-| Topic | Message Type | 설명 |
-|-------|-------------|------|
-| `/planning/debug/costmap` | `nav_msgs::msg::OccupancyGrid` | 2D Gaussian 코스트맵 (0~100) |
-| `/planning/debug/raw_path` | `nav_msgs::msg::Path` | A* 출력 (후처리 전 raw 경로) |
-| `/planning/debug/left_chain` | `nav_msgs::msg::Path` | 왼쪽 backbone 체인 |
-| `/planning/debug/right_chain` | `nav_msgs::msg::Path` | 오른쪽 backbone 체인 |
-| `/chaining/debug/left_branches` | `visualization_msgs::msg::MarkerArray` | 왼쪽 branch 시각화 (연두색 LINE_STRIP) |
-| `/chaining/debug/right_branches` | `visualization_msgs::msg::MarkerArray` | 오른쪽 branch 시각화 (분홍색) |
-| `/chaining/debug/seeds` | `visualization_msgs::msg::MarkerArray` | 체이닝 시드 (초록/빨강 SPHERE) + 골 (파랑) |
-| `/planning/debug/local_goal` | `visualization_msgs::msg::MarkerArray` | A* 목표점 (노랑 SPHERE) |
-| `/planning/debug/obstacle_wall` | `visualization_msgs::msg::MarkerArray` | obstacle_cost 이상 셀 (빨간색 CUBE_LIST, 바닥면) |
-| `/planning/debug/curvature` | `visualization_msgs::msg::MarkerArray` | 곡률 초과 지점 (노란→빨강 그라데이션 SPHERE) |
+- **생성 Stage**: Stage 5 (Postprocess) → Stage 7 (Publish)
+- **좌표계**: `base_link`
+- **발행 조건**: 항상 발행 (STALE일 때는 미발행)
+- **구독자**: 제어기 (pure_pursuit, stanley 등)
+
+**메시지 구조:**
+```
+nav_msgs/Path
+├── header
+│   ├── stamp        # 발행 시각
+│   └── frame_id     # "base_link"
+└── poses[]          # PoseStamped 배열 (등간격 waypoint)
+    └── pose
+        ├── position
+        │   ├── x    # [m] 전방(+) / 후방(-)
+        │   ├── y    # [m] 좌측(+) / 우측(-)
+        │   └── z    # 항상 0.0 (2D 플래너)
+        └── orientation
+            └── w    # 항상 1.0 (단위 쿼터니언, yaw 정보는 별도 배열)
+```
+
+**경로 특성:**
+- 등간격: `resample_ds` (기본 0.10m) 간격으로 배치
+- 후처리 완료: prune → smooth → curvature_clamp → resample → curvature_clamp → yaw 적용
+- 곡률 제한: `kappa_max = 1/r_min ≈ 0.461` 이하로 clamp됨
+- orientation에 yaw가 포함되지 않음 — yaw는 내부 `PostprocessResult.yaw[]`에만 존재
+
+> **참고**: `poses[].pose.orientation`은 단위 쿼터니언(w=1)로 고정.
+> 제어기가 heading을 필요로 하면 인접 waypoint 간 `atan2(dy, dx)`로 직접 계산해야 함.
+
+#### `/planning/status` — 플래너 상태
+
+- **발행 조건**: 항상 발행 (STALE 포함)
+- **구독자**: 상위 state machine, 모니터링 시스템
+
+**상태 값:**
+
+| 값 | 의미 | 발생 조건 |
+|----|------|----------|
+| `"ok"` | 정상 경로 생성 완료 | 모든 파이프라인 단계 성공 |
+| `"STALE"` | 인지 데이터 타임아웃 | Stage 0에서 perception_ms 초과 |
+| `"no_valid_path"` | A* 경로 탐색 실패 | 장애물로 목표 도달 불가, backbone 없음 등 |
+| `"curvature_exceeds_r_min"` | 곡률 한계 초과 | 후처리 후에도 κ > 1/r_min |
+
+---
+
+### Publications (Outputs) — Debug
+
+모든 디버그 토픽은 **lazy publishing** 패턴을 사용한다:
+```cpp
+if (publisher->get_subscription_count() > 0) {
+    // 메시지 생성 및 발행
+}
+```
+→ RViz2에서 해당 토픽을 Add하지 않으면 CPU/메모리 소비 없음.
+
+**QoS**: Reliable, depth=1 (RViz2가 Reliable로 구독하므로 매칭)
+
+**발행 게이팅 — 2단계 구조:**
+
+| 토픽 그룹 | 게이팅 조건 |
+|-----------|------------|
+| costmap, raw_path, obstacle_wall, curvature | lazy publish만 (구독자 있으면 항상 발행) |
+| left/right_chain, left/right_branches, seeds, local_goal | `publish_debug: true` 파라미터 **AND** lazy publish |
+
+#### `/planning/debug/costmap` — 2D Gaussian 코스트맵
+
+- **Type**: `nav_msgs::msg::OccupancyGrid`
+- **생성 Stage**: Stage 3a (CostmapGenerator)
+- **RViz2 Display**: Map
+
+```
+nav_msgs/OccupancyGrid
+├── header (base_link)
+├── info
+│   ├── resolution   # [m/cell] 셀 크기 (기본 0.15)
+│   ├── width        # 열 수
+│   ├── height       # 행 수
+│   └── origin       # 격자 원점 (base_link 기준)
+└── data[]           # int8 배열 (0~100, costmap 값을 100으로 clamp)
+```
+
+- 값 해석: 0=자유공간, 100=최대비용(콘 중심), 중간값=Gaussian 감쇠 영역
+- `obstacle_cost` (기본 100) 이상 셀은 A*에서 통과 불가
+
+#### `/planning/debug/raw_path` — A* 원시 경로
+
+- **Type**: `nav_msgs::msg::Path`
+- **생성 Stage**: Stage 3b (AStarPlanner)
+- **RViz2 Display**: Path
+- 후처리 전 raw 경로 → costmap 위 8방향 그리드 탐색 결과
+- 격자 단위 지그재그가 있으며, 점 간격이 불균등함
+
+#### `/planning/debug/left_chain`, `/planning/debug/right_chain` — Backbone 체인
+
+- **Type**: `nav_msgs::msg::Path`
+- **생성 Stage**: Stage 2 (DirectionChainer)
+- **게이팅**: `publish_debug: true` 필요
+- **RViz2 Display**: Path
+- 왼쪽/오른쪽 backbone 점들을 연결한 선
+- 체이닝 알고리즘이 올바르게 좌/우 경계를 분류했는지 확인용
+
+#### `/chaining/debug/left_branches`, `/chaining/debug/right_branches` — Branch 시각화
+
+- **Type**: `visualization_msgs::msg::MarkerArray`
+- **생성 Stage**: Stage 2 (DirectionChainer)
+- **게이팅**: `publish_debug: true` 필요
+- **RViz2 Display**: MarkerArray
+
+| 속성 | 왼쪽 | 오른쪽 |
+|------|------|--------|
+| 색상 | 연두색 (0.5, 1.0, 0.5) | 연분홍 (1.0, 0.5, 0.5) |
+| ns | `"left_branches"` | `"right_branches"` |
+| 마커 타입 | LINE_STRIP | LINE_STRIP |
+| 선 두께 | 3cm | 3cm |
+
+- 각 branch는 backbone의 parent 점에서 시작하여 미체이닝 노드로 연결됨
+- 매 프레임 DELETEALL로 이전 마커 제거
+
+#### `/chaining/debug/seeds` — 시드/골 마커
+
+- **Type**: `visualization_msgs::msg::MarkerArray`
+- **생성 Stage**: Stage 2 (DirectionChainer)
+- **게이팅**: `publish_debug: true` 필요
+- **RViz2 Display**: MarkerArray
+
+| 마커 | 색상 | 위치 | 크기 |
+|------|------|------|------|
+| 왼쪽 seed | 초록 (0,1,0) | backbone.front() | SPHERE 직경 15cm |
+| 오른쪽 seed | 빨강 (1,0,0) | backbone.front() | SPHERE 직경 15cm |
+| 모든 goal | 파랑 (0,0,1) | backbone.back() | SPHERE 직경 15cm |
+
+- seed: 체이닝 시작점 (ego에서 가장 가까운 전방 포인트)
+- goal: backbone 끝점 (체이닝이 도달한 가장 먼 점)
+
+#### `/planning/debug/local_goal` — A* 목표점
+
+- **Type**: `visualization_msgs::msg::MarkerArray`
+- **생성 Stage**: Stage 3c (Goal 계산, on_timer 내부)
+- **게이팅**: `publish_debug: true` 필요
+- **RViz2 Display**: MarkerArray
+- 노란색 SPHERE, 직경 30cm
+- 양쪽 backbone 끝점의 중점, 또는 한쪽만 있으면 y×0.5 보정된 점
+- costmap 경계 안쪽 1셀 마진으로 clamp됨
+
+#### `/planning/debug/obstacle_wall` — 장애물 셀 시각화
+
+- **Type**: `visualization_msgs::msg::MarkerArray`
+- **생성 Stage**: Stage 3a (CostmapGenerator)
+- **RViz2 Display**: MarkerArray
+- 빨간색 CUBE_LIST (costmap 해상도 크기, 두께 0.5cm)
+- `costmap[r][c] >= obstacle_cost` (기본 100)인 셀만 표시
+- z=-0.01m (chain 마커 아래에 렌더링)
+
+#### `/planning/debug/curvature` — 곡률 초과 지점
+
+- **Type**: `visualization_msgs::msg::MarkerArray`
+- **생성 Stage**: Stage 6 (SafetyChecker 후 시각화)
+- **RViz2 Display**: MarkerArray
+- SPHERE 직경 15cm, lifetime 0.2초
+- Menger 곡률이 `kappa_limit = 1/r_min`을 초과하는 각 triplet의 중간점에 표시
+- 색상 그라데이션: 노란색(약간 초과) → 빨간색(크게 초과)
+  - `ratio = min((kappa/kappa_limit - 1) × 2, 1.0)`
+  - `r=1.0, g=1.0-ratio, b=0.0`
+- 매 프레임 DELETEALL로 이전 마커 제거
+
+---
+
+### 토픽 데이터 흐름 요약
+
+```
+/perception/bboxes ──────┐
+  (BBoxArray, BestEffort)│  Stage 1: parse_input()
+                         ├──→ ChainPoint[] (type=CONE, base_link 좌표)
+/perception/lane_boundaries─┘       ↓ (type=LANE)
+                         │
+                    Stage 2: DirectionChainer
+                         │
+              ┌──────────┼──────────┐
+              ▼          ▼          ▼
+        left.backbone  right.backbone  unchained
+              │          │          │
+              └──────────┼──────────┘
+                         ▼
+                    Stage 3a: CostmapGenerator
+                         │
+                    CostmapResult ──→ /planning/debug/costmap
+                         │              /planning/debug/obstacle_wall
+                         ▼
+                    Stage 3b: AStarPlanner
+                         │
+                    raw_path ──→ /planning/debug/raw_path
+                         │
+                    Stage 5: PathPostprocessor
+                         │
+                    PostprocessResult
+                         │
+                    Stage 6: SafetyChecker
+                         │
+              ┌──────────┼──────────────────────┐
+              ▼          ▼                      ▼
+     /planning/path   /planning/status   /planning/debug/curvature
+```
+
+### RViz2 확인 명령어
+
+```bash
+# 모든 planning 토픽 목록 확인
+ros2 topic list | grep -E "planning|chaining"
+
+# 토픽 발행 주기 확인
+ros2 topic hz /planning/path
+
+# 메시지 내용 확인
+ros2 topic echo /planning/status
+
+# 경로 waypoint 수 확인
+ros2 topic echo /planning/path --field poses --once | grep -c "position:"
+```
 
 ---
 

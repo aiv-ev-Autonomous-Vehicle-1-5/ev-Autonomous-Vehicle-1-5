@@ -2,17 +2,19 @@
  * @file path_postprocessor.cpp
  * @brief 경로 후처리기 — 구현부
  *
- * MagneticPlanner가 출력한 원시(raw) greedy 경로를
+ * AStarPlanner가 출력한 원시(raw) 경로를
  * 차량 제어기에 적합한 깨끗하고 부드러운 경로로 변환한다.
  *
  * [파이프라인 전체 흐름]
  *
- *   MagneticPlanner 출력 (격자 기반 지그재그 경로)
+ *   AStarPlanner 출력 (격자 기반 지그재그 경로)
  *       │
- *       ├─① prune()    : 직선 구간의 불필요한 중간점 제거
- *       ├─② smooth()   : 이동 평균으로 잔여 꺾임 완화
- *       ├─③ resample() : 등간격 점 재배치 (geometry.hpp의 resample_polyline)
- *       └─④ yaw 계산   : 접선 벡터 → atan2 헤딩 각도
+ *       ├─① prune()           : 직선 구간의 불필요한 중간점 제거
+ *       ├─② smooth()          : 이동 평균으로 잔여 꺾임 완화
+ *       ├─③ curvature_clamp() : 최대 곡률 제한 (1차)
+ *       ├─④ resample()        : 등간격 점 재배치 (geometry.hpp의 resample_polyline)
+ *       ├─⑤ curvature_clamp() : 최대 곡률 제한 (2차, resample 후 재적용)
+ *       └─⑥ yaw 계산          : 접선 벡터 → atan2 헤딩 각도
  *       │
  *       ▼
  *   PostprocessResult { path[], yaw[], valid }
@@ -205,12 +207,12 @@ std::vector<Point2D> PathPostprocessor::smooth(
 }
 
 // ============================================================================
-// process() — 4단계 파이프라인 메인 함수
+// process() — 6단계 파이프라인 메인 함수
 // ============================================================================
 //
 // [호출 흐름]
-//   lc_planner_node.cpp의 planning 콜백에서 호출된다:
-//     MagneticPlanner::plan() → raw_path (Point2D 배열)
+//   chaining_costmap_ver_node.cpp의 planning 콜백에서 호출된다:
+//     AStarPlanner::plan() → raw_path (Point2D 배열)
 //     PathPostprocessor::process(raw_path, ...) → PostprocessResult
 //     SafetyChecker::check(result, ...) → PlannerState
 //

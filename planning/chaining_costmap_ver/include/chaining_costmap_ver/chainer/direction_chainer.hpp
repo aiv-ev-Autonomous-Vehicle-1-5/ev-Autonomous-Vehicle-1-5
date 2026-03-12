@@ -28,8 +28,7 @@
  *   │ 1단계: Seed 선택 (Seed Selection)                       │
  *   │   - 좌/우 각각 시작점(seed) 선택                         │
  *   │   - side_seed_y 가드: 중심선 부근 점 제외 (|y| < 가드)   │
- *   │   - cone_priority: 콘이 있으면 콘을 우선 seed로 선택     │
- *   │   - 선택 기준: ego(원점)에 가장 가까운 전방 점            │
+ *   │   - 선택 기준: ego(원점)에 가장 가까운 점                 │
  *   ├─────────────────────────────────────────────────────────┤
  *   │ 2단계: Undirected Graph 구성 (Build Graph)              │
  *   │   - 모든 점에 대해 kNN(k-최근접 이웃) 탐색               │
@@ -170,18 +169,16 @@ private:
    * @brief 좌측 또는 우측의 체이닝 시작점(seed) 선택
    *
    * [알고리즘]
-   *   1. x ≥ 0 (전방) 필터: 후방 점은 seed 후보에서 제외
+   *   1. x ≥ -2.0 필터: 후방 2m 이상인 점은 seed 후보에서 제외
    *   2. side_seed_y 가드:
    *      - 좌측(is_left=true):  y ≥ side_seed_y 인 점만 후보
    *      - 우측(is_left=false): y ≤ -side_seed_y 인 점만 후보
    *      → 중심선(y≈0) 근처 점이 잘못된 방향의 seed가 되는 것 방지
-   *   3. ego(원점)에서 가장 가까운 전방 점을 seed로 선택
-   *   4. cone_priority가 true이고 콘 후보가 있으면:
-   *      → 콘을 우선 seed로 선택 (콘이 차선보다 위치 정확도가 높음)
+   *   3. ego(원점)에서 가장 가까운 점을 seed로 선택 (콘/차선 구분 없이)
    *
    * @param points   필터링된 경계점 배열
    * @param is_left  true=좌측 seed, false=우측 seed
-   * @param cp       chainer 파라미터 (side_seed_y, cone_priority 사용)
+   * @param cp       chainer 파라미터 (side_seed_y 사용)
    * @return seed 인덱스 (후보 없으면 -1)
    */
   int find_seed(
