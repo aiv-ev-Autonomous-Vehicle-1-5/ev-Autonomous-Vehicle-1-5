@@ -9,6 +9,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(t870_msgs REQUIRED)
+find_package(erp42_msgs REQUIRED)
 
 add_executable(pure_pursuit_relative_node src/pure_pursuit_relative_node.cpp)
 
@@ -16,11 +17,20 @@ ament_target_dependencies(pure_pursuit_relative_node
   rclcpp
   visualization_msgs
   t870_msgs
+  erp42_msgs
 )
 
 install(TARGETS
   pure_pursuit_relative_node
   DESTINATION lib/${PROJECT_NAME}
+)
+
+install(DIRECTORY launch/
+  DESTINATION share/${PROJECT_NAME}/launch
+)
+
+install(DIRECTORY config/
+  DESTINATION share/${PROJECT_NAME}/config
 )
 
 ament_package()

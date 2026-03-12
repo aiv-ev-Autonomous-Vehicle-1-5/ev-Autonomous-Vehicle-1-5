@@ -28,7 +28,8 @@
 // [데이터 흐름]
 //   /planning/path (visualization_msgs/Marker POINTS, base_link 기준 상대좌표)
 //     → [이 노드: Pure Pursuit 계산]
-//       → /t870/control_command (t870_msgs/ControlCommand)
+//       → /t870/control_command  (t870_msgs/ControlCommand)  — 실차용
+//       → /erp42/control_command (erp42_msgs/ControlCommand) — Gazebo 시뮬레이션용 (lazy)
 //
 // ============================================================================
 
@@ -41,6 +42,7 @@
 #include "rclcpp/rclcpp.hpp"                      // ROS2 C++ 클라이언트 라이브러리
 #include "visualization_msgs/msg/marker.hpp"       // 경로 메시지 (POINTS 마커)
 #include "t870_msgs/msg/control_command.hpp"       // T870 제어 명령 메시지 (speed, steering)
+#include "erp42_msgs/msg/control_command.hpp"      // ERP42 제어 명령 메시지 (Gazebo 시뮬레이션용)
 
 using std::placeholders::_1;  // std::bind에서 콜백 인자 바인딩용
 
@@ -152,11 +154,11 @@ public:
     //   - planning 모듈이 발행하는 경로를 수신
     //   - 각 Point의 x/y는 base_link 기준 상대좌표
     //     (x: 전방, y: 좌측이 +)
-    //   - QoS depth=10: 최대 10개의 메시지를 큐에 보관
+    //   - QoS: BestEffort, KeepLast(10) — planning publisher가 BestEffort이므로 맞춤
     //   - 콜백 on_path()에서 latest_points_에 저장
     path_sub_ = this->create_subscription<visualization_msgs::msg::Marker>(
       path_topic_,
-      10,
+      rclcpp::QoS(10).best_effort(),
       std::bind(&PurePursuitRelativeNode::on_path, this, _1)
     );
 
@@ -167,6 +169,15 @@ public:
     cmd_pub_ = this->create_publisher<t870_msgs::msg::ControlCommand>(
       cmd_topic_,
       rclcpp::QoS(1).best_effort()
+    );
+
+    // [Lazy Publisher] /erp42/control_command (erp42_msgs/ControlCommand)
+    //   - Gazebo 시뮬레이션의 gazebo_bridge가 구독
+    //   - 구독자가 없으면 발행하지 않음 (lazy: get_subscription_count()로 확인)
+    //   - 필드: speed (float64), steering (float64), brake (uint8)
+    cmd_erp42_pub_ = this->create_publisher<erp42_msgs::msg::ControlCommand>(
+      "/erp42/control_command",
+      rclcpp::QoS(10)
     );
 
     // =========================================================================
@@ -252,6 +263,15 @@ private:
     cmd.speed = 0.0;       // 속도 0
     cmd.steering = 0.0;    // 직진 유지
     cmd_pub_->publish(cmd);
+
+    // Gazebo 시뮬레이션용 ERP42 명령 (구독자가 있을 때만)
+    if (cmd_erp42_pub_->get_subscription_count() > 0) {
+      erp42_msgs::msg::ControlCommand erp_cmd;
+      erp_cmd.speed = 0.0;
+      erp_cmd.steering = 0.0;
+      erp_cmd.brake = 1;
+      cmd_erp42_pub_->publish(erp_cmd);
+    }
   }
 
   // ===========================================================================
@@ -517,8 +537,16 @@ private:
     t870_msgs::msg::ControlCommand cmd;
     cmd.speed = v_;
     cmd.steering = delta;
-
     cmd_pub_->publish(cmd);
+
+    // Gazebo 시뮬레이션용 ERP42 명령 (구독자가 있을 때만)
+    if (cmd_erp42_pub_->get_subscription_count() > 0) {
+      erp42_msgs::msg::ControlCommand erp_cmd;
+      erp_cmd.speed = v_;
+      erp_cmd.steering = delta;
+      erp_cmd.brake = 0;
+      cmd_erp42_pub_->publish(erp_cmd);
+    }
 
     // 디버깅 로그 (500ms마다 출력, 터미널 가독성을 위해 throttle)
     RCLCPP_INFO_THROTTLE(
@@ -548,6 +576,7 @@ private:
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;  // 경로 구독자 (POINTS 마커)
   rclcpp::Publisher<t870_msgs::msg::ControlCommand>::SharedPtr cmd_pub_;    // 제어 명령 발행자
+  rclcpp::Publisher<erp42_msgs::msg::ControlCommand>::SharedPtr cmd_erp42_pub_;  // ERP42 Gazebo 시뮬레이션용 (lazy)
   rclcpp::TimerBase::SharedPtr timer_;                                      // 20Hz 제어 루프 타이머
 
   // --- 상태 저장 ---

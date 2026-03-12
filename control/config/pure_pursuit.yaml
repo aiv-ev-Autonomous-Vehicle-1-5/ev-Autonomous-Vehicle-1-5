@@ -1,0 +1,13 @@
+pure_pursuit_relative_node:
+  ros__parameters:
+    # --- 토픽 ---
+    path_topic: "/planning/path"
+    cmd_topic:  "/t870/control_command"
+
+    # --- 차량/알고리즘 ---
+    wheelbase: 0.87          # [m] T870 축간거리
+    lookahead: 1.2           # [m] 전방 주시 거리
+    speed: 1.0               # [m/s] t870 최대 주행속도 = 1.6 m/s (= 5.76 km/h)
+    delta_max: 0.314         # [rad] 최대 조향각 (~18도)
+    path_timeout_sec: 0.5    # [s] 경로 타임아웃
+    min_x_target: 0.05       # [m] 목표점 최소 전방 거리
