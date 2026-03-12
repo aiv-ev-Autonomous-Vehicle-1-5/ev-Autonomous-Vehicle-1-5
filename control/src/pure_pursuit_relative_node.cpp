@@ -38,6 +38,7 @@
 #include <string>       // std::string (토픽 이름 저장용)
 #include <vector>       // vector (내부적으로 Path 메시지가 사용)
 #include <algorithm>    // std::clamp (값 범위 제한용)
+#include <limits>       // numeric_limits
 
 #include "rclcpp/rclcpp.hpp"                      // ROS2 C++ 클라이언트 라이브러리
 #include "visualization_msgs/msg/marker.hpp"       // 경로 메시지 (POINTS 마커)
@@ -102,16 +103,20 @@ public:
     //   - 값이 크면 같은 곡률에서 조향각이 커짐
     this->declare_parameter<double>("wheelbase", 0.87);
 
-    // lookahead (Ld): 목표점까지의 원하는 전방 주시 거리 [m]
-    //   - 크게 하면: 부드러운 주행, 경로 추종 정밀도 ↓
-    //   - 작게 하면: 경로 추종 정밀도 ↑, 진동/불안정 위험
-    //   - 일반적으로 속도에 비례하여 설정 (여기서는 고정값 사용)
+    // lookahead: 이전 고정 lookahead 설정과의 호환용 파라미터
     this->declare_parameter<double>("lookahead", 1.2);
+    this->declare_parameter<double>("lookahead_min", 0.8);
+    this->declare_parameter<double>("lookahead_max", 1.6);
+    this->declare_parameter<double>("lookahead_speed_gain", 0.6);
 
-    // speed (v): 목표 주행 속도 [m/s]
-    //   - T870 ControlCommand의 speed 필드에 직접 전달
-    //   - 저속 주행 (대회 환경: ~0.3 m/s ≈ 1 km/h)
+    // speed: 이전 고정 속도 설정과의 호환용 파라미터
     this->declare_parameter<double>("speed", 0.3);
+    this->declare_parameter<double>("speed_min", 0.4);
+    this->declare_parameter<double>("speed_max", 1.2);
+    this->declare_parameter<double>("lateral_accel_limit", 0.9);
+    this->declare_parameter<double>("preview_distance", 2.5);
+    this->declare_parameter<double>("accel_rate", 0.8);
+    this->declare_parameter<double>("decel_rate", 1.8);
 
     // delta_max: 최대 조향각 제한 [rad]
     //   - 0.314 rad ≈ 18도
@@ -139,12 +144,37 @@ public:
     path_topic_ = this->get_parameter("path_topic").as_string();
     cmd_topic_  = this->get_parameter("cmd_topic").as_string();
 
+    const double legacy_lookahead = this->get_parameter("lookahead").as_double();
+    const double legacy_speed = this->get_parameter("speed").as_double();
+
     L_                = this->get_parameter("wheelbase").as_double();
-    Ld_default_       = this->get_parameter("lookahead").as_double();
-    v_                = this->get_parameter("speed").as_double();
     delta_max_        = this->get_parameter("delta_max").as_double();
     path_timeout_sec_ = this->get_parameter("path_timeout_sec").as_double();
     min_x_target_     = this->get_parameter("min_x_target").as_double();
+
+    lookahead_min_ = this->get_parameter("lookahead_min").as_double();
+    lookahead_max_ = this->get_parameter("lookahead_max").as_double();
+    lookahead_speed_gain_ = this->get_parameter("lookahead_speed_gain").as_double();
+    if (lookahead_min_ <= 0.0) {
+      lookahead_min_ = legacy_lookahead;
+    }
+    if (lookahead_max_ <= 0.0) {
+      lookahead_max_ = legacy_lookahead;
+    }
+    if (lookahead_max_ < lookahead_min_) {
+      std::swap(lookahead_min_, lookahead_max_);
+    }
+
+    v_max_ = this->get_parameter("speed_max").as_double();
+    if (v_max_ <= 0.0) {
+      v_max_ = std::max(0.0, legacy_speed);
+    }
+    v_min_ = std::clamp(this->get_parameter("speed_min").as_double(), 0.0, v_max_);
+    lateral_accel_limit_ = std::max(1e-3, this->get_parameter("lateral_accel_limit").as_double());
+    preview_distance_ = std::max(lookahead_min_, this->get_parameter("preview_distance").as_double());
+    accel_rate_ = std::max(1e-3, this->get_parameter("accel_rate").as_double());
+    decel_rate_ = std::max(1e-3, this->get_parameter("decel_rate").as_double());
+    last_cmd_speed_ = 0.0;
 
     // =========================================================================
     // 3. Subscriber / Publisher 생성
@@ -194,12 +224,15 @@ public:
     // 초기화 완료 로그 출력
     RCLCPP_INFO(
       this->get_logger(),
-      "[PP Relative] path=%s cmd=%s L=%.2f Ld=%.2f v=%.2f delta_max=%.3f",
+      "[PP Relative] path=%s cmd=%s L=%.2f Ld=[%.2f, %.2f] v=[%.2f, %.2f] a_lat=%.2f delta_max=%.3f",
       path_topic_.c_str(),
       cmd_topic_.c_str(),
       L_,
-      Ld_default_,
-      v_,
+      lookahead_min_,
+      lookahead_max_,
+      v_min_,
+      v_max_,
+      lateral_accel_limit_,
       delta_max_
     );
   }
@@ -272,6 +305,101 @@ private:
       erp_cmd.brake = 1;
       cmd_erp42_pub_->publish(erp_cmd);
     }
+
+    last_cmd_speed_ = 0.0;
+    last_control_time_ = this->now();
+  }
+
+  size_t find_nearest_index() const
+  {
+    const auto & pts = latest_points_;
+    size_t nearest_i = 0;
+    double best_d2 = std::numeric_limits<double>::infinity();
+
+    for (size_t i = 0; i < pts.size(); ++i) {
+      const double d2 = pts[i].x * pts[i].x + pts[i].y * pts[i].y;
+      if (d2 < best_d2) {
+        best_d2 = d2;
+        nearest_i = i;
+      }
+    }
+
+    return nearest_i;
+  }
+
+  double compute_dynamic_lookahead(double speed) const
+  {
+    const double unclamped = lookahead_min_ + lookahead_speed_gain_ * std::max(0.0, speed);
+    return std::clamp(unclamped, lookahead_min_, lookahead_max_);
+  }
+
+  double compute_preview_curvature(size_t nearest_i, double preview_distance) const
+  {
+    const auto & pts = latest_points_;
+    if (pts.size() < 3 || nearest_i + 2 >= pts.size()) {
+      return 0.0;
+    }
+
+    size_t end_i = nearest_i;
+    double acc = 0.0;
+    while (end_i + 1 < pts.size() && acc < preview_distance) {
+      const auto & p0 = pts[end_i];
+      const auto & p1 = pts[end_i + 1];
+      acc += norm2d(p1.x - p0.x, p1.y - p0.y);
+      ++end_i;
+    }
+
+    if (end_i < nearest_i + 2) {
+      return 0.0;
+    }
+
+    double max_abs_kappa = 0.0;
+    for (size_t i = nearest_i; i + 2 <= end_i; ++i) {
+      const auto & a = pts[i];
+      const auto & b = pts[i + 1];
+      const auto & c = pts[i + 2];
+
+      const double ab = norm2d(b.x - a.x, b.y - a.y);
+      const double bc = norm2d(c.x - b.x, c.y - b.y);
+      const double ac = norm2d(c.x - a.x, c.y - a.y);
+      const double denom = ab * bc * ac;
+      if (denom < 1e-9) {
+        continue;
+      }
+
+      const double cross =
+        (b.x - a.x) * (c.y - b.y) -
+        (b.y - a.y) * (c.x - b.x);
+      const double kappa = 2.0 * std::abs(cross) / denom;
+      max_abs_kappa = std::max(max_abs_kappa, kappa);
+    }
+
+    return max_abs_kappa;
+  }
+
+  double compute_speed_target(double abs_kappa) const
+  {
+    if (v_max_ <= 0.0) {
+      return 0.0;
+    }
+    if (abs_kappa <= 1e-6) {
+      return v_max_;
+    }
+
+    const double curvature_limited_speed = std::sqrt(lateral_accel_limit_ / abs_kappa);
+    return std::clamp(curvature_limited_speed, v_min_, v_max_);
+  }
+
+  double rate_limit_speed(double target_speed, double dt) const
+  {
+    if (dt <= 0.0) {
+      return target_speed;
+    }
+
+    if (target_speed >= last_cmd_speed_) {
+      return std::min(target_speed, last_cmd_speed_ + accel_rate_ * dt);
+    }
+    return std::max(target_speed, last_cmd_speed_ - decel_rate_ * dt);
   }
 
   // ===========================================================================
@@ -301,7 +429,7 @@ private:
   //
   //   Step 2: 누적 arc length로 lookahead 지점 탐색
   //     - nearest_i부터 path를 따라가며 연속된 점 사이의 거리를 누적
-  //     - 누적 거리가 Ld_default_ (lookahead) 이상이 되는 첫 번째 점을 목표로 선택
+  //     - 누적 거리가 lookahead_dist 이상이 되는 첫 번째 점을 목표로 선택
   //     - 이렇게 하면 경로의 "곡률"을 반영한 lookahead가 가능
   //       (직선거리가 아닌 경로를 따른 거리 기준)
   //
@@ -322,7 +450,12 @@ private:
   //   차량    (전방 거리)
   //
   // ===========================================================================
-  bool compute_target_relative(double &tx, double &ty, double &Ld_used)
+  bool compute_target_relative(
+    size_t nearest_i,
+    double lookahead_dist,
+    double &tx,
+    double &ty,
+    double &Ld_used)
   {
     // 경로 유효성 확인
     if (!path_fresh()) {
@@ -334,26 +467,6 @@ private:
     // 최소 2개의 점이 필요 (1개로는 방향을 결정할 수 없음)
     if (pts.size() < 2) {
       return false;
-    }
-
-    // -----------------------------------------------------------------
-    // Step 1: 원점(차량 위치)에서 가장 가까운 경로 점 찾기
-    // -----------------------------------------------------------------
-    // 거리 제곱(d2)으로 비교하여 불필요한 sqrt 연산을 피한다.
-    // (최솟값 비교에는 제곱근이 불필요)
-    // -----------------------------------------------------------------
-    size_t nearest_i = 0;
-    double best_d2 = std::numeric_limits<double>::infinity();
-
-    for (size_t i = 0; i < pts.size(); ++i) {
-      const double px = pts[i].x;
-      const double py = pts[i].y;
-
-      const double d2 = px * px + py * py;  // 원점 기준 거리 제곱
-      if (d2 < best_d2) {
-        best_d2 = d2;
-        nearest_i = i;
-      }
     }
 
     // -----------------------------------------------------------------
@@ -376,7 +489,7 @@ private:
 
       acc += norm2d(x1 - x0, y1 - y0);  // 두 점 사이의 유클리드 거리 누적
 
-      if (acc >= Ld_default_) {
+      if (acc >= lookahead_dist) {
         tx = x1;
         ty = y1;
         // Ld_used는 경로를 따른 거리(acc)가 아닌,
@@ -391,7 +504,7 @@ private:
     // Step 3: 경로 끝까지 가도 lookahead를 충족 못하면 마지막 점 사용
     // -----------------------------------------------------------------
     // 경로가 짧은 경우의 폴백 처리.
-    // 이 경우 Ld_used가 Ld_default_보다 작아질 수 있어 조향이 예민해질 수 있다.
+  // 이 경우 Ld_used가 목표 lookahead보다 작아질 수 있어 조향이 예민해질 수 있다.
     // -----------------------------------------------------------------
     tx = pts.back().x;
     ty = pts.back().y;
@@ -418,6 +531,13 @@ private:
   // ===========================================================================
   void on_timer()
   {
+    const auto now = this->now();
+    double control_dt = 0.05;
+    if (last_control_time_.nanoseconds() > 0) {
+      control_dt = std::clamp((now - last_control_time_).seconds(), 1e-3, 0.2);
+    }
+    last_control_time_ = now;
+
     // ----- 경로 유효성 확인 -----
     // path가 없거나 오래됐으면 정지
     if (!path_fresh()) {
@@ -431,12 +551,17 @@ private:
       return;
     }
 
+    const size_t nearest_i = find_nearest_index();
+    const double preview_kappa = compute_preview_curvature(nearest_i, preview_distance_);
+    const double preview_speed_target = compute_speed_target(preview_kappa);
+    const double lookahead_cmd = compute_dynamic_lookahead(preview_speed_target);
+
     // ----- 목표점 계산 -----
     double tx = 0.0;       // 목표점 x (전방 거리)
     double ty = 0.0;       // 목표점 y (횡방향 거리)
     double Ld_used = 0.0;  // 실제 사용된 lookahead 거리 (직선)
 
-    if (!compute_target_relative(tx, ty, Ld_used)) {
+    if (!compute_target_relative(nearest_i, lookahead_cmd, tx, ty, Ld_used)) {
       RCLCPP_WARN_THROTTLE(
         this->get_logger(),
         *this->get_clock(),
@@ -518,31 +643,36 @@ private:
     const double y_v = ty;  // 목표점의 횡방향 거리 (Pure Pursuit 핵심 입력)
 
     // 곡률 계산: kappa = 2 * y / Ld^2
-    double kappa = (2.0 * y_v) / (Ld_used * Ld_used);
+    const double kappa_pp = (2.0 * y_v) / (Ld_used * Ld_used);
 
     // 조향각 계산: delta = atan(L * kappa)
-    double delta = std::atan(L_ * kappa);
+    double delta = std::atan(L_ * kappa_pp);
 
     // 최대 조향각 제한 [-delta_max_, +delta_max_]
     // T870 하드웨어의 물리적 한계를 초과하지 않도록 clamp
     delta = std::clamp(delta, -delta_max_, delta_max_);
 
+    const double effective_abs_kappa = std::max(std::abs(kappa_pp), preview_kappa);
+    const double v_target = compute_speed_target(effective_abs_kappa);
+    const double v_cmd = rate_limit_speed(v_target, control_dt);
+    last_cmd_speed_ = v_cmd;
+
     // =================================================================
     // T870 제어 명령 발행
     // =================================================================
     // ControlCommand 메시지 구성:
-    //   - speed:    목표 속도 [m/s] (파라미터로 설정된 고정값)
+    //   - speed:    곡률 기반으로 계산된 목표 속도 [m/s]
     //   - steering: 조향각 [rad] (Pure Pursuit으로 계산된 값)
     // =================================================================
     t870_msgs::msg::ControlCommand cmd;
-    cmd.speed = v_;
+    cmd.speed = v_cmd;
     cmd.steering = delta;
     cmd_pub_->publish(cmd);
 
     // Gazebo 시뮬레이션용 ERP42 명령 (구독자가 있을 때만)
     if (cmd_erp42_pub_->get_subscription_count() > 0) {
       erp42_msgs::msg::ControlCommand erp_cmd;
-      erp_cmd.speed = v_;
+      erp_cmd.speed = v_cmd;
       erp_cmd.steering = delta;
       erp_cmd.brake = 0;
       cmd_erp42_pub_->publish(erp_cmd);
@@ -553,8 +683,8 @@ private:
       this->get_logger(),
       *this->get_clock(),
       500,
-      "[PP Relative] target=(%.2f, %.2f), Ld=%.2f, kappa=%.3f, delta=%.3f",
-      tx, ty, Ld_used, kappa, delta
+      "[PP Relative] target=(%.2f, %.2f), Ld=%.2f, kappa_pp=%.3f, kappa_prev=%.3f, v_target=%.2f, v_cmd=%.2f, delta=%.3f",
+      tx, ty, Ld_used, kappa_pp, preview_kappa, v_target, v_cmd, delta
     );
   }
 
@@ -567,11 +697,19 @@ private:
 
   // --- 차량/알고리즘 파라미터 ---
   double L_{0.87};               // wheelbase: 축간거리 [m]
-  double Ld_default_{1.2};       // lookahead: 전방 주시 거리 [m]
-  double v_{0.3};                // speed: 목표 주행 속도 [m/s]
+  double lookahead_min_{0.8};    // 속도 연동 lookahead 최소값 [m]
+  double lookahead_max_{1.6};    // 속도 연동 lookahead 최대값 [m]
+  double lookahead_speed_gain_{0.6};  // 속도 1m/s 증가당 lookahead 증가량 [m]
+  double v_min_{0.4};            // 최소 주행 속도 [m/s]
+  double v_max_{1.2};            // 최대 주행 속도 [m/s]
+  double lateral_accel_limit_{0.9};   // 곡률 기반 감속용 최대 횡가속 [m/s^2]
+  double preview_distance_{2.5};      // 선감속용 전방 curvature preview 거리 [m]
+  double accel_rate_{0.8};       // 가속 rate limit [m/s^2]
+  double decel_rate_{1.8};       // 감속 rate limit [m/s^2]
   double delta_max_{0.314};      // 최대 조향각 [rad] (≈18도)
   double path_timeout_sec_{0.5}; // 경로 타임아웃 [초]
   double min_x_target_{0.05};    // 목표점 최소 전방 거리 [m]
+  double last_cmd_speed_{0.0};   // 직전 제어 주기의 속도 명령 [m/s]
 
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;  // 경로 구독자 (POINTS 마커)
@@ -582,6 +720,7 @@ private:
   // --- 상태 저장 ---
   std::vector<geometry_msgs::msg::Point> latest_points_;    // 가장 최근 수신한 경로 점 배열
   rclcpp::Time last_path_time_{0, 0, RCL_ROS_TIME};       // 경로 마지막 수신 시각
+  rclcpp::Time last_control_time_{0, 0, RCL_ROS_TIME};    // 직전 제어 루프 시각
 };
 
 // =============================================================================
