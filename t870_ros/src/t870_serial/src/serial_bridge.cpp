@@ -237,7 +237,7 @@ void t870_serial::SerialBridge::initialize_node()
     // Subscribers
     control_command_sub_ = this->create_subscription<t870_msgs::msg::ControlCommand>(
         "/t870/control_command",
-        rclcpp::QoS(rclcpp::KeepLast(1)).reliable().durability_volatile(),
+        rclcpp::QoS(rclcpp::KeepLast(1)).best_effort().durability_volatile(),
         std::bind(&SerialBridge::control_command_callback, this, _1)
     );
 

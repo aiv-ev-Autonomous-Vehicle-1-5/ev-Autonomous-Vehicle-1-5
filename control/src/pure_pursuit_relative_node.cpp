@@ -4,7 +4,7 @@
 //
 // [개요]
 //   상대좌표(base_link 기준) Marker(POINTS)를 입력받아 Pure Pursuit 알고리즘으로
-//   ERP42 차량의 조향각(steering)과 속도(speed)를 계산하는 제어 노드.
+//   T870 차량의 조향각(steering)과 속도(speed)를 계산하는 제어 노드.
 //
 // [Pure Pursuit 알고리즘 요약]
 //   Pure Pursuit는 차량 전방의 "목표점(lookahead point)"을 향해
@@ -28,7 +28,7 @@
 // [데이터 흐름]
 //   /planning/path (visualization_msgs/Marker POINTS, base_link 기준 상대좌표)
 //     → [이 노드: Pure Pursuit 계산]
-//       → /erp42/control_command (erp42_msgs/ControlCommand)
+//       → /t870/control_command (t870_msgs/ControlCommand)
 //
 // ============================================================================
 
@@ -40,7 +40,7 @@
 
 #include "rclcpp/rclcpp.hpp"                      // ROS2 C++ 클라이언트 라이브러리
 #include "visualization_msgs/msg/marker.hpp"       // 경로 메시지 (POINTS 마커)
-#include "erp42_msgs/msg/control_command.hpp"      // ERP42 제어 명령 메시지
+#include "t870_msgs/msg/control_command.hpp"       // T870 제어 명령 메시지 (speed, steering)
 
 using std::placeholders::_1;  // std::bind에서 콜백 인자 바인딩용
 
@@ -90,15 +90,15 @@ public:
 
     // --- 토픽 관련 파라미터 ---
     // path_topic: planning 모듈이 발행하는 base_link 기준 상대좌표 경로
-    // cmd_topic:  ERP42 차량 인터페이스가 구독하는 제어 명령 토픽
+    // cmd_topic:  T870 차량 인터페이스가 구독하는 제어 명령 토픽
     this->declare_parameter<std::string>("path_topic", "/planning/path");
-    this->declare_parameter<std::string>("cmd_topic",  "/erp42/control_command");
+    this->declare_parameter<std::string>("cmd_topic",  "/t870/control_command");
 
     // --- 차량/알고리즘 파라미터 ---
-    // wheelbase (L): ERP42의 앞바퀴 축~뒷바퀴 축 간 거리 [m]
+    // wheelbase (L): T870의 앞바퀴 축~뒷바퀴 축 간 거리 [m]
     //   - Ackermann 조향 기하학의 핵심 파라미터
     //   - 값이 크면 같은 곡률에서 조향각이 커짐
-    this->declare_parameter<double>("wheelbase", 0.74);
+    this->declare_parameter<double>("wheelbase", 0.87);
 
     // lookahead (Ld): 목표점까지의 원하는 전방 주시 거리 [m]
     //   - 크게 하면: 부드러운 주행, 경로 추종 정밀도 ↓
@@ -107,23 +107,15 @@ public:
     this->declare_parameter<double>("lookahead", 1.2);
 
     // speed (v): 목표 주행 속도 [m/s]
-    //   - ERP42 ControlCommand의 speed 필드에 직접 전달
+    //   - T870 ControlCommand의 speed 필드에 직접 전달
     //   - 저속 주행 (대회 환경: ~0.3 m/s ≈ 1 km/h)
     this->declare_parameter<double>("speed", 0.3);
 
     // delta_max: 최대 조향각 제한 [rad]
     //   - 0.314 rad ≈ 18도
-    //   - ERP42 하드웨어의 물리적 조향 한계를 반영
+    //   - T870 하드웨어의 물리적 조향 한계를 반영
     //   - 이 값을 초과하는 조향 명령은 clamp됨
     this->declare_parameter<double>("delta_max", 0.314);
-
-    // brake_stop: 차량 정지 시 적용할 브레이크 값 [0~150]
-    //   - 30: 부드러운 정지 (급정지 방지)
-    this->declare_parameter<int>("brake_stop", 30);
-
-    // brake_run: 주행 중 적용할 브레이크 값 [0~150]
-    //   - 0: 브레이크 미적용 (자유 주행)
-    this->declare_parameter<int>("brake_run", 0);
 
     // path_timeout_sec: 경로 메시지 타임아웃 [초]
     //   - 마지막 경로 수신 후 이 시간이 지나면 경로를 "stale"로 판단하고 정지
@@ -149,8 +141,6 @@ public:
     Ld_default_       = this->get_parameter("lookahead").as_double();
     v_                = this->get_parameter("speed").as_double();
     delta_max_        = this->get_parameter("delta_max").as_double();
-    brake_stop_       = this->get_parameter("brake_stop").as_int();
-    brake_run_        = this->get_parameter("brake_run").as_int();
     path_timeout_sec_ = this->get_parameter("path_timeout_sec").as_double();
     min_x_target_     = this->get_parameter("min_x_target").as_double();
 
@@ -159,7 +149,7 @@ public:
     // =========================================================================
 
     // [Subscriber] /planning/path (visualization_msgs/Marker, POINTS 타입)
-    //   - planning 모듈(chaining_CDT)이 발행하는 경로를 수신
+    //   - planning 모듈이 발행하는 경로를 수신
     //   - 각 Point의 x/y는 base_link 기준 상대좌표
     //     (x: 전방, y: 좌측이 +)
     //   - QoS depth=10: 최대 10개의 메시지를 큐에 보관
@@ -170,20 +160,20 @@ public:
       std::bind(&PurePursuitRelativeNode::on_path, this, _1)
     );
 
-    // [Publisher] /erp42/control_command (erp42_msgs/ControlCommand)
-    //   - ERP42 차량 인터페이스(erp42_ros 패키지)가 구독
-    //   - 필드: speed (float64), steering (float64, rad), brake (uint8, 0~150)
-    //   - QoS depth=10
-    cmd_pub_ = this->create_publisher<erp42_msgs::msg::ControlCommand>(
+    // [Publisher] /t870/control_command (t870_msgs/ControlCommand)
+    //   - T870 차량 인터페이스(t870_ros 패키지)가 구독
+    //   - 필드: speed (float64, m/s), steering (float64, rad)
+    //   - QoS: BestEffort, KeepLast(1) — 제어 명령은 최신 값만 의미 있으므로
+    cmd_pub_ = this->create_publisher<t870_msgs::msg::ControlCommand>(
       cmd_topic_,
-      10
+      rclcpp::QoS(1).best_effort()
     );
 
     // =========================================================================
     // 4. 제어 루프 타이머 (20Hz = 50ms 주기)
     // =========================================================================
     // wall_timer: 시뮬레이션 시간이 아닌 실제 시계 기준 타이머
-    // 20Hz는 ERP42의 제어 주기에 적합한 빈도
+    // 20Hz는 T870의 제어 주기에 적합한 빈도
     // (너무 빠르면 CAN 통신 부하, 너무 느리면 제어 지연)
     timer_ = this->create_wall_timer(
       std::chrono::milliseconds(50),
@@ -249,7 +239,7 @@ private:
   // ===========================================================================
   // publish_stop: 정지 명령 발행
   // ===========================================================================
-  // 속도 0, 조향 0(직진), 브레이크 brake_stop_ 값으로 정지 명령을 발행한다.
+  // 속도 0, 조향 0(직진)으로 정지 명령을 발행한다.
   //
   // 호출되는 상황:
   //   1) 경로가 없거나 타임아웃
@@ -258,10 +248,9 @@ private:
   // ===========================================================================
   void publish_stop()
   {
-    erp42_msgs::msg::ControlCommand cmd;
-    cmd.speed = 0.0;                                                     // 속도 0
-    cmd.steering = 0.0;                                                  // 직진 유지
-    cmd.brake = static_cast<uint8_t>(std::clamp(brake_stop_, 0, 150));   // 브레이크 적용
+    t870_msgs::msg::ControlCommand cmd;
+    cmd.speed = 0.0;       // 속도 0
+    cmd.steering = 0.0;    // 직진 유지
     cmd_pub_->publish(cmd);
   }
 
@@ -506,7 +495,6 @@ private:
     //   tx, ty를 그대로 사용할 수 있다 → yaw 변환 불필요!
     //
     // =================================================================
-    const double x_v = tx;  // 목표점의 전방 거리 (사용은 안전 조건에서 이미 완료)
     const double y_v = ty;  // 목표점의 횡방향 거리 (Pure Pursuit 핵심 입력)
 
     // 곡률 계산: kappa = 2 * y / Ld^2
@@ -516,21 +504,19 @@ private:
     double delta = std::atan(L_ * kappa);
 
     // 최대 조향각 제한 [-delta_max_, +delta_max_]
-    // ERP42 하드웨어의 물리적 한계를 초과하지 않도록 clamp
+    // T870 하드웨어의 물리적 한계를 초과하지 않도록 clamp
     delta = std::clamp(delta, -delta_max_, delta_max_);
 
     // =================================================================
-    // ERP42 제어 명령 발행
+    // T870 제어 명령 발행
     // =================================================================
     // ControlCommand 메시지 구성:
     //   - speed:    목표 속도 [m/s] (파라미터로 설정된 고정값)
     //   - steering: 조향각 [rad] (Pure Pursuit으로 계산된 값)
-    //   - brake:    브레이크 [0~150] (주행 중이므로 brake_run_ 적용)
     // =================================================================
-    erp42_msgs::msg::ControlCommand cmd;
+    t870_msgs::msg::ControlCommand cmd;
     cmd.speed = v_;
     cmd.steering = delta;
-    cmd.brake = static_cast<uint8_t>(std::clamp(brake_run_, 0, 150));
 
     cmd_pub_->publish(cmd);
 
@@ -549,21 +535,19 @@ private:
 
   // --- 토픽 이름 ---
   std::string path_topic_;   // 경로 입력 토픽 (기본: /planning/path)
-  std::string cmd_topic_;    // 제어 출력 토픽 (기본: /erp42/control_command)
+  std::string cmd_topic_;    // 제어 출력 토픽 (기본: /t870/control_command)
 
   // --- 차량/알고리즘 파라미터 ---
-  double L_{0.74};               // wheelbase: 축간거리 [m]
+  double L_{0.87};               // wheelbase: 축간거리 [m]
   double Ld_default_{1.2};       // lookahead: 전방 주시 거리 [m]
   double v_{0.3};                // speed: 목표 주행 속도 [m/s]
   double delta_max_{0.314};      // 최대 조향각 [rad] (≈18도)
-  int brake_stop_{30};           // 정지 시 브레이크 값 [0~150]
-  int brake_run_{0};             // 주행 시 브레이크 값 [0~150]
   double path_timeout_sec_{0.5}; // 경로 타임아웃 [초]
   double min_x_target_{0.05};    // 목표점 최소 전방 거리 [m]
 
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;  // 경로 구독자 (POINTS 마커)
-  rclcpp::Publisher<erp42_msgs::msg::ControlCommand>::SharedPtr cmd_pub_;   // 제어 명령 발행자
+  rclcpp::Publisher<t870_msgs::msg::ControlCommand>::SharedPtr cmd_pub_;    // 제어 명령 발행자
   rclcpp::TimerBase::SharedPtr timer_;                                      // 20Hz 제어 루프 타이머
 
   // --- 상태 저장 ---

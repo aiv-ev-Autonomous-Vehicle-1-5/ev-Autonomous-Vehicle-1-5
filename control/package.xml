@@ -2,7 +2,7 @@
 <package format="3">
   <name>pp_controller_cpp</name>
   <version>0.0.0</version>
-  <description>Relative-coordinate pure pursuit controller for ERP42</description>
+  <description>Relative-coordinate pure pursuit controller for T870</description>
 
   <maintainer email="you@example.com">you</maintainer>
   <license>Apache-2.0</license>
@@ -11,7 +11,7 @@
 
   <depend>rclcpp</depend>
   <depend>visualization_msgs</depend>
-  <depend>erp42_msgs</depend>
+  <depend>t870_msgs</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

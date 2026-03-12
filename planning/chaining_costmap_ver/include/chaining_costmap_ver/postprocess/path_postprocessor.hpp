@@ -1,6 +1,6 @@
 /**
  * @file path_postprocessor.hpp
- * @brief 경로 후처리기 — 6단계 파이프라인 (prune → smooth → curvature_clamp → resample → curvature_clamp → yaw)
+ * @brief 경로 후처리기 — 5단계 파이프라인 (prune → resample → smooth → curvature_clamp → yaw)
  *
  * ──────────────────────────────────────────────────────────────────
  * [전체 파이프라인에서의 위치]
@@ -20,7 +20,7 @@
  *   "깨끗하고 균등한 경로 + yaw 배열"을 출력한다.
  *
  * ──────────────────────────────────────────────────────────────────
- * [6단계 파이프라인 요약]
+ * [5단계 파이프라인 요약]
  *
  *   raw_path (AStarPlanner 출력)
  *       │
@@ -29,22 +29,19 @@
  *       │  - 직선 구간의 중간점을 제거하여 점 수를 대폭 줄임
  *       │  - max_dev 이하로 편차가 있는 중간점들은 건너뜀(shortcut)
  *       ▼
- *   ② Smooth (이동 평균 필터)
- *       │  - 남은 꺾임을 윈도우 크기 만큼의 이웃 평균으로 완화
+ *   ② Resample (등간격 리샘플링)
+ *       │  - prune 후 불균등해진 점 간격을 ds 간격으로 균일하게 재배치
+ *       │  - smooth가 등간격 점에서 동작해야 편향 없는 평활화 가능
+ *       ▼
+ *   ③ Smooth (이동 평균 필터)
+ *       │  - 등간격 점에 대해 이동 평균을 적용하여 잔여 꺾임 완화
  *       │  - 시작점/끝점은 보존하여 경로 연속성 유지
  *       ▼
- *   ③ Curvature Clamp (1차 곡률 제한)
+ *   ④ Curvature Clamp (곡률 제한)
  *       │  - Menger 곡률이 kappa_max 초과 시 중간점을 이동하여 곡률 저감
  *       │  - 차량 최소 회전 반경 보장
  *       ▼
- *   ④ Resample (등간격 리샘플링)
- *       │  - 불균등해진 점 간격을 ds 간격으로 균일하게 재배치
- *       │  - 제어기가 일정 간격 waypoint를 기대하므로 필수
- *       ▼
- *   ⑤ Curvature Clamp (2차 곡률 제한)
- *       │  - resample의 lerp 보간이 새로운 급커브를 생성할 수 있으므로 재적용
- *       ▼
- *   ⑥ Yaw (접선 벡터 → 헤딩 각도)
+ *   ⑤ Yaw (접선 벡터 → 헤딩 각도)
  *       │  - 각 waypoint에서의 진행 방향(접선)을 구하고
  *       │  - atan2(dy, dx)로 yaw 각도 [rad]를 계산
  *       ▼
@@ -78,7 +75,7 @@ class PathPostprocessor
 {
 public:
   /**
-   * @brief 6단계 파이프라인 실행: prune → smooth → curvature_clamp → resample → curvature_clamp → yaw
+   * @brief 5단계 파이프라인 실행: prune → resample → smooth → curvature_clamp → yaw
    *
    * @param raw_path       AStarPlanner가 출력한 원시 경로 (Point2D 배열)
    * @param prune_max_dev  [m] prune 단계에서 허용하는 최대 수직 편차

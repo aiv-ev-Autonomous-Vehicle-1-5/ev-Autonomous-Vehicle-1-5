@@ -160,13 +160,12 @@ struct PlanningParams
   // Postprocess — 경로 후처리
   //
   // AStarPlanner가 생성한 "raw 경로"를 제어기(Pure Pursuit 등)가
-  // 사용할 수 있도록 정리하는 6단계 처리:
+  // 사용할 수 있도록 정리하는 5단계 처리:
   //   1. Prune           : Douglas-Peucker 유사 단순화로 직선 구간 중간점 제거
-  //   2. Smooth          : 이동 평균(Moving Average)으로 지그재그 완화
-  //   3. Curvature Clamp : 최대 곡률 제한 (1차, 차량 최소 회전 반경 보장)
-  //   4. Resample        : 불균등한 간격의 경유점을 일정 간격(ds)으로 재배치
-  //   5. Curvature Clamp : 최대 곡률 제한 (2차, resample 후 재적용)
-  //   6. Yaw             : 접선 벡터 → atan2 헤딩 각도 계산
+  //   2. Resample        : 불균등한 간격의 경유점을 일정 간격(ds)으로 재배치
+  //   3. Smooth          : 이동 평균(Moving Average)으로 지그재그 완화
+  //   4. Curvature Clamp : 최대 곡률 제한 (차량 최소 회전 반경 보장)
+  //   5. Yaw             : 접선 벡터 → atan2 헤딩 각도 계산
   // ============================================================
   struct Postprocess
   {
