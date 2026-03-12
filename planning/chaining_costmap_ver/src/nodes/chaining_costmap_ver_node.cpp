@@ -87,8 +87,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     });
 
   // ── Core 퍼블리셔: 항상 발행하는 핵심 토픽 ──
-  pub_path_ = create_publisher<nav_msgs::msg::Path>(
-    "/planning/path", qos_be);           // 최종 후처리 경로 → 제어기가 구독
+  pub_path_ = create_publisher<visualization_msgs::msg::Marker>(
+    "/planning/path", qos_be);           // 최종 후처리 경로 (POINTS 마커) → 제어기가 구독
   pub_status_ = create_publisher<std_msgs::msg::String>(
     "/planning/status", qos_be);         // 플래너 상태 문자열 (OK/STALE/INFEASIBLE 등)
 
@@ -100,9 +100,9 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
 
   pub_dbg_costmap_ = create_publisher<nav_msgs::msg::OccupancyGrid>(
     "/planning/debug/costmap", qos_dbg);
-  pub_dbg_raw_path_ = create_publisher<nav_msgs::msg::Path>(
+  pub_dbg_raw_path_ = create_publisher<visualization_msgs::msg::Marker>(
     "/planning/debug/raw_path", qos_dbg);
-  pub_dbg_pruned_path_ = create_publisher<nav_msgs::msg::Path>(
+  pub_dbg_pruned_path_ = create_publisher<visualization_msgs::msg::Marker>(
     "/planning/debug/pruned_path", qos_dbg);
   pub_dbg_left_chain_ = create_publisher<nav_msgs::msg::Path>(
     "/planning/debug/left_chain", qos_dbg);
@@ -397,10 +397,12 @@ void LCPlannerNode::on_timer()
   // Core 토픽은 항상 발행하고, Debug 토픽은 구독자가 있을 때만 발행한다.
 
   // ── Core: 최종 경로 발행 ──
-  // to_path_msg(): Point2D 벡터를 nav_msgs::msg::Path로 변환하는 유틸 함수
+  // to_points_marker(): Point2D 벡터를 Marker(POINTS)로 변환하는 유틸 함수
   // 제어기(controller)가 이 토픽을 구독하여 조향/속도를 결정한다.
-  auto path_msg = std::make_unique<nav_msgs::msg::Path>(
-    to_path_msg(pp_result.path, frame_id, stamp));
+  // 초록색 점으로 최종 경로를 시각화
+  auto path_msg = std::make_unique<visualization_msgs::msg::Marker>(
+    to_points_marker(pp_result.path, frame_id, stamp,
+                     "final_path", 0.0f, 1.0f, 0.0f, 1.0f, 0.08));
   pub_path_->publish(std::move(path_msg));
 
   // ── Core: 플래너 상태 발행 ──
@@ -527,17 +529,19 @@ void LCPlannerNode::on_timer()
       std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
   }
 
-  // ── Debug: raw_path (A* 원시 경로, 후처리 전) ──
+  // ── Debug: raw_path (A* 원시 경로, 후처리 전) — 흰색 점 ──
   if (pub_dbg_raw_path_->get_subscription_count() > 0) {
-    pub_dbg_raw_path_->publish(std::make_unique<nav_msgs::msg::Path>(
-      to_path_msg(raw_path, frame_id, stamp)));
+    pub_dbg_raw_path_->publish(std::make_unique<visualization_msgs::msg::Marker>(
+      to_points_marker(raw_path, frame_id, stamp,
+                       "raw_path", 1.0f, 1.0f, 1.0f, 1.0f, 0.06)));
   }
 
-  // ── Debug: pruned_path (prune 직후, smooth/curvature_clamp 전) ──
+  // ── Debug: pruned_path (prune 직후, smooth/curvature_clamp 전) — 노란색 점 ──
   if (pub_dbg_pruned_path_->get_subscription_count() > 0 &&
       !pp_result.pruned.empty()) {
-    pub_dbg_pruned_path_->publish(std::make_unique<nav_msgs::msg::Path>(
-      to_path_msg(pp_result.pruned, frame_id, stamp)));
+    pub_dbg_pruned_path_->publish(std::make_unique<visualization_msgs::msg::Marker>(
+      to_points_marker(pp_result.pruned, frame_id, stamp,
+                       "pruned_path", 1.0f, 1.0f, 0.0f, 1.0f, 0.10)));
   }
 
   // ── Debug: chainer 시각화 (backbone, branches, seeds) ──

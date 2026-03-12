@@ -39,7 +39,7 @@
 #include <algorithm>    // std::clamp (값 범위 제한용)
 
 #include "rclcpp/rclcpp.hpp"                      // ROS2 C++ 클라이언트 라이브러리
-#include "nav_msgs/msg/path.hpp"                   // 경로 메시지 (PoseStamped 배열)
+#include "visualization_msgs/msg/marker.hpp"       // 경로 메시지 (POINTS 마커)
 #include "erp42_msgs/msg/control_command.hpp"      // ERP42 제어 명령 메시지
 
 using std::placeholders::_1;  // std::bind에서 콜백 인자 바인딩용
@@ -158,13 +158,13 @@ public:
     // 3. Subscriber / Publisher 생성
     // =========================================================================
 
-    // [Subscriber] /planning/path (nav_msgs/Path)
+    // [Subscriber] /planning/path (visualization_msgs/Marker, POINTS 타입)
     //   - planning 모듈(chaining_CDT)이 발행하는 경로를 수신
-    //   - 각 PoseStamped의 position은 base_link 기준 상대좌표
+    //   - 각 Point의 x/y는 base_link 기준 상대좌표
     //     (x: 전방, y: 좌측이 +)
     //   - QoS depth=10: 최대 10개의 메시지를 큐에 보관
-    //   - 콜백 on_path()에서 latest_path_에 저장
-    path_sub_ = this->create_subscription<nav_msgs::msg::Path>(
+    //   - 콜백 on_path()에서 latest_points_에 저장
+    path_sub_ = this->create_subscription<visualization_msgs::msg::Marker>(
       path_topic_,
       10,
       std::bind(&PurePursuitRelativeNode::on_path, this, _1)
@@ -218,9 +218,9 @@ private:
   //   - 제어 루프(on_timer)와 비동기적으로 호출되므로,
   //     single-threaded executor에서는 동시 접근 문제 없음
   // ===========================================================================
-  void on_path(const nav_msgs::msg::Path::SharedPtr msg)
+  void on_path(const visualization_msgs::msg::Marker::SharedPtr msg)
   {
-    latest_path_ = *msg;              // 메시지 내용 복사 (deep copy)
+    latest_points_ = msg->points;     // points 배열 복사
     last_path_time_ = this->now();    // 현재 ROS 시각 기록
   }
 
@@ -237,7 +237,7 @@ private:
   bool path_fresh() const
   {
     // 한 번도 경로를 받은 적 없거나 빈 경로
-    if (latest_path_.poses.empty()) {
+    if (latest_points_.empty()) {
       return false;
     }
 
@@ -320,10 +320,10 @@ private:
       return false;
     }
 
-    const auto &poses = latest_path_.poses;
+    const auto &pts = latest_points_;
 
     // 최소 2개의 점이 필요 (1개로는 방향을 결정할 수 없음)
-    if (poses.size() < 2) {
+    if (pts.size() < 2) {
       return false;
     }
 
@@ -336,9 +336,9 @@ private:
     size_t nearest_i = 0;
     double best_d2 = std::numeric_limits<double>::infinity();
 
-    for (size_t i = 0; i < poses.size(); ++i) {
-      const double px = poses[i].pose.position.x;
-      const double py = poses[i].pose.position.y;
+    for (size_t i = 0; i < pts.size(); ++i) {
+      const double px = pts[i].x;
+      const double py = pts[i].y;
 
       const double d2 = px * px + py * py;  // 원점 기준 거리 제곱
       if (d2 < best_d2) {
@@ -359,11 +359,11 @@ private:
     // -----------------------------------------------------------------
     double acc = 0.0;
 
-    for (size_t i = nearest_i; i + 1 < poses.size(); ++i) {
-      const double x0 = poses[i].pose.position.x;
-      const double y0 = poses[i].pose.position.y;
-      const double x1 = poses[i + 1].pose.position.x;
-      const double y1 = poses[i + 1].pose.position.y;
+    for (size_t i = nearest_i; i + 1 < pts.size(); ++i) {
+      const double x0 = pts[i].x;
+      const double y0 = pts[i].y;
+      const double x1 = pts[i + 1].x;
+      const double y1 = pts[i + 1].y;
 
       acc += norm2d(x1 - x0, y1 - y0);  // 두 점 사이의 유클리드 거리 누적
 
@@ -384,8 +384,8 @@ private:
     // 경로가 짧은 경우의 폴백 처리.
     // 이 경우 Ld_used가 Ld_default_보다 작아질 수 있어 조향이 예민해질 수 있다.
     // -----------------------------------------------------------------
-    tx = poses.back().pose.position.x;
-    ty = poses.back().pose.position.y;
+    tx = pts.back().x;
+    ty = pts.back().y;
     Ld_used = norm2d(tx, ty);
     return true;
   }
@@ -562,12 +562,12 @@ private:
   double min_x_target_{0.05};    // 목표점 최소 전방 거리 [m]
 
   // --- ROS2 통신 객체 ---
-  rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr path_sub_;           // 경로 구독자
+  rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;  // 경로 구독자 (POINTS 마커)
   rclcpp::Publisher<erp42_msgs::msg::ControlCommand>::SharedPtr cmd_pub_;   // 제어 명령 발행자
   rclcpp::TimerBase::SharedPtr timer_;                                      // 20Hz 제어 루프 타이머
 
   // --- 상태 저장 ---
-  nav_msgs::msg::Path latest_path_;                        // 가장 최근 수신한 경로
+  std::vector<geometry_msgs::msg::Point> latest_points_;    // 가장 최근 수신한 경로 점 배열
   rclcpp::Time last_path_time_{0, 0, RCL_ROS_TIME};       // 경로 마지막 수신 시각
 };
 

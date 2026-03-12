@@ -208,15 +208,15 @@ private:
   rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_bboxes_;          ///< /perception/bboxes 구독
 
   // ── Core 퍼블리셔 (항상 발행) ──
-  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_path_;       ///< /planning/path — 최종 경로
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_path_;       ///< /planning/path — 최종 경로 (POINTS 마커)
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_status_;   ///< /planning/status — 플래너 상태
 
   // ── Debug 퍼블리셔 (구독자가 있을 때만 발행 = lazy publishing) ──
   // lazy publishing: get_subscription_count() > 0 일 때만 메시지를 생성/발행
   // → RViz2에서 해당 토픽을 구독하지 않으면 CPU/메모리 낭비를 방지
   rclcpp::Publisher<nav_msgs::msg::OccupancyGrid>::SharedPtr pub_dbg_costmap_;       ///< costmap 시각화 (OccupancyGrid)
-  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_path_;             ///< A* 원시 경로 (후처리 전)
-  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_pruned_path_;          ///< prune 직후 경로 (디버그용)
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_raw_path_;             ///< A* 원시 경로 (POINTS 마커)
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_pruned_path_;          ///< prune 직후 경로 (POINTS 마커)
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_left_chain_;           ///< 왼쪽 backbone 체인
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_right_chain_;          ///< 오른쪽 backbone 체인
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_left_branches_;   ///< 왼쪽 branch 시각화

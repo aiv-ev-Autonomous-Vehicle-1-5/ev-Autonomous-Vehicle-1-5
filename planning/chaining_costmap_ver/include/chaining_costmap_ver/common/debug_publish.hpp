@@ -24,6 +24,7 @@
 // nav_msgs/Path            : PoseStamped 배열 → RViz2 "Path" 디스플레이로 시각화 가능
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <nav_msgs/msg/path.hpp>
+#include <visualization_msgs/msg/marker.hpp>
 #include <rclcpp/rclcpp.hpp>
 
 #include <string>
@@ -90,6 +91,55 @@ inline nav_msgs::msg::Path to_path_msg(
   return msg;
 }
 
+
+// ============================================================================
+// to_points_marker  — Point2D 벡터 → visualization_msgs::msg::Marker (POINTS) 변환
+// ============================================================================
+/**
+ * @brief Point2D 벡터를 POINTS 타입 Marker로 변환한다.
+ *
+ * RViz2에서 각 점을 개별 구체로 표시하므로 점 개수를 직관적으로 파악 가능.
+ * Path 타입과 달리 점 사이를 직선으로 연결하지 않는다.
+ *
+ * @param pts       변환할 Point2D 벡터
+ * @param frame_id  좌표계 이름
+ * @param stamp     ROS 타임스탬프
+ * @param ns        마커 namespace (토픽 구분용)
+ * @param r,g,b,a   마커 색상 (0.0~1.0)
+ * @param scale     점 크기 [m]
+ */
+inline visualization_msgs::msg::Marker to_points_marker(
+  const std::vector<Point2D> & pts,
+  const std::string & frame_id,
+  const rclcpp::Time & stamp,
+  const std::string & ns = "points",
+  float r = 1.0f, float g = 1.0f, float b = 1.0f, float a = 1.0f,
+  double scale = 0.08)
+{
+  visualization_msgs::msg::Marker m;
+  m.header.frame_id = frame_id;
+  m.header.stamp = stamp;
+  m.ns = ns;
+  m.id = 0;
+  m.type = visualization_msgs::msg::Marker::POINTS;
+  m.action = visualization_msgs::msg::Marker::ADD;
+  m.scale.x = scale;
+  m.scale.y = scale;
+  m.color.r = r;
+  m.color.g = g;
+  m.color.b = b;
+  m.color.a = a;
+  m.lifetime = rclcpp::Duration::from_seconds(0.2);
+  m.points.reserve(pts.size());
+  for (const auto & pt : pts) {
+    geometry_msgs::msg::Point p;
+    p.x = pt.x;
+    p.y = pt.y;
+    p.z = 0.0;
+    m.points.push_back(p);
+  }
+  return m;
+}
 
 }  // namespace chaining_costmap_ver
 
