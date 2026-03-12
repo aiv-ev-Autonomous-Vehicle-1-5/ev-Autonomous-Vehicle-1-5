@@ -1,0 +1,14 @@
+session_name: ev
+start_directory: /home/aiv/ev-Autonomous-Vehicle-1-5
+
+shell_command_before:
+  - source /opt/ros/humble/setup.bash
+  - source /home/aiv/ev-Autonomous-Vehicle-1-5/install/setup.bash
+
+windows:
+  - window_name: main
+    layout: even-horizontal
+    panes:
+      - ros2 launch carsa_gazebo empty.launch.py
+      - ros2 launch lidar_launch make_bbox.launch.py
+      - ros2 launch chaining_costmap_ver chaining_costmap_ver.launch.py
