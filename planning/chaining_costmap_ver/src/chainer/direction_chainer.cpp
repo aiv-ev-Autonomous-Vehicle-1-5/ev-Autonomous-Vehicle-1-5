@@ -1,22 +1,23 @@
 /**
  * @file direction_chainer.cpp
- * @brief DirectionChainer — 6단계 파이프라인 구현부
+ * @brief DirectionChainer — Owner-Label 기반 순차 체이닝 구현부 (v3)
  *
  * [파일 구조]
  *   이 파일은 direction_chainer.hpp에 선언된 DirectionChainer 클래스의
  *   모든 멤버 함수를 구현한다. 각 함수는 파이프라인의 한 단계에 대응한다.
  *
- * [6단계 파이프라인 요약]
- *   1단계: find_seed()           — 좌/우 시작점 선택 (최근접점 기반)
- *   2단계: build_graph()         — kNN + G1,G3 게이트로 undirected 그래프 구성
- *   3단계: extract_component()   — BFS로 seed 연결 성분 추출 (visited 공유)
- *   4단계: extract_backbone()    — greedy chaining으로 주 경계선 추출
- *   5단계: extract_branches()    — 잔여 노드를 backbone에 연결하여 가지 구성
- *   6단계: resample_component()  — 전 edge를 일정 간격으로 보간
+ * [파이프라인 요약]
+ *   준비: find_seed()           — 좌/우 시작점 선택 (최근접점 기반)
+ *         build_graph()         — kNN + G1,G3 게이트로 undirected 그래프 구성
+ *   1단계: extract_backbone()   — left backbone 확정 (owner==NONE 후보)
+ *   2단계: extract_backbone()   — right backbone 확정 (LEFT_BACKBONE 제외)
+ *   3단계: extract_branches()   — left branch 확정 (backbone 순회 BFS)
+ *   4단계: extract_branches()   — right branch 확정 (LEFT_BACKBONE+LEFT_BRANCH 제외)
+ *   5단계: resample_component() — 좌/우 각각 전 edge를 일정 간격으로 보간
  *
  * [의존 관계]
  *   - geometry.hpp: dot2() — 2D 벡터 내적 함수
- *   - types.hpp: ChainPoint, ChainingGraph, BranchInfo, StopReason 등
+ *   - types.hpp: ChainPoint, ChainingGraph, BranchInfo, StopReason, NodeOwner 등
  *   - params.hpp: PlanningParams::Chainer — 모든 튜닝 파라미터
  */
 #include "chaining_costmap_ver/chainer/direction_chainer.hpp"
@@ -34,7 +35,7 @@ namespace chaining_costmap_ver
 {
 
 // ============================================================================
-// 메인 chain() — 6단계 파이프라인 통합 실행
+// 메인 chain() — Owner-Label 기반 순차 체이닝
 // ============================================================================
 //
 // [전체 흐름 다이어그램]
@@ -42,19 +43,24 @@ namespace chaining_costmap_ver
 //   입력: ChainPoint[] (콘+차선 혼합)
 //     │
 //     ▼
-//   1단계: find_seed() × 2 → 좌측/우측 seed 선택
+//   준비: find_seed() × 2 → 좌측/우측 seed 선택
+//         build_graph() → kNN+게이트 기반 undirected 그래프
+//         owner[] 초기화 (all NONE)
 //     │
 //     ▼
-//   2단계: build_graph() → kNN+게이트 기반 undirected 그래프
+//   1단계: extract_backbone(left) → LEFT_BACKBONE 라벨 부여
 //     │
 //     ▼
-//   3단계: extract_component() × 2 → 좌/우 연결 성분 분리
-//     │                                (visited 공유로 중복 방지)
+//   2단계: extract_backbone(right) → RIGHT_BACKBONE 라벨 부여
+//     │                              (LEFT_BACKBONE 자동 제외)
 //     ▼
-//   4~6단계: process_side() × 2
-//     │  ├── 4: extract_backbone() → 주 경계선 추출
-//     │  ├── 5: extract_branches() → 잔여 노드 → 가지 구성
-//     │  └── 6: resample_component() → 균등 보간
+//   3단계: extract_branches(left) → LEFT_BRANCH 라벨 부여
+//     │                             (backbone 제외, LEFT_BRANCH 중복 허용)
+//     ▼
+//   4단계: extract_branches(right) → RIGHT_BRANCH 라벨 부여
+//     │                              (LEFT_BACKBONE+LEFT_BRANCH 제외)
+//     ▼
+//   5단계: resample_component() × 2 → 균등 보간
 //     │
 //     ▼
 //   출력: DirectionChainResult (left + right SideResult)
@@ -68,123 +74,97 @@ DirectionChainResult DirectionChainer::chain(
   DirectionChainResult result;
   const auto & cp = params.chainer;
 
-  // ── 0단계: 입력 검사 ──
-  // 점이 2개 미만이면 체이닝 자체가 불가능하므로 조기 반환.
+  // ── 준비: 입력 검사 ──
   const auto & filtered = points;
   if (filtered.size() < 2) return result;
 
-  // ── 1단계: Seed 선택 ──
-  // 좌측(y>0)과 우측(y<0) 각각에서 ego에 가장 가까운 전방 점을 seed로 선택한다.
-  // 양쪽 모두 seed를 찾지 못하면 체이닝이 불가능.
-  int left_seed = find_seed(filtered, true, cp);    // 좌측 seed (y > side_seed_y)
-  int right_seed = find_seed(filtered, false, cp);   // 우측 seed (y < -side_seed_y)
+  // ── 준비: Seed 선택 ──
+  int left_seed = find_seed(filtered, true, cp);
+  int right_seed = find_seed(filtered, false, cp);
   if (left_seed < 0 && right_seed < 0) return result;
 
-  // ── 2단계: Undirected Graph 구성 ──
-  // 모든 점에 대해 kNN + G1(거리) + G3(횡오차) 게이트를 적용하여
-  // 양방향 인접 리스트를 구성한다.
-  // 이 그래프는 3단계 BFS와 5단계 branch BFS에서 재사용된다.
+  // ── 준비: Undirected Graph 구성 ──
   auto graph = build_graph(filtered, cp);
 
-  // ── 3단계: Side Component 추출 (visited 공유) ──
-  //
-  // 핵심: visited 배열을 좌/우가 공유한다.
-  // → 먼저 BFS를 실행한 쪽이 차지한 노드는 반대쪽이 접근할 수 없다.
-  // → 하나의 점이 좌/우 양쪽에 배정되는 것을 원천 방지한다.
-  //
-  // ego에 더 가까운 seed를 먼저 처리한다.
-  // 이유: ego에 가까운 점은 좌/우 구분이 더 명확하므로,
-  //       가까운 쪽이 먼저 확실한 노드들을 차지하게 한다.
-  std::vector<bool> visited(filtered.size(), false);
+  // ── 준비: Owner 배열 초기화 ──
+  // 모든 노드를 NONE으로 시작. 각 단계에서 라벨을 부여한다.
+  std::vector<NodeOwner> owner(filtered.size(), NodeOwner::NONE);
 
-  // 좌/우 seed의 ego 거리 계산 (어느 쪽을 먼저 처리할지 결정)
-  double left_dist = (left_seed >= 0)
-    ? std::sqrt(filtered[left_seed].x * filtered[left_seed].x +
-                filtered[left_seed].y * filtered[left_seed].y)
-    : std::numeric_limits<double>::max();   // seed 없으면 ∞ → 나중에 처리
-  double right_dist = (right_seed >= 0)
-    ? std::sqrt(filtered[right_seed].x * filtered[right_seed].x +
-                filtered[right_seed].y * filtered[right_seed].y)
-    : std::numeric_limits<double>::max();
-
-  std::vector<int> l_component, r_component;
-
-  // ego에 더 가까운 seed를 먼저 BFS 실행 (visited 선점)
-  if (left_dist <= right_dist) {
-    if (left_seed >= 0)
-      l_component = extract_component(graph, left_seed, visited);
-    if (right_seed >= 0)
-      r_component = extract_component(graph, right_seed, visited);
-  } else {
-    if (right_seed >= 0)
-      r_component = extract_component(graph, right_seed, visited);
-    if (left_seed >= 0)
-      l_component = extract_component(graph, left_seed, visited);
+  // ── 1단계: Left Backbone 확정 ──
+  std::vector<int> left_backbone_ids;
+  StopReason left_stop = StopReason::NO_CANDIDATE;
+  if (left_seed >= 0) {
+    left_backbone_ids = extract_backbone(
+      filtered, owner, left_seed, true, left_stop, cp);
+    for (int idx : left_backbone_ids) {
+      owner[idx] = NodeOwner::LEFT_BACKBONE;
+    }
   }
 
-  // ── 4~6단계: 각 side별 backbone/branch/resample 처리 ──
-  //
-  // 좌/우 각각 동일한 과정을 거친다:
-  //   4단계: backbone 추출 (greedy chaining으로 주 경계선)
-  //   5단계: branch 추출 (잔여 노드를 backbone에 연결)
-  //   6단계: resample (전 edge를 균등 간격으로 보간)
-  //
-  // 이 과정을 lambda로 정의하여 좌/우에 동일하게 적용한다.
-  auto process_side = [&](
-    const std::vector<int> & comp_ids,
-    int seed_idx,
-    bool is_left) -> SideResult
-  {
-    SideResult side;
-    if (comp_ids.empty() || seed_idx < 0) return side;
-
-    side.seed_idx = seed_idx;
-
-    // ━━━ 4단계: Backbone 추출 ━━━
-    // seed에서 출발하여 greedy하게 전방으로 확장.
-    // 비용함수 w' = w + λ·C_side 최소인 다음 점을 선택한다.
-    // stop_reason에 종료 이유가 기록된다
-    // (후보 없음 / 게이트 탈락 / max_len 도달).
-    StopReason stop;
-    auto backbone_ids = extract_backbone(
-      filtered, comp_ids, seed_idx, is_left, stop, cp);
-    side.stop_reason = stop;
-
-    if (backbone_ids.empty()) return side;
-
-    // goal_idx: backbone의 마지막 노드 (체이닝이 끝난 지점)
-    side.goal_idx = backbone_ids.back();
-
-    // backbone 포인트를 SideResult에 복사 (디버그/시각화용)
-    side.backbone.reserve(backbone_ids.size());
-    for (int idx : backbone_ids) {
-      side.backbone.push_back(filtered[idx]);
+  // ── 2단계: Right Backbone 확정 ──
+  // LEFT_BACKBONE 노드는 owner!=NONE이라 자동 제외된다.
+  std::vector<int> right_backbone_ids;
+  StopReason right_stop = StopReason::NO_CANDIDATE;
+  if (right_seed >= 0) {
+    right_backbone_ids = extract_backbone(
+      filtered, owner, right_seed, false, right_stop, cp);
+    for (int idx : right_backbone_ids) {
+      owner[idx] = NodeOwner::RIGHT_BACKBONE;
     }
+  }
 
-    // ━━━ 5단계: Branch 추출 ━━━
-    // 잔여 노드를 BFS로 가장 가까운 backbone 노드에 연결하여
-    // 가지(branch)를 구성한다.
-    side.branches = extract_branches(
-      graph, filtered, comp_ids, backbone_ids, cp);
+  // ── 3단계: Left Branch 확정 ──
+  // 허용: NONE, LEFT_BRANCH / 차단: LEFT_BACKBONE, RIGHT_BACKBONE
+  std::vector<BranchInfo> left_branches;
+  if (!left_backbone_ids.empty()) {
+    left_branches = extract_branches(
+      graph, filtered, left_backbone_ids, owner,
+      NodeOwner::LEFT_BRANCH, cp);
+  }
 
-    // ━━━ 6단계: Component 리샘플링 ━━━
-    // backbone + branch의 모든 edge를 resample_ds 간격으로 보간한다.
-    // 결과: costmap에 전달할 균등 간격 경계점열.
-    side.component = resample_component(
-      filtered, backbone_ids, side.branches, cp.resample_ds);
+  // ── 4단계: Right Branch 확정 ──
+  // 허용: NONE, RIGHT_BRANCH / 차단: LEFT_BACKBONE, RIGHT_BACKBONE, LEFT_BRANCH
+  std::vector<BranchInfo> right_branches;
+  if (!right_backbone_ids.empty()) {
+    right_branches = extract_branches(
+      graph, filtered, right_backbone_ids, owner,
+      NodeOwner::RIGHT_BRANCH, cp);
+  }
 
-    return side;
-  };
+  // ── 5단계: 좌/우 각각 Resample ──
+  // Left side SideResult 구성
+  if (!left_backbone_ids.empty()) {
+    result.left.seed_idx = left_seed;
+    result.left.goal_idx = left_backbone_ids.back();
+    result.left.stop_reason = left_stop;
+    result.left.backbone.reserve(left_backbone_ids.size());
+    for (int idx : left_backbone_ids) {
+      result.left.backbone.push_back(filtered[idx]);
+    }
+    result.left.branches = std::move(left_branches);
+    result.left.component = resample_component(
+      filtered, left_backbone_ids, result.left.branches, cp.resample_ds);
+  }
 
-  // 좌/우 각각 4~6단계 실행
-  result.left = process_side(l_component, left_seed, true);    // 좌측 처리
-  result.right = process_side(r_component, right_seed, false);  // 우측 처리
+  // Right side SideResult 구성
+  if (!right_backbone_ids.empty()) {
+    result.right.seed_idx = right_seed;
+    result.right.goal_idx = right_backbone_ids.back();
+    result.right.stop_reason = right_stop;
+    result.right.backbone.reserve(right_backbone_ids.size());
+    for (int idx : right_backbone_ids) {
+      result.right.backbone.push_back(filtered[idx]);
+    }
+    result.right.branches = std::move(right_branches);
+    result.right.component = resample_component(
+      filtered, right_backbone_ids, result.right.branches, cp.resample_ds);
+  }
 
   // ── unchained 포인트 수집 ──
-  // visited 배열에서 false인 점 = 어떤 component에도 속하지 못한 점
+  // owner가 NONE인 노드 = 어떤 체인에도 속하지 못한 점
   // → costmap에서 CONE 비용으로 보수적 처리 (미확인 장애물)
   for (size_t i = 0; i < filtered.size(); ++i) {
-    if (!visited[i]) {
+    if (owner[i] == NodeOwner::NONE) {
       result.unchained.push_back(filtered[i]);
     }
   }
@@ -338,73 +318,6 @@ ChainingGraph DirectionChainer::build_graph(
   }
 
   return graph;
-}
-
-// ============================================================================
-// 3단계: Component 추출 (BFS)
-// ============================================================================
-//
-// [목적]
-//   seed에서 출발하여 그래프 상에서 연결된 모든 노드를 하나의 "component"로 묶는다.
-//   component = 같은 방향(좌 또는 우) 경계에 속하는 점들의 집합.
-//
-// [BFS (너비 우선 탐색) 동작]
-//   1. seed를 큐에 넣고 visited 표시
-//   2. 큐에서 하나 꺼내서 인접 노드 확인
-//   3. 미방문 인접 노드를 큐에 넣고 visited 표시 + component에 추가
-//   4. 큐가 빌 때까지 반복
-//
-// [visited 공유의 핵심 효과]
-//   visited 배열은 chain() 함수에서 좌/우 양쪽이 공유한다.
-//   따라서:
-//   - 좌측 BFS가 먼저 실행되면, 좌측 seed와 연결된 노드들이 visited=true 됨
-//   - 이후 우측 BFS 실행 시, 이미 visited된 노드는 접근 불가
-//   - 결과: 하나의 점이 좌/우 양쪽 component에 중복 배정되지 않음
-//
-//   이 메커니즘이 "ego에 가까운 seed를 먼저 처리"하는 이유와 결합된다:
-//   ego 근처에서는 좌/우 구분이 명확하므로, 확실한 쪽이 먼저 점유한다.
-//
-// [경계 사례]
-//   - seed가 유효하지 않거나(-1, 범위 초과) → 빈 배열 반환
-//   - seed가 이미 visited → 빈 배열 반환 (반대쪽이 이미 차지함)
-//
-// ============================================================================
-
-std::vector<int> DirectionChainer::extract_component(
-  const ChainingGraph & graph,
-  int seed_idx,
-  std::vector<bool> & visited) const
-{
-  std::vector<int> component;
-
-  // seed 유효성 검사: 인덱스 범위 / 이미 방문 여부
-  if (seed_idx < 0 ||
-      seed_idx >= static_cast<int>(graph.undirected.size()) ||
-      visited[seed_idx]) {
-    return component;  // 빈 배열 반환
-  }
-
-  // BFS 시작: seed를 큐에 넣고 방문 표시
-  std::queue<int> q;
-  q.push(seed_idx);
-  visited[seed_idx] = true;
-  component.push_back(seed_idx);
-
-  // BFS 탐색: 큐가 빌 때까지 반복
-  while (!q.empty()) {
-    int cur = q.front();
-    q.pop();
-
-    // 현재 노드의 모든 인접 노드를 확인
-    for (int nb : graph.undirected[cur]) {
-      if (visited[nb]) continue;  // 이미 방문 → 건너뜀 (좌/우 공유 visited)
-      visited[nb] = true;          // 방문 표시 (반대쪽 BFS가 접근 못하게)
-      component.push_back(nb);     // component에 추가
-      q.push(nb);                  // 큐에 넣어 후속 탐색
-    }
-  }
-
-  return component;
 }
 
 // ============================================================================
@@ -655,12 +568,18 @@ double DirectionChainer::compute_cost_prime(
 }
 
 // ============================================================================
-// 4단계: Backbone 추출 (Greedy Chaining)
+// 1-2단계: Backbone 추출 (Greedy Chaining)
 // ============================================================================
 //
 // [목적]
-//   component 내에서 seed부터 전방으로 이어지는 "주 경계선"(backbone)을 추출한다.
+//   seed부터 전방으로 이어지는 "주 경계선"(backbone)을 추출한다.
 //   이 backbone이 한쪽 경계의 핵심 구조이다.
+//
+// [Owner 기반 필터링]
+//   기존 component_ids 대신 owner 배열을 사용한다.
+//   owner[j] == NONE인 노드만 후보로 허용하므로:
+//   - 1단계(left backbone): 모든 NONE 노드가 후보
+//   - 2단계(right backbone): LEFT_BACKBONE 노드는 자동 제외
 //
 // [Greedy Chaining 알고리즘]
 //
@@ -668,55 +587,32 @@ double DirectionChainer::compute_cost_prime(
 //            ↑
 //         매 스텝마다:
 //         1) 현재 노드의 kNN 후보 탐색
-//         2) 3개 게이트(G1+G2+G3) 적용하여 부적합 후보 제거
+//         2) owner==NONE 필터링 + 3개 게이트(G1+G2+G3) 적용
 //         3) 통과한 후보들의 w' 비용 계산
 //         4) w' 최소인 노드로 이동, 진행 방향 갱신
 //         5) 반복 (종료 조건 충족 시 중단)
 //
-// [3개 게이트 — backbone 전용 (2단계 graph와 다른 점)]
+// [3개 게이트 — backbone 전용]
 //
 //   G1 (거리 게이트): d(cur, j) ≤ d_max  AND  d > 0
-//     → 2단계와 동일. 너무 먼 점 차단.
-//     → d < 1e-9: 거의 같은 위치의 점 제외 (방향 계산 불가)
-//
-//   G2 (전방 콘 게이트): angle(v, u_ij) ≤ cone_half_rad  ★ 2단계에는 없음!
-//     → 현재 진행 방향 v 기준으로 "전방 콘" 안에 있는 점만 통과
-//     → 뒤쪽/완전 옆쪽 점은 "다음 경계점"이 아님
-//     → 예: forward_cone_deg=120° → 전방 ±60° 범위만 허용
-//
-//         v (진행방향)
-//          \  ±60°  /
-//           \      /
-//            \    /   ← 이 콘 안의 점만 후보
-//             \  /
-//              ● (현재 노드)
-//
+//   G2 (전방 콘 게이트): angle(v, u_ij) ≤ cone_half_rad
 //   G3 (횡오차 게이트): |lat_proj| ≤ lateral_gate
-//     → 진행 방향 v의 수직 성분으로 투영한 거리가 lateral_gate 이내
-//     → 2단계의 단순 |Δy|와 달리, 진행 방향 기준의 정밀한 횡오차
 //
 // [종료 조건과 StopReason]
-//   - MAX_LEN: max_chain_len 도달 (정상 종료, 충분히 길게 체이닝됨)
-//   - NO_CANDIDATE: kNN 중 component 내 후보가 하나도 없음 (경계 끝)
-//   - ALL_GATED: 후보는 있지만 게이트를 모두 탈락 (방향 급변/장애물)
-//
-// [진행 방향 v 갱신]
-//   - 초기값: v = (1,0) — base_link 전방
-//   - 매 스텝: v = (dx/d, dy/d) — 현재→다음 방향으로 갱신
-//   - 이렇게 하면 G2 콘이 체인의 진행 방향을 따라간다
+//   - MAX_LEN: max_chain_len 도달 (정상 종료)
+//   - NO_CANDIDATE: kNN 중 NONE 후보가 없음 (경계 끝)
+//   - ALL_GATED: 후보는 있지만 게이트를 모두 탈락
 //
 // ============================================================================
 
 std::vector<int> DirectionChainer::extract_backbone(
   const std::vector<ChainPoint> & points,
-  const std::vector<int> & component_ids,
+  const std::vector<NodeOwner> & owner,
   int seed_idx,
   bool is_left,
   StopReason & stop_reason,
   const PlanningParams::Chainer & cp) const
 {
-  // component 소속 여부를 O(1)로 검색하기 위한 hash set
-  std::unordered_set<int> comp_set(component_ids.begin(), component_ids.end());
 
   // backbone: seed에서 시작하는 노드 인덱스 리스트
   std::vector<int> backbone;
@@ -743,18 +639,18 @@ std::vector<int> DirectionChainer::extract_backbone(
   while (static_cast<int>(backbone.size()) < cp.max_chain_len) {
 
     // ━━━ 1단계: 후보 탐색 ━━━
-    // 현재 노드의 kNN 이웃 중 component에 속하는 노드만 대상
+    // 현재 노드의 kNN 이웃 중 owner==NONE인 노드만 대상
     auto neighbors = knn(points, current, cp.k);
 
-    // ━━━ 2단계: 3개 게이트 적용 ━━━
-    // G1(거리) + G2(전방 콘) + G3(횡오차) 모두 통과한 후보만 gated에 추가
+    // ━━━ 2단계: owner 필터 + 3개 게이트 적용 ━━━
+    // owner==NONE + G1(거리) + G2(전방 콘) + G3(횡오차) 모두 통과한 후보만 gated에 추가
     std::vector<int> gated;
-    bool had_candidates = false;  // component 내 후보가 있었는지 추적
+    bool had_candidates = false;  // NONE 후보가 있었는지 추적
 
     for (int j : neighbors) {
-      // component 밖의 노드는 건너뜀
-      if (!comp_set.count(j)) continue;
-      had_candidates = true;  // component 내에 후보가 최소 1개 존재
+      // 이미 소유권이 부여된 노드는 건너뜀
+      if (owner[j] != NodeOwner::NONE) continue;
+      had_candidates = true;  // NONE 후보가 최소 1개 존재
 
       // 이미 backbone에 포함된 노드는 건너뜀 (순환 방지)
       if (visited_set.count(j)) continue;
@@ -788,10 +684,10 @@ std::vector<int> DirectionChainer::extract_backbone(
     // 유효 후보가 없으면 체이닝 종료
     if (gated.empty()) {
       // had_candidates로 종료 이유 구분:
-      // - ALL_GATED: component 내 후보는 있었지만 게이트에서 모두 탈락
+      // - ALL_GATED: NONE 후보는 있었지만 게이트에서 모두 탈락
       //   → 방향이 급변하거나 장애물이 막는 상황
-      // - NO_CANDIDATE: component 내 후보 자체가 없음
-      //   → 경계의 끝에 도달했거나 component가 작음
+      // - NO_CANDIDATE: NONE 후보 자체가 없음
+      //   → 경계의 끝에 도달했거나 모든 이웃이 이미 소유됨
       stop_reason = had_candidates ? StopReason::ALL_GATED
                                    : StopReason::NO_CANDIDATE;
       break;
@@ -830,158 +726,116 @@ std::vector<int> DirectionChainer::extract_backbone(
 }
 
 // ============================================================================
-// 5단계: Branch 추출 (잔여 노드 → Backbone 연결)
+// 3-4단계: Branch 추출 (Backbone 순회 기반 BFS)
 // ============================================================================
 //
 // [목적]
-//   backbone(주 경계선)에 포함되지 못한 "잔여 노드"들을
-//   backbone에 연결하여 가지(branch)로 구성한다.
+//   backbone에 포함되지 못한 노드들을 backbone에 연결하여
+//   가지(branch)로 구성한다. costmap에 빈틈 없는 비용 장벽을 형성한다.
 //
-// [왜 Branch가 필요한가?]
+// [알고리즘 — Backbone 순회 기반 정방향 BFS]
 //
-//   backbone은 seed→전방 방향으로 greedy하게 뻗어나가므로,
-//   component 내 모든 점을 포함하지 못할 수 있다:
+//   backbone 노드를 B0→B1→B2→... 순서로 순회하며:
 //
-//     backbone:  seed ──→ ● ──→ ● ──→ ● ──→ goal
-//                              ↑
-//                          ● ← 잔여 노드 (backbone 옆에 있지만 선택 안 됨)
-//                          ●
-//                          ● ← 이 점들도 경계 정보를 담고 있다!
+//   1) Bi의 그래프 이웃 중 허용 라벨 노드를 BFS 큐에 추가
+//   2) BFS 큐에서 꺼낸 노드의 이웃도 같은 조건으로 확장
+//   3) 수집된 노드들이 Bi의 branch가 됨
+//   4) 부모(Bi)로부터 거리순 정렬, max_branch_len 제한
 //
-//   이런 잔여 노드를 무시하면 costmap에 "구멍"이 생긴다.
-//   branch로 연결하면 경계 정보를 최대한 활용할 수 있다.
+// [허용 조건]
+//   owner[node] == NONE || owner[node] == branch_label
 //
-// [알고리즘]
+//   → 같은 side의 이미 확정된 branch 노드를 BFS로 통과+재연결 가능
+//   → 반대 side의 backbone/branch는 차단
 //
-//   1) 잔여 노드 수집:
-//      component에 속하지만 backbone에는 없는 노드들
+//   | 단계          | branch_label  | 허용               | 차단                                    |
+//   |---------------|---------------|--------------------|-----------------------------------------|
+//   | 3. left branch| LEFT_BRANCH   | NONE, LEFT_BRANCH  | LEFT_BACKBONE, RIGHT_BACKBONE           |
+//   | 4. right branch| RIGHT_BRANCH | NONE, RIGHT_BRANCH | LEFT_BACKBONE, RIGHT_BACKBONE, LEFT_BRANCH |
 //
-//   2) 각 잔여 노드에서 BFS → 가장 가까운 backbone 노드 탐색:
-//      undirected 그래프 위에서 BFS를 실행하여
-//      최초로 만나는 backbone 노드를 "부모(parent)"로 결정한다.
-//      BFS이므로 최단 hop 거리의 backbone 노드가 선택된다.
-//
-//   3) 같은 부모를 공유하는 잔여 노드들을 묶어 하나의 branch 구성:
-//      backbone 상의 같은 지점에서 분기되는 점들의 그룹.
-//
-//   4) 부모로부터 거리 순 정렬:
-//      branch 내 점들을 부모에서 가까운 순서로 정렬한다.
-//      → 6단계 리샘플링에서 edge를 올바른 순서로 보간하기 위함.
-//
-//   5) max_branch_len 제한:
-//      너무 긴 branch는 잘라낸다 (노이즈/오탐 방지).
-//
-// [BranchInfo 구조]
-//   - parent_backbone_idx: backbone 상의 분기점 위치 (0-based 인덱스)
-//   - points: branch 포인트들 (부모에서 가까운 순)
-//   - score: branch 품질 (현재는 1/N, N=점 수)
+// [중복 소속]
+//   같은 side의 다른 backbone 노드에 이미 소속된 branch 노드도
+//   현재 backbone 노드의 branch에 다시 연결할 수 있다.
+//   → 각 backbone 노드마다 독립적인 BFS visited를 사용 (backbone-local).
+//   → 촘촘한 costmap 장벽 형성에 기여한다.
 //
 // ============================================================================
 
 std::vector<BranchInfo> DirectionChainer::extract_branches(
   const ChainingGraph & graph,
   const std::vector<ChainPoint> & points,
-  const std::vector<int> & component_ids,
   const std::vector<int> & backbone_ids,
+  std::vector<NodeOwner> & owner,
+  NodeOwner branch_label,
   const PlanningParams::Chainer & cp) const
 {
-  // backbone 소속 여부를 O(1)로 검색하기 위한 hash set
-  std::unordered_set<int> backbone_set(backbone_ids.begin(), backbone_ids.end());
+  std::vector<BranchInfo> branches;
 
-  // point index → backbone 내 순서 매핑
-  // 예: backbone_ids = [5, 12, 3] → {5→0, 12→1, 3→2}
-  // → BranchInfo.parent_backbone_idx에 backbone "몇 번째 노드"인지 기록할 때 사용
-  std::unordered_map<int, int> backbone_idx_map;
-  for (int i = 0; i < static_cast<int>(backbone_ids.size()); ++i) {
-    backbone_idx_map[backbone_ids[i]] = i;
-  }
+  // ── backbone 노드를 순서대로 순회하며 BFS로 branch 수집 ──
+  for (int b_idx = 0; b_idx < static_cast<int>(backbone_ids.size()); ++b_idx) {
+    const int b_node = backbone_ids[b_idx];
 
-  // ── 1) 잔여 노드 수집 ──
-  // component에 속하지만 backbone에는 없는 노드들
-  std::vector<int> rest;
-  for (int id : component_ids) {
-    if (!backbone_set.count(id)) {
-      rest.push_back(id);
-    }
-  }
-
-  // 잔여 노드가 없으면 branch도 없음
-  if (rest.empty()) return {};
-
-  // ── 2) 각 잔여 노드 → 가장 가까운 backbone 노드 탐색 (BFS) ──
-  // attach: 잔여 노드 → 부모 backbone 노드 매핑
-  std::unordered_map<int, int> attach;
-
-  for (int n : rest) {
-    // 잔여 노드 n에서 BFS 시작 → backbone 노드를 최초로 만나면 부모로 결정
-    std::queue<int> q;
+    // backbone-local BFS visited: 같은 backbone 내 중복 방문만 방지
+    // (다른 backbone의 branch 노드는 다시 방문 가능)
     std::unordered_set<int> bfs_visited;
-    q.push(n);
-    bfs_visited.insert(n);
-    int found_parent = -1;
+    std::vector<int> branch_nodes;
+    std::queue<int> q;
 
-    while (!q.empty() && found_parent < 0) {
+    // backbone 노드의 그래프 이웃 중 허용 노드를 BFS 시드로 추가
+    for (int nb : graph.undirected[b_node]) {
+      // 허용 조건: NONE 또는 같은 side의 branch
+      if (owner[nb] != NodeOwner::NONE && owner[nb] != branch_label) continue;
+      if (bfs_visited.count(nb)) continue;
+
+      bfs_visited.insert(nb);
+      branch_nodes.push_back(nb);
+      owner[nb] = branch_label;  // 최초 발견 시 라벨 부여
+      q.push(nb);
+    }
+
+    // BFS 확장: branch 노드의 이웃도 같은 조건으로 탐색
+    while (!q.empty()) {
       int cur = q.front();
       q.pop();
 
       for (int nb : graph.undirected[cur]) {
+        if (owner[nb] != NodeOwner::NONE && owner[nb] != branch_label) continue;
         if (bfs_visited.count(nb)) continue;
-        bfs_visited.insert(nb);
 
-        // backbone 노드를 발견하면 → 이것이 부모
-        if (backbone_set.count(nb)) {
-          found_parent = nb;
-          break;  // BFS이므로 최단 hop 거리의 backbone 노드
-        }
+        bfs_visited.insert(nb);
+        branch_nodes.push_back(nb);
+        owner[nb] = branch_label;
         q.push(nb);
       }
     }
 
-    // 부모를 찾았으면 매핑 저장
-    if (found_parent >= 0) {
-      attach[n] = found_parent;
-    }
-    // 부모를 못 찾은 경우: 그래프 상 backbone과 연결 안 됨 → 무시
-  }
+    if (branch_nodes.empty()) continue;
 
-  // ── 3) 같은 부모를 공유하는 잔여 노드들을 묶어 branch 구성 ──
-  std::unordered_map<int, std::vector<int>> parent_groups;
-  for (const auto & [node, parent] : attach) {
-    parent_groups[parent].push_back(node);
-  }
-
-  std::vector<BranchInfo> branches;
-
-  for (auto & [parent, nodes] : parent_groups) {
-    // ── 4) 부모로부터 거리 순 정렬 ──
-    // 유클리드 거리 기준 오름차순 (부모에 가까운 점이 앞)
-    const double px = points[parent].x;
-    const double py = points[parent].y;
-    std::sort(nodes.begin(), nodes.end(),
+    // ── 부모(Bi)로부터 거리 순 정렬 ──
+    const double px = points[b_node].x;
+    const double py = points[b_node].y;
+    std::sort(branch_nodes.begin(), branch_nodes.end(),
       [&](int a, int b) {
         double da = (points[a].x - px) * (points[a].x - px) +
                     (points[a].y - py) * (points[a].y - py);
         double db = (points[b].x - px) * (points[b].x - px) +
                     (points[b].y - py) * (points[b].y - py);
-        return da < db;  // 거리² 비교 (오름차순)
+        return da < db;
       });
 
-    // ── 5) max_branch_len 제한 ──
-    // 너무 긴 branch는 잘라냄 (노이즈/오탐이 연쇄적으로 연결된 경우 방지)
-    if (static_cast<int>(nodes.size()) > cp.max_branch_len) {
-      nodes.resize(cp.max_branch_len);
+    // ── max_branch_len 제한 ──
+    if (static_cast<int>(branch_nodes.size()) > cp.max_branch_len) {
+      branch_nodes.resize(cp.max_branch_len);
     }
 
     // BranchInfo 구성
     BranchInfo bi;
-    bi.parent_backbone_idx = backbone_idx_map[parent];  // backbone 내 순서
-    bi.points.reserve(nodes.size());
-    for (int idx : nodes) {
-      bi.points.push_back(points[idx]);  // 실제 포인트 데이터 복사
+    bi.parent_backbone_idx = b_idx;
+    bi.points.reserve(branch_nodes.size());
+    for (int idx : branch_nodes) {
+      bi.points.push_back(points[idx]);
     }
-    // score: branch 품질 (점이 적을수록 높음 — 간결한 branch 선호)
-    // 현재는 단순히 1/N, 향후 비용 기반 스코어링으로 확장 가능
-    bi.score = (nodes.empty()) ? 0.0 : 1.0 / static_cast<double>(nodes.size());
+    bi.score = branch_nodes.empty() ? 0.0 : 1.0 / static_cast<double>(branch_nodes.size());
 
     branches.push_back(std::move(bi));
   }

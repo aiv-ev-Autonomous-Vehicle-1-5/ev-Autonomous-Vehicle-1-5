@@ -1,6 +1,6 @@
 /**
  * @file direction_chainer.hpp
- * @brief DirectionChainer — Component → Backbone → Branch 기반 체이닝 (v2)
+ * @brief DirectionChainer — Owner-Label 기반 순차 체이닝 (v3)
  *
  * ══════════════════════════════════════════════════════════════
  * [DirectionChainer란?]
@@ -14,51 +14,46 @@
  *         → costmap에 전달하여 경로 생성의 기반이 된다.
  *
  * ══════════════════════════════════════════════════════════════
- * [왜 6단계 파이프라인인가?]
+ * [왜 Owner-Label 기반 파이프라인인가?]
  *
- *   경계점들은 불규칙하게 흩어져 있고, 노이즈/오탐이 섞여 있다.
- *   한 번에 연결하면 좌/우가 뒤섞이거나 지그재그 경로가 생긴다.
- *   따라서 단계적으로 필터→그래프→컴포넌트→주선→가지를 추출하여
- *   안정적인 경계 라인을 구성한다.
+ *   v2에서는 visited 배열을 좌/우 BFS가 공유하여 component를 분리했다.
+ *   하지만 bridge 노드(y≈0 근처)를 통해 한쪽이 반대편 노드를 선점하는
+ *   문제가 있었다. v3에서는 NodeOwner 라벨로 노드 소유권을 관리하여
+ *   이 문제를 해결한다.
  *
  * ──────────────────────────────────────────────────────────────
- * [6단계 파이프라인 상세]
+ * [5단계 파이프라인 상세]
  *
  *   ┌─────────────────────────────────────────────────────────┐
- *   │ 1단계: Seed 선택 (Seed Selection)                       │
+ *   │ 준비: Seed 선택 + Undirected Graph 구성                  │
  *   │   - 좌/우 각각 시작점(seed) 선택                         │
- *   │   - side_seed_y 가드: 중심선 부근 점 제외 (|y| < 가드)   │
- *   │   - 선택 기준: ego(원점)에 가장 가까운 점                 │
+ *   │   - 모든 점에 대해 kNN + G1,G3 게이트로 그래프 구성       │
+ *   │   - owner 배열 초기화 (all NONE)                         │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 2단계: Undirected Graph 구성 (Build Graph)              │
- *   │   - 모든 점에 대해 kNN(k-최근접 이웃) 탐색               │
- *   │   - G1 거리 게이트: d(i,j) ≤ d_max 만 연결              │
- *   │   - G3 횡오차 게이트: |Δy| ≤ lateral_gate 만 연결        │
- *   │   - 결과: 양방향(undirected) 인접 리스트                  │
+ *   │ 1단계: Left Backbone 확정                               │
+ *   │   - left seed에서 greedy chaining (owner==NONE만 후보)   │
+ *   │   - 확정된 노드에 LEFT_BACKBONE 라벨 부여                │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 3단계: Component 추출 (BFS from seed)                   │
- *   │   - seed에서 BFS → 연결된 모든 노드를 하나의 component로  │
- *   │   - visited 배열을 좌/우가 공유 → 한 점이 양쪽에 배정되지  │
- *   │     않게 보장 (ego에 가까운 seed 먼저 처리)               │
+ *   │ 2단계: Right Backbone 확정                              │
+ *   │   - right seed에서 greedy chaining (owner==NONE만 후보)  │
+ *   │   - LEFT_BACKBONE 노드는 자동 제외                       │
+ *   │   - 확정된 노드에 RIGHT_BACKBONE 라벨 부여               │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 4단계: Backbone 추출 (Greedy Chaining)                  │
- *   │   - component 내에서 seed부터 전방으로 탐욕적 확장        │
- *   │   - 비용함수 w' = w + λ·C_side 최소인 다음 노드 선택     │
- *   │     w = α·C_d + β·C_a + γ·C_lat + δ·C_size             │
- *   │   - 3개 게이트 (G1 거리, G2 전방 콘, G3 횡오차) 통과     │
- *   │     후보만 비용 계산 → 최소 비용 노드로 이동              │
- *   │   - 종료 조건: 후보 소진 / 모두 게이트 탈락 / max_len    │
+ *   │ 3단계: Left Branch 확정                                 │
+ *   │   - left backbone 노드를 순서대로 순회하며 BFS            │
+ *   │   - 허용: NONE, LEFT_BRANCH / 차단: 모든 BACKBONE        │
+ *   │   - 같은 side branch 중복 소속 허용 (촘촘한 costmap 장벽) │
+ *   │   - 확정된 노드에 LEFT_BRANCH 라벨 부여                  │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 5단계: Branch 추출 (Residual → Backbone 연결)           │
- *   │   - backbone에 포함되지 않은 잔여 노드들                  │
- *   │   - 각 잔여 노드에서 BFS → 가장 가까운 backbone 노드 탐색 │
- *   │   - 같은 backbone 노드에 연결된 잔여 노드들을 묶어 branch │
- *   │   - branch = 콘/차선이 backbone 옆으로 갈라진 가지        │
+ *   │ 4단계: Right Branch 확정                                │
+ *   │   - right backbone 노드를 순서대로 순회하며 BFS           │
+ *   │   - 허용: NONE, RIGHT_BRANCH                             │
+ *   │   - 차단: LEFT_BACKBONE, RIGHT_BACKBONE, LEFT_BRANCH     │
+ *   │   - 확정된 노드에 RIGHT_BRANCH 라벨 부여                 │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 6단계: Component 리샘플링 (Resample)                    │
- *   │   - backbone + branch의 모든 edge를 일정 간격으로 보간    │
+ *   │ 5단계: Resample                                         │
+ *   │   - 좌/우 각각 backbone + branch의 모든 edge를 보간       │
  *   │   - resample_ds 간격으로 균등한 점열 생성                 │
- *   │   - costmap에 전달할 최종 경계점열 완성                   │
  *   └─────────────────────────────────────────────────────────┘
  *
  * ──────────────────────────────────────────────────────────────
@@ -124,7 +119,7 @@ namespace chaining_costmap_ver
 
 /**
  * @class DirectionChainer
- * @brief 6단계 파이프라인으로 경계점을 좌/우 체인으로 분류하는 핵심 클래스
+ * @brief Owner-Label 기반 파이프라인으로 경계점을 좌/우 체인으로 분류하는 핵심 클래스
  *
  * [사용 방법]
  *   DirectionChainer chainer;
@@ -134,7 +129,7 @@ namespace chaining_costmap_ver
  *
  * [설계 철학]
  *   - 모든 상태를 멤버로 보관하지 않음 (stateless)
- *   - chain() 호출마다 0~6단계를 순차 실행
+ *   - chain() 호출마다 seed→graph→backbone→branch→resample 순차 실행
  *   - const 메서드로 스레드 안전
  */
 class DirectionChainer
@@ -187,7 +182,7 @@ private:
     const PlanningParams::Chainer & cp) const;
 
   // ═══════════════════════════════════════════════════════════
-  // 2단계: Undirected Graph 구성 — kNN + 게이트 필터
+  // Undirected Graph 구성 — kNN + 게이트 필터
   // ═══════════════════════════════════════════════════════════
   /**
    * @brief 모든 점 간의 연결 관계를 kNN + 게이트로 구성
@@ -202,9 +197,9 @@ private:
    *     → 너무 먼 점끼리 연결되면 다른 경계의 점이 섞일 수 있다.
    *   - G3 (횡오차 게이트): |Δy| ≤ lateral_gate
    *     → 좌/우 경계가 그래프에서 직접 연결되는 것을 방지한다.
-   *     → 2단계에서는 방향 정보가 없으므로 단순 y 차이로 판정한다.
+   *     → 방향 정보가 없으므로 단순 y 차이로 판정한다.
    *   ※ G2 (전방 콘 게이트)는 여기서 적용하지 않는다.
-   *     → 방향 벡터가 없기 때문. 4단계 backbone에서 동적으로 적용된다.
+   *     → 방향 벡터가 없기 때문. backbone에서 동적으로 적용된다.
    *
    * [출력]
    *   - ChainingGraph.undirected: 양방향 인접 리스트
@@ -219,37 +214,14 @@ private:
     const PlanningParams::Chainer & cp) const;
 
   // ═══════════════════════════════════════════════════════════
-  // 3단계: Component 추출 — BFS로 연결 성분 분리
+  // 1-2단계: Backbone 추출 — 탐욕적 체이닝으로 주선 추출
   // ═══════════════════════════════════════════════════════════
   /**
-   * @brief seed에서 BFS로 연결된 모든 노드를 하나의 component로 추출
-   *
-   * [왜 visited를 공유하는가?]
-   *   - 좌측 seed와 우측 seed가 각각 BFS를 실행한다.
-   *   - visited 배열을 공유하면, 먼저 처리된 쪽이 차지한 노드는
-   *     반대쪽에서 접근할 수 없다.
-   *   - 이렇게 하면 하나의 점이 좌/우 양쪽에 배정되는 것을 방지한다.
-   *   - ego에 가까운 seed를 먼저 처리하여 더 확실한 쪽이 우선권을 가진다.
-   *
-   * @param graph     2단계에서 구성한 undirected 그래프
-   * @param seed_idx  BFS 시작점 (seed)
-   * @param visited   [in/out] 방문 표시 배열 (좌/우 공유)
-   * @return component에 포함된 점 인덱스 배열
-   */
-  std::vector<int> extract_component(
-    const ChainingGraph & graph,
-    int seed_idx,
-    std::vector<bool> & visited) const;
-
-  // ═══════════════════════════════════════════════════════════
-  // 4단계: Backbone 추출 — 탐욕적 체이닝으로 주선 추출
-  // ═══════════════════════════════════════════════════════════
-  /**
-   * @brief component 내에서 seed→전방으로 greedy하게 주 경계선 추출
+   * @brief seed→전방으로 greedy하게 주 경계선 추출 (owner==NONE 노드만 후보)
    *
    * [Greedy Chaining 알고리즘]
    *   1. seed를 시작점으로, 초기 진행 방향 v = (1,0) (전방)
-   *   2. 현재 노드의 kNN 중 component 내 노드만 필터
+   *   2. 현재 노드의 kNN 중 owner==NONE인 노드만 필터
    *   3. 3개 게이트 적용:
    *      - G1: d(cur, j) ≤ d_max (거리)
    *      - G2: angle(v, u_ij) ≤ cone_half (전방 콘)
@@ -258,13 +230,13 @@ private:
    *   5. w' 최소인 노드를 다음 노드로 선택, 진행 방향 갱신
    *   6. 반복 (후보 소진 / 모두 게이트 탈락 / max_chain_len 도달 시 종료)
    *
-   * [왜 Greedy인가?]
-   *   - 전역 최적해(예: 최단 경로)는 O(n!) 이상 걸릴 수 있다.
-   *   - 경계점은 물리적으로 순서가 있으므로, 가장 자연스러운 다음 점을
-   *     선택하는 greedy 방식이 실시간에 적합하고 결과도 충분히 좋다.
+   * [owner 기반 필터링]
+   *   기존 component_ids 대신 owner 배열을 사용한다.
+   *   owner[j] == NONE인 노드만 후보로 허용하므로,
+   *   이미 LEFT_BACKBONE으로 확정된 노드는 right backbone 후보에서 자동 제외된다.
    *
    * @param points         필터링된 경계점 배열
-   * @param component_ids  3단계에서 추출한 component 내 인덱스들
+   * @param owner          [in] 각 노드의 소유권 라벨 배열
    * @param seed_idx       시작점 인덱스
    * @param is_left        좌측(true) / 우측(false) — C_side 계산에 사용
    * @param stop_reason    [out] 체이닝이 왜 멈췄는지 기록
@@ -273,44 +245,48 @@ private:
    */
   std::vector<int> extract_backbone(
     const std::vector<ChainPoint> & points,
-    const std::vector<int> & component_ids,
+    const std::vector<NodeOwner> & owner,
     int seed_idx,
     bool is_left,
     StopReason & stop_reason,
     const PlanningParams::Chainer & cp) const;
 
   // ═══════════════════════════════════════════════════════════
-  // 5단계: Branch 추출 — 잔여 노드를 backbone에 연결
+  // 3-4단계: Branch 추출 — Backbone 순회 기반 BFS
   // ═══════════════════════════════════════════════════════════
   /**
-   * @brief backbone에 포함되지 않은 잔여 노드를 가지(branch)로 구성
+   * @brief backbone 노드를 순서대로 순회하며 주변 노드를 BFS로 branch에 연결
    *
    * [Branch란?]
-   *   backbone은 component의 "주 경계선"이다.
-   *   하지만 component에는 backbone에 포함되지 못한 점들이 있다.
-   *   예: backbone 옆에 있는 콘, 곡선 구간에서 빠진 차선점 등.
-   *   이런 점들을 무시하면 costmap에 빈 영역이 생긴다.
-   *   branch로 연결하면 경계 정보를 최대한 활용할 수 있다.
+   *   backbone 옆에 있지만 backbone에 선택되지 못한 콘/차선점.
+   *   이런 점들을 branch로 연결하면 costmap에 빈틈 없는 비용 장벽이 형성된다.
    *
-   * [알고리즘]
-   *   1. component 중 backbone에 없는 잔여 노드 수집
-   *   2. 각 잔여 노드에서 undirected 그래프 BFS 실행
-   *   3. BFS 중 backbone 노드를 만나면 → 그 backbone 노드가 "부모"
-   *   4. 같은 부모를 공유하는 잔여 노드들을 묶어 하나의 branch 구성
-   *   5. 부모로부터 거리 순 정렬, max_branch_len으로 길이 제한
+   * [알고리즘 — Backbone 순회 기반 정방향 BFS]
+   *   backbone 노드를 B0→B1→B2→... 순서로 순회하며:
+   *   1. Bi의 그래프 이웃 중 허용 라벨의 노드를 BFS로 수집
+   *   2. 수집된 branch 노드에서도 BFS를 확장하여 연쇄 탐색
+   *   3. 같은 side의 다른 backbone에 이미 소속된 branch도 중복 연결 허용
+   *   4. 부모로부터 거리순 정렬, max_branch_len 제한
    *
-   * @param graph          2단계의 undirected 그래프
+   * [허용 조건]
+   *   owner[node] == NONE || owner[node] == branch_label
+   *   → 같은 side의 branch 노드는 중복 소속 가능 (BFS 통과 + 재연결)
+   *   → 반대 side의 backbone/branch는 차단
+   *
+   * @param graph          undirected 그래프
    * @param points         필터링된 경계점 배열
-   * @param component_ids  component 내 인덱스들
-   * @param backbone_ids   4단계의 backbone 인덱스들
+   * @param backbone_ids   backbone 인덱스 배열
+   * @param owner          [in/out] 소유권 라벨 (새 branch에 branch_label 부여)
+   * @param branch_label   이 side의 branch 라벨 (LEFT_BRANCH 또는 RIGHT_BRANCH)
    * @param cp             chainer 파라미터 (max_branch_len 사용)
    * @return branch 정보 배열 (BranchInfo: 부모 위치, 점들, 스코어)
    */
   std::vector<BranchInfo> extract_branches(
     const ChainingGraph & graph,
     const std::vector<ChainPoint> & points,
-    const std::vector<int> & component_ids,
     const std::vector<int> & backbone_ids,
+    std::vector<NodeOwner> & owner,
+    NodeOwner branch_label,
     const PlanningParams::Chainer & cp) const;
 
   // ═══════════════════════════════════════════════════════════

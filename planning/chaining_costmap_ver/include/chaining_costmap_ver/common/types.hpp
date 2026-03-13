@@ -381,6 +381,32 @@ enum class StopReason : uint8_t
 };
 
 /**
+ * @brief 노드 소유권 라벨 — chain() 파이프라인에서 각 노드의 역할 구분
+ *
+ * [왜 NodeOwner가 필요한가?]
+ * 기존에는 visited 배열(bool)을 좌/우 BFS가 공유하여 component를 분리했다.
+ * 이 방식은 bridge 노드(y≈0 근처)를 통해 한쪽이 반대편 노드를 선점하는 문제가 있었다.
+ * NodeOwner 라벨로 각 노드의 소유권을 5가지 상태로 구분하면:
+ *   - backbone vs branch vs 미할당을 명확히 구분
+ *   - 각 단계에서 "어떤 노드를 후보로 허용할지" 라벨 비교만으로 판정
+ *   - visited 토글 없이 단방향 라벨링만으로 좌/우 분리 보장
+ *
+ * [파이프라인에서의 라벨 부여 순서]
+ *   1. left backbone  확정 → LEFT_BACKBONE
+ *   2. right backbone 확정 → RIGHT_BACKBONE (LEFT_BACKBONE 자동 제외)
+ *   3. left branch    확정 → LEFT_BRANCH   (RIGHT_BACKBONE 제외)
+ *   4. right branch   확정 → RIGHT_BRANCH  (LEFT_BACKBONE + LEFT_BRANCH 제외)
+ */
+enum class NodeOwner : uint8_t
+{
+  NONE = 0,        ///< 미할당 — 아직 어떤 체인에도 소속되지 않은 노드
+  LEFT_BACKBONE,   ///< 좌측 backbone — 좌측 주 경계선의 일부
+  RIGHT_BACKBONE,  ///< 우측 backbone — 우측 주 경계선의 일부
+  LEFT_BRANCH,     ///< 좌측 branch — 좌측 backbone에서 분기된 가지의 일부
+  RIGHT_BRANCH     ///< 우측 branch — 우측 backbone에서 분기된 가지의 일부
+};
+
+/**
  * @brief 한쪽 side(좌 또는 우)의 chaining 결과
  *
  * [구조 이해]
