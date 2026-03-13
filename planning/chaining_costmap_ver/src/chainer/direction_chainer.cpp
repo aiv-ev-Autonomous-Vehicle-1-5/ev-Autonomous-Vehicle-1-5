@@ -9,8 +9,8 @@
  * [파이프라인 요약]
  *   준비: find_seed()           — 좌/우 시작점 선택 (최근접점 기반)
  *         build_graph()         — kNN + G1,G3 게이트로 undirected 그래프 구성
- *   1단계: extract_backbone()   — left backbone 확정 (owner==NONE 후보)
- *   2단계: extract_backbone()   — right backbone 확정 (LEFT_BACKBONE 제외)
+ *   1단계: extract_backbone()   — left backbone 확정 (양방향: forward+backward, owner==NONE 후보)
+ *   2단계: extract_backbone()   — right backbone 확정 (양방향: forward+backward, LEFT_BACKBONE 제외)
  *   3단계: extract_branches()   — left branch 확정 (backbone 순회 greedy chaining)
  *   4단계: extract_branches()   — right branch 확정 (LEFT_BACKBONE+LEFT_BRANCH 제외)
  *   5단계: resample_component() — 좌/우 각각 전 edge를 일정 간격으로 보간
@@ -47,10 +47,11 @@ namespace chaining_costmap_ver
 //         owner[] 초기화 (all NONE)
 //     │
 //     ▼
-//   1단계: extract_backbone(left) → LEFT_BACKBONE 라벨 부여
-//     │
+//   1단계: extract_backbone(left) → 양방향(fwd+bwd) greedy chaining
+//     │                            → LEFT_BACKBONE 라벨 부여
 //     ▼
-//   2단계: extract_backbone(right) → RIGHT_BACKBONE 라벨 부여
+//   2단계: extract_backbone(right) → 양방향(fwd+bwd) greedy chaining
+//     │                             → RIGHT_BACKBONE 라벨 부여
 //     │                              (LEFT_BACKBONE 자동 제외)
 //     ▼
 //   3단계: extract_branches(left) → LEFT_BRANCH 라벨 부여
@@ -89,24 +90,26 @@ DirectionChainResult DirectionChainer::chain(
   // 모든 노드를 NONE으로 시작. 각 단계에서 라벨을 부여한다.
   std::vector<NodeOwner> owner(filtered.size(), NodeOwner::NONE);
 
-  // ── 1단계: Left Backbone 확정 ──
+  // ── 1단계: Left Backbone 확정 (양방향) ──
   std::vector<int> left_backbone_ids;
-  StopReason left_stop = StopReason::NO_CANDIDATE;
+  StopReason left_stop_fwd = StopReason::NO_CANDIDATE;
+  StopReason left_stop_bwd = StopReason::NO_CANDIDATE;
   if (left_seed >= 0) {
     left_backbone_ids = extract_backbone(
-      filtered, owner, left_seed, true, left_stop, cp);
+      filtered, owner, left_seed, true, left_stop_fwd, left_stop_bwd, cp);
     for (int idx : left_backbone_ids) {
       owner[idx] = NodeOwner::LEFT_BACKBONE;
     }
   }
 
-  // ── 2단계: Right Backbone 확정 ──
+  // ── 2단계: Right Backbone 확정 (양방향) ──
   // LEFT_BACKBONE 노드는 owner!=NONE이라 자동 제외된다.
   std::vector<int> right_backbone_ids;
-  StopReason right_stop = StopReason::NO_CANDIDATE;
+  StopReason right_stop_fwd = StopReason::NO_CANDIDATE;
+  StopReason right_stop_bwd = StopReason::NO_CANDIDATE;
   if (right_seed >= 0) {
     right_backbone_ids = extract_backbone(
-      filtered, owner, right_seed, false, right_stop, cp);
+      filtered, owner, right_seed, false, right_stop_fwd, right_stop_bwd, cp);
     for (int idx : right_backbone_ids) {
       owner[idx] = NodeOwner::RIGHT_BACKBONE;
     }
@@ -135,7 +138,8 @@ DirectionChainResult DirectionChainer::chain(
   if (!left_backbone_ids.empty()) {
     result.left.seed_idx = left_seed;
     result.left.goal_idx = left_backbone_ids.back();
-    result.left.stop_reason = left_stop;
+    result.left.stop_reason_forward = left_stop_fwd;
+    result.left.stop_reason_backward = left_stop_bwd;
     result.left.backbone.reserve(left_backbone_ids.size());
     for (int idx : left_backbone_ids) {
       result.left.backbone.push_back(filtered[idx]);
@@ -149,7 +153,8 @@ DirectionChainResult DirectionChainer::chain(
   if (!right_backbone_ids.empty()) {
     result.right.seed_idx = right_seed;
     result.right.goal_idx = right_backbone_ids.back();
-    result.right.stop_reason = right_stop;
+    result.right.stop_reason_forward = right_stop_fwd;
+    result.right.stop_reason_backward = right_stop_bwd;
     result.right.backbone.reserve(right_backbone_ids.size());
     for (int idx : right_backbone_ids) {
       result.right.backbone.push_back(filtered[idx]);
@@ -567,67 +572,52 @@ double DirectionChainer::compute_cost_prime(
 }
 
 // ============================================================================
-// 1-2단계: Backbone 추출 (Greedy Chaining)
+// 단방향 Greedy Chaining 헬퍼 (chain_one_direction)
 // ============================================================================
 //
 // [목적]
-//   seed부터 전방으로 이어지는 "주 경계선"(backbone)을 추출한다.
-//   이 backbone이 한쪽 경계의 핵심 구조이다.
+//   seed에서 주어진 초기 방향(init_dir)으로 한 방향만 greedy chaining한다.
+//   extract_backbone()이 forward/backward 각각에 대해 이 함수를 호출한다.
+//
+// [반환값]
+//   seed를 제외한 체이닝된 노드 인덱스 배열 (진행 방향 순서).
+//   seed는 extract_backbone()에서 관리한다.
 //
 // [Owner 기반 필터링]
-//   기존 component_ids 대신 owner 배열을 사용한다.
 //   owner[j] == NONE인 노드만 후보로 허용하므로:
 //   - 1단계(left backbone): 모든 NONE 노드가 후보
 //   - 2단계(right backbone): LEFT_BACKBONE 노드는 자동 제외
 //
-// [Greedy Chaining 알고리즘]
-//
-//   seed ──→ ● ──→ ● ──→ ● ──→ ● ──→ goal
-//            ↑
-//         매 스텝마다:
-//         1) 현재 노드의 kNN 후보 탐색
-//         2) owner==NONE 필터링 + 3개 게이트(G1+G2+G3) 적용
-//         3) 통과한 후보들의 w' 비용 계산
-//         4) w' 최소인 노드로 이동, 진행 방향 갱신
-//         5) 반복 (종료 조건 충족 시 중단)
-//
-// [3개 게이트 — backbone 전용]
-//
+// [3개 게이트]
 //   G1 (거리 게이트): d(cur, j) ≤ d_max  AND  d > 0
-//   G2 (전방 콘 게이트): angle(v, u_ij) ≤ cone_half_rad
+//   G2 (콘 게이트): angle(v, u_ij) ≤ cone_half_rad
 //   G3 (횡오차 게이트): |lat_proj| ≤ lateral_gate
 //
 // [종료 조건과 StopReason]
-//   - MAX_LEN: max_chain_len 도달 (정상 종료)
+//   - MAX_LEN: remaining_len 소진 (정상 종료)
 //   - NO_CANDIDATE: kNN 중 NONE 후보가 없음 (경계 끝)
 //   - ALL_GATED: 후보는 있지만 게이트를 모두 탈락
 //
 // ============================================================================
 
-std::vector<int> DirectionChainer::extract_backbone(
+std::vector<int> DirectionChainer::chain_one_direction(
   const std::vector<ChainPoint> & points,
   const std::vector<NodeOwner> & owner,
   int seed_idx,
+  const Point2D & init_dir,
   bool is_left,
+  std::unordered_set<int> & visited_set,
+  int remaining_len,
   StopReason & stop_reason,
   const PlanningParams::Chainer & cp) const
 {
-
-  // backbone: seed에서 시작하는 노드 인덱스 리스트
-  std::vector<int> backbone;
-  backbone.push_back(seed_idx);
-
-  // backbone 내 중복 방문 방지용 set
-  std::unordered_set<int> visited_set;
-  visited_set.insert(seed_idx);
-
+  std::vector<int> chain;
   int current = seed_idx;
 
-  // 초기 진행 방향: base_link의 전방 (x축 양의 방향)
-  // 체이닝이 진행될수록 실제 이동 방향으로 갱신됨
-  Point2D v = {1.0, 0.0};
+  // 초기 진행 방향: 호출자가 지정 (forward: {1,0}, backward: {-1,0})
+  Point2D v = init_dir;
 
-  // 기본 종료 이유: max_chain_len 도달 (while 조건에 의한 정상 종료)
+  // 기본 종료 이유: remaining_len 소진 (while 조건에 의한 정상 종료)
   stop_reason = StopReason::MAX_LEN;
 
   // forward_cone_deg의 반각(half angle)을 라디안으로 변환
@@ -635,14 +625,14 @@ std::vector<int> DirectionChainer::extract_backbone(
   const double cone_half_rad = cp.forward_cone_deg * M_PI / 360.0;
 
   // ── Greedy Chaining 메인 루프 ──
-  while (static_cast<int>(backbone.size()) < cp.max_chain_len) {
+  while (static_cast<int>(chain.size()) < remaining_len) {
 
     // ━━━ 1단계: 후보 탐색 ━━━
     // 현재 노드의 kNN 이웃 중 owner==NONE인 노드만 대상
     auto neighbors = knn(points, current, cp.k);
 
     // ━━━ 2단계: owner 필터 + 3개 게이트 적용 ━━━
-    // owner==NONE + G1(거리) + G2(전방 콘) + G3(횡오차) 모두 통과한 후보만 gated에 추가
+    // owner==NONE + G1(거리) + G2(콘) + G3(횡오차) 모두 통과한 후보만 gated에 추가
     std::vector<int> gated;
     bool had_candidates = false;  // NONE 후보가 있었는지 추적
 
@@ -651,7 +641,7 @@ std::vector<int> DirectionChainer::extract_backbone(
       if (owner[j] != NodeOwner::NONE) continue;
       had_candidates = true;  // NONE 후보가 최소 1개 존재
 
-      // 이미 backbone에 포함된 노드는 건너뜀 (순환 방지)
+      // 이미 방문된 노드는 건너뜀 (순환 방지, forward↔backward 공유)
       if (visited_set.count(j)) continue;
 
       const double dx = points[j].x - points[current].x;
@@ -662,9 +652,9 @@ std::vector<int> DirectionChainer::extract_backbone(
       // d_max 초과이거나 거의 같은 위치(d≈0)인 점은 제외
       if (d > cp.d_max || d < 1e-9) continue;
 
-      // ── G2: 전방 콘 게이트 ──
+      // ── G2: 콘 게이트 ──
       // 현재 진행 방향 v와 cur→j 방향 u_ij 사이의 각도가
-      // cone_half_rad(전방 콘의 반각)를 초과하면 제외
+      // cone_half_rad(콘의 반각)를 초과하면 제외
       Point2D u_ij = {dx / d, dy / d};             // cur→j 단위벡터
       double cos_angle = dot2(v, u_ij);             // v·u_ij = cos(θ)
       cos_angle = std::clamp(cos_angle, -1.0, 1.0); // 부동소수점 안전 처리
@@ -717,9 +707,104 @@ std::vector<int> DirectionChainer::extract_backbone(
     v = {dx / d, dy / d};  // 새 진행 방향 (단위벡터)
 
     visited_set.insert(best);      // 방문 표시 (순환 방지)
-    backbone.push_back(best);      // backbone에 추가
+    chain.push_back(best);         // chain에 추가
     current = best;                // 현재 노드 갱신
   }
+
+  return chain;
+}
+
+// ============================================================================
+// 1-2단계: Backbone 추출 (양방향 Greedy Chaining)
+// ============================================================================
+//
+// [목적]
+//   seed에서 양방향(전방+후방)으로 이어지는 "주 경계선"(backbone)을 추출한다.
+//   seed가 backbone 중간지점이어도 양쪽 모두 체이닝된다.
+//
+// [양방향 알고리즘]
+//
+//   1) Forward pass:  seed에서 v={1,0} 방향으로 greedy chaining
+//   2) Backward pass: seed에서 v={-1,0} 방향으로 greedy chaining
+//      (forward에서 방문한 노드는 visited_set 공유로 자동 제외)
+//   3) 결합: reverse(backward) + [seed] + forward → 최종 backbone
+//
+//   backward 끝              seed            forward 끝
+//   ● ← ● ← ● ← ● ←  [S]  → ● → ● → ● → ●
+//                        ↓
+//   ● ── ● ── ● ── ● ── [S] ── ● ── ● ── ● ── ●
+//
+// [max_chain_len 합산 제한]
+//   forward + backward 합산이 max_chain_len - 1을 초과하지 않도록
+//   forward를 먼저 수행한 뒤, 남은 길이를 backward에 할당한다.
+//   (-1은 seed 자체가 차지하는 1슬롯)
+//
+// [Owner 기반 필터링]
+//   owner[j] == NONE인 노드만 후보로 허용하므로:
+//   - 1단계(left backbone): 모든 NONE 노드가 후보
+//   - 2단계(right backbone): LEFT_BACKBONE 노드는 자동 제외
+//
+// ============================================================================
+
+std::vector<int> DirectionChainer::extract_backbone(
+  const std::vector<ChainPoint> & points,
+  const std::vector<NodeOwner> & owner,
+  int seed_idx,
+  bool is_left,
+  StopReason & stop_reason_forward,
+  StopReason & stop_reason_backward,
+  const PlanningParams::Chainer & cp) const
+{
+  // forward↔backward 공유 visited set (중복 방문 방지)
+  std::unordered_set<int> visited_set;
+  visited_set.insert(seed_idx);
+
+  // seed를 제외한 최대 허용 길이
+  const int max_extend = cp.max_chain_len - 1;
+
+  // ── Forward pass: seed에서 전방(+x)으로 체이닝 ──
+  auto forward_chain = chain_one_direction(
+    points, owner, seed_idx,
+    {1.0, 0.0},   // 전방 초기 방향
+    is_left, visited_set,
+    max_extend,    // forward에 전체 예산 할당 (먼저 수행)
+    stop_reason_forward, cp);
+
+  // ── Backward pass: seed에서 후방(-x)으로 체이닝 ──
+  // forward가 소진한 만큼 remaining_len을 줄여 합산 제한 적용
+  const int backward_budget = max_extend - static_cast<int>(forward_chain.size());
+  if (backward_budget > 0) {
+    auto backward_chain = chain_one_direction(
+      points, owner, seed_idx,
+      {-1.0, 0.0},  // 후방 초기 방향
+      is_left, visited_set,
+      backward_budget,
+      stop_reason_backward, cp);
+
+    // ── 결합: reverse(backward) + [seed] + forward ──
+    // backward는 seed→뒤쪽 순서이므로 reverse하면 뒤쪽끝→seed 순서가 됨
+    std::vector<int> backbone;
+    backbone.reserve(backward_chain.size() + 1 + forward_chain.size());
+
+    // backward를 역순으로 추가 (뒤쪽 끝 → seed 직전)
+    for (auto it = backward_chain.rbegin(); it != backward_chain.rend(); ++it) {
+      backbone.push_back(*it);
+    }
+    // seed 추가
+    backbone.push_back(seed_idx);
+    // forward를 순서대로 추가 (seed 직후 → 앞쪽 끝)
+    backbone.insert(backbone.end(), forward_chain.begin(), forward_chain.end());
+
+    return backbone;
+  }
+
+  // backward 예산이 0 이하이면 forward만으로 구성
+  // (forward가 max_extend를 모두 소진한 경우)
+  stop_reason_backward = StopReason::MAX_LEN;
+  std::vector<int> backbone;
+  backbone.reserve(1 + forward_chain.size());
+  backbone.push_back(seed_idx);
+  backbone.insert(backbone.end(), forward_chain.begin(), forward_chain.end());
 
   return backbone;
 }

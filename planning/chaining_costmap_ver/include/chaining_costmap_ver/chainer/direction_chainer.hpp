@@ -30,13 +30,15 @@
  *   │   - 모든 점에 대해 kNN + G1,G3 게이트로 그래프 구성       │
  *   │   - owner 배열 초기화 (all NONE)                         │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 1단계: Left Backbone 확정                               │
- *   │   - left seed에서 greedy chaining (owner==NONE만 후보)   │
+ *   │ 1단계: Left Backbone 확정 (양방향)                       │
+ *   │   - left seed에서 forward(+x) + backward(-x) chaining  │
+ *   │   - owner==NONE만 후보, visited_set forward↔backward 공유│
+ *   │   - 결합: reverse(backward) + seed + forward            │
  *   │   - 확정된 노드에 LEFT_BACKBONE 라벨 부여                │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 2단계: Right Backbone 확정                              │
- *   │   - right seed에서 greedy chaining (owner==NONE만 후보)  │
- *   │   - LEFT_BACKBONE 노드는 자동 제외                       │
+ *   │ 2단계: Right Backbone 확정 (양방향)                     │
+ *   │   - right seed에서 forward(+x) + backward(-x) chaining │
+ *   │   - owner==NONE만 후보, LEFT_BACKBONE 노드는 자동 제외   │
  *   │   - 확정된 노드에 RIGHT_BACKBONE 라벨 부여               │
  *   ├─────────────────────────────────────────────────────────┤
  *   │ 3단계: Left Branch 확정                                 │
@@ -112,6 +114,7 @@
 #include "chaining_costmap_ver/common/types.hpp"
 #include "chaining_costmap_ver/common/params.hpp"
 
+#include <unordered_set>
 #include <vector>
 
 namespace chaining_costmap_ver
@@ -214,40 +217,76 @@ private:
     const PlanningParams::Chainer & cp) const;
 
   // ═══════════════════════════════════════════════════════════
-  // 1-2단계: Backbone 추출 — 탐욕적 체이닝으로 주선 추출
+  // 1-2단계: Backbone 추출 — 양방향 탐욕적 체이닝으로 주선 추출
   // ═══════════════════════════════════════════════════════════
   /**
-   * @brief seed→전방으로 greedy하게 주 경계선 추출 (owner==NONE 노드만 후보)
+   * @brief seed에서 양방향(전방+후방)으로 greedy하게 주 경계선 추출
    *
-   * [Greedy Chaining 알고리즘]
-   *   1. seed를 시작점으로, 초기 진행 방향 v = (1,0) (전방)
-   *   2. 현재 노드의 kNN 중 owner==NONE인 노드만 필터
-   *   3. 3개 게이트 적용:
-   *      - G1: d(cur, j) ≤ d_max (거리)
-   *      - G2: angle(v, u_ij) ≤ cone_half (전방 콘)
-   *      - G3: |lateral_proj| ≤ lateral_gate (횡오차)
-   *   4. 게이트 통과한 후보들에 대해 w' 비용 계산
-   *   5. w' 최소인 노드를 다음 노드로 선택, 진행 방향 갱신
-   *   6. 반복 (후보 소진 / 모두 게이트 탈락 / max_chain_len 도달 시 종료)
+   * [양방향 Greedy Chaining 알고리즘]
+   *   1) Forward pass: seed에서 v={1,0} 방향으로 greedy chaining
+   *   2) Backward pass: seed에서 v={-1,0} 방향으로 greedy chaining
+   *      (forward에서 방문한 노드는 visited_set 공유로 제외)
+   *   3) 결합: reverse(backward) + seed + forward → 최종 backbone
+   *   4) max_chain_len은 forward + backward 합산으로 제한
+   *
+   *   [전방+후방 결합 결과]
+   *     backward 끝              seed            forward 끝
+   *     ● ← ● ← ● ← ● ←  [S]  → ● → ● → ● → ●
+   *                         ↓
+   *     ● ── ● ── ● ── ● ── [S] ── ● ── ● ── ● ── ●
+   *
+   * [각 패스의 게이트 적용]
+   *   - G1: d(cur, j) ≤ d_max (거리)
+   *   - G2: angle(v, u_ij) ≤ cone_half (전방/후방 콘)
+   *   - G3: |lateral_proj| ≤ lateral_gate (횡오차)
    *
    * [owner 기반 필터링]
-   *   기존 component_ids 대신 owner 배열을 사용한다.
    *   owner[j] == NONE인 노드만 후보로 허용하므로,
    *   이미 LEFT_BACKBONE으로 확정된 노드는 right backbone 후보에서 자동 제외된다.
    *
-   * @param points         필터링된 경계점 배열
-   * @param owner          [in] 각 노드의 소유권 라벨 배열
-   * @param seed_idx       시작점 인덱스
-   * @param is_left        좌측(true) / 우측(false) — C_side 계산에 사용
-   * @param stop_reason    [out] 체이닝이 왜 멈췄는지 기록
-   * @param cp             chainer 파라미터
-   * @return backbone 노드 인덱스 배열 (seed → goal 순서)
+   * @param points              필터링된 경계점 배열
+   * @param owner               [in] 각 노드의 소유권 라벨 배열
+   * @param seed_idx            시작점 인덱스
+   * @param is_left             좌측(true) / 우측(false) — C_side 계산에 사용
+   * @param stop_reason_forward [out] 전방 체이닝 종료 이유
+   * @param stop_reason_backward [out] 후방 체이닝 종료 이유
+   * @param cp                  chainer 파라미터
+   * @return backbone 노드 인덱스 배열 (backward 끝 → seed → forward 끝 순서)
    */
   std::vector<int> extract_backbone(
     const std::vector<ChainPoint> & points,
     const std::vector<NodeOwner> & owner,
     int seed_idx,
     bool is_left,
+    StopReason & stop_reason_forward,
+    StopReason & stop_reason_backward,
+    const PlanningParams::Chainer & cp) const;
+
+  /**
+   * @brief 단방향 greedy chaining 내부 헬퍼 (extract_backbone에서 호출)
+   *
+   * seed에서 주어진 초기 방향(init_dir)으로 한 방향만 체이닝한다.
+   * extract_backbone()이 forward/backward 각각에 대해 이 함수를 호출한다.
+   *
+   * @param points       경계점 배열
+   * @param owner        [in] 소유권 라벨 배열
+   * @param seed_idx     시작점 인덱스
+   * @param init_dir     초기 진행 방향 단위벡터 (전방: {1,0}, 후방: {-1,0})
+   * @param is_left      좌측/우측 — C_side 계산용
+   * @param visited_set  [in/out] 방문 노드 set (forward↔backward 공유)
+   * @param remaining_len 남은 허용 체인 길이 (max_chain_len 합산 제한용)
+   * @param stop_reason  [out] 체이닝 종료 이유
+   * @param cp           chainer 파라미터
+   * @return 체이닝된 노드 인덱스 배열 (seed 미포함, 진행 방향 순서)
+   */
+  std::vector<int> chain_one_direction(
+    const std::vector<ChainPoint> & points,
+    const std::vector<NodeOwner> & owner,
+    int seed_idx,
+    const Point2D & init_dir,
+    bool is_left,
+    std::unordered_set<int> & visited_set,
+    int remaining_len,
     StopReason & stop_reason,
     const PlanningParams::Chainer & cp) const;
 

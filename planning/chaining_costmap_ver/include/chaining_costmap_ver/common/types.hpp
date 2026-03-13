@@ -414,7 +414,7 @@ enum class NodeOwner : uint8_t
  * SideResult는 한쪽 경계의 전체 결과를 담으며, 3가지 레벨로 구성된다:
  *
  *   component (전체)
- *   └── backbone (주 경계선)
+ *   └── backbone (주 경계선, 양방향: backward끝→seed→forward끝)
  *       └── branches[] (가지들)
  *
  * [데이터 흐름]
@@ -424,8 +424,13 @@ enum class NodeOwner : uint8_t
  * [seed와 goal]
  * seed: 차량에 가장 가까운 경계점 (체이닝 시작점)
  *   → 차량 바로 옆의 콘이나 차선점이 seed가 됨
- * goal: greedy chaining이 도달한 마지막 점 (자동 결정)
- *   → 센서가 볼 수 있는 가장 먼 경계점
+ *   → 양방향 체이닝의 중심점으로, forward(+x)와 backward(-x) 양쪽으로 뻗어나감
+ * goal: greedy chaining이 도달한 마지막 점 (forward 끝)
+ *   → 센서가 볼 수 있는 가장 먼 전방 경계점
+ *
+ * [양방향 체이닝]
+ * seed가 backbone 중간지점이어도 forward+backward 양쪽으로 체이닝된다.
+ * stop_reason_forward/backward로 각 방향의 종료 이유를 별도 기록한다.
  */
 struct SideResult
 {
@@ -449,9 +454,12 @@ struct SideResult
                                             ///< seed는 차량에 가장 가까운 경계점
   int goal_idx = -1;                       ///< greedy chain이 도달한 마지막 노드의 인덱스
                                             ///< 체이닝이 StopReason에 의해 멈춘 위치
-  StopReason stop_reason = StopReason::NO_CANDIDATE;
-                                            ///< 체이닝이 왜 종료되었는지 기록
-                                            ///< 디버깅 시 "왜 체인이 짧은가?" 진단용
+  StopReason stop_reason_forward = StopReason::NO_CANDIDATE;
+                                            ///< 전방(forward) 체이닝이 왜 종료되었는지 기록
+                                            ///< seed에서 전방으로 뻗어나간 체인의 종료 이유
+  StopReason stop_reason_backward = StopReason::NO_CANDIDATE;
+                                            ///< 후방(backward) 체이닝이 왜 종료되었는지 기록
+                                            ///< seed에서 후방으로 뻗어나간 체인의 종료 이유
 };
 
 /**
