@@ -41,7 +41,7 @@
  *     → 마지막으로 받은 인지 데이터가 timeout_ms 이내인지 확인.
  *       오래된 데이터로 경로를 생성하면 위험하므로 "STALE" 상태를 발행하고 중단.
  *
- *   Stage 1: Input Parse (입력 파싱)
+ *   Stage 1: Input Parse (입력 파싱) → nodes/input_parser.hpp
  *     → BBox/LaneBoundary ROS 메시지를 내부 ChainPoint 벡터로 변환.
  *       - LiDAR bbox: sensor_tf 오프셋(velodyne→base_link) 보정 적용
  *       - 차선 점: 그대로 사용 (카메라는 base_link 기준이라 오프셋 불필요)
@@ -54,6 +54,7 @@
  *
  *   Stage 3: Costmap Generation + A* Path Planning (코스트맵 생성 + A* 경로 탐색)
  *     → 좌/우 체인 포인트로 가우시안 코스트맵을 생성하고,
+ *       goal 계산(nodes/goal_calculator.hpp)을 거쳐
  *       A* 알고리즘으로 시작점(ego)에서 목표점(local_goal)까지 경로를 탐색한다.
  *
  *   Stage 5: Postprocess (후처리)
@@ -65,7 +66,7 @@
  *     → Menger 곡률 공식으로 최대 곡률을 계산하고,
  *       차량의 최소 회전 반경 제한에 따라 경로 실현 가능성(곡률 검사)을 판정한다.
  *
- *   Stage 7: Publish (발행)
+ *   Stage 7: Publish (발행) → nodes/debug_publisher.hpp
  *     → Core: 최종 경로 + 플래너 상태
  *     → Debug: costmap, raw_path, chains, branches, seeds
  *       (디버그 토픽은 구독자가 있을 때만 발행 → 연산 절약)
@@ -132,31 +133,6 @@ private:
    * "STALE" 상태만 발행하고 즉시 반환(early return)한다.
    */
   void on_timer();
-
-  /**
-   * @brief [Stage 1] 콘/차선 ROS 메시지를 단일 ChainPoint 벡터로 변환
-   *
-   * ── 변환 규칙 ──
-   *
-   * [BBox → ChainPoint] (LiDAR 장애물, 주로 PE 드럼/교통 콘)
-   *   - 좌표: b.position.x + sensor_tf.tf_x,  b.position.y + sensor_tf.tf_y
-   *     → velodyne 좌표계를 base_link 좌표계로 변환하기 위해 오프셋 적용
-   *     → sensor_tf는 yaml 파라미터에서 로드 (tf_x, tf_y: LiDAR→base_link 변위)
-   *   - type: CONE
-   *   - label, size_x, size_y: BBox 메시지에서 그대로 복사
-   *
-   * [LaneBoundary → ChainPoint] (카메라 차선 인식 점)
-   *   - 좌표: 그대로 사용 (카메라는 base_link 기준으로 점을 발행한다고 가정)
-   *   - type: LANE
-   *   - label: -1 (차선에는 클러스터 라벨이 없으므로)
-   *
-   * ── 주의 ──
-   *   좌/우 구분은 이 함수에서 하지 않는다.
-   *   DirectionChainer(Stage 2)가 seed 선택 알고리즘으로 좌/우를 결정한다.
-   *
-   * @param[out] all_pts  변환된 ChainPoint들이 추가될 벡터
-   */
-  void parse_input(std::vector<ChainPoint> & all_pts) const;
 
   /**
    * @brief [Stage 0] 인지 데이터 신선도(stale) 검사

@@ -35,9 +35,20 @@ include_directories(include)
 
 # ============================================================================
 # Library 1: chaining_costmap_chainer — DirectionChainer 라이브러리
+#   direction_chainer.cpp: chain() 오케스트레이터
+#   seed_selector.cpp:     find_seed(), knn()
+#   graph_builder.cpp:     build_graph()
+#   backbone_extractor.cpp: extract_backbone(), chain_one_direction(), compute_cost()
+#   branch_extractor.cpp:  extract_branches()
+#   chain_resampler.cpp:   resample_component()
 # ============================================================================
 add_library(chaining_costmap_chainer SHARED
   src/chainer/direction_chainer.cpp
+  src/chainer/seed_selector.cpp
+  src/chainer/graph_builder.cpp
+  src/chainer/backbone_extractor.cpp
+  src/chainer/branch_extractor.cpp
+  src/chainer/chain_resampler.cpp
 )
 ament_target_dependencies(chaining_costmap_chainer
   rclcpp geometry_msgs
@@ -80,9 +91,16 @@ install(TARGETS chaining_costmap_astar
 
 # ============================================================================
 # Library 4: chaining_costmap_postprocess — 경로 후처리 라이브러리
+#   path_postprocessor.cpp: process() 오케스트레이터
+#   prune.cpp:              ① Douglas-Peucker 유사 경로 단순화
+#   smooth.cpp:             ③ 이동 평균 필터
+#   curvature_clamp.cpp:    ④ 최대 곡률 제한
 # ============================================================================
 add_library(chaining_costmap_postprocess SHARED
   src/postprocess/path_postprocessor.cpp
+  src/postprocess/prune.cpp
+  src/postprocess/smooth.cpp
+  src/postprocess/curvature_clamp.cpp
 )
 ament_target_dependencies(chaining_costmap_postprocess
   rclcpp geometry_msgs ev_msgs
@@ -95,9 +113,16 @@ install(TARGETS chaining_costmap_postprocess
 
 # ============================================================================
 # Component: lc_planner_component — 메인 노드 (ComposableNode)
+#   chaining_costmap_ver_node.cpp: LCPlannerNode (생성자 + on_timer 파이프라인)
+#   input_parser.cpp:              Stage 1 입력 파싱
+#   goal_calculator.cpp:           Stage 3c goal 계산
+#   debug_publisher.cpp:           Stage 7 디버그 시각화
 # ============================================================================
 add_library(lc_planner_component SHARED
   src/nodes/chaining_costmap_ver_node.cpp
+  src/nodes/input_parser.cpp
+  src/nodes/goal_calculator.cpp
+  src/nodes/debug_publisher.cpp
 )
 target_link_libraries(lc_planner_component
   chaining_costmap_chainer

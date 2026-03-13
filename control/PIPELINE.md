@@ -13,16 +13,58 @@ Planning 모듈이 생성한 base_link 기준 상대좌표 경로(Marker POINTS)
 
 ```
 control/
-├── CMakeLists.txt                     # 빌드 설정
-├── package.xml                        # 패키지 메타데이터 (pp_controller_cpp)
-├── PIPELINE.md                        # 이 문서
-├── topic.md                           # 토픽 인터페이스 요약
+├── CMakeLists.txt                              # 빌드 설정
+├── package.xml                                 # 패키지 메타데이터 (pp_controller_cpp)
+├── PIPELINE.md                                 # 이 문서
+├── topic.md                                    # 토픽 인터페이스 요약
 ├── config/
-│   └── pure_pursuit.yaml              # ROS 2 파라미터 설정
+│   └── pure_pursuit.yaml                       # ROS 2 파라미터 설정
 ├── launch/
-│   └── pure_pursuit.launch.py         # 런치 파일
+│   └── pure_pursuit.launch.py                  # 런치 파일
+├── include/pp_controller_cpp/
+│   ├── common/
+│   │   ├── geometry.hpp                        # 2D 기하학 유틸 (norm2d, header-only)
+│   │   └── params.hpp                          # 파라미터 구조체 + load() (header-only)
+│   ├── pursuit/
+│   │   └── pursuit_algorithm.hpp               # Pure Pursuit 핵심 알고리즘 헤더
+│   ├── debug/
+│   │   └── debug_visualizer.hpp                # RViz2 디버그 시각화 헤더
+│   └── nodes/
+│       └── pure_pursuit_relative_node.hpp      # 노드 클래스 선언
 └── src/
-    └── pure_pursuit_relative_node.cpp # 전체 노드 구현 (단일 파일)
+    ├── pursuit/
+    │   └── pursuit_algorithm.cpp               # Pure Pursuit 계산 (상태 없는 free 함수)
+    ├── debug/
+    │   └── debug_visualizer.cpp                # RViz2 마커 생성/발행
+    └── nodes/
+        └── pure_pursuit_relative_node.cpp      # 노드 오케스트레이터 + main()
+```
+
+### 모듈 구조
+
+| 모듈 | 역할 | 비고 |
+|------|------|------|
+| `common/geometry.hpp` | `norm2d()` 2D 거리 유틸 | header-only, ROS 비의존 |
+| `common/params.hpp` | `PurePursuitParams` 구조체 + `load()` | header-only, 파라미터 declare/get |
+| `pursuit/pursuit_algorithm` | Pure Pursuit 수학 계산 (free 함수) | ROS 노드 비의존, 독립 테스트 가능 |
+| `debug/debug_visualizer` | RViz2 마커 생성/발행 (lazy) | 알고리즘 비의존 |
+| `nodes/pure_pursuit_relative_node` | 노드 오케스트레이터 | 모듈 조합, 제어 루프 |
+
+### 모듈 의존성
+
+```
+geometry.hpp (의존성 없음)
+     │
+     v
+params.hpp (rclcpp)
+     │
+     v
+pursuit_algorithm (geometry.hpp, geometry_msgs)
+     │
+debug_visualizer (visualization_msgs, rclcpp)
+     │
+     v
+pure_pursuit_relative_node (전체 모듈 + t870_msgs + erp42_msgs + std_msgs)
 ```
 
 ### 의존성
@@ -192,69 +234,87 @@ erp42_msgs/msg/ControlCommand
 
 ## 내부 함수 상세
 
-### `norm2d(x, y)` — 2D 유클리드 거리
+### 모듈: `common/geometry.hpp`
 
+#### `norm2d(x, y)` — 2D 유클리드 거리
 ```cpp
-static double norm2d(double x, double y) { return sqrt(x*x + y*y); }
+inline double norm2d(double x, double y) { return sqrt(x*x + y*y); }
 ```
 - 두 점 사이의 거리(누적 arc length) 또는 원점→목표점 직선 거리(Ld) 계산에 사용.
 
-### `on_path(msg)` — 경로 수신 콜백
+### 모듈: `common/params.hpp`
 
-- `latest_points_` ← `msg->points` (덮어쓰기, 최신 경로만 유지)
-- `last_path_time_` ← `now()` (타임아웃 판단용)
+#### `PurePursuitParams` — 파라미터 구조체
+- 서브구조체: `Topics`, `Vehicle`, `Lookahead`, `Speed`, `Safety`
+- `load(rclcpp::Node*)`: ROS2 파라미터 declare/get 후 멤버에 캐싱
 
-### `path_fresh()` — 경로 유효성 판단
+### 모듈: `pursuit/pursuit_algorithm` (상태 없는 free 함수)
 
-- `latest_points_`가 비어있거나, 마지막 수신 후 `path_timeout_sec_` 초과 시 `false` 반환.
-- planning 노드 장애나 LiDAR 끊김 감지 역할.
-
-### `find_nearest_index()` — 최근접점 탐색
-
+#### `find_nearest_index(pts)` — 최근접점 탐색
 - 경로의 모든 점에 대해 원점(0,0)과의 거리² 계산.
 - 가장 가까운 점의 인덱스를 반환.
 
-### `compute_dynamic_lookahead(speed)` — 속도 적응형 lookahead
-
+#### `compute_dynamic_lookahead(speed, min, max, gain)` — 속도 적응형 lookahead
 ```
 Ld = clamp(Ld_min + Ld_gain × speed, Ld_min, Ld_max)
 ```
 - 속도가 빠르면 → 더 먼 곳을 주시 (안정적 추종)
 - 속도가 느리면 → 가까운 곳을 주시 (민첩한 코너링)
 
-### `compute_preview_curvature(nearest_i, preview_distance)` — 전방 곡률 미리보기
-
+#### `compute_preview_curvature(pts, nearest_i, preview_distance)` — 전방 곡률 미리보기
 1. `nearest_i`부터 경로를 따라가며 `preview_distance`(2.5m) 내의 구간을 확인.
 2. 연속 3점(a, b, c)에서 외적 기반 곡률을 계산: `κ = 2|cross| / (|ab|·|bc|·|ac|)`.
 3. 구간 내 **최대 절대 곡률**을 반환.
 
-### `compute_speed_target(abs_kappa)` — 곡률 기반 목표 속도
-
+#### `compute_speed_target(abs_kappa, v_min, v_max, lat_accel)` — 곡률 기반 목표 속도
 ```
 v = clamp(√(a_lat_limit / κ), v_min, v_max)
 ```
 - 곡률이 0에 가까우면 → `v_max` (직선 최대 속도)
 - 곡률이 크면 → 횡가속도 한계에 맞춘 감속
 
-### `compute_target_relative(nearest_i, Ld, tx, ty, Ld_used)` — lookahead 목표점 탐색
-
+#### `compute_target_relative(pts, nearest_i, Ld, tx, ty, Ld_used)` — lookahead 목표점 탐색
 1. `nearest_i`부터 경로를 따라가며 점 간 거리를 누적.
 2. 누적 거리 ≥ `Ld`인 첫 번째 점을 목표로 선택.
 3. 경로 끝까지 가도 부족하면 마지막 점 사용 (폴백).
 4. `Ld_used`는 원점→목표점 **직선 거리** (Pure Pursuit 공식 요구).
 
-### `rate_limit_speed(target, dt)` — 가감속 rate 제한
-
+#### `rate_limit_speed(target, last_speed, dt, accel_rate, decel_rate)` — 가감속 rate 제한
 ```
 가속 시: v_cmd = min(v_target, v_prev + accel_rate × dt)
 감속 시: v_cmd = max(v_target, v_prev - decel_rate × dt)
 ```
 - 급격한 가감속 방지, 차량 안정성 확보.
 
-### `publish_stop()` — 안전 정지 명령 발행
+#### `compute_steering(ty, Ld, wheelbase, delta_max)` — Pure Pursuit 조향각 계산
+```
+κ = 2·ty / Ld², δ = clamp(atan(L·κ), ±δ_max)
+```
 
+### 모듈: `debug/debug_visualizer`
+
+#### `DebugVisualizer` 클래스
+- `publish_lookahead_point(tx, ty, stamp)`: lookahead 목표점을 초록색 SPHERE로 발행 (lazy)
+- `publish_pursuit_arc(tx, ty, kappa_pp, stamp)`: PP 원호 궤적을 노란색 LINE_STRIP으로 발행 (lazy)
+
+### 모듈: `nodes/pure_pursuit_relative_node` (오케스트레이터)
+
+#### `on_path(msg)` — 경로 수신 콜백
+- `latest_points_` ← `msg->points` (덮어쓰기, 최신 경로만 유지)
+- `last_path_time_` ← `now()` (타임아웃 판단용)
+
+#### `path_fresh()` — 경로 유효성 판단
+- `latest_points_`가 비어있거나, 마지막 수신 후 `path_timeout_sec` 초과 시 `false` 반환.
+- planning 노드 장애나 LiDAR 끊김 감지 역할.
+
+#### `publish_stop()` — 안전 정지 명령 발행
 - `speed=0, steering=0` 발행 (T870 + ERP42).
 - `last_cmd_speed_` 초기화.
+
+#### `on_timer()` — 메인 제어 루프 (20Hz)
+- `pursuit::*` 함수 호출로 알고리즘 수행
+- `debug_viz_` 메서드 호출로 시각화 발행
+- 안전 조건 확인 및 정지 명령 처리
 
 ---
 
