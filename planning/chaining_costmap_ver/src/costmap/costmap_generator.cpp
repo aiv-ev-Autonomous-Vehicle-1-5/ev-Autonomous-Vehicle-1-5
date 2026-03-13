@@ -152,8 +152,8 @@ void CostmapGenerator::apply_source(
 // ============================================================================
 //
 // [격자 좌표계]
-//   origin = (0, -size_y/2)
-//   → X축: 0 ~ size_x (base_link 앞쪽으로만 확장)
+//   origin = (origin_x, -size_y/2)  — origin_x는 파라미터로 설정
+//   → X축: origin_x ~ origin_x + size_x (origin_x < 0이면 후방도 포함)
 //   → Y축: -size_y/2 ~ +size_y/2 (좌우 대칭)
 //   → col = X방향, row = Y방향
 //
@@ -178,7 +178,7 @@ CostmapResult CostmapGenerator::generate(
   result.resolution = cm.resolution;
   result.cols = static_cast<int>(std::round(cm.size_x / cm.resolution));  // X방향 셀 수
   result.rows = static_cast<int>(std::round(cm.size_y / cm.resolution));  // Y방향 셀 수
-  result.origin_x = 0;                  // X 원점: base_link 위치 (전방만 사용)
+  result.origin_x = cm.origin_x;         // X 원점: 파라미터로 설정 (base_link 기준)
   result.origin_y = -cm.size_y / 2.0;   // Y 원점: 좌우 대칭을 위해 -size_y/2
 
   // 전체 격자를 0.0(자유 공간)으로 초기화
@@ -227,18 +227,20 @@ CostmapResult CostmapGenerator::generate(
 }
 
 // ============================================================================
-// apply_entry_walls — ego 양옆→시드까지 가상 콘 벽 생성
+// apply_entry_walls — costmap 하단→시드까지 가상 콘 벽 생성
 // ============================================================================
 //
 // [목적]
 //   A*가 경계 뒤쪽(바깥)으로 돌아가는 경로를 생성하는 것을 방지한다.
-//   ego 양옆에서 시드까지 가상 콘을 일정 간격으로 배치하여
+//   costmap 하단(origin_x) 양옆에서 시드까지 가상 콘을 일정 간격으로 배치하여
 //   "입구(시드 사이)"로만 진입하도록 유도한다.
 //
 // [가상 콘 배치]
-//   from(ego 옆) → to(seed)까지의 직선을 step(=resolution*2) 간격으로 분할.
-//   각 분할점에 실제 콘과 동일한 비용 파라미터(cone_cost_max, cone_radius)를 적용.
-//   → costmap에 연속적인 비용 장벽이 형성된다.
+//   좌측 벽: (origin_x, +entry_wall_ego_y) → left_seed
+//   우측 벽: (origin_x, -entry_wall_ego_y) → right_seed
+//   from→to 직선을 step(=resolution*2) 간격으로 분할하여 가상 콘 배치.
+//   → costmap 하단부터 시드까지 연속적인 비용 장벽 형성.
+//   → 차량이 costmap 중앙에 있어도 뒤쪽이 완전히 막혀 A*가 우회 불가.
 //
 // [왜 resolution*2 간격인가?]
 //   sigma=1.0m일 때 가우시안의 3σ≈3m이므로, resolution*2(≈0.3m) 간격이면
@@ -254,6 +256,9 @@ void CostmapGenerator::apply_entry_walls(
 {
   const auto & cm = params.costmap;
   const double step = cm.resolution * 2.0;  // 가상 콘 간격 (resolution의 2배)
+
+  // costmap 하단 x좌표 (= origin_x, 그리드 좌하단의 x값)
+  const double bottom_x = costmap.origin_x;
 
   // from→to 직선을 따라 가상 콘을 등간격 샘플링하는 람다
   auto sample_cones = [&](const Point2D & from, const Point2D & to) {
@@ -273,10 +278,10 @@ void CostmapGenerator::apply_entry_walls(
     }
   };
 
-  // 좌측 벽: ego 왼쪽(0, +entry_wall_ego_y) → left_seed
-  sample_cones({0.0, +cm.entry_wall_ego_y}, left_seed);
-  // 우측 벽: ego 오른쪽(0, -entry_wall_ego_y) → right_seed
-  sample_cones({0.0, -cm.entry_wall_ego_y}, right_seed);
+  // 좌측 벽: costmap 하단 좌측(origin_x, +entry_wall_ego_y) → left_seed
+  sample_cones({bottom_x, +cm.entry_wall_ego_y}, left_seed);
+  // 우측 벽: costmap 하단 우측(origin_x, -entry_wall_ego_y) → right_seed
+  sample_cones({bottom_x, -cm.entry_wall_ego_y}, right_seed);
 }
 
 }  // namespace chaining_costmap_ver

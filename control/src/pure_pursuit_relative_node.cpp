@@ -26,10 +26,13 @@
 //   이는 대회 규정상 차선 구간에서 GPS 사용이 금지되어 있기 때문에 중요하다.
 //
 // [데이터 흐름]
-//   /planning/path (visualization_msgs/Marker POINTS, base_link 기준 상대좌표)
+//   /planning/path   (visualization_msgs/Marker POINTS, base_link 기준 상대좌표)
+//   /planning/status (std_msgs/String — "OK", "FAIL - ..." 등 planning 상태)
 //     → [이 노드: Pure Pursuit 계산]
 //       → /t870/control_command  (t870_msgs/ControlCommand)  — 실차용
 //       → /erp42/control_command (erp42_msgs/ControlCommand) — Gazebo 시뮬레이션용 (lazy)
+//       → /pp_debug/lookahead_point (Marker SPHERE)          — 디버그: lookahead 목표점 (lazy)
+//       → /pp_debug/pursuit_arc     (Marker LINE_STRIP)      — 디버그: PP 원호 궤적 (lazy)
 //
 // ============================================================================
 
@@ -44,6 +47,7 @@
 #include "visualization_msgs/msg/marker.hpp"       // 경로 메시지 (POINTS 마커)
 #include "t870_msgs/msg/control_command.hpp"       // T870 제어 명령 메시지 (speed, steering)
 #include "erp42_msgs/msg/control_command.hpp"      // ERP42 제어 명령 메시지 (Gazebo 시뮬레이션용)
+#include "std_msgs/msg/string.hpp"                 // Planning 상태 메시지 (/planning/status)
 
 using std::placeholders::_1;  // std::bind에서 콜백 인자 바인딩용
 
@@ -192,12 +196,44 @@ public:
       std::bind(&PurePursuitRelativeNode::on_path, this, _1)
     );
 
+    // [Subscriber] /planning/status (std_msgs/String)
+    //   - planning 모듈이 발행하는 상태 문자열을 수신
+    //   - "OK": 정상, "FAIL - ...": 실패 (정지 조건으로 사용)
+    //   - 정지 대상 FAIL:
+    //     "FAIL - not enough seeds"      — 체인 생성 실패
+    //     "FAIL - no valid path"         — A* 경로 없음
+    //     "FAIL - too short valid path"  — 경로 길이 < min_path_length
+    status_sub_ = this->create_subscription<std_msgs::msg::String>(
+      "/planning/status",
+      rclcpp::QoS(10).best_effort(),
+      [this](const std_msgs::msg::String::SharedPtr msg) {
+        latest_status_ = msg->data;
+      }
+    );
+
     // [Publisher] /t870/control_command (t870_msgs/ControlCommand)
     //   - T870 차량 인터페이스(t870_ros 패키지)가 구독
     //   - 필드: speed (float64, m/s), steering (float64, rad)
     //   - QoS: BestEffort, KeepLast(1) — 제어 명령은 최신 값만 의미 있으므로
     cmd_pub_ = this->create_publisher<t870_msgs::msg::ControlCommand>(
       cmd_topic_,
+      rclcpp::QoS(1).best_effort()
+    );
+
+    // [Debug Publisher] /pp_debug/lookahead_point (visualization_msgs/Marker, SPHERE)
+    //   - PP가 선택한 lookahead 목표점을 RViz2에서 초록색 구로 시각화
+    //   - base_link 프레임 기준 (tx, ty, 0) 위치에 표시
+    dbg_lookahead_pub_ = this->create_publisher<visualization_msgs::msg::Marker>(
+      "/pp_debug/lookahead_point",
+      rclcpp::QoS(1).best_effort()
+    );
+
+    // [Debug Publisher] /pp_debug/pursuit_arc (visualization_msgs/Marker, LINE_STRIP)
+    //   - PP가 계산한 곡률(kappa)로부터 차량이 따라갈 예상 원호 궤적을 시각화
+    //   - 차량 원점에서 lookahead 목표점까지의 원호를 약 30개 점으로 샘플링
+    //   - kappa ≈ 0 (직선)이면 직선 경로를 표시
+    dbg_arc_pub_ = this->create_publisher<visualization_msgs::msg::Marker>(
+      "/pp_debug/pursuit_arc",
       rclcpp::QoS(1).best_effort()
     );
 
@@ -525,6 +561,7 @@ private:
   //
   // [정지 조건 정리]
   //   - 경로 미수신 또는 타임아웃 (path_timeout_sec_ 초과)
+  //   - planning 상태 FAIL (not enough seeds / no valid path / too short valid path)
   //   - 경로 점이 2개 미만
   //   - 목표점까지 거리가 0에 가까움 (Ld < 1e-3, 0으로 나누기 방지)
   //   - 목표점이 차량 뒤쪽 (tx ≤ min_x_target_)
@@ -546,6 +583,26 @@ private:
         *this->get_clock(),
         1000,  // 1초에 한 번만 경고 출력 (로그 폭주 방지)
         "[PP Relative] Path is missing or stale. Stop."
+      );
+      publish_stop();
+      return;
+    }
+
+    // ----- planning 상태 확인 -----
+    // planning이 FAIL 상태를 발행하면 즉시 정지
+    //   - "FAIL - not enough seeds"     : 체인 생성 실패 (좌/우 경계 없음)
+    //   - "FAIL - no valid path"        : A* 경로 탐색 실패
+    //   - "FAIL - too short valid path" : 경로 길이 < min_path_length (2.5m)
+    if (latest_status_ == "FAIL - not enough seeds" ||
+        latest_status_ == "FAIL - no valid path" ||
+        latest_status_ == "FAIL - too short valid path")
+    {
+      RCLCPP_WARN_THROTTLE(
+        this->get_logger(),
+        *this->get_clock(),
+        1000,
+        "[PP Relative] Planning status: %s. Stop.",
+        latest_status_.c_str()
       );
       publish_stop();
       return;
@@ -686,6 +743,104 @@ private:
       "[PP Relative] target=(%.2f, %.2f), Ld=%.2f, kappa_pp=%.3f, kappa_prev=%.3f, v_target=%.2f, v_cmd=%.2f, delta=%.3f",
       tx, ty, Ld_used, kappa_pp, preview_kappa, v_target, v_cmd, delta
     );
+
+    // =================================================================
+    // RViz2 디버그 시각화 발행
+    // =================================================================
+
+    // --- 1) Lookahead 목표점 (SPHERE) ---
+    // PP가 선택한 lookahead target point를 초록색 구로 표시
+    if (dbg_lookahead_pub_->get_subscription_count() > 0) {
+      visualization_msgs::msg::Marker m;
+      m.header.frame_id = "base_link";
+      m.header.stamp = now;
+      m.ns = "pp_debug";
+      m.id = 0;
+      m.type = visualization_msgs::msg::Marker::SPHERE;
+      m.action = visualization_msgs::msg::Marker::ADD;
+      m.pose.position.x = tx;
+      m.pose.position.y = ty;
+      m.pose.position.z = 0.0;
+      m.pose.orientation.w = 1.0;
+      m.scale.x = 0.15;
+      m.scale.y = 0.15;
+      m.scale.z = 0.15;
+      m.color.r = 0.0f;
+      m.color.g = 1.0f;
+      m.color.b = 0.0f;
+      m.color.a = 1.0f;
+      dbg_lookahead_pub_->publish(m);
+    }
+
+    // --- 2) PP 원호 궤적 (LINE_STRIP) ---
+    // kappa_pp로부터 차량이 따라갈 예상 원호를 샘플링하여 노란색 선으로 표시
+    // kappa = 2*y/Ld^2 → R = 1/kappa, 회전 중심 = (0, R)
+    // kappa ≈ 0이면 직선 경로로 폴백
+    if (dbg_arc_pub_->get_subscription_count() > 0) {
+      visualization_msgs::msg::Marker arc;
+      arc.header.frame_id = "base_link";
+      arc.header.stamp = now;
+      arc.ns = "pp_debug";
+      arc.id = 1;
+      arc.type = visualization_msgs::msg::Marker::LINE_STRIP;
+      arc.action = visualization_msgs::msg::Marker::ADD;
+      arc.pose.orientation.w = 1.0;
+      arc.scale.x = 0.03;  // 선 두께
+      arc.color.r = 1.0f;
+      arc.color.g = 1.0f;
+      arc.color.b = 0.0f;
+      arc.color.a = 0.8f;
+
+      constexpr int N_ARC = 30;  // 원호 샘플 수
+
+      if (std::abs(kappa_pp) < 1e-6) {
+        // 직선: 차량 원점 → 목표점까지 직선 보간
+        for (int i = 0; i <= N_ARC; ++i) {
+          const double t = static_cast<double>(i) / N_ARC;
+          geometry_msgs::msg::Point p;
+          p.x = tx * t;
+          p.y = ty * t;
+          p.z = 0.0;
+          arc.points.push_back(p);
+        }
+      } else {
+        // 원호: 회전 중심 (cx, cy) = (0, R), 반지름 |R|
+        // R = 1/kappa_pp (좌회전: R>0, 우회전: R<0)
+        const double R = 1.0 / kappa_pp;
+        const double cx = 0.0;
+        const double cy = R;
+        const double abs_R = std::abs(R);
+
+        // 시작각: 차량 원점(0,0)에서의 각도 = atan2(0 - cy, 0 - cx)
+        const double theta_start = std::atan2(-cy, -cx);
+        // 종료각: 목표점(tx, ty)에서의 각도 = atan2(ty - cy, tx - cx)
+        const double theta_end = std::atan2(ty - cy, tx - cx);
+
+        // 각도 차이 계산 (회전 방향 고려)
+        double dtheta = theta_end - theta_start;
+        // kappa_pp > 0 (좌회전): 반시계 방향 → dtheta > 0이어야 함
+        // kappa_pp < 0 (우회전): 시계 방향 → dtheta < 0이어야 함
+        if (kappa_pp > 0.0) {
+          while (dtheta < 0.0) dtheta += 2.0 * M_PI;
+          while (dtheta > 2.0 * M_PI) dtheta -= 2.0 * M_PI;
+        } else {
+          while (dtheta > 0.0) dtheta -= 2.0 * M_PI;
+          while (dtheta < -2.0 * M_PI) dtheta += 2.0 * M_PI;
+        }
+
+        for (int i = 0; i <= N_ARC; ++i) {
+          const double t = static_cast<double>(i) / N_ARC;
+          const double theta = theta_start + dtheta * t;
+          geometry_msgs::msg::Point p;
+          p.x = cx + abs_R * std::cos(theta);
+          p.y = cy + abs_R * std::sin(theta);
+          p.z = 0.0;
+          arc.points.push_back(p);
+        }
+      }
+
+      dbg_arc_pub_->publish(arc);
+    }
   }
 
 private:
@@ -713,14 +868,18 @@ private:
 
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;  // 경로 구독자 (POINTS 마커)
+  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr status_sub_;          // planning 상태 구독자
   rclcpp::Publisher<t870_msgs::msg::ControlCommand>::SharedPtr cmd_pub_;    // 제어 명령 발행자
   rclcpp::Publisher<erp42_msgs::msg::ControlCommand>::SharedPtr cmd_erp42_pub_;  // ERP42 Gazebo 시뮬레이션용 (lazy)
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr dbg_lookahead_pub_;  // 디버그: lookahead 목표점 (SPHERE)
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr dbg_arc_pub_;        // 디버그: PP 원호 궤적 (LINE_STRIP)
   rclcpp::TimerBase::SharedPtr timer_;                                      // 20Hz 제어 루프 타이머
 
   // --- 상태 저장 ---
   std::vector<geometry_msgs::msg::Point> latest_points_;    // 가장 최근 수신한 경로 점 배열
   rclcpp::Time last_path_time_{0, 0, RCL_ROS_TIME};       // 경로 마지막 수신 시각
   rclcpp::Time last_control_time_{0, 0, RCL_ROS_TIME};    // 직전 제어 루프 시각
+  std::string latest_status_{""};                           // 최신 planning 상태 ("OK", "FAIL - ..." 등)
 };
 
 // =============================================================================

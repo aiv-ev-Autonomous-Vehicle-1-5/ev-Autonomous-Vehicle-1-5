@@ -84,8 +84,15 @@ struct PlanningParams
     double cost_threshold = 2.0;
 
     // [m] ego 쪽 가상 콘 시작점의 횡방향 오프셋.
-    // ego 좌측(0, +ego_y)→left_seed, ego 우측(0, -ego_y)→right_seed
+    // costmap 하단 좌측(origin_x, +ego_y)→left_seed,
+    // costmap 하단 우측(origin_x, -ego_y)→right_seed
     double entry_wall_ego_y = 0.3;
+
+    // [m] costmap X 원점 오프셋 (base_link 기준).
+    // origin_x = -4 이면 costmap이 후방 4m ~ 전방 (size_x - 4)m 범위.
+    // origin_x = 0 이면 전방만 (0 ~ size_x)m 범위.
+    // entry wall의 시작점 x좌표로도 사용됨 (costmap 하단).
+    double origin_x = -4.0;
   } costmap;
 
   // ============================================================
@@ -410,6 +417,7 @@ struct PlanningParams
     costmap.sigma          = p("costmap.sigma",          costmap.sigma);
     costmap.cost_threshold = p("costmap.cost_threshold", costmap.cost_threshold);
     costmap.entry_wall_ego_y  = p("costmap.entry_wall_ego_y",  costmap.entry_wall_ego_y);
+    costmap.origin_x          = p("costmap.origin_x",          costmap.origin_x);
 
     // ── AStar 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.astar.*

@@ -66,15 +66,16 @@ lc_planner_node:
     # [Stage 3] Costmap — 가우시안 비용 지도 생성
     # ============================================================
     costmap:
-      size_x: 10.0              # [m] costmap X 전체 크기
-      size_y: 10.0              # [m] costmap Y 전체 크기
+      size_x: 16.0              # [m] costmap X 전체 크기
+      size_y: 16.0              # [m] costmap Y 전체 크기
       resolution: 0.15          # [m/cell] (1.5m 차로 = 10셀)
       cone_cost_max: 100.0      # 콘 최대 비용
       lane_cost_max: 50.0       # 차선 최대 비용 (낮아서 넘을 수 있음)
       cone_radius: 1.025         # cone_radius를 늘리기: 0.65 → 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
       sigma: 1.0                # [m] 가우시안 확산
       cost_threshold: 2.0       # 이 이하 비용 무시
-      entry_wall_ego_y: 2.5     # [m] ego 양옆 가상 콘 시작점 횡방향 오프셋
+      entry_wall_ego_y: 2.5     # [m] costmap 하단 양옆 가상 콘 시작점 횡방향 오프셋
+      origin_x: -4.0            # [m] costmap X 원점 (base_link 기준). -4 = 후방 4m 포함
 
     # ============================================================
     # [Stage 3] A* — 격자 경로 탐색
@@ -99,7 +100,7 @@ lc_planner_node:
     # [Stage 6] Safety — 안전 검사 파라미터
     # ============================================================
     safety:
-      min_path_length: 2.5            # [m] 최소 경로 길이 (이하이면 "FAIL - too short valid path")
+      min_path_length: 1.5            # [m] 최소 경로 길이 (이하이면 "FAIL - too short valid path")
 
     # ============================================================
     # [Stage 5-6] Vehicle (T870) — 차량 제원 (postprocess + safety에서 사용)

@@ -11,7 +11,7 @@
  *         build_graph()         — kNN + G1,G3 게이트로 undirected 그래프 구성
  *   1단계: extract_backbone()   — left backbone 확정 (owner==NONE 후보)
  *   2단계: extract_backbone()   — right backbone 확정 (LEFT_BACKBONE 제외)
- *   3단계: extract_branches()   — left branch 확정 (backbone 순회 BFS)
+ *   3단계: extract_branches()   — left branch 확정 (backbone 순회 greedy chaining)
  *   4단계: extract_branches()   — right branch 확정 (LEFT_BACKBONE+LEFT_BRANCH 제외)
  *   5단계: resample_component() — 좌/우 각각 전 edge를 일정 간격으로 보간
  *
@@ -26,7 +26,6 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
-#include <queue>
 #include <unordered_set>
 #include <unordered_map>
 #include <numeric>
@@ -118,7 +117,7 @@ DirectionChainResult DirectionChainer::chain(
   std::vector<BranchInfo> left_branches;
   if (!left_backbone_ids.empty()) {
     left_branches = extract_branches(
-      graph, filtered, left_backbone_ids, owner,
+      filtered, left_backbone_ids, owner,
       NodeOwner::LEFT_BRANCH, cp);
   }
 
@@ -127,7 +126,7 @@ DirectionChainResult DirectionChainer::chain(
   std::vector<BranchInfo> right_branches;
   if (!right_backbone_ids.empty()) {
     right_branches = extract_branches(
-      graph, filtered, right_backbone_ids, owner,
+      filtered, right_backbone_ids, owner,
       NodeOwner::RIGHT_BRANCH, cp);
   }
 
@@ -726,26 +725,27 @@ std::vector<int> DirectionChainer::extract_backbone(
 }
 
 // ============================================================================
-// 3-4단계: Branch 추출 (Backbone 순회 기반 BFS)
+// 3-4단계: Branch 추출 (Backbone 순회 기반 Greedy Chaining)
 // ============================================================================
 //
 // [목적]
 //   backbone에 포함되지 못한 노드들을 backbone에 연결하여
 //   가지(branch)로 구성한다. costmap에 빈틈 없는 비용 장벽을 형성한다.
 //
-// [알고리즘 — Backbone 순회 기반 정방향 BFS]
+// [알고리즘 — Greedy Chaining]
 //
 //   backbone 노드를 B0→B1→B2→... 순서로 순회하며:
 //
-//   1) Bi의 그래프 이웃 중 허용 라벨 노드를 BFS 큐에 추가
-//   2) BFS 큐에서 꺼낸 노드의 이웃도 같은 조건으로 확장
-//   3) 수집된 노드들이 Bi의 branch가 됨
-//   4) 부모(Bi)로부터 거리순 정렬, max_branch_len 제한
+//   1) Bi에서 d_max 범위 내의 허용 노드를 수집 (후보 풀)
+//   2) 후보 중 Bi에 가장 가까운 노드를 chain 시작점으로 선택
+//   3) chain 끝점에서 d_max 범위 내의 다음 허용 노드를 greedy 선택
+//   4) 후보가 없거나 max_branch_len에 도달하면 종료
+//   → 모든 연결이 d_max 이내로 보장되고, 공간적 연속성 유지
 //
 // [허용 조건]
 //   owner[node] == NONE || owner[node] == branch_label
 //
-//   → 같은 side의 이미 확정된 branch 노드를 BFS로 통과+재연결 가능
+//   → 같은 side의 이미 확정된 branch 노드를 통과+재연결 가능
 //   → 반대 side의 backbone/branch는 차단
 //
 //   | 단계          | branch_label  | 허용               | 차단                                    |
@@ -753,89 +753,100 @@ std::vector<int> DirectionChainer::extract_backbone(
 //   | 3. left branch| LEFT_BRANCH   | NONE, LEFT_BRANCH  | LEFT_BACKBONE, RIGHT_BACKBONE           |
 //   | 4. right branch| RIGHT_BRANCH | NONE, RIGHT_BRANCH | LEFT_BACKBONE, RIGHT_BACKBONE, LEFT_BRANCH |
 //
-// [중복 소속]
-//   같은 side의 다른 backbone 노드에 이미 소속된 branch 노드도
-//   현재 backbone 노드의 branch에 다시 연결할 수 있다.
-//   → 각 backbone 노드마다 독립적인 BFS visited를 사용 (backbone-local).
-//   → 촘촘한 costmap 장벽 형성에 기여한다.
-//
 // ============================================================================
 
 std::vector<BranchInfo> DirectionChainer::extract_branches(
-  const ChainingGraph & graph,
   const std::vector<ChainPoint> & points,
   const std::vector<int> & backbone_ids,
   std::vector<NodeOwner> & owner,
   NodeOwner branch_label,
   const PlanningParams::Chainer & cp) const
 {
+  const int n = static_cast<int>(points.size());
+  const double d_max = cp.d_max;
+  const double d_max2 = d_max * d_max;  // 거리 비교용 제곱값
+
+  // backbone 노드를 빠르게 판별하기 위한 set
+  std::unordered_set<int> backbone_set(backbone_ids.begin(), backbone_ids.end());
+
   std::vector<BranchInfo> branches;
 
-  // ── backbone 노드를 순서대로 순회하며 BFS로 branch 수집 ──
+  // ── backbone 노드를 순서대로 순회하며 greedy chaining으로 branch 수집 ──
   for (int b_idx = 0; b_idx < static_cast<int>(backbone_ids.size()); ++b_idx) {
     const int b_node = backbone_ids[b_idx];
 
-    // backbone-local BFS visited: 같은 backbone 내 중복 방문만 방지
-    // (다른 backbone의 branch 노드는 다시 방문 가능)
-    std::unordered_set<int> bfs_visited;
-    std::vector<int> branch_nodes;
-    std::queue<int> q;
+    // backbone-local visited: 같은 backbone 내 중복 방문만 방지
+    // (다른 backbone의 branch 노드는 다시 방문 가능 → 촘촘한 costmap 장벽)
+    std::unordered_set<int> visited;
 
-    // backbone 노드의 그래프 이웃 중 허용 노드를 BFS 시드로 추가
-    for (int nb : graph.undirected[b_node]) {
-      // 허용 조건: NONE 또는 같은 side의 branch
-      if (owner[nb] != NodeOwner::NONE && owner[nb] != branch_label) continue;
-      if (bfs_visited.count(nb)) continue;
+    // ── 1단계: backbone 노드(Bi)에서 d_max 내 허용 노드 수집 ──
+    // 이 중 가장 가까운 노드가 chain 시작점이 된다
+    int first = -1;
+    double first_dist2 = std::numeric_limits<double>::infinity();
 
-      bfs_visited.insert(nb);
-      branch_nodes.push_back(nb);
-      owner[nb] = branch_label;  // 최초 발견 시 라벨 부여
-      q.push(nb);
-    }
+    for (int j = 0; j < n; ++j) {
+      if (backbone_set.count(j)) continue;  // backbone 노드 제외
+      if (owner[j] != NodeOwner::NONE && owner[j] != branch_label) continue;
 
-    // BFS 확장: branch 노드의 이웃도 같은 조건으로 탐색
-    while (!q.empty()) {
-      int cur = q.front();
-      q.pop();
+      const double dx = points[j].x - points[b_node].x;
+      const double dy = points[j].y - points[b_node].y;
+      const double dist2 = dx * dx + dy * dy;
+      if (dist2 > d_max2) continue;  // d_max 초과 → 범위 밖
 
-      for (int nb : graph.undirected[cur]) {
-        if (owner[nb] != NodeOwner::NONE && owner[nb] != branch_label) continue;
-        if (bfs_visited.count(nb)) continue;
-
-        bfs_visited.insert(nb);
-        branch_nodes.push_back(nb);
-        owner[nb] = branch_label;
-        q.push(nb);
+      if (dist2 < first_dist2) {
+        first_dist2 = dist2;
+        first = j;
       }
     }
 
-    if (branch_nodes.empty()) continue;
+    if (first < 0) continue;  // d_max 내에 허용 노드 없음 → 다음 backbone
 
-    // ── 부모(Bi)로부터 거리 순 정렬 ──
-    const double px = points[b_node].x;
-    const double py = points[b_node].y;
-    std::sort(branch_nodes.begin(), branch_nodes.end(),
-      [&](int a, int b) {
-        double da = (points[a].x - px) * (points[a].x - px) +
-                    (points[a].y - py) * (points[a].y - py);
-        double db = (points[b].x - px) * (points[b].x - px) +
-                    (points[b].y - py) * (points[b].y - py);
-        return da < db;
-      });
+    // ── 2단계: Greedy Chaining ──
+    // chain 끝점에서 d_max 범위 내 가장 가까운 미방문 허용 노드로 이동
+    // → 모든 연결(edge)이 d_max 이내로 보장됨
+    std::vector<int> chain_nodes;
+    chain_nodes.push_back(first);
+    visited.insert(first);
+    owner[first] = branch_label;
 
-    // ── max_branch_len 제한 ──
-    if (static_cast<int>(branch_nodes.size()) > cp.max_branch_len) {
-      branch_nodes.resize(cp.max_branch_len);
+    int current = first;
+    while (static_cast<int>(chain_nodes.size()) < cp.max_branch_len) {
+      int best = -1;
+      double best_dist2 = std::numeric_limits<double>::infinity();
+
+      for (int j = 0; j < n; ++j) {
+        if (backbone_set.count(j)) continue;
+        if (owner[j] != NodeOwner::NONE && owner[j] != branch_label) continue;
+        if (visited.count(j)) continue;
+
+        const double dx = points[j].x - points[current].x;
+        const double dy = points[j].y - points[current].y;
+        const double dist2 = dx * dx + dy * dy;
+        if (dist2 > d_max2) continue;
+
+        if (dist2 < best_dist2) {
+          best_dist2 = dist2;
+          best = j;
+        }
+      }
+
+      if (best < 0) break;  // d_max 내에 더 이상 후보 없음
+
+      chain_nodes.push_back(best);
+      visited.insert(best);
+      owner[best] = branch_label;
+      current = best;
     }
 
-    // BranchInfo 구성
+    // ── BranchInfo 구성 ──
+    // chain_nodes는 이미 연결 순서대로 정렬되어 있음
     BranchInfo bi;
     bi.parent_backbone_idx = b_idx;
-    bi.points.reserve(branch_nodes.size());
-    for (int idx : branch_nodes) {
+    bi.points.reserve(chain_nodes.size());
+    for (int idx : chain_nodes) {
       bi.points.push_back(points[idx]);
     }
-    bi.score = branch_nodes.empty() ? 0.0 : 1.0 / static_cast<double>(branch_nodes.size());
+    bi.score = 1.0 / static_cast<double>(chain_nodes.size());
 
     branches.push_back(std::move(bi));
   }

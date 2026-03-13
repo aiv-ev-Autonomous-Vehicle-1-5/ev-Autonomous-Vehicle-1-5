@@ -261,19 +261,18 @@ private:
    *   backbone 옆에 있지만 backbone에 선택되지 못한 콘/차선점.
    *   이런 점들을 branch로 연결하면 costmap에 빈틈 없는 비용 장벽이 형성된다.
    *
-   * [알고리즘 — Backbone 순회 기반 정방향 BFS]
+   * [알고리즘 — Backbone 순회 기반 Greedy Chaining]
    *   backbone 노드를 B0→B1→B2→... 순서로 순회하며:
-   *   1. Bi의 그래프 이웃 중 허용 라벨의 노드를 BFS로 수집
-   *   2. 수집된 branch 노드에서도 BFS를 확장하여 연쇄 탐색
+   *   1. Bi에서 d_max 범위 내의 허용 노드 중 가장 가까운 노드를 chain 시작점으로 선택
+   *   2. chain 끝점에서 d_max 범위 내의 가장 가까운 미방문 허용 노드로 greedy 이동
    *   3. 같은 side의 다른 backbone에 이미 소속된 branch도 중복 연결 허용
-   *   4. 부모로부터 거리순 정렬, max_branch_len 제한
+   *   4. max_branch_len 제한, 모든 edge가 d_max 이내로 보장
    *
    * [허용 조건]
    *   owner[node] == NONE || owner[node] == branch_label
-   *   → 같은 side의 branch 노드는 중복 소속 가능 (BFS 통과 + 재연결)
+   *   → 같은 side의 branch 노드는 중복 소속 가능 (greedy 통과 + 재연결)
    *   → 반대 side의 backbone/branch는 차단
    *
-   * @param graph          undirected 그래프
    * @param points         필터링된 경계점 배열
    * @param backbone_ids   backbone 인덱스 배열
    * @param owner          [in/out] 소유권 라벨 (새 branch에 branch_label 부여)
@@ -282,7 +281,6 @@ private:
    * @return branch 정보 배열 (BranchInfo: 부모 위치, 점들, 스코어)
    */
   std::vector<BranchInfo> extract_branches(
-    const ChainingGraph & graph,
     const std::vector<ChainPoint> & points,
     const std::vector<int> & backbone_ids,
     std::vector<NodeOwner> & owner,

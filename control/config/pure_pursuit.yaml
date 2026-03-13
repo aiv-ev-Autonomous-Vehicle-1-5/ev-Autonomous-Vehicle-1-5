@@ -12,7 +12,7 @@ pure_pursuit_relative_node:
     lookahead_speed_gain: 0.65  # [m/(m/s)] 속도 증가에 따른 lookahead 증가량
     speed: 1.0               # [m/s] legacy fallback
     speed_min: 0.45          # [m/s] 급코너 최소 속도
-    speed_max: 7.20          # [m/s] 직선 최대 속도
+    speed_max: 1.20          # [m/s] 직선 최대 속도
     lateral_accel_limit: 0.90  # [m/s^2] 곡률 기반 감속 한계
     preview_distance: 2.50   # [m] 전방 curvature preview 거리
     accel_rate: 1.20         # [m/s^2] 직선 가속 rate limit
