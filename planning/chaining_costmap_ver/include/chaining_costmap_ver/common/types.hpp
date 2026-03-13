@@ -62,7 +62,7 @@ namespace chaining_costmap_ver
  * [왜 Point2D가 필요한가?]
  * - CostmapGenerator, AStarPlanner, PathPostprocessor 등
  *   "센서 타입에 무관하게" 좌표만 다루는 모듈에서 사용됨.
- * - ChainedPoint나 ChainPoint는 센서 메타정보(type, confidence 등)를
+ * - ChainedPoint나 ChainPoint는 센서 메타정보(type, label 등)를
  *   포함하지만, planner 이후 단계에서는 순수 좌표만 필요하므로
  *   to_point2d() 변환을 통해 이 구조체로 내려온다.
  */
@@ -173,18 +173,27 @@ struct PostprocessResult
  * 이 상태에 따라 제어기는 "경로 추종", "정지", "비상 정지" 등
  * 서로 다른 행동을 취한다.
  *
+ * [상태 문자열 포맷]
+ *   /planning/status 토픽으로 발행되는 문자열:
+ *     "OK"                              — 정상
+ *     "STALE"                           — 센서 데이터 만료
+ *     "FAIL - <reason>"                 — 실패 + 원인
+ *       예: "FAIL - not enough seeds"
+ *           "FAIL - no valid path"
+ *           "FAIL - too short valid path"
+ *           "FAIL - curvature exceeds r_min"
+ *
  * [상태 전이 예시]
- *   OK → INFEASIBLE: 전방 장애물이 너무 가까워 회피 경로를 생성 불가
+ *   OK → FAIL: 전방 장애물이 너무 가까워 회피 경로를 생성 불가
  *   OK → STALE: 센서 데이터가 일정 시간 이상 갱신되지 않음
- *   STOP → OK: 정지 조건 해소 후 새 경로 생성 성공
+ *   FAIL → OK: 실패 조건 해소 후 새 경로 생성 성공
  */
 enum class PlannerState : uint8_t
 {
   OK = 0,          ///< 정상 — 경로 추종 가능, 제어기에 경로 전달
-  STOP = 1,        ///< 정지 — 안전한 감속 정지 (예: 경로 끝 도달, 속도 초과)
-  INFEASIBLE = 2,  ///< 경로 생성 불가 — 장애물로 막혀 있는 등 해결 불가 상황
-                    ///< 제어기는 현재 위치에서 비상 정지 수행
-  STALE = 3        ///< 데이터 만료 — 센서 입력이 timeout 이상 갱신 안 됨
+  FAIL = 1,        ///< 실패 — 경로 생성/추종 불가 (reason 문자열에 원인 포함)
+                    ///< 제어기는 현재 위치에서 안전 정지 수행
+  STALE = 2        ///< 데이터 만료 — 센서 입력이 timeout 이상 갱신 안 됨
                     ///< 마지막 유효 경로를 유지하되, 속도를 점진적으로 줄임
 };
 
@@ -224,7 +233,7 @@ enum class PointType : uint8_t
  * DirectionChainer의 SideResult.component[]에 담긴 ChainPoint들이
  * to_chained_point()를 통해 ChainedPoint로 변환된 후,
  * CostmapGenerator에 전달된다.
- * ChainPoint보다 가벼운 구조체 — confidence, label, size 등
+ * ChainPoint보다 가벼운 구조체 — label, size 등
  * 메타정보를 버리고 (x, y, type)만 남긴 것.
  * CostmapGenerator는 이 3가지 정보만으로 비용 지도를 생성할 수 있다.
  */
@@ -249,13 +258,12 @@ struct ChainedPoint
  * @brief DirectionChainer 입력 포인트 — 위치 + 메타정보
  *
  * BBox/LaneBoundary를 통합한 내부 표현.
- * ChainedPoint보다 confidence/label/size 정보가 추가됨.
+ * ChainedPoint보다 label/size 정보가 추가됨.
  *
  * [왜 ChainedPoint보다 필드가 많은가?]
  * DirectionChainer는 체이닝 품질을 높이기 위해 추가 정보를 활용한다:
- *   - confidence: 신뢰도가 낮은 점은 체이닝 우선순위를 낮춘다
  *   - label: 같은 클러스터에서 온 점들을 그룹으로 처리할 수 있다
- *   - size_x/y: 콘의 AABB 크기 → 코스트맵에서 flat zone 반지름 결정에 활용 가능
+ *   - size_x/y: 콘의 AABB 크기 → 비용함수 C_size에서 크기 일관성 판단에 활용
  * 체이닝이 끝난 후 CostmapGenerator에 넘길 때는 to_chained_point()로
  * 메타정보를 제거하고 (x, y, type)만 전달한다.
  *
@@ -268,9 +276,6 @@ struct ChainPoint
   double x = 0.0;             ///< [m] base_link 기준 전방(+)/후방(-)
   double y = 0.0;             ///< [m] base_link 기준 좌측(+)/우측(-)
   PointType type = PointType::LANE;  ///< 콘/차선 구분
-  float confidence = 1.0f;    ///< 원본 신뢰도 [0.0~1.0]
-                                ///< 콘: DBSCAN의 클러스터 밀도 기반 점수
-                                ///< 차선: 인식 알고리즘의 confidence score
   int32_t label = -1;         ///< 원본 cluster_id
                                 ///< 콘: DBSCAN이 부여한 클러스터 번호 (0, 1, 2, ...)
                                 ///< 차선: -1 (클러스터 개념 없음)
@@ -433,7 +438,7 @@ struct SideResult
  * [valid의 의미]
  * 최소 한쪽(left 또는 right)의 backbone이 성공적으로 생성되면 valid=true.
  * 양쪽 모두 실패하면 valid=false → CostmapGenerator를 호출하지 않고,
- * PlannerState::INFEASIBLE로 전이한다.
+ * "FAIL - not enough seeds" 상태를 발행한다.
  *
  * [한쪽만 성공한 경우]
  * 예를 들어 좌측에만 콘이 보이는 경우, left.backbone은 있지만
@@ -448,7 +453,7 @@ struct DirectionChainResult
   std::vector<ChainPoint> unchained;  ///< 어떤 체인에도 속하지 못한 포인트들
                                ///< costmap에서 CONE 비용으로 보수적 처리
   bool valid = false;         ///< 최소 한쪽 backbone 생성 성공 여부
-                               ///< false이면 경로 생성 불가 → INFEASIBLE
+                               ///< false이면 경로 생성 불가 → FAIL - not enough seeds
 };
 
 }  // namespace chaining_costmap_ver

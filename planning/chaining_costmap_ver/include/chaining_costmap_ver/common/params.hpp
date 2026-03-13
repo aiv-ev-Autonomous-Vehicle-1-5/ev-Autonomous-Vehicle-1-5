@@ -192,6 +192,19 @@ struct PlanningParams
   } postprocess;
 
   // ============================================================
+  // Safety — 안전 검사 파라미터
+  //
+  // SafetyChecker에서 경로의 실현 가능성을 판별할 때 사용.
+  // ============================================================
+  struct Safety
+  {
+    // [m] 최소 경로 길이. 후처리 완료된 경로의 총 길이가 이 이하이면
+    // "FAIL - too short valid path" 판정.
+    // 0.5m = 50cm. 너무 짧은 경로는 제어기가 추종할 의미가 없다.
+    double min_path_length = 0.5;
+  } safety;
+
+  // ============================================================
   // SensorTf — velodyne → base_link 좌표 오프셋
   //
   // LiDAR(velodyne) 센서의 물리적 장착 위치를 base_link 기준으로 표현.
@@ -418,6 +431,9 @@ struct PlanningParams
     postprocess.smooth_window = p("postprocess.smooth_window", postprocess.smooth_window);
     postprocess.prune_max_dev = p("postprocess.prune_max_dev", postprocess.prune_max_dev);
     postprocess.curvature_clamp_max_iter = p("postprocess.curvature_clamp_max_iter", postprocess.curvature_clamp_max_iter);
+
+    // ── Safety 파라미터 로드 ──
+    safety.min_path_length = p("safety.min_path_length", safety.min_path_length);
 
     // ── SensorTf 파라미터 로드 ──
     // 주의: 코드 기본값(tf_x=0.7)과 yaml 값(tf_x=0.0)이 다를 수 있음.

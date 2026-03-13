@@ -1029,8 +1029,6 @@ std::vector<BranchInfo> DirectionChainer::extract_branches(
 // [보간점의 속성]
 //   - type: 양끝이 모두 CONE이면 CONE, 아니면 LANE
 //     → costmap에서 콘 구간은 더 높은 비용(cone_cost_max)이 적용됨
-//   - confidence: 양끝 중 낮은 값 사용 (보수적 전략)
-//     → 한쪽이라도 불확실하면 보간점도 불확실하게 표시
 //
 // ============================================================================
 
@@ -1071,8 +1069,6 @@ std::vector<ChainPoint> DirectionChainer::resample_component(
         interp.x = a.x + t * dx;  // 선형 보간 x
         interp.y = a.y + t * dy;  // 선형 보간 y
         interp.type = seg_type;
-        // 신뢰도: 양끝 중 낮은 값 (보수적)
-        interp.confidence = std::min(a.confidence, b.confidence);
         resampled.push_back(interp);
       }
     }

@@ -143,12 +143,11 @@ private:
    *     → velodyne 좌표계를 base_link 좌표계로 변환하기 위해 오프셋 적용
    *     → sensor_tf는 yaml 파라미터에서 로드 (tf_x, tf_y: LiDAR→base_link 변위)
    *   - type: CONE
-   *   - confidence, label, size_x, size_y: BBox 메시지에서 그대로 복사
+   *   - label, size_x, size_y: BBox 메시지에서 그대로 복사
    *
    * [LaneBoundary → ChainPoint] (카메라 차선 인식 점)
    *   - 좌표: 그대로 사용 (카메라는 base_link 기준으로 점을 발행한다고 가정)
    *   - type: LANE
-   *   - confidence: boundary의 confidence
    *   - label: -1 (차선에는 클러스터 라벨이 없으므로)
    *
    * ── 주의 ──

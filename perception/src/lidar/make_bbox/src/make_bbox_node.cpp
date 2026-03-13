@@ -1,6 +1,5 @@
 #include "make_bbox/make_bbox_node.hpp"
 
-#include <cmath>
 #include <limits>
 #include <unordered_map>
 #include <vector>
@@ -48,8 +47,6 @@ MakeBBoxNode::MakeBBoxNode(const rclcpp::NodeOptions & options)
   auto input_topic  = declare_parameter<std::string>("input_topic", "/pointcloud/clustered");
   auto output_topic = declare_parameter<std::string>("output_topic", "/perception/bboxes");
   auto marker_topic = declare_parameter<std::string>("marker_topic", "/perception/bboxes_marker");
-  sigmoid_k_     = declare_parameter<double>("sigmoid_k", 0.3);
-  sigmoid_n_mid_ = declare_parameter<double>("sigmoid_n_mid", 15.0);
   max_size_x_    = static_cast<float>(declare_parameter<double>("max_size_x", 0.55));
   max_size_y_    = static_cast<float>(declare_parameter<double>("max_size_y", 0.55));
   max_size_z_    = static_cast<float>(declare_parameter<double>("max_size_z", 0.89));
@@ -147,11 +144,6 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     const float cy = (s.min_y + s.max_y) * 0.5F;
     const float cz = (s.min_z + s.max_z) * 0.5F;
 
-    // sigmoid confidence
-    const double n = static_cast<double>(s.count);
-    const float confidence = static_cast<float>(
-      1.0 / (1.0 + std::exp(-sigmoid_k_ * (n - sigmoid_n_mid_))));
-
     // BBox 메시지 (바운딩박스)
     ev_msgs::msg::BBox bbox;
     bbox.position.x = static_cast<double>(cx);
@@ -160,7 +152,6 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     bbox.size_x = size_x;
     bbox.size_y = size_y;
     bbox.size_z = size_z;
-    bbox.confidence = confidence;
     bbox.label = cid;
     bbox_msg->bboxes.push_back(bbox);
 

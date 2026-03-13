@@ -70,7 +70,6 @@ ev_msgs/BBoxArray
     ├── size_x       # float32 — X 크기 [m]
     ├── size_y       # float32 — Y 크기 [m]
     ├── size_z       # float32 — 높이 [m]
-    ├── confidence   # float32 — 시그모이드 정규화 신뢰도 (0.0~1.0)
     └── label        # int32 — DBSCAN 클러스터 ID
 ```
 
@@ -78,7 +77,6 @@ ev_msgs/BBoxArray
 - `position.x + tf_x`, `position.y + tf_y` → base_link 좌표로 변환
 - `size_x`, `size_y` → 체이닝 비용 함수 C_size에 사용
 - `label` → 같은 클러스터 식별용
-- `confidence` → ChainPoint에 복사 (현재 체이닝에서 미사용)
 
 #### `/perception/lane_boundaries` — 카메라 차선 경계
 
@@ -94,13 +92,11 @@ ev_msgs/LaneBoundaryArray
 │   └── frame_id     # "base_link"
 └── boundaries[]     # LaneBoundary 배열
     ├── header       # 개별 헤더
-    ├── points[]     # geometry_msgs/Point[] — 순서 정렬된 경계점 (차량에서 가까운 점부터)
-    └── confidence   # float32 — 검출 신뢰도 (0.0~1.0)
+    └── points[]     # geometry_msgs/Point[] — 순서 정렬된 경계점 (차량에서 가까운 점부터)
 ```
 
 **Planning 노드에서의 사용:**
 - `points[].x`, `points[].y` → ChainPoint 좌표로 직접 사용 (이미 base_link 기준)
-- `confidence` → ChainPoint에 복사
 - `label = -1` (차선에는 클러스터 라벨 없음)
 
 #### QoS 설정 — Best Effort, depth=1
@@ -179,10 +175,12 @@ nav_msgs/Path
 
 | 값 | 의미 | 발생 조건 |
 |----|------|----------|
-| `"ok"` | 정상 경로 생성 완료 | 모든 파이프라인 단계 성공 |
+| `"OK"` | 정상 경로 생성 완료 | 모든 파이프라인 단계 성공 |
 | `"STALE"` | 인지 데이터 타임아웃 | Stage 0에서 perception_ms 초과 |
-| `"no_valid_path"` | A* 경로 탐색 실패 | 장애물로 목표 도달 불가, backbone 없음 등 |
-| `"curvature_exceeds_r_min"` | 곡률 한계 초과 | 후처리 후에도 κ > 1/r_min |
+| `"FAIL - not enough seeds"` | 시드(backbone) 생성 실패 | Stage 2에서 양쪽 backbone 모두 실패 |
+| `"FAIL - no valid path"` | A* 경로 탐색 실패 | 장애물로 목표 도달 불가, 경로 점 부족 |
+| `"FAIL - too short valid path"` | 경로가 너무 짧음 | 경로 총 길이 < safety.min_path_length |
+| `"FAIL - curvature exceeds r_min"` | 곡률 한계 초과 | 후처리 후에도 κ > 1/r_min |
 
 ---
 
@@ -444,7 +442,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 - **Menger 곡률**: κ = 2|cross(BA, CB)| / (|AB|·|BC|·|AC|)
 - **최소 회전 반경**: r_min = wheelbase / tan(δ_max) ≈ 2.17m
 - **곡률 한계**: κ_limit = 1/r_min ≈ 0.461 rad/m
-- **결과**: OK / STOP (no_valid_path) / INFEASIBLE (curvature_exceeds_r_min)
+- **결과**: OK / FAIL - no valid path / FAIL - too short valid path / FAIL - curvature exceeds r_min
 - **속도 계산 없음**: SafetyChecker는 곡률만 검사, 속도 제한은 제어기 측에서 처리
 
 ### Stage 7: Publish
@@ -543,8 +541,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 |------|------------|------|-------|------|
 | WARN | `[Stage0] STALE — perception timeout` | 2초 | Stage 0 | perception 데이터가 `perception_ms` (300ms) 동안 갱신되지 않음 |
 | INFO | `[Planner] OK — path:N pts, kappa=X.XXX (r=X.XXm), limit=X.XXX (r_min=X.XXm, delta_max=XX.X°)` | 1초 | Stage 6 | 정상 경로 생성 완료. kappa=최대곡률, r=실제반경, limit=한계곡률 |
-| WARN | `[Planner] FAIL — curvature_exceeds_r_min: kappa=X.XXX (r=X.XXm) > limit=X.XXX (r_min=X.XXm, delta_max=XX.X°)` | 1초 | Stage 6 | 곡률이 차량 최소 회전 반경 초과 |
-| WARN | `[Planner] FAIL — <reason>` | 1초 | Stage 6 | 기타 실패 (reason: `"no_valid_path"` 등) |
+| WARN | `[Planner] FAIL - <reason>` | 1초 | Stage 6 | 실패 원인 포함 (reason: `"no valid path"`, `"too short valid path"`, `"curvature exceeds r_min"` 등) |
 
 ### 조건부 디버그 (`publish_debug: true` 일 때 출력)
 
@@ -568,8 +565,10 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | 증상 | 로그 메시지 | 원인 | 대응 |
 |------|-----------|------|------|
 | 경로 없음 | `[Stage0] STALE` | perception 노드 중단 또는 토픽 미발행 | `ros2 topic hz /perception/bboxes` 로 발행 확인 |
-| 경로 없음 | `[Planner] FAIL — no_valid_path` | A* 탐색 실패 (목표점 도달 불가) | costmap 시각화로 장애물 배치 확인, `max_iterations` 증가 검토 |
-| 경로 불안정 | `[Planner] FAIL — curvature_exceeds_r_min` | 생성된 경로의 곡률이 차량 한계 초과 | `curvature_clamp_max_iter` 증가, `cone_radius`/`sigma` 조정 |
+| 시드 부족 | `[Stage2.5] FAIL — not enough seeds` | 양쪽 backbone 모두 실패 | 인지 데이터 확인, 시드 탐색 범위(`side_seed_y`) 조정 |
+| 경로 없음 | `[Planner] FAIL - no valid path` | A* 탐색 실패 (목표점 도달 불가) | costmap 시각화로 장애물 배치 확인, `max_iterations` 증가 검토 |
+| 경로 너무 짧음 | `[Planner] FAIL - too short valid path` | 경로 총 길이 < min_path_length | `safety.min_path_length` 값 확인, 인지 범위 점검 |
+| 경로 불안정 | `[Planner] FAIL - curvature exceeds r_min` | 생성된 경로의 곡률이 차량 한계 초과 | `curvature_clamp_max_iter` 증가, `cone_radius`/`sigma` 조정 |
 | 체이닝 편향 | chain 로그에서 `L_comp=0` | 한쪽 경계점이 없음 | seed 파라미터(`side_seed_y`) 또는 perception 확인 |
 | 곡률 초과 빈번 | curvature 마커 다수 표시 | 급커브 구간, costmap 과밀 | `curvature_clamp_max_iter` 증가, postprocess 파라미터 조정 |
 

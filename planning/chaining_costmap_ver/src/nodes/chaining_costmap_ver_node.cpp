@@ -20,8 +20,8 @@
  *                            (좌/우 체인 → 코스트맵 → A* 경로 계획)
  *    Stage 5: Postprocess — prune → smooth → curvature_clamp → resample → curvature_clamp → yaw
  *                           (경로 정제: 이상치 제거, 스무딩, 곡률 제한, 등간격화, 방향각)
- *    Stage 6: Safety Check — 곡률 검사
- *                            (Menger 곡률 → 경로 실현 가능성 판정)
+ *    Stage 6: Safety Check — 경로 유효성 + 곡률 검사
+ *                            (길이/곡률 → 경로 실현 가능성 판정)
  *    Stage 7: Publish — 경로, 상태, 디버그 토픽 발행
  *                       (Core: 항상 발행, Debug: 구독자 있을 때만)
  * ══════════════════════════════════════════════════════════════
@@ -90,7 +90,7 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
   pub_path_ = create_publisher<visualization_msgs::msg::Marker>(
     "/planning/path", qos_be);           // 최종 후처리 경로 (POINTS 마커) → 제어기가 구독
   pub_status_ = create_publisher<std_msgs::msg::String>(
-    "/planning/status", qos_be);         // 플래너 상태 문자열 (OK/STALE/INFEASIBLE 등)
+    "/planning/status", qos_be);         // 플래너 상태 문자열 (OK/STALE/FAIL - ... 등)
 
   // ── Debug 퍼블리셔: RViz2 시각화용 (lazy publishing) ──
   // RViz2는 Reliable QoS로 구독하므로, 디버그 토픽도 Reliable로 발행한다.
@@ -165,7 +165,6 @@ void LCPlannerNode::parse_input(
       cp.x = b.position.x + ox;   // velodyne_x + 오프셋 → base_link_x
       cp.y = b.position.y + oy;   // velodyne_y + 오프셋 → base_link_y
       cp.type = PointType::CONE;   // 장애물 타입
-      cp.confidence = b.confidence; // 인지 신뢰도 (0.0~1.0)
       cp.label = b.label;           // DBSCAN 클러스터 라벨
       cp.size_x = b.size_x;         // 바운딩 박스 x 크기 [m]
       cp.size_y = b.size_y;         // 바운딩 박스 y 크기 [m]
@@ -182,7 +181,6 @@ void LCPlannerNode::parse_input(
         cp.x = p.x;                   // base_link 기준 x 좌표
         cp.y = p.y;                   // base_link 기준 y 좌표
         cp.type = PointType::LANE;     // 차선 타입
-        cp.confidence = bd.confidence; // 차선 인식 신뢰도
         cp.label = -1;                 // 차선에는 클러스터 라벨 없음 → -1
         all_pts.push_back(cp);
       }
@@ -272,6 +270,24 @@ void LCPlannerNode::on_timer()
   //   Component(연결된 점 그룹) → Backbone(주 경로) → Branch(갈래)
   // 를 생성한다. 결과는 dc_result.left / dc_result.right에 저장.
   auto dc_result = direction_chainer_.chain(all_pts, params_);
+
+  // ======== Stage 2.5: Seed Gate ========
+  // 양쪽 backbone 모두 실패하면 costmap/A*를 실행할 의미가 없다.
+  // "FAIL - not enough seeds" 상태를 발행하고 즉시 반환.
+  if (!dc_result.valid) {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
+      "[Stage2.5] FAIL — not enough seeds (both backbones empty)");
+    auto status_msg = std::make_unique<std_msgs::msg::String>();
+    status_msg->data = "FAIL - not enough seeds";
+    pub_status_->publish(std::move(status_msg));
+
+    // 빈 경로 발행 (제어기가 경로 없음을 인지하도록)
+    auto path_msg = std::make_unique<visualization_msgs::msg::Marker>(
+      to_points_marker({}, frame_id, stamp,
+                       "final_path", 0.0f, 1.0f, 0.0f, 1.0f, 0.08));
+    pub_path_->publish(std::move(path_msg));
+    return;
+  }
 
   // ======== Stage 3: Costmap Generation + A* Path Planning ========
   // 3a. ChainPoint → ChainedPoint 변환 (left, right, unchained)
@@ -420,30 +436,24 @@ void LCPlannerNode::on_timer()
     params_.postprocess.curvature_clamp_max_iter);
 
   // ======== Stage 6: Safety Check ========
-  // Menger 곡률 공식으로 후처리된 경로의 최대 곡률(κ_max)을 계산하고:
-  //   - κ_max > 1/r_min  → INFEASIBLE (물리적으로 추종 불가)
-  //   - 그 외             → OK
+  // 후처리된 경로에 대해 안전 검사를 수행한다:
+  //   - 경로 없음/짧음     → FAIL - no valid path / too short valid path
+  //   - κ_max > 1/r_min   → FAIL - curvature exceeds r_min
+  //   - 그 외              → OK
   auto safety = safety_checker::check(pp_result, params_);
 
-  // ── 상태 로그 (INFO 레벨) ──
+  // ── 상태 로그 ──
   const double r_min = params_.vehicle.r_min();
   const double kappa_limit = 1.0 / r_min;
   const double r_actual = (safety.max_curvature > 1e-6) ? 1.0 / safety.max_curvature : 999.0;
-  if (safety.reason == "ok") {
+  if (safety.state == PlannerState::OK) {
     RCLCPP_INFO_THROTTLE(get_logger(), *get_clock(), 1000,
       "[Planner] OK — path:%zu pts, kappa=%.3f (r=%.2fm), limit=%.3f (r_min=%.2fm, delta_max=%.1f°)",
       pp_result.path.size(), safety.max_curvature, r_actual,
       kappa_limit, r_min, params_.vehicle.delta_max * 180.0 / M_PI);
-  } else if (safety.reason == "curvature_exceeds_r_min") {
-    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 1000,
-      "[Planner] FAIL — curvature_exceeds_r_min: "
-      "kappa=%.3f (r=%.2fm) > limit=%.3f (r_min=%.2fm, delta_max=%.1f°)",
-      safety.max_curvature, r_actual,
-      kappa_limit, r_min,
-      params_.vehicle.delta_max * 180.0 / M_PI);
   } else {
     RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 1000,
-      "[Planner] FAIL — %s", safety.reason.c_str());
+      "[Planner] %s", safety.reason.c_str());
   }
 
   // ======== Stage 7: Publish (발행) ========
@@ -459,7 +469,7 @@ void LCPlannerNode::on_timer()
   pub_path_->publish(std::move(path_msg));
 
   // ── Core: 플래너 상태 발행 ──
-  // safety.reason: "ok", "no_valid_path", "curvature_exceeds_r_min" 등
+  // safety.reason: "OK", "FAIL - no valid path", "FAIL - curvature exceeds r_min" 등
   // 상위 시스템(state machine)이 이 상태를 보고 정지/서행 등을 결정할 수 있다.
   auto status_msg = std::make_unique<std_msgs::msg::String>();
   status_msg->data = safety.reason;

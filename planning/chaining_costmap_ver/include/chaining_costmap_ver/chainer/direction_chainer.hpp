@@ -330,7 +330,6 @@ private:
    *   2. 각 edge를 resample_ds 간격으로 선형 보간
    *   3. branch도 동일하게: 부모→첫점 edge + 내부 edge 모두 보간
    *   4. 보간점의 type: 양끝이 모두 CONE이면 CONE, 아니면 LANE
-   *   5. 보간점의 confidence: 양끝 중 낮은 값 사용 (보수적)
    *
    * @param points       필터링된 경계점 배열
    * @param backbone_ids backbone 인덱스 배열

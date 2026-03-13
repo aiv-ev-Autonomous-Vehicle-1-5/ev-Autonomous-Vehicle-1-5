@@ -1,20 +1,21 @@
 /**
  * @file safety_checker.hpp
- * @brief 안전 검사 모듈 — 곡률(curvature) 검사
+ * @brief 안전 검사 모듈 — 경로 유효성 + 곡률(curvature) 검사
  *
  * ──────────────────────────────────────────────────────────────
  * [목적]
  *   경로(path)의 기하학적 실현 가능성을 판별한다.
  *
- *   1) Menger 곡률 공식으로 경로 상 최대 곡률(κ_max)을 계산한다.
- *   2) κ_max가 차량의 최소 회전 반경(r_min)으로 결정되는 한계 곡률을
- *      초과하면 → INFEASIBLE (물리적으로 추종 불가능한 경로).
+ *   1) 경로 유효성 검사: valid 플래그, 점 개수, 총 길이
+ *   2) Menger 곡률 공식으로 경로 상 최대 곡률(κ_max)을 계산한다.
+ *   3) κ_max가 차량의 최소 회전 반경(r_min)으로 결정되는 한계 곡률을
+ *      초과하면 → FAIL (물리적으로 추종 불가능한 경로).
  *
  * [반환값]
  *   SafetyResult { state, max_curvature, reason }
- *     - state: OK / STOP / INFEASIBLE (PlannerState enum)
+ *     - state: OK / FAIL (PlannerState enum)
  *     - max_curvature: 경로 상 최대 곡률 [1/m]
- *     - reason: 사람이 읽을 수 있는 판정 사유 문자열
+ *     - reason: 상태 문자열 ("OK", "FAIL - <원인>")
  * ──────────────────────────────────────────────────────────────
  */
 #ifndef CHAINING_COSTMAP_VER__SAFETY__SAFETY_CHECKER_HPP_
@@ -38,15 +39,15 @@ namespace safety_checker
  * @struct SafetyResult
  * @brief 안전 검사 결과를 담는 구조체
  *
- * - state:          플래너 상태 (OK=정상, STOP=정지 필요, INFEASIBLE=물리적 불가)
+ * - state:          플래너 상태 (OK=정상, FAIL=실패)
  * - max_curvature:  경로 전체에서 측정된 최대 곡률 [1/m]
- * - reason:         판정 사유를 설명하는 문자열 (로그/디버그용)
+ * - reason:         상태 문자열 ("OK", "FAIL - <원인>")
  */
 struct SafetyResult
 {
-  PlannerState state = PlannerState::STOP;   ///< 기본값은 STOP (안전 최우선)
+  PlannerState state = PlannerState::FAIL;   ///< 기본값은 FAIL (안전 최우선)
   double max_curvature = 0.0;                ///< 경로 상 최대 곡률 [1/m]
-  std::string reason;                        ///< 판정 사유 문자열
+  std::string reason;                        ///< 상태 문자열 ("OK" 또는 "FAIL - ...")
 };
 
 /**
@@ -130,26 +131,46 @@ inline double compute_max_curvature(const std::vector<Point2D> & path)
 }
 
 /**
+ * @brief 경로의 총 길이를 계산 (유클리드 거리 합산)
+ *
+ * @param path  2D 점 벡터
+ * @return      경로 총 길이 [m] (점이 2개 미만이면 0.0)
+ */
+inline double compute_path_length(const std::vector<Point2D> & path)
+{
+  if (path.size() < 2) return 0.0;
+  double length = 0.0;
+  for (size_t i = 1; i < path.size(); ++i) {
+    length += dist(path[i - 1], path[i]);
+  }
+  return length;
+}
+
+/**
  * @brief 후처리된 경로에 대해 안전 검사를 수행하고, 결과를 반환
  *
  * ──────────────────────────────────────────────────────────────
  * [검사 흐름]
  *
- *   1) 유효성 검사:  경로가 비었거나 점이 2개 미만이면 → STOP
+ *   1) 유효성 검사:  경로가 비었거나 점이 2개 미만이면
+ *      → FAIL - no valid path
  *
- *   2) 최대 곡률 계산:  compute_max_curvature() 호출
+ *   2) 최소 길이 검사: 경로 총 길이가 min_path_length 미만이면
+ *      → FAIL - too short valid path
  *
- *   3) 최소 회전 반경 제한:
+ *   3) 최대 곡률 계산:  compute_max_curvature() 호출
+ *
+ *   4) 최소 회전 반경 제한:
  *      - r_min = 차량 파라미터에서 가져온 최소 회전 반경 [m]
  *      - κ_limit = 1 / r_min  (한계 곡률)
- *      - κ_max > κ_limit 이면 → INFEASIBLE
+ *      - κ_max > κ_limit 이면 → FAIL - curvature exceeds r_min
  *        (스티어링을 최대로 꺾어도 이 곡률을 따라갈 수 없다)
  *
- *   4) 곡률 검사 통과 → OK
+ *   5) 모든 검사 통과 → OK
  *
  * @param path  후처리 결과 (PostprocessResult)
- * @param p     플래너 파라미터 (차량 사양, 속도 제한 등)
- * @return      SafetyResult (상태 + 목표 속도 + 최대 곡률 + 사유)
+ * @param p     플래너 파라미터 (차량 사양, 안전 파라미터 등)
+ * @return      SafetyResult (상태 + 최대 곡률 + 사유)
  * ──────────────────────────────────────────────────────────────
  */
 inline SafetyResult check(
@@ -158,17 +179,25 @@ inline SafetyResult check(
 {
   SafetyResult result;
 
-  // ── 1) 유효성 검사: 경로가 없거나 너무 짧으면 정지 ──
+  // ── 1) 유효성 검사: 경로가 없거나 너무 짧으면 실패 ──
   if (!path.valid || path.path.size() < 2) {
-    result.state = PlannerState::STOP;
-    result.reason = "no_valid_path";
+    result.state = PlannerState::FAIL;
+    result.reason = "FAIL - no valid path";
     return result;
   }
 
-  // ── 2) 최대 곡률 계산 (Menger 공식) ──
+  // ── 2) 최소 길이 검사: 경로가 너무 짧으면 추종 무의미 ──
+  const double path_length = compute_path_length(path.path);
+  if (path_length < p.safety.min_path_length) {
+    result.state = PlannerState::FAIL;
+    result.reason = "FAIL - too short valid path";
+    return result;
+  }
+
+  // ── 3) 최대 곡률 계산 (Menger 공식) ──
   result.max_curvature = compute_max_curvature(path.path);
 
-  // ── 3) 최소 회전 반경 제한 검사 ──
+  // ── 4) 최소 회전 반경 제한 검사 ──
   // r_min: 차량이 스티어링을 최대로 꺾었을 때의 최소 회전 반경 [m]
   // κ_limit = 1/r_min: 차량이 물리적으로 추종 가능한 최대 곡률 [1/m]
   const double r_min = p.vehicle.r_min();
@@ -176,14 +205,14 @@ inline SafetyResult check(
 
   // 경로의 최대 곡률이 한계를 초과하면 → 물리적으로 추종 불가능
   if (result.max_curvature > kappa_limit) {
-    result.state = PlannerState::INFEASIBLE;
-    result.reason = "curvature_exceeds_r_min";
+    result.state = PlannerState::FAIL;
+    result.reason = "FAIL - curvature exceeds r_min";
     return result;
   }
 
-  // ── 4) 곡률 검사 통과 → OK ──
+  // ── 5) 모든 검사 통과 → OK ──
   result.state = PlannerState::OK;
-  result.reason = "ok";
+  result.reason = "OK";
   return result;
 }
 

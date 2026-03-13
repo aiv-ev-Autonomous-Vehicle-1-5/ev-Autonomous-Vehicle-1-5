@@ -21,8 +21,6 @@ private:
   rclcpp::Publisher<ev_msgs::msg::BBoxArray>::SharedPtr pub_bboxes_;
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_markers_;
 
-  double sigmoid_k_;
-  double sigmoid_n_mid_;
   float max_size_x_;
   float max_size_y_;
   float max_size_z_;
