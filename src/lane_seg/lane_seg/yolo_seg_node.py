@@ -66,6 +66,7 @@ class YoloSegNode(Node):
                 color_mask[combined_mask > 0.5] = [255, 0, 0]
 
                 # 행(row)별로 중심점 추출
+                center_points = []  # 시각화용 픽셀 좌표 저장
                 unique_rows = np.where(np.any(combined_mask > 0.5, axis=1))[0]
                 for row in unique_rows[::10]:  # 10행 간격
                     cols_in_row = np.where(combined_mask[row] > 0.5)[0]
@@ -79,8 +80,10 @@ class YoloSegNode(Node):
 
                     for group in groups:
                         center_x = int(np.mean(group))
-                        real_y = float((self.car_y_px - row) * self.interval)
-                        real_x = float((self.car_x_px - center_x) * self.interval)
+                        center_points.append((center_x, row))
+                        # 차량 좌표계: x=전방(종방향), y=좌우(횡방향)
+                        real_x = float((self.car_y_px - row) * self.interval)       # 전방 거리
+                        real_y = float((self.car_x_px - center_x) * self.interval)  # 좌(+) / 우(-)
                         lane_msg.line_x.append(real_x)
                         lane_msg.line_y.append(real_y)
 
@@ -89,6 +92,11 @@ class YoloSegNode(Node):
 
             # 5. 시각화 처리
             final_result = cv2.addWeighted(bev_frame, 1, color_mask, 0.5, 0)
+
+            # 중심점 빨간 점으로 표시
+            if result.masks is not None:
+                for (cx, cy) in center_points:
+                    cv2.circle(final_result, (cx, cy), 3, (0, 0, 255), -1)
             
             if result.boxes is not None:
                 for box in result.boxes.data.cpu().numpy():

@@ -26,7 +26,8 @@ setup(
         'console_scripts': [
             'bev_node = lane_seg.bev_node:main',
             'yolo_seg = lane_seg.yolo_seg_node:main',
-            'lane_coord_viewer = lane_seg.lane_coord_viewer:main'
+            'lane_coord_viewer = lane_seg.lane_coord_viewer:main',
+            'yolo_db_seg = lane_seg.yolo_db_seg_node:main'
         ],
     },
 )
