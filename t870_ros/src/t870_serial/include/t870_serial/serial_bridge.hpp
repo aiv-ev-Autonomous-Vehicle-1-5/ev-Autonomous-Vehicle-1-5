@@ -65,10 +65,12 @@ namespace t870_serial
     private:
 
         /**
-         * @brief Receives and publishes feedback from the serial port.
-         * @details Validates packet structure (STX/ETX), parses raw bytes into a Feedback message, 
-         * and publishes it to the feedback topic.
-         * @return 'true' if the packet was received, parsed, and published successfully; 'false' otherwise.
+         * @brief Receives, re-synchronizes, and publishes feedback from the serial port.
+         * @details Reads a fixed-size packet from the serial port, shifts the buffer when the
+         * stream starts mid-packet, validates packet structure (STX/ETX), and publishes a
+         * Feedback message on success.
+         * @return 'true' if a valid packet was received, parsed, and published successfully;
+         *         'false' otherwise.
          */
         bool receive_feedback();
 
@@ -84,7 +86,7 @@ namespace t870_serial
 
         /**
          * @brief Periodic timer callback for serial communication.
-         * @details Calls 'receive_feedback()', 'transmit_command()', and increments the heartbeat counter.
+         * @details Calls 'transmit_command()', 'receive_feedback()', and increments the heartbeat counter.
          */
         void timer_callback();
 
@@ -147,6 +149,10 @@ namespace t870_serial
 
         // Health checker counter
         uint8_t heartbeat_;
+
+        // Control command timeout (reset speed/steering if no message received)
+        rclcpp::Time last_command_time_;
+        static constexpr double COMMAND_TIMEOUT_SEC = 0.5;
 
     }; // class SerialBridge
 

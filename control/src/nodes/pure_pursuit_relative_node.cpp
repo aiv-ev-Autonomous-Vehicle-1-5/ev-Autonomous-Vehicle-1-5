@@ -83,9 +83,9 @@ PurePursuitRelativeNode::PurePursuitRelativeNode(
     rclcpp::QoS(10)
   );
 
-  // 4. 제어 루프 타이머 (20Hz = 50ms)
+  // 4. 제어 루프 타이머 (50Hz = 20ms)
   timer_ = this->create_wall_timer(
-    std::chrono::milliseconds(50),
+    std::chrono::milliseconds(20),
     std::bind(&PurePursuitRelativeNode::on_timer, this)
   );
 

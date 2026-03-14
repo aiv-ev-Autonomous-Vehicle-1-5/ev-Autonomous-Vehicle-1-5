@@ -42,14 +42,27 @@ using namespace std::chrono_literals;
 using std::placeholders::_1;
 using std::placeholders::_2;
 
+namespace
+{
+bool has_valid_feedback_protocol(const std::array<uint8_t, t870_serial::RX::PACKET_SIZE> &packet)
+{
+    return packet[t870_serial::RX::STX_S] == 0x53 &&
+           packet[t870_serial::RX::STX_T] == 0x54 &&
+           packet[t870_serial::RX::STX_X] == 0x58 &&
+           packet[t870_serial::RX::ETX_0] == 0x0D &&
+           packet[t870_serial::RX::ETX_1] == 0x0A;
+}
+} // namespace
+
 /**
- * @brief Default class contructor
+ * @brief Default class constructor
  * @details Initializes the base Node with name "serial_bridge", 
  * resets the heartbeat counter to zero.
  */
 t870_serial::SerialBridge::SerialBridge(const rclcpp::NodeOptions &options)
   : Node("serial_bridge", options),
-    heartbeat_(0)
+    heartbeat_(0),
+    last_command_time_(this->now())
 {
     declare_parameters();
     initialize_node();
@@ -75,10 +88,12 @@ t870_serial::SerialBridge::~SerialBridge()
 }
 
 /**
- * @brief Receives and publishes feedback from the serial port.
- * @details Validates packet structure (STX/ETX), parses raw bytes into a Feedback message, 
- * and publishes it to the feedback topic.
- * @return 'true' if the packet was received, parsed, and published successfully; 'false' otherwise.
+ * @brief Receives, re-synchronizes, and publishes feedback from the serial port.
+ * @details Reads a fixed-size packet, shifts the receive window when the stream starts
+ * mid-packet, validates packet structure (STX/ETX), parses raw bytes into a Feedback
+ * message, and publishes it to the feedback topic.
+ * @return 'true' if a valid packet was received, parsed, and published successfully;
+ *         'false' otherwise.
  */
 bool t870_serial::SerialBridge::receive_feedback()
 {
@@ -88,15 +103,32 @@ bool t870_serial::SerialBridge::receive_feedback()
         return false;
     }
 
-    // Check packet protocols
-    if(rx_packet_[RX::STX_S] != 0x53 || // S
-       rx_packet_[RX::STX_T] != 0x54 || // T
-       rx_packet_[RX::STX_X] != 0x58 || // X
-       rx_packet_[RX::ETX_0] != 0x0D || // ETX_0
-       rx_packet_[RX::ETX_1] != 0x0A )  // ETX_1
+    if(!has_valid_feedback_protocol(rx_packet_))
     {
-        T870_ERROR("SerialBridge::receive_feedback() Packet protocol is ruined.");
-        return false;
+        bool synchronized = false;
+        for(std::size_t discarded_bytes = 1; discarded_bytes < RX::PACKET_SIZE; ++discarded_bytes)
+        {
+            std::rotate(rx_packet_.begin(), rx_packet_.begin() + 1, rx_packet_.end());
+            if(!serial_port_->receive_packet(&rx_packet_.back(), 1))
+            {
+                return false;
+            }
+
+            if(has_valid_feedback_protocol(rx_packet_))
+            {
+                T870_WARN(
+                    "SerialBridge::receive_feedback() Re-synchronized feedback packet after discarding %zu byte(s).",
+                    discarded_bytes);
+                synchronized = true;
+                break;
+            }
+        }
+
+        if(!synchronized)
+        {
+            T870_ERROR("SerialBridge::receive_feedback() Packet protocol is ruined.");
+            return false;
+        }
     }
 
     // Byte to ROS message
@@ -161,10 +193,19 @@ bool t870_serial::SerialBridge::transmit_command()
 
 /**
  * @brief Periodic timer callback for serial communication.
- * @details Calls 'receive_feedback()', 'transmit_command()', and increments the heartbeat counter.
+ * @details Calls 'transmit_command()', 'receive_feedback()', and increments the heartbeat counter.
  */
 void t870_serial::SerialBridge::timer_callback()
 {
+    // Reset speed/steering if no control_command received within timeout
+    if ((this->now() - last_command_time_).seconds() > COMMAND_TIMEOUT_SEC)
+    {
+        tx_packet_[TX::SPEED_RAW_0] = 0;
+        tx_packet_[TX::SPEED_RAW_1] = 0;
+        tx_packet_[TX::STEERING_100_0] = 0;
+        tx_packet_[TX::STEERING_100_1] = 0;
+    }
+
     transmit_command();
     receive_feedback();
     heartbeat_++;
@@ -205,6 +246,9 @@ void t870_serial::SerialBridge::mode_command_callback(
  */
 void t870_serial::SerialBridge::control_command_callback(const t870_msgs::msg::ControlCommand::SharedPtr msg)
 {
+    // Update last command time for timeout detection
+    last_command_time_ = this->now();
+
     // Speed (m/s to motor raw command)
     double speed = msg->speed < 0 ? 0 : msg->speed;
     speed = max_speed_mps_ < speed ? max_speed_mps_ : speed;

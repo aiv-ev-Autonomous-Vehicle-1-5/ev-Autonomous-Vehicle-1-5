@@ -433,6 +433,18 @@ Visualization Manager:
         Reliability Policy: Best Effort
         Value: /planning/path
       Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        lane_points: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/debug/lane_points
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -479,7 +491,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 17.940580368041992
+      Distance: 34.8647346496582
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1

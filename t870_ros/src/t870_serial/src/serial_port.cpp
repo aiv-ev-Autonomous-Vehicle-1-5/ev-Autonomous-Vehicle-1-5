@@ -205,4 +205,5 @@ void t870_serial::SerialPort::initialize_port()
         file_descriptor_ = -1;
         throw t870_util::Exception("SerialPort::initialize_port() tcsetattr failed.");
     }
+    tcflush(file_descriptor_, TCIFLUSH);
 }

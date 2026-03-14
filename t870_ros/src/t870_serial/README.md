@@ -10,6 +10,9 @@ ROS2 communication interface and Henes T870 PCU serial packet conversion node
 $ ros2 launch t870_serial serial_bridge.launch.py
 ```
 
+The feedback receiver automatically re-synchronizes to the next `STX ... CR LF` frame when
+the serial stream starts with a stray leading byte or the port is opened mid-packet.
+
 ### Topic / Service Names
 | Interface | Entitiy      | Type                             | Name                      | Description                                      |
 | --------- | ------------ | -------------------------------- | ------------------------- | ------------------------------------------------ |
