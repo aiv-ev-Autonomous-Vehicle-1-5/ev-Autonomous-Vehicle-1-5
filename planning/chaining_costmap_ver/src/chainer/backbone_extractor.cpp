@@ -5,7 +5,7 @@
  * [포함 함수]
  *   - extract_backbone():      전방 전용(forward-only) greedy chaining
  *   - chain_one_direction():   단방향 greedy chaining 헬퍼
- *                              (bbox(CONE) 우선 선택 — 탐색 범위 안에 bbox가
+ *                              (BBOX 우선 선택 — 탐색 범위 안에 bbox가
  *                               있으면 bbox 후보만으로 w' 최소 비용 선택,
  *                               없으면 lane 후보로 fallback)
  *   - compute_cost():          기본 비용함수 w(i,j)
@@ -63,7 +63,7 @@ double DirectionChainer::compute_cost(
 
   // C_size: 크기 변화 비용 (bbox↔bbox 전용)
   double C_size = 0.0;
-  if (pi.type == PointType::CONE && pj.type == PointType::CONE) {
+  if (pi.type == PointType::BBOX && pj.type == PointType::BBOX) {
     double size_i = pi.size_x + pi.size_y;
     double size_j = pj.size_x + pj.size_y;
     const double eps = 1e-6;
@@ -159,12 +159,12 @@ std::vector<int> DirectionChainer::chain_one_direction(
       break;
     }
 
-    // bbox(CONE) 우선 선택: 탐색 범위 안에 bbox가 있으면 bbox만으로 선택,
+    // BBOX 우선 선택: 탐색 범위 안에 bbox가 있으면 bbox만으로 선택,
     // bbox가 없으면 나머지(lane) 후보로 fallback
     std::vector<int> bbox_gated;
     std::vector<int> lane_gated;
     for (int idx : gated) {
-      if (points[idx].type == PointType::CONE) {
+      if (points[idx].type == PointType::BBOX) {
         bbox_gated.push_back(idx);
       } else {
         lane_gated.push_back(idx);

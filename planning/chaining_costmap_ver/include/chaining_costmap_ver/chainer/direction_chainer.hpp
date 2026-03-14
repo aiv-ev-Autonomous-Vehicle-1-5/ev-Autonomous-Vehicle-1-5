@@ -344,7 +344,7 @@ private:
    *   1. backbone의 연속된 점 쌍(edge)을 순회
    *   2. 각 edge를 resample_ds 간격으로 선형 보간
    *   3. branch도 동일하게: 부모→첫점 edge + 내부 edge 모두 보간
-   *   4. 보간점의 type: 양끝이 모두 BBOX(CONE)이면 CONE, 아니면 LANE
+   *   4. 보간점의 type: 양끝 모두 BBOX일 때만 BBOX, 혼합 edge는 LANE
    *
    * @param points       필터링된 경계점 배열
    * @param backbone_ids backbone 인덱스 배열

@@ -30,7 +30,7 @@ void parse_input(
       ChainPoint cp;
       cp.x = b.position.x + ox;
       cp.y = b.position.y + oy;
-      cp.type = PointType::CONE;
+      cp.type = PointType::BBOX;
       cp.label = b.label;
       cp.size_x = b.size_x;
       cp.size_y = b.size_y;

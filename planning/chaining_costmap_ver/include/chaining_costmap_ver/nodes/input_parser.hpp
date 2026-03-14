@@ -26,7 +26,7 @@ namespace chaining_costmap_ver
  * @brief bbox/차선 ROS 메시지를 단일 ChainPoint 벡터로 변환
  *
  * [변환 규칙]
- *   BBox → ChainPoint: sensor_tf 오프셋 적용 (velodyne→base_link), type=CONE
+ *   BBox → ChainPoint: sensor_tf 오프셋 적용 (velodyne→base_link), type=BBOX
  *   LaneBoundary → ChainPoint: 그대로 사용 (base_link 기준), type=LANE
  *
  * @param bboxes    LiDAR bbox 메시지 (nullptr 가능)

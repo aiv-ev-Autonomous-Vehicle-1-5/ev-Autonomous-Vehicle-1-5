@@ -192,7 +192,7 @@ CostmapResult CostmapGenerator::generate(
   auto apply_chain = [&](const std::vector<ChainedPoint> & chain) {
     for (const auto & pt : chain) {
       const Point2D src = pt.to_point2d();
-      if (pt.is_backbone || pt.type == PointType::CONE) {
+      if (pt.is_backbone || pt.type == PointType::BBOX) {
         // backbone 포인트는 타입에 관계없이 bbox_cost_max 적용
         // → lane↔bbox 전환 구간에서도 끊김 없는 비용 장벽 형성
         apply_source(

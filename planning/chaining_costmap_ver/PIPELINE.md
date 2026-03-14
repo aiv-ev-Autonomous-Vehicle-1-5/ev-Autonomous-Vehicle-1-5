@@ -77,7 +77,7 @@ on_timer() — 10Hz (100ms)
 ├── Stage 2: DirectionChainer  [chainer/*.cpp]
 │     find_seed → build_graph → extract_backbone(L/R, forward-only)
 │     → extract_branches(L/R) → resample_component(L/R)
-│     * backbone chaining 시 bbox(CONE) 우선 선택:
+│     * backbone chaining 시 BBOX 우선 선택:
 │       게이트 통과 후보 중 bbox가 있으면 bbox만으로 w' 선택,
 │       없으면 lane으로 fallback
 │
@@ -87,7 +87,7 @@ on_timer() — 10Hz (100ms)
 ├── Stage 3: Costmap + A*  [costmap/, planner/, nodes/goal_calculator.hpp]
 │     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
 │     3b. Gaussian Costmap 생성 + entry walls
-│         * backbone 포인트(is_backbone=true)는 타입(LANE/CONE)에 관계없이
+│         * backbone 포인트(is_backbone=true)는 타입(LANE/BBOX)에 관계없이
 │           bbox_cost_max + bbox_radius 적용 → 전환 구간 gap 방지
 │         * branch의 LANE 포인트는 기존대로 lane_cost_max 적용
 │     3c. Goal 계산 (좌/우 끝점 선분 중점 or 폴백)

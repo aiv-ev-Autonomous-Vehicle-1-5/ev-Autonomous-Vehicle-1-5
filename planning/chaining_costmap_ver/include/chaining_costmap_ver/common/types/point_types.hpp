@@ -54,7 +54,7 @@ struct Point2D
  */
 enum class PointType : uint8_t
 {
-  CONE = 0,  ///< LiDAR DBSCAN 결과 (PE 드럼) — flat zone 적용
+  BBOX = 0,  ///< LiDAR DBSCAN 결과 (PE 드럼) — flat zone 적용
   LANE = 1   ///< 카메라 차선 인식 결과 — 거리 기반 감쇠만 적용
 };
 
@@ -84,7 +84,7 @@ struct ChainedPoint
  * ChainedPoint보다 label/size 정보가 추가됨.
  *
  * 데이터 흐름:
- *   LiDAR DBSCAN → BBox 메시지 → ChainPoint (type=CONE, label=cluster_id)
+ *   LiDAR DBSCAN → BBox 메시지 → ChainPoint (type=BBOX, label=cluster_id)
  *   카메라 차선  → LaneBoundary → ChainPoint (type=LANE, label=-1)
  */
 struct ChainPoint

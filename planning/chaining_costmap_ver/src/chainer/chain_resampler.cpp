@@ -26,9 +26,9 @@ namespace chaining_costmap_ver
 // backbone + branch의 모든 edge를 resample_ds 간격으로 선형 보간하여
 // 균등한 점열을 생성한다. costmap에 연속적인 비용 장벽을 보장.
 //
-// 보간점의 type: 양끝 중 하나라도 BBOX(CONE)이면 CONE
-// 전환 edge(lane↔bbox)를 LANE로 강등하면 costmap 장벽이 약해져
-// A*가 바로 그 구간으로 빠져나갈 수 있으므로 stronger type을 유지한다.
+// 보간점의 type: 양끝 모두 BBOX일 때만 BBOX, 혼합 edge는 LANE
+// 전환 edge(lane↔bbox)에서는 LANE으로 처리하여
+// costmap에서 해당 구간이 lane_cost_max로 적용된다.
 //
 std::vector<ChainPoint> DirectionChainer::resample_component(
   const std::vector<ChainPoint> & points,
@@ -52,8 +52,8 @@ std::vector<ChainPoint> DirectionChainer::resample_component(
 
     if (len >= resample_ds) {
       const PointType seg_type =
-        (a.type == PointType::CONE || b.type == PointType::CONE)
-          ? PointType::CONE : PointType::LANE;
+        (a.type == PointType::BBOX && b.type == PointType::BBOX)
+          ? PointType::BBOX : PointType::LANE;
 
       for (double d = resample_ds; d < len; d += resample_ds) {
         const double t = d / len;
