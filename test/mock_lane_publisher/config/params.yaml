@@ -1,0 +1,8 @@
+mock_lane_publisher:
+  ros__parameters:
+    # ── 차선 배치 파라미터 (base_link 기준) ──
+    lane_half_width: 1.5    # 중앙에서 좌/우 오프셋 [m] → 총 폭 3.0m
+    lane_x_start: 0.5       # 차선 시작 x [m]
+    lane_x_end: 5.0         # 차선 끝 x [m]
+    point_spacing: 0.5      # 점 간격 [m]
+    publish_hz: 10.0        # 발행 주기 [Hz]

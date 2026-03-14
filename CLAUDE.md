@@ -4,6 +4,8 @@
 - 제5회 국제 대학생 EV 자율주행 경진대회 준비
 - LiDAR + Camera 기반 자율주행 시스템
 - ROS 2 Humble, C++17
+- cpp + component 아키텍처
+- 빌드할 때는 colcon build --symlink-install 로 빌드한다
 
 
 
