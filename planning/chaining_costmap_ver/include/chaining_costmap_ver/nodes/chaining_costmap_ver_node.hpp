@@ -16,7 +16,7 @@
  *
  * [입력 토픽] (Best Effort QoS, depth=1)
  *   - /perception/lane_boundaries : 카메라 차선 인식 결과 (LaneBoundaryArray)
- *   - /perception/bboxes          : LiDAR 장애물(콘) 바운딩 박스 (BBoxArray)
+ *   - /perception/bboxes          : LiDAR 장애물 바운딩 박스 (BBoxArray)
  *
  *   ※ Best Effort QoS를 사용하는 이유:
  *     인지 데이터는 실시간성이 중요하며, 오래된 데이터를 재전송 받는 것보다
@@ -145,7 +145,7 @@ private:
    *   둘 다 stale이거나 한 번도 받지 못했으면 → true (stale)
    *
    *   ※ OR 조건인 이유:
-   *     차선만 보이는 구간, 콘만 보이는 구간이 있으므로
+   *     차선만 보이는 구간, bbox만 보이는 구간이 있으므로
    *     하나만 있어도 경로 계획이 가능하다.
    *
    * @return true: 데이터가 stale → 파이프라인 중단 필요
@@ -200,6 +200,7 @@ private:
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_local_goal_;      ///< A* goal 시각화
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_obstacle_wall_;  ///< obstacle_cost 이상 셀 (빨간색)
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_curvature_;     ///< 곡률 초과 지점 (노란색 구)
+  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_lane_points_;  ///< 수신된 lane points 시각화 (분홍색 구)
 
   // ── 타이머 ──
   // 100ms(10Hz) 주기의 wall timer — on_timer() 콜백을 호출

@@ -3,8 +3,11 @@
  * @brief DirectionChainer — Backbone 추출 + 비용함수 구현
  *
  * [포함 함수]
- *   - extract_backbone():      양방향(forward+backward) greedy chaining
+ *   - extract_backbone():      전방 전용(forward-only) greedy chaining
  *   - chain_one_direction():   단방향 greedy chaining 헬퍼
+ *                              (bbox(CONE) 우선 선택 — 탐색 범위 안에 bbox가
+ *                               있으면 bbox 후보만으로 w' 최소 비용 선택,
+ *                               없으면 lane 후보로 fallback)
  *   - compute_cost():          기본 비용함수 w(i,j)
  *   - compute_cost_prime():    확장 비용함수 w'(i,j) = w + λ·C_side
  *
@@ -58,7 +61,7 @@ double DirectionChainer::compute_cost(
   double lat_offset = std::abs(dx * perp.x + dy * perp.y);
   const double C_lat = lat_offset / cp.lateral_gate;
 
-  // C_size: 크기 변화 비용 (콘↔콘 전용)
+  // C_size: 크기 변화 비용 (bbox↔bbox 전용)
   double C_size = 0.0;
   if (pi.type == PointType::CONE && pj.type == PointType::CONE) {
     double size_i = pi.size_x + pi.size_y;
@@ -98,7 +101,7 @@ double DirectionChainer::compute_cost_prime(
 // 단방향 Greedy Chaining 헬퍼
 // ============================================================================
 // seed에서 주어진 초기 방향(init_dir)으로 한 방향만 greedy chaining.
-// G1(거리) + G2(콘) + G3(횡오차) 게이트 적용.
+// G1(거리) + G2(전방 cone) + G3(횡오차) 게이트 적용.
 //
 std::vector<int> DirectionChainer::chain_one_direction(
   const std::vector<ChainPoint> & points,
@@ -136,7 +139,7 @@ std::vector<int> DirectionChainer::chain_one_direction(
       // G1: 거리 게이트
       if (d > cp.d_max || d < 1e-9) continue;
 
-      // G2: 콘 게이트
+      // G2: 전방 cone 게이트
       Point2D u_ij = {dx / d, dy / d};
       double cos_angle = dot2(v, u_ij);
       cos_angle = std::clamp(cos_angle, -1.0, 1.0);
@@ -156,17 +159,30 @@ std::vector<int> DirectionChainer::chain_one_direction(
       break;
     }
 
+    // bbox(CONE) 우선 선택: 탐색 범위 안에 bbox가 있으면 bbox만으로 선택,
+    // bbox가 없으면 나머지(lane) 후보로 fallback
+    std::vector<int> bbox_gated;
+    std::vector<int> lane_gated;
+    for (int idx : gated) {
+      if (points[idx].type == PointType::CONE) {
+        bbox_gated.push_back(idx);
+      } else {
+        lane_gated.push_back(idx);
+      }
+    }
+    const auto & candidates = bbox_gated.empty() ? lane_gated : bbox_gated;
+
     // w' 최소 비용 선택
-    int best = gated[0];
+    int best = candidates[0];
     double best_cost = compute_cost_prime(
       points[current], points[best], v, is_left, cp);
 
-    for (size_t i = 1; i < gated.size(); ++i) {
+    for (size_t i = 1; i < candidates.size(); ++i) {
       double c = compute_cost_prime(
-        points[current], points[gated[i]], v, is_left, cp);
+        points[current], points[candidates[i]], v, is_left, cp);
       if (c < best_cost) {
         best_cost = c;
-        best = gated[i];
+        best = candidates[i];
       }
     }
 
@@ -185,10 +201,10 @@ std::vector<int> DirectionChainer::chain_one_direction(
 }
 
 // ============================================================================
-// Backbone 추출 — 양방향 Greedy Chaining
+// Backbone 추출 — 전방 전용 Greedy Chaining
 // ============================================================================
-// seed에서 forward(+x) + backward(-x) 양쪽으로 체이닝하여
-// reverse(backward) + [seed] + forward → 최종 backbone.
+// seed에서 forward(+x) 방향으로만 체이닝하여
+// [seed] + forward → 최종 backbone.
 //
 std::vector<int> DirectionChainer::extract_backbone(
   const std::vector<ChainPoint> & points,
@@ -196,7 +212,6 @@ std::vector<int> DirectionChainer::extract_backbone(
   int seed_idx,
   bool is_left,
   StopReason & stop_reason_forward,
-  StopReason & stop_reason_backward,
   const PlanningParams::Chainer & cp) const
 {
   std::unordered_set<int> visited_set;
@@ -204,33 +219,13 @@ std::vector<int> DirectionChainer::extract_backbone(
 
   const int max_extend = cp.max_chain_len - 1;
 
-  // Forward pass
+  // Forward pass only
   auto forward_chain = chain_one_direction(
     points, owner, seed_idx,
     {1.0, 0.0}, is_left, visited_set,
     max_extend, stop_reason_forward, cp);
 
-  // Backward pass
-  const int backward_budget = max_extend - static_cast<int>(forward_chain.size());
-  if (backward_budget > 0) {
-    auto backward_chain = chain_one_direction(
-      points, owner, seed_idx,
-      {-1.0, 0.0}, is_left, visited_set,
-      backward_budget, stop_reason_backward, cp);
-
-    // 결합: reverse(backward) + [seed] + forward
-    std::vector<int> backbone;
-    backbone.reserve(backward_chain.size() + 1 + forward_chain.size());
-    for (auto it = backward_chain.rbegin(); it != backward_chain.rend(); ++it) {
-      backbone.push_back(*it);
-    }
-    backbone.push_back(seed_idx);
-    backbone.insert(backbone.end(), forward_chain.begin(), forward_chain.end());
-    return backbone;
-  }
-
-  // backward 예산이 0 이하이면 forward만으로 구성
-  stop_reason_backward = StopReason::MAX_LEN;
+  // [seed] + forward → backbone
   std::vector<int> backbone;
   backbone.reserve(1 + forward_chain.size());
   backbone.push_back(seed_idx);

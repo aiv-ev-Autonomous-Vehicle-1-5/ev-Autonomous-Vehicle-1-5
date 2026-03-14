@@ -8,8 +8,7 @@ Panels:
         - /PointCloud21/Topic1
         - /PointCloud22/Topic1
         - /Map1/Topic1
-        - /MarkerArray1/Topic1
-        - /Marker1
+        - /MarkerArray2/Topic1
         - /Marker3/Topic1
       Splitter Ratio: 0.3901098966598511
     Tree Height: 724
@@ -271,6 +270,18 @@ Visualization Manager:
       Enabled: true
       Name: MarkerArray
       Namespaces:
+        seeds: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /chaining/debug/seeds
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
         bboxes: true
       Topic:
         Depth: 5
@@ -278,6 +289,18 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Best Effort
         Value: /perception/bboxes_marker
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        obstacle_wall: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /planning/debug/obstacle_wall
       Value: true
     - Alpha: 1
       Buffer Length: 1
@@ -306,30 +329,6 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /planning/debug/left_chain
-      Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /chaining/debug/left_branches
-      Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /chaining/debug/right_branches
       Value: true
     - Alpha: 1
       Buffer Length: 1
@@ -363,6 +362,30 @@ Visualization Manager:
       Enabled: true
       Name: MarkerArray
       Namespaces:
+        left_branches: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /chaining/debug/left_branches
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        right_branches: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /chaining/debug/right_branches
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
         local_goal: true
       Topic:
         Depth: 5
@@ -370,18 +393,6 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /planning/debug/local_goal
-      Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Name: MarkerArray
-      Namespaces:
-        obstacle_wall: true
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /planning/debug/obstacle_wall
       Value: true
     - Class: rviz_default_plugins/Marker
       Enabled: true
@@ -468,7 +479,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 16.869911193847656
+      Distance: 17.940580368041992
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -483,10 +494,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5697963237762451
+      Pitch: 1.5247963666915894
       Target Frame: base_footprint
       Value: Orbit (rviz)
-      Yaw: 2.7836010456085205
+      Yaw: 3.1336026191711426
     Saved: ~
 Window Geometry:
   Displays:

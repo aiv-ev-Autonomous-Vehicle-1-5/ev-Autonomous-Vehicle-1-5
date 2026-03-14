@@ -143,8 +143,8 @@ inline double cell_to_world(int c, double origin, double resolution)
 //   │                                                                 │
 //   │  costmap[m] × cost_weight                                       │
 //   │    = 해당 셀의 가우시안 비용 × 가중치                            │
-//   │    → 콘/차선 근처를 지나면 추가 비용 (장애물 회피 유도)          │
-//   │    예: cost=100(콘), weight=0.05 → 5.0 추가비용                 │
+//   │    → bbox/차선 근처를 지나면 추가 비용 (장애물 회피 유도)          │
+//   │    예: cost=100(bbox), weight=0.05 → 5.0 추가비용                 │
 //   │        cost=50(차선), weight=0.05 → 2.5 추가비용                │
 //   └─────────────────────────────────────────────────────────────────┘
 //
@@ -273,7 +273,7 @@ std::vector<Point2D> AStarPlanner::plan(
 
       // 장애물 셀 판정: costmap 비용이 obstacle_cost 이상이면 "벽"
       // → A*가 이 셀로 절대 이동하지 않는다
-      // 예: obstacle_cost=100, cone_cost_max=100 → 콘 중심은 벽
+      // 예: obstacle_cost=100, bbox_cost_max=100 → bbox 중심은 벽
       //     lane_cost_max=50 < 100 → 차선은 통과 가능 (비용만 추가)
       if (cell_cost >= ap.obstacle_cost) continue;
 
@@ -281,7 +281,7 @@ std::vector<Point2D> AStarPlanner::plan(
       // g(이웃) = g(현재) + 이동 거리[m] + costmap 비용 × 가중치
       //
       // move_cost × res: 실제 이동 거리 (직선=1×0.15=0.15m, 대각선=√2×0.15≈0.21m)
-      // cell_cost × cost_weight: 비용 패널티 (콘 근처일수록 큼)
+      // cell_cost × cost_weight: 비용 패널티 (bbox 근처일수록 큼)
       double tentative_g = cur.g
         + nb.move_cost * res         // 유클리드 이동 거리 [m]
         + cell_cost * ap.cost_weight; // costmap 비용 패널티

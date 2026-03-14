@@ -37,10 +37,10 @@ struct PlanningParams
   // 좌/우 경계 체인의 각 포인트에서 가우시안 비용을 확산시켜
   // 2D 격자 비용 지도(costmap)를 생성한다.
   //
-  // 콘(CONE): flat zone(cone_radius) + 가우시안 감쇠, 비용 높음(100)
-  // 차선(LANE): 가우시안 감쇠만, 비용 낮음(50) → A*가 필요시 차선을 넘을 수 있음
+  // BBOX: flat zone(bbox_radius) + 가우시안 감쇠, 비용 높음(100)
+  // LANE: flat zone(lane_radius) + 가우시안 감쇠, 비용 낮음(50) → A*가 필요시 차선을 넘을 수 있음
   //
-  // 이를 통해 차선→콘 트랙 전환 구간에서 자연스러운 경로 생성 가능.
+  // 이를 통해 차선→bbox 트랙 전환 구간에서 자연스러운 경로 생성 가능.
   // ============================================================
   struct Costmap
   {
@@ -57,25 +57,30 @@ struct PlanningParams
     // 작게 하면 정밀하지만 셀 수 증가 → A* 탐색 시간 증가.
     double resolution = 0.15;
 
-    // [무차원] 콘의 최대 비용 값. 가우시안 중심(또는 flat zone)에서의 비용.
-    // 100.0 = 콘 근처에 높은 비용 → A*가 콘을 강하게 회피.
-    double cone_cost_max = 100.0;
+    // [무차원] bbox의 최대 비용 값. 가우시안 중심(또는 flat zone)에서의 비용.
+    // 100.0 = bbox 근처에 높은 비용 → A*가 bbox를 강하게 회피.
+    double bbox_cost_max = 100.0;
 
     // [무차원] 차선의 최대 비용 값.
-    // 50.0 = 콘(100)보다 낮음 → 차선을 넘는 것이 콘을 넘는 것보다 비용이 낮음.
-    // 이 차이로 인해 차선→콘 트랙 전환이 자연스럽게 이루어진다.
+    // 50.0 = bbox(100)보다 낮음 → 차선을 넘는 것이 bbox를 넘는 것보다 비용이 낮음.
+    // 이 차이로 인해 차선→bbox 트랙 전환이 자연스럽게 이루어진다.
     double lane_cost_max = 50.0;
 
-    // [m] 콘의 flat zone(최대 비용 유지) 반경.
+    // [m] bbox의 flat zone(최대 비용 유지) 반경.
     // 0.65m = PE 드럼 직경(500mm)의 약간 바깥.
-    // 이 반경 이내에서는 비용이 cone_cost_max로 일정.
+    // 이 반경 이내에서는 비용이 bbox_cost_max로 일정.
     // 이 반경 밖에서부터 가우시안 감쇠 시작.
-    double cone_radius = 0.65;
+    double bbox_radius = 0.65;
+
+    // [m] lane의 flat zone(최대 비용 유지) 반경.
+    // 0.0m = 기본값은 flat zone 없음 (가우시안 감쇠만 적용).
+    // 이 반경 이내에서는 비용이 lane_cost_max로 일정.
+    double lane_radius = 0.0;
 
     // [m] 가우시안 확산의 표준편차(σ).
     // cost(d) = cost_max * exp(-d² / (2σ²)).
     // 1.0m = 1σ 거리에서 비용이 약 60%로 감소. 3σ(3m)에서 거의 0.
-    // 줄이면 콘/차선 근처만 높은 비용 (날카로운 장벽),
+    // 줄이면 bbox/차선 근처만 높은 비용 (날카로운 장벽),
     // 키우면 넓게 퍼짐 (부드러운 경로 유도).
     double sigma = 1.0;
 
@@ -83,7 +88,7 @@ struct PlanningParams
     // 2.0 = 가우시안 꼬리의 미세한 비용을 무시 → 연산량 절감.
     double cost_threshold = 2.0;
 
-    // [m] ego 쪽 가상 콘 시작점의 횡방향 오프셋.
+    // [m] ego 쪽 가상 bbox 시작점의 횡방향 오프셋.
     // costmap 하단 좌측(origin_x, +ego_y)→left_seed,
     // costmap 하단 우측(origin_x, -ego_y)→right_seed
     double entry_wall_ego_y = 0.3;
@@ -120,7 +125,7 @@ struct PlanningParams
     double cost_weight = 0.05;
 
     // [무차원] 통과 불가 비용 임계값. costmap 비용이 이 이상이면 벽으로 처리.
-    // 80.0 = cone_cost_max(100)보다 낮아서 콘 중심 근처는 통과 불가.
+    // 80.0 = bbox_cost_max(100)보다 낮아서 bbox 중심 근처는 통과 불가.
     // lane_cost_max(50)보다 높아서 차선은 통과 가능.
     double obstacle_cost = 80.0;
 
@@ -260,7 +265,7 @@ struct PlanningParams
   // Component → Backbone → Branch 기반 좌/우 차선 경계 체이닝.
   //
   // ── 체이닝 개요 ──
-  // 인식 결과(콘 BBox, 차선 점)를 "좌측 경계"와 "우측 경계"로
+  // 인식 결과(bbox, 차선 점)를 "좌측 경계"와 "우측 경계"로
   // 분류하고, 각 측면에서 일렬로 연결(chain)하는 알고리즘.
   //
   // 동작 순서:
@@ -273,7 +278,7 @@ struct PlanningParams
   //   d       = 유클리드 거리
   //   theta   = 현재 heading과 후보 방향 사이의 각도 차이
   //   lateral = heading에 수직인 횡방향 오프셋
-  //   size_diff = 콘 크기 변화 (차선 점에는 적용 안 됨)
+  //   size_diff = bbox 크기 변화 (차선 점에는 적용 안 됨)
   // ============================================================
   struct Chainer
   {
@@ -293,8 +298,8 @@ struct PlanningParams
 
     // [m] kNN 후보의 최대 허용 거리.
     // 이 거리보다 먼 포인트는 후보에서 제거.
-    // 1.5m = 콘 간격이 보통 1~2m이므로 적절한 값.
-    // 줄이면 가까운 것만 연결 (조밀한 콘), 키우면 듬성듬성한 콘도 연결.
+    // 1.5m = bbox 간격이 보통 1~2m이므로 적절한 값.
+    // 줄이면 가까운 것만 연결 (조밀한 bbox), 키우면 듬성듬성한 bbox도 연결.
     double d_max = 1.5;                 ///< [m] neighbor 최대 거리
 
     // [deg] 전방 탐색 원뿔의 전체 각도.
@@ -327,11 +332,11 @@ struct PlanningParams
     // 0.6 = 보조적 역할. 곡선 구간에서는 약간의 횡이동을 허용.
     double gamma = 0.6;                 ///< 횡오차 비용
 
-    // [무차원] 크기 변화 비용 가중치 (콘 전용).
-    // 연속된 콘의 BBox 크기가 급변하면 다른 물체일 가능성 → 패널티.
+    // [무차원] 크기 변화 비용 가중치 (bbox 전용).
+    // 연속된 bbox 크기가 급변하면 다른 물체일 가능성 → 패널티.
     // 차선 점(LaneBoundary)에는 크기 정보가 없으므로 적용 안 됨.
     // 0.2 = 약한 보조 역할.
-    double delta = 0.2;                 ///< 크기 변화 비용 (콘 전용)
+    double delta = 0.2;                 ///< 크기 변화 비용 (bbox 전용)
 
     // ── Backbone (greedy chaining) ──
     // [무차원] 좌/우측 선호도 가중치.
@@ -411,9 +416,10 @@ struct PlanningParams
     costmap.size_x         = p("costmap.size_x",         costmap.size_x);
     costmap.size_y         = p("costmap.size_y",         costmap.size_y);
     costmap.resolution     = p("costmap.resolution",     costmap.resolution);
-    costmap.cone_cost_max  = p("costmap.cone_cost_max",  costmap.cone_cost_max);
+    costmap.bbox_cost_max  = p("costmap.bbox_cost_max",  costmap.bbox_cost_max);
     costmap.lane_cost_max  = p("costmap.lane_cost_max",  costmap.lane_cost_max);
-    costmap.cone_radius    = p("costmap.cone_radius",    costmap.cone_radius);
+    costmap.bbox_radius    = p("costmap.bbox_radius",    costmap.bbox_radius);
+    costmap.lane_radius    = p("costmap.lane_radius",    costmap.lane_radius);
     costmap.sigma          = p("costmap.sigma",          costmap.sigma);
     costmap.cost_threshold = p("costmap.cost_threshold", costmap.cost_threshold);
     costmap.entry_wall_ego_y  = p("costmap.entry_wall_ego_y",  costmap.entry_wall_ego_y);

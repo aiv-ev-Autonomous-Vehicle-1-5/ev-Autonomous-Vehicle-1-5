@@ -4,9 +4,11 @@
  *
  * 패키지 전반에서 사용하는 최소 단위 구조체:
  *   - Point2D:      순수 2D 좌표
- *   - PointType:    콘/차선 구분 열거형
- *   - ChainedPoint: 체이닝된 경계점 (위치 + 타입)
- *   - ChainPoint:   DirectionChainer 입력 포인트 (위치 + 메타정보)
+ *   - PointType:    bbox/차선 구분 열거형
+ *   - ChainedPoint: 체이닝된 경계점 (위치 + 타입 + is_backbone 플래그)
+ *                   is_backbone=true이면 costmap에서 타입 무관하게 bbox_cost_max 적용
+ *   - ChainPoint:   DirectionChainer 입력 포인트 (위치 + 메타정보 + is_backbone 플래그)
+ *                   to_chained_point() 변환 시 is_backbone을 ChainedPoint로 전파
  */
 #ifndef CHAINING_COSTMAP_VER__COMMON__TYPES__POINT_TYPES_HPP_
 #define CHAINING_COSTMAP_VER__COMMON__TYPES__POINT_TYPES_HPP_
@@ -42,17 +44,17 @@ struct Point2D
 // ============================================================================
 
 /**
- * @brief 경계점의 원본 타입 (콘 vs 차선)
+ * @brief 경계점의 원본 타입 (bbox vs 차선)
  *
- * costmap에서 콘은 cone_cost_max + cone_radius (flat zone),
- * 차선은 lane_cost_max (flat zone 없음)로 차별 적용된다.
+ * costmap에서 bbox는 bbox_cost_max + bbox_radius (flat zone),
+ * 차선은 lane_cost_max + lane_radius (flat zone)로 차별 적용된다.
  *
- * 콘(PE 드럼, 직경 500mm)은 물리적 크기가 있어서 flat zone을 만들고,
- * 차선(10cm 흰색 테이프)은 물리적 두께가 거의 없으므로 거리 기반 감쇠만 적용.
+ * bbox(PE 드럼, 직경 500mm)는 물리적 크기가 있어서 bbox_radius flat zone을 만들고,
+ * 차선(10cm 흰색 테이프)은 lane_radius flat zone을 적용 (기본 0.0m).
  */
 enum class PointType : uint8_t
 {
-  CONE = 0,  ///< LiDAR DBSCAN 결과 (PE 드럼/교통 콘) — flat zone 적용
+  CONE = 0,  ///< LiDAR DBSCAN 결과 (PE 드럼) — flat zone 적용
   LANE = 1   ///< 카메라 차선 인식 결과 — 거리 기반 감쇠만 적용
 };
 
@@ -68,7 +70,8 @@ struct ChainedPoint
 {
   double x = 0.0;             ///< [m] base_link 기준 전방(+)/후방(-)
   double y = 0.0;             ///< [m] base_link 기준 좌측(+)/우측(-)
-  PointType type = PointType::LANE;  ///< 콘/차선 구분 — costmap 비용 계산에 사용
+  PointType type = PointType::LANE;  ///< bbox/차선 구분 — costmap 비용 계산에 사용
+  bool is_backbone = false;   ///< backbone 포인트 여부 — true이면 costmap에서 bbox_cost_max 적용
 
   /// Point2D로 변환 (costmap/planner 모듈과의 호환용)
   Point2D to_point2d() const { return {x, y}; }
@@ -88,13 +91,14 @@ struct ChainPoint
 {
   double x = 0.0;             ///< [m] base_link 기준 전방(+)/후방(-)
   double y = 0.0;             ///< [m] base_link 기준 좌측(+)/우측(-)
-  PointType type = PointType::LANE;  ///< 콘/차선 구분
-  int32_t label = -1;         ///< 원본 cluster_id (콘: DBSCAN 번호, 차선: -1)
-  double size_x = 0.0;        ///< AABB X 크기 [m] (콘만 유효)
-  double size_y = 0.0;        ///< AABB Y 크기 [m] (콘만 유효)
+  PointType type = PointType::LANE;  ///< bbox/차선 구분
+  int32_t label = -1;         ///< 원본 cluster_id (bbox: DBSCAN 번호, 차선: -1)
+  double size_x = 0.0;        ///< AABB X 크기 [m] (bbox만 유효)
+  double size_y = 0.0;        ///< AABB Y 크기 [m] (bbox만 유효)
+  bool is_backbone = false;   ///< backbone 포인트 여부 — true이면 costmap에서 bbox_cost_max 적용
 
-  /// ChainedPoint로 변환 (CostmapGenerator 호환용)
-  ChainedPoint to_chained_point() const { return {x, y, type}; }
+  /// ChainedPoint로 변환 (CostmapGenerator 호환용, is_backbone 전파)
+  ChainedPoint to_chained_point() const { return {x, y, type, is_backbone}; }
   /// Point2D로 변환 — 순수 좌표만 필요한 경우
   Point2D to_point2d() const { return {x, y}; }
 };

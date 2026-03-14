@@ -92,7 +92,6 @@ struct SideResult
   int seed_idx = -1;                       ///< seed 인덱스
   int goal_idx = -1;                       ///< goal 인덱스
   StopReason stop_reason_forward = StopReason::NO_CANDIDATE;
-  StopReason stop_reason_backward = StopReason::NO_CANDIDATE;
 };
 
 /**

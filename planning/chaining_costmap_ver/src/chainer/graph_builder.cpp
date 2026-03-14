@@ -23,7 +23,7 @@ namespace chaining_costmap_ver
 //
 // G1: d(i,j) ≤ d_max → 먼 점 연결 차단
 // G3: |Δy| ≤ lateral_gate → 좌/우 경계 직접 연결 방지
-// G2(전방 콘 게이트)는 backbone에서 동적으로 적용됨
+// G2(전방 cone 게이트)는 backbone에서 동적으로 적용됨
 //
 ChainingGraph DirectionChainer::build_graph(
   const std::vector<ChainPoint> & points,

@@ -75,7 +75,8 @@ private:
 
   // --- 상태 ---
   std::vector<geometry_msgs::msg::Point> latest_points_;  // 최근 수신 경로 점 배열
-  rclcpp::Time last_path_time_{0, 0, RCL_ROS_TIME};      // 경로 마지막 수신 시각
+  rclcpp::Time last_path_time_{0, 0, RCL_ROS_TIME};      // 경로 마지막 수신 시각 (stale 검사용)
+  rclcpp::Time last_path_stamp_{0, 0, RCL_ROS_TIME};    // 경로 메시지의 원본 센서 타임스탬프 (delay 전파용)
   rclcpp::Time last_control_time_{0, 0, RCL_ROS_TIME};   // 직전 제어 루프 시각
   std::string latest_status_;                              // 최신 planning 상태
   double last_cmd_speed_{0.0};                             // 직전 속도 명령 [m/s]

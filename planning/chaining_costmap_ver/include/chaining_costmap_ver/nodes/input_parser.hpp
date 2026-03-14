@@ -1,6 +1,6 @@
 /**
  * @file input_parser.hpp
- * @brief [Stage 1] 콘/차선 ROS 메시지 → ChainPoint 벡터 변환
+ * @brief [Stage 1] bbox/차선 ROS 메시지 → ChainPoint 벡터 변환
  *
  * BBox(LiDAR 장애물)와 LaneBoundary(카메라 차선)를
  * 단일 ChainPoint 벡터로 변환하는 유틸리티.
@@ -23,7 +23,7 @@ namespace chaining_costmap_ver
 {
 
 /**
- * @brief 콘/차선 ROS 메시지를 단일 ChainPoint 벡터로 변환
+ * @brief bbox/차선 ROS 메시지를 단일 ChainPoint 벡터로 변환
  *
  * [변환 규칙]
  *   BBox → ChainPoint: sensor_tf 오프셋 적용 (velodyne→base_link), type=CONE

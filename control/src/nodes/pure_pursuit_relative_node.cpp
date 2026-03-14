@@ -15,7 +15,7 @@
 //   8) Pure Pursuit 조향각 계산
 //   9) 속도 결정 + rate limit
 //  10) 제어 명령 발행 (T870 / ERP42)
-//  11) 디버그 시각화 발행
+//  11) 디버그 시각화 발행 (원본 센서 타임스탬프 전파 → topic delay 측정 가능)
 // ============================================================================
 
 #include "pp_controller_cpp/nodes/pure_pursuit_relative_node.hpp"
@@ -112,7 +112,8 @@ void PurePursuitRelativeNode::on_path(
   const visualization_msgs::msg::Marker::SharedPtr msg)
 {
   latest_points_ = msg->points;
-  last_path_time_ = this->now();
+  last_path_time_ = this->now();            // stale 검사용
+  last_path_stamp_ = msg->header.stamp;     // 원본 센서 타임스탬프 전파
 }
 
 // ===========================================================================
@@ -282,9 +283,9 @@ void PurePursuitRelativeNode::on_timer()
     "v_target=%.2f, v_cmd=%.2f, delta=%.3f",
     tx, ty, Ld_used, kappa_pp, preview_kappa, v_target, v_cmd, delta);
 
-  // ----- 디버그 시각화 발행 (lazy) -----
-  debug_viz_.publish_lookahead_point(tx, ty, now);
-  debug_viz_.publish_pursuit_arc(tx, ty, kappa_pp, now);
+  // ----- 디버그 시각화 발행 (lazy) — 원본 센서 타임스탬프 전파 -----
+  debug_viz_.publish_lookahead_point(tx, ty, last_path_stamp_);
+  debug_viz_.publish_pursuit_arc(tx, ty, kappa_pp, last_path_stamp_);
 }
 
 }  // namespace pp_controller_cpp

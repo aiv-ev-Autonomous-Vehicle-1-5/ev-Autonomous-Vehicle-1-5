@@ -5,11 +5,11 @@
  * ══════════════════════════════════════════════════════════════
  * [DirectionChainer란?]
  *
- *   LiDAR 콘(PE 드럼/교통 콘)과 카메라 차선 인식 경계점들을
+ *   LiDAR bbox(PE 드럼)와 카메라 차선 인식 경계점들을
  *   "좌측 경계"와 "우측 경계"로 분류하고,
  *   각 경계를 하나의 연속적인 라인(chain)으로 연결하는 모듈이다.
  *
- *   입력: ChainPoint[] (콘 + 차선 경계점, base_link 좌표)
+ *   입력: ChainPoint[] (bbox + 차선 경계점, base_link 좌표)
  *   출력: DirectionChainResult (좌/우 SideResult)
  *         → costmap에 전달하여 경로 생성의 기반이 된다.
  *
@@ -30,14 +30,14 @@
  *   │   - 모든 점에 대해 kNN + G1,G3 게이트로 그래프 구성       │
  *   │   - owner 배열 초기화 (all NONE)                         │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 1단계: Left Backbone 확정 (양방향)                       │
- *   │   - left seed에서 forward(+x) + backward(-x) chaining  │
- *   │   - owner==NONE만 후보, visited_set forward↔backward 공유│
- *   │   - 결합: reverse(backward) + seed + forward            │
+ *   │ 1단계: Left Backbone 확정 (전방 전용)                     │
+ *   │   - left seed에서 forward(+x) 방향으로만 chaining       │
+ *   │   - owner==NONE만 후보                                  │
+ *   │   - 결과: [seed] + forward → 최종 backbone              │
  *   │   - 확정된 노드에 LEFT_BACKBONE 라벨 부여                │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 2단계: Right Backbone 확정 (양방향)                     │
- *   │   - right seed에서 forward(+x) + backward(-x) chaining │
+ *   │ 2단계: Right Backbone 확정 (전방 전용)                   │
+ *   │   - right seed에서 forward(+x) 방향으로만 chaining      │
  *   │   - owner==NONE만 후보, LEFT_BACKBONE 노드는 자동 제외   │
  *   │   - 확정된 노드에 RIGHT_BACKBONE 라벨 부여               │
  *   ├─────────────────────────────────────────────────────────┤
@@ -81,8 +81,8 @@
  *   │        │ → 진행 방향 수직 성분이 작은 점 선호            │
  *   │        │ → 체인이 옆으로 튀는 것 방지                   │
  *   ├────────┼──────────────────────────────────────────────┤
- *   │ C_size │ 크기 변화: |size_j-size_i|/size_i (콘 전용)   │
- *   │        │ → 비슷한 크기의 콘끼리 연결 유도               │
+ *   │ C_size │ 크기 변화: |size_j-size_i|/size_i (bbox 전용)  │
+ *   │        │ → 비슷한 크기의 bbox끼리 연결 유도             │
  *   │        │ → 다른 크기의 장애물과 혼동 방지                │
  *   ├────────┼──────────────────────────────────────────────┤
  *   │ C_side │ 측면 선호도: 중심선 쪽으로 이동 시 페널티       │
@@ -97,7 +97,7 @@
  *   G1 (거리 게이트):  d(i,j) ≤ d_max
  *     → 너무 먼 점은 같은 경계가 아님 (연결 차단)
  *
- *   G2 (전방 콘 게이트): angle(v_i, u_ij) ≤ forward_cone_deg/2
+ *   G2 (전방 cone 게이트): angle(v_i, u_ij) ≤ forward_cone_deg/2
  *     → 뒤쪽/옆쪽 점은 "다음 경계점"이 아님
  *     → backbone에서만 적용 (graph 구성 시에는 미적용)
  *
@@ -141,12 +141,12 @@ public:
   /**
    * @brief 메인 진입점 — 6단계 파이프라인 전체 실행
    *
-   * 모든 경계점(콘+차선)을 입력받아 좌/우로 분류하고,
+   * 모든 경계점(bbox+차선)을 입력받아 좌/우로 분류하고,
    * 각 방향의 backbone(주선) + branch(가지)를 추출하여
    * 리샘플링된 경계점열을 반환한다.
    *
-   * @param points  모든 경계점 (ChainPoint, 콘+차선 통합)
-   *                - LiDAR DBSCAN 결과의 콘 중심점
+   * @param points  모든 경계점 (ChainPoint, bbox+차선 통합)
+   *                - LiDAR DBSCAN 결과의 bbox 중심점
    *                - 카메라 차선 인식 결과의 경계점
    * @param params  전체 파라미터 (PlanningParams)
    *                - params.chainer 섹션의 값들이 사용됨
@@ -172,7 +172,7 @@ private:
    *      - 좌측(is_left=true):  y ≥ side_seed_y 인 점만 후보
    *      - 우측(is_left=false): y ≤ -side_seed_y 인 점만 후보
    *      → 중심선(y≈0) 근처 점이 잘못된 방향의 seed가 되는 것 방지
-   *   3. ego(원점)에서 가장 가까운 점을 seed로 선택 (콘/차선 구분 없이)
+   *   3. ego(원점)에서 가장 가까운 점을 seed로 선택 (bbox/차선 구분 없이)
    *
    * @param points   필터링된 경계점 배열
    * @param is_left  true=좌측 seed, false=우측 seed
@@ -201,7 +201,7 @@ private:
    *   - G3 (횡오차 게이트): |Δy| ≤ lateral_gate
    *     → 좌/우 경계가 그래프에서 직접 연결되는 것을 방지한다.
    *     → 방향 정보가 없으므로 단순 y 차이로 판정한다.
-   *   ※ G2 (전방 콘 게이트)는 여기서 적용하지 않는다.
+   *   ※ G2 (전방 cone 게이트)는 여기서 적용하지 않는다.
    *     → 방향 벡터가 없기 때문. backbone에서 동적으로 적용된다.
    *
    * [출력]
@@ -217,28 +217,28 @@ private:
     const PlanningParams::Chainer & cp) const;
 
   // ═══════════════════════════════════════════════════════════
-  // 1-2단계: Backbone 추출 — 양방향 탐욕적 체이닝으로 주선 추출
+  // 1-2단계: Backbone 추출 — 전방 전용 탐욕적 체이닝으로 주선 추출
   // ═══════════════════════════════════════════════════════════
   /**
-   * @brief seed에서 양방향(전방+후방)으로 greedy하게 주 경계선 추출
+   * @brief seed에서 전방(+x)으로만 greedy하게 주 경계선 추출
    *
-   * [양방향 Greedy Chaining 알고리즘]
+   * [전방 전용 Greedy Chaining 알고리즘]
    *   1) Forward pass: seed에서 v={1,0} 방향으로 greedy chaining
-   *   2) Backward pass: seed에서 v={-1,0} 방향으로 greedy chaining
-   *      (forward에서 방문한 노드는 visited_set 공유로 제외)
-   *   3) 결합: reverse(backward) + seed + forward → 최종 backbone
-   *   4) max_chain_len은 forward + backward 합산으로 제한
+   *   2) 결과: [seed] + forward → 최종 backbone
    *
-   *   [전방+후방 결합 결과]
-   *     backward 끝              seed            forward 끝
-   *     ● ← ● ← ● ← ● ←  [S]  → ● → ● → ● → ●
-   *                         ↓
-   *     ● ── ● ── ● ── ● ── [S] ── ● ── ● ── ● ── ●
+   *   [결과]
+   *     seed            forward 끝
+   *     [S] → ● → ● → ● → ●
    *
-   * [각 패스의 게이트 적용]
+   * [게이트 적용]
    *   - G1: d(cur, j) ≤ d_max (거리)
-   *   - G2: angle(v, u_ij) ≤ cone_half (전방/후방 콘)
+   *   - G2: angle(v, u_ij) ≤ cone_half (전방 cone)
    *   - G3: |lateral_proj| ≤ lateral_gate (횡오차)
+   *
+   * [BBOX 우선 선택]
+   *   게이트를 통과한 후보를 BBOX와 LANE으로 분리한 뒤,
+   *   bbox 후보가 존재하면 bbox만으로 w' 최소 비용 선택을 수행한다.
+   *   bbox가 없을 때만 lane 후보로 fallback한다.
    *
    * [owner 기반 필터링]
    *   owner[j] == NONE인 노드만 후보로 허용하므로,
@@ -249,9 +249,8 @@ private:
    * @param seed_idx            시작점 인덱스
    * @param is_left             좌측(true) / 우측(false) — C_side 계산에 사용
    * @param stop_reason_forward [out] 전방 체이닝 종료 이유
-   * @param stop_reason_backward [out] 후방 체이닝 종료 이유
    * @param cp                  chainer 파라미터
-   * @return backbone 노드 인덱스 배열 (backward 끝 → seed → forward 끝 순서)
+   * @return backbone 노드 인덱스 배열 (seed → forward 끝 순서)
    */
   std::vector<int> extract_backbone(
     const std::vector<ChainPoint> & points,
@@ -259,21 +258,24 @@ private:
     int seed_idx,
     bool is_left,
     StopReason & stop_reason_forward,
-    StopReason & stop_reason_backward,
     const PlanningParams::Chainer & cp) const;
 
   /**
    * @brief 단방향 greedy chaining 내부 헬퍼 (extract_backbone에서 호출)
    *
    * seed에서 주어진 초기 방향(init_dir)으로 한 방향만 체이닝한다.
-   * extract_backbone()이 forward/backward 각각에 대해 이 함수를 호출한다.
+   * extract_backbone()이 forward(+x) 방향에 대해 이 함수를 호출한다.
+   *
+   * [BBOX 우선 선택]
+   *   각 스텝에서 게이트 통과 후보를 bbox/lane으로 분리 →
+   *   bbox가 있으면 bbox만으로, 없으면 lane으로 w' 최소 비용 선택.
    *
    * @param points       경계점 배열
    * @param owner        [in] 소유권 라벨 배열
    * @param seed_idx     시작점 인덱스
    * @param init_dir     초기 진행 방향 단위벡터 (전방: {1,0}, 후방: {-1,0})
    * @param is_left      좌측/우측 — C_side 계산용
-   * @param visited_set  [in/out] 방문 노드 set (forward↔backward 공유)
+   * @param visited_set  [in/out] 방문 노드 set
    * @param remaining_len 남은 허용 체인 길이 (max_chain_len 합산 제한용)
    * @param stop_reason  [out] 체이닝 종료 이유
    * @param cp           chainer 파라미터
@@ -297,7 +299,7 @@ private:
    * @brief backbone 노드를 순서대로 순회하며 주변 노드를 BFS로 branch에 연결
    *
    * [Branch란?]
-   *   backbone 옆에 있지만 backbone에 선택되지 못한 콘/차선점.
+   *   backbone 옆에 있지만 backbone에 선택되지 못한 bbox/차선점.
    *   이런 점들을 branch로 연결하면 costmap에 빈틈 없는 비용 장벽이 형성된다.
    *
    * [알고리즘 — Backbone 순회 기반 Greedy Chaining]
@@ -342,7 +344,7 @@ private:
    *   1. backbone의 연속된 점 쌍(edge)을 순회
    *   2. 각 edge를 resample_ds 간격으로 선형 보간
    *   3. branch도 동일하게: 부모→첫점 edge + 내부 edge 모두 보간
-   *   4. 보간점의 type: 양끝이 모두 CONE이면 CONE, 아니면 LANE
+   *   4. 보간점의 type: 양끝이 모두 BBOX(CONE)이면 CONE, 아니면 LANE
    *
    * @param points       필터링된 경계점 배열
    * @param backbone_ids backbone 인덱스 배열
@@ -389,8 +391,8 @@ private:
    *           (angle/θ_max, 0~1+ 정규화)
    *   C_lat : 횡오차 비용 — 진행 방향 수직 성분이 작은 점 선호
    *           (lat_offset/lateral_gate, 0~1 정규화)
-   *   C_size: 크기 변화 비용 — 비슷한 크기의 콘끼리 연결 선호
-   *           (콘↔콘일 때만 적용, 상대적 크기 변화율)
+   *   C_size: 크기 변화 비용 — 비슷한 크기의 bbox끼리 연결 선호
+   *           (bbox↔bbox일 때만 적용, 상대적 크기 변화율)
    *
    * @param pi    현재 점
    * @param pj    후보 다음 점

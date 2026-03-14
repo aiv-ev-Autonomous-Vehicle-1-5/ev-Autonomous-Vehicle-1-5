@@ -1,6 +1,6 @@
 /**
  * @file input_parser.cpp
- * @brief [Stage 1] 콘/차선 ROS 메시지 → ChainPoint 벡터 변환 구현
+ * @brief [Stage 1] bbox/차선 ROS 메시지 → ChainPoint 벡터 변환 구현
  *
  * BBox(LiDAR 장애물)와 LaneBoundary(카메라 차선)를
  * 단일 ChainPoint 벡터로 변환한다.

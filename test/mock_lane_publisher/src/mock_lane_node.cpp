@@ -7,7 +7,6 @@
  *
  * 발행 토픽:
  *   /perception/lane_boundaries  (ev_msgs/LaneBoundaryArray, BestEffort)
- *   /debug/mock_lane_points      (visualization_msgs/MarkerArray, Reliable)
  *
  * 차선 배치 (base_link 기준):
  *   - 왼쪽 경계: y = +lane_half_width, x = [lane_x_start, lane_x_end]
@@ -24,8 +23,6 @@
 #include <ev_msgs/msg/lane_boundary.hpp>
 #include <ev_msgs/msg/lane_boundary_array.hpp>
 #include <geometry_msgs/msg/point.hpp>
-#include <visualization_msgs/msg/marker.hpp>
-#include <visualization_msgs/msg/marker_array.hpp>
 
 using namespace std::chrono_literals;
 
@@ -56,11 +53,6 @@ public:
     auto qos_be = rclcpp::QoS(1).best_effort();
     lane_pub_ = this->create_publisher<ev_msgs::msg::LaneBoundaryArray>(
       "/perception/lane_boundaries", qos_be);
-
-    // ── Publisher: debug markers (Reliable, depth=1) ──
-    auto qos_rel = rclcpp::QoS(1).reliable();
-    marker_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>(
-      "/debug/mock_lane_points", qos_rel);
 
     // ── Timer ──
     auto period = std::chrono::duration<double>(1.0 / hz);
@@ -111,38 +103,6 @@ private:
     lane_msg.boundaries.push_back(left);
     lane_msg.boundaries.push_back(right);
     lane_pub_->publish(lane_msg);
-
-    // ── Debug MarkerArray 발행 (분홍색 SPHERE 점) ──
-    visualization_msgs::msg::MarkerArray marker_arr;
-    int id = 0;
-
-    auto add_points = [&](const std::vector<geometry_msgs::msg::Point> & pts) {
-      for (const auto & pt : pts) {
-        visualization_msgs::msg::Marker m;
-        m.header.stamp = now;
-        m.header.frame_id = "base_link";
-        m.ns = "mock_lane_points";
-        m.id = id++;
-        m.type = visualization_msgs::msg::Marker::SPHERE;
-        m.action = visualization_msgs::msg::Marker::ADD;
-        m.pose.position = pt;
-        m.pose.orientation.w = 1.0;
-        m.scale.x = 0.15;
-        m.scale.y = 0.15;
-        m.scale.z = 0.15;
-        // 분홍색 (R=1.0, G=0.41, B=0.71, A=1.0)
-        m.color.r = 1.0f;
-        m.color.g = 0.41f;
-        m.color.b = 0.71f;
-        m.color.a = 1.0f;
-        m.lifetime = rclcpp::Duration(0, 200'000'000);  // 0.2초 (주기보다 약간 길게)
-        marker_arr.markers.push_back(m);
-      }
-    };
-
-    add_points(left_pts_);
-    add_points(right_pts_);
-    marker_pub_->publish(marker_arr);
   }
 
   // ── 멤버 변수 ──
@@ -151,7 +111,6 @@ private:
   std::vector<geometry_msgs::msg::Point> right_pts_;
 
   rclcpp::Publisher<ev_msgs::msg::LaneBoundaryArray>::SharedPtr lane_pub_;
-  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr marker_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
 };
 

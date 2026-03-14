@@ -13,8 +13,8 @@
  *
  * [파이프라인 요약]
  *   준비: find_seed() → build_graph() → owner[] 초기화
- *   1단계: extract_backbone(left)  → LEFT_BACKBONE 라벨
- *   2단계: extract_backbone(right) → RIGHT_BACKBONE 라벨
+ *   1단계: extract_backbone(left, forward-only)  → LEFT_BACKBONE 라벨
+ *   2단계: extract_backbone(right, forward-only) → RIGHT_BACKBONE 라벨
  *   3단계: extract_branches(left)  → LEFT_BRANCH 라벨
  *   4단계: extract_branches(right) → RIGHT_BRANCH 라벨
  *   5단계: resample_component() × 2
@@ -48,25 +48,23 @@ DirectionChainResult DirectionChainer::chain(
   // 준비: Owner 배열 초기화 (all NONE)
   std::vector<NodeOwner> owner(filtered.size(), NodeOwner::NONE);
 
-  // 1단계: Left Backbone 확정
+  // 1단계: Left Backbone 확정 (전방 전용)
   std::vector<int> left_backbone_ids;
   StopReason left_stop_fwd = StopReason::NO_CANDIDATE;
-  StopReason left_stop_bwd = StopReason::NO_CANDIDATE;
   if (left_seed >= 0) {
     left_backbone_ids = extract_backbone(
-      filtered, owner, left_seed, true, left_stop_fwd, left_stop_bwd, cp);
+      filtered, owner, left_seed, true, left_stop_fwd, cp);
     for (int idx : left_backbone_ids) {
       owner[idx] = NodeOwner::LEFT_BACKBONE;
     }
   }
 
-  // 2단계: Right Backbone 확정
+  // 2단계: Right Backbone 확정 (전방 전용)
   std::vector<int> right_backbone_ids;
   StopReason right_stop_fwd = StopReason::NO_CANDIDATE;
-  StopReason right_stop_bwd = StopReason::NO_CANDIDATE;
   if (right_seed >= 0) {
     right_backbone_ids = extract_backbone(
-      filtered, owner, right_seed, false, right_stop_fwd, right_stop_bwd, cp);
+      filtered, owner, right_seed, false, right_stop_fwd, cp);
     for (int idx : right_backbone_ids) {
       owner[idx] = NodeOwner::RIGHT_BACKBONE;
     }
@@ -91,7 +89,6 @@ DirectionChainResult DirectionChainer::chain(
     result.left.seed_idx = left_seed;
     result.left.goal_idx = left_backbone_ids.back();
     result.left.stop_reason_forward = left_stop_fwd;
-    result.left.stop_reason_backward = left_stop_bwd;
     result.left.backbone.reserve(left_backbone_ids.size());
     for (int idx : left_backbone_ids) {
       result.left.backbone.push_back(filtered[idx]);
@@ -105,7 +102,6 @@ DirectionChainResult DirectionChainer::chain(
     result.right.seed_idx = right_seed;
     result.right.goal_idx = right_backbone_ids.back();
     result.right.stop_reason_forward = right_stop_fwd;
-    result.right.stop_reason_backward = right_stop_bwd;
     result.right.backbone.reserve(right_backbone_ids.size());
     for (int idx : right_backbone_ids) {
       result.right.backbone.push_back(filtered[idx]);

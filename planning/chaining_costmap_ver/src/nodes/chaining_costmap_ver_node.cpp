@@ -8,10 +8,11 @@
  *  핵심 구조:
  *    생성자 — 파라미터 로드, QoS 설정, 구독/발행 생성, 타이머 시작
  *    on_timer() — 10Hz로 호출되는 메인 루프 (7단계 파이프라인)
+ *                 perception 메시지의 원본 센서 타임스탬프를 모든 출력에 전파
  *
  *  7단계 파이프라인 (on_timer 콜백):
  *    Stage 0: Stale Gate — perception 데이터 타임아웃 검사
- *    Stage 1: Input Parse — 콘/차선 ROS 메시지 → 단일 ChainPoint 벡터
+ *    Stage 1: Input Parse — bbox/차선 ROS 메시지 → 단일 ChainPoint 벡터
  *             (input_parser.hpp의 parse_input() 사용)
  *    Stage 2: DirectionChainer — Component→Backbone→Branch + 리샘플
  *    Stage 3: Costmap + A* — 가우시안 코스트맵 생성 + A* 경로 탐색
@@ -108,6 +109,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/obstacle_wall", qos_dbg);
   pub_dbg_curvature_ = create_publisher<visualization_msgs::msg::MarkerArray>(
     "/planning/debug/curvature", qos_dbg);
+  pub_dbg_lane_points_ = create_publisher<visualization_msgs::msg::MarkerArray>(
+    "/planning/debug/lane_points", qos_dbg);
 
   // ── 10Hz 타이머 ──
   timer_ = create_wall_timer(
@@ -142,7 +145,15 @@ bool LCPlannerNode::check_stale() const
 // ══════════════════════════════════════════════════════════════
 void LCPlannerNode::on_timer()
 {
-  const auto stamp = now();
+  // 원본 센서 타임스탬프를 전파 — topic delay 측정 가능
+  rclcpp::Time stamp(0, 0, RCL_ROS_TIME);
+  if (last_bboxes_) {
+    stamp = rclcpp::Time(last_bboxes_->header.stamp);
+  }
+  if (last_lanes_) {
+    rclcpp::Time t(last_lanes_->header.stamp);
+    if (t > stamp) stamp = t;
+  }
   const std::string frame_id = "base_link";
 
   // ======== Stage 0: Stale Gate ========
@@ -255,6 +266,43 @@ void LCPlannerNode::on_timer()
   auto status_msg = std::make_unique<std_msgs::msg::String>();
   status_msg->data = safety.reason;
   pub_status_->publish(std::move(status_msg));
+
+  // ── Debug: lane points (수신된 차선점 시각화, 분홍색 SPHERE) ──
+  if (pub_dbg_lane_points_->get_subscription_count() > 0) {
+    visualization_msgs::msg::MarkerArray lane_ma;
+    visualization_msgs::msg::Marker del;
+    del.header.stamp = stamp;
+    del.header.frame_id = frame_id;
+    del.ns = "lane_points";
+    del.id = -1;
+    del.action = visualization_msgs::msg::Marker::DELETEALL;
+    lane_ma.markers.push_back(del);
+
+    int lane_id = 0;
+    for (const auto & pt : all_pts) {
+      if (pt.type != PointType::LANE) continue;
+      visualization_msgs::msg::Marker m;
+      m.header.stamp = stamp;
+      m.header.frame_id = frame_id;
+      m.ns = "lane_points";
+      m.id = lane_id++;
+      m.type = visualization_msgs::msg::Marker::SPHERE;
+      m.action = visualization_msgs::msg::Marker::ADD;
+      m.pose.position.x = pt.x;
+      m.pose.position.y = pt.y;
+      m.pose.position.z = 0.0;
+      m.pose.orientation.w = 1.0;
+      m.scale.x = m.scale.y = m.scale.z = 0.15;
+      m.color.r = 1.0f;
+      m.color.g = 0.41f;
+      m.color.b = 0.71f;
+      m.color.a = 1.0f;
+      m.lifetime = rclcpp::Duration::from_seconds(0.2);
+      lane_ma.markers.push_back(m);
+    }
+    pub_dbg_lane_points_->publish(
+      std::make_unique<visualization_msgs::msg::MarkerArray>(lane_ma));
+  }
 
   // ── Debug: costmap (debug_publisher.hpp) ──
   publish_debug_costmap(pub_dbg_costmap_, costmap, frame_id, stamp);

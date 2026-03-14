@@ -6,13 +6,15 @@
  * 2D 격자 비용 지도를 생성한다.
  *
  * ── 비용 분기 ──
- *   CONE      : cone_cost_max(100) + cone_radius flat zone + 가우시안 감쇠
- *   LANE      : lane_cost_max(50)  + flat zone 없음        + 가우시안 감쇠
- *   unchained : CONE 비용으로 보수적 처리 (체이닝 실패 = 미확인 장애물)
+ *   backbone  : is_backbone=true → 타입 무관하게 bbox_cost_max + bbox_radius 적용
+ *               (lane↔bbox 전환 구간에서도 끊김 없는 강한 비용 장벽 형성)
+ *   BBOX      : bbox_cost_max(100) + bbox_radius flat zone + 가우시안 감쇠
+ *   LANE      : lane_cost_max(50)  + lane_radius flat zone + 가우시안 감쇠
+ *   unchained : bbox 비용으로 보수적 처리 (체이닝 실패 = 미확인 장애물)
  *
  * ── max-merge 정책 ──
  *   여러 source의 비용이 같은 셀에 겹치면, 큰 값을 유지한다.
- *   (덧셈이 아닌 max 연산 → 콘이 밀집해도 비용이 무한히 커지지 않음)
+ *   (덧셈이 아닌 max 연산 → bbox가 밀집해도 비용이 무한히 커지지 않음)
  */
 #include "chaining_costmap_ver/costmap/costmap_generator.hpp"
 
@@ -124,8 +126,7 @@ void CostmapGenerator::apply_source(
       double cost;
       if (d <= inner_radius) {
         // ── flat zone ──
-        // 콘의 물리적 크기(cone_radius) 이내 → 최대 비용 유지
-        // LANE은 inner_radius=0이므로 이 분기에 들어오지 않음
+        // bbox/lane의 flat zone(inner_radius) 이내 → 최대 비용 유지
         cost = cost_max;
       } else {
         // ── 가우시안 감쇠 ──
@@ -138,7 +139,7 @@ void CostmapGenerator::apply_source(
 
       // ── max-merge ──
       // 여러 source가 겹치면 큰 값을 유지한다.
-      // 덧셈이 아닌 max: 밀집된 콘이 비정상적으로 높은 비용을 만들지 않도록.
+      // 덧셈이 아닌 max: 밀집된 bbox가 비정상적으로 높은 비용을 만들지 않도록.
       int idx = r * cols + c;
       if (cost > grid[idx]) {
         grid[idx] = cost;
@@ -160,9 +161,9 @@ void CostmapGenerator::apply_source(
 // [처리 순서]
 //   1) 격자 메타정보(rows, cols, origin 등) 설정
 //   2) 전체 격자를 0.0(자유 공간)으로 초기화
-//   3) 좌측 체인의 각 점에 가우시안 비용 적용 (CONE/LANE 분기)
+//   3) 좌측 체인의 각 점에 가우시안 비용 적용 (BBOX/LANE 분기)
 //   4) 우측 체인의 각 점에 가우시안 비용 적용
-//   5) unchained 포인트에 CONE 비용 적용 (보수적 처리)
+//   5) unchained 포인트에 BBOX 비용 적용 (보수적 처리)
 //
 // ============================================================================
 
@@ -184,24 +185,27 @@ CostmapResult CostmapGenerator::generate(
   // 전체 격자를 0.0(자유 공간)으로 초기화
   result.data.assign(result.rows * result.cols, 0.0);
 
-  // ── 체인 포인트 비용 적용 (CONE/LANE 분기) ──
-  // CONE: cone_cost_max + cone_radius flat zone → 강한 비용 장벽
-  // LANE: lane_cost_max + flat zone 없음(0.0) → 약한 비용 장벽 (넘을 수 있음)
+  // ── 체인 포인트 비용 적용 (backbone / BBOX / LANE 분기) ──
+  // backbone:  is_backbone=true → bbox_cost_max + bbox_radius (타입 무관, 단단한 벽)
+  // BBOX:      bbox_cost_max + bbox_radius flat zone → 강한 비용 장벽
+  // LANE:      lane_cost_max + lane_radius flat zone → 약한 비용 장벽 (넘을 수 있음)
   auto apply_chain = [&](const std::vector<ChainedPoint> & chain) {
     for (const auto & pt : chain) {
       const Point2D src = pt.to_point2d();
-      if (pt.type == PointType::CONE) {
+      if (pt.is_backbone || pt.type == PointType::CONE) {
+        // backbone 포인트는 타입에 관계없이 bbox_cost_max 적용
+        // → lane↔bbox 전환 구간에서도 끊김 없는 비용 장벽 형성
         apply_source(
           result.data, result.rows, result.cols,
           result.resolution, result.origin_x, result.origin_y,
-          src, cm.cone_cost_max, cm.sigma, cm.cost_threshold,
-          cm.cone_radius);   // flat zone = cone_radius (PE 드럼 크기)
+          src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
+          cm.bbox_radius);   // flat zone = bbox_radius
       } else {
         apply_source(
           result.data, result.rows, result.cols,
           result.resolution, result.origin_x, result.origin_y,
           src, cm.lane_cost_max, cm.sigma, cm.cost_threshold,
-          0.0);              // flat zone = 0 (차선은 물리적 크기 없음)
+          cm.lane_radius);   // flat zone = lane_radius
       }
     }
   };
@@ -211,15 +215,15 @@ CostmapResult CostmapGenerator::generate(
 
   // ── unchained 포인트 처리 ──
   // 체이닝 실패 = 좌/우 경계에 배정되지 못한 점
-  // 정체를 알 수 없으므로 CONE 비용(가장 높은 비용)으로 보수적 처리
+  // 정체를 알 수 없으므로 bbox 비용(가장 높은 비용)으로 보수적 처리
   // → A*가 이 점들을 최대한 회피하도록 유도
   for (const auto & pt : unchained) {
     const Point2D src = pt.to_point2d();
     apply_source(
       result.data, result.rows, result.cols,
       result.resolution, result.origin_x, result.origin_y,
-      src, cm.cone_cost_max, cm.sigma, cm.cost_threshold,
-      cm.cone_radius);
+      src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
+      cm.bbox_radius);
   }
 
   result.valid = true;
@@ -227,24 +231,24 @@ CostmapResult CostmapGenerator::generate(
 }
 
 // ============================================================================
-// apply_entry_walls — costmap 하단→시드까지 가상 콘 벽 생성
+// apply_entry_walls — costmap 하단→시드까지 가상 bbox 벽 생성
 // ============================================================================
 //
 // [목적]
 //   A*가 경계 뒤쪽(바깥)으로 돌아가는 경로를 생성하는 것을 방지한다.
-//   costmap 하단(origin_x) 양옆에서 시드까지 가상 콘을 일정 간격으로 배치하여
+//   costmap 하단(origin_x) 양옆에서 시드까지 가상 bbox를 일정 간격으로 배치하여
 //   "입구(시드 사이)"로만 진입하도록 유도한다.
 //
-// [가상 콘 배치]
+// [가상 bbox 배치]
 //   좌측 벽: (origin_x, +entry_wall_ego_y) → left_seed
 //   우측 벽: (origin_x, -entry_wall_ego_y) → right_seed
-//   from→to 직선을 step(=resolution*2) 간격으로 분할하여 가상 콘 배치.
+//   from→to 직선을 step(=resolution*2) 간격으로 분할하여 가상 bbox 배치.
 //   → costmap 하단부터 시드까지 연속적인 비용 장벽 형성.
 //   → 차량이 costmap 중앙에 있어도 뒤쪽이 완전히 막혀 A*가 우회 불가.
 //
 // [왜 resolution*2 간격인가?]
 //   sigma=1.0m일 때 가우시안의 3σ≈3m이므로, resolution*2(≈0.3m) 간격이면
-//   인접 콘의 비용장이 충분히 겹쳐서 틈이 없는 연속 벽이 만들어진다.
+//   인접 bbox의 비용장이 충분히 겹쳐서 틈이 없는 연속 벽이 만들어진다.
 //
 // ============================================================================
 
@@ -255,13 +259,13 @@ void CostmapGenerator::apply_entry_walls(
   const PlanningParams & params)
 {
   const auto & cm = params.costmap;
-  const double step = cm.resolution * 2.0;  // 가상 콘 간격 (resolution의 2배)
+  const double step = cm.resolution * 2.0;  // 가상 bbox 간격 (resolution의 2배)
 
   // costmap 하단 x좌표 (= origin_x, 그리드 좌하단의 x값)
   const double bottom_x = costmap.origin_x;
 
-  // from→to 직선을 따라 가상 콘을 등간격 샘플링하는 람다
-  auto sample_cones = [&](const Point2D & from, const Point2D & to) {
+  // from→to 직선을 따라 가상 bbox를 등간격 샘플링하는 람다
+  auto sample_bboxes = [&](const Point2D & from, const Point2D & to) {
     double dx = to.x - from.x;
     double dy = to.y - from.y;
     double len = std::sqrt(dx * dx + dy * dy);
@@ -274,14 +278,14 @@ void CostmapGenerator::apply_entry_walls(
       apply_source(
         costmap.data, costmap.rows, costmap.cols,
         costmap.resolution, costmap.origin_x, costmap.origin_y,
-        pt, cm.cone_cost_max, cm.sigma, cm.cost_threshold, cm.cone_radius);
+        pt, cm.bbox_cost_max, cm.sigma, cm.cost_threshold, cm.bbox_radius);
     }
   };
 
   // 좌측 벽: costmap 하단 좌측(origin_x, +entry_wall_ego_y) → left_seed
-  sample_cones({bottom_x, +cm.entry_wall_ego_y}, left_seed);
+  sample_bboxes({bottom_x, +cm.entry_wall_ego_y}, left_seed);
   // 우측 벽: costmap 하단 우측(origin_x, -entry_wall_ego_y) → right_seed
-  sample_cones({bottom_x, -cm.entry_wall_ego_y}, right_seed);
+  sample_bboxes({bottom_x, -cm.entry_wall_ego_y}, right_seed);
 }
 
 }  // namespace chaining_costmap_ver

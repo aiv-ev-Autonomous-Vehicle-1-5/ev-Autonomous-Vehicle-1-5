@@ -125,7 +125,7 @@ velodyne_points (PointCloud2)        camera (LaneBoundaryArray)
 ```
 visualization_msgs/msg/Marker
 ├── header
-│   ├── stamp        # 경로 생성 시각
+│   ├── stamp        # 원본 센서(perception) 타임스탬프 (topic delay 측정용)
 │   └── frame_id     # "base_link" (상대좌표)
 ├── type             # Marker::POINTS
 └── points[]         # geometry_msgs/Point 배열
@@ -177,7 +177,8 @@ erp42_msgs/msg/ControlCommand
 │                        │                                         │
 │                        ▼                                         │
 │                   latest_points_ 저장                             │
-│                   last_path_time_ 기록                            │
+│                   last_path_time_ 기록 (stale 검사용)               │
+│                   last_path_stamp_ 기록 (원본 센서 stamp 전파)     │
 │                                                                  │
 │  20Hz 타이머 ──→ [on_timer 제어루프]                               │
 │                        │                                         │
@@ -302,6 +303,7 @@ v = clamp(√(a_lat_limit / κ), v_min, v_max)
 #### `on_path(msg)` — 경로 수신 콜백
 - `latest_points_` ← `msg->points` (덮어쓰기, 최신 경로만 유지)
 - `last_path_time_` ← `now()` (타임아웃 판단용)
+- `last_path_stamp_` ← `msg->header.stamp` (원본 센서 타임스탬프 전파 — topic delay 측정용)
 
 #### `path_fresh()` — 경로 유효성 판단
 - `latest_points_`가 비어있거나, 마지막 수신 후 `path_timeout_sec` 초과 시 `false` 반환.
@@ -313,7 +315,7 @@ v = clamp(√(a_lat_limit / κ), v_min, v_max)
 
 #### `on_timer()` — 메인 제어 루프 (20Hz)
 - `pursuit::*` 함수 호출로 알고리즘 수행
-- `debug_viz_` 메서드 호출로 시각화 발행
+- `debug_viz_` 메서드 호출로 시각화 발행 (원본 센서 타임스탬프 `last_path_stamp_` 전파)
 - 안전 조건 확인 및 정지 명령 처리
 
 ---

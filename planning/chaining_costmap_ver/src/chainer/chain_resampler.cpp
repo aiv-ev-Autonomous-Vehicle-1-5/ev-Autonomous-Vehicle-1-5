@@ -4,6 +4,9 @@
  *
  * [포함 함수]
  *   - resample_component(): backbone + branch의 모든 edge를 resample_ds 간격으로 보간
+ *     - resample_edge 람다에 is_bb 파라미터를 받아 backbone/branch를 구분
+ *     - backbone edge → is_backbone=true로 마킹하여 costmap에서 bbox_cost_max 적용 보장
+ *     - branch edge  → is_backbone=false로 마킹하여 원래 타입 기반 비용 적용
  *
  * [의존 관계]
  *   - types.hpp: ChainPoint, BranchInfo, PointType
@@ -23,7 +26,9 @@ namespace chaining_costmap_ver
 // backbone + branch의 모든 edge를 resample_ds 간격으로 선형 보간하여
 // 균등한 점열을 생성한다. costmap에 연속적인 비용 장벽을 보장.
 //
-// 보간점의 type: 양끝이 모두 CONE이면 CONE, 아니면 LANE
+// 보간점의 type: 양끝 중 하나라도 BBOX(CONE)이면 CONE
+// 전환 edge(lane↔bbox)를 LANE로 강등하면 costmap 장벽이 약해져
+// A*가 바로 그 구간으로 빠져나갈 수 있으므로 stronger type을 유지한다.
 //
 std::vector<ChainPoint> DirectionChainer::resample_component(
   const std::vector<ChainPoint> & points,
@@ -35,16 +40,19 @@ std::vector<ChainPoint> DirectionChainer::resample_component(
   if (backbone_ids.empty()) return resampled;
 
   // edge 보간 헬퍼: 시작점 a는 추가하지만, 끝점 b는 추가하지 않음
-  auto resample_edge = [&](const ChainPoint & a, const ChainPoint & b) {
+  // is_bb: true이면 backbone edge → 보간점에 is_backbone=true 설정
+  auto resample_edge = [&](const ChainPoint & a, const ChainPoint & b, bool is_bb) {
+    ChainPoint a_copy = a;
+    a_copy.is_backbone = is_bb;
+    resampled.push_back(a_copy);
+
     const double dx = b.x - a.x;
     const double dy = b.y - a.y;
     const double len = std::sqrt(dx * dx + dy * dy);
 
-    resampled.push_back(a);
-
     if (len >= resample_ds) {
       const PointType seg_type =
-        (a.type == PointType::CONE && b.type == PointType::CONE)
+        (a.type == PointType::CONE || b.type == PointType::CONE)
           ? PointType::CONE : PointType::LANE;
 
       for (double d = resample_ds; d < len; d += resample_ds) {
@@ -53,17 +61,20 @@ std::vector<ChainPoint> DirectionChainer::resample_component(
         interp.x = a.x + t * dx;
         interp.y = a.y + t * dy;
         interp.type = seg_type;
+        interp.is_backbone = is_bb;
         resampled.push_back(interp);
       }
     }
   };
 
-  // 1) backbone edges 리샘플
+  // 1) backbone edges 리샘플 (is_backbone=true)
   for (size_t i = 0; i + 1 < backbone_ids.size(); ++i) {
-    resample_edge(points[backbone_ids[i]], points[backbone_ids[i + 1]]);
+    resample_edge(points[backbone_ids[i]], points[backbone_ids[i + 1]], true);
   }
   if (!backbone_ids.empty()) {
-    resampled.push_back(points[backbone_ids.back()]);
+    ChainPoint last = points[backbone_ids.back()];
+    last.is_backbone = true;
+    resampled.push_back(last);
   }
 
   // 2) 각 branch의 연결 edge + 내부 edges 리샘플
@@ -75,10 +86,10 @@ std::vector<ChainPoint> DirectionChainer::resample_component(
     }
 
     const auto & parent_pt = points[backbone_ids[branch.parent_backbone_idx]];
-    resample_edge(parent_pt, branch.points[0]);
+    resample_edge(parent_pt, branch.points[0], false);
 
     for (size_t i = 0; i + 1 < branch.points.size(); ++i) {
-      resample_edge(branch.points[i], branch.points[i + 1]);
+      resample_edge(branch.points[i], branch.points[i + 1], false);
     }
     resampled.push_back(branch.points.back());
   }
