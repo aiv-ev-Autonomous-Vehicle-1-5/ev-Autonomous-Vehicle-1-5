@@ -16,7 +16,7 @@
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
 | `/planning/path` | `visualization_msgs/msg/Marker` (POINTS) | Best Effort, depth=1 | 최종 후처리 경로 — 제어기(Pure Pursuit)가 구독 (초록색, 8cm) |
-| `/planning/status` | `std_msgs/msg/String` | Best Effort, depth=1 | 플래너 상태: `OK`, `STALE`, `FAIL - not enough seeds`, `FAIL - no valid path`, `FAIL - too short valid path`, `FAIL - curvature exceeds r_min` |
+| `/planning/status` | `std_msgs/msg/String` | Best Effort, depth=1 | 플래너 상태: `OK`, `STALE`, `FAIL - not enough seeds`, `FAIL - no valid path`, `FAIL - too short valid path`, `WARNING - curvature exceeds r_min` |
 
 ### Debug 토픽 (Lazy Publishing — RViz2 구독 시에만 발행)
 

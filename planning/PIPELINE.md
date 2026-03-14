@@ -180,7 +180,7 @@ nav_msgs/Path
 | `"FAIL - not enough seeds"` | 시드(backbone) 생성 실패 | Stage 2에서 양쪽 backbone 모두 실패 |
 | `"FAIL - no valid path"` | A* 경로 탐색 실패 | 장애물로 목표 도달 불가, 경로 점 부족 |
 | `"FAIL - too short valid path"` | 경로가 너무 짧음 | 경로 총 길이 < safety.min_path_length |
-| `"FAIL - curvature exceeds r_min"` | 곡률 한계 초과 | 후처리 후에도 κ > 1/r_min |
+| `"WARNING - curvature exceeds r_min"` | 곡률 한계 초과 (경고) | 후처리 후에도 κ > 1/r_min (경로는 발행) |
 
 ---
 
@@ -433,7 +433,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | 6 | Yaw Calc | atan2(dy, dx) | 각 waypoint의 heading 각도 |
 
 **Curvature Clamp 상세:**
-- **5% 마진**: kappa > kappa_max × 0.95 이면 보정 시작 (safety_checker 경계 FAIL 방지)
+- **5% 마진**: kappa > kappa_max × 0.95 이면 보정 시작 (safety_checker 경계 WARNING 방지)
 - **보정 방식**: P_i를 P_{i-1}과 P_{i+1}의 중점 방향으로 이동
 - **이동 비율**: `ratio = 1.0 - 0.95*(kappa_max / kappa)`, 최대 70%
 - **수렴 반복**: violations == 0이 되면 조기 종료
@@ -442,7 +442,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 - **Menger 곡률**: κ = 2|cross(BA, CB)| / (|AB|·|BC|·|AC|)
 - **최소 회전 반경**: r_min = wheelbase / tan(δ_max) ≈ 2.17m
 - **곡률 한계**: κ_limit = 1/r_min ≈ 0.461 rad/m
-- **결과**: OK / FAIL - no valid path / FAIL - too short valid path / FAIL - curvature exceeds r_min
+- **결과**: OK / FAIL - no valid path / FAIL - too short valid path / WARNING - curvature exceeds r_min
 - **속도 계산 없음**: SafetyChecker는 곡률만 검사, 속도 제한은 제어기 측에서 처리
 
 ### Stage 7: Publish
@@ -541,7 +541,8 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 |------|------------|------|-------|------|
 | WARN | `[Stage0] STALE — perception timeout` | 2초 | Stage 0 | perception 데이터가 `perception_ms` (300ms) 동안 갱신되지 않음 |
 | INFO | `[Planner] OK — path:N pts, kappa=X.XXX (r=X.XXm), limit=X.XXX (r_min=X.XXm, delta_max=XX.X°)` | 1초 | Stage 6 | 정상 경로 생성 완료. kappa=최대곡률, r=실제반경, limit=한계곡률 |
-| WARN | `[Planner] FAIL - <reason>` | 1초 | Stage 6 | 실패 원인 포함 (reason: `"no valid path"`, `"too short valid path"`, `"curvature exceeds r_min"` 등) |
+| WARN | `[Planner] FAIL - <reason>` | 1초 | Stage 6 | 실패 원인 포함 (reason: `"no valid path"`, `"too short valid path"` 등) |
+| WARN | `[Planner] WARNING - curvature exceeds r_min — ...` | 1초 | Stage 6 | 곡률 초과 경고 (경로는 발행, kappa/r 정보 포함) |
 
 ### 조건부 디버그 (`publish_debug: true` 일 때 출력)
 
@@ -568,7 +569,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | 시드 부족 | `[Stage2.5] FAIL — not enough seeds` | 양쪽 backbone 모두 실패 | 인지 데이터 확인, 시드 탐색 범위(`side_seed_y`) 조정 |
 | 경로 없음 | `[Planner] FAIL - no valid path` | A* 탐색 실패 (목표점 도달 불가) | costmap 시각화로 장애물 배치 확인, `max_iterations` 증가 검토 |
 | 경로 너무 짧음 | `[Planner] FAIL - too short valid path` | 경로 총 길이 < min_path_length | `safety.min_path_length` 값 확인, 인지 범위 점검 |
-| 경로 불안정 | `[Planner] FAIL - curvature exceeds r_min` | 생성된 경로의 곡률이 차량 한계 초과 | `curvature_clamp_max_iter` 증가, `cone_radius`/`sigma` 조정 |
+| 경로 불안정 | `[Planner] WARNING - curvature exceeds r_min` | 생성된 경로의 곡률이 차량 한계 초과 (경로는 발행) | `curvature_clamp_max_iter` 증가, `cone_radius`/`sigma` 조정 |
 | 체이닝 편향 | chain 로그에서 `L_comp=0` | 한쪽 경계점이 없음 | seed 파라미터(`side_seed_y`) 또는 perception 확인 |
 | 곡률 초과 빈번 | curvature 마커 다수 표시 | 급커브 구간, costmap 과밀 | `curvature_clamp_max_iter` 증가, postprocess 파라미터 조정 |
 

@@ -9,13 +9,13 @@
  *   1) 경로 유효성 검사: valid 플래그, 점 개수, 총 길이
  *   2) Menger 곡률 공식으로 경로 상 최대 곡률(κ_max)을 계산한다.
  *   3) κ_max가 차량의 최소 회전 반경(r_min)으로 결정되는 한계 곡률을
- *      초과하면 → FAIL (물리적으로 추종 불가능한 경로).
+ *      초과하면 → WARNING (물리적으로 추종이 어려울 수 있는 경로).
  *
  * [반환값]
  *   SafetyResult { state, max_curvature, reason }
- *     - state: OK / FAIL (PlannerState enum)
+ *     - state: OK / FAIL / WARNING (PlannerState enum)
  *     - max_curvature: 경로 상 최대 곡률 [1/m]
- *     - reason: 상태 문자열 ("OK", "FAIL - <원인>")
+ *     - reason: 상태 문자열 ("OK", "FAIL - <원인>", "WARNING - <원인>")
  * ──────────────────────────────────────────────────────────────
  */
 #ifndef CHAINING_COSTMAP_VER__SAFETY__SAFETY_CHECKER_HPP_
@@ -39,15 +39,15 @@ namespace safety_checker
  * @struct SafetyResult
  * @brief 안전 검사 결과를 담는 구조체
  *
- * - state:          플래너 상태 (OK=정상, FAIL=실패)
+ * - state:          플래너 상태 (OK=정상, FAIL=실패, WARNING=경고)
  * - max_curvature:  경로 전체에서 측정된 최대 곡률 [1/m]
- * - reason:         상태 문자열 ("OK", "FAIL - <원인>")
+ * - reason:         상태 문자열 ("OK", "FAIL - <원인>", "WARNING - <원인>")
  */
 struct SafetyResult
 {
   PlannerState state = PlannerState::FAIL;   ///< 기본값은 FAIL (안전 최우선)
   double max_curvature = 0.0;                ///< 경로 상 최대 곡률 [1/m]
-  std::string reason;                        ///< 상태 문자열 ("OK" 또는 "FAIL - ...")
+  std::string reason;                        ///< 상태 문자열 ("OK", "FAIL - ...", "WARNING - ...")
 };
 
 /**
@@ -163,8 +163,8 @@ inline double compute_path_length(const std::vector<Point2D> & path)
  *   4) 최소 회전 반경 제한:
  *      - r_min = 차량 파라미터에서 가져온 최소 회전 반경 [m]
  *      - κ_limit = 1 / r_min  (한계 곡률)
- *      - κ_max > κ_limit 이면 → FAIL - curvature exceeds r_min
- *        (스티어링을 최대로 꺾어도 이 곡률을 따라갈 수 없다)
+ *      - κ_max > κ_limit 이면 → WARNING - curvature exceeds r_min
+ *        (스티어링을 최대로 꺾어도 이 곡률을 따라가기 어려움, 경로는 발행)
  *
  *   5) 모든 검사 통과 → OK
  *
@@ -203,10 +203,10 @@ inline SafetyResult check(
   const double r_min = p.vehicle.r_min();
   const double kappa_limit = (r_min > 1e-6) ? (1.0 / r_min) : 1e6;
 
-  // 경로의 최대 곡률이 한계를 초과하면 → 물리적으로 추종 불가능
+  // 경로의 최대 곡률이 한계를 초과하면 → 경고 (추종은 시도하되 주의 필요)
   if (result.max_curvature > kappa_limit) {
-    result.state = PlannerState::FAIL;
-    result.reason = "FAIL - curvature exceeds r_min";
+    result.state = PlannerState::WARNING;
+    result.reason = "WARNING - curvature exceeds r_min";
     return result;
   }
 

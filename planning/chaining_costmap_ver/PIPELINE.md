@@ -98,7 +98,7 @@ on_timer() — 10Hz (100ms)
 │     prune → resample → smooth → curvature_clamp → yaw
 │
 ├── Stage 6: Safety Check  [safety/safety_checker.hpp]
-│     경로 길이 + Menger 곡률 검사 → OK / FAIL
+│     경로 길이 + Menger 곡률 검사 → OK / FAIL / WARNING
 │
 └── Stage 7: Publish  [nodes/debug_publisher.hpp]
       Core: path (Marker), status (String)

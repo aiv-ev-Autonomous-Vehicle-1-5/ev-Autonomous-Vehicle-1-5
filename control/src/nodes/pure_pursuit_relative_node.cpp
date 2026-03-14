@@ -60,7 +60,7 @@ PurePursuitRelativeNode::PurePursuitRelativeNode(
   );
 
   // [Subscriber] /planning/status (std_msgs/String)
-  //   - "OK": 정상, "FAIL - ...": 실패 (정지 조건으로 사용)
+  //   - "OK": 정상, "FAIL - ...": 실패 (정지 조건), "WARNING - ...": 경고 (경로 추종 계속)
   status_sub_ = this->create_subscription<std_msgs::msg::String>(
     "/planning/status",
     rclcpp::QoS(10).best_effort(),

@@ -4,7 +4,7 @@
  *
  * PathPostprocessor → SafetyChecker → 제어기 사이의 인터페이스 타입.
  *   - PostprocessResult: 후처리된 경로 + yaw 배열
- *   - PlannerState:      플래너 상태 열거형 (OK/FAIL/STALE)
+ *   - PlannerState:      플래너 상태 열거형 (OK/FAIL/STALE/WARNING)
  */
 #ifndef CHAINING_COSTMAP_VER__COMMON__TYPES__PLANNER_TYPES_HPP_
 #define CHAINING_COSTMAP_VER__COMMON__TYPES__PLANNER_TYPES_HPP_
@@ -43,12 +43,14 @@ struct PostprocessResult
  *   "OK"                    — 정상
  *   "STALE"                 — 센서 데이터 만료
  *   "FAIL - <reason>"       — 실패 + 원인
+ *   "WARNING - <reason>"    — 경고 (경로는 발행하되 주의 필요)
  */
 enum class PlannerState : uint8_t
 {
   OK = 0,          ///< 정상 — 경로 추종 가능
   FAIL = 1,        ///< 실패 — 경로 생성/추종 불가
-  STALE = 2        ///< 데이터 만료 — 센서 입력 timeout
+  STALE = 2,       ///< 데이터 만료 — 센서 입력 timeout
+  WARNING = 3      ///< 경고 — 경로 추종 가능하나 주의 필요 (예: 곡률 초과)
 };
 
 }  // namespace chaining_costmap_ver

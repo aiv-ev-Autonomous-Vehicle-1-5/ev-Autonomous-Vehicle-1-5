@@ -59,7 +59,7 @@ std::vector<Point2D> PathPostprocessor::curvature_clamp(
       if (la < 1e-12 || lb < 1e-12 || lc < 1e-12) continue;
 
       double kappa = 2.0 * area2 / (la * lb * lc);
-      // 5% 마진을 두어 safety_checker 경계에서 FAIL 방지
+      // 5% 마진을 두어 safety_checker 경계에서 WARNING 방지
       if (kappa <= kappa_max * 0.95) continue;
 
       ++violations;

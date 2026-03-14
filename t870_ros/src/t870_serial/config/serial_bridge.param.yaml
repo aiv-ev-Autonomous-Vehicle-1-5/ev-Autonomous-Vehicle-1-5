@@ -4,7 +4,7 @@ serial_bridge:
   ros__parameters:
 
     # Serial port settings
-    port_path: "/dev/ttyUSB0"
+    port_path: "/dev/ttyUSB1"
     baud_rate: 115200
 
     # Henes T870 parameters

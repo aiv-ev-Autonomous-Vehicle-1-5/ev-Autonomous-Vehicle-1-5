@@ -250,6 +250,11 @@ void LCPlannerNode::on_timer()
       "[Planner] OK — path:%zu pts, kappa=%.3f (r=%.2fm), limit=%.3f (r_min=%.2fm, delta_max=%.1f°)",
       pp_result.path.size(), safety.max_curvature, r_actual,
       kappa_limit, r_min, params_.vehicle.delta_max * 180.0 / M_PI);
+  } else if (safety.state == PlannerState::WARNING) {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 1000,
+      "[Planner] %s — path:%zu pts, kappa=%.3f (r=%.2fm), limit=%.3f (r_min=%.2fm)",
+      safety.reason.c_str(), pp_result.path.size(), safety.max_curvature, r_actual,
+      kappa_limit, r_min);
   } else {
     RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 1000,
       "[Planner] %s", safety.reason.c_str());
