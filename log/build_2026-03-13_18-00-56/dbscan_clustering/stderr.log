@@ -1,0 +1,9 @@
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/dbscan_clustering/src/dbscan_cpu.cpp:[m[K In function ‘[01m[Kvoid dbscan_cpu_query_neighbors(const float*, int, float, int, int*, int*)[m[K’:
+[01m[K/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/dbscan_clustering/src/dbscan_cpu.cpp:49:36:[m[K [01;31m[Kerror: [m[K‘[01m[KKDTreeSingleIndexParams[m[K’ is not a member of ‘[01m[Knanoflann[m[K’; did you mean ‘[01m[KKDTreeSingleIndexAdaptor[m[K’?
+   49 |   KDTree tree(3, cloud, nanoflann::[01;31m[KKDTreeSingleIndexParams[m[K{32});
+      |                                    [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+      |                                    [32m[KKDTreeSingleIndexAdaptor[m[K
+gmake[2]: *** [CMakeFiles/dbscan_cpu.dir/build.make:76: CMakeFiles/dbscan_cpu.dir/src/dbscan_cpu.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:167: CMakeFiles/dbscan_cpu.dir/all] Error 2
+gmake[1]: *** Waiting for unfinished jobs....
+gmake: *** [Makefile:146: all] Error 2

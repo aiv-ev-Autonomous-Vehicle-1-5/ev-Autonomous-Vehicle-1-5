@@ -1,0 +1,31 @@
+[35m[1mConsolidate compiler generated dependencies of target dbscan_cpu[0m
+[ 33%] Built target dbscan_node
+[ 50%] [32mBuilding CXX object CMakeFiles/dbscan_cpu.dir/src/dbscan_cpu.cpp.o[0m
+[ 66%] [32m[1mLinking CXX shared library libdbscan_cpu.so[0m
+[ 66%] Built target dbscan_cpu
+[ 83%] [32mBuilding CXX object CMakeFiles/dbscan_component.dir/src/dbscan_node.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library libdbscan_component.so[0m
+[100%] Built target dbscan_component
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/lib/libdbscan_component.so
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/lib/libdbscan_cpu.so
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/lib/dbscan_clustering/dbscan_node
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering//launch/dbscan_clustering.launch.py
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering//config/dbscan_params.yaml
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/ament_index/resource_index/package_run_dependencies/dbscan_clustering
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/ament_index/resource_index/parent_prefix_path/dbscan_clustering
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/environment/path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/environment/path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/local_setup.bash
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/local_setup.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/local_setup.zsh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/local_setup.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/ament_index/resource_index/packages/dbscan_clustering
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/ament_index/resource_index/rclcpp_components/dbscan_clustering
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig-version.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.xml

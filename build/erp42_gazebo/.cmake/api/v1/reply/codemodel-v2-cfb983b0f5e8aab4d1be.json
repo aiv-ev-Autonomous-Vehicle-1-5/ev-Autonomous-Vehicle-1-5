@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-61675409de936574a88c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "erp42_gazebo",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "erp42_gazebo::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-erp42_gazebo-8a4ccefe26b7d012be54.json",
+					"name" : "erp42_gazebo",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "erp42_gazebo_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-erp42_gazebo_uninstall-ab8361bedce9f6128635.json",
+					"name" : "erp42_gazebo_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gazebo_bridge::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gazebo_bridge-5a439def4f75c8610cc6.json",
+					"name" : "gazebo_bridge",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gazebo_bridge_composable::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gazebo_bridge_composable-a36c3163f051c23fedd5.json",
+					"name" : "gazebo_bridge_composable",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-6718f9895a169d578e18.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_gazebo",
+		"source" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_gazebo"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

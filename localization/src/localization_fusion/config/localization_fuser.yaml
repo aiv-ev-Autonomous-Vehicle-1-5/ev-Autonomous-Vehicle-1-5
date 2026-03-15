@@ -1,0 +1,11 @@
+localization_fuser:
+  ros__parameters:
+    gps_pose_topic: "/gps_pose"
+    odom_topic: "/erp42/odometry_wheel"
+    out_pose_topic: "/local_pose"
+
+    map_frame: "map"
+    base_frame: "base_link"
+
+    gps_timeout_s: 0.7
+    use_gps_orientation: true

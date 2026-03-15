@@ -1,0 +1,37 @@
+[0.027s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp -- -j10 -l10
+[0.082s] [ 33%] Built target patchworkpp_node
+[0.082s] [ 66%] Built target ground_seg_cores
+[0.095s] [100%] Built target gseg_component
+[0.103s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp -- -j10 -l10
+[0.106s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp
+[0.112s] -- Install configuration: "Release"
+[0.112s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/include
+[0.112s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/include/patchwork
+[0.112s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/include/patchwork/patchworkpp.h
+[0.112s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/libground_seg_cores.a
+[0.112s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig.cmake
+[0.112s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/cmake/patchworkpp/patchworkppConfig-release.cmake
+[0.112s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets.cmake
+[0.112s] -- Up-to-date: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/cmake/patchworkpp/patchworkppTargets-release.cmake
+[0.112s] -- Execute custom install script
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/patchworkpp/patchworkpp_node
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/lib/libgseg_component.so
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp//launch/patchworkpp.launch.py
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp//rviz/patchworkpp.rviz
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/ament_index/resource_index/package_run_dependencies/patchworkpp
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/ament_index/resource_index/parent_prefix_path/patchworkpp
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.sh
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/environment/ament_prefix_path.dsv
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/environment/path.sh
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/environment/path.dsv
+[0.112s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/local_setup.bash
+[0.122s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/local_setup.sh
+[0.122s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/local_setup.zsh
+[0.122s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/local_setup.dsv
+[0.122s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/package.dsv
+[0.124s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/ament_index/resource_index/packages/patchworkpp
+[0.124s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/ament_index/resource_index/rclcpp_components/patchworkpp
+[0.124s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig.cmake
+[0.124s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/cmake/patchworkppConfig-version.cmake
+[0.124s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/package.xml
+[0.155s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/patchworkpp

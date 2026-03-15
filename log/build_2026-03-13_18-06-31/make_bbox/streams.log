@@ -1,0 +1,31 @@
+[0.015s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox -- -j10 -l10
+[3.325s] [ 25%] [32mBuilding CXX object CMakeFiles/make_bbox_node.dir/rclcpp_components/node_main_make_bbox_node.cpp.o[0m
+[3.325s] [ 50%] [32mBuilding CXX object CMakeFiles/make_bbox_component.dir/src/make_bbox_node.cpp.o[0m
+[6.494s] [ 75%] [32m[1mLinking CXX executable make_bbox_node[0m
+[7.382s] [ 75%] Built target make_bbox_node
+[36.639s] [100%] [32m[1mLinking CXX shared library libmake_bbox_component.so[0m
+[36.926s] [100%] Built target make_bbox_component
+[37.054s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox -- -j10 -l10
+[37.061s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox
+[37.072s] -- Install configuration: ""
+[37.072s] -- Execute custom install script
+[37.072s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/lib/make_bbox/make_bbox_node
+[37.074s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/lib/libmake_bbox_component.so
+[37.081s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/include/make_bbox/make_bbox_node.hpp
+[37.087s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/ament_index/resource_index/package_run_dependencies/make_bbox
+[37.094s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/ament_index/resource_index/parent_prefix_path/make_bbox
+[37.104s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/environment/ament_prefix_path.sh
+[37.105s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/environment/ament_prefix_path.dsv
+[37.108s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/environment/path.sh
+[37.119s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/environment/path.dsv
+[37.123s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/local_setup.bash
+[37.136s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/local_setup.sh
+[37.150s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/local_setup.zsh
+[37.158s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/local_setup.dsv
+[37.167s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/package.dsv
+[37.172s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/ament_index/resource_index/packages/make_bbox
+[37.177s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/ament_index/resource_index/rclcpp_components/make_bbox
+[37.181s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/cmake/make_bboxConfig.cmake
+[37.187s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/cmake/make_bboxConfig-version.cmake
+[37.191s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/package.xml
+[37.201s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/make_bbox

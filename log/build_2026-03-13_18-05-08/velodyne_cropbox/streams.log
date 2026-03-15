@@ -1,0 +1,47 @@
+[0.098s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_cropbox -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox
+[0.128s] -- The C compiler identification is GNU 11.4.0
+[0.148s] -- The CXX compiler identification is GNU 11.4.0
+[0.151s] -- Detecting C compiler ABI info
+[0.207s] -- Detecting C compiler ABI info - done
+[0.211s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.211s] -- Detecting C compile features
+[0.217s] -- Detecting C compile features - done
+[0.217s] -- Detecting CXX compiler ABI info
+[0.308s] -- Detecting CXX compiler ABI info - done
+[0.312s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.312s] -- Detecting CXX compile features
+[0.312s] -- Detecting CXX compile features - done
+[0.314s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.422s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.451s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.462s] -- Found rclcpp: 16.0.17 (/opt/ros/humble/share/rclcpp/cmake)
+[0.484s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.486s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.490s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.497s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.505s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.524s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.529s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[0.575s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[0.590s] -- Found FastRTPS: /opt/ros/humble/include  
+[0.615s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.619s] -- Looking for pthread.h
+[0.671s] -- Looking for pthread.h - found
+[0.671s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.708s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.709s] -- Found Threads: TRUE  
+[0.734s] -- Found rclcpp_components: 16.0.17 (/opt/ros/humble/share/rclcpp_components/cmake)
+[0.747s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[0.763s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.824s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.824s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/velodyne_cropbox/include>
+[0.824s] -- Configured cppcheck exclude dirs and/or files: 
+[0.824s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.824s] -- Added test 'lint_cmake' to check CMake code style
+[0.824s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[0.825s] -- Added test 'uncrustify' to check C / C++ code style
+[0.825s] -- Configured uncrustify additional arguments: 
+[0.825s] -- Added test 'xmllint' to check XML markup files
+[0.826s] -- Configuring done
+[0.832s] -- Generating done
+[0.834s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox

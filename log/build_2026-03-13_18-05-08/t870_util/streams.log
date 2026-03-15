@@ -1,0 +1,30 @@
+[0.017s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util -- -j10 -l10
+[0.064s] [ 50%] [32mBuilding CXX object CMakeFiles/t870_util.dir/src/log.cpp.o[0m
+[0.211s] [100%] [32m[1mLinking CXX shared library libt870_util.so[0m
+[0.250s] [100%] Built target t870_util
+[0.267s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util -- -j10 -l10
+[0.267s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_util
+[0.938s] -- Install configuration: ""
+[0.938s] -- Execute custom install script
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/include/t870_util/t870_util/exception.hpp
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/include/t870_util/t870_util/log.hpp
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/library_path.sh
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/library_path.dsv
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib/libt870_util.so
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/ament_index/resource_index/package_run_dependencies/t870_util
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/ament_index/resource_index/parent_prefix_path/t870_util
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/ament_prefix_path.sh
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/ament_prefix_path.dsv
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/path.sh
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/environment/path.dsv
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/local_setup.bash
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/local_setup.sh
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/local_setup.zsh
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/local_setup.dsv
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/package.dsv
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/ament_index/resource_index/packages/t870_util
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/cmake/ament_cmake_export_libraries-extras.cmake
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/cmake/t870_utilConfig.cmake
+[0.938s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/cmake/t870_utilConfig-version.cmake
+[0.939s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/share/t870_util/package.xml

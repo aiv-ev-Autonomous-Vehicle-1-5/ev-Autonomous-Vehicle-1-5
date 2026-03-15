@@ -1,0 +1,10 @@
+# generated from colcon_core/shell/template/command_prefix.sh.em
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/cluster_splitter/share/cluster_splitter/package.sh"
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.sh"
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/ev_msgs/share/ev_msgs/package.sh"
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/lidar_voxel_grid/share/lidar_voxel_grid/package.sh"
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/patchworkpp/share/patchworkpp/package.sh"
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/share/velodyne_msgs/package.sh"
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/package.sh"
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_driver/share/velodyne_driver/package.sh"
+. "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_pointcloud/share/velodyne_pointcloud/package.sh"

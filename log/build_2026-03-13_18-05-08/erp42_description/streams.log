@@ -1,0 +1,33 @@
+[0.022s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description -- -j10 -l10
+[0.076s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description -- -j10 -l10
+[0.076s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description
+[0.092s] -- Install configuration: ""
+[0.092s] -- Execute custom install script
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/include/erp42_description/erp42_description/vehicle_parameters.hpp
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/ament_index/resource_index/package_run_dependencies/erp42_description
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/ament_index/resource_index/parent_prefix_path/erp42_description
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/environment/ament_prefix_path.sh
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/environment/ament_prefix_path.dsv
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/environment/path.sh
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/environment/path.dsv
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/local_setup.bash
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/local_setup.sh
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/local_setup.zsh
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/local_setup.dsv
+[0.092s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/package.dsv
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/ament_index/resource_index/packages/erp42_description
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/cmake/ament_cmake_export_include_directories-extras.cmake
+[0.092s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/cmake/erp42_descriptionConfig.cmake
+[0.093s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/cmake/erp42_descriptionConfig-version.cmake
+[0.093s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/package.xml
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/launch/vehicle_description.launch.py
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/meshes/erp42_bumper.dae
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/meshes/erp42_chassis.dae
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/meshes/erp42_rim.dae
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/meshes/erp42_tire.dae
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/rviz/vehicle_description.rviz
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/urdf/erp42.urdf
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/urdf/erp42.xacro
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/urdf/erp42_model.xacro
+[0.094s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_description/share/erp42_description/urdf/erp42_wheel.xacro
+[0.125s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake:/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_description

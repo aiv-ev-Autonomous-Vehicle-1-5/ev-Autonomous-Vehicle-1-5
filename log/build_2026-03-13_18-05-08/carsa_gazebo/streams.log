@@ -1,0 +1,47 @@
+[0.084s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo -- -j10 -l10
+[0.172s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo -- -j10 -l10
+[0.173s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo
+[0.186s] -- Install configuration: ""
+[0.186s] -- Execute custom install script
+[0.187s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//launch/empty.launch.py
+[0.190s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//launch/kcity.launch.py
+[0.190s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//meshes/gps_antenna.dae
+[0.195s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_c920.dae
+[0.201s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_c930.dae
+[0.201s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//meshes/logitech_camera_lens.dae
+[0.211s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//models/construction_cone/materials/textures/Construction_Cone_Diffuse.png
+[0.215s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//models/construction_cone/meshes/construction_cone.dae
+[0.218s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//models/construction_cone/model-1_3.sdf
+[0.222s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//models/construction_cone/model-1_4.sdf
+[0.225s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//models/construction_cone/model.config
+[0.243s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//models/construction_cone/model.sdf
+[0.244s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//rviz/erp42.rviz
+[0.253s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//rviz/planning.rviz
+[0.256s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//rviz/t870.rviz
+[0.262s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//urdf/erp42.xacro
+[0.266s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//urdf/logitech_c920.xacro
+[0.293s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//urdf/logitech_c930.xacro
+[0.297s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//urdf/t870.xacro
+[0.300s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//urdf/ublox_zed_f9p.xacro
+[0.304s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//urdf/velodyne_vlp_16c.xacro
+[0.307s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//urdf/velodyne_vlp_32c.xacro
+[0.312s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//urdf/xsens_mti3.xacro
+[0.322s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//worlds/circular_cone_track.world
+[0.326s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//worlds/control_test.world
+[0.329s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//worlds/empty.world
+[0.336s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo//worlds/planning_test.world
+[0.343s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/ament_index/resource_index/package_run_dependencies/carsa_gazebo
+[0.347s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/ament_index/resource_index/parent_prefix_path/carsa_gazebo
+[0.356s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/environment/ament_prefix_path.sh
+[0.363s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/environment/ament_prefix_path.dsv
+[0.367s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/environment/path.sh
+[0.370s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/environment/path.dsv
+[0.374s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/local_setup.bash
+[0.379s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/local_setup.sh
+[0.382s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/local_setup.zsh
+[0.400s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/local_setup.dsv
+[0.412s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/package.dsv
+[0.415s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/ament_index/resource_index/packages/carsa_gazebo
+[0.423s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/cmake/carsa_gazeboConfig.cmake
+[0.423s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/cmake/carsa_gazeboConfig-version.cmake
+[0.426s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo/share/carsa_gazebo/package.xml

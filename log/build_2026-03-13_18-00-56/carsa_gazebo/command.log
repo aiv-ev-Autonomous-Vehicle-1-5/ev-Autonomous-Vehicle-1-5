@@ -1,0 +1,1 @@
+Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/carsa_gazebo': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/carsa_gazebo -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/carsa_gazebo

@@ -1,0 +1,30 @@
+[ 50%] [32mBuilding CXX object CMakeFiles/cropbox_component.dir/src/cropbox_component.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library libcropbox_component.so[0m
+[100%] Built target cropbox_component
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/lib/libcropbox_component.so
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/include/velodyne_cropbox/cropbox_component.hpp
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/config/default_cropbox_params.yaml
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/launch/cropbox.launch.py
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/ament_index/resource_index/package_run_dependencies/velodyne_cropbox
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/ament_index/resource_index/parent_prefix_path/velodyne_cropbox
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.bash
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.zsh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/package.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/ament_index/resource_index/packages/velodyne_cropbox
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/ament_index/resource_index/rclcpp_components/velodyne_cropbox
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_libraries-extras.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig-version.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/package.xml

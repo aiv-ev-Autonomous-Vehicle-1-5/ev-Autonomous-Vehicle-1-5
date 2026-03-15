@@ -1,0 +1,31 @@
+[0.026s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_cmake -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake
+[0.050s] -- Found ament_cmake_auto: 1.3.12 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+[0.149s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.195s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.305s] -- Configuring done
+[0.306s] -- Generating done
+[0.307s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake
+[0.311s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/erp42_ros/src/erp42_cmake -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake
+[0.311s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake -- -j10 -l10
+[0.877s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake -- -j10 -l10
+[0.881s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake
+[0.927s] -- Install configuration: ""
+[0.927s] -- Execute custom install script
+[0.927s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/cmake/erp42_cmake_config_extras.cmake
+[0.927s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/ament_index/resource_index/package_run_dependencies/erp42_cmake
+[0.927s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/ament_index/resource_index/parent_prefix_path/erp42_cmake
+[0.927s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/environment/ament_prefix_path.sh
+[0.927s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/environment/ament_prefix_path.dsv
+[0.927s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/environment/path.sh
+[0.927s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/environment/path.dsv
+[0.943s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/local_setup.bash
+[0.947s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/local_setup.sh
+[0.951s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/local_setup.zsh
+[0.954s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/local_setup.dsv
+[0.958s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/package.dsv
+[0.967s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/ament_index/resource_index/packages/erp42_cmake
+[0.967s] -- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/cmake/erp42_cmake_config_extras.cmake
+[0.967s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/cmake/erp42_cmakeConfig.cmake
+[0.971s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/cmake/erp42_cmakeConfig-version.cmake
+[0.976s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_cmake/share/erp42_cmake/package.xml
+[0.981s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/erp42_cmake

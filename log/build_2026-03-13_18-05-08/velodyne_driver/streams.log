@@ -1,0 +1,17 @@
+[0.051s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_driver -- -j10 -l10
+[0.230s] [  8%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[0.230s] [ 16%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[0.230s] [ 25%] [32mBuilding CXX object CMakeFiles/velodyne_input.dir/src/lib/input.cpp.o[0m
+[0.399s] [ 33%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[0.415s] [ 33%] Built target gtest_main
+[1.323s] [ 41%] [32m[1mLinking CXX static library libgtest.a[0m
+[1.347s] [ 41%] Built target gtest
+[1.373s] [ 50%] [32m[1mLinking CXX shared library libvelodyne_input.so[0m
+[1.411s] [ 50%] Built target velodyne_input
+[1.421s] [ 66%] [32mBuilding CXX object CMakeFiles/time_test.dir/tests/timeconversiontest.cpp.o[0m
+[1.421s] [ 66%] [32mBuilding CXX object CMakeFiles/velodyne_driver.dir/src/driver/driver.cpp.o[0m
+[2.824s] [ 75%] [32m[1mLinking CXX executable time_test[0m
+[2.911s] [ 75%] Built target time_test
+[4.428s] gmake[2]: *** [CMakeFiles/velodyne_driver.dir/build.make:76: CMakeFiles/velodyne_driver.dir/src/driver/driver.cpp.o] Interrupt
+[4.428s] gmake[1]: *** [CMakeFiles/Makefile2:187: CMakeFiles/velodyne_driver.dir/all] Interrupt
+[4.428s] gmake: *** [Makefile:146: all] Interrupt

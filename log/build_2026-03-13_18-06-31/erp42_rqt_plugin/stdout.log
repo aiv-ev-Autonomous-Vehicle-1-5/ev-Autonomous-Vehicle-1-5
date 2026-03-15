@@ -1,0 +1,40 @@
+[ 11%] [34m[1mGenerating ui_feedback_monitor.h[0m
+[ 22%] [34m[1mGenerating include/erp42_rqt_plugin/moc_control_panel_plugin.cpp[0m
+[ 33%] [34m[1mGenerating include/erp42_rqt_plugin/moc_feedback_monitor_plugin.cpp[0m
+[ 44%] [34m[1mGenerating ui_control_panel.h[0m
+[ 55%] [32mBuilding CXX object CMakeFiles/erp42_rqt_plugin.dir/src/control_panel_plugin.cpp.o[0m
+[ 66%] [32mBuilding CXX object CMakeFiles/erp42_rqt_plugin.dir/include/erp42_rqt_plugin/moc_feedback_monitor_plugin.cpp.o[0m
+[ 77%] [32mBuilding CXX object CMakeFiles/erp42_rqt_plugin.dir/include/erp42_rqt_plugin/moc_control_panel_plugin.cpp.o[0m
+[ 88%] [32mBuilding CXX object CMakeFiles/erp42_rqt_plugin.dir/src/feedback_monitor_plugin.cpp.o[0m
+[100%] [32m[1mLinking CXX shared library liberp42_rqt_plugin.so[0m
+[100%] Built target erp42_rqt_plugin
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin//plugin.xml
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/include/erp42_rqt_plugin/erp42_rqt_plugin/control_panel_plugin.hpp
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/include/erp42_rqt_plugin/erp42_rqt_plugin/feedback_monitor_plugin.hpp
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/library_path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/library_path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/lib/liberp42_rqt_plugin.so
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/ament_index/resource_index/package_run_dependencies/erp42_rqt_plugin
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/ament_index/resource_index/parent_prefix_path/erp42_rqt_plugin
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/ament_prefix_path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/ament_prefix_path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/environment/path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/local_setup.bash
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/local_setup.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/local_setup.zsh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/local_setup.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/package.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/ament_index/resource_index/packages/erp42_rqt_plugin
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/ament_index/resource_index/rqt_gui__pluginlib__plugin/erp42_rqt_plugin
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/ament_cmake_export_libraries-extras.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/erp42_rqt_pluginConfig.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/cmake/erp42_rqt_pluginConfig-version.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/package.xml
+-- Up-to-date symlink: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/plugin.xml
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/ui/control_panel.ui
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/erp42_rqt_plugin/share/erp42_rqt_plugin/ui/feedback_monitor.ui

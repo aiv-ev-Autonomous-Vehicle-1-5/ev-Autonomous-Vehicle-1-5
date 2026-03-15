@@ -1,0 +1,2 @@
+/usr/bin/ar qc libground_seg_cores.a CMakeFiles/ground_seg_cores.dir/src/patchworkpp.cpp.o
+/usr/bin/ranlib libground_seg_cores.a

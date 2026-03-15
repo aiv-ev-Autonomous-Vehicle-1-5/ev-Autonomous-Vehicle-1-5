@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-79afe30142e7a24e571b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "dbscan_clustering",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_clustering_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_clustering_uninstall-08ad5b7f2750b0b55155.json",
+					"name" : "dbscan_clustering_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_component::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_component-e284907c9428112b5a5d.json",
+					"name" : "dbscan_component",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_cpu::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_cpu-51289fefde0e8d8217b8.json",
+					"name" : "dbscan_cpu",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "dbscan_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-dbscan_node-b7a91a2751af128a19f3.json",
+					"name" : "dbscan_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-04b3c5308204b5337f29.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering",
+		"source" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/dbscan_clustering"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

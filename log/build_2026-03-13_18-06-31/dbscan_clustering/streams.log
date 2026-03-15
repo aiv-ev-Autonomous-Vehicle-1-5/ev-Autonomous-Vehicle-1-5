@@ -1,0 +1,35 @@
+[0.028s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering -- -j10 -l10
+[0.052s] [35m[1mConsolidate compiler generated dependencies of target dbscan_cpu[0m
+[0.057s] [ 33%] Built target dbscan_node
+[0.080s] [ 50%] [32mBuilding CXX object CMakeFiles/dbscan_cpu.dir/src/dbscan_cpu.cpp.o[0m
+[1.086s] [ 66%] [32m[1mLinking CXX shared library libdbscan_cpu.so[0m
+[1.287s] [ 66%] Built target dbscan_cpu
+[1.362s] [ 83%] [32mBuilding CXX object CMakeFiles/dbscan_component.dir/src/dbscan_node.cpp.o[0m
+[27.659s] [100%] [32m[1mLinking CXX shared library libdbscan_component.so[0m
+[27.945s] [100%] Built target dbscan_component
+[28.470s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering -- -j10 -l10
+[28.664s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering
+[28.828s] -- Install configuration: ""
+[28.828s] -- Execute custom install script
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/lib/libdbscan_component.so
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/lib/libdbscan_cpu.so
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/lib/dbscan_clustering/dbscan_node
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering//launch/dbscan_clustering.launch.py
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering//config/dbscan_params.yaml
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/ament_index/resource_index/package_run_dependencies/dbscan_clustering
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/ament_index/resource_index/parent_prefix_path/dbscan_clustering
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.sh
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/environment/ament_prefix_path.dsv
+[28.828s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/environment/path.sh
+[28.829s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/environment/path.dsv
+[28.829s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/local_setup.bash
+[28.829s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/local_setup.sh
+[28.829s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/local_setup.zsh
+[28.830s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/local_setup.dsv
+[28.836s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.dsv
+[28.841s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/ament_index/resource_index/packages/dbscan_clustering
+[28.846s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/ament_index/resource_index/rclcpp_components/dbscan_clustering
+[28.851s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig.cmake
+[28.855s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/cmake/dbscan_clusteringConfig-version.cmake
+[28.859s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/dbscan_clustering/share/dbscan_clustering/package.xml
+[28.881s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/dbscan_clustering

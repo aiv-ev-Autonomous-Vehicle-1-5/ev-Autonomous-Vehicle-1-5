@@ -1,0 +1,88 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-be0260d97bba5878a92c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "cluster_splitter",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "cluster_splitter_component::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cluster_splitter_component-e01b8052add6c88a6b28.json",
+					"name" : "cluster_splitter_component",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "cluster_splitter_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cluster_splitter_node-3f6e8f42be3b0daac541.json",
+					"name" : "cluster_splitter_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "cluster_splitter_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-cluster_splitter_uninstall-b79e28949bf710c883c5.json",
+					"name" : "cluster_splitter_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-2621f5c131f79493af23.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/cluster_splitter",
+		"source" : "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/perception/src/lidar/cluster_splitter(not_used)"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

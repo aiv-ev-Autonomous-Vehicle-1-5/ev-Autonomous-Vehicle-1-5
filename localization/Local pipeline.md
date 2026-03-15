@@ -1,3 +1,70 @@
+# 전체 구성도
+
+```
+/ublox_gps_node/fix (sensor_msgs/NavSatFix)
+          │
+          ▼
+gps_localization / utm_localizer_node
+  ├─ publish: /gps_pose (geometry_msgs/PoseStamped, frame=map, yaw 포함)
+  └─ (선택) /local_path (nav_msgs/Path, frame=base_link) — 필요 시 사용
+          │
+          ▼
+localization_fusion / localization_fuser
+  ├─ subscribe: /gps_pose + /erp42/odometry_wheel
+  ├─ publish:   /local_pose (geometry_msgs/PoseStamped, frame=map)
+  └─ TF broadcast: map -> base_link  -  Planning이 lookup
+          │
+          ▼
+planning (TF lookup: map -> base_link)
+  └─ publish: /planning/path (nav_msgs/Path, frame=base_link)
+          │
+          ▼
+controller
+```
+
+# 토픽/프레임 명세
+
+utm_localizer (gps_localization)
+
+* Input:
+  - /ublox_gps_node/fix (sensor_msgs/NavSatFix)
+* Output:
+  - /gps_pose (geometry_msgs/PoseStamped)
+    + frame: map
+    + position: origin 기준 local 좌표(m)
+    + orientation: 이동 방향 기반 yaw(quaternion)
+
+localization_fuser (localization_fusion)
+
+* Input:
+  - /gps_pose (geometry_msgs/PoseStamped)
+  - /erp42/odometry_wheel (nav_msgs/Odometry)
+* Output:
+  - /local_pose (geometry_msgs/PoseStamped, frame=map)
+  - TF:
+    + map -> base_link ---> planning이 lookup하는 핵심
+
+# 실행 방법
+## 방법 A) 통합 launch로 한 번에 실행
+
+```bash
+ros2 launch localization_fusion local_pipeline.launch.py
+```
+
+## 방법 B) 개별 실행(디버깅용)
+
+1) utm_localizer 실행
+
+```bash
+ros2 run gps_localization utm_localizer_node --ros-args -r __node:=utm_localizer
+```
+
+2) localization_fuser 실행 
+
+```bash
+ros2 launch localization_fusion localization_fuser.launch.py
+```
+
 # gps_localization (UTM Localizer) README
 ## 1. 이 패키지가 하는 일
 

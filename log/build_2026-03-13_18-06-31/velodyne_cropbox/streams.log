@@ -1,0 +1,34 @@
+[0.016s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox -- -j10 -l10
+[0.034s] [ 50%] [32mBuilding CXX object CMakeFiles/cropbox_component.dir/src/cropbox_component.cpp.o[0m
+[46.062s] [100%] [32m[1mLinking CXX shared library libcropbox_component.so[0m
+[46.282s] [100%] Built target cropbox_component
+[46.316s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox -- -j10 -l10
+[46.318s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox
+[46.320s] -- Install configuration: ""
+[46.321s] -- Execute custom install script
+[46.322s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/lib/libcropbox_component.so
+[46.326s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/include/velodyne_cropbox/cropbox_component.hpp
+[46.329s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/config/default_cropbox_params.yaml
+[46.332s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/launch/cropbox.launch.py
+[46.336s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.sh
+[46.339s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/library_path.dsv
+[46.343s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/ament_index/resource_index/package_run_dependencies/velodyne_cropbox
+[46.345s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/ament_index/resource_index/parent_prefix_path/velodyne_cropbox
+[46.348s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.sh
+[46.351s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/ament_prefix_path.dsv
+[46.353s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.sh
+[46.356s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/environment/path.dsv
+[46.360s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.bash
+[46.363s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.sh
+[46.365s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.zsh
+[46.368s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/local_setup.dsv
+[46.371s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/package.dsv
+[46.374s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/ament_index/resource_index/packages/velodyne_cropbox
+[46.376s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/ament_index/resource_index/rclcpp_components/velodyne_cropbox
+[46.379s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_include_directories-extras.cmake
+[46.382s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_libraries-extras.cmake
+[46.386s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/ament_cmake_export_dependencies-extras.cmake
+[46.389s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig.cmake
+[46.392s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/cmake/velodyne_cropboxConfig-version.cmake
+[46.395s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/velodyne_cropbox/share/velodyne_cropbox/package.xml
+[46.399s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/velodyne_cropbox

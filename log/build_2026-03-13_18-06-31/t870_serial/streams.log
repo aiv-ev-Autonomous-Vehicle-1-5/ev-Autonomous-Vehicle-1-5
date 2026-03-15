@@ -1,0 +1,81 @@
+[0.072s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_serial -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial
+[7.767s] -- The C compiler identification is GNU 11.4.0
+[7.767s] -- The CXX compiler identification is GNU 11.4.0
+[7.767s] -- Detecting C compiler ABI info
+[7.767s] -- Detecting C compiler ABI info - done
+[7.767s] -- Check for working C compiler: /usr/bin/cc - skipped
+[7.767s] -- Detecting C compile features
+[7.767s] -- Detecting C compile features - done
+[7.767s] -- Detecting CXX compiler ABI info
+[7.767s] -- Detecting CXX compiler ABI info - done
+[7.767s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[7.767s] -- Detecting CXX compile features
+[7.767s] -- Detecting CXX compile features - done
+[7.767s] -- Found t870_cmake: 0.0.0 (/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake/share/t870_cmake/cmake)
+[7.767s] -- Found ament_cmake_auto: 1.3.12 (/opt/ros/humble/share/ament_cmake_auto/cmake)
+[7.767s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[7.767s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[7.767s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[7.767s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[7.767s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[7.767s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[7.767s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[7.767s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[7.768s] -- Found rmw_fastrtps_cpp: 6.2.9 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[7.768s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[7.768s] -- Found FastRTPS: /opt/ros/humble/include  
+[7.768s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[7.768s] -- Looking for pthread.h
+[7.768s] -- Looking for pthread.h - found
+[7.768s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[7.768s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[7.768s] -- Found Threads: TRUE  
+[7.768s] -- Configuring done
+[7.768s] -- Generating done
+[7.768s] -- Build files have been written to: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial
+[7.784s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/t870_ros/src/t870_serial -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial
+[7.787s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial -- -j10 -l10
+[7.916s] [ 28%] [32mBuilding CXX object CMakeFiles/serial_bridge_composable.dir/rclcpp_components/node_main_serial_bridge_composable.cpp.o[0m
+[7.918s] [ 28%] [32mBuilding CXX object CMakeFiles/t870_serial.dir/src/serial_bridge.cpp.o[0m
+[7.918s] [ 42%] [32mBuilding CXX object CMakeFiles/t870_serial.dir/src/serial_port.cpp.o[0m
+[9.289s] [ 57%] [32m[1mLinking CXX executable serial_bridge_composable[0m
+[9.351s] [ 57%] Built target serial_bridge_composable
+[12.114s] [ 71%] [32m[1mLinking CXX shared library libt870_serial.so[0m
+[12.392s] [ 71%] Built target t870_serial
+[12.402s] [ 85%] [32mBuilding CXX object CMakeFiles/serial_bridge.dir/node/serial_bridge_node.cpp.o[0m
+[13.673s] [100%] [32m[1mLinking CXX executable serial_bridge[0m
+[13.768s] [100%] Built target serial_bridge
+[13.774s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --build /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial -- -j10 -l10
+[13.775s] Invoking command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial
+[13.778s] -- Install configuration: ""
+[13.779s] -- Execute custom install script
+[13.780s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/lib/t870_serial/serial_bridge_composable
+[13.783s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/include/t870_serial/t870_serial/serial_bridge.hpp
+[13.786s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/include/t870_serial/t870_serial/serial_packet.hpp
+[13.790s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/include/t870_serial/t870_serial/serial_port.hpp
+[13.793s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/environment/library_path.sh
+[13.796s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/environment/library_path.dsv
+[13.800s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/lib/libt870_serial.so
+[13.804s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/lib/t870_serial/serial_bridge
+[13.808s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/ament_index/resource_index/package_run_dependencies/t870_serial
+[13.811s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/ament_index/resource_index/parent_prefix_path/t870_serial
+[13.814s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/environment/ament_prefix_path.sh
+[13.817s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/environment/ament_prefix_path.dsv
+[13.821s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/environment/path.sh
+[13.825s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/environment/path.dsv
+[13.829s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/local_setup.bash
+[13.833s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/local_setup.sh
+[13.837s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/local_setup.zsh
+[13.840s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/local_setup.dsv
+[13.843s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/package.dsv
+[13.846s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/ament_index/resource_index/packages/t870_serial
+[13.850s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/ament_index/resource_index/rclcpp_components/t870_serial
+[13.853s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/cmake/ament_cmake_export_dependencies-extras.cmake
+[13.857s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/cmake/ament_cmake_export_include_directories-extras.cmake
+[13.861s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/cmake/ament_cmake_export_libraries-extras.cmake
+[13.864s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/cmake/t870_serialConfig.cmake
+[13.867s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/cmake/t870_serialConfig-version.cmake
+[13.871s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/package.xml
+[13.874s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/config/serial_bridge.param.yaml
+[13.878s] -- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_serial/share/t870_serial/launch/serial_bridge.launch.py
+[13.883s] Invoked command in '/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial' returned '0': AMENT_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_cmake:/opt/ros/humble LD_LIBRARY_PATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_util/lib:/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/t870_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} /usr/bin/cmake --install /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/t870_serial

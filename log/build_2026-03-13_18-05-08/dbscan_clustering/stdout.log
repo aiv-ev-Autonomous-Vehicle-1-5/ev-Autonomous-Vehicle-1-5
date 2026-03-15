@@ -1,0 +1,4 @@
+[35m[1mConsolidate compiler generated dependencies of target dbscan_cpu[0m
+[35m[1mConsolidate compiler generated dependencies of target dbscan_node[0m
+[ 16%] [32mBuilding CXX object CMakeFiles/dbscan_cpu.dir/src/dbscan_cpu.cpp.o[0m
+[ 50%] Built target dbscan_node

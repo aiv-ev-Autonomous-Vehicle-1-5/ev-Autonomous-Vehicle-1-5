@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/build/pp_controller_cpp/pure_pursuit_relative_node" "TARGETS" "pure_pursuit_relative_node" "DESTINATION" "lib/pp_controller_cpp")

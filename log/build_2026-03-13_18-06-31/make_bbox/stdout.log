@@ -1,0 +1,27 @@
+[ 25%] [32mBuilding CXX object CMakeFiles/make_bbox_node.dir/rclcpp_components/node_main_make_bbox_node.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/make_bbox_component.dir/src/make_bbox_node.cpp.o[0m
+[ 75%] [32m[1mLinking CXX executable make_bbox_node[0m
+[ 75%] Built target make_bbox_node
+[100%] [32m[1mLinking CXX shared library libmake_bbox_component.so[0m
+[100%] Built target make_bbox_component
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/lib/make_bbox/make_bbox_node
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/lib/libmake_bbox_component.so
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/include/make_bbox/make_bbox_node.hpp
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/ament_index/resource_index/package_run_dependencies/make_bbox
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/ament_index/resource_index/parent_prefix_path/make_bbox
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/environment/ament_prefix_path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/environment/ament_prefix_path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/environment/path.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/environment/path.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/local_setup.bash
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/local_setup.sh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/local_setup.zsh
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/local_setup.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/package.dsv
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/ament_index/resource_index/packages/make_bbox
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/ament_index/resource_index/rclcpp_components/make_bbox
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/cmake/make_bboxConfig.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/cmake/make_bboxConfig-version.cmake
+-- Symlinking: /home/kimsohee/ev-1-5/ev-Autonomous-Vehicle-1-5/install/make_bbox/share/make_bbox/package.xml
