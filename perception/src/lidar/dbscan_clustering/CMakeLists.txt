@@ -6,10 +6,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ── CUDA auto-detection ──
 # CUDA가 있으면 GPU 이웃 검색, 없으면 CPU KD-Tree fallback
-# 최신 CUDA toolkit 자동 탐색 (sm_90 PTX 지원을 위해 12.x 우선)
+# 최신 CUDA toolkit 자동 탐색 (sm_120 Blackwell 지원을 위해 12.8 우선)
 if(NOT CMAKE_CUDA_COMPILER)
   find_program(_nvcc_latest nvcc
-    PATHS /usr/local/cuda-12.5/bin /usr/local/cuda-12/bin /usr/local/cuda/bin
+    PATHS /usr/local/cuda-12.8/bin /usr/local/cuda-12.5/bin /usr/local/cuda-12/bin /usr/local/cuda/bin
     NO_DEFAULT_PATH)
   if(_nvcc_latest)
     set(CMAKE_CUDA_COMPILER "${_nvcc_latest}")
@@ -30,7 +30,10 @@ if(CMAKE_CUDA_COMPILER)
   if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
     set(_dbscan_cuda_architectures 60-real 61-real 70-real 75-real 80-real 86-real)
     if(CMAKE_CUDA_COMPILER_VERSION VERSION_GREATER_EQUAL 11.8)
-      list(APPEND _dbscan_cuda_architectures 90)
+      list(APPEND _dbscan_cuda_architectures 90-real)
+    endif()
+    if(CMAKE_CUDA_COMPILER_VERSION VERSION_GREATER_EQUAL 12.8)
+      list(APPEND _dbscan_cuda_architectures 120)
     endif()
     set(CMAKE_CUDA_ARCHITECTURES "${_dbscan_cuda_architectures}" CACHE STRING "CUDA architectures" FORCE)
   endif()

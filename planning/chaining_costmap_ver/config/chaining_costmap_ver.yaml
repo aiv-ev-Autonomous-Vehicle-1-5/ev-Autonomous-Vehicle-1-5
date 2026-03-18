@@ -36,7 +36,7 @@ lc_planner_node:
       side_seed_y: 0.3        # [m] |y| < 이 값이면 seed 후보 제외
 
       # --- kNN + 게이트 ---
-      k: 8                    # centroid kNN 후보 수
+      k: 16                    # centroid kNN 후보 수
       d_max: 2.0              # [m] neighbor 최대 거리
       forward_cone_deg: 130.0 # [deg] 전방 cone 전체 각도 (±60°)
       lateral_gate: 1.5      # [m] 횡방향 오차 한계
@@ -71,8 +71,8 @@ lc_planner_node:
       resolution: 0.15          # [m/cell] (1.5m 차로 = 10셀)
       bbox_cost_max: 100.0      # bbox 최대 비용(==costmap max cost)
       lane_cost_max: 70.0       # 차선 최대 비용 (낮아서 넘을 수 있음)
-      bbox_radius: 1.025         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
-      lane_radius: 1.0           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
+      bbox_radius: 0.5025         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
+      lane_radius: 0.10           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
       sigma: 1.0                # [m] 가우시안 확산
       cost_threshold: 2.0       # 이 이하 비용 무시
       entry_wall_ego_y: 2.5     # [m] costmap 하단 양옆 가상 bbox 시작점 횡방향 오프셋

@@ -1,0 +1,9 @@
+utm_localizer:
+  ros__parameters:
+    # (필터) GPS 튐/공분산 임계값
+    jump_threshold: 2.0               # m
+    covariance_threshold: 0.5         # sigma_xy(m)
+
+    # (경로 생성) 컨트롤이 받을 local_path 설정
+    lookahead_m: 6.0                 # m (t870이면 대략 5~8m로 시작 추천)
+    path_points: 30                  # path에 넣을 점 개수
