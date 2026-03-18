@@ -1,55 +1,24 @@
-"""Debug Stage 1: Velodyne Driver + Transform only.
+"""base_link → velodyne 고정 TF 발행.
 
-Verify raw point cloud output on /velodyne_points.
+Velodyne driver는 별도 launch(예: Gazebo plugin 등)에서 실행.
 """
 
-import os
-import yaml
-
-import ament_index_python.packages
 from launch import LaunchDescription
-from launch_ros.actions import ComposableNodeContainer
-from launch_ros.descriptions import ComposableNode
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    # Velodyne driver parameters
-    driver_share_dir = ament_index_python.packages.get_package_share_directory('velodyne_driver')
-    driver_params_file = os.path.join(driver_share_dir, 'config', 'VLP16-velodyne_driver_node-params.yaml')
-    with open(driver_params_file, 'r') as f:
-        driver_params = yaml.safe_load(f)['velodyne_driver_node']['ros__parameters']
-
-    # Velodyne transform parameters
-    convert_share_dir = ament_index_python.packages.get_package_share_directory('velodyne_pointcloud')
-    convert_params_file = os.path.join(convert_share_dir, 'config', 'VLP16-velodyne_transform_node-params.yaml')
-    with open(convert_params_file, 'r') as f:
-        convert_params = yaml.safe_load(f)['velodyne_transform_node']['ros__parameters']
-    convert_params['calibration'] = os.path.join(convert_share_dir, 'params', 'VLP16db.yaml')
-
-    # Stage 1: Driver -> Transform -> /velodyne_points
-    container = ComposableNodeContainer(
-            name='velodyne_container',
-            namespace='',
-            package='rclcpp_components',
-            executable='component_container',
-            composable_node_descriptions=[
-                # 1. Velodyne driver - receives UDP packets
-                ComposableNode(
-                    package='velodyne_driver',
-                    plugin='velodyne_driver::VelodyneDriver',
-                    name='velodyne_driver_node',
-                    parameters=[driver_params],
-                    ),  # intra-process disabled
-
-                # 2. Velodyne transform - converts packets to point cloud
-                ComposableNode(
-                    package='velodyne_pointcloud',
-                    plugin='velodyne_pointcloud::Transform',
-                    name='velodyne_transform_node',
-                    parameters=[convert_params],
-                    ),  # intra-process disabled
-            ],
-            output='both',
+    # base_link → velodyne 고정 TF
+    static_tf_velodyne = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_tf_base_to_velodyne',
+        arguments=[
+            "0.79", "0", "0.485",
+            "0", "0", "0", "1",
+            "base_link", "velodyne"
+        ],
+        output='screen'
     )
 
-    return LaunchDescription([container])
+    return LaunchDescription([static_tf_velodyne])

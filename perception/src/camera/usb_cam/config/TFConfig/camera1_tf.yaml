@@ -1,10 +1,10 @@
-# velodyne -> camera1
-parent_frame: "velodyne"
+# base_link -> camera1
+parent_frame: "base_link"
 child_frame: "camera1"
 translation:
-  x: -0.673693650
-  y: -0.242514968
-  z: 0.525331932
+  x: 0.224
+  y: 0.0
+  z: 1.264
 rotation_matrix:
   r11: -0.69891131
   r12: -0.37262762

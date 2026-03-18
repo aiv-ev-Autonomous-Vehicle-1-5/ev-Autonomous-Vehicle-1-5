@@ -9,7 +9,7 @@ import yaml
 
 import ament_index_python.packages
 from launch import LaunchDescription
-from launch_ros.actions import ComposableNodeContainer
+from launch_ros.actions import ComposableNodeContainer, Node
 from launch_ros.descriptions import ComposableNode
 from launch.actions import ExecuteProcess
 
@@ -124,4 +124,17 @@ def generate_launch_description():
         cmd=['python3', debug_script, '/perception/bboxes'],
         output='screen',
     )
-    return LaunchDescription([container,debug_bboxes])
+    # base_link → velodyne 고정 TF
+    static_tf_velodyne = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_tf_base_to_velodyne',
+        arguments=[
+            "22.7", "0", "82.3",
+            "0", "0", "0", "1",
+            "base_link", "velodyne"
+        ],
+        output='screen'
+    )
+
+    return LaunchDescription([container, debug_bboxes, static_tf_velodyne])

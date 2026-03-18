@@ -58,24 +58,7 @@ CAMERAS.append(
         param_path=Path(USB_CAM_DIR, 'config', 'params_1.yaml')
     )
 )
-CAMERAS.append(
-    CameraConfig(
-        name='camera2',
-        param_path=Path(USB_CAM_DIR, 'config', 'params_2.yaml')
-    )
-)
-CAMERAS.append(
-    CameraConfig(
-        name='camera3',
-        param_path=Path(USB_CAM_DIR, 'config', 'params_3.yaml')
-    )
-)
-CAMERAS.append(
-    CameraConfig(
-        name='camera4',
-        param_path=Path(USB_CAM_DIR, 'config', 'params_4.yaml')
-    )
-)
+
 # Add more Camera's here and they will automatically be launched below
 
 
@@ -156,21 +139,9 @@ def generate_launch_description():
         else:
             print(f"TF 설정이 {camera.name}에 대해 발견되지 않았습니다.")
 
-    # base_link → velodyne 고정 TF 추가
-    static_tf_velodyne = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='static_tf_base_to_velodyne',
-        arguments=[
-            "0.79", "0", "0.485",      # x y z "0.79", "0", "0.485"
-            "0", "0", "0", "1", # qx qy qz qw
-            "base_link", "velodyne"
-        ],
-        output='screen'
-    )
-
-    # 카메라 노드와 TF 노드를 그룹으로 묶어서 실행
-    all_nodes = camera_nodes + tf_nodes + [static_tf_velodyne]
+    # 카메라 노드와 TF 노드(velodyne → camera_N)를 그룹으로 묶어서 실행
+    # base_link → velodyne TF는 lidar driver.launch.py에서 발행
+    all_nodes = camera_nodes + tf_nodes
     node_group = GroupAction(all_nodes)
 
     ld.add_action(node_group)
