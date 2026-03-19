@@ -9,7 +9,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
+find_package(visualization_msgs REQUIRED)
 
 include_directories(include)
 
@@ -21,7 +21,7 @@ ament_target_dependencies(utm_localizer_lib
   rclcpp
   sensor_msgs
   geometry_msgs
-  nav_msgs
+  visualization_msgs
 )
 
 add_executable(utm_localizer_node
@@ -36,7 +36,7 @@ ament_target_dependencies(utm_localizer_node
   rclcpp
   sensor_msgs
   geometry_msgs
-  nav_msgs
+  visualization_msgs
 )
 
 install(TARGETS
@@ -46,7 +46,7 @@ install(TARGETS
 )
 
 install(
-  DIRECTORY config launch waypoints
+  DIRECTORY config launch
   DESTINATION share/${PROJECT_NAME}
 )
 

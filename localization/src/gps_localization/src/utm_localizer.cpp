@@ -3,7 +3,6 @@
 #include <cmath>
 #include <fstream>
 #include <sstream>
-#include <limits>
 #include <algorithm>
 
 using std::placeholders::_1;
@@ -18,8 +17,6 @@ UtmLocalizer::UtmLocalizer()
   - waypoint_file: "lat,lon" 형식 CSV 파일 경로
   - jump_threshold: GPS 튐 거리 임계값(m)
   - covariance_threshold: 공분산 기반 sigma_xy 임계값(m)
-  - lookahead_m: 목표점(lookahead) 거리(m)
-  - path_points: local_path에 넣을 포인트 수
   ------------------------------------------------------------
   */
   // ---- parameters ----
@@ -27,38 +24,20 @@ UtmLocalizer::UtmLocalizer()
   declare_parameter<std::string>("waypoint_file", "");
   declare_parameter<double>("jump_threshold", jump_threshold_);
   declare_parameter<double>("covariance_threshold", covariance_threshold_);
-  declare_parameter<double>("lookahead_m", lookahead_m_);
-  declare_parameter<int>("path_points", path_points_);
-  declare_parameter<bool>("filter_forward_only", filter_forward_only_);
-  declare_parameter<double>("forward_min_x", forward_min_x_);
-
-
-  // 새로 추가 (timeout, goal)
-  declare_parameter<double>("fix_timeout_s", fix_timeout_s_);
-  declare_parameter<double>("goal_tolerance_m", goal_tolerance_m_);
 
   // ---- get parameters ----
   fix_topic_ = get_parameter("fix_topic").as_string();
   waypoint_file_ = get_parameter("waypoint_file").as_string();
   jump_threshold_ = get_parameter("jump_threshold").as_double();
   covariance_threshold_ = get_parameter("covariance_threshold").as_double();
-  lookahead_m_ = get_parameter("lookahead_m").as_double();
-  path_points_ = get_parameter("path_points").as_int();
-  fix_timeout_s_ = get_parameter("fix_timeout_s").as_double();
-  goal_tolerance_m_ = get_parameter("goal_tolerance_m").as_double();
-  filter_forward_only_ = get_parameter("filter_forward_only").as_bool();
-  forward_min_x_ = get_parameter("forward_min_x").as_double();
 
-  // 1) /fix 구독 (너가 실제로 쓰는 토픽이 /ublox_gps_node/fix라면 여기만 바꿈
+  // 1) /fix 구독
   gps_sub_ = create_subscription<sensor_msgs::msg::NavSatFix>(
     fix_topic_, rclcpp::QoS(10),
     std::bind(&UtmLocalizer::gpsCallback, this, _1));
 
-  // 2) /local_pose 퍼블리시 (frame=map)
-  pose_pub_ = create_publisher<geometry_msgs::msg::PoseStamped>("/gps_pose", rclcpp::QoS(10));
-
-  // 3) /local_path 퍼블리시 (frame=base_link)  -> 컨트롤 입력
-  path_pub_ = create_publisher<nav_msgs::msg::Path>("/local_path", rclcpp::QoS(10));
+  // 2) /local_path 퍼블리시 (frame=base_link) — 전체 waypoint의 헤딩 기준 상대 좌표 (Marker POINTS)
+  marker_pub_ = create_publisher<visualization_msgs::msg::Marker>("/local_path", rclcpp::QoS(10));
 
   // 4) waypoint 파일은 origin이 정해져야 local(map)로 변환 가능하므로,
   //    여기서는 "lat/lon 목록만" 미리 로드해둔다.
@@ -73,26 +52,11 @@ UtmLocalizer::UtmLocalizer()
     RCLCPP_WARN(get_logger(), "waypoint_file parameter is empty. Path publish will be skipped.");
   }
 
-  // ---------------------------------------------
-  // fix timeout 감시 타이머
-  // - /fix 가 끊기면 컨트롤 보호를 위해 빈 path publish
-  // ---------------------------------------------
-  watchdog_timer_ = create_wall_timer(
-    std::chrono::milliseconds(100),
-    std::bind(&UtmLocalizer::watchdogTick, this)
-  );
-
-  RCLCPP_INFO(get_logger(),
-  "utm_localizer started. fix_topic=%s, lookahead=%.1f, path_points=%d, timeout=%.2fs, goal_tol=%.1fm",
-  fix_topic_.c_str(), lookahead_m_, path_points_, fix_timeout_s_, goal_tolerance_m_);
+  RCLCPP_INFO(get_logger(), "utm_localizer started. fix_topic=%s", fix_topic_.c_str());
 
 }
 
 void UtmLocalizer::gpsCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg){
-
-  // timeout 감시용 stamp 갱신
-  last_fix_stamp_ = now();   // 수신 시각 기준으로 timeout 판단
-  has_fix_stamp_ = true;
 
   // ------------------------------------------------------------
   // (0) 공분산 필터
@@ -130,7 +94,6 @@ void UtmLocalizer::gpsCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
     origin_set_ = true;
     RCLCPP_INFO(get_logger(), "Origin set: (%.3f, %.3f)", origin_x_, origin_y_);
 
-    // origin이 있어야 waypoint를 local(map)로 만들 수 있음
     if (waypoints_loaded_) {
       convertWaypointsToLocal();
       if (waypointsReady()) {
@@ -184,9 +147,6 @@ void UtmLocalizer::gpsCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
         const double dyaw = normalizeAngle(new_yaw - yaw_);
         if (std::fabs(dyaw) <= max_yaw_jump_rad_) {
           yaw_ = new_yaw;
-        } else {
-          // outlier면 yaw 유지
-          // (GPS가 순간적으로 튀거나 방향이 급격히 바뀐 것처럼 보이는 경우 방지)
         }
       }
     }
@@ -200,43 +160,11 @@ void UtmLocalizer::gpsCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
   has_prev_ = true;
 
   // ------------------------------------------------------------
-  // (7) /local_pose 발행 (frame=map)
-  // - planning/debug용, 또는 로깅용
-  // ------------------------------------------------------------
-  geometry_msgs::msg::PoseStamped pose;
-  pose.header.stamp = msg->header.stamp;
-  pose.header.frame_id = "map";
-
-  pose.pose.position.x = local_x;
-  pose.pose.position.y = local_y;
-  pose.pose.position.z = 0.0;
-
-  if (yaw_valid_) {
-    pose.pose.orientation = yawToQuat(yaw_);
-  } else {
-    pose.pose.orientation.w = 1.0; // yaw 아직 없으면 identity
-  }
-
-  pose_pub_->publish(pose);
-
-  // ------------------------------------------------------------
-  // (8) /local_path 발행 (frame=base_link)
-  // - 컨트롤은 base_link 좌표계에서 path를 받으면 바로 조향각 계산 가능
+  // (7) /local_path 발행 (frame=base_link)
+  // - 전체 waypoint를 헤딩 기준 상대 좌표로 변환하여 발행
   // ------------------------------------------------------------
   if (yaw_valid_ && waypointsReady()) {
-
-    // 도착 판정: 마지막 웨이포인트 근처면 빈 path
-    if(reachedGoal(P_local)){
-      publishEmptyPath(msg->header.stamp);
-      return;
-    }
-
-    // nearest를 찾을 때 progress_idx_ 부근부터 찾으면 "뒤로 돌아가는 현상"이 줄어듦
-    const int nearest = findNearestIdx(P_local, progress_idx_);
-    progress_idx_ = std::max(progress_idx_, nearest);
-
-    const int start_idx = findLookaheadIdx(nearest, lookahead_m_);
-    publishLocalPathBaseLink(P_local, yaw_, start_idx, msg->header.stamp);
+    publishWaypointsBaseLink(P_local, yaw_, msg->header.stamp);
   }
 }
 
@@ -291,107 +219,44 @@ void UtmLocalizer::convertWaypointsToLocal(){
   }
 
   waypoints_local_ready_ = !waypoints_local_.empty();
-  progress_idx_ = 0;
 }
 
-int UtmLocalizer::findNearestIdx(const Vec2& P, int start_hint) const{
-  const int n = static_cast<int>(waypoints_local_.size());
-  if (n == 0) return 0;
-
-  // 힌트 인덱스 주변부터 앞으로만 탐색(뒤로 돌아가는 현상 완화)
-  int start = std::clamp(start_hint, 0, n-1);
-
-  int best = start;
-  double best_d2 = std::numeric_limits<double>::infinity();
-
-  for (int i = start; i < n; ++i) {
-    const double dx = waypoints_local_[i].x - P.x;
-    const double dy = waypoints_local_[i].y - P.y;
-    const double d2 = dx*dx + dy*dy;
-    if (d2 < best_d2) {
-      best_d2 = d2;
-      best = i;
-    }
-    // 너무 멀어지는 구간이면 조기 종료(선택적, 과도한 최적화는 피하려면 제거해도 됨)
-  }
-  return best;
-}
-
-int UtmLocalizer::findLookaheadIdx(int nearest_idx, double lookahead_m) const{
-  const int n = static_cast<int>(waypoints_local_.size());
-  if (n == 0) return 0;
-
-  int idx = std::clamp(nearest_idx, 0, n-1);
-  double acc = 0.0;
-
-  // nearest부터 앞으로 가면서 누적 거리 >= lookahead가 되는 지점 선택
-  for (int i = idx; i < n-1; ++i) {
-    const double dx = waypoints_local_[i+1].x - waypoints_local_[i].x;
-    const double dy = waypoints_local_[i+1].y - waypoints_local_[i].y;
-    acc += std::hypot(dx, dy);
-    if (acc >= lookahead_m) return i+1;
-  }
-  return n-1;
-}
-
-void UtmLocalizer::publishLocalPathBaseLink(const Vec2& P_local, double yaw, int start_idx, const rclcpp::Time& stamp){
-  nav_msgs::msg::Path path;
-  path.header.stamp = stamp;
-  path.header.frame_id = "base_link";
+void UtmLocalizer::publishWaypointsBaseLink(const Vec2& P_local, double yaw, const rclcpp::Time& stamp){
+  visualization_msgs::msg::Marker marker;
+  marker.header.stamp = stamp;
+  marker.header.frame_id = "base_link";
+  marker.ns = "waypoints";
+  marker.id = 0;
+  marker.type = visualization_msgs::msg::Marker::POINTS;
+  marker.action = visualization_msgs::msg::Marker::ADD;
+  marker.scale.x = 0.3;  // point 크기
+  marker.scale.y = 0.3;
+  marker.color.r = 0.0;
+  marker.color.g = 1.0;
+  marker.color.b = 0.0;
+  marker.color.a = 1.0;
 
   const int n = static_cast<int>(waypoints_local_.size());
-  int s = std::clamp(start_idx, 0, std::max(0, n-1));
-  int e = std::min(n, s + path_points_);
+  marker.points.reserve(n);
 
-  path.poses.reserve(e - s);
-
-  // local(map) waypoint들을 base_link로 변환해서 Path에 넣음
-  for (int i = s; i < e; ++i) {
+  // 전체 waypoint를 헤딩 기준 상대 좌표(base_link)로 변환
+  for (int i = 0; i < n; ++i) {
     Vec2 G_base = worldToBase(P_local, yaw, waypoints_local_[i]);
 
-    // 차량 앞쪽 점만 남기기
-    if(filter_forward_only_ && G_base.x < forward_min_x_){
-      continue;
-    }
-
-    geometry_msgs::msg::PoseStamped p;
-    p.header = path.header;
-    p.pose.position.x = G_base.x;
-    p.pose.position.y = G_base.y;
-    p.pose.position.z = 0.0;
-    p.pose.orientation.w = 1.0; // path 점 자체는 방향 불필요(컨트롤에서 곡률 계산하면 됨)
-
-    path.poses.push_back(p);
+    geometry_msgs::msg::Point pt;
+    pt.x = G_base.x;
+    pt.y = G_base.y;
+    pt.z = 0.0;
+    marker.points.push_back(pt);
   }
 
-  if (path.poses.empty()) {
-    // fallback: start_idx 점 하나라도 넣기
-    Vec2 G_base = worldToBase(P_local, yaw, waypoints_local_[s]);
-    geometry_msgs::msg::PoseStamped p;
-    p.header = path.header;
-    p.pose.position.x = G_base.x;
-    p.pose.position.y = G_base.y;
-    p.pose.orientation.w = 1.0;
-    path.poses.push_back(p);
-  }
-
-  path_pub_->publish(path);
+  marker_pub_->publish(marker);
 }
 
 double UtmLocalizer::normalizeAngle(double a){
   while (a > M_PI) a -= 2.0 * M_PI;
   while (a < -M_PI) a += 2.0 * M_PI;
   return a;
-}
-
-geometry_msgs::msg::Quaternion UtmLocalizer::yawToQuat(double yaw){
-  geometry_msgs::msg::Quaternion q;
-  const double half = yaw * 0.5;
-  q.x = 0.0;
-  q.y = 0.0;
-  q.z = std::sin(half);
-  q.w = std::cos(half);
-  return q;
 }
 
 Vec2 UtmLocalizer::worldToBase(const Vec2& P_world, double yaw, const Vec2& G_world){
@@ -450,36 +315,6 @@ void UtmLocalizer::latLonToUTM(double lat, double lon, double &x, double &y){
       (A*A/2
       + (5 - T + 9*C + 4*C*C) * std::pow(A,4)/24
       + (61 - 58*T + T*T + 600*C - 330*(e2/(1-e2))) * std::pow(A,6)/720));
-}
-
-void UtmLocalizer::watchdogTick(){
-  if (!has_fix_stamp_) return;
-
-  const rclcpp::Time now_t = now();
-  const double dt = (now_t - last_fix_stamp_).seconds();
-
-  if (dt > fix_timeout_s_) {
-    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
-      "/fix timeout: dt=%.2fs > %.2fs -> publish empty path",
-      dt, fix_timeout_s_);
-    publishEmptyPath(now_t);
-  }
-}
-
-void UtmLocalizer::publishEmptyPath(const rclcpp::Time& stamp){
-  nav_msgs::msg::Path path;
-  path.header.stamp = stamp;
-  path.header.frame_id = "base_link";
-  path.poses.clear();
-  path_pub_->publish(path);
-}
-
-bool UtmLocalizer::reachedGoal(const Vec2& P_local) const
-{
-  if (!waypointsReady()) return false;
-  const Vec2& G_last = waypoints_local_.back();
-  const double d = std::hypot(G_last.x - P_local.x, G_last.y - P_local.y);
-  return d <= goal_tolerance_m_;
 }
 
 } // namespace gps_localization
