@@ -258,6 +258,7 @@ private:
     int seed_idx,
     bool is_left,
     StopReason & stop_reason_forward,
+    int & seed_backbone_pos,
     const PlanningParams::Chainer & cp) const;
 
   /**

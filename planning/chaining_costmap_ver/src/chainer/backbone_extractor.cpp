@@ -3,7 +3,8 @@
  * @brief DirectionChainer — Backbone 추출 + 비용함수 구현
  *
  * [포함 함수]
- *   - extract_backbone():      전방 전용(forward-only) greedy chaining
+ *   - extract_backbone():      양방향(backward+forward) greedy chaining
+ *                              reverse(backward) + [seed] + forward
  *   - chain_one_direction():   단방향 greedy chaining 헬퍼
  *                              (2-phase BBOX 최우선 탐색:
  *                               Phase 1 — d_max 범위 내 모든 bbox를 knn 없이
@@ -244,10 +245,11 @@ std::vector<int> DirectionChainer::chain_one_direction(
 }
 
 // ============================================================================
-// Backbone 추출 — 전방 전용 Greedy Chaining
+// Backbone 추출 — 양방향 Greedy Chaining
 // ============================================================================
-// seed에서 forward(+x) 방향으로만 체이닝하여
-// [seed] + forward → 최종 backbone.
+// seed에서 backward(-x) + forward(+x) 양방향 체이닝하여
+// reverse(backward) + [seed] + forward → 최종 backbone.
+// 전방/후방 각각 max_chain_len - 1 개까지 확장 가능.
 //
 std::vector<int> DirectionChainer::extract_backbone(
   const std::vector<ChainPoint> & points,
@@ -255,6 +257,7 @@ std::vector<int> DirectionChainer::extract_backbone(
   int seed_idx,
   bool is_left,
   StopReason & stop_reason_forward,
+  int & seed_backbone_pos,
   const PlanningParams::Chainer & cp) const
 {
   std::unordered_set<int> visited_set;
@@ -262,15 +265,26 @@ std::vector<int> DirectionChainer::extract_backbone(
 
   const int max_extend = cp.max_chain_len - 1;
 
-  // Forward pass only
+  // Backward pass (-x 방향)
+  StopReason stop_reason_backward = StopReason::MAX_LEN;
+  auto backward_chain = chain_one_direction(
+    points, owner, seed_idx,
+    {-1.0, 0.0}, is_left, visited_set,
+    max_extend, stop_reason_backward, cp);
+
+  // Forward pass (+x 방향)
   auto forward_chain = chain_one_direction(
     points, owner, seed_idx,
     {1.0, 0.0}, is_left, visited_set,
     max_extend, stop_reason_forward, cp);
 
-  // [seed] + forward → backbone
+  // reverse(backward) + [seed] + forward → backbone
+  seed_backbone_pos = static_cast<int>(backward_chain.size());
   std::vector<int> backbone;
-  backbone.reserve(1 + forward_chain.size());
+  backbone.reserve(backward_chain.size() + 1 + forward_chain.size());
+  for (auto it = backward_chain.rbegin(); it != backward_chain.rend(); ++it) {
+    backbone.push_back(*it);
+  }
   backbone.push_back(seed_idx);
   backbone.insert(backbone.end(), forward_chain.begin(), forward_chain.end());
   return backbone;

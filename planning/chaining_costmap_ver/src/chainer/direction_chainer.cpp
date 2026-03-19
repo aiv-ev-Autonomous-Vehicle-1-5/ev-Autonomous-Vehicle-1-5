@@ -13,12 +13,10 @@
  *
  * [파이프라인 요약]
  *   준비: find_seed() → build_graph() → owner[] 초기화
- *   1단계: extract_backbone(left, forward-only)  → LEFT_BACKBONE 라벨
- *   2단계: extract_backbone(right, forward-only) → RIGHT_BACKBONE 라벨
- *   2.5단계: 교차 판정 — 1·2단계 backbone 확정 후, 반대쪽 seed가
- *           이쪽 backbone에 포함되었는지 owner[] 라벨로 검사.
- *           owner[right_seed] == LEFT_BACKBONE → left_crossed_right = true
- *           owner[left_seed]  == RIGHT_BACKBONE → right_crossed_left = true
+ *   1단계: extract_backbone(left, backward+forward)  → LEFT_BACKBONE 라벨
+ *   1.5단계: 교차 판정 — owner[right_seed] == LEFT_BACKBONE → left_crossed_right
+ *   2단계: extract_backbone(right, backward+forward) → RIGHT_BACKBONE 라벨
+ *   2.5단계: 교차 판정 — owner[left_seed] == RIGHT_BACKBONE → right_crossed_left
  *           교차 플래그는 DirectionChainResult에 저장되어 GoalCalculator에서
  *           backbone 중간점 폴백에 사용된다.
  *   3단계: extract_branches(left)  → LEFT_BRANCH 라벨
@@ -54,12 +52,13 @@ DirectionChainResult DirectionChainer::chain(
   // 준비: Owner 배열 초기화 (all NONE)
   std::vector<NodeOwner> owner(filtered.size(), NodeOwner::NONE);
 
-  // 1단계: Left Backbone 확정 (전방 전용)
+  // 1단계: Left Backbone 확정 (양방향: backward + forward)
   std::vector<int> left_backbone_ids;
   StopReason left_stop_fwd = StopReason::NO_CANDIDATE;
+  int left_seed_bb_pos = 0;
   if (left_seed >= 0) {
     left_backbone_ids = extract_backbone(
-      filtered, owner, left_seed, true, left_stop_fwd, cp);
+      filtered, owner, left_seed, true, left_stop_fwd, left_seed_bb_pos, cp);
     for (int idx : left_backbone_ids) {
       owner[idx] = NodeOwner::LEFT_BACKBONE;
     }
@@ -72,12 +71,13 @@ DirectionChainResult DirectionChainer::chain(
     result.left_crossed_right = true;
   }
 
-  // 2단계: Right Backbone 확정 (전방 전용)
+  // 2단계: Right Backbone 확정 (양방향: backward + forward)
   std::vector<int> right_backbone_ids;
   StopReason right_stop_fwd = StopReason::NO_CANDIDATE;
+  int right_seed_bb_pos = 0;
   if (right_seed >= 0) {
     right_backbone_ids = extract_backbone(
-      filtered, owner, right_seed, false, right_stop_fwd, cp);
+      filtered, owner, right_seed, false, right_stop_fwd, right_seed_bb_pos, cp);
     for (int idx : right_backbone_ids) {
       owner[idx] = NodeOwner::RIGHT_BACKBONE;
     }
@@ -107,6 +107,7 @@ DirectionChainResult DirectionChainer::chain(
   if (!left_backbone_ids.empty()) {
     result.left.seed_idx = left_seed;
     result.left.goal_idx = left_backbone_ids.back();
+    result.left.seed_backbone_pos = left_seed_bb_pos;
     result.left.stop_reason_forward = left_stop_fwd;
     result.left.backbone.reserve(left_backbone_ids.size());
     for (int idx : left_backbone_ids) {
@@ -120,6 +121,7 @@ DirectionChainResult DirectionChainer::chain(
   if (!right_backbone_ids.empty()) {
     result.right.seed_idx = right_seed;
     result.right.goal_idx = right_backbone_ids.back();
+    result.right.seed_backbone_pos = right_seed_bb_pos;
     result.right.stop_reason_forward = right_stop_fwd;
     result.right.backbone.reserve(right_backbone_ids.size());
     for (int idx : right_backbone_ids) {

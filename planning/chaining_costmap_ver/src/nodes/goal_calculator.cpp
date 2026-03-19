@@ -50,20 +50,37 @@ GoalResult calculate_goal(
   GoalResult gr;
 
   // 교차 판정: 한쪽 backbone이 반대쪽 seed를 먹은 경우
-  // → 해당 backbone의 인덱스 중간점을 local_goal로 사용
+  // → 해당 backbone의 누적 거리 기준 중점을 local_goal로 사용
+  auto midpoint_by_length = [](const std::vector<ChainPoint> & bb, Point2D & out) {
+    if (bb.size() < 2) { out = {bb[0].x, bb[0].y}; return; }
+    // 누적 거리 계산
+    double total = 0.0;
+    for (size_t i = 1; i < bb.size(); ++i) {
+      total += std::hypot(bb[i].x - bb[i-1].x, bb[i].y - bb[i-1].y);
+    }
+    const double half = total * 0.5;
+    double acc = 0.0;
+    for (size_t i = 1; i < bb.size(); ++i) {
+      double seg = std::hypot(bb[i].x - bb[i-1].x, bb[i].y - bb[i-1].y);
+      if (acc + seg >= half) {
+        // 선분 내 보간
+        double t = (seg > 1e-9) ? (half - acc) / seg : 0.0;
+        out.x = bb[i-1].x + t * (bb[i].x - bb[i-1].x);
+        out.y = bb[i-1].y + t * (bb[i].y - bb[i-1].y);
+        return;
+      }
+      acc += seg;
+    }
+    out = {bb.back().x, bb.back().y};
+  };
+
   if (dc_result.left_crossed_right && !dc_result.left.backbone.empty()) {
-    const auto & bb = dc_result.left.backbone;
-    const auto & mid = bb[bb.size() / 2];
-    gr.goal.x = mid.x;
-    gr.goal.y = mid.y;
+    midpoint_by_length(dc_result.left.backbone, gr.goal);
     gr.have_goal = true;
     return gr;
   }
   if (dc_result.right_crossed_left && !dc_result.right.backbone.empty()) {
-    const auto & bb = dc_result.right.backbone;
-    const auto & mid = bb[bb.size() / 2];
-    gr.goal.x = mid.x;
-    gr.goal.y = mid.y;
+    midpoint_by_length(dc_result.right.backbone, gr.goal);
     gr.have_goal = true;
     return gr;
   }

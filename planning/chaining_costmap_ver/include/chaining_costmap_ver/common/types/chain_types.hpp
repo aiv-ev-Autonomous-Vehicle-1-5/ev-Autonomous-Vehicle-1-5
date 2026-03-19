@@ -90,8 +90,9 @@ struct SideResult
   std::vector<ChainPoint> backbone;        ///< 주 경계선 (디버깅/시각화용)
   std::vector<BranchInfo> branches;        ///< backbone에서 분기된 가지들
 
-  int seed_idx = -1;                       ///< seed 인덱스
+  int seed_idx = -1;                       ///< seed 인덱스 (원본 points 배열 기준)
   int goal_idx = -1;                       ///< goal 인덱스
+  int seed_backbone_pos = 0;               ///< backbone 내 seed_start 위치 (= backward chain 길이)
   StopReason stop_reason_forward = StopReason::NO_CANDIDATE;
 };
 

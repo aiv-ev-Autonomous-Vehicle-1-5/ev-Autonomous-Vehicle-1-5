@@ -227,14 +227,27 @@ visualization_msgs::msg::MarkerArray make_seeds_markers(
     m.type = visualization_msgs::msg::Marker::SPHERE;
     m.action = visualization_msgs::msg::Marker::ADD;
     m.scale.x = m.scale.y = m.scale.z = 0.15;
+    m.pose.orientation.w = 1.0;
+
+    // seed_back: 후방 체이닝 끝점 (backbone.front())
     m.color.r = r; m.color.g = g; m.color.b = b_color; m.color.a = 1.0f;
     m.pose.position.x = side.backbone.front().x;
     m.pose.position.y = side.backbone.front().y;
-    m.pose.orientation.w = 1.0;
     ma.markers.push_back(m);
 
+    // seed_start: find_seed()로 찾은 원래 시작점
+    const int sp = side.seed_backbone_pos;
+    if (sp >= 0 && sp < static_cast<int>(side.backbone.size())) {
+      m.id = id++;
+      m.color.r = 1.0f; m.color.g = 1.0f; m.color.b = 0.0f;  // 노랑
+      m.pose.position.x = side.backbone[sp].x;
+      m.pose.position.y = side.backbone[sp].y;
+      ma.markers.push_back(m);
+    }
+
+    // seed_end: 전방 체이닝 끝점 (backbone.back())
     m.id = id++;
-    m.color.r = 0.0f; m.color.g = 0.0f; m.color.b = 1.0f;
+    m.color.r = 0.0f; m.color.g = 0.0f; m.color.b = 1.0f;  // 파랑
     m.pose.position.x = side.backbone.back().x;
     m.pose.position.y = side.backbone.back().y;
     ma.markers.push_back(m);
