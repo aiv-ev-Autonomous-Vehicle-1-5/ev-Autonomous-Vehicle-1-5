@@ -27,9 +27,9 @@ private:
   ------------------------------------------------------------
   1) /fix (lat,lon,cov) 수신
   2) 공분산 필터(sigma_xy): 너무 크면 무시
-  3) lat/lon -> UTM
+  3) lat/lon -> UTM (현재 위치)
   4) 최초 1회 origin 설정(utm 기준)
-     - origin 설정 후 waypoint(lat/lon)를 UTM->local(map)로 1회 변환 캐싱
+     - origin 설정 후 waypoint(UTM CSV)를 local(map)로 1회 변환 캐싱
   5) local(map) = (utm - origin)
   6) 점프 필터: 이전 local과 거리 > jump_threshold면 무시
   7) yaw 추정: 이동방향(atan2(dy,dx))
@@ -43,15 +43,14 @@ private:
   void gpsCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg);
 
   // -------- Waypoint I/O --------
-  bool loadWaypointsLatLonCsv(
-      const std::string& file_path,
-      std::vector<std::pair<double,double>>& out_latlon);
+  // "index,utm_x,utm_y" 형식 CSV 로드
+  bool loadWaypointsUtmCsv(const std::string& file_path);
 
-  // origin 설정 이후 1회 실행: lat/lon -> UTM -> local(map) 캐싱
+  // origin 설정 이후 1회 실행: waypoint_utm - origin → local(map) 캐싱
   void convertWaypointsToLocal();
   bool waypointsReady() const { return waypoints_local_ready_ && !waypoints_local_.empty(); }
 
-  // 전체 waypoint를 헤딩 기준 상대 좌표(base_link)로 변환해 Path 발행
+  // 전체 waypoint를 헤딩 기준 상대 좌표(base_link)로 변환해 Marker POINTS 발행
   void publishWaypointsBaseLink(
       const Vec2& P_local,
       double yaw,
@@ -97,10 +96,10 @@ private:
   bool waypoints_loaded_{false};
   bool waypoints_local_ready_{false};
 
-  // raw: lat/lon
-  std::vector<std::pair<double,double>> waypoints_latlon_;
+  // raw: UTM 좌표 (CSV에서 로드)
+  std::vector<Vec2> waypoints_utm_;
 
-  // local(map) 캐시
+  // local(map) 캐시 = waypoint_utm - origin
   std::vector<Vec2> waypoints_local_;
 };
 

@@ -8,7 +8,8 @@
  *   - StopReason:            Greedy chaining 종료 이유
  *   - NodeOwner:             노드 소유권 라벨
  *   - SideResult:            한쪽 side의 chaining 결과
- *   - DirectionChainResult:  좌/우 전체 결과
+ *   - DirectionChainResult:  좌/우 전체 결과 + 교차 판정 플래그
+ *                            (left_crossed_right / right_crossed_left)
  */
 #ifndef CHAINING_COSTMAP_VER__COMMON__TYPES__CHAIN_TYPES_HPP_
 #define CHAINING_COSTMAP_VER__COMMON__TYPES__CHAIN_TYPES_HPP_
@@ -106,6 +107,10 @@ struct DirectionChainResult
   SideResult right;           ///< 우측 경계 체이닝 결과
   std::vector<ChainPoint> unchained;  ///< 어떤 체인에도 속하지 못한 포인트들
   bool valid = false;         ///< 최소 한쪽 backbone 생성 성공 여부
+
+  /// 교차 판정: 한쪽 backbone이 반대쪽 seed를 체이닝한 경우
+  bool left_crossed_right = false;  ///< left backbone이 right seed를 포함
+  bool right_crossed_left = false;  ///< right backbone이 left seed를 포함
 };
 
 }  // namespace chaining_costmap_ver

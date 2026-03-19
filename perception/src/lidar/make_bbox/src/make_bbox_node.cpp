@@ -1,5 +1,7 @@
 #include "make_bbox/make_bbox_node.hpp"
 
+#include <algorithm>
+#include <cmath>
 #include <limits>
 #include <unordered_map>
 #include <vector>
@@ -51,6 +53,12 @@ MakeBBoxNode::MakeBBoxNode(const rclcpp::NodeOptions & options)
   max_size_y_    = static_cast<float>(declare_parameter<double>("max_size_y", 0.55));
   max_size_z_    = static_cast<float>(declare_parameter<double>("max_size_z", 0.89));
 
+  // 클러스터 분할 파라미터
+  enable_split_          = declare_parameter<bool>("enable_cluster_split", true);
+  split_cone_diameter_   = static_cast<float>(declare_parameter<double>("split_cone_diameter_m", 0.5));
+  split_kmeans_max_iter_ = declare_parameter<int>("split_kmeans_max_iter", 15);
+  split_min_points_      = declare_parameter<int>("split_min_points", 5);
+
   auto qos = rclcpp::SensorDataQoS();
 
   sub_ = create_subscription<sensor_msgs::msg::PointCloud2>(
@@ -74,18 +82,9 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     return;
   }
 
-  // 클러스터별 바운딩박스 통계
-  struct ClusterStats {
-    float min_x = std::numeric_limits<float>::max();
-    float max_x = std::numeric_limits<float>::lowest();
-    float min_y = std::numeric_limits<float>::max();
-    float max_y = std::numeric_limits<float>::lowest();
-    float min_z = std::numeric_limits<float>::max();
-    float max_z = std::numeric_limits<float>::lowest();
-    size_t count = 0;
-  };
-
-  std::unordered_map<int32_t, ClusterStats> clusters;
+  // ── 1단계: 클러스터별 포인트 수집 ──
+  struct Point3 { float x, y, z; };
+  std::unordered_map<int32_t, std::vector<Point3>> cluster_points;
 
   try {
     sensor_msgs::PointCloud2ConstIterator<float> it_x(*msg, "x");
@@ -96,55 +95,142 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     for (size_t i = 0; i < total; ++i, ++it_x, ++it_y, ++it_z, ++it_cid) {
       const int32_t cid = *it_cid;
       if (cid < 0) continue;
-
-      auto & s = clusters[cid];
-      if (*it_x < s.min_x) s.min_x = *it_x;
-      if (*it_x > s.max_x) s.max_x = *it_x;
-      if (*it_y < s.min_y) s.min_y = *it_y;
-      if (*it_y > s.max_y) s.max_y = *it_y;
-      if (*it_z < s.min_z) s.min_z = *it_z;
-      if (*it_z > s.max_z) s.max_z = *it_z;
-      ++s.count;
+      cluster_points[cid].push_back({*it_x, *it_y, *it_z});
     }
   } catch (const std::exception & e) {
     RCLCPP_ERROR(get_logger(), "PointCloud2 field error: %s", e.what());
     return;
   }
 
-  // BBoxArray 생성
+  // ── 2단계: oversized 클러스터 K-means 분할 ──
+  // 분할 결과를 최종 클러스터 리스트에 담는다
+  struct ClusterData {
+    std::vector<Point3> points;
+    int32_t label;  // 시각화용 label
+  };
+  std::vector<ClusterData> final_clusters;
+  final_clusters.reserve(cluster_points.size());
+
+  int32_t next_label = 0;
+
+  for (auto & [cid, pts] : cluster_points) {
+    if (pts.size() < 2 || !enable_split_) {
+      // 분할 불필요
+      final_clusters.push_back({std::move(pts), next_label++});
+      continue;
+    }
+
+    // XY 바운딩박스 계산
+    float min_x = std::numeric_limits<float>::max(), max_x = std::numeric_limits<float>::lowest();
+    float min_y = std::numeric_limits<float>::max(), max_y = std::numeric_limits<float>::lowest();
+    for (const auto & p : pts) {
+      min_x = std::min(min_x, p.x); max_x = std::max(max_x, p.x);
+      min_y = std::min(min_y, p.y); max_y = std::max(max_y, p.y);
+    }
+    const float range_x = max_x - min_x;
+    const float range_y = max_y - min_y;
+    const float longest = std::max(range_x, range_y);
+
+    // 분할이 필요한지 판단: 최장축이 콘 지름보다 커야 함
+    const int k = static_cast<int>(std::round(longest / split_cone_diameter_));
+    if (k < 2) {
+      final_clusters.push_back({std::move(pts), next_label++});
+      continue;
+    }
+
+    // K-means (XY만 사용)
+    // 초기 centroid: 최장축을 따라 k등분 위치에 배치
+    const bool split_along_x = (range_x >= range_y);
+    std::vector<float> cx(k), cy(k);
+    for (int j = 0; j < k; ++j) {
+      const float t = (static_cast<float>(j) + 0.5F) / static_cast<float>(k);
+      cx[j] = split_along_x ? (min_x + t * range_x) : ((min_x + max_x) * 0.5F);
+      cy[j] = split_along_x ? ((min_y + max_y) * 0.5F) : (min_y + t * range_y);
+    }
+
+    const size_t n = pts.size();
+    std::vector<int> assign(n, 0);
+
+    for (int iter = 0; iter < split_kmeans_max_iter_; ++iter) {
+      // 할당: 각 포인트를 가장 가까운 centroid에
+      bool changed = false;
+      for (size_t i = 0; i < n; ++i) {
+        float best_d2 = std::numeric_limits<float>::max();
+        int best_j = 0;
+        for (int j = 0; j < k; ++j) {
+          const float dx = pts[i].x - cx[j];
+          const float dy = pts[i].y - cy[j];
+          const float d2 = dx * dx + dy * dy;
+          if (d2 < best_d2) { best_d2 = d2; best_j = j; }
+        }
+        if (assign[i] != best_j) { assign[i] = best_j; changed = true; }
+      }
+      if (!changed) break;
+
+      // centroid 재계산
+      std::vector<float> sum_x(k, 0.0F), sum_y(k, 0.0F);
+      std::vector<int> cnt(k, 0);
+      for (size_t i = 0; i < n; ++i) {
+        sum_x[assign[i]] += pts[i].x;
+        sum_y[assign[i]] += pts[i].y;
+        ++cnt[assign[i]];
+      }
+      for (int j = 0; j < k; ++j) {
+        if (cnt[j] > 0) {
+          cx[j] = sum_x[j] / static_cast<float>(cnt[j]);
+          cy[j] = sum_y[j] / static_cast<float>(cnt[j]);
+        }
+      }
+    }
+
+    // 서브클러스터를 final_clusters에 추가
+    std::vector<std::vector<Point3>> sub(k);
+    for (size_t i = 0; i < n; ++i) {
+      sub[assign[i]].push_back(pts[i]);
+    }
+    for (int j = 0; j < k; ++j) {
+      if (static_cast<int>(sub[j].size()) >= split_min_points_) {
+        final_clusters.push_back({std::move(sub[j]), next_label++});
+      }
+    }
+  }
+
+  // ── 3단계: 바운딩박스 & 마커 생성 ──
   auto bbox_msg = std::make_unique<ev_msgs::msg::BBoxArray>();
   bbox_msg->header = msg->header;
-  bbox_msg->bboxes.reserve(clusters.size());
+  bbox_msg->bboxes.reserve(final_clusters.size());
 
-  // MarkerArray 생성
   auto marker_msg = std::make_unique<visualization_msgs::msg::MarkerArray>();
-
-  // DELETEALL 마커 (이전 프레임 잔상 제거)
   visualization_msgs::msg::Marker del;
   del.header = msg->header;
   del.action = visualization_msgs::msg::Marker::DELETEALL;
   marker_msg->markers.push_back(del);
 
   int marker_id = 0;
-  for (const auto & [cid, s] : clusters) {
-    if (s.count == 0) continue;
+  for (const auto & cl : final_clusters) {
+    // 바운딩박스 통계
+    float bmin_x = std::numeric_limits<float>::max(), bmax_x = std::numeric_limits<float>::lowest();
+    float bmin_y = std::numeric_limits<float>::max(), bmax_y = std::numeric_limits<float>::lowest();
+    float bmin_z = std::numeric_limits<float>::max(), bmax_z = std::numeric_limits<float>::lowest();
+    for (const auto & p : cl.points) {
+      bmin_x = std::min(bmin_x, p.x); bmax_x = std::max(bmax_x, p.x);
+      bmin_y = std::min(bmin_y, p.y); bmax_y = std::max(bmax_y, p.y);
+      bmin_z = std::min(bmin_z, p.z); bmax_z = std::max(bmax_z, p.z);
+    }
 
-    // 바운딩박스 크기
-    const float size_x = s.max_x - s.min_x;
-    const float size_y = s.max_y - s.min_y;
-    const float size_z = s.max_z - s.min_z;
+    const float size_x = bmax_x - bmin_x;
+    const float size_y = bmax_y - bmin_y;
+    const float size_z = bmax_z - bmin_z;
 
     // 크기 상한 필터: 라바콘보다 큰 물체 탈락
     if (size_x > max_size_x_ || size_y > max_size_y_ || size_z > max_size_z_) {
       continue;
     }
 
-    // 바운딩박스 중심
-    const float cx = (s.min_x + s.max_x) * 0.5F;
-    const float cy = (s.min_y + s.max_y) * 0.5F;
-    const float cz = (s.min_z + s.max_z) * 0.5F;
+    const float cx = (bmin_x + bmax_x) * 0.5F;
+    const float cy = (bmin_y + bmax_y) * 0.5F;
+    const float cz = (bmin_z + bmax_z) * 0.5F;
 
-    // BBox 메시지 (바운딩박스)
     ev_msgs::msg::BBox bbox;
     bbox.position.x = static_cast<double>(cx);
     bbox.position.y = static_cast<double>(cy);
@@ -152,7 +238,7 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     bbox.size_x = size_x;
     bbox.size_y = size_y;
     bbox.size_z = size_z;
-    bbox.label = cid;
+    bbox.label = cl.label;
     bbox_msg->bboxes.push_back(bbox);
 
     // LINE_LIST 마커 (와이어프레임 바운딩박스)
@@ -163,15 +249,14 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     m.type = visualization_msgs::msg::Marker::LINE_LIST;
     m.action = visualization_msgs::msg::Marker::ADD;
     m.pose.orientation.w = 1.0;
-    m.scale.x = 0.03;  // 선 두께 (3cm)
-    m.color = id_to_color(cid);
+    m.scale.x = 0.03;
+    m.color = id_to_color(cl.label);
     m.color.a = 1.0F;
     m.lifetime = rclcpp::Duration::from_seconds(0.2);
 
-    // 8개 꼭짓점
-    const double x0 = static_cast<double>(s.min_x), x1 = static_cast<double>(s.max_x);
-    const double y0 = static_cast<double>(s.min_y), y1 = static_cast<double>(s.max_y);
-    const double z0 = static_cast<double>(s.min_z), z1 = static_cast<double>(s.max_z);
+    const double x0 = static_cast<double>(bmin_x), x1 = static_cast<double>(bmax_x);
+    const double y0 = static_cast<double>(bmin_y), y1 = static_cast<double>(bmax_y);
+    const double z0 = static_cast<double>(bmin_z), z1 = static_cast<double>(bmax_z);
 
     auto pt = [](double x, double y, double z) {
       geometry_msgs::msg::Point p;
@@ -179,7 +264,6 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
       return p;
     };
 
-    // 12개 모서리 (LINE_LIST: 점 2개가 한 쌍)
     // 바닥면
     m.points.push_back(pt(x0, y0, z0)); m.points.push_back(pt(x1, y0, z0));
     m.points.push_back(pt(x1, y0, z0)); m.points.push_back(pt(x1, y1, z0));

@@ -14,7 +14,7 @@ UtmLocalizer::UtmLocalizer()
   /*
   ------------------------------------------------------------
   파라미터
-  - waypoint_file: "lat,lon" 형식 CSV 파일 경로
+  - waypoint_file: "index,utm_x,utm_y" 형식 CSV 파일 경로
   - jump_threshold: GPS 튐 거리 임계값(m)
   - covariance_threshold: 공분산 기반 sigma_xy 임계값(m)
   ------------------------------------------------------------
@@ -39,12 +39,12 @@ UtmLocalizer::UtmLocalizer()
   // 2) /local_path 퍼블리시 (frame=base_link) — 전체 waypoint의 헤딩 기준 상대 좌표 (Marker POINTS)
   marker_pub_ = create_publisher<visualization_msgs::msg::Marker>("/local_path", rclcpp::QoS(10));
 
-  // 4) waypoint 파일은 origin이 정해져야 local(map)로 변환 가능하므로,
-  //    여기서는 "lat/lon 목록만" 미리 로드해둔다.
+  // 3) waypoint CSV 로드 (index,utm_x,utm_y 형식)
+  //    origin이 정해져야 local(map)로 변환 가능하므로 UTM 값만 미리 로드
   if (!waypoint_file_.empty()) {
-    waypoints_loaded_ = loadWaypointsLatLonCsv(waypoint_file_, waypoints_latlon_);
+    waypoints_loaded_ = loadWaypointsUtmCsv(waypoint_file_);
     if (waypoints_loaded_) {
-      RCLCPP_INFO(get_logger(), "Loaded waypoint lat/lon: %zu", waypoints_latlon_.size());
+      RCLCPP_INFO(get_logger(), "Loaded waypoint UTM: %zu", waypoints_utm_.size());
     } else {
       RCLCPP_WARN(get_logger(), "Failed to load waypoint file: %s", waypoint_file_.c_str());
     }
@@ -168,36 +168,35 @@ void UtmLocalizer::gpsCallback(const sensor_msgs::msg::NavSatFix::SharedPtr msg)
   }
 }
 
-bool UtmLocalizer::loadWaypointsLatLonCsv(const std::string& file_path,
-                                         std::vector<std::pair<double,double>>& out_latlon){
+bool UtmLocalizer::loadWaypointsUtmCsv(const std::string& file_path){
   std::ifstream fin(file_path);
   if (!fin.is_open()) return false;
 
-  out_latlon.clear();
+  waypoints_utm_.clear();
 
   std::string line;
   while (std::getline(fin, line)) {
-    // 공백 제거
     line.erase(std::remove_if(line.begin(), line.end(), [](unsigned char c){ return c=='\r'; }), line.end());
     if (line.empty()) continue;
     if (line[0] == '#') continue;
 
-    // "lat,lon" 파싱
+    // "index,utm_x,utm_y" 파싱
     std::stringstream ss(line);
-    std::string a, b;
-    if (!std::getline(ss, a, ',')) continue;
-    if (!std::getline(ss, b)) continue;
+    std::string idx_str, x_str, y_str;
+    if (!std::getline(ss, idx_str, ',')) continue;
+    if (!std::getline(ss, x_str, ',')) continue;
+    if (!std::getline(ss, y_str)) continue;
 
     try {
-      const double lat = std::stod(a);
-      const double lon = std::stod(b);
-      out_latlon.emplace_back(lat, lon);
+      Vec2 wp;
+      wp.x = std::stod(x_str);
+      wp.y = std::stod(y_str);
+      waypoints_utm_.push_back(wp);
     } catch (...) {
-      // 헤더/문자열 라인이면 스킵
       continue;
     }
   }
-  return !out_latlon.empty();
+  return !waypoints_utm_.empty();
 }
 
 void UtmLocalizer::convertWaypointsToLocal(){
@@ -206,15 +205,13 @@ void UtmLocalizer::convertWaypointsToLocal(){
 
   if (!origin_set_ || !waypoints_loaded_) return;
 
-  waypoints_local_.reserve(waypoints_latlon_.size());
+  waypoints_local_.reserve(waypoints_utm_.size());
 
-  for (const auto& ll : waypoints_latlon_) {
-    double wx_utm = 0.0, wy_utm = 0.0;
-    latLonToUTM(ll.first, ll.second, wx_utm, wy_utm);
-
+  // waypoint는 이미 UTM 좌표이므로 origin만 빼면 local(map)
+  for (const auto& wp : waypoints_utm_) {
     Vec2 w_local;
-    w_local.x = wx_utm - origin_x_;
-    w_local.y = wy_utm - origin_y_;
+    w_local.x = wp.x - origin_x_;
+    w_local.y = wp.y - origin_y_;
     waypoints_local_.push_back(w_local);
   }
 

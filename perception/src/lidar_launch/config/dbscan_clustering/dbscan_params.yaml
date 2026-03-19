@@ -2,17 +2,17 @@ dbscan_clustering:
   ros__parameters:
     input_topic: "/patchworkpp/nonground"
     output_topic: "/pointcloud/clustered"
-    eps: 0.3
+    eps: 0.15
     min_points: 10
     max_neighbors: 1024
     max_points: 80000
     queue_size: 1
 
     # ROI
-    roi_min_x: -6.0
-    roi_max_x: 16.0
-    roi_min_y: -7.0
-    roi_max_y: 7.0
+    roi_min_x: -3.0
+    roi_max_x: 12.0
+    roi_min_y: -3.0
+    roi_max_y: 3.0
     roi_min_z: -2.0
     roi_max_z: 0.5
 

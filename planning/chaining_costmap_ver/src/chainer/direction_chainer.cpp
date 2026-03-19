@@ -15,6 +15,12 @@
  *   준비: find_seed() → build_graph() → owner[] 초기화
  *   1단계: extract_backbone(left, forward-only)  → LEFT_BACKBONE 라벨
  *   2단계: extract_backbone(right, forward-only) → RIGHT_BACKBONE 라벨
+ *   2.5단계: 교차 판정 — 1·2단계 backbone 확정 후, 반대쪽 seed가
+ *           이쪽 backbone에 포함되었는지 owner[] 라벨로 검사.
+ *           owner[right_seed] == LEFT_BACKBONE → left_crossed_right = true
+ *           owner[left_seed]  == RIGHT_BACKBONE → right_crossed_left = true
+ *           교차 플래그는 DirectionChainResult에 저장되어 GoalCalculator에서
+ *           backbone 중간점 폴백에 사용된다.
  *   3단계: extract_branches(left)  → LEFT_BRANCH 라벨
  *   4단계: extract_branches(right) → RIGHT_BRANCH 라벨
  *   5단계: resample_component() × 2
@@ -59,6 +65,13 @@ DirectionChainResult DirectionChainer::chain(
     }
   }
 
+  // 교차 판정 (1단계 직후): left backbone이 right seed를 체이닝했는지
+  // right backbone 빌드 전에 검사해야 owner가 덮어써지지 않음
+  if (right_seed >= 0 && !left_backbone_ids.empty() &&
+      owner[right_seed] == NodeOwner::LEFT_BACKBONE) {
+    result.left_crossed_right = true;
+  }
+
   // 2단계: Right Backbone 확정 (전방 전용)
   std::vector<int> right_backbone_ids;
   StopReason right_stop_fwd = StopReason::NO_CANDIDATE;
@@ -68,6 +81,12 @@ DirectionChainResult DirectionChainer::chain(
     for (int idx : right_backbone_ids) {
       owner[idx] = NodeOwner::RIGHT_BACKBONE;
     }
+  }
+
+  // 교차 판정 (2단계 직후): right backbone이 left seed를 체이닝했는지
+  if (left_seed >= 0 && !right_backbone_ids.empty() &&
+      owner[left_seed] == NodeOwner::RIGHT_BACKBONE) {
+    result.right_crossed_left = true;
   }
 
   // 3단계: Left Branch 확정

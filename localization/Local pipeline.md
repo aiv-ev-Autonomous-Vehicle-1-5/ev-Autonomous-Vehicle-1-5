@@ -24,7 +24,7 @@ utm_localizer (gps_localization)
     + 전체 waypoint를 차량 헤딩 기준 상대 좌표(x, y)로 변환하여 points 배열로 발행
 * Parameters:
   - `fix_topic` (string, 기본값: `/ublox_gps_node/fix`) — 구독할 GNSS 토픽명
-  - `waypoint_file` (string, 기본값: `""`) — "lat,lon" 형식 CSV 파일 경로
+  - `waypoint_file` (string, 기본값: `""`) — "index,utm_x,utm_y" 형식 CSV 파일 경로 (예: RDDF/sejong_playground.csv)
   - `jump_threshold` (double, 기본값: `2.0`) — GPS 튐 거리 임계값(m)
   - `covariance_threshold` (double, 기본값: `0.5`) — 공분산 기반 sigma_xy 임계값(m)
 
@@ -39,7 +39,7 @@ ros2 run gps_localization utm_localizer_node
 1. `/fix` 수신
 2. 공분산 필터: sigma_xy > `covariance_threshold` → 무시
 3. lat/lon → UTM 변환
-4. 최초 1회 origin 설정, waypoint를 local(map) 좌표로 1회 변환 캐싱
+4. 최초 1회 origin 설정, CSV waypoint(UTM)를 local(map) 좌표로 1회 변환 캐싱 (waypoint_utm - origin)
 5. local 좌표: local = utm - origin
 6. 점프 필터: 이전 local과 거리 > `jump_threshold` → 무시
 7. yaw 추정: atan2(dy, dx), 저속 시 freeze, 급점프 outlier 무시

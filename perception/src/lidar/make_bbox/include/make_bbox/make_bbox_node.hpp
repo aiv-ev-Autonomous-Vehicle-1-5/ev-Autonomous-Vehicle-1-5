@@ -24,6 +24,12 @@ private:
   float max_size_x_;
   float max_size_y_;
   float max_size_z_;
+
+  // 클러스터 분할 파라미터
+  bool enable_split_;
+  float split_cone_diameter_;
+  int split_kmeans_max_iter_;
+  int split_min_points_;
 };
 
 }  // namespace make_bbox

@@ -76,10 +76,16 @@ on_timer() — 10Hz (100ms)
 │
 ├── Stage 2: DirectionChainer  [chainer/*.cpp]
 │     find_seed → build_graph → extract_backbone(L/R, forward-only)
-│     → extract_branches(L/R) → resample_component(L/R)
-│     * backbone chaining 시 BBOX 우선 선택:
-│       게이트 통과 후보 중 bbox가 있으면 bbox만으로 w' 선택,
-│       없으면 lane으로 fallback
+│     → 교차 판정 → extract_branches(L/R) → resample_component(L/R)
+│     * backbone chaining 시 2-phase BBOX 최우선 탐색:
+│       Phase 1 — d_max 범위 내 모든 bbox를 knn 없이 직접 전수 탐색
+│                 (lane point가 많아도 bbox가 k개 제한에 밀리지 않음)
+│       Phase 2 — bbox 후보 없으면 knn fallback → bbox-first 선택
+│     * 교차 판정 (1·2단계 backbone 확정 직후):
+│       owner[right_seed] == LEFT_BACKBONE → left_crossed_right = true
+│       owner[left_seed]  == RIGHT_BACKBONE → right_crossed_left = true
+│       한쪽 backbone이 반대쪽 seed까지 체이닝한 비정상 상황을 감지.
+│       플래그는 DirectionChainResult에 저장 → Stage 3c에서 사용.
 │
 ├── Stage 2.5: Seed Gate
 │     양쪽 backbone 실패 시 "FAIL" 발행 후 중단.
@@ -90,7 +96,10 @@ on_timer() — 10Hz (100ms)
 │         * backbone 포인트(is_backbone=true)는 타입(LANE/BBOX)에 관계없이
 │           bbox_cost_max + bbox_radius 적용 → 전환 구간 gap 방지
 │         * branch의 LANE 포인트는 기존대로 lane_cost_max 적용
-│     3c. Goal 계산 (좌/우 끝점 선분 중점 or 폴백)
+│     3c. Goal 계산
+│         * 교차 판정 처리: left_crossed_right 또는 right_crossed_left가
+│           true이면 해당 backbone 인덱스 중간점을 local_goal로 즉시 반환
+│         * 정상 시: 좌/우 끝점 선분 중점 or 폴백
 │     3d. Goal → costmap 경계 clamp
 │     3e. A* 경로 탐색
 │

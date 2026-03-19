@@ -3,6 +3,14 @@ make_bbox:
     input_topic: "/pointcloud/clustered"
     output_topic: "/perception/bboxes"
     marker_topic: "/perception/bboxes_marker"
+    
+    # 클러스터 분할 (붙어있는 콘 분리용)
+    # XY 최장축이 cone_diameter보다 크면 k=round(최장축/cone_diameter)로 K-means 분할
+    enable_cluster_split: true
+    split_cone_diameter_m: 0.5    # 콘 지름 기준 (m)
+    split_kmeans_max_iter: 15     # K-means 최대 반복
+    split_min_points: 0           # 분할 후 최소 포인트 수 (미달 시 버림)
+
     # bbox 크기 상한 필터 (대회 라바콘 규격 + 0.05m 패딩)
     #   라바콘: X=0.500, Y=0.500, Z=0.840
 
@@ -10,6 +18,7 @@ make_bbox:
     #   - 가로(X): 약 0.500 m
     #   - 세로(Y): 약 0.500 m
     #   - 높이(Z): 약 0.840 m
-    max_size_x: 0.75
-    max_size_y: 0.75
+    max_size_x: 1.75
+    max_size_y: 1.75
     max_size_z: 1.5
+

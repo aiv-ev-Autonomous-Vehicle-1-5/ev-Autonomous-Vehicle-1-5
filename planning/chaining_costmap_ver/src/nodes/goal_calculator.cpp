@@ -5,6 +5,12 @@
  * 좌/우 backbone 끝점을 잇는 선분 위에서 통과 가능한 goal을 결정한다.
  * costmap 경계 clamp도 포함.
  *
+ * [교차 판정 처리]
+ *   DirectionChainResult의 교차 플래그(left_crossed_right / right_crossed_left)가
+ *   true인 경우, 해당 backbone의 인덱스 중간점(bb[bb.size()/2])을 local_goal로
+ *   즉시 반환한다. 교차 상태는 한쪽 backbone이 반대쪽 seed까지 체이닝한 비정상
+ *   상황이므로, 좌/우 끝점 선분 기반 계산을 건너뛰고 안전한 중간점을 사용한다.
+ *
  * [의존 관계]
  *   - goal_calculator.hpp: GoalResult, calculate_goal(), clamp_goal_to_costmap() 선언
  *   - types.hpp: CostmapResult, DirectionChainResult, Point2D
@@ -42,6 +48,25 @@ GoalResult calculate_goal(
   const PlanningParams & params)
 {
   GoalResult gr;
+
+  // 교차 판정: 한쪽 backbone이 반대쪽 seed를 먹은 경우
+  // → 해당 backbone의 인덱스 중간점을 local_goal로 사용
+  if (dc_result.left_crossed_right && !dc_result.left.backbone.empty()) {
+    const auto & bb = dc_result.left.backbone;
+    const auto & mid = bb[bb.size() / 2];
+    gr.goal.x = mid.x;
+    gr.goal.y = mid.y;
+    gr.have_goal = true;
+    return gr;
+  }
+  if (dc_result.right_crossed_left && !dc_result.right.backbone.empty()) {
+    const auto & bb = dc_result.right.backbone;
+    const auto & mid = bb[bb.size() / 2];
+    gr.goal.x = mid.x;
+    gr.goal.y = mid.y;
+    gr.have_goal = true;
+    return gr;
+  }
 
   if (!dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
     const double lx = dc_result.left.backbone.back().x;

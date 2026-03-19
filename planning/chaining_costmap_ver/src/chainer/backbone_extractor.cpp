@@ -5,9 +5,10 @@
  * [포함 함수]
  *   - extract_backbone():      전방 전용(forward-only) greedy chaining
  *   - chain_one_direction():   단방향 greedy chaining 헬퍼
- *                              (BBOX 우선 선택 — 탐색 범위 안에 bbox가
- *                               있으면 bbox 후보만으로 w' 최소 비용 선택,
- *                               없으면 lane 후보로 fallback)
+ *                              (2-phase BBOX 최우선 탐색:
+ *                               Phase 1 — d_max 범위 내 모든 bbox를 knn 없이
+ *                               직접 전수 탐색 → 게이트 적용,
+ *                               Phase 2 — bbox 후보 없으면 knn fallback)
  *   - compute_cost():          기본 비용함수 w(i,j)
  *   - compute_cost_prime():    확장 비용함수 w'(i,j) = w + λ·C_side
  *
@@ -101,7 +102,11 @@ double DirectionChainer::compute_cost_prime(
 // 단방향 Greedy Chaining 헬퍼
 // ============================================================================
 // seed에서 주어진 초기 방향(init_dir)으로 한 방향만 greedy chaining.
-// G1(거리) + G2(전방 cone) + G3(횡오차) 게이트 적용.
+//
+// [2-phase BBOX 최우선 탐색]
+//   Phase 1: d_max 범위 내 모든 bbox를 knn 없이 직접 전수 탐색 → G2+G3 게이트
+//            (lane point가 많아도 bbox가 k개 제한에 밀리지 않음)
+//   Phase 2: bbox 후보 없으면 기존 knn(k) → G1+G2+G3 게이트 → bbox-first 선택
 //
 std::vector<int> DirectionChainer::chain_one_direction(
   const std::vector<ChainPoint> & points,
@@ -121,23 +126,27 @@ std::vector<int> DirectionChainer::chain_one_direction(
   const double cone_half_rad = cp.forward_cone_deg * M_PI / 360.0;
 
   while (static_cast<int>(chain.size()) < remaining_len) {
-    auto neighbors = knn(points, current, cp.k);
-
-    // owner 필터 + 3개 게이트 적용
     std::vector<int> gated;
     bool had_candidates = false;
+    const int n = static_cast<int>(points.size());
+    const double d_max_sq = cp.d_max * cp.d_max;
 
-    for (int j : neighbors) {
-      if (owner[j] != NodeOwner::NONE) continue;
+    // ── Phase 1: BBOX 최우선 — d_max 범위 내 모든 bbox를 knn 없이 직접 탐색
+    //    knn k개 제한 때문에 lane point에 밀려 bbox가 후보에서 빠지는 것을 방지
+    for (int i = 0; i < n; ++i) {
+      if (i == current) continue;
+      if (points[i].type != PointType::BBOX) continue;
+
+      const double dx = points[i].x - points[current].x;
+      const double dy = points[i].y - points[current].y;
+      if (dx * dx + dy * dy > d_max_sq) continue;
+
+      if (owner[i] != NodeOwner::NONE) continue;
       had_candidates = true;
-      if (visited_set.count(j)) continue;
+      if (visited_set.count(i)) continue;
 
-      const double dx = points[j].x - points[current].x;
-      const double dy = points[j].y - points[current].y;
       const double d = std::sqrt(dx * dx + dy * dy);
-
-      // G1: 거리 게이트
-      if (d > cp.d_max || d < 1e-9) continue;
+      if (d < 1e-9) continue;
 
       // G2: 전방 cone 게이트
       Point2D u_ij = {dx / d, dy / d};
@@ -150,7 +159,54 @@ std::vector<int> DirectionChainer::chain_one_direction(
       double lat = std::abs(dx * perp.x + dy * perp.y);
       if (lat > cp.lateral_gate) continue;
 
-      gated.push_back(j);
+      gated.push_back(i);
+    }
+
+    // ── Phase 2: bbox 후보가 없으면 기존 knn fallback (lane + bbox 혼합)
+    if (gated.empty()) {
+      auto neighbors = knn(points, current, cp.k);
+
+      for (int j : neighbors) {
+        if (owner[j] != NodeOwner::NONE) continue;
+        had_candidates = true;
+        if (visited_set.count(j)) continue;
+
+        const double dx = points[j].x - points[current].x;
+        const double dy = points[j].y - points[current].y;
+        const double d = std::sqrt(dx * dx + dy * dy);
+
+        // G1: 거리 게이트
+        if (d > cp.d_max || d < 1e-9) continue;
+
+        // G2: 전방 cone 게이트
+        Point2D u_ij = {dx / d, dy / d};
+        double cos_angle = dot2(v, u_ij);
+        cos_angle = std::clamp(cos_angle, -1.0, 1.0);
+        if (std::acos(cos_angle) > cone_half_rad) continue;
+
+        // G3: 횡오차 게이트
+        Point2D perp = {-v.y, v.x};
+        double lat = std::abs(dx * perp.x + dy * perp.y);
+        if (lat > cp.lateral_gate) continue;
+
+        gated.push_back(j);
+      }
+
+      // knn fallback에서도 bbox 우선 선택 유지
+      if (!gated.empty()) {
+        std::vector<int> bbox_gated;
+        std::vector<int> lane_gated;
+        for (int idx : gated) {
+          if (points[idx].type == PointType::BBOX) {
+            bbox_gated.push_back(idx);
+          } else {
+            lane_gated.push_back(idx);
+          }
+        }
+        if (!bbox_gated.empty()) {
+          gated = std::move(bbox_gated);
+        }
+      }
     }
 
     if (gated.empty()) {
@@ -159,30 +215,17 @@ std::vector<int> DirectionChainer::chain_one_direction(
       break;
     }
 
-    // BBOX 우선 선택: 탐색 범위 안에 bbox가 있으면 bbox만으로 선택,
-    // bbox가 없으면 나머지(lane) 후보로 fallback
-    std::vector<int> bbox_gated;
-    std::vector<int> lane_gated;
-    for (int idx : gated) {
-      if (points[idx].type == PointType::BBOX) {
-        bbox_gated.push_back(idx);
-      } else {
-        lane_gated.push_back(idx);
-      }
-    }
-    const auto & candidates = bbox_gated.empty() ? lane_gated : bbox_gated;
-
     // w' 최소 비용 선택
-    int best = candidates[0];
+    int best = gated[0];
     double best_cost = compute_cost_prime(
       points[current], points[best], v, is_left, cp);
 
-    for (size_t i = 1; i < candidates.size(); ++i) {
+    for (size_t i = 1; i < gated.size(); ++i) {
       double c = compute_cost_prime(
-        points[current], points[candidates[i]], v, is_left, cp);
+        points[current], points[gated[i]], v, is_left, cp);
       if (c < best_cost) {
         best_cost = c;
-        best = candidates[i];
+        best = gated[i];
       }
     }
 
