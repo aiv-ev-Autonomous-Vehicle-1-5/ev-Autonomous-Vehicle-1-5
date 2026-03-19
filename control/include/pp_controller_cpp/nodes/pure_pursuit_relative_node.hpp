@@ -29,6 +29,7 @@
 #ifndef PP_CONTROLLER_CPP__NODES__PURE_PURSUIT_RELATIVE_NODE_HPP_
 #define PP_CONTROLLER_CPP__NODES__PURE_PURSUIT_RELATIVE_NODE_HPP_
 
+#include <deque>
 #include <string>
 #include <vector>
 
@@ -56,7 +57,7 @@ private:
   /// /planning/path 토픽 콜백: 최신 경로 저장
   void on_path(const visualization_msgs::msg::Marker::SharedPtr msg);
 
-  /// 메인 제어 루프 (20Hz)
+  /// 메인 제어 루프 (50Hz)
   void on_timer();
 
   // ======================== 유틸리티 ========================
@@ -65,8 +66,8 @@ private:
   /// true = 비어있지 않고 timeout 이내, false = 없거나 오래됨
   bool path_fresh() const;
 
-  /// 정지 명령 발행 (speed=0, steering=0)
-  void publish_stop();
+  /// 정지 명령 발행 (speed=0, steering=0) — 즉시 정지 아닌 점진적 감속
+  void publish_emergency_decel(double dt);
 
   // ======================== 멤버 변수 ========================
 
@@ -80,6 +81,8 @@ private:
   rclcpp::Time last_control_time_{0, 0, RCL_ROS_TIME};   // 직전 제어 루프 시각
   std::string latest_status_;                              // 최신 planning 상태
   double last_cmd_speed_{0.0};                             // 직전 속도 명령 [m/s]
+  int    fail_counter_{0};                                  // FAIL 연속 카운터
+  std::deque<double> path_length_buffer_;                   // 경로 길이 이동 평균 버퍼
 
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;

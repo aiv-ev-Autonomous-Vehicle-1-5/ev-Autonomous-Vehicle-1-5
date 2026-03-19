@@ -195,6 +195,36 @@ bool compute_target_relative(
 }
 
 // ---------------------------------------------------------------------------
+// compute_remaining_length: nearest_i부터 경로 끝까지 남은 arc length [m]
+// ---------------------------------------------------------------------------
+double compute_remaining_length(
+  const std::vector<geometry_msgs::msg::Point> & pts,
+  size_t nearest_i)
+{
+  double len = 0.0;
+  for (size_t i = nearest_i + 1; i < pts.size(); ++i) {
+    len += norm2d(pts[i].x - pts[i-1].x, pts[i].y - pts[i-1].y);
+  }
+  return len;
+}
+
+// ---------------------------------------------------------------------------
+// compute_path_end_speed: 남은 거리 안에 멈출 수 있는 최대 속도
+// ---------------------------------------------------------------------------
+// 제동거리 공식 d = v²/(2a) 를 역으로: v = √(2a × d)
+// ---------------------------------------------------------------------------
+double compute_path_end_speed(
+  double remaining_length,
+  double decel_rate,
+  double v_min,
+  double v_max)
+{
+  if (remaining_length <= 0.0 || decel_rate <= 0.0) return v_min;
+  double v = std::sqrt(2.0 * decel_rate * remaining_length);
+  return std::clamp(v, v_min, v_max);
+}
+
+// ---------------------------------------------------------------------------
 // rate_limit_speed: 가감속 rate limit 적용
 // ---------------------------------------------------------------------------
 // 가속: v_cmd = min(target, prev + accel_rate * dt)

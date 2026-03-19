@@ -180,14 +180,14 @@ erp42_msgs/msg/ControlCommand
 │                   last_path_time_ 기록 (stale 검사용)               │
 │                   last_path_stamp_ 기록 (원본 센서 stamp 전파)     │
 │                                                                  │
-│  20Hz 타이머 ──→ [on_timer 제어루프]                               │
+│  50Hz 타이머 ──→ [on_timer 제어루프]                               │
 │                        │                                         │
-│                   ①  path_fresh() 확인                            │
-│                        │  (경로 비어있거나 timeout → 정지)          │
-│                        ▼                                         │
-│                   ①-b planning status 확인                        │
-│                        │  (FAIL 시 정지: not enough seeds /        │
-│                        │   no valid path / too short valid path)  │
+│                   ①  정지 조건 판정 + 연속 카운터                    │
+│                        │  - path_fresh() 실패 또는                 │
+│                        │    planning FAIL 시 fail_counter_++       │
+│                        │  - N회(emergency_stop_count) 연속 도달 시  │
+│                        │    emergency_decel_rate로 점진적 감속      │
+│                        │  - 정상이면 카운터 리셋                    │
 │                        ▼                                         │
 │                   ②  find_nearest_index()                        │
 │                        │  - 경로 전체에서 원점(0,0)에 최근접점 탐색  │
@@ -208,8 +208,8 @@ erp42_msgs/msg/ControlCommand
 │                        │    lookahead 목표점 선택                  │
 │                        ▼                                         │
 │                   ⑦  안전 조건 확인                                │
-│                        │  - Ld < 1e-3 → 정지                      │
-│                        │  - tx ≤ min_x_target → 정지              │
+│                        │  - Ld < 1e-3 → 점진적 긴급 감속           │
+│                        │  - tx ≤ min_x_target → 점진적 긴급 감속   │
 │                        ▼                                         │
 │                   ⑧  Pure Pursuit 조향각 계산                     │
 │                        │  kappa = 2*y / Ld²                       │
@@ -217,8 +217,9 @@ erp42_msgs/msg/ControlCommand
 │                        │  delta = clamp(delta, ±delta_max)        │
 │                        ▼                                         │
 │                   ⑨  최종 속도 결정                                │
-│                        │  effective_κ = max(|κ_pp|, κ_preview)    │
-│                        │  v_target = speed_target(effective_κ)    │
+│                        │  v_curv = speed_target(effective_κ)      │
+│                        │  v_end  = √(2 × decel × remaining_len)  │
+│                        │  v_target = min(v_curv, v_end)           │
 │                        │  v_cmd = rate_limit(v_target, dt)        │
 │                        ▼                                         │
 │                   ⑩  제어 명령 발행                                │
@@ -230,6 +231,39 @@ erp42_msgs/msg/ControlCommand
 │                        │  → /pp_debug/pursuit_arc (LINE_STRIP)    │
 └──────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## 긴급 감속 (Emergency Decel)
+
+급정지 시 역전기력(back-EMF)에 의한 하드웨어 손상을 방지하기 위해, 모든 정지 상황에서 `emergency_decel_rate`로 점진적 감속한다.
+
+### 발생 조건
+
+| 트리거 | 발생 위치 | 설명 |
+|---|---|---|
+| planning FAIL 연속 N회 | ① 정지 조건 판정 | `FAIL - not enough seeds` 또는 `FAIL - no valid path`가 `emergency_stop_count`(10회, 200ms) 연속 수신 시 |
+| 경로 미수신/타임아웃 | ① 정지 조건 판정 | `path_fresh()` 실패가 `emergency_stop_count` 연속 시 |
+| lookahead 목표점 계산 실패 | ⑥→⑦ 사이 | `compute_target_relative()`가 유효한 목표점을 찾지 못한 경우 |
+| Ld ≈ 0 | ⑦ 안전 조건 확인 | lookahead 거리가 1e-3 미만 → 조향 계산 불가 (0 나누기 방지) |
+| 목표점이 뒤쪽 | ⑦ 안전 조건 확인 | 목표점 x좌표 ≤ `min_x_target` → 전방 추종 불가 |
+
+### 노이즈 필터링 (① 한정)
+
+planning FAIL 및 경로 타임아웃은 단발성 노이즈일 수 있으므로, 연속 카운터로 필터링한다:
+- FAIL 1~9회: **이전 명령 유지** (감속 안 함, 노이즈 무시)
+- FAIL 10회 연속(200ms): **긴급 감속 시작**
+- 정상 복귀 시: 카운터 즉시 리셋, 정상 주행 재개
+
+### 감속 동작
+
+```
+v_cmd = rate_limit_speed(0.0, last_cmd_speed_, dt, accel_rate, emergency_decel_rate)
+```
+- 목표속도 = 0으로 설정하되, `emergency_decel_rate`(3.0 m/s²)로 점진적 감속
+- 매 사이클(dt=0.02초) 최대 0.06 m/s씩 감속
+- 최대속도 3.2 m/s에서 정지까지 약 1.07초
+- 속도가 0에 도달하면 ERP42에 brake=1 발행
 
 ---
 

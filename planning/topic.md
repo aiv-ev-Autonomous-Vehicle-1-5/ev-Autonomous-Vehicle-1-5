@@ -16,7 +16,18 @@
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
 | `/planning/path` | `visualization_msgs/msg/Marker` (POINTS) | Best Effort, depth=1 | 최종 후처리 경로 — 제어기(Pure Pursuit)가 구독 (초록색, 8cm) |
-| `/planning/status` | `std_msgs/msg/String` | Best Effort, depth=1 | 플래너 상태: `OK`, `STALE`, `FAIL - not enough seeds`, `FAIL - no valid path`, `FAIL - too short valid path`, `WARNING - curvature exceeds r_min` |
+| `/planning/status` | `std_msgs/msg/String` | Best Effort, depth=1 | 플래너 상태 (아래 표 참고) |
+
+#### 플래너 상태 (`/planning/status`) 상세
+
+| 상태 | 발생 시점 | 발생 조건 | 경로 발행 |
+|---|---|---|---|
+| `OK` | Stage 6 (Safety Check) | 모든 검사 통과. 경로 유효, 곡률 정상 | 정상 경로 발행 |
+| `STALE` | Stage 0 (Stale Gate) | perception 데이터(bbox/lane) 마지막 수신 시각이 `perception_ms`(300ms) 초과 — 센서 입력 없음 또는 지연 | 발행 안 함 (즉시 return) |
+| `FAIL - not enough seeds` | Stage 2.5 (Seed Gate) | DirectionChainer가 좌/우 seed를 모두 찾지 못함 → 좌/우 backbone이 둘 다 비어있음 (`dc_result.valid == false`). 차선/콘이 전혀 감지되지 않거나 seed 조건(`side_seed_y`)을 만족하는 점이 없는 경우 | 빈 경로 발행 (즉시 return, Stage 3~7 스킵) |
+| `FAIL - no valid path` | Stage 6 (Safety Check) | seed는 있었으나 A* 경로 탐색 결과가 2점 미만. ① start/goal이 costmap 범위 밖 ② start 주변이 전부 벽(cost ≥ obstacle_cost)으로 둘러싸임 ③ goal이 없음(`have_goal == false`) | 빈 경로 발행 |
+| `WARNING - curvature exceeds r_min` | Stage 6 (Safety Check) | 경로의 최대 곡률(κ_max)이 차량 최소 회전반경의 한계 곡률(κ_limit = 1/r_min)을 초과. 스티어링을 최대로 꺾어도 해당 곡률을 추종하기 어려움 | **경로 발행됨** (추종은 가능하나 주의 필요) |
+| `WARNING - too short valid path` | Stage 6 (Safety Check) | A* 경로는 생성되었으나 후처리 결과 총 길이가 `min_path_length`(1.5m) 미만. 장애물이 가까이 밀집하여 짧은 partial path만 생성된 경우 | **경로 발행됨** (짧은 경로임을 알림) |
 
 ### Debug 토픽 (Lazy Publishing — RViz2 구독 시에만 발행)
 

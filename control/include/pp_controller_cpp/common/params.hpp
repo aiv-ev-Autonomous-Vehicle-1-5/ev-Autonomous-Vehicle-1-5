@@ -52,12 +52,16 @@ struct PurePursuitParams
     double preview_distance{2.5};       // 선감속용 전방 curvature preview 거리 [m]
     double accel_rate{0.8};             // 가속 rate limit [m/s^2]
     double decel_rate{1.8};             // 감속 rate limit [m/s^2]
+    int    path_length_filter_size{10}; // 경로 길이 이동 평균 윈도우 크기
+    double stop_margin{1.5};            // 경로 끝 정지 여유거리 [m]
   } speed;
 
   // --- 안전 파라미터 ---
   struct Safety {
-    double path_timeout_sec{0.5};   // 경로 타임아웃 [초]
-    double min_x_target{0.05};      // 목표점 최소 전방 거리 [m]
+    double path_timeout_sec{0.5};       // 경로 타임아웃 [초]
+    double min_x_target{0.05};          // 목표점 최소 전방 거리 [m]
+    double emergency_decel_rate{3.0};   // 긴급 정지 감속 rate limit [m/s^2]
+    int    emergency_stop_count{10};    // FAIL 연속 N회 시 긴급 감속 시작
   } safety;
 
   // =========================================================================
@@ -110,6 +114,7 @@ struct PurePursuitParams
     node->declare_parameter<double>("preview_distance", speed.preview_distance);
     node->declare_parameter<double>("accel_rate", speed.accel_rate);
     node->declare_parameter<double>("decel_rate", speed.decel_rate);
+    node->declare_parameter<int>("path_length_filter_size", speed.path_length_filter_size);
 
     const double legacy_speed = node->get_parameter("speed").as_double();
     speed.max = node->get_parameter("speed_max").as_double();
@@ -121,12 +126,20 @@ struct PurePursuitParams
     speed.preview_distance    = std::max(lookahead.min, node->get_parameter("preview_distance").as_double());
     speed.accel_rate = std::max(1e-3, node->get_parameter("accel_rate").as_double());
     speed.decel_rate = std::max(1e-3, node->get_parameter("decel_rate").as_double());
+    speed.path_length_filter_size = std::max(1, static_cast<int>(node->get_parameter("path_length_filter_size").as_int()));
+
+    node->declare_parameter<double>("stop_margin", speed.stop_margin);
+    speed.stop_margin = std::max(0.0, node->get_parameter("stop_margin").as_double());
 
     // --- 안전 ---
     node->declare_parameter<double>("path_timeout_sec", safety.path_timeout_sec);
     node->declare_parameter<double>("min_x_target", safety.min_x_target);
-    safety.path_timeout_sec = node->get_parameter("path_timeout_sec").as_double();
-    safety.min_x_target     = node->get_parameter("min_x_target").as_double();
+    node->declare_parameter<double>("emergency_decel_rate", safety.emergency_decel_rate);
+    node->declare_parameter<int>("emergency_stop_count", safety.emergency_stop_count);
+    safety.path_timeout_sec     = node->get_parameter("path_timeout_sec").as_double();
+    safety.min_x_target         = node->get_parameter("min_x_target").as_double();
+    safety.emergency_decel_rate = std::max(1e-3, node->get_parameter("emergency_decel_rate").as_double());
+    safety.emergency_stop_count = std::max(1, static_cast<int>(node->get_parameter("emergency_stop_count").as_int()));
   }
 };
 

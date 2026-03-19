@@ -4,7 +4,7 @@
 // 이 파일은 노드 오케스트레이터 역할만 담당한다.
 // 알고리즘 계산은 pursuit::* 함수에, 시각화는 DebugVisualizer에 위임한다.
 //
-// [제어 루프 파이프라인] (on_timer, 20Hz)
+// [제어 루프 파이프라인] (on_timer, 50Hz)
 //   1) 경로 유효성 확인 → 없으면 정지
 //   2) planning 상태 확인 → FAIL이면 정지
 //   3) 최근접점 탐색
@@ -131,35 +131,44 @@ bool PurePursuitRelativeNode::path_fresh() const
 }
 
 // ===========================================================================
-// publish_stop: 정지 명령 발행
+// publish_emergency_decel: 점진적 긴급 감속 명령 발행
 // ===========================================================================
+// emergency_decel_rate로 rate limit을 적용하여 점진적으로 감속한다.
+// 역전기력(back-EMF)에 의한 하드웨어 손상을 방지한다.
+//
 // 호출되는 상황:
-//   1) 경로가 없거나 타임아웃
-//   2) 목표점 계산 실패
-//   3) 목표점이 너무 가깝거나 차량 뒤쪽에 위치
+//   1) FAIL 연속 카운터가 emergency_stop_count에 도달
+//   2) 경로가 없거나 타임아웃
+//   3) 목표점 계산 실패
+//   4) 목표점이 너무 가깝거나 차량 뒤쪽에 위치
 // ===========================================================================
-void PurePursuitRelativeNode::publish_stop()
+void PurePursuitRelativeNode::publish_emergency_decel(double dt)
 {
+  const double v_cmd = pursuit::rate_limit_speed(
+    0.0, last_cmd_speed_, dt,
+    params_.speed.accel_rate,
+    params_.safety.emergency_decel_rate);
+  last_cmd_speed_ = v_cmd;
+
   t870_msgs::msg::ControlCommand cmd;
-  cmd.speed = 0.0;
+  cmd.speed = v_cmd;
   cmd.steering = 0.0;
   cmd_pub_->publish(cmd);
 
   // Gazebo 시뮬레이션용 ERP42 명령 (구독자가 있을 때만)
   if (cmd_erp42_pub_->get_subscription_count() > 0) {
     erp42_msgs::msg::ControlCommand erp_cmd;
-    erp_cmd.speed = 0.0;
+    erp_cmd.speed = v_cmd;
     erp_cmd.steering = 0.0;
-    erp_cmd.brake = 1;
+    erp_cmd.brake = (v_cmd < 1e-3) ? 75 : 0;
     cmd_erp42_pub_->publish(erp_cmd);
   }
 
-  last_cmd_speed_ = 0.0;
   last_control_time_ = this->now();
 }
 
 // ===========================================================================
-// on_timer: 메인 제어 루프 (20Hz)
+// on_timer: 메인 제어 루프 (50Hz)
 // ===========================================================================
 //
 // [정지 조건]
@@ -178,26 +187,35 @@ void PurePursuitRelativeNode::on_timer()
   }
   last_control_time_ = now;
 
-  // ----- 경로 유효성 확인 -----
+  // ----- 정지 조건 판정 + 연속 카운터 -----
+  bool should_stop = false;
+  std::string stop_reason;
+
   if (!path_fresh()) {
-    RCLCPP_WARN_THROTTLE(
-      this->get_logger(), *this->get_clock(), 1000,
-      "[PP Relative] Path is missing or stale. Stop.");
-    publish_stop();
+    should_stop = true;
+    stop_reason = "Path is missing or stale";
+  } else if (latest_status_ == "FAIL - not enough seeds" ||
+             latest_status_ == "FAIL - no valid path")
+  {
+    should_stop = true;
+    stop_reason = latest_status_;
+  }
+
+  if (should_stop) {
+    ++fail_counter_;
+    if (fail_counter_ >= params_.safety.emergency_stop_count) {
+      RCLCPP_WARN_THROTTLE(
+        this->get_logger(), *this->get_clock(), 1000,
+        "[PP Relative] %s (%d consecutive). Emergency decel.",
+        stop_reason.c_str(), fail_counter_);
+      publish_emergency_decel(control_dt);
+    }
+    // 카운터 미달 시: 이전 명령 유지 (노이즈 필터링)
     return;
   }
 
-  // ----- planning 상태 확인 -----
-  if (latest_status_ == "FAIL - not enough seeds" ||
-      latest_status_ == "FAIL - no valid path" ||
-      latest_status_ == "FAIL - too short valid path")
-  {
-    RCLCPP_WARN_THROTTLE(
-      this->get_logger(), *this->get_clock(), 1000,
-      "[PP Relative] Planning status: %s. Stop.", latest_status_.c_str());
-    publish_stop();
-    return;
-  }
+  // 정상 상태 → 카운터 리셋
+  fail_counter_ = 0;
 
   // ----- Pure Pursuit 파이프라인 -----
   const auto & pts = latest_points_;
@@ -222,7 +240,7 @@ void PurePursuitRelativeNode::on_timer()
     RCLCPP_WARN_THROTTLE(
       this->get_logger(), *this->get_clock(), 1000,
       "[PP Relative] Failed to compute target. Stop.");
-    publish_stop();
+    publish_emergency_decel(control_dt);
     return;
   }
 
@@ -233,7 +251,7 @@ void PurePursuitRelativeNode::on_timer()
     RCLCPP_WARN_THROTTLE(
       this->get_logger(), *this->get_clock(), 1000,
       "[PP Relative] Target distance too small. Stop.");
-    publish_stop();
+    publish_emergency_decel(control_dt);
     return;
   }
 
@@ -242,7 +260,7 @@ void PurePursuitRelativeNode::on_timer()
     RCLCPP_WARN_THROTTLE(
       this->get_logger(), *this->get_clock(), 1000,
       "[PP Relative] Target is behind or too close: tx=%.3f. Stop.", tx);
-    publish_stop();
+    publish_emergency_decel(control_dt);
     return;
   }
 
@@ -254,9 +272,32 @@ void PurePursuitRelativeNode::on_timer()
   const double kappa_pp = (2.0 * ty) / (Ld_used * Ld_used);
 
   // ----- 속도 결정 -----
+  // a) 곡률 기반 목표 속도
   const double effective_abs_kappa = std::max(std::abs(kappa_pp), preview_kappa);
-  const double v_target = pursuit::compute_speed_target(
+  const double v_curvature = pursuit::compute_speed_target(
     effective_abs_kappa, p.speed.min, p.speed.max, p.speed.lateral_accel_limit);
+
+  // b) 제동거리 기반 목표 속도 (경로 길이 이동 평균 필터)
+  //    안전 우선: 필터 평균과 현재 raw 값 중 작은 값을 사용
+  //    → 경로가 갑자기 짧아지면 즉시 반영 (가속 방지)
+  //    → 경로가 갑자기 길어지면 서서히 반영 (노이즈 필터링)
+  const double raw_remaining = pursuit::compute_remaining_length(pts, nearest_i);
+  path_length_buffer_.push_back(raw_remaining);
+  while (static_cast<int>(path_length_buffer_.size()) > p.speed.path_length_filter_size) {
+    path_length_buffer_.pop_front();
+  }
+  double avg_remaining = 0.0;
+  for (const auto & l : path_length_buffer_) avg_remaining += l;
+  avg_remaining /= static_cast<double>(path_length_buffer_.size());
+  const double filtered_remaining = std::min(raw_remaining, avg_remaining);
+
+  // 남은 거리에서 정지 여유거리를 빼서, stop_margin 지점에서 속도 0으로 정지
+  const double effective_remaining = std::max(0.0, filtered_remaining - p.speed.stop_margin);
+  const double v_path_end = pursuit::compute_path_end_speed(
+    effective_remaining, p.speed.decel_rate, 0.0, p.speed.max);
+
+  // c) 두 목표 속도 중 작은 값 선택
+  const double v_target = std::min(v_curvature, v_path_end);
   const double v_cmd = pursuit::rate_limit_speed(
     v_target, last_cmd_speed_, control_dt, p.speed.accel_rate, p.speed.decel_rate);
   last_cmd_speed_ = v_cmd;
@@ -272,7 +313,7 @@ void PurePursuitRelativeNode::on_timer()
     erp42_msgs::msg::ControlCommand erp_cmd;
     erp_cmd.speed = v_cmd;
     erp_cmd.steering = delta;
-    erp_cmd.brake = 0;
+    erp_cmd.brake = (v_cmd < 1e-3) ? 75 : 0;
     cmd_erp42_pub_->publish(erp_cmd);
   }
 
@@ -280,8 +321,10 @@ void PurePursuitRelativeNode::on_timer()
   RCLCPP_INFO_THROTTLE(
     this->get_logger(), *this->get_clock(), 500,
     "[PP Relative] target=(%.2f, %.2f), Ld=%.2f, kappa_pp=%.3f, kappa_prev=%.3f, "
-    "v_target=%.2f, v_cmd=%.2f, delta=%.3f",
-    tx, ty, Ld_used, kappa_pp, preview_kappa, v_target, v_cmd, delta);
+    "v_target=%.2f, v_cmd=%.2f, delta=%.3f, "
+    "remain=%.2f, filtered=%.2f, v_curv=%.2f, v_end=%.2f",
+    tx, ty, Ld_used, kappa_pp, preview_kappa, v_target, v_cmd, delta,
+    raw_remaining, filtered_remaining, v_curvature, v_path_end);
 
   // ----- 디버그 시각화 발행 (lazy) — 원본 센서 타임스탬프 전파 -----
   debug_viz_.publish_lookahead_point(tx, ty, last_path_stamp_);

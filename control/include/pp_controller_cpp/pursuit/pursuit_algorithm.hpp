@@ -63,6 +63,19 @@ bool compute_target_relative(
   double & ty,
   double & Ld_used);
 
+/// nearest_i부터 경로 끝까지의 남은 arc length 계산 [m]
+double compute_remaining_length(
+  const std::vector<geometry_msgs::msg::Point> & pts,
+  size_t nearest_i);
+
+/// 남은 경로 길이 안에 멈출 수 있는 최대 속도 계산
+/// v = sqrt(2 * decel_rate * remaining_length)
+double compute_path_end_speed(
+  double remaining_length,
+  double decel_rate,
+  double v_min,
+  double v_max);
+
 /// 가감속 rate limit 적용
 double rate_limit_speed(
   double target_speed,

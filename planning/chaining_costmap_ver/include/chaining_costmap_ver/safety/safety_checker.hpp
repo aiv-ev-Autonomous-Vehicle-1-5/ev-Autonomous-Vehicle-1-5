@@ -155,16 +155,15 @@ inline double compute_path_length(const std::vector<Point2D> & path)
  *   1) 유효성 검사:  경로가 비었거나 점이 2개 미만이면
  *      → FAIL - no valid path
  *
- *   2) 최소 길이 검사: 경로 총 길이가 min_path_length 미만이면
- *      → FAIL - too short valid path
+ *   2) 최대 곡률 계산:  compute_max_curvature() 호출
  *
- *   3) 최대 곡률 계산:  compute_max_curvature() 호출
- *
- *   4) 최소 회전 반경 제한:
- *      - r_min = 차량 파라미터에서 가져온 최소 회전 반경 [m]
- *      - κ_limit = 1 / r_min  (한계 곡률)
+ *   3) 최소 회전 반경 제한:
  *      - κ_max > κ_limit 이면 → WARNING - curvature exceeds r_min
- *        (스티어링을 최대로 꺾어도 이 곡률을 따라가기 어려움, 경로는 발행)
+ *        (경로는 발행하되 주의 필요)
+ *
+ *   4) 최소 길이 검사: 경로 총 길이가 min_path_length 미만이면
+ *      → WARNING - too short valid path
+ *        (경로는 발행하되 짧은 경로임을 알림)
  *
  *   5) 모든 검사 통과 → OK
  *
@@ -186,18 +185,11 @@ inline SafetyResult check(
     return result;
   }
 
-  // ── 2) 최소 길이 검사: 경로가 너무 짧으면 추종 무의미 ──
-  const double path_length = compute_path_length(path.path);
-  if (path_length < p.safety.min_path_length) {
-    result.state = PlannerState::FAIL;
-    result.reason = "FAIL - too short valid path";
-    return result;
-  }
-
-  // ── 3) 최대 곡률 계산 (Menger 공식) ──
+  // ── 2) 최대 곡률 계산 (Menger 공식) ──
+  //   (길이 검사보다 먼저 수행 — WARNING 판정에 곡률 정보 필요)
   result.max_curvature = compute_max_curvature(path.path);
 
-  // ── 4) 최소 회전 반경 제한 검사 ──
+  // ── 3) 최소 회전 반경 제한 검사 ──
   // r_min: 차량이 스티어링을 최대로 꺾었을 때의 최소 회전 반경 [m]
   // κ_limit = 1/r_min: 차량이 물리적으로 추종 가능한 최대 곡률 [1/m]
   const double r_min = p.vehicle.r_min();
@@ -207,6 +199,15 @@ inline SafetyResult check(
   if (result.max_curvature > kappa_limit) {
     result.state = PlannerState::WARNING;
     result.reason = "WARNING - curvature exceeds r_min";
+    return result;
+  }
+
+  // ── 4) 최소 길이 검사: 경로가 너무 짧으면 경고 ──
+  // 경로는 발행하되, 제어기에 짧은 경로임을 알림
+  const double path_length = compute_path_length(path.path);
+  if (path_length < p.safety.min_path_length) {
+    result.state = PlannerState::WARNING;
+    result.reason = "WARNING - too short valid path";
     return result;
   }
 
