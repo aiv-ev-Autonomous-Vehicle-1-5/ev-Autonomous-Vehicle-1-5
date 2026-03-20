@@ -1,0 +1,29 @@
+session_name: ev
+start_directory: /home/aiv/ev-Autonomous-Vehicle-1-5
+
+shell_command_before:
+  - source /opt/ros/humble/setup.bash
+  - source /home/aiv/ev-Autonomous-Vehicle-1-5/install/setup.bash
+
+windows:
+  - window_name: main
+    layout: tiled
+    panes:
+      # Pane 0: T870 시리얼 브릿지
+      - ros2 launch t870_serial serial_bridge.launch.py
+      # Pane 1: Velodyne LiDAR 드라이버 + patchworkpp + DBSCAN + splitter + make_bbox
+      - ros2 launch lidar_launch my_velodyne_VLP16-composed-launch.py
+      # Pane 2: Planning (chaining costmap)
+      - ros2 launch chaining_costmap_ver chaining_costmap_ver.launch.py
+      # Pane 3: Control (pure pursuit)
+      - ros2 launch pp_controller_cpp pure_pursuit.launch.py
+      # Pane 4: Camera (usb_cam + camera TF)
+      - ros2 launch usb_cam camera.launch.py
+      # Pane 5: BEV 변환
+      - ros2 run lane_seg bev_node
+      # Pane 6: YOLO DBSCAN 차선 세그멘테이션
+      - ros2 run lane_seg yolo_db_seg
+      # Pane 7: LiDAR TF (base_link → velodyne)
+      - ros2 launch lidar_launch tf.launch.py
+      # Pane 8: RViz2
+      - rviz2
