@@ -286,8 +286,7 @@ private:
     std::unordered_set<int> & visited_set,
     int remaining_len,
     StopReason & stop_reason,
-    const PlanningParams::Chainer & cp,
-    double seed_y) const;
+    const PlanningParams::Chainer & cp) const;
 
   // ═══════════════════════════════════════════════════════════
   // 3단계: Component 리샘플링 — 균등 간격 보간

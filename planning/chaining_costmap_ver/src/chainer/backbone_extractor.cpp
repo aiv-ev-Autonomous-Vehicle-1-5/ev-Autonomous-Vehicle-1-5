@@ -118,8 +118,7 @@ std::vector<int> DirectionChainer::chain_one_direction(
   std::unordered_set<int> & visited_set,
   int remaining_len,
   StopReason & stop_reason,
-  const PlanningParams::Chainer & cp,
-  double seed_y) const
+  const PlanningParams::Chainer & cp) const
 {
   std::vector<int> chain;
   int current = seed_idx;
@@ -157,14 +156,12 @@ std::vector<int> DirectionChainer::chain_one_direction(
       cos_angle = std::clamp(cos_angle, -1.0, 1.0);
       if (std::acos(cos_angle) > cone_half_rad) continue;
 
-      // G3: 횡오차 게이트
+      // G3: 횡오차 게이트 (편측) — 안쪽(중심) 방향만 제한
+      // perp = 방향벡터의 왼쪽 수직벡터 (왼쪽 +, 오른쪽 -)
       Point2D perp = {-v.y, v.x};
-      double lat = std::abs(dx * perp.x + dy * perp.y);
-      if (lat > cp.lateral_gate) continue;
-
-      // G4: 시드 기준 횡편차 가드 — 반대편 크로스 방지
-      if (is_left  && points[i].y < seed_y - cp.max_lateral_deviation) continue;
-      if (!is_left && points[i].y > seed_y + cp.max_lateral_deviation) continue;
+      double signed_lat = dx * perp.x + dy * perp.y;
+      if (is_left  && signed_lat < -cp.lateral_gate) continue;  // 안쪽(오른쪽) 초과
+      if (!is_left && signed_lat >  cp.lateral_gate) continue;  // 안쪽(왼쪽) 초과
 
       gated.push_back(i);
     }
@@ -191,14 +188,11 @@ std::vector<int> DirectionChainer::chain_one_direction(
         cos_angle = std::clamp(cos_angle, -1.0, 1.0);
         if (std::acos(cos_angle) > cone_half_rad) continue;
 
-        // G3: 횡오차 게이트
+        // G3: 횡오차 게이트 (편측) — 안쪽(중심) 방향만 제한
         Point2D perp = {-v.y, v.x};
-        double lat = std::abs(dx * perp.x + dy * perp.y);
-        if (lat > cp.lateral_gate) continue;
-
-        // G4: 시드 기준 횡편차 가드 — 반대편 크로스 방지
-        if (is_left  && points[j].y < seed_y - cp.max_lateral_deviation) continue;
-        if (!is_left && points[j].y > seed_y + cp.max_lateral_deviation) continue;
+        double signed_lat = dx * perp.x + dy * perp.y;
+        if (is_left  && signed_lat < -cp.lateral_gate) continue;
+        if (!is_left && signed_lat >  cp.lateral_gate) continue;
 
         gated.push_back(j);
       }
@@ -275,20 +269,18 @@ std::vector<int> DirectionChainer::extract_backbone(
 
   const int max_extend = cp.max_chain_len - 1;
 
-  const double seed_y = points[seed_idx].y;
-
   // Backward pass (-x 방향)
   StopReason stop_reason_backward = StopReason::MAX_LEN;
   auto backward_chain = chain_one_direction(
     points, owner, seed_idx,
     {-1.0, 0.0}, is_left, visited_set,
-    max_extend, stop_reason_backward, cp, seed_y);
+    max_extend, stop_reason_backward, cp);
 
   // Forward pass (+x 방향)
   auto forward_chain = chain_one_direction(
     points, owner, seed_idx,
     {1.0, 0.0}, is_left, visited_set,
-    max_extend, stop_reason_forward, cp, seed_y);
+    max_extend, stop_reason_forward, cp);
 
   // reverse(backward) + [seed] + forward → backbone
   seed_backbone_pos = static_cast<int>(backward_chain.size());

@@ -79,7 +79,7 @@ on_timer() — 10Hz (100ms)
 │       G1 (거리 게이트):       d(i,j) ≤ d_max
 │       G2 (전방 cone 게이트):  angle(v, u_ij) ≤ forward_cone_deg/2
 │       G3 (횡오차 게이트):     |lateral_proj| ≤ lateral_gate
-│       G4 (시드 기준 횡편차 가드): candidate.y が seed_y ± max_lateral_deviation 이내
+│       G4 (시드 기준 횡편차 가드): candidate.y ∈ seed_y ± max_lateral_deviation
 │          left  backbone → candidate.y < seed_y - max_lateral_deviation 이면 reject
 │          right backbone → candidate.y > seed_y + max_lateral_deviation 이면 reject
 │          → backbone이 반대편으로 크로스하는 것을 사전 차단
@@ -100,9 +100,14 @@ on_timer() — 10Hz (100ms)
 │
 ├── Stage 3: Costmap + A*  [costmap/, planner/, nodes/goal_calculator.hpp]
 │     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
-│     3b. Gaussian Costmap 생성 + entry walls
+│     3b. Gaussian Costmap 생성
 │         * backbone 포인트(is_backbone=true)는 타입(LANE/BBOX)에 관계없이
 │           bbox_cost_max + bbox_radius 적용 → 전환 구간 gap 방지
+│     3b-2. 중앙선 유인 비용 (center line attraction)
+│         * 좌/우 backbone 중점 연결선(중앙선)에 음의 가우시안 비용 적용 → A*를 중앙으로 유도
+│         * cost >= bbox_cost_max(100)인 셀은 보존 (장애물 불변)
+│         * 파라미터: center_attract_max(30.0), center_attract_sigma(0.5m)
+│     3b-3. Entry walls
 │     3c. Goal 계산
 │         * 교차 판정 처리: left_crossed_right 또는 right_crossed_left가
 │           true이면 해당 backbone 인덱스 중간점을 local_goal로 즉시 반환

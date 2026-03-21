@@ -98,6 +98,12 @@ struct PlanningParams
     // origin_x = 0 이면 전방만 (0 ~ size_x)m 범위.
     // entry wall의 시작점 x좌표로도 사용됨 (costmap 하단).
     double origin_x = -4.0;
+
+    // ── 중앙선 유인 비용 ──
+    // 양쪽 backbone 중앙선을 따라 costmap 비용을 감소시켜 A*를 중앙으로 유도.
+    // cost >= bbox_cost_max인 장애물 셀은 건드리지 않는다.
+    double center_attract_max = 30.0;   ///< 중앙선 최대 비용 감소량
+    double center_attract_sigma = 0.5;  ///< [m] 중앙선 유인 가우시안 확산
   } costmap;
 
   // ============================================================
@@ -344,11 +350,6 @@ struct PlanningParams
     // 키우면 side 전환 억제, 줄이면 side 구분 약해짐.
     double lambda_side = 0.5;           ///< side preference 가중치
 
-    // [m] 시드 y 기준 반대편 최대 허용 횡편차.
-    // 체인 후보가 시드의 y좌표에서 이 값 이상 반대편으로 벗어나면 게이트에서 제거.
-    // 2.0 = 시드에서 반대쪽으로 2m까지 허용. 코너에서 크로스 방지.
-    double max_lateral_deviation = 2.0; ///< [m] 시드 기준 반대편 횡편차 한계
-
     // ── 종료/제한 ──
     // [개] backbone의 최대 포인트 수.
     // 100 = 리샘플 간격 0.1m 기준 최대 10m의 backbone.
@@ -422,6 +423,8 @@ struct PlanningParams
     costmap.cost_threshold = p("costmap.cost_threshold", costmap.cost_threshold);
     costmap.entry_wall_ego_y  = p("costmap.entry_wall_ego_y",  costmap.entry_wall_ego_y);
     costmap.origin_x          = p("costmap.origin_x",          costmap.origin_x);
+    costmap.center_attract_max   = p("costmap.center_attract_max",   costmap.center_attract_max);
+    costmap.center_attract_sigma = p("costmap.center_attract_sigma", costmap.center_attract_sigma);
 
     // ── AStar 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.astar.*
@@ -469,7 +472,6 @@ struct PlanningParams
     chainer.gamma             = p("chainer.gamma",             chainer.gamma);
     chainer.delta             = p("chainer.delta",             chainer.delta);
     chainer.lambda_side       = p("chainer.lambda_side",       chainer.lambda_side);
-    chainer.max_lateral_deviation = p("chainer.max_lateral_deviation", chainer.max_lateral_deviation);
     chainer.max_chain_len     = p("chainer.max_chain_len",     chainer.max_chain_len);
     chainer.resample_ds       = p("chainer.resample_ds",       chainer.resample_ds);
     chainer.publish_debug     = p("chainer.publish_debug",     chainer.publish_debug);

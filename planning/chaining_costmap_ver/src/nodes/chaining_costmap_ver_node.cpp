@@ -107,6 +107,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/curvature", qos_dbg);
   pub_dbg_lane_points_ = create_publisher<visualization_msgs::msg::MarkerArray>(
     "/planning/debug/lane_points", qos_dbg);
+  pub_dbg_center_line_ = create_publisher<visualization_msgs::msg::Marker>(
+    "/planning/debug/center_line", qos_dbg);
 
   // ── 10Hz 타이머 ──
   timer_ = create_wall_timer(
@@ -199,7 +201,40 @@ void LCPlannerNode::on_timer()
   auto costmap = costmap_generator_.generate(
     left_chained, right_chained, unchained_chained, params_);
 
-  // 3b-2. Entry walls
+  // 3b-2. 중앙선 유인 비용 적용
+  std::vector<Point2D> center_line;
+  if (costmap.valid) {
+    center_line = CostmapGenerator::apply_center_attraction(
+      costmap, left_chained, right_chained, params_);
+  }
+
+  // 중앙선 디버그 발행 (POINTS 마커)
+  if (pub_dbg_center_line_->get_subscription_count() > 0 && !center_line.empty()) {
+    visualization_msgs::msg::Marker m;
+    m.header.stamp = stamp;
+    m.header.frame_id = frame_id;
+    m.ns = "center_line";
+    m.id = 0;
+    m.type = visualization_msgs::msg::Marker::POINTS;
+    m.action = visualization_msgs::msg::Marker::ADD;
+    m.scale.x = 0.08;
+    m.scale.y = 0.08;
+    m.color.r = 1.0f;
+    m.color.g = 1.0f;
+    m.color.b = 0.0f;
+    m.color.a = 1.0f;
+    m.points.reserve(center_line.size());
+    for (const auto & pt : center_line) {
+      geometry_msgs::msg::Point p;
+      p.x = pt.x;
+      p.y = pt.y;
+      p.z = 0.0;
+      m.points.push_back(p);
+    }
+    pub_dbg_center_line_->publish(m);
+  }
+
+  // 3b-3. Entry walls
   if (costmap.valid &&
       !dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
     Point2D left_seed = {

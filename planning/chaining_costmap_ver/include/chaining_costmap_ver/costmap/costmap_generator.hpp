@@ -95,6 +95,23 @@ public:
    * @param right_seed   우측 체인의 시드 위치
    * @param params       costmap 파라미터 (entry_wall_ego_y, bbox_cost_max 등)
    */
+  /**
+   * @brief 양쪽 backbone 중앙선을 따라 costmap 비용을 감소시켜 A*를 중앙으로 유도
+   *
+   * left/right backbone의 중점(midpoint)을 연결한 중앙선에 음의 가우시안을 적용.
+   * cost >= bbox_cost_max인 장애물 셀은 건드리지 않는다.
+   *
+   * @param costmap      generate()로 생성된 costmap (in-place 수정)
+   * @param left_chain   좌측 경계 체인
+   * @param right_chain  우측 경계 체인
+   * @param params       center_attract_max, center_attract_sigma 사용
+   */
+  static std::vector<Point2D> apply_center_attraction(
+    CostmapResult & costmap,
+    const std::vector<ChainedPoint> & left_chain,
+    const std::vector<ChainedPoint> & right_chain,
+    const PlanningParams & params);
+
   static void apply_entry_walls(
     CostmapResult & costmap,
     const Point2D & left_seed,
