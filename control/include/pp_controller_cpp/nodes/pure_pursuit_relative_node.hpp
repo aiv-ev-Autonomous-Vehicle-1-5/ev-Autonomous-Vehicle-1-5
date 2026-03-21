@@ -39,6 +39,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "visualization_msgs/msg/marker.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "ev_msgs/msg/b_box_array.hpp"
 
 #include "pp_controller_cpp/common/params.hpp"
 #include "pp_controller_cpp/nodes/command_publisher.hpp"
@@ -74,6 +75,9 @@ private:
   /// 경로 잔여 길이를 이동 평균 필터링 (안전 우선: raw와 avg 중 작은 값)
   double compute_filtered_remaining(double raw_remaining);
 
+  /// 전방 ROI에 bbox 장애물이 없는지 판단 (CREEP 모드 조건)
+  bool is_forward_clear() const;
+
   // ======================== 멤버 변수 ========================
 
   // --- 파라미터 ---
@@ -89,14 +93,19 @@ private:
   int    fail_counter_{0};                                  // FAIL 연속 카운터
   std::deque<double> path_length_buffer_;                   // 경로 길이 이동 평균 버퍼
 
+  // --- CREEP 상태 ---
+  ev_msgs::msg::BBoxArray::SharedPtr latest_bboxes_;       // 최신 bbox 데이터
+
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr status_sub_;
+  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr bbox_sub_;
   CommandPublisher cmd_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
   // --- 디버그 시각화 ---
   DebugVisualizer debug_viz_;
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_creep_roi_;  ///< CREEP ROI 영역 (lazy)
 };
 
 }  // namespace pp_controller_cpp

@@ -37,7 +37,7 @@ lc_planner_node:
 
       # --- kNN + 게이트 ---
       k: 10                    # centroid kNN 후보 수
-      d_max: 1.8             # [m] neighbor 최대 거리 real : 1.5 m
+      d_max: 2.0          # [m] neighbor 최대 거리 real : 1.5 m
       forward_cone_deg: 130.0 # [deg] 전방 cone 전체 각도 (±60°)
       lateral_gate: 1.2      # [m] 횡방향 오차 한계
 

@@ -24,3 +24,8 @@ pure_pursuit_relative_node:
     delta_max: 0.314         # [rad] 최대 조향각 (~18도)
     path_timeout_sec: 0.5    # [s] 경로 타임아웃
     min_x_target: 0.05       # [m] 목표점 최소 전방 거리
+
+    # --- CREEP 모드 (경로 실패 시 전방 clear면 저속 직진) ---
+    creep_speed: 0.2         # [m/s] CREEP 시 직진 속도
+    creep_roi_x: 2.0         # [m] 전방 판정 거리
+    creep_roi_y: 0.8         # [m] 좌우 판정 폭 (±)

@@ -64,6 +64,14 @@ struct PurePursuitParams
     int    emergency_stop_count{10};    // FAIL 연속 N회 시 긴급 감속 시작
   } safety;
 
+  // --- CREEP 모드 ---
+  // 경로 실패 시 전방에 장애물이 없으면 저속 직진
+  struct Creep {
+    double speed{0.2};                  // [m/s] CREEP 시 직진 속도
+    double roi_x{2.0};                  // [m] 전방 판정 거리
+    double roi_y{0.8};                  // [m] 좌우 판정 폭 (±)
+  } creep;
+
   // =========================================================================
   // load: ROS2 파라미터를 declare/get 하여 멤버에 캐싱
   // =========================================================================
@@ -140,6 +148,14 @@ struct PurePursuitParams
     safety.min_x_target         = node->get_parameter("min_x_target").as_double();
     safety.emergency_decel_rate = std::max(1e-3, node->get_parameter("emergency_decel_rate").as_double());
     safety.emergency_stop_count = std::max(1, static_cast<int>(node->get_parameter("emergency_stop_count").as_int()));
+
+    // CREEP
+    node->declare_parameter<double>("creep_speed", creep.speed);
+    node->declare_parameter<double>("creep_roi_x", creep.roi_x);
+    node->declare_parameter<double>("creep_roi_y", creep.roi_y);
+    creep.speed = node->get_parameter("creep_speed").as_double();
+    creep.roi_x = node->get_parameter("creep_roi_x").as_double();
+    creep.roi_y = node->get_parameter("creep_roi_y").as_double();
   }
 };
 

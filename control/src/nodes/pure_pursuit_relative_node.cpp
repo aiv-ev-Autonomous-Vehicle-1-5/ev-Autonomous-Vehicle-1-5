@@ -76,6 +76,19 @@ PurePursuitRelativeNode::PurePursuitRelativeNode(
     }
   );
 
+  // [Subscriber] /perception/bboxes (ev_msgs/BBoxArray) — CREEP 모드용 장애물 판정
+  bbox_sub_ = this->create_subscription<ev_msgs::msg::BBoxArray>(
+    "/perception/bboxes",
+    rclcpp::QoS(10).best_effort(),
+    [this](ev_msgs::msg::BBoxArray::SharedPtr msg) {
+      latest_bboxes_ = msg;
+    }
+  );
+
+  // CREEP ROI 디버그 퍼블리셔
+  pub_dbg_creep_roi_ = this->create_publisher<visualization_msgs::msg::Marker>(
+    "/pp_debug/creep_roi", rclcpp::QoS(1).best_effort());
+
   // 3. 제어 루프 타이머 (50Hz = 20ms)
   timer_ = this->create_wall_timer(
     std::chrono::milliseconds(20),
@@ -166,6 +179,26 @@ double PurePursuitRelativeNode::compute_filtered_remaining(double raw_remaining)
 }
 
 // ===========================================================================
+// is_forward_clear: 전방 ROI에 bbox 장애물이 없는지 판단
+// ===========================================================================
+// CREEP 모드 진입 조건: 전방 (0 ~ roi_x) × (±roi_y) 영역에 bbox가 없으면 true
+// ===========================================================================
+bool PurePursuitRelativeNode::is_forward_clear() const
+{
+  if (!latest_bboxes_) return false;  // bbox 데이터 없으면 안전하게 false
+
+  const auto & cp = params_.creep;
+  for (const auto & b : latest_bboxes_->bboxes) {
+    if (b.position.x > 0.0 && b.position.x < cp.roi_x &&
+        b.position.y > -cp.roi_y && b.position.y < cp.roi_y)
+    {
+      return false;  // ROI 내 장애물 있음
+    }
+  }
+  return true;
+}
+
+// ===========================================================================
 // on_timer: 메인 제어 루프 (50Hz)
 // ===========================================================================
 //
@@ -193,7 +226,8 @@ void PurePursuitRelativeNode::on_timer()
     should_stop = true;
     stop_reason = "Path is missing or stale";
   } else if (latest_status_ == "FAIL - not enough seeds" ||
-             latest_status_ == "FAIL - no valid path")
+             latest_status_ == "FAIL - no valid path" ||
+             latest_status_ == "WARNING - too short valid path")
   {
     should_stop = true;
     stop_reason = latest_status_;
@@ -202,9 +236,24 @@ void PurePursuitRelativeNode::on_timer()
   if (should_stop) {
     ++fail_counter_;
     if (fail_counter_ >= params_.safety.emergency_stop_count) {
+      // CREEP: 전방에 장애물 없으면 저속 직진
+      if (is_forward_clear()) {
+        const double v_cmd = pursuit::rate_limit_speed(
+          params_.creep.speed, last_cmd_speed_, control_dt,
+          params_.speed.accel_rate, params_.speed.decel_rate);
+        last_cmd_speed_ = v_cmd;
+        cmd_pub_.publish(v_cmd, 0.0);
+        last_control_time_ = this->now();
+        RCLCPP_WARN_THROTTLE(
+          this->get_logger(), *this->get_clock(), 1000,
+          "[PP Relative] CREEP — forward clear, v_cmd=%.2f", v_cmd);
+        return;
+      }
+
+      // FAIL: 전방에 장애물 있음 → 긴급 감속
       RCLCPP_WARN_THROTTLE(
         this->get_logger(), *this->get_clock(), 1000,
-        "[PP Relative] %s (%d consecutive). Emergency decel.",
+        "[PP Relative] FAIL — %s, forward blocked (%d consecutive). Emergency decel.",
         stop_reason.c_str(), fail_counter_);
       publish_emergency_decel(control_dt);
     }
@@ -305,6 +354,31 @@ void PurePursuitRelativeNode::on_timer()
   // ----- 디버그 시각화 발행 (lazy) — 원본 센서 타임스탬프 전파 -----
   debug_viz_.publish_lookahead_point(tx, ty, last_path_stamp_);
   debug_viz_.publish_pursuit_arc(tx, ty, kappa_pp, last_path_stamp_);
+
+  // ----- CREEP ROI 디버그 마커 (lazy) -----
+  if (pub_dbg_creep_roi_->get_subscription_count() > 0) {
+    const auto & cp = params_.creep;
+    visualization_msgs::msg::Marker m;
+    m.header.stamp = last_path_stamp_;
+    m.header.frame_id = "base_link";
+    m.ns = "creep_roi";
+    m.id = 0;
+    m.type = visualization_msgs::msg::Marker::LINE_STRIP;
+    m.action = visualization_msgs::msg::Marker::ADD;
+    m.scale.x = 0.03;
+    m.color.r = 1.0f; m.color.g = 0.5f; m.color.b = 0.0f; m.color.a = 0.8f;
+
+    // ROI 사각형: (0, -roi_y) → (roi_x, -roi_y) → (roi_x, roi_y) → (0, roi_y) → 닫기
+    auto pt = [](double x, double y) {
+      geometry_msgs::msg::Point p; p.x = x; p.y = y; p.z = 0.0; return p;
+    };
+    m.points.push_back(pt(0.0, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x,  cp.roi_y));
+    m.points.push_back(pt(0.0,  cp.roi_y));
+    m.points.push_back(pt(0.0, -cp.roi_y));  // 닫기
+    pub_dbg_creep_roi_->publish(m);
+  }
 }
 
 }  // namespace pp_controller_cpp

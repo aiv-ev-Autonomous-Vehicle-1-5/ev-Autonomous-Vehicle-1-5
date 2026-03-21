@@ -15,6 +15,7 @@ find_package(std_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(t870_msgs REQUIRED)
 find_package(erp42_msgs REQUIRED)
+find_package(ev_msgs REQUIRED)
 
 include_directories(include)
 
@@ -48,7 +49,7 @@ target_link_libraries(pp_controller_component
 )
 ament_target_dependencies(pp_controller_component
   rclcpp rclcpp_components
-  std_msgs visualization_msgs t870_msgs erp42_msgs
+  std_msgs visualization_msgs t870_msgs erp42_msgs ev_msgs
 )
 
 # 컴포넌트 등록 + standalone 실행 파일 자동 생성
