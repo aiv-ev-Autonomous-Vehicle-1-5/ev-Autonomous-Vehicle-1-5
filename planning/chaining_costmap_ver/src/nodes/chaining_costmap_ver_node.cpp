@@ -219,20 +219,35 @@ void LCPlannerNode::on_timer()
     clamp_goal_to_costmap(goal_result.goal, costmap);
   }
 
-  // 3e. A* 경로 탐색
+  // 3e. 경로 탐색 (A* or Hybrid A* — hybrid_astar.enabled 파라미터로 선택)
   std::vector<Point2D> raw_path;
   if (goal_result.have_goal && costmap.valid) {
-    raw_path = astar_planner_.plan(costmap, {0.0, 0.0}, goal_result.goal, params_);
+    if (params_.hybrid_astar.enabled) {
+      raw_path = hybrid_astar_planner_.plan(costmap, {0.0, 0.0}, goal_result.goal, params_);
+    } else {
+      raw_path = astar_planner_.plan(costmap, {0.0, 0.0}, goal_result.goal, params_);
+    }
   }
 
   // ======== Stage 5: Postprocess ========
-  auto pp_result = postprocessor_.process(
-    raw_path,
-    params_.postprocess.prune_max_dev,
-    params_.postprocess.smooth_window,
-    params_.postprocess.resample_ds,
-    1.0 / params_.vehicle.r_min(),
-    params_.postprocess.curvature_clamp_max_iter);
+  // Hybrid A*: resample → yaw (자전거 모델 기반으로 smooth/curvature_clamp 불필요)
+  // A*:        prune → resample → smooth → curvature_clamp → yaw
+  PostprocessResult pp_result;
+  if (params_.hybrid_astar.enabled) {
+    pp_result = postprocessor_.process_hybrid(
+      raw_path,
+      params_.postprocess.resample_ds,
+      1.0 / params_.vehicle.r_min(),
+      params_.postprocess.curvature_clamp_max_iter);
+  } else {
+    pp_result = postprocessor_.process(
+      raw_path,
+      params_.postprocess.prune_max_dev,
+      params_.postprocess.smooth_window,
+      params_.postprocess.resample_ds,
+      1.0 / params_.vehicle.r_min(),
+      params_.postprocess.curvature_clamp_max_iter);
+  }
 
   // ======== Stage 6: Safety Check ========
   auto safety = safety_checker::check(pp_result, params_);

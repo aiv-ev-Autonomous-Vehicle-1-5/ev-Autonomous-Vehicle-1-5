@@ -86,6 +86,7 @@
 #include "chaining_costmap_ver/chainer/direction_chainer.hpp"
 #include "chaining_costmap_ver/costmap/costmap_generator.hpp"
 #include "chaining_costmap_ver/planner/astar_planner.hpp"
+#include "chaining_costmap_ver/planner/hybrid_astar_planner.hpp"
 #include "chaining_costmap_ver/postprocess/path_postprocessor.hpp"
 
 #include <rclcpp/rclcpp.hpp>
@@ -162,7 +163,8 @@ private:
   // 각 모듈은 stateless에 가깝게 설계되어, 매 콜백마다 params와 입력을 받아 처리
   DirectionChainer        direction_chainer_;   ///< Stage 2: 방향 기반 체이닝
   CostmapGenerator        costmap_generator_;   ///< Stage 3a: 가우시안 비용 지도 생성
-  AStarPlanner            astar_planner_;       ///< Stage 3b: A* 경로 탐색
+  AStarPlanner            astar_planner_;        ///< Stage 3b: A* 경로 탐색
+  HybridAStarPlanner      hybrid_astar_planner_; ///< Stage 3b(alt): Hybrid A* 경로 탐색 (hybrid_astar.enabled=true 시 사용)
   PathPostprocessor       postprocessor_;       ///< Stage 5: prune→smooth→curvature_clamp→resample→yaw
 
   // ── 최신 입력 데이터 (콜백에서 갱신) ──

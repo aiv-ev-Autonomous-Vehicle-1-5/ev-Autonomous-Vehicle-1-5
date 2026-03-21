@@ -1,52 +1,49 @@
 /**
  * @file path_postprocessor.hpp
- * @brief 경로 후처리기 — 5단계 파이프라인 (prune → resample → smooth → curvature_clamp → yaw)
+ * @brief 경로 후처리기 — A* / Hybrid A* 전용 파이프라인 제공
  *
  * ──────────────────────────────────────────────────────────────────
- * [전체 파이프라인에서의 위치]
+ * [A* 전용 파이프라인 — process()]
  *
- *   AStarPlanner가 costmap 위에서 A* 탐색으로 생성한
- *   "원시 경로(raw path)"는 다음과 같은 문제를 가진다:
- *
- *   (1) 격자 해상도에 의한 지그재그 — costmap grid cell 단위로 이동하므로
- *       미세한 꺾임이 다수 발생한다.
- *   (2) 불필요한 중간점 — 거의 직선인 구간에도 매 cell마다 점이 존재한다.
- *   (3) 불균등한 점 간격 — 격자 대각선 vs 직교 이동에 따라 간격이 다르다.
- *   (4) yaw(헤딩) 정보 없음 — 차량 제어에는 각 waypoint의 목표 헤딩이 필요하다.
- *   (5) 곡률 초과 — 격자 경로의 급커브가 차량 최소 회전 반경을 위반할 수 있다.
- *
- *   PathPostprocessor는 이 문제들을 순차적으로 해결하여,
- *   차량 제어기(Pure Pursuit, Stanley 등)에 적합한
- *   "깨끗하고 균등한 경로 + yaw 배열"을 출력한다.
- *
- * ──────────────────────────────────────────────────────────────────
- * [5단계 파이프라인 요약]
+ *   AStarPlanner(격자 A*)가 생성한 원시 경로는 격자 지그재그,
+ *   불균등 간격, 곡률 초과 문제가 있으므로 5단계 후처리가 필요하다.
  *
  *   raw_path (AStarPlanner 출력)
  *       │
  *       ▼
  *   ① Prune (Douglas-Peucker 유사 단순화)
  *       │  - 직선 구간의 중간점을 제거하여 점 수를 대폭 줄임
- *       │  - max_dev 이하로 편차가 있는 중간점들은 건너뜀(shortcut)
  *       ▼
  *   ② Resample (등간격 리샘플링)
  *       │  - prune 후 불균등해진 점 간격을 ds 간격으로 균일하게 재배치
- *       │  - smooth가 등간격 점에서 동작해야 편향 없는 평활화 가능
  *       ▼
  *   ③ Smooth (이동 평균 필터)
- *       │  - 등간격 점에 대해 이동 평균을 적용하여 잔여 꺾임 완화
- *       │  - 시작점/끝점은 보존하여 경로 연속성 유지
+ *       │  - 격자 지그재그를 제거하여 부드러운 곡선 생성
  *       ▼
  *   ④ Curvature Clamp (곡률 제한)
  *       │  - Menger 곡률이 kappa_max 초과 시 중간점을 이동하여 곡률 저감
- *       │  - 차량 최소 회전 반경 보장
  *       ▼
  *   ⑤ Yaw (접선 벡터 → 헤딩 각도)
- *       │  - 각 waypoint에서의 진행 방향(접선)을 구하고
- *       │  - atan2(dy, dx)로 yaw 각도 [rad]를 계산
  *       ▼
  *   PostprocessResult { path, yaw, valid }
- *       → SafetyChecker → 차량 제어기로 전달
+ *
+ * ──────────────────────────────────────────────────────────────────
+ * [Hybrid A* 전용 파이프라인 — process_hybrid()]
+ *
+ *   HybridAStarPlanner는 자전거 모델 기반으로 경로를 탐색하므로
+ *   헤딩이 이미 연속적이고 곡률도 delta_max 범위 내로 보장된다.
+ *   Smooth/CurvatureClamp를 적용하면 오히려 원호를 왜곡시킬 수 있어
+ *   Resample + Yaw 계산만 수행한다.
+ *
+ *   raw_path (HybridAStarPlanner 출력)
+ *       │
+ *       ▼
+ *   ① Resample (등간격 리샘플링)
+ *       │  - arc_length 단위의 불균등 간격을 ds 간격으로 균일하게 재배치
+ *       ▼
+ *   ② Yaw (접선 벡터 → 헤딩 각도)
+ *       ▼
+ *   PostprocessResult { path, yaw, valid }
  *
  * ──────────────────────────────────────────────────────────────────
  */
@@ -94,10 +91,31 @@ public:
    * @param kappa_max  [1/m] 최대 허용 곡률 (0.0이면 비활성화)
    *                   kappa_max = 1/R_min = 1/2.68 ≈ 0.373 for T870
    */
+  /**
+   * @brief [A* 전용] 5단계 파이프라인: prune → resample → smooth → curvature_clamp → yaw
+   */
   PostprocessResult process(
     const std::vector<Point2D> & raw_path,
     double prune_max_dev,
     int smooth_window,
+    double resample_ds,
+    double kappa_max = 0.0,
+    int curvature_clamp_max_iter = 30);
+
+  /**
+   * @brief [Hybrid A* 전용] 3단계 파이프라인: resample → curvature_clamp → yaw
+   *
+   * Hybrid A*는 자전거 모델 기반이므로 원호 자체는 매끄럽다.
+   * Smooth를 적용하면 원호를 왜곡하므로 제외하고,
+   * 직선→커브 접합점의 kink만 curvature_clamp로 처리한다.
+   *
+   * @param raw_path                HybridAStarPlanner가 출력한 원시 경로
+   * @param resample_ds             [m] 등간격 리샘플링 간격
+   * @param kappa_max               [1/m] 최대 허용 곡률 (0.0이면 비활성화)
+   * @param curvature_clamp_max_iter 곡률 제한 최대 반복 횟수
+   */
+  PostprocessResult process_hybrid(
+    const std::vector<Point2D> & raw_path,
     double resample_ds,
     double kappa_max = 0.0,
     int curvature_clamp_max_iter = 30);

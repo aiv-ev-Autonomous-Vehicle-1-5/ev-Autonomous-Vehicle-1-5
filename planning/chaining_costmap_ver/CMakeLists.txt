@@ -73,10 +73,11 @@ install(TARGETS chaining_costmap_costmap
 )
 
 # ============================================================================
-# Library 3: chaining_costmap_astar — A* 경로 탐색 라이브러리
+# Library 3: chaining_costmap_astar — A* / Hybrid A* 경로 탐색 라이브러리
 # ============================================================================
 add_library(chaining_costmap_astar SHARED
   src/planner/astar_planner.cpp
+  src/planner/hybrid_astar_planner.cpp
 )
 ament_target_dependencies(chaining_costmap_astar
   rclcpp geometry_msgs

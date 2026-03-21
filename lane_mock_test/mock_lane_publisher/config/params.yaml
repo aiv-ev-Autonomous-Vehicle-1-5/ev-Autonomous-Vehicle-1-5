@@ -1,8 +1,14 @@
 mock_lane_publisher:
   ros__parameters:
-    # ── 차선 배치 파라미터 (base_link 기준) ──
-    lane_half_width: 2.0    # 중앙에서 좌/우 오프셋 [m] → 총 폭 3.0m
+    # ── 공통 파라미터 ──
+    shape: "curve"          # "straight" | "curve"
+    lane_half_width: 1.5    # 중앙에서 좌/우 오프셋 [m]
     lane_x_start: 0.5       # 차선 시작 x [m]
-    lane_x_end: 5.0         # 차선 끝 x [m]
-    point_spacing: 0.5      # 점 간격 [m]
+    lane_x_end: 5.0         # 직선 모드 차선 끝 x [m]
+    point_spacing: 0.3      # 점 간격 [m]
     publish_hz: 10.0        # 발행 주기 [Hz]
+
+    # ── 커브 모드 파라미터 (shape: "curve" 일 때 사용) ──
+    curve_radius: 5.0       # 중심선 곡률 반경 [m]
+    curve_arc_deg: 90.0     # 커브 호 각도 [deg]
+    straight_length: 1.0    # 커브 전 직선 구간 [m]

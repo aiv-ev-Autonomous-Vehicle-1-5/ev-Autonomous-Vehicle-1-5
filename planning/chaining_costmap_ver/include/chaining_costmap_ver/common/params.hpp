@@ -169,6 +169,24 @@ struct PlanningParams
   } vehicle;
 
   // ============================================================
+  // HybridAStar — Hybrid A* 경로 탐색 파라미터
+  //
+  // 현재 A*와 동일한 costmap 입력을 사용하지만,
+  // (x, y, θ) 상태 공간에서 차량 운동학(bicycle model)을 반영한 탐색.
+  // max_iterations / goal_tolerance / cost_weight / obstacle_cost 는 astar 구조체 값을 재사용.
+  // ============================================================
+  struct HybridAStar
+  {
+    // Hybrid A* 활성화 여부. false이면 기존 A*를 사용.
+    bool enabled = false;
+
+    // [m] 한 번의 모션 프리미티브 확장 시 이동하는 호 길이.
+    // 작을수록 경로가 정밀하지만 탐색 공간이 커짐.
+    // 0.3m = costmap resolution(0.15m)의 2배 → 한 스텝에 2셀 이동.
+    double arc_length = 0.3;
+  } hybrid_astar;
+
+  // ============================================================
   // Postprocess — 경로 후처리
   //
   // AStarPlanner가 생성한 "raw 경로"를 제어기(Pure Pursuit 등)가
@@ -456,6 +474,10 @@ struct PlanningParams
 
     // ── Timeouts 파라미터 로드 ──
     timeouts.perception_ms = p("timeouts.perception_ms", timeouts.perception_ms);
+
+    // ── HybridAStar 파라미터 로드 ──
+    hybrid_astar.enabled    = p("hybrid_astar.enabled",    hybrid_astar.enabled);
+    hybrid_astar.arc_length = p("hybrid_astar.arc_length", hybrid_astar.arc_length);
 
     // ── Chainer (v2 DirectionChainer) 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.chainer.*
