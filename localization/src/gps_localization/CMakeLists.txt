@@ -39,9 +39,34 @@ ament_target_dependencies(utm_localizer_node
   visualization_msgs
 )
 
+# ---- waypoint_recorder ----
+add_library(waypoint_recorder_lib
+  src/waypoint_recorder.cpp
+)
+
+ament_target_dependencies(waypoint_recorder_lib
+  rclcpp
+  sensor_msgs
+)
+
+add_executable(waypoint_recorder_node
+  src/waypoint_recorder_node.cpp
+)
+
+target_link_libraries(waypoint_recorder_node
+  waypoint_recorder_lib
+)
+
+ament_target_dependencies(waypoint_recorder_node
+  rclcpp
+  sensor_msgs
+)
+
 install(TARGETS
   utm_localizer_lib
   utm_localizer_node
+  waypoint_recorder_lib
+  waypoint_recorder_node
   DESTINATION lib/${PROJECT_NAME}
 )
 

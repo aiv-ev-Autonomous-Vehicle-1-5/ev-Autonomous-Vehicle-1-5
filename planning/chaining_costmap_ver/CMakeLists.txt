@@ -39,7 +39,6 @@ include_directories(include)
 #   seed_selector.cpp:     find_seed(), knn()
 #   graph_builder.cpp:     build_graph()
 #   backbone_extractor.cpp: extract_backbone(), chain_one_direction(), compute_cost()
-#   branch_extractor.cpp:  extract_branches()
 #   chain_resampler.cpp:   resample_component()
 # ============================================================================
 add_library(chaining_costmap_chainer SHARED
@@ -47,7 +46,6 @@ add_library(chaining_costmap_chainer SHARED
   src/chainer/seed_selector.cpp
   src/chainer/graph_builder.cpp
   src/chainer/backbone_extractor.cpp
-  src/chainer/branch_extractor.cpp
   src/chainer/chain_resampler.cpp
 )
 ament_target_dependencies(chaining_costmap_chainer

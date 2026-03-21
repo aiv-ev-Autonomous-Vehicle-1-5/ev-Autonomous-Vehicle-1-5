@@ -41,20 +41,8 @@
  *   │   - owner==NONE만 후보, LEFT_BACKBONE 노드는 자동 제외   │
  *   │   - 확정된 노드에 RIGHT_BACKBONE 라벨 부여               │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 3단계: Left Branch 확정                                 │
- *   │   - left backbone 노드를 순서대로 순회하며 BFS            │
- *   │   - 허용: NONE, LEFT_BRANCH / 차단: 모든 BACKBONE        │
- *   │   - 같은 side branch 중복 소속 허용 (촘촘한 costmap 장벽) │
- *   │   - 확정된 노드에 LEFT_BRANCH 라벨 부여                  │
- *   ├─────────────────────────────────────────────────────────┤
- *   │ 4단계: Right Branch 확정                                │
- *   │   - right backbone 노드를 순서대로 순회하며 BFS           │
- *   │   - 허용: NONE, RIGHT_BRANCH                             │
- *   │   - 차단: LEFT_BACKBONE, RIGHT_BACKBONE, LEFT_BRANCH     │
- *   │   - 확정된 노드에 RIGHT_BRANCH 라벨 부여                 │
- *   ├─────────────────────────────────────────────────────────┤
- *   │ 5단계: Resample                                         │
- *   │   - 좌/우 각각 backbone + branch의 모든 edge를 보간       │
+ *   │ 3단계: Resample                                         │
+ *   │   - 좌/우 각각 backbone의 모든 edge를 보간               │
  *   │   - resample_ds 간격으로 균등한 점열 생성                 │
  *   └─────────────────────────────────────────────────────────┘
  *
@@ -106,6 +94,12 @@
  *     → 횡방향으로 너무 떨어진 점 연결 차단
  *     → 좌/우 경계가 서로 연결되는 것 방지
  *
+ *   G4 (시드 기준 횡편차 가드): candidate.y ∈ [seed_y − max_lateral_deviation,
+ *                                              seed_y + max_lateral_deviation]
+ *     → left  backbone: candidate.y < seed_y − max_lateral_deviation → reject
+ *     → right backbone: candidate.y > seed_y + max_lateral_deviation → reject
+ *     → backbone이 반대편으로 크로스하는 것을 사전 차단 (backbone 전용)
+ *
  * ══════════════════════════════════════════════════════════════
  */
 #ifndef CHAINING_COSTMAP_VER__CHAINER__DIRECTION_CHAINER_HPP_
@@ -132,17 +126,17 @@ namespace chaining_costmap_ver
  *
  * [설계 철학]
  *   - 모든 상태를 멤버로 보관하지 않음 (stateless)
- *   - chain() 호출마다 seed→graph→backbone→branch→resample 순차 실행
+ *   - chain() 호출마다 seed→graph→backbone→resample 순차 실행
  *   - const 메서드로 스레드 안전
  */
 class DirectionChainer
 {
 public:
   /**
-   * @brief 메인 진입점 — 6단계 파이프라인 전체 실행
+   * @brief 메인 진입점 — 파이프라인 전체 실행
    *
    * 모든 경계점(bbox+차선)을 입력받아 좌/우로 분류하고,
-   * 각 방향의 backbone(주선) + branch(가지)를 추출하여
+   * 각 방향의 backbone(주선)을 추출하여
    * 리샘플링된 경계점열을 반환한다.
    *
    * @param points  모든 경계점 (ChainPoint, bbox+차선 통합)
@@ -151,7 +145,7 @@ public:
    * @param params  전체 파라미터 (PlanningParams)
    *                - params.chainer 섹션의 값들이 사용됨
    * @return DirectionChainResult
-   *   - left: 좌측 SideResult (component, backbone, branches)
+   *   - left: 좌측 SideResult (component, backbone)
    *   - right: 우측 SideResult
    *   - valid: 최소 한쪽 backbone이 생성되었는지 여부
    */
@@ -234,6 +228,7 @@ private:
    *   - G1: d(cur, j) ≤ d_max (거리)
    *   - G2: angle(v, u_ij) ≤ cone_half (전방 cone)
    *   - G3: |lateral_proj| ≤ lateral_gate (횡오차)
+   *   - G4: candidate.y ∈ seed_y ± max_lateral_deviation (시드 기준 횡편차 가드)
    *
    * [BBOX 우선 선택]
    *   게이트를 통과한 후보를 BBOX와 LANE으로 분리한 뒤,
@@ -291,49 +286,14 @@ private:
     std::unordered_set<int> & visited_set,
     int remaining_len,
     StopReason & stop_reason,
-    const PlanningParams::Chainer & cp) const;
+    const PlanningParams::Chainer & cp,
+    double seed_y) const;
 
   // ═══════════════════════════════════════════════════════════
-  // 3-4단계: Branch 추출 — Backbone 순회 기반 BFS
+  // 3단계: Component 리샘플링 — 균등 간격 보간
   // ═══════════════════════════════════════════════════════════
   /**
-   * @brief backbone 노드를 순서대로 순회하며 주변 노드를 BFS로 branch에 연결
-   *
-   * [Branch란?]
-   *   backbone 옆에 있지만 backbone에 선택되지 못한 bbox/차선점.
-   *   이런 점들을 branch로 연결하면 costmap에 빈틈 없는 비용 장벽이 형성된다.
-   *
-   * [알고리즘 — Backbone 순회 기반 Greedy Chaining]
-   *   backbone 노드를 B0→B1→B2→... 순서로 순회하며:
-   *   1. Bi에서 d_max 범위 내의 허용 노드 중 가장 가까운 노드를 chain 시작점으로 선택
-   *   2. chain 끝점에서 d_max 범위 내의 가장 가까운 미방문 허용 노드로 greedy 이동
-   *   3. 같은 side의 다른 backbone에 이미 소속된 branch도 중복 연결 허용
-   *   4. max_branch_len 제한, 모든 edge가 d_max 이내로 보장
-   *
-   * [허용 조건]
-   *   owner[node] == NONE || owner[node] == branch_label
-   *   → 같은 side의 branch 노드는 중복 소속 가능 (greedy 통과 + 재연결)
-   *   → 반대 side의 backbone/branch는 차단
-   *
-   * @param points         필터링된 경계점 배열
-   * @param backbone_ids   backbone 인덱스 배열
-   * @param owner          [in/out] 소유권 라벨 (새 branch에 branch_label 부여)
-   * @param branch_label   이 side의 branch 라벨 (LEFT_BRANCH 또는 RIGHT_BRANCH)
-   * @param cp             chainer 파라미터 (max_branch_len 사용)
-   * @return branch 정보 배열 (BranchInfo: 부모 위치, 점들, 스코어)
-   */
-  std::vector<BranchInfo> extract_branches(
-    const std::vector<ChainPoint> & points,
-    const std::vector<int> & backbone_ids,
-    std::vector<NodeOwner> & owner,
-    NodeOwner branch_label,
-    const PlanningParams::Chainer & cp) const;
-
-  // ═══════════════════════════════════════════════════════════
-  // 6단계: Component 리샘플링 — 균등 간격 보간
-  // ═══════════════════════════════════════════════════════════
-  /**
-   * @brief backbone + branch의 모든 edge를 resample_ds 간격으로 보간
+   * @brief backbone의 모든 edge를 resample_ds 간격으로 보간
    *
    * [왜 리샘플링이 필요한가?]
    *   - 원본 점들은 불균등한 간격으로 분포한다.
@@ -344,19 +304,16 @@ private:
    * [리샘플 과정]
    *   1. backbone의 연속된 점 쌍(edge)을 순회
    *   2. 각 edge를 resample_ds 간격으로 선형 보간
-   *   3. branch도 동일하게: 부모→첫점 edge + 내부 edge 모두 보간
-   *   4. 보간점의 type: 양끝 모두 BBOX일 때만 BBOX, 혼합 edge는 LANE
+   *   3. 보간점의 type: 양끝 모두 BBOX일 때만 BBOX, 혼합 edge는 LANE
    *
    * @param points       필터링된 경계점 배열
    * @param backbone_ids backbone 인덱스 배열
-   * @param branches     branch 정보 배열
    * @param resample_ds  보간 간격 [m]
    * @return 리샘플링된 경계점 배열 (costmap 전달용)
    */
   std::vector<ChainPoint> resample_component(
     const std::vector<ChainPoint> & points,
     const std::vector<int> & backbone_ids,
-    const std::vector<BranchInfo> & branches,
     double resample_ds) const;
 
   // ═══════════════════════════════════════════════════════════

@@ -19,7 +19,9 @@
 // ============================================================================
 
 #include "pp_controller_cpp/nodes/pure_pursuit_relative_node.hpp"
-#include "pp_controller_cpp/pursuit/pursuit_algorithm.hpp"
+#include "pp_controller_cpp/pursuit/path_query.hpp"
+#include "pp_controller_cpp/pursuit/speed_planning.hpp"
+#include "pp_controller_cpp/pursuit/steering.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -36,8 +38,13 @@ namespace pp_controller_cpp
 PurePursuitRelativeNode::PurePursuitRelativeNode(
   const rclcpp::NodeOptions & options)
   : Node("pure_pursuit_relative_node", options)
+  , cmd_pub_(
+      this->create_publisher<t870_msgs::msg::ControlCommand>(
+        "/t870/control_command", rclcpp::QoS(1).best_effort()),
+      this->create_publisher<erp42_msgs::msg::ControlCommand>(
+        "/erp42/control_command", rclcpp::QoS(10))
+    )
   , debug_viz_(
-      // 디버그 퍼블리셔를 미리 생성하여 DebugVisualizer에 주입
       this->create_publisher<visualization_msgs::msg::Marker>(
         "/pp_debug/lookahead_point", rclcpp::QoS(1).best_effort()),
       this->create_publisher<visualization_msgs::msg::Marker>(
@@ -69,21 +76,7 @@ PurePursuitRelativeNode::PurePursuitRelativeNode(
     }
   );
 
-  // 3. Publisher 생성
-
-  // [Publisher] /t870/control_command — 실차 제어 명령
-  cmd_pub_ = this->create_publisher<t870_msgs::msg::ControlCommand>(
-    params_.topics.cmd_topic,
-    rclcpp::QoS(1).best_effort()
-  );
-
-  // [Publisher] /erp42/control_command — Gazebo 시뮬레이션용 (lazy)
-  cmd_erp42_pub_ = this->create_publisher<erp42_msgs::msg::ControlCommand>(
-    "/erp42/control_command",
-    rclcpp::QoS(10)
-  );
-
-  // 4. 제어 루프 타이머 (50Hz = 20ms)
+  // 3. 제어 루프 타이머 (50Hz = 20ms)
   timer_ = this->create_wall_timer(
     std::chrono::milliseconds(20),
     std::bind(&PurePursuitRelativeNode::on_timer, this)
@@ -149,22 +142,27 @@ void PurePursuitRelativeNode::publish_emergency_decel(double dt)
     params_.speed.accel_rate,
     params_.safety.emergency_decel_rate);
   last_cmd_speed_ = v_cmd;
-
-  t870_msgs::msg::ControlCommand cmd;
-  cmd.speed = v_cmd;
-  cmd.steering = 0.0;
-  cmd_pub_->publish(cmd);
-
-  // Gazebo 시뮬레이션용 ERP42 명령 (구독자가 있을 때만)
-  if (cmd_erp42_pub_->get_subscription_count() > 0) {
-    erp42_msgs::msg::ControlCommand erp_cmd;
-    erp_cmd.speed = v_cmd;
-    erp_cmd.steering = 0.0;
-    erp_cmd.brake = (v_cmd < 1e-3) ? 75 : 0;
-    cmd_erp42_pub_->publish(erp_cmd);
-  }
-
+  cmd_pub_.publish(v_cmd, 0.0);
   last_control_time_ = this->now();
+}
+
+// ===========================================================================
+// compute_filtered_remaining: 경로 잔여 길이 이동 평균 필터
+// ===========================================================================
+// 안전 우선: 필터 평균과 현재 raw 값 중 작은 값을 사용
+//   → 경로가 갑자기 짧아지면 즉시 반영 (가속 방지)
+//   → 경로가 갑자기 길어지면 서서히 반영 (노이즈 필터링)
+// ===========================================================================
+double PurePursuitRelativeNode::compute_filtered_remaining(double raw_remaining)
+{
+  path_length_buffer_.push_back(raw_remaining);
+  while (static_cast<int>(path_length_buffer_.size()) > params_.speed.path_length_filter_size) {
+    path_length_buffer_.pop_front();
+  }
+  double avg_remaining = 0.0;
+  for (const auto & l : path_length_buffer_) avg_remaining += l;
+  avg_remaining /= static_cast<double>(path_length_buffer_.size());
+  return std::min(raw_remaining, avg_remaining);
 }
 
 // ===========================================================================
@@ -278,18 +276,8 @@ void PurePursuitRelativeNode::on_timer()
     effective_abs_kappa, p.speed.min, p.speed.max, p.speed.lateral_accel_limit);
 
   // b) 제동거리 기반 목표 속도 (경로 길이 이동 평균 필터)
-  //    안전 우선: 필터 평균과 현재 raw 값 중 작은 값을 사용
-  //    → 경로가 갑자기 짧아지면 즉시 반영 (가속 방지)
-  //    → 경로가 갑자기 길어지면 서서히 반영 (노이즈 필터링)
   const double raw_remaining = pursuit::compute_remaining_length(pts, nearest_i);
-  path_length_buffer_.push_back(raw_remaining);
-  while (static_cast<int>(path_length_buffer_.size()) > p.speed.path_length_filter_size) {
-    path_length_buffer_.pop_front();
-  }
-  double avg_remaining = 0.0;
-  for (const auto & l : path_length_buffer_) avg_remaining += l;
-  avg_remaining /= static_cast<double>(path_length_buffer_.size());
-  const double filtered_remaining = std::min(raw_remaining, avg_remaining);
+  const double filtered_remaining = compute_filtered_remaining(raw_remaining);
 
   // 남은 거리에서 정지 여유거리를 빼서, stop_margin 지점에서 속도 0으로 정지
   const double effective_remaining = std::max(0.0, filtered_remaining - p.speed.stop_margin);
@@ -302,20 +290,8 @@ void PurePursuitRelativeNode::on_timer()
     v_target, last_cmd_speed_, control_dt, p.speed.accel_rate, p.speed.decel_rate);
   last_cmd_speed_ = v_cmd;
 
-  // ----- T870 제어 명령 발행 -----
-  t870_msgs::msg::ControlCommand cmd;
-  cmd.speed = v_cmd;
-  cmd.steering = delta;
-  cmd_pub_->publish(cmd);
-
-  // ----- ERP42 시뮬레이션 명령 (lazy) -----
-  if (cmd_erp42_pub_->get_subscription_count() > 0) {
-    erp42_msgs::msg::ControlCommand erp_cmd;
-    erp_cmd.speed = v_cmd;
-    erp_cmd.steering = delta;
-    erp_cmd.brake = (v_cmd < 1e-3) ? 75 : 0;
-    cmd_erp42_pub_->publish(erp_cmd);
-  }
+  // ----- 제어 명령 발행 (T870 + ERP42) -----
+  cmd_pub_.publish(v_cmd, delta);
 
   // ----- 디버깅 로그 (500ms마다 throttle) -----
   RCLCPP_INFO_THROTTLE(

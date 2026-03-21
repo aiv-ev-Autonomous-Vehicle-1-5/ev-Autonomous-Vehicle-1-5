@@ -1,0 +1,5 @@
+waypoint_recorder:
+  ros__parameters:
+    record_interval: 0.5              # 기록 주기(s)
+    covariance_threshold: 0.5         # sigma_xy(m) 임계값
+    min_distance: 0.3                 # 연속 기록 최소 거리(m), 정차 시 중복 방지

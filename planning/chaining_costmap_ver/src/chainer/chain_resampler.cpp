@@ -3,13 +3,11 @@
  * @brief DirectionChainer — Component 리샘플링 구현
  *
  * [포함 함수]
- *   - resample_component(): backbone + branch의 모든 edge를 resample_ds 간격으로 보간
- *     - resample_edge 람다에 is_bb 파라미터를 받아 backbone/branch를 구분
+ *   - resample_component(): backbone의 모든 edge를 resample_ds 간격으로 보간
  *     - backbone edge → is_backbone=true로 마킹하여 costmap에서 bbox_cost_max 적용 보장
- *     - branch edge  → is_backbone=false로 마킹하여 원래 타입 기반 비용 적용
  *
  * [의존 관계]
- *   - types.hpp: ChainPoint, BranchInfo, PointType
+ *   - types.hpp: ChainPoint, PointType
  */
 #include "chaining_costmap_ver/chainer/direction_chainer.hpp"
 
@@ -23,7 +21,7 @@ namespace chaining_costmap_ver
 // Component 리샘플링 — 전 edge 보간
 // ============================================================================
 //
-// backbone + branch의 모든 edge를 resample_ds 간격으로 선형 보간하여
+// backbone의 모든 edge를 resample_ds 간격으로 선형 보간하여
 // 균등한 점열을 생성한다. costmap에 연속적인 비용 장벽을 보장.
 //
 // 보간점의 type: 양끝 모두 BBOX일 때만 BBOX, 혼합 edge는 LANE
@@ -33,7 +31,6 @@ namespace chaining_costmap_ver
 std::vector<ChainPoint> DirectionChainer::resample_component(
   const std::vector<ChainPoint> & points,
   const std::vector<int> & backbone_ids,
-  const std::vector<BranchInfo> & branches,
   double resample_ds) const
 {
   std::vector<ChainPoint> resampled;
@@ -75,23 +72,6 @@ std::vector<ChainPoint> DirectionChainer::resample_component(
     ChainPoint last = points[backbone_ids.back()];
     last.is_backbone = true;
     resampled.push_back(last);
-  }
-
-  // 2) 각 branch의 연결 edge + 내부 edges 리샘플
-  for (const auto & branch : branches) {
-    if (branch.points.empty()) continue;
-    if (branch.parent_backbone_idx < 0 ||
-        branch.parent_backbone_idx >= static_cast<int>(backbone_ids.size())) {
-      continue;
-    }
-
-    const auto & parent_pt = points[backbone_ids[branch.parent_backbone_idx]];
-    resample_edge(parent_pt, branch.points[0], false);
-
-    for (size_t i = 0; i + 1 < branch.points.size(); ++i) {
-      resample_edge(branch.points[i], branch.points[i + 1], false);
-    }
-    resampled.push_back(branch.points.back());
   }
 
   return resampled;

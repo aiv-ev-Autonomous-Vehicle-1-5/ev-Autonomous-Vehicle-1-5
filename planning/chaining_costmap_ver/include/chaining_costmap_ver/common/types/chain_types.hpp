@@ -2,9 +2,8 @@
  * @file chain_types.hpp
  * @brief DirectionChainer v2 체이닝 타입 정의
  *
- * Component → Backbone → Branch 기반 좌/우 차선 경계 체이닝 시스템의 타입들:
+ * Component → Backbone 기반 좌/우 차선 경계 체이닝 시스템의 타입들:
  *   - ChainingGraph:         Undirected 그래프 (component 추출용)
- *   - BranchInfo:            Branch 정보 (backbone 분기)
  *   - StopReason:            Greedy chaining 종료 이유
  *   - NodeOwner:             노드 소유권 라벨
  *   - SideResult:            한쪽 side의 chaining 결과
@@ -35,20 +34,6 @@ struct ChainingGraph
 };
 
 /**
- * @brief Branch 정보 — backbone에서 분기된 가지
- *
- * 곡선 구간이나 장애물 회피 구간에서 경계점이 갈래처럼 갈라질 때,
- * backbone은 주 방향, branch는 비틀어진 부수적 경계선.
- * Branch의 점들도 코스트맵에 반영되어 경로가 해당 영역을 피하게 된다.
- */
-struct BranchInfo
-{
-  int parent_backbone_idx = -1;              ///< backbone에서의 분기점 인덱스
-  std::vector<ChainPoint> points;            ///< branch 포인트 배열
-  double score = 0.0;                        ///< branch 품질 점수
-};
-
-/**
  * @brief Greedy chaining 종료 이유
  */
 enum class StopReason : uint8_t
@@ -65,16 +50,12 @@ enum class StopReason : uint8_t
  * 라벨 부여 순서:
  *   1. left backbone  확정 → LEFT_BACKBONE
  *   2. right backbone 확정 → RIGHT_BACKBONE
- *   3. left branch    확정 → LEFT_BRANCH
- *   4. right branch   확정 → RIGHT_BRANCH
  */
 enum class NodeOwner : uint8_t
 {
   NONE = 0,        ///< 미할당
   LEFT_BACKBONE,   ///< 좌측 backbone
-  RIGHT_BACKBONE,  ///< 우측 backbone
-  LEFT_BRANCH,     ///< 좌측 branch
-  RIGHT_BRANCH     ///< 우측 branch
+  RIGHT_BACKBONE   ///< 우측 backbone
 };
 
 /**
@@ -82,13 +63,11 @@ enum class NodeOwner : uint8_t
  *
  *   component (전체) → CostmapGenerator에 전달
  *   └── backbone (주 경계선) → RViz2 시각화
- *       └── branches[] (가지들) → RViz2 시각화
  */
 struct SideResult
 {
   std::vector<ChainPoint> component;       ///< side 전체 리샘플 포인트 (costmap 전달용)
   std::vector<ChainPoint> backbone;        ///< 주 경계선 (디버깅/시각화용)
-  std::vector<BranchInfo> branches;        ///< backbone에서 분기된 가지들
 
   int seed_idx = -1;                       ///< seed 인덱스 (원본 points 배열 기준)
   int goal_idx = -1;                       ///< goal 인덱스

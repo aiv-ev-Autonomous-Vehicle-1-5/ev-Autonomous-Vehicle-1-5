@@ -262,7 +262,7 @@ struct PlanningParams
   // ============================================================
   // Chainer — DirectionChainer v2 파라미터
   //
-  // Component → Backbone → Branch 기반 좌/우 차선 경계 체이닝.
+  // Component → Backbone 기반 좌/우 차선 경계 체이닝.
   //
   // ── 체이닝 개요 ──
   // 인식 결과(bbox, 차선 점)를 "좌측 경계"와 "우측 경계"로
@@ -271,8 +271,7 @@ struct PlanningParams
   // 동작 순서:
   //   1. Seed 선택 : 차량에 가장 가까운 좌/우 포인트를 시작점으로 선택
   //   2. Backbone  : seed에서 greedy kNN으로 전방 포인트를 하나씩 연결
-  //   3. Branch    : backbone에서 갈라지는 가지(분기)를 추적
-  //   4. 결과      : 좌/우 경계선 → Costmap에 전달
+  //   3. 결과      : 좌/우 경계선 → Costmap에 전달
   //
   // 비용함수: cost = alpha*d + beta*theta + gamma*lateral + delta*size_diff
   //   d       = 유클리드 거리
@@ -345,11 +344,10 @@ struct PlanningParams
     // 키우면 side 전환 억제, 줄이면 side 구분 약해짐.
     double lambda_side = 0.5;           ///< side preference 가중치
 
-    // ── Branch ──
-    // [개] 하나의 branch에서 최대로 연결할 포인트 수.
-    // branch가 너무 길어지면 잘못된 연결일 가능성 → 제한.
-    // 40 = 리샘플 간격 0.1m 기준 최대 4m 길이의 branch.
-    int max_branch_len = 40;            ///< branch 최대 길이 (포인트 수)
+    // [m] 시드 y 기준 반대편 최대 허용 횡편차.
+    // 체인 후보가 시드의 y좌표에서 이 값 이상 반대편으로 벗어나면 게이트에서 제거.
+    // 2.0 = 시드에서 반대쪽으로 2m까지 허용. 코너에서 크로스 방지.
+    double max_lateral_deviation = 2.0; ///< [m] 시드 기준 반대편 횡편차 한계
 
     // ── 종료/제한 ──
     // [개] backbone의 최대 포인트 수.
@@ -471,7 +469,7 @@ struct PlanningParams
     chainer.gamma             = p("chainer.gamma",             chainer.gamma);
     chainer.delta             = p("chainer.delta",             chainer.delta);
     chainer.lambda_side       = p("chainer.lambda_side",       chainer.lambda_side);
-    chainer.max_branch_len    = p("chainer.max_branch_len",    chainer.max_branch_len);
+    chainer.max_lateral_deviation = p("chainer.max_lateral_deviation", chainer.max_lateral_deviation);
     chainer.max_chain_len     = p("chainer.max_chain_len",     chainer.max_chain_len);
     chainer.resample_ds       = p("chainer.resample_ds",       chainer.resample_ds);
     chainer.publish_debug     = p("chainer.publish_debug",     chainer.publish_debug);

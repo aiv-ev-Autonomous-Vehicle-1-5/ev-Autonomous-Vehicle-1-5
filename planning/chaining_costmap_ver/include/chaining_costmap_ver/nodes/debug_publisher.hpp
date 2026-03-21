@@ -3,7 +3,7 @@
  * @brief [Stage 7] 디버그 토픽 발행 유틸리티
  *
  * on_timer()의 Stage 7에서 호출되는 디버그 시각화 로직을 분리한 헤더.
- * costmap, raw_path, chains, branches, seeds 등의 디버그 마커 생성/발행.
+ * costmap, raw_path, chains, seeds 등의 디버그 마커 생성/발행.
  * 모든 함수는 lazy publishing (구독자가 있을 때만 발행).
  *
  * [구현 파일] src/nodes/debug_publisher.cpp
@@ -50,17 +50,6 @@ void publish_debug_curvature(
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr & pub,
   const PostprocessResult & pp_result,
   double r_min,
-  const std::string & frame_id,
-  const rclcpp::Time & stamp);
-
-/**
- * @brief branch MarkerArray 생성 (좌/우 공용)
- */
-visualization_msgs::msg::MarkerArray make_branch_markers(
-  const std::vector<BranchInfo> & branches,
-  const std::vector<ChainPoint> & backbone,
-  float r, float g, float b_color,
-  const std::string & ns,
   const std::string & frame_id,
   const rclcpp::Time & stamp);
 

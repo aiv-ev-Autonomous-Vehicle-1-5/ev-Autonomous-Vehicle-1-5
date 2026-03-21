@@ -2,13 +2,13 @@
  * @file debug_publisher.cpp
  * @brief [Stage 7] 디버그 토픽 발행 유틸리티 구현
  *
- * costmap, obstacle_wall, curvature, branches, seeds 등의
+ * costmap, obstacle_wall, curvature, seeds 등의
  * 디버그 마커 생성/발행 함수 구현.
  * 모든 함수는 lazy publishing (구독자가 있을 때만 발행).
  *
  * [의존 관계]
  *   - debug_publisher.hpp: 함수 선언
- *   - types.hpp: CostmapResult, PostprocessResult, BranchInfo 등
+ *   - types.hpp: CostmapResult, PostprocessResult 등
  *   - geometry.hpp: dist(), cross2()
  */
 #include "chaining_costmap_ver/nodes/debug_publisher.hpp"
@@ -151,58 +151,6 @@ void publish_debug_curvature(
     }
   }
   pub->publish(std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
-}
-
-// ============================================================================
-// branch MarkerArray 생성 (좌/우 공용)
-// ============================================================================
-visualization_msgs::msg::MarkerArray make_branch_markers(
-  const std::vector<BranchInfo> & branches,
-  const std::vector<ChainPoint> & backbone,
-  float r, float g, float b_color,
-  const std::string & ns,
-  const std::string & frame_id,
-  const rclcpp::Time & stamp)
-{
-  visualization_msgs::msg::MarkerArray ma;
-
-  visualization_msgs::msg::Marker del;
-  del.header.stamp = stamp;
-  del.header.frame_id = frame_id;
-  del.ns = ns;
-  del.id = -1;
-  del.action = visualization_msgs::msg::Marker::DELETEALL;
-  ma.markers.push_back(del);
-
-  int id = 0;
-  for (const auto & br : branches) {
-    if (br.points.empty() || br.parent_backbone_idx < 0 ||
-        br.parent_backbone_idx >= static_cast<int>(backbone.size())) {
-      continue;
-    }
-
-    visualization_msgs::msg::Marker m;
-    m.header.stamp = stamp;
-    m.header.frame_id = frame_id;
-    m.ns = ns;
-    m.id = id++;
-    m.type = visualization_msgs::msg::Marker::LINE_STRIP;
-    m.action = visualization_msgs::msg::Marker::ADD;
-    m.scale.x = 0.03;
-    m.color.r = r; m.color.g = g; m.color.b = b_color; m.color.a = 0.8f;
-
-    geometry_msgs::msg::Point pt;
-    pt.x = backbone[br.parent_backbone_idx].x;
-    pt.y = backbone[br.parent_backbone_idx].y;
-    pt.z = 0.0;
-    m.points.push_back(pt);
-    for (const auto & bp : br.points) {
-      pt.x = bp.x; pt.y = bp.y;
-      m.points.push_back(pt);
-    }
-    ma.markers.push_back(m);
-  }
-  return ma;
 }
 
 // ============================================================================

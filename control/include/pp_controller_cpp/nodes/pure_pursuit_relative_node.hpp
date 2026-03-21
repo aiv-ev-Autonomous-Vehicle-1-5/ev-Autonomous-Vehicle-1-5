@@ -22,7 +22,10 @@
 // [모듈 구조]
 //   이 노드는 다음 모듈들을 조합하여 동작한다:
 //     - common/params.hpp          : 파라미터 관리
-//     - pursuit/pursuit_algorithm  : Pure Pursuit 수학 계산
+//     - pursuit/path_query         : 경로 분석 (최근접, 목표점, 잔여거리, 곡률)
+//     - pursuit/speed_planning     : 속도 계획 (lookahead, 속도, rate limit)
+//     - pursuit/steering           : 조향각 계산
+//     - nodes/command_publisher    : T870/ERP42 이중 명령 발행
 //     - debug/debug_visualizer     : RViz2 시각화
 // ============================================================================
 
@@ -35,11 +38,10 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "visualization_msgs/msg/marker.hpp"
-#include "t870_msgs/msg/control_command.hpp"
-#include "erp42_msgs/msg/control_command.hpp"
 #include "std_msgs/msg/string.hpp"
 
 #include "pp_controller_cpp/common/params.hpp"
+#include "pp_controller_cpp/nodes/command_publisher.hpp"
 #include "pp_controller_cpp/debug/debug_visualizer.hpp"
 
 namespace pp_controller_cpp
@@ -69,6 +71,9 @@ private:
   /// 정지 명령 발행 (speed=0, steering=0) — 즉시 정지 아닌 점진적 감속
   void publish_emergency_decel(double dt);
 
+  /// 경로 잔여 길이를 이동 평균 필터링 (안전 우선: raw와 avg 중 작은 값)
+  double compute_filtered_remaining(double raw_remaining);
+
   // ======================== 멤버 변수 ========================
 
   // --- 파라미터 ---
@@ -87,8 +92,7 @@ private:
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr status_sub_;
-  rclcpp::Publisher<t870_msgs::msg::ControlCommand>::SharedPtr cmd_pub_;
-  rclcpp::Publisher<erp42_msgs::msg::ControlCommand>::SharedPtr cmd_erp42_pub_;
+  CommandPublisher cmd_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
   // --- 디버그 시각화 ---

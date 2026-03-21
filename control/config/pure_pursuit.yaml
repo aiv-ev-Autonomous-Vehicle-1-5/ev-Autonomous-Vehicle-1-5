@@ -8,19 +8,19 @@ pure_pursuit_relative_node:
     wheelbase: 0.87          # [m] T870 축간거리
     lookahead: 1.2           # [m] legacy fallback
     lookahead_min: 0.85      # [m] 코너에서 짧게 보는 최소 주시 거리
-    lookahead_max: 2.50      # [m] 직선에서 길게 보는 최대 주시 거리
-    lookahead_speed_gain: 0.65  # [m/(m/s)] 속도 증가에 따른 lookahead 증가량
+    lookahead_max: 1.50      # [m] 직선에서 길게 보는 최대 주시 거리
+    lookahead_speed_gain: 0.35  # [m/(m/s)] 속도 증가에 따른 lookahead 증가량
     speed: 1.0               # [m/s] legacy fallback
-    speed_min: 0.45          # [m/s] 급코너 최소 속도
-    speed_max: 1.2          # [m/s] 직선 최대 속도
+    speed_min: 0.2         # [m/s] 급코너 최소 속도
+    speed_max: 0.7            # [m/s] 직선 최대 속도
     lateral_accel_limit: 0.90  # [m/s^2] 곡률 기반 감속 한계
     preview_distance: 2.50   # [m] 전방 curvature preview 거리
-    accel_rate: 0.30         # [m/s^2] 직선 가속 rate limit
+    accel_rate: 0.20         # [m/s^2] 직선 가속 rate limit
     decel_rate: 3.00         # [m/s^2] 정상 감속 rate limit (코너 진입 + 제동거리 기반 감속)
-    emergency_decel_rate: 3.0  # [m/s^2] 긴급 정지 감속 rate limit (FAIL, timeout 등)
-    emergency_stop_count: 10   # FAIL 연속 N회 시 긴급 감속 시작 (50Hz 기준 10회 = 200ms)
-    path_length_filter_size: 10  # 경로 길이 이동 평균 윈도우 크기 (50Hz 기준 10 = 200ms = planning(10hz) 2 cycle)
-    stop_margin: 2.0             # [m] 경로 끝 정지 여유거리 (남은 경로 ≤ 이 값이면 속도 0)
+    emergency_decel_rate: 2.0  # [m/s^2] 긴급 정지 감속 rate limit (FAIL, timeout 등)
+    emergency_stop_count: 40   # FAIL 연속 N회 시 긴급 감속 시작 (50Hz 기준 10회 = 200ms)
+    path_length_filter_size: 20  # 경로 길이 이동 평균 윈도우 크기 (50Hz 기준 10 = 200ms = planning(10hz) 2 cycle)
+    stop_margin: 1.3             # [m] 경로 끝 정지 여유거리 (남은 경로 ≤ 이 값이면 속도 0)
     delta_max: 0.314         # [rad] 최대 조향각 (~18도)
     path_timeout_sec: 0.5    # [s] 경로 타임아웃
     min_x_target: 0.05       # [m] 목표점 최소 전방 거리

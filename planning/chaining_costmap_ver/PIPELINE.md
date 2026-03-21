@@ -3,7 +3,7 @@
 ## 패키지 개요
 
 LiDAR + Camera 기반 자율주행 경로 계획 패키지.
-DirectionChainer v2 + Gaussian Costmap + A* 7단계 파이프라인.
+DirectionChainer v3 + Gaussian Costmap + A* 7단계 파이프라인.
 
 ## 디렉토리 구조
 
@@ -16,7 +16,7 @@ chaining_costmap_ver/
 │   │   │   ├── point_types.hpp       # Point2D, PointType, ChainedPoint, ChainPoint
 │   │   │   ├── costmap_types.hpp     # CostmapResult
 │   │   │   ├── planner_types.hpp     # PostprocessResult, PlannerState
-│   │   │   └── chain_types.hpp       # ChainingGraph, BranchInfo, SideResult 등
+│   │   │   └── chain_types.hpp       # ChainingGraph, StopReason, NodeOwner, SideResult, DirectionChainResult
 │   │   ├── params.hpp                # PlanningParams (모든 파라미터 구조체)
 │   │   ├── geometry.hpp              # 2D 기하 유틸리티 (inline)
 │   │   └── debug_publish.hpp         # to_path_msg(), to_points_marker()
@@ -36,13 +36,12 @@ chaining_costmap_ver/
 │       ├── goal_calculator.hpp       # Stage 3c: calculate_goal() 선언
 │       └── debug_publisher.hpp       # Stage 7: 디버그 시각화 헬퍼 선언
 ├── src/
-│   ├── chainer/                      # DirectionChainer 구현 (6파일, 1클래스)
+│   ├── chainer/                      # DirectionChainer 구현 (5파일, 1클래스)
 │   │   ├── direction_chainer.cpp     # chain() 오케스트레이터
 │   │   ├── seed_selector.cpp         # find_seed(), knn()
 │   │   ├── graph_builder.cpp         # build_graph()
 │   │   ├── backbone_extractor.cpp    # extract_backbone(), chain_one_direction(),
 │   │   │                             #   compute_cost(), compute_cost_prime()
-│   │   ├── branch_extractor.cpp      # extract_branches()
 │   │   └── chain_resampler.cpp       # resample_component()
 │   ├── costmap/
 │   │   └── costmap_generator.cpp     # CostmapGenerator 구현
@@ -75,12 +74,21 @@ on_timer() — 10Hz (100ms)
 │     BBox + LaneBoundary → ChainPoint 벡터 (sensor_tf 보정)
 │
 ├── Stage 2: DirectionChainer  [chainer/*.cpp]
-│     find_seed → build_graph → extract_backbone(L/R, forward-only)
-│     → 교차 판정 → extract_branches(L/R) → resample_component(L/R)
+│     find_seed → build_graph → extract_backbone(L/R) → resample_component(L/R)
+│     * backbone chaining 게이트:
+│       G1 (거리 게이트):       d(i,j) ≤ d_max
+│       G2 (전방 cone 게이트):  angle(v, u_ij) ≤ forward_cone_deg/2
+│       G3 (횡오차 게이트):     |lateral_proj| ≤ lateral_gate
+│       G4 (시드 기준 횡편차 가드): candidate.y が seed_y ± max_lateral_deviation 이내
+│          left  backbone → candidate.y < seed_y - max_lateral_deviation 이면 reject
+│          right backbone → candidate.y > seed_y + max_lateral_deviation 이면 reject
+│          → backbone이 반대편으로 크로스하는 것을 사전 차단
 │     * backbone chaining 시 2-phase BBOX 최우선 탐색:
 │       Phase 1 — d_max 범위 내 모든 bbox를 knn 없이 직접 전수 탐색
 │                 (lane point가 많아도 bbox가 k개 제한에 밀리지 않음)
+│                 G1+G2+G3+G4 게이트 적용
 │       Phase 2 — bbox 후보 없으면 knn fallback → bbox-first 선택
+│                 G1+G2+G3+G4 게이트 적용
 │     * 교차 판정 (1·2단계 backbone 확정 직후):
 │       owner[right_seed] == LEFT_BACKBONE → left_crossed_right = true
 │       owner[left_seed]  == RIGHT_BACKBONE → right_crossed_left = true
@@ -95,7 +103,6 @@ on_timer() — 10Hz (100ms)
 │     3b. Gaussian Costmap 생성 + entry walls
 │         * backbone 포인트(is_backbone=true)는 타입(LANE/BBOX)에 관계없이
 │           bbox_cost_max + bbox_radius 적용 → 전환 구간 gap 방지
-│         * branch의 LANE 포인트는 기존대로 lane_cost_max 적용
 │     3c. Goal 계산
 │         * 교차 판정 처리: left_crossed_right 또는 right_crossed_left가
 │           true이면 해당 backbone 인덱스 중간점을 local_goal로 즉시 반환
@@ -112,14 +119,14 @@ on_timer() — 10Hz (100ms)
 └── Stage 7: Publish  [nodes/debug_publisher.hpp]
       Core: path (Marker), status (String)
       Debug: costmap, obstacle_wall, curvature, raw_path,
-             pruned_path, chains, branches, seeds, local_goal
+             pruned_path, chains, seeds, local_goal
 ```
 
 ## 빌드 타겟
 
 | 타겟 | 타입 | 소스 파일 |
 |------|------|-----------|
-| `chaining_costmap_chainer` | 공유 라이브러리 | `src/chainer/*.cpp` (6파일) |
+| `chaining_costmap_chainer` | 공유 라이브러리 | `src/chainer/*.cpp` (5파일) |
 | `chaining_costmap_costmap` | 공유 라이브러리 | `src/costmap/costmap_generator.cpp` |
 | `chaining_costmap_astar` | 공유 라이브러리 | `src/planner/astar_planner.cpp` |
 | `chaining_costmap_postprocess` | 공유 라이브러리 | `src/postprocess/*.cpp` (4파일) |

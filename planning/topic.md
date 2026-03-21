@@ -38,8 +38,6 @@
 | `/planning/debug/pruned_path` | `visualization_msgs/msg/Marker` (POINTS) | Reliable, depth=1 | prune 직후 경로 — smooth/curvature_clamp 전 (노란색, 10cm) |
 | `/planning/debug/left_chain` | `nav_msgs/msg/Path` | Reliable, depth=1 | 왼쪽 backbone 체인 |
 | `/planning/debug/right_chain` | `nav_msgs/msg/Path` | Reliable, depth=1 | 오른쪽 backbone 체인 |
-| `/chaining/debug/left_branches` | `visualization_msgs/msg/MarkerArray` (LINE_STRIP) | Reliable, depth=1 | 왼쪽 branch 시각화 (연한 초록색) |
-| `/chaining/debug/right_branches` | `visualization_msgs/msg/MarkerArray` (LINE_STRIP) | Reliable, depth=1 | 오른쪽 branch 시각화 (연한 분홍색) |
 | `/chaining/debug/seeds` | `visualization_msgs/msg/MarkerArray` (SPHERE) | Reliable, depth=1 | 시드(시작점) 및 골(끝점) 마커 |
 | `/planning/debug/local_goal` | `visualization_msgs/msg/MarkerArray` (SPHERE) | Reliable, depth=1 | A* 탐색 목표점 (노란색 구체, 30cm) |
 | `/planning/debug/obstacle_wall` | `visualization_msgs/msg/MarkerArray` (CUBE_LIST) | Reliable, depth=1 | cost >= obstacle_cost 셀 (빨간색 큐브) |

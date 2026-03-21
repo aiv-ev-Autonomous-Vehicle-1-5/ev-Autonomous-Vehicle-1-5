@@ -118,7 +118,8 @@ std::vector<int> DirectionChainer::chain_one_direction(
   std::unordered_set<int> & visited_set,
   int remaining_len,
   StopReason & stop_reason,
-  const PlanningParams::Chainer & cp) const
+  const PlanningParams::Chainer & cp,
+  double seed_y) const
 {
   std::vector<int> chain;
   int current = seed_idx;
@@ -131,7 +132,8 @@ std::vector<int> DirectionChainer::chain_one_direction(
     bool had_candidates = false;
     const int n = static_cast<int>(points.size());
     const double d_max_sq = cp.d_max * cp.d_max;
-
+    
+    // G1 : 거리 게이트
     // ── Phase 1: BBOX 최우선 — d_max 범위 내 모든 bbox를 knn 없이 직접 탐색
     //    knn k개 제한 때문에 lane point에 밀려 bbox가 후보에서 빠지는 것을 방지
     for (int i = 0; i < n; ++i) {
@@ -159,6 +161,10 @@ std::vector<int> DirectionChainer::chain_one_direction(
       Point2D perp = {-v.y, v.x};
       double lat = std::abs(dx * perp.x + dy * perp.y);
       if (lat > cp.lateral_gate) continue;
+
+      // G4: 시드 기준 횡편차 가드 — 반대편 크로스 방지
+      if (is_left  && points[i].y < seed_y - cp.max_lateral_deviation) continue;
+      if (!is_left && points[i].y > seed_y + cp.max_lateral_deviation) continue;
 
       gated.push_back(i);
     }
@@ -189,6 +195,10 @@ std::vector<int> DirectionChainer::chain_one_direction(
         Point2D perp = {-v.y, v.x};
         double lat = std::abs(dx * perp.x + dy * perp.y);
         if (lat > cp.lateral_gate) continue;
+
+        // G4: 시드 기준 횡편차 가드 — 반대편 크로스 방지
+        if (is_left  && points[j].y < seed_y - cp.max_lateral_deviation) continue;
+        if (!is_left && points[j].y > seed_y + cp.max_lateral_deviation) continue;
 
         gated.push_back(j);
       }
@@ -265,18 +275,20 @@ std::vector<int> DirectionChainer::extract_backbone(
 
   const int max_extend = cp.max_chain_len - 1;
 
+  const double seed_y = points[seed_idx].y;
+
   // Backward pass (-x 방향)
   StopReason stop_reason_backward = StopReason::MAX_LEN;
   auto backward_chain = chain_one_direction(
     points, owner, seed_idx,
     {-1.0, 0.0}, is_left, visited_set,
-    max_extend, stop_reason_backward, cp);
+    max_extend, stop_reason_backward, cp, seed_y);
 
   // Forward pass (+x 방향)
   auto forward_chain = chain_one_direction(
     points, owner, seed_idx,
     {1.0, 0.0}, is_left, visited_set,
-    max_extend, stop_reason_forward, cp);
+    max_extend, stop_reason_forward, cp, seed_y);
 
   // reverse(backward) + [seed] + forward → backbone
   seed_backbone_pos = static_cast<int>(backward_chain.size());
