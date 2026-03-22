@@ -41,8 +41,10 @@ void publish_debug_costmap(
   grid_msg->info.origin.position.y = costmap.origin_y;
   grid_msg->info.origin.orientation.w = 1.0;
   grid_msg->data.resize(costmap.rows * costmap.cols);
+  double max_val = *std::max_element(costmap.data.begin(), costmap.data.end());
+  double scale = (max_val > 0.0) ? (100.0 / max_val) : 1.0;
   for (int i = 0; i < costmap.rows * costmap.cols; ++i) {
-    grid_msg->data[i] = static_cast<int8_t>(std::min(100.0, costmap.data[i]));
+    grid_msg->data[i] = static_cast<int8_t>(std::clamp(costmap.data[i] * scale, 0.0, 100.0));
   }
   pub->publish(std::move(grid_msg));
 }

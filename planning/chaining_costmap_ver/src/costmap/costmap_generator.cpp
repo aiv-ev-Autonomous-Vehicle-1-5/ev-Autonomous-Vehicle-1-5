@@ -297,9 +297,22 @@ std::vector<Point2D> CostmapGenerator::apply_center_attraction(
   const double r_total = cm.center_attract_sigma * 3.0;  // 3σ까지만 순회
   const int r_cells = static_cast<int>(std::ceil(r_total / cm.resolution));
 
+  int cpt_idx = 0;
   for (const auto & cpt : center_line) {
     int src_col = static_cast<int>(std::round((cpt.x - costmap.origin_x) / cm.resolution));
     int src_row = static_cast<int>(std::round((cpt.y - costmap.origin_y) / cm.resolution));
+
+    // 중앙선 포인트 자체 셀의 before 값 로그 (처음 5개만)
+    if (cpt_idx < 5) {
+      int center_idx = src_row * costmap.cols + src_col;
+      if (center_idx >= 0 && center_idx < static_cast<int>(costmap.data.size())) {
+        double before = costmap.data[center_idx];
+        bool skipped = (before >= cm.bbox_cost_max);
+        std::fprintf(stderr,
+          "[center_attract] pt[%d] (%.2f,%.2f) grid(%d,%d) before=%.1f bbox_max=%.1f skipped=%d\n",
+          cpt_idx, cpt.x, cpt.y, src_row, src_col, before, cm.bbox_cost_max, skipped);
+      }
+    }
 
     int row_min = std::max(0, src_row - r_cells);
     int row_max = std::min(costmap.rows - 1, src_row + r_cells);
@@ -320,9 +333,19 @@ std::vector<Point2D> CostmapGenerator::apply_center_attraction(
         double d2 = ddx * ddx + ddy * ddy;
 
         double reduction = cm.center_attract_max * std::exp(inv_2sigma2 * d2);
-        costmap.data[idx] = std::max(0.0, costmap.data[idx] - reduction);
+        double after = std::max(0.0, costmap.data[idx] - reduction);
+
+        // 처음 5개 포인트의 중심 셀만 after 로그
+        if (cpt_idx < 5 && r == src_row && c == src_col) {
+          std::fprintf(stderr,
+            "[center_attract] pt[%d] reduction=%.1f after=%.1f\n",
+            cpt_idx, reduction, after);
+        }
+
+        costmap.data[idx] = after;
       }
     }
+    ++cpt_idx;
   }
 
   return center_line;

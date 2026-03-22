@@ -48,9 +48,10 @@ on_timer() — 10Hz (100ms)
 │     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
 │     3b. Gaussian Costmap 생성
 │         * backbone 포인트는 bbox_cost_max + bbox_radius 적용
-│     3b-2. 중앙선 유인 비용 (center line attraction)
+│     3b-2. Entry walls
+│     3b-3. 중앙선 유인 비용 (center line attraction) ← 가장 마지막에 적용
 │         * 좌/우 backbone 중점 연결선에 음의 가우시안 비용 적용
-│     3b-3. Entry walls
+│         * 다른 비용이 덮어쓰지 못하도록 최종 단계에서 차감
 │     3c. Goal 계산
 │         * 교차 판정 처리: 교차 시 해당 backbone 중간점을 local_goal로 반환
 │         * 정상 시: 좌/우 끝점 선분 중점 or 폴백

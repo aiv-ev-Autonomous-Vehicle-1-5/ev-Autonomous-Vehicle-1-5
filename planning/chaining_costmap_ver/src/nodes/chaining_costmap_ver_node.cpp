@@ -201,7 +201,19 @@ void LCPlannerNode::on_timer()
   auto costmap = costmap_generator_.generate(
     left_chained, right_chained, unchained_chained, params_);
 
-  // 3b-2. 중앙선 유인 비용 적용
+  // 3b-2. Entry walls (중앙선 유인보다 먼저 적용 — 중앙선이 마지막에 비용을 빼야 override되지 않음)
+  if (costmap.valid &&
+      !dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
+    Point2D left_seed = {
+      dc_result.left.backbone.front().x,
+      dc_result.left.backbone.front().y};
+    Point2D right_seed = {
+      dc_result.right.backbone.front().x,
+      dc_result.right.backbone.front().y};
+    CostmapGenerator::apply_entry_walls(costmap, left_seed, right_seed, params_);
+  }
+
+  // 3b-3. 중앙선 유인 비용 적용 (가장 마지막에 적용하여 다른 비용이 덮어쓰지 못하게 함)
   std::vector<Point2D> center_line;
   if (costmap.valid) {
     center_line = CostmapGenerator::apply_center_attraction(
@@ -232,18 +244,6 @@ void LCPlannerNode::on_timer()
       m.points.push_back(p);
     }
     pub_dbg_center_line_->publish(m);
-  }
-
-  // 3b-3. Entry walls
-  if (costmap.valid &&
-      !dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
-    Point2D left_seed = {
-      dc_result.left.backbone.front().x,
-      dc_result.left.backbone.front().y};
-    Point2D right_seed = {
-      dc_result.right.backbone.front().x,
-      dc_result.right.backbone.front().y};
-    CostmapGenerator::apply_entry_walls(costmap, left_seed, right_seed, params_);
   }
 
   // 3c. Goal 계산 (goal_calculator.hpp)
