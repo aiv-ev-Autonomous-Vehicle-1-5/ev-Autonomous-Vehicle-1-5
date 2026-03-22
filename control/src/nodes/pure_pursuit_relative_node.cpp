@@ -162,20 +162,75 @@ void PurePursuitRelativeNode::publish_emergency_decel(double dt)
 // ===========================================================================
 // compute_filtered_remaining: 경로 잔여 길이 이동 평균 필터
 // ===========================================================================
-// 안전 우선: 필터 평균과 현재 raw 값 중 작은 값을 사용
-//   → 경로가 갑자기 짧아지면 즉시 반영 (가속 방지)
-//   → 경로가 갑자기 길어지면 서서히 반영 (노이즈 필터링)
+// 이동 평균 필터 + 급락 확정 로직 (buffer 동결 방식)
+//
+// [동작]
+//   1) buffer의 기존 avg 계산 (현재 raw는 아직 넣지 않음)
+//   2) raw < avg × path_drop_ratio → 급락 의심
+//      - pending_raws_에 보류, buffer 동결, avg 반환
+//      - N프레임 연속 시 확정 → pending 전부 buffer push, raw 반환
+//   3) 정상 → 밀린 pending + raw를 buffer에 push, avg 반환
+//
+// [설계 의도]
+//   단발 노이즈에 급브레이크 방지 (buffer 동결로 avg 오염 없음)
+//   진짜 급정지는 60ms(3프레임) 지연 후 즉시 반영
 // ===========================================================================
 double PurePursuitRelativeNode::compute_filtered_remaining(double raw_remaining)
 {
+  const auto & sp = params_.speed;
+
+  // 초기화: buffer가 비어있으면 raw를 넣고 반환
+  if (path_length_buffer_.empty()) {
+    path_length_buffer_.push_back(raw_remaining);
+    return raw_remaining;
+  }
+
+  // 기존 buffer로 avg 계산 (raw는 아직 넣지 않음)
+  double avg = 0.0;
+  for (const auto & l : path_length_buffer_) avg += l;
+  avg /= static_cast<double>(path_length_buffer_.size());
+
+  const double drop_threshold = avg * sp.path_drop_ratio;
+
+  if (raw_remaining < drop_threshold) {
+    // ── 급락 의심: buffer 동결, raw를 pending에 보류 ──
+    pending_raws_.push_back(raw_remaining);
+    ++path_drop_counter_;
+
+    if (path_drop_counter_ >= sp.path_drop_confirm_count) {
+      // 확정: pending 전부 buffer에 push
+      for (const double r : pending_raws_) {
+        path_length_buffer_.push_back(r);
+      }
+      while (static_cast<int>(path_length_buffer_.size()) > sp.path_length_filter_size) {
+        path_length_buffer_.pop_front();
+      }
+      pending_raws_.clear();
+      path_drop_counter_ = 0;
+      return raw_remaining;
+    }
+
+    // 미확정: 동결된 avg 반환
+    return avg;
+  }
+
+  // ── 정상: 밀린 pending + 현재 raw를 buffer에 push ──
+  for (const double r : pending_raws_) {
+    path_length_buffer_.push_back(r);
+  }
+  pending_raws_.clear();
+  path_drop_counter_ = 0;
+
   path_length_buffer_.push_back(raw_remaining);
-  while (static_cast<int>(path_length_buffer_.size()) > params_.speed.path_length_filter_size) {
+  while (static_cast<int>(path_length_buffer_.size()) > sp.path_length_filter_size) {
     path_length_buffer_.pop_front();
   }
-  double avg_remaining = 0.0;
-  for (const auto & l : path_length_buffer_) avg_remaining += l;
-  avg_remaining /= static_cast<double>(path_length_buffer_.size());
-  return std::min(raw_remaining, avg_remaining);
+
+  // 새 avg 계산하여 반환
+  double new_avg = 0.0;
+  for (const auto & l : path_length_buffer_) new_avg += l;
+  new_avg /= static_cast<double>(path_length_buffer_.size());
+  return new_avg;
 }
 
 // ===========================================================================
@@ -212,11 +267,34 @@ bool PurePursuitRelativeNode::is_forward_clear() const
 void PurePursuitRelativeNode::on_timer()
 {
   const auto now = this->now();
-  double control_dt = 0.05;
+  double control_dt = 0.02;
   if (last_control_time_.nanoseconds() > 0) {
     control_dt = std::clamp((now - last_control_time_).seconds(), 1e-3, 0.2);
   }
   last_control_time_ = now;
+
+  // ----- CREEP ROI 디버그 마커 (lazy, 항상 발행) -----
+  if (pub_dbg_creep_roi_->get_subscription_count() > 0) {
+    const auto & cp = params_.creep;
+    visualization_msgs::msg::Marker m;
+    m.header.stamp = now;
+    m.header.frame_id = "base_link";
+    m.ns = "creep_roi";
+    m.id = 0;
+    m.type = visualization_msgs::msg::Marker::LINE_STRIP;
+    m.action = visualization_msgs::msg::Marker::ADD;
+    m.scale.x = 0.03;
+    m.color.r = 1.0f; m.color.g = 0.5f; m.color.b = 0.0f; m.color.a = 0.8f;
+    auto pt = [](double x, double y) {
+      geometry_msgs::msg::Point p; p.x = x; p.y = y; p.z = 0.0; return p;
+    };
+    m.points.push_back(pt(0.0, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x,  cp.roi_y));
+    m.points.push_back(pt(0.0,  cp.roi_y));
+    m.points.push_back(pt(0.0, -cp.roi_y));
+    pub_dbg_creep_roi_->publish(m);
+  }
 
   // ----- 정지 조건 판정 + 연속 카운터 -----
   bool should_stop = false;
@@ -354,31 +432,6 @@ void PurePursuitRelativeNode::on_timer()
   // ----- 디버그 시각화 발행 (lazy) — 원본 센서 타임스탬프 전파 -----
   debug_viz_.publish_lookahead_point(tx, ty, last_path_stamp_);
   debug_viz_.publish_pursuit_arc(tx, ty, kappa_pp, last_path_stamp_);
-
-  // ----- CREEP ROI 디버그 마커 (lazy) -----
-  if (pub_dbg_creep_roi_->get_subscription_count() > 0) {
-    const auto & cp = params_.creep;
-    visualization_msgs::msg::Marker m;
-    m.header.stamp = last_path_stamp_;
-    m.header.frame_id = "base_link";
-    m.ns = "creep_roi";
-    m.id = 0;
-    m.type = visualization_msgs::msg::Marker::LINE_STRIP;
-    m.action = visualization_msgs::msg::Marker::ADD;
-    m.scale.x = 0.03;
-    m.color.r = 1.0f; m.color.g = 0.5f; m.color.b = 0.0f; m.color.a = 0.8f;
-
-    // ROI 사각형: (0, -roi_y) → (roi_x, -roi_y) → (roi_x, roi_y) → (0, roi_y) → 닫기
-    auto pt = [](double x, double y) {
-      geometry_msgs::msg::Point p; p.x = x; p.y = y; p.z = 0.0; return p;
-    };
-    m.points.push_back(pt(0.0, -cp.roi_y));
-    m.points.push_back(pt(cp.roi_x, -cp.roi_y));
-    m.points.push_back(pt(cp.roi_x,  cp.roi_y));
-    m.points.push_back(pt(0.0,  cp.roi_y));
-    m.points.push_back(pt(0.0, -cp.roi_y));  // 닫기
-    pub_dbg_creep_roi_->publish(m);
-  }
 }
 
 }  // namespace pp_controller_cpp

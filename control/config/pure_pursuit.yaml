@@ -20,12 +20,14 @@ pure_pursuit_relative_node:
     emergency_decel_rate: 2.0  # [m/s^2] 긴급 정지 감속 rate limit (FAIL, timeout 등)
     emergency_stop_count: 40   # FAIL 연속 N회 시 긴급 감속 시작 (50Hz 기준 10회 = 200ms)
     path_length_filter_size: 20  # 경로 길이 이동 평균 윈도우 크기 (50Hz 기준 10 = 200ms = planning(10hz) 2 cycle)
+    path_drop_confirm_count: 3   # 급락 확정 연속 프레임 수 (50Hz 기준 3 = 60ms)
+    path_drop_ratio: 0.4         # avg 대비 이 비율 이하면 급락 후보
     stop_margin: 1.3             # [m] 경로 끝 정지 여유거리 (남은 경로 ≤ 이 값이면 속도 0)
     delta_max: 0.314         # [rad] 최대 조향각 (~18도)
     path_timeout_sec: 0.5    # [s] 경로 타임아웃
     min_x_target: 0.05       # [m] 목표점 최소 전방 거리
 
     # --- CREEP 모드 (경로 실패 시 전방 clear면 저속 직진) ---
-    creep_speed: 0.2         # [m/s] CREEP 시 직진 속도
-    creep_roi_x: 2.0         # [m] 전방 판정 거리
-    creep_roi_y: 0.8         # [m] 좌우 판정 폭 (±)
+    creep_speed: 0.4         # [m/s] CREEP 시 직진 속도
+    creep_roi_x: 1.0         # [m] 전방 판정 거리
+    creep_roi_y: 0.5         # [m] 좌우 판정 폭 (±)

@@ -53,6 +53,8 @@ struct PurePursuitParams
     double accel_rate{0.8};             // 가속 rate limit [m/s^2]
     double decel_rate{1.8};             // 감속 rate limit [m/s^2]
     int    path_length_filter_size{10}; // 경로 길이 이동 평균 윈도우 크기
+    int    path_drop_confirm_count{3};  // 급락 확정 연속 프레임 수 (50Hz 기준 3 = 60ms)
+    double path_drop_ratio{0.4};        // 급락 판정 비율 (avg 대비 이 비율 이하면 급락 후보)
     double stop_margin{1.5};            // 경로 끝 정지 여유거리 [m]
   } speed;
 
@@ -135,6 +137,11 @@ struct PurePursuitParams
     speed.accel_rate = std::max(1e-3, node->get_parameter("accel_rate").as_double());
     speed.decel_rate = std::max(1e-3, node->get_parameter("decel_rate").as_double());
     speed.path_length_filter_size = std::max(1, static_cast<int>(node->get_parameter("path_length_filter_size").as_int()));
+
+    node->declare_parameter<int>("path_drop_confirm_count", speed.path_drop_confirm_count);
+    node->declare_parameter<double>("path_drop_ratio", speed.path_drop_ratio);
+    speed.path_drop_confirm_count = std::max(1, static_cast<int>(node->get_parameter("path_drop_confirm_count").as_int()));
+    speed.path_drop_ratio = std::clamp(node->get_parameter("path_drop_ratio").as_double(), 0.1, 0.9);
 
     node->declare_parameter<double>("stop_margin", speed.stop_margin);
     speed.stop_margin = std::max(0.0, node->get_parameter("stop_margin").as_double());

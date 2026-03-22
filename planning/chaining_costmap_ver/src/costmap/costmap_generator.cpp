@@ -215,15 +215,23 @@ CostmapResult CostmapGenerator::generate(
 
   // ── unchained 포인트 처리 ──
   // 체이닝 실패 = 좌/우 경계에 배정되지 못한 점
-  // 정체를 알 수 없으므로 bbox 비용(가장 높은 비용)으로 보수적 처리
-  // → A*가 이 점들을 최대한 회피하도록 유도
+  // BBOX: 정체 불명 장애물 → bbox_cost_max(100)으로 보수적 처리
+  // LANE: 차선 포인트 → lane_cost_max(50)으로 처리
   for (const auto & pt : unchained) {
     const Point2D src = pt.to_point2d();
-    apply_source(
-      result.data, result.rows, result.cols,
-      result.resolution, result.origin_x, result.origin_y,
-      src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
-      cm.bbox_radius);
+    if (pt.type == PointType::BBOX) {
+      apply_source(
+        result.data, result.rows, result.cols,
+        result.resolution, result.origin_x, result.origin_y,
+        src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
+        cm.bbox_radius);
+    } else {
+      apply_source(
+        result.data, result.rows, result.cols,
+        result.resolution, result.origin_x, result.origin_y,
+        src, cm.lane_cost_max, cm.sigma, cm.cost_threshold,
+        cm.lane_radius);
+    }
   }
 
   result.valid = true;

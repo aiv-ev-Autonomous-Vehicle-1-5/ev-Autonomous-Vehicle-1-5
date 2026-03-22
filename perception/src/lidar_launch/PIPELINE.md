@@ -1,6 +1,10 @@
-# LiDAR Perception Pipeline — 전체 파이프라인 & 토픽
+# lidar_launch — LiDAR 인식 파이프라인 런치 메타패키지
 
-## 전체 흐름
+## 개요
+
+LiDAR 인식 파이프라인 런치 및 설정 메타패키지. 노드 없이 런치 파일과 중앙집중 설정만 제공한다.
+
+## 전체 파이프라인 데이터 흐름
 
 ```
 Velodyne VLP-16 (UDP)
@@ -18,8 +22,10 @@ Velodyne VLP-16 (UDP)
     ▼
 /patchworkpp/nonground
     │
+    ├─ VoxelGrid (optional, 근거리 다운샘플링)
+    │
     ├─ DBSCAN Clustering (클러스터링)
-    │   └─ /pointcloud/clustered (PointCloud2, label별 색상)
+    │   └─ /pointcloud/clustered (PointCloud2, cluster_id + rgb)
     │
     ▼
 /pointcloud/clustered
@@ -40,6 +46,31 @@ Velodyne VLP-16 (UDP)
     │
     ▼
 /perception/bboxes → planning (chaining_costmap_ver)
+```
+
+## 런치 파일
+
+| 파일 | 용도 |
+|------|------|
+| `my_velodyne_VLP16-composed-launch.py` | 실차 파이프라인 |
+| `sim_velodyne_VLP16-composed-launch.py` | 시뮬레이션 파이프라인 |
+
+## 설정 파일
+
+모든 perception config는 `lidar_launch/config/`에 집중 관리:
+
+```
+lidar_launch/config/
+├── patchworkpp/
+│   └── patchworkpp_params.yaml
+├── dbscan_clustering/
+│   └── dbscan_params.yaml
+├── lidar_voxel_grid/
+│   └── voxel_grid_params.yaml
+├── make_bbox/
+│   └── make_bbox_params.yaml
+└── bbox_tracker/
+    └── bbox_tracker_params.yaml
 ```
 
 ## 노드별 토픽
@@ -83,46 +114,6 @@ Velodyne VLP-16 (UDP)
 | Pub | `/tracker/debug/tracks` | `visualization_msgs/Marker` | 전체 트랙 (lazy) |
 | Pub | `/tracker/debug/predicted` | `visualization_msgs/Marker` | 예측 유지만 (lazy) |
 
-## Config 파일 위치
-
-모든 perception config는 `lidar_launch/config/`에 집중 관리:
-
-```
-lidar_launch/config/
-├── patchworkpp/
-│   └── patchworkpp_params.yaml
-├── dbscan_clustering/
-│   └── dbscan_params.yaml
-├── lidar_voxel_grid/
-│   └── voxel_grid_params.yaml
-├── cluster_splitter/
-│   └── cluster_splitter_params.yaml
-├── make_bbox/
-│   └── make_bbox_params.yaml
-└── bbox_tracker/
-    └── bbox_tracker_params.yaml
-```
-
-## Launch 파일
-
-| 파일 | 구성 |
-|------|------|
-| `make_bbox.launch.py` | Patchwork++ + DBSCAN + make_bbox (ComposableNode 컨테이너) |
-| `clustering.launch.py` | Driver + Transform + Patchwork++ + DBSCAN + make_bbox |
-| `bbox_tracker.launch.py` | bbox_tracker 단독 (별도 노드) |
-| `tf.launch.py` | base_link → velodyne static TF |
-
-## tmuxp 실행 순서
-
-```yaml
-# ev.yaml / ev_real.yaml
-- Gazebo / T870 serial          # 차량
-- lidar_launch make_bbox        # perception 파이프라인
-- bbox_tracker                  # 트래킹
-- chaining_costmap_ver          # planning
-- pure_pursuit                  # control
-```
-
 ## 메시지 타입
 
 ### ev_msgs/BBox
@@ -138,4 +129,15 @@ int32 label                     # 클러스터 ID
 ```
 std_msgs/Header header
 BBox[] bboxes
+```
+
+## tmuxp 실행 순서
+
+```yaml
+# ev.yaml / ev_real.yaml
+- Gazebo / T870 serial          # 차량
+- lidar_launch make_bbox        # perception 파이프라인
+- bbox_tracker                  # 트래킹
+- chaining_costmap_ver          # planning
+- pure_pursuit                  # control
 ```

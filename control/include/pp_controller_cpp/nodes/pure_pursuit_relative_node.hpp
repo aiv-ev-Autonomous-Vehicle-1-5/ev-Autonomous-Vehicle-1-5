@@ -72,7 +72,7 @@ private:
   /// 정지 명령 발행 (speed=0, steering=0) — 즉시 정지 아닌 점진적 감속
   void publish_emergency_decel(double dt);
 
-  /// 경로 잔여 길이를 이동 평균 필터링 (안전 우선: raw와 avg 중 작은 값)
+  /// 경로 잔여 길이를 이동 평균 필터링 (drop 의심 시 buffer 동결, N프레임 확정 시 즉시 반영)
   double compute_filtered_remaining(double raw_remaining);
 
   /// 전방 ROI에 bbox 장애물이 없는지 판단 (CREEP 모드 조건)
@@ -92,6 +92,8 @@ private:
   double last_cmd_speed_{0.0};                             // 직전 속도 명령 [m/s]
   int    fail_counter_{0};                                  // FAIL 연속 카운터
   std::deque<double> path_length_buffer_;                   // 경로 길이 이동 평균 버퍼
+  int path_drop_counter_{0};                                // 급락 연속 카운터
+  std::vector<double> pending_raws_;                        // drop 의심 중 보류된 raw 값들
 
   // --- CREEP 상태 ---
   ev_msgs::msg::BBoxArray::SharedPtr latest_bboxes_;       // 최신 bbox 데이터

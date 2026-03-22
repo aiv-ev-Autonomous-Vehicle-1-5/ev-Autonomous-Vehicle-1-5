@@ -2,8 +2,74 @@
 
 ## 패키지 개요
 
-LiDAR + Camera 기반 자율주행 경로 계획 패키지.
-DirectionChainer v3 + Gaussian Costmap + A* 7단계 파이프라인.
+- **Package**: chaining_costmap_ver
+- **Description**: DirectionChainer v3 + Gaussian Costmap + A* 기반 로컬 경로 계획 패키지
+- LiDAR + Camera 인식 결과를 사용한 7단계 파이프라인
+- ROS 2 Humble, C++17, Component architecture
+- **Node**: LCPlannerNode (ComposableNode, 10Hz)
+
+---
+
+## 7단계 파이프라인
+
+```
+on_timer() — 10Hz (100ms)
+│
+├── Stage 0: Stale Gate
+│     인식 데이터 유효시간 검사 (perception_ms: 300ms)
+│     오래된 데이터 → "STALE" 발행 후 중단
+│
+├── Stage 1: Input Parse  [nodes/input_parser.hpp]
+│     BBox/LaneBoundary → ChainPoint 변환 (sensor_tf 보정)
+│
+├── Stage 2: DirectionChainer  [chainer/*.cpp]
+│     컴포넌트 분류 + L/R 백본 추출
+│     find_seed (2-pass bbox 우선) → build_graph → extract_backbone(L/R) → resample_component(L/R)
+│     * find_seed 전략 (2-pass bbox 우선):
+│       Pass 1 — bbox만 탐색 (x ≥ -2.0, side_seed_y 가드, d ≤ seed_bbox_max_dist)
+│                조건 만족 bbox 중 가장 가까운 것 반환
+│       Pass 2 — Pass 1 실패 시 bbox+lane 전체에서 가장 가까운 점 (기존 로직)
+│     * backbone chaining 게이트:
+│       G1 (거리 게이트):       d(i,j) ≤ d_max
+│       G2 (전방 cone 게이트):  angle(v, u_ij) ≤ forward_cone_deg/2
+│       G3 (횡오차 게이트):     |lateral_proj| ≤ lateral_gate
+│       G4 (시드 기준 횡편차 가드): candidate.y ∈ seed_y ± max_lateral_deviation
+│     * backbone chaining 시 2-phase BBOX 최우선 탐색:
+│       Phase 1 — d_max 범위 내 모든 bbox를 직접 전수 탐색
+│       Phase 2 — bbox 후보 없으면 knn fallback → bbox-first 선택
+│     * 교차 판정 (backbone 확정 직후):
+│       한쪽 backbone이 반대쪽 seed까지 체이닝한 비정상 상황을 감지
+│
+├── Stage 2.5: Seed Gate
+│     양쪽 backbone 실패 시 "FAIL" 발행 후 중단
+│     시드 유효성 검증
+│
+├── Stage 3: Costmap + A*  [costmap/, planner/, nodes/goal_calculator.hpp]
+│     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
+│     3b. Gaussian Costmap 생성
+│         * backbone 포인트는 bbox_cost_max + bbox_radius 적용
+│     3b-2. 중앙선 유인 비용 (center line attraction)
+│         * 좌/우 backbone 중점 연결선에 음의 가우시안 비용 적용
+│     3b-3. Entry walls
+│     3c. Goal 계산
+│         * 교차 판정 처리: 교차 시 해당 backbone 중간점을 local_goal로 반환
+│         * 정상 시: 좌/우 끝점 선분 중점 or 폴백
+│     3d. Goal → costmap 경계 clamp
+│     3e. A* 경로 탐색
+│
+├── Stage 5: Postprocess  [postprocess/*.cpp]
+│     prune → smooth → curvature_clamp → resample → yaw
+│
+├── Stage 6: Safety Check  [safety/safety_checker.hpp]
+│     경로 유효성 + 곡률 검증 → OK / FAIL / WARNING
+│
+└── Stage 7: Publish  [nodes/debug_publisher.hpp]
+      Core: path (Marker), status (String)
+      Debug: costmap, obstacle_wall, curvature, raw_path,
+             pruned_path, chains, seeds, local_goal
+```
+
+---
 
 ## 디렉토리 구조
 
@@ -62,70 +128,18 @@ chaining_costmap_ver/
 └── CMakeLists.txt                    # 빌드 설정
 ```
 
-## 7단계 파이프라인
+### 모듈 구조
 
-```
-on_timer() — 10Hz (100ms)
-│
-├── Stage 0: Stale Gate
-│     인지 데이터 타임아웃 검사. 오래된 데이터 → "STALE" 발행 후 중단.
-│
-├── Stage 1: Input Parse  [nodes/input_parser.hpp]
-│     BBox + LaneBoundary → ChainPoint 벡터 (sensor_tf 보정)
-│
-├── Stage 2: DirectionChainer  [chainer/*.cpp]
-│     find_seed → build_graph → extract_backbone(L/R) → resample_component(L/R)
-│     * backbone chaining 게이트:
-│       G1 (거리 게이트):       d(i,j) ≤ d_max
-│       G2 (전방 cone 게이트):  angle(v, u_ij) ≤ forward_cone_deg/2
-│       G3 (횡오차 게이트):     |lateral_proj| ≤ lateral_gate
-│       G4 (시드 기준 횡편차 가드): candidate.y ∈ seed_y ± max_lateral_deviation
-│          left  backbone → candidate.y < seed_y - max_lateral_deviation 이면 reject
-│          right backbone → candidate.y > seed_y + max_lateral_deviation 이면 reject
-│          → backbone이 반대편으로 크로스하는 것을 사전 차단
-│     * backbone chaining 시 2-phase BBOX 최우선 탐색:
-│       Phase 1 — d_max 범위 내 모든 bbox를 knn 없이 직접 전수 탐색
-│                 (lane point가 많아도 bbox가 k개 제한에 밀리지 않음)
-│                 G1+G2+G3+G4 게이트 적용
-│       Phase 2 — bbox 후보 없으면 knn fallback → bbox-first 선택
-│                 G1+G2+G3+G4 게이트 적용
-│     * 교차 판정 (1·2단계 backbone 확정 직후):
-│       owner[right_seed] == LEFT_BACKBONE → left_crossed_right = true
-│       owner[left_seed]  == RIGHT_BACKBONE → right_crossed_left = true
-│       한쪽 backbone이 반대쪽 seed까지 체이닝한 비정상 상황을 감지.
-│       플래그는 DirectionChainResult에 저장 → Stage 3c에서 사용.
-│
-├── Stage 2.5: Seed Gate
-│     양쪽 backbone 실패 시 "FAIL" 발행 후 중단.
-│
-├── Stage 3: Costmap + A*  [costmap/, planner/, nodes/goal_calculator.hpp]
-│     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
-│     3b. Gaussian Costmap 생성
-│         * backbone 포인트(is_backbone=true)는 타입(LANE/BBOX)에 관계없이
-│           bbox_cost_max + bbox_radius 적용 → 전환 구간 gap 방지
-│     3b-2. 중앙선 유인 비용 (center line attraction)
-│         * 좌/우 backbone 중점 연결선(중앙선)에 음의 가우시안 비용 적용 → A*를 중앙으로 유도
-│         * cost >= bbox_cost_max(100)인 셀은 보존 (장애물 불변)
-│         * 파라미터: center_attract_max(30.0), center_attract_sigma(0.5m)
-│     3b-3. Entry walls
-│     3c. Goal 계산
-│         * 교차 판정 처리: left_crossed_right 또는 right_crossed_left가
-│           true이면 해당 backbone 인덱스 중간점을 local_goal로 즉시 반환
-│         * 정상 시: 좌/우 끝점 선분 중점 or 폴백
-│     3d. Goal → costmap 경계 clamp
-│     3e. A* 경로 탐색
-│
-├── Stage 5: Postprocess  [postprocess/*.cpp]
-│     prune → resample → smooth → curvature_clamp → yaw
-│
-├── Stage 6: Safety Check  [safety/safety_checker.hpp]
-│     경로 길이 + Menger 곡률 검사 → OK / FAIL / WARNING
-│
-└── Stage 7: Publish  [nodes/debug_publisher.hpp]
-      Core: path (Marker), status (String)
-      Debug: costmap, obstacle_wall, curvature, raw_path,
-             pruned_path, chains, seeds, local_goal
-```
+| 모듈 | 역할 |
+|------|------|
+| `chainer/` | DirectionChainer v3 — 컴포넌트 분류 + L/R 백본 추출 |
+| `costmap/` | Gaussian Costmap 생성 |
+| `planner/` | A* 경로 탐색 |
+| `postprocess/` | 경로 후처리 (prune, smooth, curvature_clamp, resample, yaw) |
+| `safety/` | 경로 유효성 + 곡률 검증 |
+| `nodes/` | 노드 오케스트레이터 + 입력 파서 + 골 계산 + 디버그 발행 |
+
+---
 
 ## 빌드 타겟
 
@@ -137,11 +151,77 @@ on_timer() — 10Hz (100ms)
 | `chaining_costmap_postprocess` | 공유 라이브러리 | `src/postprocess/*.cpp` (4파일) |
 | `lc_planner_component` | ComposableNode | `src/nodes/*.cpp` (4파일) |
 
-## 빌드 명령
+### 빌드 명령
 
 ```bash
-cd ~/ev_ws/planning && colcon build --symlink-install --packages-select chaining_costmap_ver
+cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-select chaining_costmap_ver
 ```
+
+---
+
+## 주요 파라미터
+
+설정 파일: `config/chaining_costmap_ver.yaml`
+
+### sensor_tf
+
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `tf_x` | 0.0 | m | 센서 X 오프셋 |
+| `tf_y` | 0.0 | m | 센서 Y 오프셋 |
+| `tf_z` | 0.7 | m | 센서 Z 오프셋 |
+
+### chainer
+
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `side_seed_y` | 0.1 | m | 시드 Y 오프셋 |
+| `seed_bbox_max_dist` | 3.0 | m | seed bbox 우선 탐색 최대 거리 (Pass 1) |
+| `k` | 10 | - | KNN 이웃 수 |
+| `d_max` | 2.0 | m | 최대 연결 거리 |
+| `forward_cone_deg` | 130 | deg | 전방 cone 각도 |
+| `lateral_gate` | 1.2 | m | 횡오차 게이트 |
+
+### costmap
+
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `size_x` | 16.0 | m | 코스트맵 X 크기 |
+| `size_y` | 16.0 | m | 코스트맵 Y 크기 |
+| `resolution` | 0.15 | m | 셀 해상도 |
+| `bbox_cost_max` | 100 | - | 장애물 최대 비용 |
+| `lane_cost_max` | 70 | - | 차선 최대 비용 |
+
+### astar
+
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `max_iterations` | 10000 | - | 최대 반복 횟수 |
+| `goal_tolerance` | 0.3 | m | 골 허용 오차 |
+
+### postprocess
+
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `resample_ds` | 0.10 | m | 리샘플링 간격 |
+| `smooth_window` | 5 | - | 이동 평균 윈도우 크기 |
+| `prune_max_dev` | 0.15 | m | 프루닝 최대 편차 |
+
+### safety
+
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `min_path_length` | 1.5 | m | 최소 경로 길이 |
+
+### vehicle
+
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `width` | 0.79 | m | 차량 폭 |
+| `wheelbase` | 0.73 | m | 축간거리 |
+| `delta_max` | 0.3249 | rad | 최대 조향각 |
+
+---
 
 ## 모듈 분리 원칙
 

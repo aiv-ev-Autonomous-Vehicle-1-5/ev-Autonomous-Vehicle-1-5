@@ -1,9 +1,10 @@
-# BBox Tracker — Ego-Motion 기반 BBox 트래킹
+# bbox_tracker — 자전거 모델 기반 BBox 트래킹
 
 ## 개요
 
-LiDAR 최소 인식거리 사각지대에 진입한 라바콘을 ego-motion(조향/속도) 기반으로
-예측 유지하여, 인식 끊김 없는 연속적인 bbox 데이터를 planning에 제공한다.
+자전거 모델 기반 자아운동 예측을 활용한 BBox 트래킹 노드. LiDAR 최소 인식거리 사각지대에 진입한 라바콘을 ego-motion(조향/속도) 기반으로 예측 유지하여, 인식 끊김 없는 연속적인 bbox 데이터를 planning에 제공한다.
+
+- Node: `BBoxTrackerNode` (ComposableNode)
 
 ## 파이프라인 위치
 
@@ -24,7 +25,7 @@ bbox_tracker
 
 planning 코드 변경 없이, 토픽명만 중간에 remap하여 파이프라인에 삽입.
 
-## 트래킹 사이클 (bbox 수신 시마다 실행)
+## 알고리즘 — 트래킹 사이클 (bbox 수신 시마다 실행)
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -49,36 +50,6 @@ planning 코드 변경 없이, 토픽명만 중간에 remap하여 파이프라�
 │     └─ 디버그 마커 발행 (lazy)                       │
 └─────────────────────────────────────────────────────┘
 ```
-
-## 토픽
-
-### Subscriber
-
-| 토픽 | 타입 | QoS | 설명 |
-|------|------|-----|------|
-| `/perception/raw_bboxes` | `ev_msgs/BBoxArray` | BestEffort(10) | make_bbox의 raw 검출 |
-| `/t870/control_command` | `t870_msgs/ControlCommand` | BestEffort(10) | 직전 조향(rad)/속도(m/s) |
-
-### Publisher
-
-| 토픽 | 타입 | QoS | 설명 |
-|------|------|-----|------|
-| `/perception/bboxes` | `ev_msgs/BBoxArray` | BestEffort(10) | tracked bbox (planning 입력) |
-| `/tracker/debug/tracks` | `visualization_msgs/Marker` (POINTS) | BestEffort(1), lazy | 전체 트랙: 초록=검출, 빨강=예측 |
-| `/tracker/debug/predicted` | `visualization_msgs/Marker` (CUBE_LIST) | BestEffort(1), lazy | 예측 유지 트랙만 (주황색 큐브) |
-
-## 파라미터
-
-| 파라미터 | 기본값 | 단위 | 설명 |
-|---------|--------|------|------|
-| `wheelbase` | 0.87 | m | T870 축간거리 (Bicycle Model) |
-| `min_match_dist` | 0.1 | m | 동적 매칭 최소 거리 (저속/정지 시 하한) |
-| `max_miss_count` | 20 | 회 | 연속 미검출 삭제 임계값 (10Hz 기준 2초) |
-| `input_topic` | /perception/raw_bboxes | — | 입력 bbox 토픽 |
-| `output_topic` | /perception/bboxes | — | 출력 tracked bbox 토픽 |
-| `control_topic` | /t870/control_command | — | 제어 명령 토픽 |
-
-config 경로: `lidar_launch/config/bbox_tracker/bbox_tracker_params.yaml`
 
 ## Predict — Bicycle Model 상세
 
@@ -105,6 +76,19 @@ threshold = max(min_match_dist, |speed| × dt)
 속도 1.0m/s, dt=0.1s → 0.1m
 속도 2.0m/s, dt=0.1s → 0.2m
 ```
+
+## 파라미터
+
+| 파라미터 | 기본값 | 단위 | 설명 |
+|---------|--------|------|------|
+| `wheelbase` | 0.87 | m | T870 축간거리 (Bicycle Model) |
+| `min_match_dist` | 0.1 | m | 동적 매칭 최소 거리 (저속/정지 시 하한) |
+| `max_miss_count` | 5 | 회 | 연속 미검출 삭제 임계값 |
+| `input_topic` | /perception/raw_bboxes | -- | 입력 bbox 토픽 |
+| `output_topic` | /perception/bboxes | -- | 출력 tracked bbox 토픽 |
+| `control_topic` | /t870/control_command | -- | 제어 명령 토픽 |
+
+config 경로: `lidar_launch/config/bbox_tracker/bbox_tracker_params.yaml`
 
 ## 디버그 시각화 (RViz2)
 

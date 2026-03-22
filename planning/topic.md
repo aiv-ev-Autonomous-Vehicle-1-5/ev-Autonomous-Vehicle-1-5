@@ -42,6 +42,8 @@
 | `/planning/debug/local_goal` | `visualization_msgs/msg/MarkerArray` (SPHERE) | Reliable, depth=1 | A* 탐색 목표점 (노란색 구체, 30cm) |
 | `/planning/debug/obstacle_wall` | `visualization_msgs/msg/MarkerArray` (CUBE_LIST) | Reliable, depth=1 | cost >= obstacle_cost 셀 (빨간색 큐브) |
 | `/planning/debug/curvature` | `visualization_msgs/msg/MarkerArray` (SPHERE) | Reliable, depth=1 | 곡률 초과 지점 (노란~빨간 그라데이션) |
+| `/planning/debug/lane_points` | `visualization_msgs/msg/MarkerArray` (SPHERE) | Reliable, depth=1 | 수신된 차선 포인트 (마젠타 구체) |
+| `/planning/debug/center_line` | `visualization_msgs/msg/Marker` (POINTS) | Reliable, depth=1 | 중앙선 유도 포인트 (노란 포인트) |
 
 ---
 

@@ -160,13 +160,19 @@ private:
   /**
    * @brief 좌측 또는 우측의 체이닝 시작점(seed) 선택
    *
-   * [알고리즘]
-   *   1. x ≥ -2.0 필터: 후방 2m 이상인 점은 seed 후보에서 제외
-   *   2. side_seed_y 가드:
-   *      - 좌측(is_left=true):  y ≥ side_seed_y 인 점만 후보
-   *      - 우측(is_left=false): y ≤ -side_seed_y 인 점만 후보
-   *      → 중심선(y≈0) 근처 점이 잘못된 방향의 seed가 되는 것 방지
-   *   3. ego(원점)에서 가장 가까운 점을 seed로 선택 (bbox/차선 구분 없이)
+   * [알고리즘 — 2-pass bbox 우선 전략]
+   *   공통 필터:
+   *     - x ≥ -2.0 필터: 후방 2m 이상인 점은 seed 후보에서 제외
+   *     - side_seed_y 가드:
+   *       - 좌측(is_left=true):  y ≥ side_seed_y 인 점만 후보
+   *       - 우측(is_left=false): y ≤ -side_seed_y 인 점만 후보
+   *       → 중심선(y≈0) 근처 점이 잘못된 방향의 seed가 되는 것 방지
+   *   Pass 1 (bbox 우선):
+   *     - bbox만 대상, d ≤ seed_bbox_max_dist 이내
+   *     - 조건 만족 bbox 중 ego(원점)에서 가장 가까운 것을 seed로 선택
+   *   Pass 2 (fallback):
+   *     - Pass 1에서 bbox를 찾지 못한 경우에만 실행
+   *     - bbox+lane 전체에서 ego(원점)에서 가장 가까운 점을 seed로 선택
    *
    * @param points   필터링된 경계점 배열
    * @param is_left  true=좌측 seed, false=우측 seed

@@ -253,7 +253,7 @@ nav_msgs/OccupancyGrid
 | 오른쪽 seed | 빨강 (1,0,0) | backbone.front() | SPHERE 직경 15cm |
 | 모든 goal | 파랑 (0,0,1) | backbone.back() | SPHERE 직경 15cm |
 
-- seed: 체이닝 시작점 (ego에서 가장 가까운 전방 포인트)
+- seed: 체이닝 시작점 (2-pass bbox 우선: Pass 1 — seed_bbox_max_dist 이내 가장 가까운 bbox, Pass 2 — bbox 없으면 bbox+lane 전체에서 가장 가까운 점)
 - goal: backbone 끝점 (체이닝이 도달한 가장 먼 점)
 
 #### `/planning/debug/local_goal` — A* 목표점
