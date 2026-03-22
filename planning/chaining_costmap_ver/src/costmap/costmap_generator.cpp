@@ -20,6 +20,7 @@
 
 #include <cmath>
 #include <algorithm>
+#include <limits>
 
 namespace chaining_costmap_ver
 {
@@ -189,29 +190,78 @@ CostmapResult CostmapGenerator::generate(
   // backbone:  is_backbone=true → bbox_cost_max + bbox_radius (타입 무관, 단단한 벽)
   // BBOX:      bbox_cost_max + bbox_radius flat zone → 강한 비용 장벽
   // LANE:      lane_cost_max + lane_radius flat zone → 약한 비용 장벽 (넘을 수 있음)
-  auto apply_chain = [&](const std::vector<ChainedPoint> & chain) {
-    for (const auto & pt : chain) {
+  //
+  // ── 코너 내측 패딩 ──
+  // inner_corner_padding > 0 이면, center line 곡률을 분석하여
+  // 코너 안쪽 chain의 bbox_radius에 추가 padding을 적용한다.
+  // 이를 통해 A* 경로가 코너 바깥쪽으로 밀려나도록 유도.
+  auto apply_chain = [&](const std::vector<ChainedPoint> & chain,
+                         const std::vector<double> & padding) {
+    for (size_t i = 0; i < chain.size(); ++i) {
+      const auto & pt = chain[i];
       const Point2D src = pt.to_point2d();
+      double extra = (i < padding.size()) ? padding[i] : 0.0;
       if (pt.is_backbone || pt.type == PointType::BBOX) {
-        // backbone 포인트는 타입에 관계없이 bbox_cost_max 적용
-        // → lane↔bbox 전환 구간에서도 끊김 없는 비용 장벽 형성
         apply_source(
           result.data, result.rows, result.cols,
           result.resolution, result.origin_x, result.origin_y,
           src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
-          cm.bbox_radius);   // flat zone = bbox_radius
+          cm.bbox_radius + extra);   // flat zone = bbox_radius + 코너 내측 패딩
       } else {
         apply_source(
           result.data, result.rows, result.cols,
           result.resolution, result.origin_x, result.origin_y,
           src, cm.lane_cost_max, cm.sigma, cm.cost_threshold,
-          cm.lane_radius);   // flat zone = lane_radius
+          cm.lane_radius + extra);   // flat zone = lane_radius + 코너 내측 패딩
       }
     }
   };
 
-  apply_chain(left_chain);    // 좌측 경계 비용 적용
-  apply_chain(right_chain);   // 우측 경계 비용 적용
+  // ── 코너 내측 패딩 벡터 계산 ──
+  std::vector<double> left_padding, right_padding;
+  if (cm.inner_corner_padding > 0.0) {
+    // 1) left/right backbone 점 추출
+    std::vector<Point2D> left_bb, right_bb;
+    for (const auto & pt : left_chain) {
+      if (pt.is_backbone) left_bb.push_back({pt.x, pt.y});
+    }
+    for (const auto & pt : right_chain) {
+      if (pt.is_backbone) right_bb.push_back({pt.x, pt.y});
+    }
+
+    // 2) center line + 곡률 계산 (backbone 3개 이상 필요)
+    if (left_bb.size() >= 3 && right_bb.size() >= 3) {
+      // center line: left 각 backbone에서 right 최근접 매칭 → 중점
+      std::vector<Point2D> center_line;
+      center_line.reserve(left_bb.size());
+      for (const auto & lp : left_bb) {
+        double best_d2 = std::numeric_limits<double>::max();
+        size_t best_j = 0;
+        for (size_t j = 0; j < right_bb.size(); ++j) {
+          double dx = right_bb[j].x - lp.x;
+          double dy = right_bb[j].y - lp.y;
+          double d2 = dx * dx + dy * dy;
+          if (d2 < best_d2) { best_d2 = d2; best_j = j; }
+        }
+        center_line.push_back({
+          (lp.x + right_bb[best_j].x) * 0.5,
+          (lp.y + right_bb[best_j].y) * 0.5
+        });
+      }
+
+      // 곡률 계산 + padding 벡터 생성
+      auto curvatures = compute_centerline_curvatures(center_line);
+      left_padding = build_inner_padding(
+        left_chain, center_line, curvatures,
+        true, cm.inner_corner_padding, cm.corner_curvature_threshold);
+      right_padding = build_inner_padding(
+        right_chain, center_line, curvatures,
+        false, cm.inner_corner_padding, cm.corner_curvature_threshold);
+    }
+  }
+
+  apply_chain(left_chain, left_padding);     // 좌측 경계 비용 적용
+  apply_chain(right_chain, right_padding);   // 우측 경계 비용 적용
 
   // ── unchained 포인트 처리 ──
   // 체이닝 실패 = 좌/우 경계에 배정되지 못한 점
@@ -399,6 +449,125 @@ void CostmapGenerator::apply_entry_walls(
   sample_bboxes({bottom_x, +cm.entry_wall_ego_y}, left_seed);
   // 우측 벽: costmap 하단 우측(origin_x, -entry_wall_ego_y) → right_seed
   sample_bboxes({bottom_x, -cm.entry_wall_ego_y}, right_seed);
+}
+
+// ============================================================================
+// compute_centerline_curvatures — center line의 signed Menger 곡률 계산
+// ============================================================================
+//
+// [수식]
+//   세 연속 점 P(i-1), P(i), P(i+1)에 대해:
+//   a = P(i) - P(i-1),  b = P(i+1) - P(i),  c = P(i+1) - P(i-1)
+//   kappa(i) = 2 * cross(a, b) / (|a| * |b| * |c|)
+//
+// [부호 규칙]
+//   cross = a.x * b.y - a.y * b.x
+//   양수 → 좌회전 (y+ 방향으로 꺾임, ROS 좌표계)
+//   음수 → 우회전 (y- 방향으로 꺾임)
+//
+// [경계 처리]
+//   첫 번째/마지막 점은 이웃이 부족하므로 곡률 = 0.0
+//
+// ============================================================================
+
+std::vector<double> CostmapGenerator::compute_centerline_curvatures(
+  const std::vector<Point2D> & center_line)
+{
+  const size_t n = center_line.size();
+  std::vector<double> curvatures(n, 0.0);
+  if (n < 3) return curvatures;
+
+  for (size_t i = 1; i + 1 < n; ++i) {
+    const auto & p0 = center_line[i - 1];
+    const auto & p1 = center_line[i];
+    const auto & p2 = center_line[i + 1];
+
+    // a = P(i) - P(i-1), b = P(i+1) - P(i)
+    double ax = p1.x - p0.x, ay = p1.y - p0.y;
+    double bx = p2.x - p1.x, by = p2.y - p1.y;
+
+    // |a|, |b|, |c| where c = P(i+1) - P(i-1)
+    double la = std::sqrt(ax * ax + ay * ay);
+    double lb = std::sqrt(bx * bx + by * by);
+    double cx = p2.x - p0.x, cy = p2.y - p0.y;
+    double lc = std::sqrt(cx * cx + cy * cy);
+
+    double denom = la * lb * lc;
+    if (denom < 1e-9) continue;  // 퇴화 삼각형 (점들이 거의 같은 위치)
+
+    // signed cross product: 양수 = 좌회전, 음수 = 우회전
+    double cross = ax * by - ay * bx;
+    curvatures[i] = 2.0 * cross / denom;
+  }
+
+  return curvatures;
+}
+
+// ============================================================================
+// build_inner_padding — 사이드 전체 균일 코너 내측 패딩
+// ============================================================================
+//
+// [동작]
+//   1) center line 곡률에서 양수 최대(좌회전)와 음수 최대(우회전)를 각각 추출
+//   2) 더 급한 코너(|kappa|가 큰 쪽)의 방향으로 내측 사이드 결정
+//      - S-curve에서도 양쪽 동시 적용 없이 더 급한 코너만 적용
+//   3) 이 chain이 내측이면 전체에 균일 padding 적용 (linear ramp 기반)
+//      ratio = (|dominant_kappa| - threshold) / threshold, clamp [0, 1]
+//   4) 내측이 아니면 전부 0.0
+//
+// [S-curve 처리]
+//   좌회전(kappa=0.4)과 우회전(kappa=-0.3)이 동시 존재 시,
+//   |0.4| > |-0.3| 이므로 좌회전이 우선 → left chain만 padding
+//
+// ============================================================================
+
+std::vector<double> CostmapGenerator::build_inner_padding(
+  const std::vector<ChainedPoint> & chain,
+  const std::vector<Point2D> & center_line,
+  const std::vector<double> & center_curvatures,
+  bool is_left_side,
+  double padding,
+  double threshold)
+{
+  std::vector<double> result(chain.size(), 0.0);
+  if (center_line.empty() || threshold <= 0.0) return result;
+
+  // 양수 최대(좌회전)와 음수 최대(우회전)를 각각 추출
+  double max_positive = 0.0;   // 좌회전 최대 곡률
+  double max_negative = 0.0;   // 우회전 최대 곡률 (음수)
+  for (const auto & k : center_curvatures) {
+    if (k > max_positive) max_positive = k;
+    if (k < max_negative) max_negative = k;
+  }
+
+  // 더 급한 코너 방향 결정 (|kappa|가 큰 쪽이 우선)
+  double dominant_kappa;
+  if (max_positive >= std::abs(max_negative)) {
+    dominant_kappa = max_positive;    // 좌회전이 더 급함
+  } else {
+    dominant_kappa = max_negative;    // 우회전이 더 급함
+  }
+
+  double abs_dominant = std::abs(dominant_kappa);
+
+  // 코너 판정: dominant 곡률이 threshold 미만이면 직선 → 패딩 없음
+  if (abs_dominant < threshold) return result;
+
+  // 내측 판정:
+  //   좌회전 (dominant > 0) → left chain이 내측
+  //   우회전 (dominant < 0) → right chain이 내측
+  bool is_inner = (is_left_side && dominant_kappa > 0.0) ||
+                  (!is_left_side && dominant_kappa < 0.0);
+  if (!is_inner) return result;
+
+  // Linear ramp: threshold ~ 2*threshold 구간에서 0 → max_padding
+  double ratio = (abs_dominant - threshold) / threshold;
+  ratio = std::clamp(ratio, 0.0, 1.0);
+  double uniform_padding = padding * ratio;
+
+  // 내측 사이드 전체에 균일 padding 적용
+  std::fill(result.begin(), result.end(), uniform_padding);
+  return result;
 }
 
 }  // namespace chaining_costmap_ver

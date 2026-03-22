@@ -69,7 +69,7 @@ lc_planner_node:
       resolution: 0.15          # [m/cell] (1.5m 차로 = 10셀)
       bbox_cost_max: 1000.0      # bbox 최대 비용(==costmap max cost)
       lane_cost_max: 700.0       # 차선 최대 비용 (낮아서 넘을 수 있음)
-      bbox_radius: 0.7         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
+      bbox_radius: 0.55         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
       lane_radius: 0.10           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
       sigma: 1.0                # [m] 가우시안 확산
       cost_threshold: 2.0       # 이 이하 비용 무시
@@ -77,6 +77,8 @@ lc_planner_node:
       origin_x: -4.0            # [m] costmap X 원점 (base_link 기준). -4 = 후방 4m 포함
       center_attract_max: 700.0  # 중앙선 최대 비용 감소량
       center_attract_sigma: 0.05 # [m] 중앙선 유인 가우시안 확산
+      inner_corner_padding: 0.22         # [m] 코너 내측 추가 flat zone 반경
+      corner_curvature_threshold: 0.07   # [1/m] 이 곡률 이상이면 코너로 판정 (0.2 = 반경 5m 이하)
 
     # ============================================================
     # [Stage 3] A* — 격자 경로 탐색

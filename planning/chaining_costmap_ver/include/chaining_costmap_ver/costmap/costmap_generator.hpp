@@ -118,6 +118,42 @@ public:
     const Point2D & right_seed,
     const PlanningParams & params);
 
+  /**
+   * @brief 사이드 전체 균일 코너 내측 패딩 벡터 생성
+   *
+   * center line 곡률의 양수/음수 최대값 중 더 급한 코너 방향을 결정하고,
+   * 해당 내측 사이드 chain 전체에 균일한 padding을 적용한다.
+   * S-curve에서도 더 급한 코너 한쪽만 적용 (양쪽 동시 적용 없음).
+   *
+   * @param chain           좌 또는 우측 체인
+   * @param center_line     양쪽 backbone 중점을 연결한 중앙선
+   * @param center_curvatures  center_line 각 점의 signed 곡률 (좌회전 +, 우회전 -)
+   * @param is_left_side    true면 좌측 체인, false면 우측 체인
+   * @param padding         코너 내측에 추가할 최대 flat zone 반경 [m]
+   * @param threshold       코너 판정 곡률 임계값 [1/m]
+   * @return 체인 전체 균일 padding 벡터 (내측이면 전체 동일 값, 아니면 전체 0)
+   */
+  static std::vector<double> build_inner_padding(
+    const std::vector<ChainedPoint> & chain,
+    const std::vector<Point2D> & center_line,
+    const std::vector<double> & center_curvatures,
+    bool is_left_side,
+    double padding,
+    double threshold);
+
+  /**
+   * @brief center line의 signed Menger 곡률 계산
+   *
+   * 연속 3점(P_i-1, P_i, P_i+1)의 Menger 곡률:
+   *   kappa = 2 * cross(a, b) / (|a| * |b| * |c|)
+   * 부호: 양수 = 좌회전, 음수 = 우회전 (ROS 좌표계 기준)
+   *
+   * @param center_line  center line 점열
+   * @return 각 점의 signed 곡률 (첫/끝 점은 0.0)
+   */
+  static std::vector<double> compute_centerline_curvatures(
+    const std::vector<Point2D> & center_line);
+
 private:
   /**
    * @brief 단일 경계점의 가우시안 비용장을 그리드에 적용 (max-merge)

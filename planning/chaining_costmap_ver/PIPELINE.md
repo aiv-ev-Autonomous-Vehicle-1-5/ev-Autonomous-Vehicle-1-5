@@ -48,6 +48,10 @@ on_timer() — 10Hz (100ms)
 │     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
 │     3b. Gaussian Costmap 생성
 │         * backbone 포인트는 bbox_cost_max + bbox_radius 적용
+│         * 코너 내측 패딩: inner_corner_padding > 0이면
+│           center line 곡률 분석 → 코너 안쪽 chain에 추가 radius 적용
+│           (좌회전 → left chain 패딩, 우회전 → right chain 패딩)
+│           threshold 경계에서 linear ramp로 부드러운 전환
 │     3b-2. Entry walls
 │     3b-3. 중앙선 유인 비용 (center line attraction) ← 가장 마지막에 적용
 │         * 좌/우 backbone 중점 연결선에 음의 가우시안 비용 적용
@@ -192,6 +196,8 @@ cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-sele
 | `resolution` | 0.15 | m | 셀 해상도 |
 | `bbox_cost_max` | 100 | - | 장애물 최대 비용 |
 | `lane_cost_max` | 70 | - | 차선 최대 비용 |
+| `inner_corner_padding` | 0.15 | m | 코너 내측 추가 flat zone 반경 (0=비활성) |
+| `corner_curvature_threshold` | 0.2 | 1/m | 코너 판정 곡률 임계값 (0.2=반경 5m 이하) |
 
 ### astar
 

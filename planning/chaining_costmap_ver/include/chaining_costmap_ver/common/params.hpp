@@ -104,6 +104,18 @@ struct PlanningParams
     // cost >= bbox_cost_max인 장애물 셀은 건드리지 않는다.
     double center_attract_max = 30.0;   ///< 중앙선 최대 비용 감소량
     double center_attract_sigma = 0.5;  ///< [m] 중앙선 유인 가우시안 확산
+
+    // ── 코너 내측 패딩 ──
+    // 코너 구간에서 안쪽 backbone chain의 bbox_radius에 이 값만큼 추가하여
+    // A* 경로가 코너 바깥쪽으로 밀려나도록 유도한다.
+    // 0.0 = 패딩 없음 (기존 동작과 동일).
+
+    // [m] 코너 내측 체인 포인트에 추가되는 flat zone 반경.
+    double inner_corner_padding = 0.0;
+
+    // [1/m] 곡률 임계값. center line 곡률이 이 값 이상이면 "코너 구간"으로 판정.
+    // 곡률 = 1/R. 예: 0.2 → 반경 5m 이하의 커브에서 패딩 적용.
+    double corner_curvature_threshold = 0.2;
   } costmap;
 
   // ============================================================
@@ -433,6 +445,8 @@ struct PlanningParams
     costmap.origin_x          = p("costmap.origin_x",          costmap.origin_x);
     costmap.center_attract_max   = p("costmap.center_attract_max",   costmap.center_attract_max);
     costmap.center_attract_sigma = p("costmap.center_attract_sigma", costmap.center_attract_sigma);
+    costmap.inner_corner_padding        = p("costmap.inner_corner_padding",        costmap.inner_corner_padding);
+    costmap.corner_curvature_threshold  = p("costmap.corner_curvature_threshold",  costmap.corner_curvature_threshold);
 
     // ── AStar 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.astar.*
