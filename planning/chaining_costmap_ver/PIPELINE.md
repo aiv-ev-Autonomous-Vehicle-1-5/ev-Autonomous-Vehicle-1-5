@@ -49,9 +49,10 @@ on_timer() — 10Hz (100ms)
 │     3b. Gaussian Costmap 생성
 │         * backbone 포인트는 bbox_cost_max + bbox_radius 적용
 │         * 코너 내측 패딩: inner_corner_padding > 0이면
-│           center line 곡률 분석 → 코너 안쪽 chain에 추가 radius 적용
+│           ① 더 긴 chain의 heading 변화량으로 회전 방향 판정
+│           ② 안쪽 chain의 backbone 최대 곡률 ≥ threshold → 해당 chain 전체에 padding
 │           (좌회전 → left chain 패딩, 우회전 → right chain 패딩)
-│           threshold 경계에서 linear ramp로 부드러운 전환
+│           linear ramp로 부드러운 전환
 │     3b-2. Entry walls
 │     3b-3. 중앙선 유인 비용 (center line attraction) ← 가장 마지막에 적용
 │         * 좌/우 backbone 중점 연결선에 음의 가우시안 비용 적용
