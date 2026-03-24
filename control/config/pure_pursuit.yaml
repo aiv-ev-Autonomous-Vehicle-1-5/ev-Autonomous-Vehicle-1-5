@@ -31,5 +31,8 @@ pure_pursuit_relative_node:
     creep_speed: 0.4         # [m/s] 일반 CREEP 직진 속도
     creep_roi_x: 0.6         # [m] 전방 판정 거리
     creep_roi_y: 0.5         # [m] 좌우 판정 폭 (±)
-    creep_finish_speed: 1.5  # [m/s] 결승선 감지 시 부스트 속도
-    creep_bbox_threshold: 2  # bbox 개수 ≤ 이 값이면 결승선 후보 (차선만으로 막힌 상황)
+    creep_finish_speed: 1.5       # [m/s] 결승선 감지 시 부스트 속도
+    creep_bbox_threshold: 2      # bbox 개수 ≤ 이 값이면 결승선 후보
+    creep_finish_stop_delay: 1.0 # [s] 삼면 차선 해제 후 정지까지 지연 시간
+    creep_lane_front_min_x: 0.3  # [m] 전방 차선 판정 최소 x (이 이상인 lane point가 있으면 전방 차선 있음)
+    creep_lane_side_min_y: 0.3   # [m] 좌/우 차선 판정 최소 |y| (이 이상인 lane point가 있으면 측면 차선 있음)

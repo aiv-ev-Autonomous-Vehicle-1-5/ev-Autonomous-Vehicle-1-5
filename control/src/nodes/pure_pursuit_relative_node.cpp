@@ -85,6 +85,15 @@ PurePursuitRelativeNode::PurePursuitRelativeNode(
     }
   );
 
+  // [Subscriber] /perception/lane_boundaries (ev_msgs/LaneBoundaryArray) — 결승선 삼면 차선 감지용
+  lane_sub_ = this->create_subscription<ev_msgs::msg::LaneBoundaryArray>(
+    "/perception/lane_boundaries",
+    rclcpp::QoS(10).best_effort(),
+    [this](ev_msgs::msg::LaneBoundaryArray::SharedPtr msg) {
+      latest_lanes_ = msg;
+    }
+  );
+
   // CREEP ROI 디버그 퍼블리셔
   pub_dbg_creep_roi_ = this->create_publisher<visualization_msgs::msg::Marker>(
     "/pp_debug/creep_roi", rclcpp::QoS(1).best_effort());
@@ -254,17 +263,39 @@ bool PurePursuitRelativeNode::is_forward_clear() const
 }
 
 // ===========================================================================
-// is_finish_line: 결승선 판정
+// is_finish_line: 결승선 판정 — 삼면 차선 감지
 // ===========================================================================
-// bbox가 거의 없는데 planner가 FAIL → 차선만으로 둘러싸인 결승선 상황
-// bbox_count_threshold 이하이면 "장애물 없음" → 결승선 후보
+// 조건:
+//   1) bbox가 거의 없음 (≤ bbox_count_threshold)
+//   2) lane 포인트가 좌측(y > side_min_y), 우측(y < -side_min_y),
+//      전방(x > front_min_x) 모두 존재
+// → 삼면이 차선으로 둘러싸인 결승선 상황
 // ===========================================================================
 bool PurePursuitRelativeNode::is_finish_line() const
 {
-  if (!latest_bboxes_) return false;
+  if (!latest_bboxes_ || !latest_lanes_) return false;
 
+  // bbox 개수 체크
   const int bbox_count = static_cast<int>(latest_bboxes_->bboxes.size());
-  return bbox_count <= params_.creep.bbox_count_threshold;
+  if (bbox_count > params_.creep.bbox_count_threshold) return false;
+
+  // 삼면 차선 감지
+  const auto & cp = params_.creep;
+  bool has_left = false;   // y > +side_min_y
+  bool has_right = false;  // y < -side_min_y
+  bool has_front = false;  // x > front_min_x
+
+  for (const auto & bd : latest_lanes_->boundaries) {
+    for (const auto & p : bd.points) {
+      if (p.y > cp.lane_side_min_y)   has_left = true;
+      if (p.y < -cp.lane_side_min_y)  has_right = true;
+      if (p.x > cp.lane_front_min_x)  has_front = true;
+
+      if (has_left && has_right && has_front) return true;
+    }
+  }
+
+  return false;
 }
 
 // ===========================================================================
@@ -325,26 +356,89 @@ void PurePursuitRelativeNode::on_timer()
     stop_reason = latest_status_;
   }
 
+  // ----- 결승선 부스트 후 차선 통과 → 1초 지연 정지 -----
+  if (finish_boost_active_) {
+    const bool still_finish = is_finish_line();
+
+    if (still_finish) {
+      // 아직 삼면 차선 안 → 부스트 계속
+      finish_lane_lost_time_ = rclcpp::Time(0, 0, RCL_ROS_TIME);
+      const double v_cmd = pursuit::rate_limit_speed(
+        params_.creep.finish_speed, last_cmd_speed_, control_dt,
+        params_.speed.accel_rate, params_.speed.decel_rate);
+      last_cmd_speed_ = v_cmd;
+      cmd_pub_.publish(v_cmd, 0.0);
+      last_control_time_ = this->now();
+      RCLCPP_WARN_THROTTLE(
+        this->get_logger(), *this->get_clock(), 500,
+        "[PP Relative] FINISH BOOST — v_cmd=%.2f", v_cmd);
+      return;
+    }
+
+    // 삼면 차선 해제됨 → 타이머 시작 또는 확인
+    if (finish_lane_lost_time_.nanoseconds() == 0) {
+      finish_lane_lost_time_ = now;
+      RCLCPP_WARN(this->get_logger(),
+        "[PP Relative] FINISH — lanes cleared, stopping in %.1fs",
+        params_.creep.finish_stop_delay);
+    }
+
+    const double elapsed = (now - finish_lane_lost_time_).seconds();
+    if (elapsed < params_.creep.finish_stop_delay) {
+      // 아직 지연 시간 안 지남 → 부스트 유지
+      const double v_cmd = pursuit::rate_limit_speed(
+        params_.creep.finish_speed, last_cmd_speed_, control_dt,
+        params_.speed.accel_rate, params_.speed.decel_rate);
+      last_cmd_speed_ = v_cmd;
+      cmd_pub_.publish(v_cmd, 0.0);
+      last_control_time_ = this->now();
+      RCLCPP_WARN_THROTTLE(
+        this->get_logger(), *this->get_clock(), 200,
+        "[PP Relative] FINISH — coasting %.1f/%.1fs, v_cmd=%.2f",
+        elapsed, params_.creep.finish_stop_delay, v_cmd);
+      return;
+    }
+
+    // 지연 시간 경과 → 정지
+    RCLCPP_WARN(this->get_logger(),
+      "[PP Relative] FINISH — delay expired. Emergency stop.");
+    finish_boost_active_ = false;
+    publish_emergency_decel(control_dt);
+    return;
+  }
+
   if (should_stop) {
     ++fail_counter_;
     if (fail_counter_ >= params_.safety.emergency_stop_count) {
       // CREEP: 전방에 장애물 없으면 저속 직진
-      // 결승선 감지(bbox 거의 없음) 시 부스트 속도 사용
       if (is_forward_clear()) {
         const bool finish = is_finish_line();
-        const double target_speed = finish
-          ? params_.creep.finish_speed
-          : params_.creep.speed;
+
+        if (finish) {
+          // 결승선 감지 → 부스트 모드 진입
+          finish_boost_active_ = true;
+          finish_lane_lost_time_ = rclcpp::Time(0, 0, RCL_ROS_TIME);
+          const double v_cmd = pursuit::rate_limit_speed(
+            params_.creep.finish_speed, last_cmd_speed_, control_dt,
+            params_.speed.accel_rate, params_.speed.decel_rate);
+          last_cmd_speed_ = v_cmd;
+          cmd_pub_.publish(v_cmd, 0.0);
+          last_control_time_ = this->now();
+          RCLCPP_WARN(this->get_logger(),
+            "[PP Relative] FINISH BOOST START — 3-side lanes detected, v_cmd=%.2f", v_cmd);
+          return;
+        }
+
+        // 일반 CREEP
         const double v_cmd = pursuit::rate_limit_speed(
-          target_speed, last_cmd_speed_, control_dt,
+          params_.creep.speed, last_cmd_speed_, control_dt,
           params_.speed.accel_rate, params_.speed.decel_rate);
         last_cmd_speed_ = v_cmd;
         cmd_pub_.publish(v_cmd, 0.0);
         last_control_time_ = this->now();
         RCLCPP_WARN_THROTTLE(
           this->get_logger(), *this->get_clock(), 1000,
-          "[PP Relative] CREEP%s — forward clear, v_cmd=%.2f",
-          finish ? " FINISH" : "", v_cmd);
+          "[PP Relative] CREEP — forward clear, v_cmd=%.2f", v_cmd);
         return;
       }
 
@@ -359,8 +453,9 @@ void PurePursuitRelativeNode::on_timer()
     return;
   }
 
-  // 정상 상태 → 카운터 리셋
+  // 정상 상태 → 카운터 리셋 + 부스트 해제
   fail_counter_ = 0;
+  finish_boost_active_ = false;
 
   // ----- Pure Pursuit 파이프라인 -----
   const auto & pts = latest_points_;

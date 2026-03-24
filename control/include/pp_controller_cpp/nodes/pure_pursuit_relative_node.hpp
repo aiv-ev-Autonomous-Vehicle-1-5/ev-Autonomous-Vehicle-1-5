@@ -40,6 +40,7 @@
 #include "visualization_msgs/msg/marker.hpp"
 #include "std_msgs/msg/string.hpp"
 #include "ev_msgs/msg/b_box_array.hpp"
+#include "ev_msgs/msg/lane_boundary_array.hpp"
 
 #include "pp_controller_cpp/common/params.hpp"
 #include "pp_controller_cpp/nodes/command_publisher.hpp"
@@ -78,7 +79,7 @@ private:
   /// 전방 ROI에 bbox 장애물이 없는지 판단 (CREEP 모드 조건)
   bool is_forward_clear() const;
 
-  /// 결승선 판정: bbox가 거의 없는데 planner FAIL → 차선만으로 막힌 상황
+  /// 결승선 판정: 삼면(좌/우/전방) 차선 감지 + bbox 거의 없음
   bool is_finish_line() const;
 
   // ======================== 멤버 변수 ========================
@@ -100,11 +101,17 @@ private:
 
   // --- CREEP 상태 ---
   ev_msgs::msg::BBoxArray::SharedPtr latest_bboxes_;       // 최신 bbox 데이터
+  ev_msgs::msg::LaneBoundaryArray::SharedPtr latest_lanes_; // 최신 lane 데이터
+
+  // --- 결승선 부스트 상태 ---
+  bool finish_boost_active_{false};                         // 결승선 부스트 진행 중
+  rclcpp::Time finish_lane_lost_time_{0, 0, RCL_ROS_TIME}; // 삼면 차선 조건 해제 시각
 
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr status_sub_;
   rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr bbox_sub_;
+  rclcpp::Subscription<ev_msgs::msg::LaneBoundaryArray>::SharedPtr lane_sub_;
   CommandPublisher cmd_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
 

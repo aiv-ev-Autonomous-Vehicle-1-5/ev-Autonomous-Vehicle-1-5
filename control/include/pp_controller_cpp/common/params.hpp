@@ -68,13 +68,16 @@ struct PurePursuitParams
 
   // --- CREEP 모드 ---
   // 경로 실패 시 전방에 장애물이 없으면 저속 직진
-  // 결승선 감지: bbox가 거의 없는데 planner FAIL → 차선만으로 막힌 상황 → 부스트
+  // 결승선 감지: 삼면(좌/우/전방) 차선 + bbox 거의 없음 → 부스트 → 차선 사라지면 1초 후 정지
   struct Creep {
     double speed{0.2};                  // [m/s] 일반 CREEP 직진 속도
     double roi_x{2.0};                  // [m] 전방 판정 거리
     double roi_y{0.8};                  // [m] 좌우 판정 폭 (±)
     double finish_speed{1.5};           // [m/s] 결승선 감지 시 부스트 속도
-    int    bbox_count_threshold{2};     // bbox 개수 ≤ 이 값이면 "장애물 없음" 판정 → 결승선 후보
+    int    bbox_count_threshold{2};     // bbox 개수 ≤ 이 값이면 "장애물 없음" 판정
+    double finish_stop_delay{1.0};      // [s] 삼면 차선 해제 후 정지까지 지연 시간
+    double lane_front_min_x{0.3};      // [m] 전방 차선 판정 최소 x
+    double lane_side_min_y{0.3};       // [m] 좌/우 차선 판정 최소 |y|
   } creep;
 
   // =========================================================================
@@ -170,6 +173,13 @@ struct PurePursuitParams
     creep.roi_y = node->get_parameter("creep_roi_y").as_double();
     creep.finish_speed = node->get_parameter("creep_finish_speed").as_double();
     creep.bbox_count_threshold = std::max(0, static_cast<int>(node->get_parameter("creep_bbox_threshold").as_int()));
+
+    node->declare_parameter<double>("creep_finish_stop_delay", creep.finish_stop_delay);
+    node->declare_parameter<double>("creep_lane_front_min_x", creep.lane_front_min_x);
+    node->declare_parameter<double>("creep_lane_side_min_y", creep.lane_side_min_y);
+    creep.finish_stop_delay = std::max(0.0, node->get_parameter("creep_finish_stop_delay").as_double());
+    creep.lane_front_min_x = node->get_parameter("creep_lane_front_min_x").as_double();
+    creep.lane_side_min_y = node->get_parameter("creep_lane_side_min_y").as_double();
   }
 };
 
