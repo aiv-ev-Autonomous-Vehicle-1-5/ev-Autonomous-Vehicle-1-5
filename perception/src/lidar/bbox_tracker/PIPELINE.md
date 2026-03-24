@@ -43,7 +43,11 @@ planning 코드 변경 없이, 토픽명만 중간에 remap하여 파이프라�
 │  3. Update — 트랙 상태 갱신                          │
 │     ├─ 매칭 성공: 트랙을 검출값으로 갱신, miss=0     │
 │     ├─ 미매칭 트랙: predict 위치 유지, miss++        │
-│     ├─ miss > max_miss_count: 트랙 삭제             │
+│     ├─ 속도 반비례 동적 tracking time 계산           │
+│     │   ratio = clamp(speed / speed_thresh, 0, 1)   │
+│     │   time = max_time - ratio*(max_time-min_time) │
+│     │   effective_max_miss = round(time / dt)        │
+│     ├─ miss > effective_max_miss: 트랙 삭제          │
 │     └─ 미매칭 검출: 새 트랙 생성                     │
 │                                                     │
 │  4. Publish — 모든 활성 트랙을 BBoxArray로 발행      │
@@ -77,13 +81,31 @@ threshold = max(min_match_dist, |speed| × dt)
 속도 2.0m/s, dt=0.1s → 0.2m
 ```
 
+## 속도 반비례 동적 Tracking Time
+
+속도가 빠를수록 tracking 예측 노이즈가 증가하므로, 속도에 반비례하여 tracking 유지 시간을 조절한다.
+
+```
+ratio = clamp(|speed| / speed_for_min_tracking, 0, 1)
+tracking_time = max_tracking_time - ratio × (max_tracking_time - min_tracking_time)
+effective_max_miss = round(tracking_time / dt)
+
+예시 (10Hz, min=0.3s, max=2.0s, speed_thresh=3.0m/s):
+  정지 (0.0m/s) → tracking_time=2.0s → max_miss=20
+  저속 (1.0m/s) → tracking_time=1.43s → max_miss=14
+  중속 (2.0m/s) → tracking_time=0.87s → max_miss=9
+  고속 (3.0m/s+) → tracking_time=0.3s → max_miss=3
+```
+
 ## 파라미터
 
 | 파라미터 | 기본값 | 단위 | 설명 |
 |---------|--------|------|------|
 | `wheelbase` | 0.87 | m | T870 축간거리 (Bicycle Model) |
 | `min_match_dist` | 0.1 | m | 동적 매칭 최소 거리 (저속/정지 시 하한) |
-| `max_miss_count` | 5 | 회 | 연속 미검출 삭제 임계값 |
+| `min_tracking_time` | 0.3 | s | 최소 tracking 유지 시간 (고속 시) |
+| `max_tracking_time` | 2.0 | s | 최대 tracking 유지 시간 (저속/정지 시) |
+| `speed_for_min_tracking` | 3.0 | m/s | 이 속도 이상이면 min_tracking_time 적용 |
 | `input_topic` | /perception/raw_bboxes | -- | 입력 bbox 토픽 |
 | `output_topic` | /perception/bboxes | -- | 출력 tracked bbox 토픽 |
 | `control_topic` | /t870/control_command | -- | 제어 명령 토픽 |

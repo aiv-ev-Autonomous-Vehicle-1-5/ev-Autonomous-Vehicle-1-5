@@ -22,9 +22,11 @@ on_timer() — 10Hz (100ms)
 ├── Stage 1: Input Parse  [nodes/input_parser.hpp]
 │     BBox/LaneBoundary → ChainPoint 변환 (sensor_tf 보정)
 │
-├── Stage 2: DirectionChainer  [chainer/*.cpp]
-│     컴포넌트 분류 + L/R 백본 추출
-│     find_seed (2-pass bbox 우선) → build_graph → extract_backbone(L/R) → resample_component(L/R)
+├── Stage 2: DirectionChainer v4  [chainer/*.cpp]
+│     독립 체이닝 + Backtracking 중복 해소 + L/R 백본 추출
+│     find_seed (2-pass bbox 우선) → build_graph
+│       → extract_backbone(L, 독립) → extract_backbone(R, 독립)
+│       → resolve_overlaps (backtracking) → trim_crossing → resample
 │     * find_seed 전략 (2-pass bbox 우선):
 │       Pass 1 — bbox만 탐색 (x ≥ -2.0, side_seed_y 가드, d ≤ seed_bbox_max_dist)
 │                조건 만족 bbox 중 가장 가까운 것 반환
@@ -37,8 +39,21 @@ on_timer() — 10Hz (100ms)
 │     * backbone chaining 시 2-phase BBOX 최우선 탐색:
 │       Phase 1 — d_max 범위 내 모든 bbox를 직접 전수 탐색
 │       Phase 2 — bbox 후보 없으면 knn fallback → bbox-first 선택
-│     * 교차 판정 (backbone 확정 직후):
-│       한쪽 backbone이 반대쪽 seed까지 체이닝한 비정상 상황을 감지
+│     * 독립 체이닝 (v4):
+│       좌/우 각각 독립 owner 배열로 체이닝 → 상대 chain의 영향 없음
+│     * 2.5단계 — Backtracking 중복 해소 (resolve_overlaps):
+│       독립 체이닝 후 중복 노드 탐지 (left_bb ∩ right_bb)
+│       3-node 윈도우(A→B→C) 곡률 변화 + 거리 비용 비교
+│       비용 높은 쪽: truncate + 중복 노드 제외 후 재체이닝
+│       비용 동일: 양쪽 모두 truncate (재체이닝 없음)
+│       max_backtrack_count까지 반복
+│     * 교차 판정 (2.6단계, backtracking 후):
+│       left_bb에 right_seed 포함 여부 → left_crossed_right
+│       right_bb에 left_seed 포함 여부 → right_crossed_left
+│     * 선분 교차 검증 (2.75단계, resample 전):
+│       CCW 기반으로 좌/우 backbone의 모든 선분 쌍을 교차 검사
+│       교차 발견 시 양쪽 모두 가장 이른 교차 지점에서 tail trim
+│       제거된 노드는 owner → NONE 복원 → unchained로 수집
 │
 ├── Stage 2.5: Seed Gate
 │     양쪽 backbone 실패 시 "FAIL" 발행 후 중단
@@ -113,7 +128,9 @@ chaining_costmap_ver/
 │   │   ├── seed_selector.cpp         # find_seed(), knn()
 │   │   ├── graph_builder.cpp         # build_graph()
 │   │   ├── backbone_extractor.cpp    # extract_backbone(), chain_one_direction(),
-│   │   │                             #   compute_cost(), compute_cost_prime()
+│   │   │                             #   compute_cost(), compute_cost_prime(),
+│   │   │                             #   resolve_overlaps(), compute_backtrack_cost(),
+│   │   │                             #   rechain_from()
 │   │   └── chain_resampler.cpp       # resample_component()
 │   ├── costmap/
 │   │   └── costmap_generator.cpp     # CostmapGenerator 구현

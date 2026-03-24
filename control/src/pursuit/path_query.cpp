@@ -5,8 +5,10 @@
 #include "pp_controller_cpp/pursuit/path_query.hpp"
 #include "pp_controller_cpp/common/geometry.hpp"
 
+#include <algorithm>
 #include <cmath>
 #include <limits>
+#include <vector>
 
 namespace pp_controller_cpp
 {
@@ -113,17 +115,19 @@ double compute_remaining_length(
 }
 
 // ---------------------------------------------------------------------------
-// compute_preview_curvature: 전방 곡률 분석
+// compute_preview_curvature: 전방 곡률 분석 (percentile 기반)
 // ---------------------------------------------------------------------------
-// nearest_i부터 preview_distance만큼 앞의 경로를 분석하여 최대 곡률을 반환.
+// nearest_i부터 preview_distance만큼 앞의 경로를 분석하여 percentile 곡률을 반환.
 // 3점 외적 기반 곡률 추정:
 //   kappa = 2 * |cross(AB, BC)| / (|AB| * |BC| * |AC|)
-// 이 값이 크면 급커브 → 미리 감속하는 용도로 사용.
+// 전체 곡률 샘플 중 percentile 위치 값을 반환하여 단발성 노이즈 스파이크를 제거.
+// percentile=1.0이면 기존 max와 동일, 0.9이면 상위 10% 아웃라이어 무시.
 // ---------------------------------------------------------------------------
 double compute_preview_curvature(
   const std::vector<geometry_msgs::msg::Point> & pts,
   size_t nearest_i,
-  double preview_distance)
+  double preview_distance,
+  double percentile)
 {
   if (pts.size() < 3 || nearest_i + 2 >= pts.size()) {
     return 0.0;
@@ -143,8 +147,9 @@ double compute_preview_curvature(
     return 0.0;
   }
 
-  // 구간 내 3점 세트에서 최대 곡률 탐색
-  double max_abs_kappa = 0.0;
+  // 구간 내 3점 세트에서 곡률 수집
+  std::vector<double> kappas;
+  kappas.reserve(end_i - nearest_i);
   for (size_t i = nearest_i; i + 2 <= end_i; ++i) {
     const auto & a = pts[i];
     const auto & b = pts[i + 1];
@@ -161,11 +166,19 @@ double compute_preview_curvature(
     const double cross =
       (b.x - a.x) * (c.y - b.y) -
       (b.y - a.y) * (c.x - b.x);
-    const double kappa = 2.0 * std::abs(cross) / denom;
-    max_abs_kappa = std::max(max_abs_kappa, kappa);
+    kappas.push_back(2.0 * std::abs(cross) / denom);
   }
 
-  return max_abs_kappa;
+  if (kappas.empty()) {
+    return 0.0;
+  }
+
+  // percentile 인덱스 계산 후 nth_element로 O(N) 선택
+  const size_t idx = std::min(
+    static_cast<size_t>(percentile * static_cast<double>(kappas.size())),
+    kappas.size() - 1);
+  std::nth_element(kappas.begin(), kappas.begin() + static_cast<long>(idx), kappas.end());
+  return kappas[idx];
 }
 
 }  // namespace pursuit

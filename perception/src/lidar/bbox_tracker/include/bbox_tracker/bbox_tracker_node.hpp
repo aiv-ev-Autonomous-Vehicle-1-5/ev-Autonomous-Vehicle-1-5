@@ -69,7 +69,9 @@ private:
   // ---- 파라미터 ----
   double wheelbase_{0.87};          ///< [m] 차량 축간거리
   double min_match_dist_{0.1};      ///< [m] 동적 매칭 최소 거리
-  int max_miss_count_{10};          ///< 연속 미검출 삭제 임계값
+  double min_tracking_time_{0.3};   ///< [s] 최소 tracking 유지 시간 (고속 시)
+  double max_tracking_time_{2.0};   ///< [s] 최대 tracking 유지 시간 (저속/정지 시)
+  double speed_for_min_tracking_{3.0}; ///< [m/s] 이 속도 이상이면 min_tracking_time 적용
 
   // ---- 상태 ----
   std::vector<Track> tracks_;       ///< 활성 트랙 목록

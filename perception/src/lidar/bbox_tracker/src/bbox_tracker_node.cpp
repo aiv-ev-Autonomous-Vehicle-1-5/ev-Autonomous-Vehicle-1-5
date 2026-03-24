@@ -17,14 +17,18 @@ BBoxTrackerNode::BBoxTrackerNode(const rclcpp::NodeOptions & options)
   // 파라미터
   declare_parameter<double>("wheelbase", wheelbase_);
   declare_parameter<double>("min_match_dist", min_match_dist_);
-  declare_parameter<int>("max_miss_count", max_miss_count_);
+  declare_parameter<double>("min_tracking_time", min_tracking_time_);
+  declare_parameter<double>("max_tracking_time", max_tracking_time_);
+  declare_parameter<double>("speed_for_min_tracking", speed_for_min_tracking_);
   declare_parameter<std::string>("input_topic", "/perception/bboxes");
   declare_parameter<std::string>("output_topic", "/tracked/bboxes");
   declare_parameter<std::string>("control_topic", "/t870/control_command");
 
   wheelbase_ = get_parameter("wheelbase").as_double();
   min_match_dist_ = get_parameter("min_match_dist").as_double();
-  max_miss_count_ = get_parameter("max_miss_count").as_int();
+  min_tracking_time_ = get_parameter("min_tracking_time").as_double();
+  max_tracking_time_ = get_parameter("max_tracking_time").as_double();
+  speed_for_min_tracking_ = get_parameter("speed_for_min_tracking").as_double();
   const auto input_topic = get_parameter("input_topic").as_string();
   const auto output_topic = get_parameter("output_topic").as_string();
   const auto control_topic = get_parameter("control_topic").as_string();
@@ -48,9 +52,10 @@ BBoxTrackerNode::BBoxTrackerNode(const rclcpp::NodeOptions & options)
     "/tracker/debug/predicted", rclcpp::QoS(1).best_effort());
 
   RCLCPP_INFO(get_logger(),
-    "bbox_tracker started: in=%s out=%s ctrl=%s wheelbase=%.2f max_miss=%d",
+    "bbox_tracker started: in=%s out=%s ctrl=%s wheelbase=%.2f "
+    "tracking_time=[%.2f, %.2f]s speed_thresh=%.1fm/s",
     input_topic.c_str(), output_topic.c_str(), control_topic.c_str(),
-    wheelbase_, max_miss_count_);
+    wheelbase_, min_tracking_time_, max_tracking_time_, speed_for_min_tracking_);
 }
 
 // ===========================================================================
@@ -176,10 +181,16 @@ void BBoxTrackerNode::match_and_update(const ev_msgs::msg::BBoxArray & detection
     }
   }
 
+  // 속도 반비례 동적 tracking time 계산
+  const double spd = std::abs(last_speed_);
+  const double ratio = std::clamp(spd / speed_for_min_tracking_, 0.0, 1.0);
+  const double tracking_time = max_tracking_time_ - ratio * (max_tracking_time_ - min_tracking_time_);
+  const int effective_max_miss = std::max(0, static_cast<int>(std::round(tracking_time / dt)));
+
   // 오래된 트랙 삭제
   tracks_.erase(
     std::remove_if(tracks_.begin(), tracks_.end(),
-      [this](const Track & t) { return t.miss_count > max_miss_count_; }),
+      [effective_max_miss](const Track & t) { return t.miss_count > effective_max_miss; }),
     tracks_.end());
 
   // 미매칭 검출: 새 트랙 생성

@@ -1,20 +1,23 @@
 /**
  * @file backbone_extractor.cpp
- * @brief DirectionChainer — Backbone 추출 + 비용함수 구현
+ * @brief DirectionChainer — Backbone 추출 + 비용함수 + Backtracking 구현
  *
  * [포함 함수]
- *   - extract_backbone():      양방향(backward+forward) greedy chaining
- *                              reverse(backward) + [seed] + forward
- *   - chain_one_direction():   단방향 greedy chaining 헬퍼
- *                              (2-phase BBOX 최우선 탐색:
- *                               Phase 1 — d_max 범위 내 모든 bbox를 knn 없이
- *                               직접 전수 탐색 → 게이트 적용,
- *                               Phase 2 — bbox 후보 없으면 knn fallback)
- *   - compute_cost():          기본 비용함수 w(i,j)
- *   - compute_cost_prime():    확장 비용함수 w'(i,j) = w + λ·C_side
+ *   - extract_backbone():        양방향(backward+forward) greedy chaining
+ *                                reverse(backward) + [seed] + forward
+ *   - chain_one_direction():     단방향 greedy chaining 헬퍼
+ *                                (2-phase BBOX 최우선 탐색:
+ *                                 Phase 1 — d_max 범위 내 모든 bbox를 knn 없이
+ *                                 직접 전수 탐색 → 게이트 적용,
+ *                                 Phase 2 — bbox 후보 없으면 knn fallback)
+ *   - compute_cost():            기본 비용함수 w(i,j)
+ *   - compute_cost_prime():      확장 비용함수 w'(i,j) = w + λ·C_side
+ *   - resolve_overlaps():        독립 체이닝 중복 해소 backtracking 루프
+ *   - compute_backtrack_cost():  3-node 윈도우 곡률+거리 비용
+ *   - rechain_from():            truncate 후 재체이닝
  *
  * [의존 관계]
- *   - geometry.hpp: dot2() — 2D 벡터 내적
+ *   - geometry.hpp: dot2(), norm() — 2D 벡터 연산
  *   - types.hpp: ChainPoint, NodeOwner, StopReason
  *   - params.hpp: PlanningParams::Chainer
  */
@@ -292,6 +295,200 @@ std::vector<int> DirectionChainer::extract_backbone(
   backbone.push_back(seed_idx);
   backbone.insert(backbone.end(), forward_chain.begin(), forward_chain.end());
   return backbone;
+}
+
+// ============================================================================
+// compute_backtrack_cost — 3-node 윈도우 곡률+거리 backtracking 비용
+// ============================================================================
+// backbone에서 overlap_pos 위치의 노드 포함 이전 3개 노드(A, B, C)에 대해:
+//   v1 = B - A, v2 = C - B
+//   곡률 변화 = acos(dot(v1,v2) / (|v1|·|v2|))
+//   거리 = |v2| (B→C 거리, d_max로 정규화)
+//   cost = w_curv * 곡률변화 + w_dist * 거리/d_max
+//
+// 노드가 2개뿐이면 (윈도우 부족) 곡률=0, 거리만 계산.
+// 노드가 1개이면 cost=0.
+//
+double DirectionChainer::compute_backtrack_cost(
+  const std::vector<ChainPoint> & points,
+  const std::vector<int> & backbone,
+  int overlap_pos,
+  const PlanningParams::Chainer & cp) const
+{
+  // overlap_pos가 backbone의 0번째이면 이전 노드 없음 → cost=0
+  if (overlap_pos <= 0) return 0.0;
+
+  const int idx_c = backbone[overlap_pos];      // C: 중복 노드
+  const int idx_b = backbone[overlap_pos - 1];  // B: 직전 노드
+
+  const double dx_bc = points[idx_c].x - points[idx_b].x;
+  const double dy_bc = points[idx_c].y - points[idx_b].y;
+  const double dist_bc = std::sqrt(dx_bc * dx_bc + dy_bc * dy_bc);
+
+  // 거리 비용 (d_max로 정규화)
+  const double cost_dist = dist_bc / cp.d_max;
+
+  // 곡률 비용: 3-node 윈도우가 있을 때만
+  double cost_curv = 0.0;
+  if (overlap_pos >= 2) {
+    const int idx_a = backbone[overlap_pos - 2];  // A: 2칸 이전 노드
+
+    // v1 = B - A
+    const double v1x = points[idx_b].x - points[idx_a].x;
+    const double v1y = points[idx_b].y - points[idx_a].y;
+    const double len_v1 = std::sqrt(v1x * v1x + v1y * v1y);
+
+    // v2 = C - B
+    const double len_v2 = dist_bc;
+
+    if (len_v1 > 1e-9 && len_v2 > 1e-9) {
+      // dot(v1, v2) / (|v1|·|v2|) = cos(angle)
+      const double dot_val = (v1x * dx_bc + v1y * dy_bc) / (len_v1 * len_v2);
+      const double clamped = std::clamp(dot_val, -1.0, 1.0);
+      cost_curv = std::acos(clamped);  // [0, π] 범위의 각도 변화
+    }
+  }
+
+  return cp.backtrack_w_curv * cost_curv + cp.backtrack_w_dist * cost_dist;
+}
+
+// ============================================================================
+// rechain_from — backbone의 특정 위치에서 truncate 후 재체이닝
+// ============================================================================
+// backbone[rechain_pos] 이후를 삭제하고, backbone[rechain_pos-1] 노드에서
+// forward 방향으로 chain_one_direction을 다시 실행한다.
+// excluded_set에 포함된 노드는 visited_set에 미리 삽입하여 영구 제외.
+//
+void DirectionChainer::rechain_from(
+  const std::vector<ChainPoint> & points,
+  std::vector<int> & backbone,
+  int rechain_pos,
+  bool is_left,
+  const std::unordered_set<int> & excluded_set,
+  const PlanningParams::Chainer & cp) const
+{
+  if (rechain_pos <= 0 || rechain_pos >= static_cast<int>(backbone.size())) return;
+
+  // rechain_pos 이후 삭제
+  backbone.resize(rechain_pos);
+
+  // 재체이닝 시작 노드 = truncate 직전 노드
+  const int restart_node = backbone[rechain_pos - 1];
+
+  // visited_set 재구성: backbone에 이미 있는 노드 + excluded 노드
+  std::unordered_set<int> visited_set;
+  for (int idx : backbone) {
+    visited_set.insert(idx);
+  }
+  for (int idx : excluded_set) {
+    visited_set.insert(idx);
+  }
+
+  // 진행 방향 복원: 마지막 2개 노드로 방향 벡터 계산
+  Point2D dir = {1.0, 0.0};  // 기본: forward
+  if (rechain_pos >= 2) {
+    const int prev = backbone[rechain_pos - 2];
+    const double dx = points[restart_node].x - points[prev].x;
+    const double dy = points[restart_node].y - points[prev].y;
+    const double d = std::sqrt(dx * dx + dy * dy);
+    if (d > 1e-9) {
+      dir = {dx / d, dy / d};
+    }
+  }
+
+  // owner = all NONE (독립 재체이닝이므로 상대 chain 고려 안 함)
+  std::vector<NodeOwner> owner_none(points.size(), NodeOwner::NONE);
+
+  const int remaining = cp.max_chain_len - static_cast<int>(backbone.size());
+  if (remaining <= 0) return;
+
+  StopReason stop_reason = StopReason::MAX_LEN;
+  auto new_chain = chain_one_direction(
+    points, owner_none, restart_node, dir, is_left,
+    visited_set, remaining, stop_reason, cp);
+
+  // 재체이닝 결과 append
+  backbone.insert(backbone.end(), new_chain.begin(), new_chain.end());
+}
+
+// ============================================================================
+// resolve_overlaps — 독립 체이닝 중복 해소 backtracking 루프
+// ============================================================================
+// [알고리즘]
+//   1) left_bb와 right_bb에서 공통 노드(중복) 탐지
+//   2) 각 backbone 순서상 가장 빨리 등장하는 중복 노드 선택
+//   3) 양쪽 3-node 윈도우 비용 비교:
+//      - 한쪽이 높으면: 그 쪽에서 truncate + 중복 노드 제외 후 재체이닝
+//      - 동일하면: 양쪽 모두 중복 노드 이후 truncate (재체이닝 없음)
+//   4) max_backtrack_count까지 반복
+//
+void DirectionChainer::resolve_overlaps(
+  const std::vector<ChainPoint> & points,
+  std::vector<int> & left_bb,
+  std::vector<int> & right_bb,
+  const PlanningParams::Chainer & cp) const
+{
+  std::unordered_set<int> excluded_set;  // 영구 제외 노드 (누적)
+
+  for (int iter = 0; iter < cp.max_backtrack_count; ++iter) {
+    // 중복 노드 탐지: right_bb를 set으로 만들어 left_bb에서 검색
+    std::unordered_set<int> right_set(right_bb.begin(), right_bb.end());
+
+    // 양쪽에서 가장 먼저 등장하는 중복 노드와 그 위치 탐색
+    int left_overlap_pos = -1;
+    int right_overlap_pos = -1;
+    int overlap_node = -1;
+
+    // left_bb에서 가장 먼저 등장하는 중복 노드
+    for (int i = 0; i < static_cast<int>(left_bb.size()); ++i) {
+      if (right_set.count(left_bb[i])) {
+        left_overlap_pos = i;
+        overlap_node = left_bb[i];
+        break;
+      }
+    }
+
+    if (overlap_node < 0) break;  // 중복 없음 → 해소 완료
+
+    // right_bb에서 해당 노드의 위치 탐색
+    for (int j = 0; j < static_cast<int>(right_bb.size()); ++j) {
+      if (right_bb[j] == overlap_node) {
+        right_overlap_pos = j;
+        break;
+      }
+    }
+
+    // 3-node 윈도우 비용 계산
+    double left_cost = compute_backtrack_cost(
+      points, left_bb, left_overlap_pos, cp);
+    double right_cost = compute_backtrack_cost(
+      points, right_bb, right_overlap_pos, cp);
+
+    std::fprintf(stderr,
+      "[backtrack iter %d] overlap node=%d, left_pos=%d(cost=%.3f), "
+      "right_pos=%d(cost=%.3f)\n",
+      iter, overlap_node, left_overlap_pos, left_cost,
+      right_overlap_pos, right_cost);
+
+    // 중복 노드를 영구 제외 리스트에 추가
+    excluded_set.insert(overlap_node);
+
+    if (left_cost > right_cost) {
+      // left가 부자연스러움 → left에서 backtracking
+      rechain_from(points, left_bb, left_overlap_pos, true, excluded_set, cp);
+    } else if (right_cost > left_cost) {
+      // right가 부자연스러움 → right에서 backtracking
+      rechain_from(points, right_bb, right_overlap_pos, false, excluded_set, cp);
+    } else {
+      // 비용 동일 → 양쪽 모두 중복 노드 이후 truncate (재체이닝 없음)
+      if (left_overlap_pos < static_cast<int>(left_bb.size())) {
+        left_bb.resize(left_overlap_pos);
+      }
+      if (right_overlap_pos < static_cast<int>(right_bb.size())) {
+        right_bb.resize(right_overlap_pos);
+      }
+    }
+  }
 }
 
 }  // namespace chaining_costmap_ver

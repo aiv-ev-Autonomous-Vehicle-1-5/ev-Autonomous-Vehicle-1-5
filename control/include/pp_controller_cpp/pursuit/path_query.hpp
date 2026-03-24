@@ -8,7 +8,7 @@
 //   find_nearest_index        — 가장 가까운 경로점 탐색
 //   compute_target_relative   — arc-length 기반 추적점 선택
 //   compute_remaining_length  — 남은 경로 arc-length 계산
-//   compute_preview_curvature — 전방 곡률 분석 (선감속용)
+//   compute_preview_curvature — 전방 곡률 분석 (percentile 기반, 선감속용)
 // ============================================================================
 
 #ifndef PP_CONTROLLER_CPP__PURSUIT__PATH_QUERY_HPP_
@@ -41,12 +41,13 @@ double compute_remaining_length(
   const std::vector<geometry_msgs::msg::Point> & pts,
   size_t nearest_i);
 
-/// nearest_i 부터 preview_distance 까지의 구간에서 최대 곡률 계산
-/// 3점 외적 기반 곡률 추정으로 선감속에 사용
+/// nearest_i 부터 preview_distance 까지의 구간에서 percentile 곡률 계산
+/// 3점 외적 기반 곡률 추정, percentile로 노이즈 스파이크 제거 (1.0=max, 0.9=상위10% 제외)
 double compute_preview_curvature(
   const std::vector<geometry_msgs::msg::Point> & pts,
   size_t nearest_i,
-  double preview_distance);
+  double preview_distance,
+  double percentile = 1.0);
 
 }  // namespace pursuit
 }  // namespace pp_controller_cpp

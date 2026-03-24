@@ -351,7 +351,7 @@ void PurePursuitRelativeNode::on_timer()
 
   // 2) 전방 곡률 분석 (선감속)
   const double preview_kappa = pursuit::compute_preview_curvature(
-    pts, nearest_i, p.speed.preview_distance);
+    pts, nearest_i, p.speed.preview_distance, p.speed.preview_curvature_percentile);
 
   // 3) preview 기반 목표 속도 → 동적 lookahead 계산
   const double preview_speed_target = pursuit::compute_speed_target(

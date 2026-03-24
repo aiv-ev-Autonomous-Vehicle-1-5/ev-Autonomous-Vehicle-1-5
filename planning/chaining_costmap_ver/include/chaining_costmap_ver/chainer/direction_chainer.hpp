@@ -1,6 +1,6 @@
 /**
  * @file direction_chainer.hpp
- * @brief DirectionChainer — Owner-Label 기반 순차 체이닝 (v3)
+ * @brief DirectionChainer — 독립 체이닝 + Backtracking 기반 (v4)
  *
  * ══════════════════════════════════════════════════════════════
  * [DirectionChainer란?]
@@ -14,32 +14,40 @@
  *         → costmap에 전달하여 경로 생성의 기반이 된다.
  *
  * ══════════════════════════════════════════════════════════════
- * [왜 Owner-Label 기반 파이프라인인가?]
+ * [왜 독립 체이닝 + Backtracking인가?]
  *
- *   v2에서는 visited 배열을 좌/우 BFS가 공유하여 component를 분리했다.
- *   하지만 bridge 노드(y≈0 근처)를 통해 한쪽이 반대편 노드를 선점하는
- *   문제가 있었다. v3에서는 NodeOwner 라벨로 노드 소유권을 관리하여
- *   이 문제를 해결한다.
+ *   v3에서는 left→right 순차 체이닝을 하여 right가 left의 owner를
+ *   보고 후보를 탈락시켰다. 이로 인해:
+ *     - 동적 장애물로 left chain이 right seed까지 먹어버리는 문제
+ *     - right chain이 최적 경로를 찾지 못하는 문제
+ *   v4에서는 좌/우를 완전 독립적으로 체이닝한 뒤,
+ *   중복 노드를 3-node 곡률+거리 비용 기반 backtracking으로 해소한다.
  *
  * ──────────────────────────────────────────────────────────────
- * [5단계 파이프라인 상세]
+ * [파이프라인 상세]
  *
  *   ┌─────────────────────────────────────────────────────────┐
  *   │ 준비: Seed 선택 + Undirected Graph 구성                  │
  *   │   - 좌/우 각각 시작점(seed) 선택                         │
  *   │   - 모든 점에 대해 kNN + G1,G3 게이트로 그래프 구성       │
- *   │   - owner 배열 초기화 (all NONE)                         │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 1단계: Left Backbone 확정 (전방 전용)                     │
- *   │   - left seed에서 forward(+x) 방향으로만 chaining       │
- *   │   - owner==NONE만 후보                                  │
- *   │   - 결과: [seed] + forward → 최종 backbone              │
- *   │   - 확정된 노드에 LEFT_BACKBONE 라벨 부여                │
+ *   │ 1단계: Left Backbone 독립 추출                           │
+ *   │   - left seed에서 독립 owner로 chaining                 │
+ *   │   - right와 무관하게 자유롭게 확장                       │
  *   ├─────────────────────────────────────────────────────────┤
- *   │ 2단계: Right Backbone 확정 (전방 전용)                   │
- *   │   - right seed에서 forward(+x) 방향으로만 chaining      │
- *   │   - owner==NONE만 후보, LEFT_BACKBONE 노드는 자동 제외   │
- *   │   - 확정된 노드에 RIGHT_BACKBONE 라벨 부여               │
+ *   │ 2단계: Right Backbone 독립 추출                          │
+ *   │   - right seed에서 독립 owner로 chaining                │
+ *   │   - left와 무관하게 자유롭게 확장                        │
+ *   ├─────────────────────────────────────────────────────────┤
+ *   │ 2.5단계: Backtracking 중복 해소                          │
+ *   │   - left_bb ∩ right_bb 중복 노드 탐지                   │
+ *   │   - 3-node 윈도우 곡률+거리 비용 비교                    │
+ *   │   - 높은 쪽 truncate + 재체이닝 (동일 시 양쪽 truncate)  │
+ *   │   - max_backtrack_count까지 반복                         │
+ *   ├─────────────────────────────────────────────────────────┤
+ *   │ 2.75단계: 선분 교차 검증 (trim_crossing_backbones)       │
+ *   │   - CCW 기반 좌/우 backbone 선분 교차 판정               │
+ *   │   - 교차 시 양쪽 tail trim                               │
  *   ├─────────────────────────────────────────────────────────┤
  *   │ 3단계: Resample                                         │
  *   │   - 좌/우 각각 backbone의 모든 edge를 보간               │
@@ -242,8 +250,9 @@ private:
    *   bbox가 없을 때만 lane 후보로 fallback한다.
    *
    * [owner 기반 필터링]
-   *   owner[j] == NONE인 노드만 후보로 허용하므로,
-   *   이미 LEFT_BACKBONE으로 확정된 노드는 right backbone 후보에서 자동 제외된다.
+   *   owner[j] == NONE인 노드만 후보로 허용한다.
+   *   v4에서는 좌/우 독립 owner를 사용하므로 상대 chain의 영향을 받지 않는다.
+   *   중복 노드는 extract 후 resolve_overlaps()에서 backtracking으로 해소된다.
    *
    * @param points              필터링된 경계점 배열
    * @param owner               [in] 각 노드의 소유권 라벨 배열
@@ -393,6 +402,102 @@ private:
     const ChainPoint & pj,
     const Point2D & v_i,
     bool is_left,
+    const PlanningParams::Chainer & cp) const;
+
+  // ═══════════════════════════════════════════════════════════
+  // 2.75단계: 교차 검증 — 좌/우 backbone 선분 교차 시 양쪽 tail trim
+  // ═══════════════════════════════════════════════════════════
+  /**
+   * @brief 좌/우 backbone의 선분 교차를 검사하고 양쪽 tail trim
+   *
+   * [알고리즘]
+   *   1) left backbone의 모든 선분 L[i]→L[i+1]과
+   *      right backbone의 모든 선분 R[j]→R[j+1]에 대해
+   *      CCW 기반 선분 교차 판정 수행
+   *   2) 교차 발견 시 양쪽 모두 tail trim:
+   *      - left:  가장 작은 교차 선분 인덱스 i → L[i+1] 이후 전부 제거
+   *      - right: 가장 작은 교차 선분 인덱스 j → R[j+1] 이후 전부 제거
+   *   3) 제거된 노드의 owner를 NONE으로 복원
+   *
+   * [목적]
+   *   S자 구간에서 좌/우 체인이 교차하는 비정상 상황을 사후 검증으로 차단.
+   *   resample 전에 수행하므로 trimming 결과가 리샘플링에 반영된다.
+   *
+   * @param points    필터링된 경계점 배열
+   * @param left_bb   [in/out] left backbone 인덱스 배열 (교차 시 축소됨)
+   * @param right_bb  [in/out] right backbone 인덱스 배열 (교차 시 축소됨)
+   * @param owner     [in/out] 노드 소유권 배열 (제거된 노드 → NONE 복원)
+   */
+  void trim_crossing_backbones(
+    const std::vector<ChainPoint> & points,
+    std::vector<int> & left_bb,
+    std::vector<int> & right_bb,
+    std::vector<NodeOwner> & owner) const;
+
+  // ═══════════════════════════════════════════════════════════
+  // 2.5단계: 독립 체이닝 중복 해소 — Backtracking
+  // ═══════════════════════════════════════════════════════════
+  /**
+   * @brief 좌/우 독립 체이닝 결과에서 중복 노드를 backtracking으로 해소
+   *
+   * [알고리즘]
+   *   1) left_bb ∩ right_bb 중복 노드를 탐지 (backbone 순서상 첫 번째)
+   *   2) 각 chain에서 중복 노드 포함 이전 3-node 윈도우의 곡률+거리 비용 계산
+   *   3) 비용 높은 쪽: 중복 노드 이후 truncate + 중복 노드 제외 후 재체이닝
+   *      비용 동일: 양쪽 모두 중복 노드 이후 truncate (재체이닝 없음)
+   *   4) max_backtrack_count까지 반복
+   *
+   * @param points       경계점 배열
+   * @param left_bb      [in/out] left backbone 인덱스 배열
+   * @param right_bb     [in/out] right backbone 인덱스 배열
+   * @param cp           chainer 파라미터
+   */
+  void resolve_overlaps(
+    const std::vector<ChainPoint> & points,
+    std::vector<int> & left_bb,
+    std::vector<int> & right_bb,
+    const PlanningParams::Chainer & cp) const;
+
+  /**
+   * @brief 3-node 윈도우 backtracking 비용 계산
+   *
+   * backbone에서 overlap_pos 위치의 노드 포함 이전 3개 노드(A, B, C)에 대해:
+   *   v1 = B - A, v2 = C - B
+   *   곡률 변화 = acos(dot(v1,v2) / (|v1|·|v2|))
+   *   거리 = |v2| (B→C 거리)
+   *   cost = w_curv * 곡률변화 + w_dist * 거리/d_max
+   *
+   * @param points       경계점 배열
+   * @param backbone     backbone 인덱스 배열
+   * @param overlap_pos  backbone 내 중복 노드 위치
+   * @param cp           chainer 파라미터
+   * @return backtracking 비용 (높을수록 부자연스러운 체이닝)
+   */
+  double compute_backtrack_cost(
+    const std::vector<ChainPoint> & points,
+    const std::vector<int> & backbone,
+    int overlap_pos,
+    const PlanningParams::Chainer & cp) const;
+
+  /**
+   * @brief backbone의 특정 위치에서 truncate 후 재체이닝
+   *
+   * backbone[rechain_pos-1] 노드에서 forward 방향으로 chain_one_direction을
+   * 다시 실행한다. excluded_set에 포함된 노드는 후보에서 영구 제외된다.
+   *
+   * @param points        경계점 배열
+   * @param backbone      [in/out] backbone 인덱스 배열 (rechain_pos 이후 교체)
+   * @param rechain_pos   재체이닝 시작 위치 (이 위치부터 교체됨)
+   * @param is_left       좌측/우측
+   * @param excluded_set  영구 제외 노드 set
+   * @param cp            chainer 파라미터
+   */
+  void rechain_from(
+    const std::vector<ChainPoint> & points,
+    std::vector<int> & backbone,
+    int rechain_pos,
+    bool is_left,
+    const std::unordered_set<int> & excluded_set,
     const PlanningParams::Chainer & cp) const;
 };
 

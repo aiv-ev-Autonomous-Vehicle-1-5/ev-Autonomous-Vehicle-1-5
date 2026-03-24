@@ -50,6 +50,7 @@ struct PurePursuitParams
     double max{1.2};                    // 최대 주행 속도 [m/s]
     double lateral_accel_limit{0.9};    // 곡률 기반 감속용 최대 횡가속 [m/s^2]
     double preview_distance{2.5};       // 선감속용 전방 curvature preview 거리 [m]
+    double preview_curvature_percentile{0.9}; // preview 곡률 percentile [0~1] (1.0=max, 0.9=상위10% 제외)
     double accel_rate{0.8};             // 가속 rate limit [m/s^2]
     double decel_rate{1.8};             // 감속 rate limit [m/s^2]
     int    path_length_filter_size{10}; // 경로 길이 이동 평균 윈도우 크기
@@ -134,6 +135,10 @@ struct PurePursuitParams
     speed.min = std::clamp(node->get_parameter("speed_min").as_double(), 0.0, speed.max);
     speed.lateral_accel_limit = std::max(1e-3, node->get_parameter("lateral_accel_limit").as_double());
     speed.preview_distance    = std::max(lookahead.min, node->get_parameter("preview_distance").as_double());
+
+    node->declare_parameter<double>("preview_curvature_percentile", speed.preview_curvature_percentile);
+    speed.preview_curvature_percentile = std::clamp(node->get_parameter("preview_curvature_percentile").as_double(), 0.0, 1.0);
+
     speed.accel_rate = std::max(1e-3, node->get_parameter("accel_rate").as_double());
     speed.decel_rate = std::max(1e-3, node->get_parameter("decel_rate").as_double());
     speed.path_length_filter_size = std::max(1, static_cast<int>(node->get_parameter("path_length_filter_size").as_int()));

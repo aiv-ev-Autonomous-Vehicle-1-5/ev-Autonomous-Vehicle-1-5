@@ -5,19 +5,20 @@ pure_pursuit_relative_node:
     cmd_topic:  "/t870/control_command"
 
     # --- 차량/알고리즘 ---
-    wheelbase: 0.87          # [m] T870 축간거리
+    wheelbase: 0.733          # [m] T870 축간거리
     lookahead: 0.5           # [m] legacy fallback
-    lookahead_min: 0.8      # [m] 코너에서 짧게 보는 최소 주시 거리
+    lookahead_min: 0.6      # [m] 코너에서 짧게 보는 최소 주시 거리
     lookahead_max: 1.20      # [m] 직선에서 길게 보는 최대 주시 거리
-    lookahead_speed_gain: 0.35  # [m/(m/s)] 속도 증가에 따른 lookahead 증가량
+    lookahead_speed_gain: 0.6  # [m/(m/s)] 속도 증가에 따른 lookahead 증가량
     speed: 0.45               # [m/s] legacy fallback
     speed_min: 0.1         # [m/s] 급코너 최소 속도
-    speed_max: 0.6            # [m/s] 직선 최대 속도
-    lateral_accel_limit: 0.90  # [m/s^2] 곡률 기반 감속 한계
+    speed_max: 1.0            # [m/s] 직선 최대 속도
+    lateral_accel_limit: 0.17  # [m/s^2] 곡률 기반 감속 한계 (v=√(a/κ), 반경5.6m부터 감속, 하드웨어한계 κ=0.443에서 v=0.64) 0.1 부근에서 +-0.5정도만 바꾸는게 좋을듯?
     preview_distance: 2.50   # [m] 전방 curvature preview 거리
-    accel_rate: 0.080         # [m/s^2] 직선 가속 rate limit
-    decel_rate: 5.00         # [m/s^2] 정상 감속 rate limit (코너 진입 + 제동거리 기반 감속)
-    emergency_decel_rate: 2.0  # [m/s^2] 긴급 정지 감속 rate limit (FAIL, timeout 등)
+    preview_curvature_percentile: 0.90  # [0~1] preview 곡률 percentile (1.0=max, 0.9=상위10% 노이즈 제거)
+    accel_rate: 0.4         # [m/s^2] 직선 가속 rate limit
+    decel_rate: 1.50         # [m/s^2] 정상 감속 rate limit (코너 진입 + 제동거리 기반 감속)
+    emergency_decel_rate: 3.0  # [m/s^2] 긴급 정지 감속 rate limit (FAIL, timeout 등)
     emergency_stop_count: 40   # FAIL 연속 N회 시 긴급 감속 시작 (50Hz 기준 10회 = 200ms)
     path_length_filter_size: 20  # 경로 길이 이동 평균 윈도우 크기 (50Hz 기준 10 = 200ms = planning(10hz) 2 cycle)
     path_drop_confirm_count: 3   # 급락 확정 연속 프레임 수 (50Hz 기준 3 = 60ms)
@@ -29,5 +30,5 @@ pure_pursuit_relative_node:
 
     # --- CREEP 모드 (경로 실패 시 전방 clear면 저속 직진) ---
     creep_speed: 0.4         # [m/s] CREEP 시 직진 속도
-    creep_roi_x: 0.6         # [m] 전방 판정 거리
+    creep_roi_x: 0.8         # [m] 전방 판정 거리
     creep_roi_y: 0.5         # [m] 좌우 판정 폭 (±)

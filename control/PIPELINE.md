@@ -63,7 +63,9 @@ on_timer() — 50Hz (20ms)
 │     nearest_i부터 경로를 따라 arc length 누적, preview_distance(2.5m)까지 구간 결정
 │     구간 내 연속 3점(A,B,C)마다 Menger 곡률 계산:
 │       kappa = 2 × |cross(AB, BC)| / (|AB| × |BC| × |AC|)
-│     preview_kappa = 구간 내 최대 곡률
+│     곡률 값들을 정렬 후 percentile(기본 0.9 = 90th) 위치의 값을 선택
+│       → 상위 10% 아웃라이어(chaining 노이즈 스파이크)를 제거하여 불필요한 감속 방지
+│     preview_kappa = 구간 내 percentile 곡률
 │
 ├── ④ 동적 Lookahead 거리 계산
 │     [preview 기반 목표 속도]
@@ -338,7 +340,7 @@ cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-sele
 ### 전체 속도 결정 흐름
 
 ```
-경로 점들 → compute_preview_curvature() → κ_preview (전방 최대 곡률)
+경로 점들 → compute_preview_curvature() → κ_preview (전방 percentile 곡률)
                                             │
                                             ▼
                                  compute_speed_target(κ_preview)

@@ -306,8 +306,8 @@ std::vector<Point2D> CostmapGenerator::apply_center_attraction(
   if (left_bb.empty() || right_bb.empty()) return {};
 
   // 2) left 각 점에 대해 right 최근접 매칭 → midpoint 계산
-  std::vector<Point2D> center_line;
-  center_line.reserve(left_bb.size());
+  std::vector<Point2D> raw_center;
+  raw_center.reserve(left_bb.size());
   for (const auto & lp : left_bb) {
     double best_d2 = std::numeric_limits<double>::max();
     int best_j = 0;
@@ -317,10 +317,30 @@ std::vector<Point2D> CostmapGenerator::apply_center_attraction(
       double d2 = dx * dx + dy * dy;
       if (d2 < best_d2) { best_d2 = d2; best_j = j; }
     }
-    center_line.push_back({
+    raw_center.push_back({
       (lp.x + right_bb[best_j].x) * 0.5,
       (lp.y + right_bb[best_j].y) * 0.5
     });
+  }
+
+  // 2.5) midpoint를 resolution 간격으로 리샘플링하여 빈틈 없는 중앙선 생성
+  std::vector<Point2D> center_line;
+  if (!raw_center.empty()) {
+    center_line.push_back(raw_center.front());
+    for (size_t i = 1; i < raw_center.size(); ++i) {
+      double dx = raw_center[i].x - raw_center[i - 1].x;
+      double dy = raw_center[i].y - raw_center[i - 1].y;
+      double seg_len = std::sqrt(dx * dx + dy * dy);
+      int n = static_cast<int>(std::ceil(seg_len / cm.resolution));
+      if (n < 1) n = 1;
+      for (int k = 1; k <= n; ++k) {
+        double t = static_cast<double>(k) / n;
+        center_line.push_back({
+          raw_center[i - 1].x + t * dx,
+          raw_center[i - 1].y + t * dy
+        });
+      }
+    }
   }
 
   // 3) 중앙선 각 점에서 음의 가우시안으로 비용 감소

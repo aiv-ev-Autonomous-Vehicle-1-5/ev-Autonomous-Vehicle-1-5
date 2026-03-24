@@ -110,11 +110,14 @@ struct PlanningParams
     // A* 경로가 코너 바깥쪽으로 밀려나도록 유도한다.
     // 0.0 = 패딩 없음 (기존 동작과 동일).
 
-    // [m] 코너 내측 체인 포인트에 추가되는 flat zone 반경.
-    double inner_corner_padding = 0.0;
+    // [m] 코너 내측 패딩 최솟값 (곡률=0 일 때).
+    double inner_corner_padding_min = 0.0;
 
-    // [1/m] 곡률 임계값. center line 곡률이 이 값 이상이면 "코너 구간"으로 판정.
-    // 곡률 = 1/R. 예: 0.2 → 반경 5m 이하의 커브에서 패딩 적용.
+    // [m] 코너 내측 패딩 최댓값 (곡률=κ_max 일 때).
+    double inner_corner_padding_max = 0.0;
+
+    // [1/m] 곡률 임계값. 안쪽 chain 최대 곡률이 이 값 이상이면 "코너 구간"으로 판정.
+    // 곡률 = 1/R. 예: 0.15 → 반경 ~6.7m 이하의 커브에서 패딩 적용.
     double corner_curvature_threshold = 0.2;
   } costmap;
 
@@ -370,6 +373,22 @@ struct PlanningParams
     // 키우면 side 전환 억제, 줄이면 side 구분 약해짐.
     double lambda_side = 0.5;           ///< side preference 가중치
 
+    // ── Backtracking (독립 체이닝 중복 해소) ──
+    // [회] 좌/우 독립 체이닝 후 중복 노드 발견 시 backtracking 최대 반복 횟수.
+    // 각 반복마다 첫 번째 중복 노드에서 3-node 곡률+거리 비용이 높은 쪽을
+    // truncate하고 재체이닝한다. 0이면 backtracking 비활성화.
+    int max_backtrack_count = 3;        ///< 중복 해소 최대 반복 횟수
+
+    // [무차원] backtracking 비용함수의 곡률 변화량 가중치.
+    // 3-node 윈도우(A→B→C)에서 v1=B-A, v2=C-B 사이 각도 변화가 클수록
+    // 부자연스러운 체이닝 → 높은 비용 → backtracking 대상.
+    double backtrack_w_curv = 1.0;      ///< 곡률 변화량 가중치
+
+    // [무차원] backtracking 비용함수의 노드 거리 가중치.
+    // 3-node 윈도우에서 B→C(중복노드) 거리가 멀수록
+    // 무리한 도달 → 높은 비용 → backtracking 대상.
+    double backtrack_w_dist = 1.0;      ///< 노드 거리 가중치
+
     // ── 종료/제한 ──
     // [개] backbone의 최대 포인트 수.
     // 100 = 리샘플 간격 0.1m 기준 최대 10m의 backbone.
@@ -445,7 +464,8 @@ struct PlanningParams
     costmap.origin_x          = p("costmap.origin_x",          costmap.origin_x);
     costmap.center_attract_max   = p("costmap.center_attract_max",   costmap.center_attract_max);
     costmap.center_attract_sigma = p("costmap.center_attract_sigma", costmap.center_attract_sigma);
-    costmap.inner_corner_padding        = p("costmap.inner_corner_padding",        costmap.inner_corner_padding);
+    costmap.inner_corner_padding_min    = p("costmap.inner_corner_padding_min",    costmap.inner_corner_padding_min);
+    costmap.inner_corner_padding_max    = p("costmap.inner_corner_padding_max",    costmap.inner_corner_padding_max);
     costmap.corner_curvature_threshold  = p("costmap.corner_curvature_threshold",  costmap.corner_curvature_threshold);
 
     // ── AStar 파라미터 로드 ──
@@ -495,6 +515,9 @@ struct PlanningParams
     chainer.gamma             = p("chainer.gamma",             chainer.gamma);
     chainer.delta             = p("chainer.delta",             chainer.delta);
     chainer.lambda_side       = p("chainer.lambda_side",       chainer.lambda_side);
+    chainer.max_backtrack_count = p("chainer.max_backtrack_count", chainer.max_backtrack_count);
+    chainer.backtrack_w_curv  = p("chainer.backtrack_w_curv",  chainer.backtrack_w_curv);
+    chainer.backtrack_w_dist  = p("chainer.backtrack_w_dist",  chainer.backtrack_w_dist);
     chainer.max_chain_len     = p("chainer.max_chain_len",     chainer.max_chain_len);
     chainer.resample_ds       = p("chainer.resample_ds",       chainer.resample_ds);
     chainer.publish_debug     = p("chainer.publish_debug",     chainer.publish_debug);
