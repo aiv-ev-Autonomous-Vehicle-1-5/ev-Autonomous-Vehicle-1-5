@@ -131,7 +131,8 @@ std::vector<int> DirectionChainer::chain_one_direction(
     bool had_candidates = false;
     const int n = static_cast<int>(points.size());
     const double d_max_sq = cp.d_max * cp.d_max;
-
+    
+    // G1 : 거리 게이트
     // ── Phase 1: BBOX 최우선 — d_max 범위 내 모든 bbox를 knn 없이 직접 탐색
     //    knn k개 제한 때문에 lane point에 밀려 bbox가 후보에서 빠지는 것을 방지
     for (int i = 0; i < n; ++i) {
@@ -155,10 +156,12 @@ std::vector<int> DirectionChainer::chain_one_direction(
       cos_angle = std::clamp(cos_angle, -1.0, 1.0);
       if (std::acos(cos_angle) > cone_half_rad) continue;
 
-      // G3: 횡오차 게이트
+      // G3: 횡오차 게이트 (편측) — 안쪽(중심) 방향만 제한
+      // perp = 방향벡터의 왼쪽 수직벡터 (왼쪽 +, 오른쪽 -)
       Point2D perp = {-v.y, v.x};
-      double lat = std::abs(dx * perp.x + dy * perp.y);
-      if (lat > cp.lateral_gate) continue;
+      double signed_lat = dx * perp.x + dy * perp.y;
+      if (is_left  && signed_lat < -cp.lateral_gate) continue;  // 안쪽(오른쪽) 초과
+      if (!is_left && signed_lat >  cp.lateral_gate) continue;  // 안쪽(왼쪽) 초과
 
       gated.push_back(i);
     }
@@ -185,10 +188,11 @@ std::vector<int> DirectionChainer::chain_one_direction(
         cos_angle = std::clamp(cos_angle, -1.0, 1.0);
         if (std::acos(cos_angle) > cone_half_rad) continue;
 
-        // G3: 횡오차 게이트
+        // G3: 횡오차 게이트 (편측) — 안쪽(중심) 방향만 제한
         Point2D perp = {-v.y, v.x};
-        double lat = std::abs(dx * perp.x + dy * perp.y);
-        if (lat > cp.lateral_gate) continue;
+        double signed_lat = dx * perp.x + dy * perp.y;
+        if (is_left  && signed_lat < -cp.lateral_gate) continue;
+        if (!is_left && signed_lat >  cp.lateral_gate) continue;
 
         gated.push_back(j);
       }

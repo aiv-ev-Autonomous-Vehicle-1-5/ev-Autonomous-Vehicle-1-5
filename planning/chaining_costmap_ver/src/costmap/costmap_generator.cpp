@@ -215,15 +215,23 @@ CostmapResult CostmapGenerator::generate(
 
   // ── unchained 포인트 처리 ──
   // 체이닝 실패 = 좌/우 경계에 배정되지 못한 점
-  // 정체를 알 수 없으므로 bbox 비용(가장 높은 비용)으로 보수적 처리
-  // → A*가 이 점들을 최대한 회피하도록 유도
+  // BBOX: 정체 불명 장애물 → bbox_cost_max(100)으로 보수적 처리
+  // LANE: 차선 포인트 → lane_cost_max(50)으로 처리
   for (const auto & pt : unchained) {
     const Point2D src = pt.to_point2d();
-    apply_source(
-      result.data, result.rows, result.cols,
-      result.resolution, result.origin_x, result.origin_y,
-      src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
-      cm.bbox_radius);
+    if (pt.type == PointType::BBOX) {
+      apply_source(
+        result.data, result.rows, result.cols,
+        result.resolution, result.origin_x, result.origin_y,
+        src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
+        cm.bbox_radius);
+    } else {
+      apply_source(
+        result.data, result.rows, result.cols,
+        result.resolution, result.origin_x, result.origin_y,
+        src, cm.lane_cost_max, cm.sigma, cm.cost_threshold,
+        cm.lane_radius);
+    }
   }
 
   result.valid = true;
@@ -238,6 +246,111 @@ CostmapResult CostmapGenerator::generate(
 //   A*가 경계 뒤쪽(바깥)으로 돌아가는 경로를 생성하는 것을 방지한다.
 //   costmap 하단(origin_x) 양옆에서 시드까지 가상 bbox를 일정 간격으로 배치하여
 //   "입구(시드 사이)"로만 진입하도록 유도한다.
+
+// ============================================================================
+// 중앙선 유인 비용 — 양쪽 backbone 중점에 음의 가우시안 적용
+// ============================================================================
+// left/right backbone의 중점을 연결한 중앙선에 비용 감소를 적용하여
+// A*가 자연스럽게 중앙으로 유도되게 한다.
+// cost >= bbox_cost_max인 장애물 셀은 건드리지 않는다.
+// ============================================================================
+
+std::vector<Point2D> CostmapGenerator::apply_center_attraction(
+  CostmapResult & costmap,
+  const std::vector<ChainedPoint> & left_chain,
+  const std::vector<ChainedPoint> & right_chain,
+  const PlanningParams & params)
+{
+  const auto & cm = params.costmap;
+  if (cm.center_attract_max <= 0.0 || cm.center_attract_sigma <= 0.0) return {};
+
+  // 1) left/right에서 is_backbone 점만 추출
+  std::vector<Point2D> left_bb, right_bb;
+  for (const auto & pt : left_chain) {
+    if (pt.is_backbone) left_bb.push_back({pt.x, pt.y});
+  }
+  for (const auto & pt : right_chain) {
+    if (pt.is_backbone) right_bb.push_back({pt.x, pt.y});
+  }
+  if (left_bb.empty() || right_bb.empty()) return {};
+
+  // 2) left 각 점에 대해 right 최근접 매칭 → midpoint 계산
+  std::vector<Point2D> center_line;
+  center_line.reserve(left_bb.size());
+  for (const auto & lp : left_bb) {
+    double best_d2 = std::numeric_limits<double>::max();
+    int best_j = 0;
+    for (int j = 0; j < static_cast<int>(right_bb.size()); ++j) {
+      double dx = right_bb[j].x - lp.x;
+      double dy = right_bb[j].y - lp.y;
+      double d2 = dx * dx + dy * dy;
+      if (d2 < best_d2) { best_d2 = d2; best_j = j; }
+    }
+    center_line.push_back({
+      (lp.x + right_bb[best_j].x) * 0.5,
+      (lp.y + right_bb[best_j].y) * 0.5
+    });
+  }
+
+  // 3) 중앙선 각 점에서 음의 가우시안으로 비용 감소
+  const double inv_2sigma2 = -1.0 / (2.0 * cm.center_attract_sigma * cm.center_attract_sigma);
+  const double r_total = cm.center_attract_sigma * 3.0;  // 3σ까지만 순회
+  const int r_cells = static_cast<int>(std::ceil(r_total / cm.resolution));
+
+  int cpt_idx = 0;
+  for (const auto & cpt : center_line) {
+    int src_col = static_cast<int>(std::round((cpt.x - costmap.origin_x) / cm.resolution));
+    int src_row = static_cast<int>(std::round((cpt.y - costmap.origin_y) / cm.resolution));
+
+    // 중앙선 포인트 자체 셀의 before 값 로그 (처음 5개만)
+    if (cpt_idx < 5) {
+      int center_idx = src_row * costmap.cols + src_col;
+      if (center_idx >= 0 && center_idx < static_cast<int>(costmap.data.size())) {
+        double before = costmap.data[center_idx];
+        bool skipped = (before >= cm.bbox_cost_max);
+        std::fprintf(stderr,
+          "[center_attract] pt[%d] (%.2f,%.2f) grid(%d,%d) before=%.1f bbox_max=%.1f skipped=%d\n",
+          cpt_idx, cpt.x, cpt.y, src_row, src_col, before, cm.bbox_cost_max, skipped);
+      }
+    }
+
+    int row_min = std::max(0, src_row - r_cells);
+    int row_max = std::min(costmap.rows - 1, src_row + r_cells);
+    int col_min = std::max(0, src_col - r_cells);
+    int col_max = std::min(costmap.cols - 1, src_col + r_cells);
+
+    for (int r = row_min; r <= row_max; ++r) {
+      for (int c = col_min; c <= col_max; ++c) {
+        int idx = r * costmap.cols + c;
+
+        // 장애물 보존: bbox_cost_max 이상이면 skip
+        if (costmap.data[idx] >= cm.bbox_cost_max) continue;
+
+        double wx = costmap.origin_x + (c + 0.5) * cm.resolution;
+        double wy = costmap.origin_y + (r + 0.5) * cm.resolution;
+        double ddx = wx - cpt.x;
+        double ddy = wy - cpt.y;
+        double d2 = ddx * ddx + ddy * ddy;
+
+        double reduction = cm.center_attract_max * std::exp(inv_2sigma2 * d2);
+        double after = std::max(0.0, costmap.data[idx] - reduction);
+
+        // 처음 5개 포인트의 중심 셀만 after 로그
+        if (cpt_idx < 5 && r == src_row && c == src_col) {
+          std::fprintf(stderr,
+            "[center_attract] pt[%d] reduction=%.1f after=%.1f\n",
+            cpt_idx, reduction, after);
+        }
+
+        costmap.data[idx] = after;
+      }
+    }
+    ++cpt_idx;
+  }
+
+  return center_line;
+}
+
 //
 // [가상 bbox 배치]
 //   좌측 벽: (origin_x, +entry_wall_ego_y) → left_seed

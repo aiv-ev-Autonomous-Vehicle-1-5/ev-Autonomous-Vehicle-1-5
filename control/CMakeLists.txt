@@ -15,12 +15,15 @@ find_package(std_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(t870_msgs REQUIRED)
 find_package(erp42_msgs REQUIRED)
+find_package(ev_msgs REQUIRED)
 
 include_directories(include)
 
 # 라이브러리: Pure Pursuit 알고리즘 (순수 계산, 노드 비의존)
 add_library(pp_pursuit SHARED
-  src/pursuit/pursuit_algorithm.cpp
+  src/pursuit/path_query.cpp
+  src/pursuit/speed_planning.cpp
+  src/pursuit/steering.cpp
 )
 ament_target_dependencies(pp_pursuit
   visualization_msgs
@@ -38,6 +41,7 @@ ament_target_dependencies(pp_debug_viz
 # 컴포넌트: 메인 노드 (ComposableNode)
 add_library(pp_controller_component SHARED
   src/nodes/pure_pursuit_relative_node.cpp
+  src/nodes/command_publisher.cpp
 )
 target_link_libraries(pp_controller_component
   pp_pursuit
@@ -45,7 +49,7 @@ target_link_libraries(pp_controller_component
 )
 ament_target_dependencies(pp_controller_component
   rclcpp rclcpp_components
-  std_msgs visualization_msgs t870_msgs erp42_msgs
+  std_msgs visualization_msgs t870_msgs erp42_msgs ev_msgs
 )
 
 # 컴포넌트 등록 + standalone 실행 파일 자동 생성

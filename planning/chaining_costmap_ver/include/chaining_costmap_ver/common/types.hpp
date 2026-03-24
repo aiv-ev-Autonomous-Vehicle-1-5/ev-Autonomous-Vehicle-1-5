@@ -9,7 +9,7 @@
  *   - types/point_types.hpp   : Point2D, PointType, ChainedPoint, ChainPoint
  *   - types/costmap_types.hpp : CostmapResult
  *   - types/planner_types.hpp : PostprocessResult, PlannerState
- *   - types/chain_types.hpp   : ChainingGraph, BranchInfo, StopReason, NodeOwner,
+ *   - types/chain_types.hpp   : ChainingGraph, StopReason, NodeOwner,
  *                               SideResult, DirectionChainResult
  *
  * [파이프라인 전체 흐름과 타입 매핑]

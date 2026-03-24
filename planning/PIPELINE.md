@@ -20,7 +20,7 @@
  Stale Gate       Input Parse                  (lazy publish)
     │                │
     ▼                ▼
- Stage 2: DirectionChainer  ──→  left/right backbone + branches
+ Stage 2: DirectionChainer  ──→  left/right backbone
     │
     ▼
  Stage 3a: CostmapGenerator  ──→  2D Gaussian cost grid
@@ -201,7 +201,7 @@ if (publisher->get_subscription_count() > 0) {
 | 토픽 그룹 | 게이팅 조건 |
 |-----------|------------|
 | costmap, raw_path, obstacle_wall, curvature | lazy publish만 (구독자 있으면 항상 발행) |
-| left/right_chain, left/right_branches, seeds, local_goal | `publish_debug: true` 파라미터 **AND** lazy publish |
+| left/right_chain, seeds, local_goal | `publish_debug: true` 파라미터 **AND** lazy publish |
 
 #### `/planning/debug/costmap` — 2D Gaussian 코스트맵
 
@@ -240,23 +240,6 @@ nav_msgs/OccupancyGrid
 - 왼쪽/오른쪽 backbone 점들을 연결한 선
 - 체이닝 알고리즘이 올바르게 좌/우 경계를 분류했는지 확인용
 
-#### `/chaining/debug/left_branches`, `/chaining/debug/right_branches` — Branch 시각화
-
-- **Type**: `visualization_msgs::msg::MarkerArray`
-- **생성 Stage**: Stage 2 (DirectionChainer)
-- **게이팅**: `publish_debug: true` 필요
-- **RViz2 Display**: MarkerArray
-
-| 속성 | 왼쪽 | 오른쪽 |
-|------|------|--------|
-| 색상 | 연두색 (0.5, 1.0, 0.5) | 연분홍 (1.0, 0.5, 0.5) |
-| ns | `"left_branches"` | `"right_branches"` |
-| 마커 타입 | LINE_STRIP | LINE_STRIP |
-| 선 두께 | 3cm | 3cm |
-
-- 각 branch는 backbone의 parent 점에서 시작하여 미체이닝 노드로 연결됨
-- 매 프레임 DELETEALL로 이전 마커 제거
-
 #### `/chaining/debug/seeds` — 시드/골 마커
 
 - **Type**: `visualization_msgs::msg::MarkerArray`
@@ -270,7 +253,7 @@ nav_msgs/OccupancyGrid
 | 오른쪽 seed | 빨강 (1,0,0) | backbone.front() | SPHERE 직경 15cm |
 | 모든 goal | 파랑 (0,0,1) | backbone.back() | SPHERE 직경 15cm |
 
-- seed: 체이닝 시작점 (ego에서 가장 가까운 전방 포인트)
+- seed: 체이닝 시작점 (2-pass bbox 우선: Pass 1 — seed_bbox_max_dist 이내 가장 가까운 bbox, Pass 2 — bbox 없으면 bbox+lane 전체에서 가장 가까운 점)
 - goal: backbone 끝점 (체이닝이 도달한 가장 먼 점)
 
 #### `/planning/debug/local_goal` — A* 목표점
@@ -380,8 +363,7 @@ ros2 topic echo /planning/path --field poses --once | grep -c "position:"
 | 2 | Graph Building | k-NN + 거리(G1) + 측면(G3) 게이트로 무방향 그래프 생성 |
 | 3 | Component Extraction | 각 seed에서 BFS로 연결 컴포넌트 추출 |
 | 4 | Backbone Extraction | Greedy 체이닝: 비용 함수 w'(i,j) 최소화 |
-| 5 | Branch Extraction | 미체이닝 노드 → 가장 가까운 backbone 노드로 BFS 연결 |
-| 6 | Resampling | resample_ds 간격으로 선형 보간 |
+| 5 | Resampling | resample_ds 간격으로 선형 보간 |
 
 **비용 함수:**
 ```
@@ -448,7 +430,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 ### Stage 7: Publish
 - Core 토픽 항상 발행
 - Debug 토픽 중 costmap/raw_path/obstacle_wall/curvature는 항상 lazy publish
-- Debug 토픽 중 chainer 관련 (chains/branches/seeds/local_goal + chain stats 로그)은 `publish_debug` 파라미터가 true일 때만 발행
+- Debug 토픽 중 chainer 관련 (chains/seeds/local_goal + chain stats 로그)은 `publish_debug` 파라미터가 true일 때만 발행
 
 ---
 
@@ -479,7 +461,6 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 | γ (gamma) | 0.6 | — | 측면 편차 가중치 |
 | δ (delta) | 0.2 | — | 콘 크기 변화 가중치 |
 | λ_side (lambda_side) | 0.5 | — | 좌우 교차 패널티 |
-| max_branch_len | 40 | — | 최대 브랜치 길이 |
 | max_chain_len | 100 | — | 최대 backbone 길이 |
 | resample_ds | 0.1 | m | 체인 리샘플 간격 |
 | publish_debug | true | — | chainer 디버그 마커 + 체인 통계 로그 발행 여부 |
@@ -548,7 +529,7 @@ C_side = 중앙선 교차 패널티       (좌우 비대칭)
 
 | 레벨 | 메시지 패턴 | 주기 | 출처 | 설명 |
 |------|------------|------|------|------|
-| INFO | `chain: L_comp=N L_bb=N L_br=N  R_comp=N R_bb=N R_br=N` | 2초 | on_timer() | 체이닝 결과 요약. L/R=좌/우, comp=component 점 수, bb=backbone 점 수, br=branch 개수 |
+| INFO | `chain: L_comp=N L_bb=N  R_comp=N R_bb=N` | 2초 | on_timer() | 체이닝 결과 요약. L/R=좌/우, comp=component 점 수, bb=backbone 점 수 |
 | INFO | `[LEFT] pre-resample: total=N  cones=N  lanes=N` | 매 호출 | direction_chainer.cpp | 왼쪽 component의 리샘플 전 포인트 통계 |
 | INFO | `[RIGHT] pre-resample: total=N  cones=N  lanes=N` | 매 호출 | direction_chainer.cpp | 오른쪽 component의 리샘플 전 포인트 통계 |
 

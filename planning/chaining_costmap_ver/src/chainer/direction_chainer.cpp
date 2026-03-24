@@ -8,7 +8,6 @@
  *   - graph_builder.cpp:      build_graph()
  *   - backbone_extractor.cpp: extract_backbone(), chain_one_direction(),
  *                             compute_cost(), compute_cost_prime()
- *   - branch_extractor.cpp:   extract_branches()
  *   - chain_resampler.cpp:    resample_component()
  *
  * [파이프라인 요약]
@@ -19,9 +18,7 @@
  *   2.5단계: 교차 판정 — owner[left_seed] == RIGHT_BACKBONE → right_crossed_left
  *           교차 플래그는 DirectionChainResult에 저장되어 GoalCalculator에서
  *           backbone 중간점 폴백에 사용된다.
- *   3단계: extract_branches(left)  → LEFT_BRANCH 라벨
- *   4단계: extract_branches(right) → RIGHT_BRANCH 라벨
- *   5단계: resample_component() × 2
+ *   3단계: resample_component() × 2
  */
 #include "chaining_costmap_ver/chainer/direction_chainer.hpp"
 
@@ -89,21 +86,7 @@ DirectionChainResult DirectionChainer::chain(
     result.right_crossed_left = true;
   }
 
-  // 3단계: Left Branch 확정
-  std::vector<BranchInfo> left_branches;
-  if (!left_backbone_ids.empty()) {
-    left_branches = extract_branches(
-      filtered, left_backbone_ids, owner, NodeOwner::LEFT_BRANCH, cp);
-  }
-
-  // 4단계: Right Branch 확정
-  std::vector<BranchInfo> right_branches;
-  if (!right_backbone_ids.empty()) {
-    right_branches = extract_branches(
-      filtered, right_backbone_ids, owner, NodeOwner::RIGHT_BRANCH, cp);
-  }
-
-  // 5단계: 좌/우 각각 Resample + SideResult 구성
+  // 3단계: 좌/우 각각 Resample + SideResult 구성
   if (!left_backbone_ids.empty()) {
     result.left.seed_idx = left_seed;
     result.left.goal_idx = left_backbone_ids.back();
@@ -113,9 +96,8 @@ DirectionChainResult DirectionChainer::chain(
     for (int idx : left_backbone_ids) {
       result.left.backbone.push_back(filtered[idx]);
     }
-    result.left.branches = std::move(left_branches);
     result.left.component = resample_component(
-      filtered, left_backbone_ids, result.left.branches, cp.resample_ds);
+      filtered, left_backbone_ids, cp.resample_ds);
   }
 
   if (!right_backbone_ids.empty()) {
@@ -127,9 +109,8 @@ DirectionChainResult DirectionChainer::chain(
     for (int idx : right_backbone_ids) {
       result.right.backbone.push_back(filtered[idx]);
     }
-    result.right.branches = std::move(right_branches);
     result.right.component = resample_component(
-      filtered, right_backbone_ids, result.right.branches, cp.resample_ds);
+      filtered, right_backbone_ids, cp.resample_ds);
   }
 
   // unchained 포인트 수집

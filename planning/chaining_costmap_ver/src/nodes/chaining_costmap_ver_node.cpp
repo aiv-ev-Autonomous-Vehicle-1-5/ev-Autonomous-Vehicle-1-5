@@ -14,7 +14,7 @@
  *    Stage 0: Stale Gate — perception 데이터 타임아웃 검사
  *    Stage 1: Input Parse — bbox/차선 ROS 메시지 → 단일 ChainPoint 벡터
  *             (input_parser.hpp의 parse_input() 사용)
- *    Stage 2: DirectionChainer — Component→Backbone→Branch + 리샘플
+ *    Stage 2: DirectionChainer — Component→Backbone + 리샘플
  *    Stage 3: Costmap + A* — 가우시안 코스트맵 생성 + A* 경로 탐색
  *             (goal_calculator.hpp의 calculate_goal() 사용)
  *    Stage 5: Postprocess — prune → smooth → curvature_clamp → resample → yaw
@@ -97,10 +97,6 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/left_chain", qos_dbg);
   pub_dbg_right_chain_ = create_publisher<nav_msgs::msg::Path>(
     "/planning/debug/right_chain", qos_dbg);
-  pub_dbg_left_branches_ = create_publisher<visualization_msgs::msg::MarkerArray>(
-    "/chaining/debug/left_branches", qos_dbg);
-  pub_dbg_right_branches_ = create_publisher<visualization_msgs::msg::MarkerArray>(
-    "/chaining/debug/right_branches", qos_dbg);
   pub_dbg_seeds_ = create_publisher<visualization_msgs::msg::MarkerArray>(
     "/chaining/debug/seeds", qos_dbg);
   pub_dbg_local_goal_ = create_publisher<visualization_msgs::msg::MarkerArray>(
@@ -111,6 +107,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/curvature", qos_dbg);
   pub_dbg_lane_points_ = create_publisher<visualization_msgs::msg::MarkerArray>(
     "/planning/debug/lane_points", qos_dbg);
+  pub_dbg_center_line_ = create_publisher<visualization_msgs::msg::Marker>(
+    "/planning/debug/center_line", qos_dbg);
 
   // ── 10Hz 타이머 ──
   timer_ = create_wall_timer(
@@ -203,7 +201,7 @@ void LCPlannerNode::on_timer()
   auto costmap = costmap_generator_.generate(
     left_chained, right_chained, unchained_chained, params_);
 
-  // 3b-2. Entry walls
+  // 3b-2. Entry walls (중앙선 유인보다 먼저 적용 — 중앙선이 마지막에 비용을 빼야 override되지 않음)
   if (costmap.valid &&
       !dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
     Point2D left_seed = {
@@ -213,6 +211,39 @@ void LCPlannerNode::on_timer()
       dc_result.right.backbone.front().x,
       dc_result.right.backbone.front().y};
     CostmapGenerator::apply_entry_walls(costmap, left_seed, right_seed, params_);
+  }
+
+  // 3b-3. 중앙선 유인 비용 적용 (가장 마지막에 적용하여 다른 비용이 덮어쓰지 못하게 함)
+  std::vector<Point2D> center_line;
+  if (costmap.valid) {
+    center_line = CostmapGenerator::apply_center_attraction(
+      costmap, left_chained, right_chained, params_);
+  }
+
+  // 중앙선 디버그 발행 (POINTS 마커)
+  if (pub_dbg_center_line_->get_subscription_count() > 0 && !center_line.empty()) {
+    visualization_msgs::msg::Marker m;
+    m.header.stamp = stamp;
+    m.header.frame_id = frame_id;
+    m.ns = "center_line";
+    m.id = 0;
+    m.type = visualization_msgs::msg::Marker::POINTS;
+    m.action = visualization_msgs::msg::Marker::ADD;
+    m.scale.x = 0.08;
+    m.scale.y = 0.08;
+    m.color.r = 1.0f;
+    m.color.g = 1.0f;
+    m.color.b = 0.0f;
+    m.color.a = 1.0f;
+    m.points.reserve(center_line.size());
+    for (const auto & pt : center_line) {
+      geometry_msgs::msg::Point p;
+      p.x = pt.x;
+      p.y = pt.y;
+      p.z = 0.0;
+      m.points.push_back(p);
+    }
+    pub_dbg_center_line_->publish(m);
   }
 
   // 3c. Goal 계산 (goal_calculator.hpp)
@@ -335,7 +366,7 @@ void LCPlannerNode::on_timer()
                        "pruned_path", 1.0f, 1.0f, 0.0f, 1.0f, 0.10)));
   }
 
-  // ── Debug: chainer 시각화 (backbone, branches, seeds, local_goal) ──
+  // ── Debug: chainer 시각화 (backbone, seeds, local_goal) ──
   if (params_.chainer.publish_debug) {
 
     // left backbone (Path)
@@ -356,24 +387,6 @@ void LCPlannerNode::on_timer()
         right_pts.push_back(p.to_point2d());
       pub_dbg_right_chain_->publish(std::make_unique<nav_msgs::msg::Path>(
         to_path_msg(right_pts, frame_id, stamp)));
-    }
-
-    // left branches (debug_publisher.hpp)
-    if (pub_dbg_left_branches_->get_subscription_count() > 0) {
-      auto ma = make_branch_markers(
-        dc_result.left.branches, dc_result.left.backbone,
-        0.5f, 1.0f, 0.5f, "left_branches", frame_id, stamp);
-      pub_dbg_left_branches_->publish(
-        std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
-    }
-
-    // right branches (debug_publisher.hpp)
-    if (pub_dbg_right_branches_->get_subscription_count() > 0) {
-      auto ma = make_branch_markers(
-        dc_result.right.branches, dc_result.right.backbone,
-        1.0f, 0.5f, 0.5f, "right_branches", frame_id, stamp);
-      pub_dbg_right_branches_->publish(
-        std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
     }
 
     // seeds & goals (debug_publisher.hpp)

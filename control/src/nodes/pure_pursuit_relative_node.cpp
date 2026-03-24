@@ -19,7 +19,9 @@
 // ============================================================================
 
 #include "pp_controller_cpp/nodes/pure_pursuit_relative_node.hpp"
-#include "pp_controller_cpp/pursuit/pursuit_algorithm.hpp"
+#include "pp_controller_cpp/pursuit/path_query.hpp"
+#include "pp_controller_cpp/pursuit/speed_planning.hpp"
+#include "pp_controller_cpp/pursuit/steering.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -36,8 +38,13 @@ namespace pp_controller_cpp
 PurePursuitRelativeNode::PurePursuitRelativeNode(
   const rclcpp::NodeOptions & options)
   : Node("pure_pursuit_relative_node", options)
+  , cmd_pub_(
+      this->create_publisher<t870_msgs::msg::ControlCommand>(
+        "/t870/control_command", rclcpp::QoS(1).best_effort()),
+      this->create_publisher<erp42_msgs::msg::ControlCommand>(
+        "/erp42/control_command", rclcpp::QoS(10))
+    )
   , debug_viz_(
-      // 디버그 퍼블리셔를 미리 생성하여 DebugVisualizer에 주입
       this->create_publisher<visualization_msgs::msg::Marker>(
         "/pp_debug/lookahead_point", rclcpp::QoS(1).best_effort()),
       this->create_publisher<visualization_msgs::msg::Marker>(
@@ -69,21 +76,20 @@ PurePursuitRelativeNode::PurePursuitRelativeNode(
     }
   );
 
-  // 3. Publisher 생성
-
-  // [Publisher] /t870/control_command — 실차 제어 명령
-  cmd_pub_ = this->create_publisher<t870_msgs::msg::ControlCommand>(
-    params_.topics.cmd_topic,
-    rclcpp::QoS(1).best_effort()
+  // [Subscriber] /perception/bboxes (ev_msgs/BBoxArray) — CREEP 모드용 장애물 판정
+  bbox_sub_ = this->create_subscription<ev_msgs::msg::BBoxArray>(
+    "/perception/bboxes",
+    rclcpp::QoS(10).best_effort(),
+    [this](ev_msgs::msg::BBoxArray::SharedPtr msg) {
+      latest_bboxes_ = msg;
+    }
   );
 
-  // [Publisher] /erp42/control_command — Gazebo 시뮬레이션용 (lazy)
-  cmd_erp42_pub_ = this->create_publisher<erp42_msgs::msg::ControlCommand>(
-    "/erp42/control_command",
-    rclcpp::QoS(10)
-  );
+  // CREEP ROI 디버그 퍼블리셔
+  pub_dbg_creep_roi_ = this->create_publisher<visualization_msgs::msg::Marker>(
+    "/pp_debug/creep_roi", rclcpp::QoS(1).best_effort());
 
-  // 4. 제어 루프 타이머 (50Hz = 20ms)
+  // 3. 제어 루프 타이머 (50Hz = 20ms)
   timer_ = this->create_wall_timer(
     std::chrono::milliseconds(20),
     std::bind(&PurePursuitRelativeNode::on_timer, this)
@@ -149,22 +155,116 @@ void PurePursuitRelativeNode::publish_emergency_decel(double dt)
     params_.speed.accel_rate,
     params_.safety.emergency_decel_rate);
   last_cmd_speed_ = v_cmd;
+  cmd_pub_.publish(v_cmd, 0.0);
+  last_control_time_ = this->now();
+}
 
-  t870_msgs::msg::ControlCommand cmd;
-  cmd.speed = v_cmd;
-  cmd.steering = 0.0;
-  cmd_pub_->publish(cmd);
+// ===========================================================================
+// compute_filtered_remaining: 경로 잔여 길이 이동 평균 필터
+// ===========================================================================
+// 이동 평균 필터 + 급락 확정 로직 (buffer 동결 방식)
+//
+// [동작]
+//   1) buffer의 기존 avg 계산 (현재 raw는 아직 넣지 않음)
+//   2) raw < avg × path_drop_ratio → 급락 의심
+//      - pending_raws_에 보류, buffer 동결, avg 반환
+//      - N프레임 연속 시 확정 → pending 전부 buffer push, raw 반환
+//   3) 정상 → 밀린 pending + raw를 buffer에 push, avg 반환
+//
+// [설계 의도]
+//   단발 노이즈에 급브레이크 방지 (buffer 동결로 avg 오염 없음)
+//   진짜 급정지는 60ms(3프레임) 지연 후 즉시 반영
+// ===========================================================================
+double PurePursuitRelativeNode::compute_filtered_remaining(double raw_remaining)
+{
+  const auto & sp = params_.speed;
 
-  // Gazebo 시뮬레이션용 ERP42 명령 (구독자가 있을 때만)
-  if (cmd_erp42_pub_->get_subscription_count() > 0) {
-    erp42_msgs::msg::ControlCommand erp_cmd;
-    erp_cmd.speed = v_cmd;
-    erp_cmd.steering = 0.0;
-    erp_cmd.brake = (v_cmd < 1e-3) ? 75 : 0;
-    cmd_erp42_pub_->publish(erp_cmd);
+  // 초기화: buffer가 비어있으면 raw를 넣고 반환
+  if (path_length_buffer_.empty()) {
+    path_length_buffer_.push_back(raw_remaining);
+    return raw_remaining;
   }
 
-  last_control_time_ = this->now();
+  // 기존 buffer로 avg 계산 (raw는 아직 넣지 않음)
+  double avg = 0.0;
+  for (const auto & l : path_length_buffer_) avg += l;
+  avg /= static_cast<double>(path_length_buffer_.size());
+
+  const double drop_threshold = avg * sp.path_drop_ratio;
+
+  if (raw_remaining < drop_threshold) {
+    // ── 급락 의심: buffer 동결, raw를 pending에 보류 ──
+    pending_raws_.push_back(raw_remaining);
+    ++path_drop_counter_;
+
+    if (path_drop_counter_ >= sp.path_drop_confirm_count) {
+      // 확정: pending 전부 buffer에 push
+      for (const double r : pending_raws_) {
+        path_length_buffer_.push_back(r);
+      }
+      while (static_cast<int>(path_length_buffer_.size()) > sp.path_length_filter_size) {
+        path_length_buffer_.pop_front();
+      }
+      pending_raws_.clear();
+      path_drop_counter_ = 0;
+      return raw_remaining;
+    }
+
+    // 미확정: 동결된 avg 반환
+    return avg;
+  }
+
+  // ── 정상: 밀린 pending + 현재 raw를 buffer에 push ──
+  for (const double r : pending_raws_) {
+    path_length_buffer_.push_back(r);
+  }
+  pending_raws_.clear();
+  path_drop_counter_ = 0;
+
+  path_length_buffer_.push_back(raw_remaining);
+  while (static_cast<int>(path_length_buffer_.size()) > sp.path_length_filter_size) {
+    path_length_buffer_.pop_front();
+  }
+
+  // 새 avg 계산하여 반환
+  double new_avg = 0.0;
+  for (const auto & l : path_length_buffer_) new_avg += l;
+  new_avg /= static_cast<double>(path_length_buffer_.size());
+  return new_avg;
+}
+
+// ===========================================================================
+// is_forward_clear: 전방 ROI에 bbox 장애물이 없는지 판단
+// ===========================================================================
+// CREEP 모드 진입 조건: 전방 (0 ~ roi_x) × (±roi_y) 영역에 bbox가 없으면 true
+// ===========================================================================
+bool PurePursuitRelativeNode::is_forward_clear() const
+{
+  if (!latest_bboxes_) return false;  // bbox 데이터 없으면 안전하게 false
+
+  const auto & cp = params_.creep;
+  for (const auto & b : latest_bboxes_->bboxes) {
+    if (b.position.x > 0.0 && b.position.x < cp.roi_x &&
+        b.position.y > -cp.roi_y && b.position.y < cp.roi_y)
+    {
+      return false;  // ROI 내 장애물 있음
+    }
+  }
+  return true;
+}
+
+// ===========================================================================
+// is_finish_line: 결승선 판정
+// ===========================================================================
+// bbox가 거의 없는데 planner가 FAIL → 차선만으로 둘러싸인 결승선 상황
+// bbox_count_threshold 이하이면 "장애물 없음" → 결승선 후보
+// ===========================================================================
+bool PurePursuitRelativeNode::is_finish_line() const
+{
+  if (!latest_bboxes_) return false;
+
+  const int bbox_count = static_cast<int>(latest_bboxes_->bboxes.size());
+  return bbox_count <= params_.creep.bbox_count_threshold;
 }
 
 // ===========================================================================
@@ -181,11 +281,34 @@ void PurePursuitRelativeNode::publish_emergency_decel(double dt)
 void PurePursuitRelativeNode::on_timer()
 {
   const auto now = this->now();
-  double control_dt = 0.05;
+  double control_dt = 0.02;
   if (last_control_time_.nanoseconds() > 0) {
     control_dt = std::clamp((now - last_control_time_).seconds(), 1e-3, 0.2);
   }
   last_control_time_ = now;
+
+  // ----- CREEP ROI 디버그 마커 (lazy, 항상 발행) -----
+  if (pub_dbg_creep_roi_->get_subscription_count() > 0) {
+    const auto & cp = params_.creep;
+    visualization_msgs::msg::Marker m;
+    m.header.stamp = now;
+    m.header.frame_id = "base_link";
+    m.ns = "creep_roi";
+    m.id = 0;
+    m.type = visualization_msgs::msg::Marker::LINE_STRIP;
+    m.action = visualization_msgs::msg::Marker::ADD;
+    m.scale.x = 0.03;
+    m.color.r = 1.0f; m.color.g = 0.5f; m.color.b = 0.0f; m.color.a = 0.8f;
+    auto pt = [](double x, double y) {
+      geometry_msgs::msg::Point p; p.x = x; p.y = y; p.z = 0.0; return p;
+    };
+    m.points.push_back(pt(0.0, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x,  cp.roi_y));
+    m.points.push_back(pt(0.0,  cp.roi_y));
+    m.points.push_back(pt(0.0, -cp.roi_y));
+    pub_dbg_creep_roi_->publish(m);
+  }
 
   // ----- 정지 조건 판정 + 연속 카운터 -----
   bool should_stop = false;
@@ -195,7 +318,8 @@ void PurePursuitRelativeNode::on_timer()
     should_stop = true;
     stop_reason = "Path is missing or stale";
   } else if (latest_status_ == "FAIL - not enough seeds" ||
-             latest_status_ == "FAIL - no valid path")
+             latest_status_ == "FAIL - no valid path" ||
+             latest_status_ == "WARNING - too short valid path")
   {
     should_stop = true;
     stop_reason = latest_status_;
@@ -204,9 +328,30 @@ void PurePursuitRelativeNode::on_timer()
   if (should_stop) {
     ++fail_counter_;
     if (fail_counter_ >= params_.safety.emergency_stop_count) {
+      // CREEP: 전방에 장애물 없으면 저속 직진
+      // 결승선 감지(bbox 거의 없음) 시 부스트 속도 사용
+      if (is_forward_clear()) {
+        const bool finish = is_finish_line();
+        const double target_speed = finish
+          ? params_.creep.finish_speed
+          : params_.creep.speed;
+        const double v_cmd = pursuit::rate_limit_speed(
+          target_speed, last_cmd_speed_, control_dt,
+          params_.speed.accel_rate, params_.speed.decel_rate);
+        last_cmd_speed_ = v_cmd;
+        cmd_pub_.publish(v_cmd, 0.0);
+        last_control_time_ = this->now();
+        RCLCPP_WARN_THROTTLE(
+          this->get_logger(), *this->get_clock(), 1000,
+          "[PP Relative] CREEP%s — forward clear, v_cmd=%.2f",
+          finish ? " FINISH" : "", v_cmd);
+        return;
+      }
+
+      // FAIL: 전방에 장애물 있음 → 긴급 감속
       RCLCPP_WARN_THROTTLE(
         this->get_logger(), *this->get_clock(), 1000,
-        "[PP Relative] %s (%d consecutive). Emergency decel.",
+        "[PP Relative] FAIL — %s, forward blocked (%d consecutive). Emergency decel.",
         stop_reason.c_str(), fail_counter_);
       publish_emergency_decel(control_dt);
     }
@@ -278,18 +423,8 @@ void PurePursuitRelativeNode::on_timer()
     effective_abs_kappa, p.speed.min, p.speed.max, p.speed.lateral_accel_limit);
 
   // b) 제동거리 기반 목표 속도 (경로 길이 이동 평균 필터)
-  //    안전 우선: 필터 평균과 현재 raw 값 중 작은 값을 사용
-  //    → 경로가 갑자기 짧아지면 즉시 반영 (가속 방지)
-  //    → 경로가 갑자기 길어지면 서서히 반영 (노이즈 필터링)
   const double raw_remaining = pursuit::compute_remaining_length(pts, nearest_i);
-  path_length_buffer_.push_back(raw_remaining);
-  while (static_cast<int>(path_length_buffer_.size()) > p.speed.path_length_filter_size) {
-    path_length_buffer_.pop_front();
-  }
-  double avg_remaining = 0.0;
-  for (const auto & l : path_length_buffer_) avg_remaining += l;
-  avg_remaining /= static_cast<double>(path_length_buffer_.size());
-  const double filtered_remaining = std::min(raw_remaining, avg_remaining);
+  const double filtered_remaining = compute_filtered_remaining(raw_remaining);
 
   // 남은 거리에서 정지 여유거리를 빼서, stop_margin 지점에서 속도 0으로 정지
   const double effective_remaining = std::max(0.0, filtered_remaining - p.speed.stop_margin);
@@ -302,20 +437,8 @@ void PurePursuitRelativeNode::on_timer()
     v_target, last_cmd_speed_, control_dt, p.speed.accel_rate, p.speed.decel_rate);
   last_cmd_speed_ = v_cmd;
 
-  // ----- T870 제어 명령 발행 -----
-  t870_msgs::msg::ControlCommand cmd;
-  cmd.speed = v_cmd;
-  cmd.steering = delta;
-  cmd_pub_->publish(cmd);
-
-  // ----- ERP42 시뮬레이션 명령 (lazy) -----
-  if (cmd_erp42_pub_->get_subscription_count() > 0) {
-    erp42_msgs::msg::ControlCommand erp_cmd;
-    erp_cmd.speed = v_cmd;
-    erp_cmd.steering = delta;
-    erp_cmd.brake = (v_cmd < 1e-3) ? 75 : 0;
-    cmd_erp42_pub_->publish(erp_cmd);
-  }
+  // ----- 제어 명령 발행 (T870 + ERP42) -----
+  cmd_pub_.publish(v_cmd, delta);
 
   // ----- 디버깅 로그 (500ms마다 throttle) -----
   RCLCPP_INFO_THROTTLE(

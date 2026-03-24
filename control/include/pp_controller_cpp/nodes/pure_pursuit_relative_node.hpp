@@ -22,7 +22,10 @@
 // [모듈 구조]
 //   이 노드는 다음 모듈들을 조합하여 동작한다:
 //     - common/params.hpp          : 파라미터 관리
-//     - pursuit/pursuit_algorithm  : Pure Pursuit 수학 계산
+//     - pursuit/path_query         : 경로 분석 (최근접, 목표점, 잔여거리, 곡률)
+//     - pursuit/speed_planning     : 속도 계획 (lookahead, 속도, rate limit)
+//     - pursuit/steering           : 조향각 계산
+//     - nodes/command_publisher    : T870/ERP42 이중 명령 발행
 //     - debug/debug_visualizer     : RViz2 시각화
 // ============================================================================
 
@@ -35,11 +38,11 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "visualization_msgs/msg/marker.hpp"
-#include "t870_msgs/msg/control_command.hpp"
-#include "erp42_msgs/msg/control_command.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "ev_msgs/msg/b_box_array.hpp"
 
 #include "pp_controller_cpp/common/params.hpp"
+#include "pp_controller_cpp/nodes/command_publisher.hpp"
 #include "pp_controller_cpp/debug/debug_visualizer.hpp"
 
 namespace pp_controller_cpp
@@ -69,6 +72,15 @@ private:
   /// 정지 명령 발행 (speed=0, steering=0) — 즉시 정지 아닌 점진적 감속
   void publish_emergency_decel(double dt);
 
+  /// 경로 잔여 길이를 이동 평균 필터링 (drop 의심 시 buffer 동결, N프레임 확정 시 즉시 반영)
+  double compute_filtered_remaining(double raw_remaining);
+
+  /// 전방 ROI에 bbox 장애물이 없는지 판단 (CREEP 모드 조건)
+  bool is_forward_clear() const;
+
+  /// 결승선 판정: bbox가 거의 없는데 planner FAIL → 차선만으로 막힌 상황
+  bool is_finish_line() const;
+
   // ======================== 멤버 변수 ========================
 
   // --- 파라미터 ---
@@ -83,16 +95,22 @@ private:
   double last_cmd_speed_{0.0};                             // 직전 속도 명령 [m/s]
   int    fail_counter_{0};                                  // FAIL 연속 카운터
   std::deque<double> path_length_buffer_;                   // 경로 길이 이동 평균 버퍼
+  int path_drop_counter_{0};                                // 급락 연속 카운터
+  std::vector<double> pending_raws_;                        // drop 의심 중 보류된 raw 값들
+
+  // --- CREEP 상태 ---
+  ev_msgs::msg::BBoxArray::SharedPtr latest_bboxes_;       // 최신 bbox 데이터
 
   // --- ROS2 통신 객체 ---
   rclcpp::Subscription<visualization_msgs::msg::Marker>::SharedPtr path_sub_;
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr status_sub_;
-  rclcpp::Publisher<t870_msgs::msg::ControlCommand>::SharedPtr cmd_pub_;
-  rclcpp::Publisher<erp42_msgs::msg::ControlCommand>::SharedPtr cmd_erp42_pub_;
+  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr bbox_sub_;
+  CommandPublisher cmd_pub_;
   rclcpp::TimerBase::SharedPtr timer_;
 
   // --- 디버그 시각화 ---
   DebugVisualizer debug_viz_;
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_creep_roi_;  ///< CREEP ROI 영역 (lazy)
 };
 
 }  // namespace pp_controller_cpp

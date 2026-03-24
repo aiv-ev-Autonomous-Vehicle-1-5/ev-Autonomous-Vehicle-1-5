@@ -98,6 +98,12 @@ struct PlanningParams
     // origin_x = 0 이면 전방만 (0 ~ size_x)m 범위.
     // entry wall의 시작점 x좌표로도 사용됨 (costmap 하단).
     double origin_x = -4.0;
+
+    // ── 중앙선 유인 비용 ──
+    // 양쪽 backbone 중앙선을 따라 costmap 비용을 감소시켜 A*를 중앙으로 유도.
+    // cost >= bbox_cost_max인 장애물 셀은 건드리지 않는다.
+    double center_attract_max = 30.0;   ///< 중앙선 최대 비용 감소량
+    double center_attract_sigma = 0.5;  ///< [m] 중앙선 유인 가우시안 확산
   } costmap;
 
   // ============================================================
@@ -262,17 +268,18 @@ struct PlanningParams
   // ============================================================
   // Chainer — DirectionChainer v2 파라미터
   //
-  // Component → Backbone → Branch 기반 좌/우 차선 경계 체이닝.
+  // Component → Backbone 기반 좌/우 차선 경계 체이닝.
   //
   // ── 체이닝 개요 ──
   // 인식 결과(bbox, 차선 점)를 "좌측 경계"와 "우측 경계"로
   // 분류하고, 각 측면에서 일렬로 연결(chain)하는 알고리즘.
   //
   // 동작 순서:
-  //   1. Seed 선택 : 차량에 가장 가까운 좌/우 포인트를 시작점으로 선택
+  //   1. Seed 선택 : 2-pass bbox 우선 전략으로 좌/우 시작점 선택
+  //                  Pass 1: seed_bbox_max_dist 이내 bbox 중 가장 가까운 것
+  //                  Pass 2: bbox 없으면 bbox+lane 전체에서 가장 가까운 점
   //   2. Backbone  : seed에서 greedy kNN으로 전방 포인트를 하나씩 연결
-  //   3. Branch    : backbone에서 갈라지는 가지(분기)를 추적
-  //   4. 결과      : 좌/우 경계선 → Costmap에 전달
+  //   3. 결과      : 좌/우 경계선 → Costmap에 전달
   //
   // 비용함수: cost = alpha*d + beta*theta + gamma*lateral + delta*size_diff
   //   d       = 유클리드 거리
@@ -288,6 +295,12 @@ struct PlanningParams
     // 0.3m = 차량 중심에서 좌우 30cm 이내는 무시.
     // 줄이면 중앙 가까운 점도 seed 가능, 키우면 확실히 좌/우인 점만 사용.
     double side_seed_y = 0.3;           ///< [m] |y| < 이 값이면 seed 후보 제외
+
+    // [m] seed 선택 시 bbox 우선 탐색 최대 거리.
+    // Pass 1: 이 거리 이내의 bbox만 seed 후보로 탐색.
+    // Pass 1 실패 시 Pass 2: bbox+lane 전체에서 가장 가까운 점 선택 (기존 로직).
+    // d_max보다 넓게 잡아 chaining 범위 밖 bbox도 seed 후보로 허용.
+    double seed_bbox_max_dist = 3.0;    ///< [m] seed bbox 우선 탐색 최대 거리
 
     // ── kNN + 게이트 ──
     // [개] k-최근접 이웃(kNN) 탐색 시 후보 수.
@@ -344,12 +357,6 @@ struct PlanningParams
     // 0.5 = 같은 side면 비용에서 0.5만큼 감소 → 같은 편 포인트 선호.
     // 키우면 side 전환 억제, 줄이면 side 구분 약해짐.
     double lambda_side = 0.5;           ///< side preference 가중치
-
-    // ── Branch ──
-    // [개] 하나의 branch에서 최대로 연결할 포인트 수.
-    // branch가 너무 길어지면 잘못된 연결일 가능성 → 제한.
-    // 40 = 리샘플 간격 0.1m 기준 최대 4m 길이의 branch.
-    int max_branch_len = 40;            ///< branch 최대 길이 (포인트 수)
 
     // ── 종료/제한 ──
     // [개] backbone의 최대 포인트 수.
@@ -424,6 +431,8 @@ struct PlanningParams
     costmap.cost_threshold = p("costmap.cost_threshold", costmap.cost_threshold);
     costmap.entry_wall_ego_y  = p("costmap.entry_wall_ego_y",  costmap.entry_wall_ego_y);
     costmap.origin_x          = p("costmap.origin_x",          costmap.origin_x);
+    costmap.center_attract_max   = p("costmap.center_attract_max",   costmap.center_attract_max);
+    costmap.center_attract_sigma = p("costmap.center_attract_sigma", costmap.center_attract_sigma);
 
     // ── AStar 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.astar.*
@@ -461,8 +470,9 @@ struct PlanningParams
 
     // ── Chainer (v2 DirectionChainer) 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.chainer.*
-    chainer.side_seed_y       = p("chainer.side_seed_y",       chainer.side_seed_y);
-    chainer.k                 = p("chainer.k",                 chainer.k);
+    chainer.side_seed_y           = p("chainer.side_seed_y",           chainer.side_seed_y);
+    chainer.seed_bbox_max_dist    = p("chainer.seed_bbox_max_dist",    chainer.seed_bbox_max_dist);
+    chainer.k                     = p("chainer.k",                     chainer.k);
     chainer.d_max             = p("chainer.d_max",             chainer.d_max);
     chainer.forward_cone_deg  = p("chainer.forward_cone_deg",  chainer.forward_cone_deg);
     chainer.lateral_gate      = p("chainer.lateral_gate",      chainer.lateral_gate);
@@ -471,7 +481,6 @@ struct PlanningParams
     chainer.gamma             = p("chainer.gamma",             chainer.gamma);
     chainer.delta             = p("chainer.delta",             chainer.delta);
     chainer.lambda_side       = p("chainer.lambda_side",       chainer.lambda_side);
-    chainer.max_branch_len    = p("chainer.max_branch_len",    chainer.max_branch_len);
     chainer.max_chain_len     = p("chainer.max_chain_len",     chainer.max_chain_len);
     chainer.resample_ds       = p("chainer.resample_ds",       chainer.resample_ds);
     chainer.publish_debug     = p("chainer.publish_debug",     chainer.publish_debug);

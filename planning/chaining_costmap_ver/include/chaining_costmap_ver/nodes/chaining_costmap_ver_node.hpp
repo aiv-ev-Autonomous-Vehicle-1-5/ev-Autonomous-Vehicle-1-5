@@ -29,8 +29,6 @@
  *   Debug (lazy publishing — 구독자가 있을 때만 발행):
  *     - /planning/debug/left_chain   : 왼쪽 backbone 체인 (Path)
  *     - /planning/debug/right_chain  : 오른쪽 backbone 체인 (Path)
- *     - /chaining/debug/left_branches  : 왼쪽 branch 시각화 (MarkerArray)
- *     - /chaining/debug/right_branches : 오른쪽 branch 시각화 (MarkerArray)
  *     - /chaining/debug/seeds          : 체이닝 시드/골 마커 (MarkerArray)
  *
  * ──────────────────────────────────────────────────────────────
@@ -48,9 +46,8 @@
  *       - 좌/우 구분은 여기서 하지 않는다 (Stage 2에서 seed 기반으로 결정)
  *
  *   Stage 2: DirectionChainer
- *     → Component 분리 → Backbone 생성 → Branch 분기
- *       연결된 포인트 그룹(component)을 찾고, 주 경로(backbone)와
- *       갈래(branch)로 분리한다.
+ *     → Component 분리 → Backbone 생성
+ *       연결된 포인트 그룹(component)을 찾고, 주 경로(backbone)를 추출한다.
  *
  *   Stage 3: Costmap Generation + A* Path Planning (코스트맵 생성 + A* 경로 탐색)
  *     → 좌/우 체인 포인트로 가우시안 코스트맵을 생성하고,
@@ -68,7 +65,7 @@
  *
  *   Stage 7: Publish (발행) → nodes/debug_publisher.hpp
  *     → Core: 최종 경로 + 플래너 상태
- *     → Debug: costmap, raw_path, chains, branches, seeds
+ *     → Debug: costmap, raw_path, chains, seeds
  *       (디버그 토픽은 구독자가 있을 때만 발행 → 연산 절약)
  *
  * ──────────────────────────────────────────────────────────────
@@ -194,13 +191,12 @@ private:
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_pruned_path_;          ///< prune 직후 경로 (POINTS 마커)
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_left_chain_;           ///< 왼쪽 backbone 체인
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_right_chain_;          ///< 오른쪽 backbone 체인
-  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_left_branches_;   ///< 왼쪽 branch 시각화
-  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_right_branches_;  ///< 오른쪽 branch 시각화
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_seeds_;            ///< 시드/골 마커 시각화
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_local_goal_;      ///< A* goal 시각화
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_obstacle_wall_;  ///< obstacle_cost 이상 셀 (빨간색)
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_curvature_;     ///< 곡률 초과 지점 (노란색 구)
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_lane_points_;  ///< 수신된 lane points 시각화 (분홍색 구)
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_center_line_;     ///< 중앙선 포인트 시각화
 
   // ── 타이머 ──
   // 100ms(10Hz) 주기의 wall timer — on_timer() 콜백을 호출

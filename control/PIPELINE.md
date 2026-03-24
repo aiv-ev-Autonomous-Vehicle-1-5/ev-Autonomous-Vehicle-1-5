@@ -2,10 +2,191 @@
 
 ## 개요
 
-T870 차량을 위한 **상대좌표 Pure Pursuit 경로 추종 제어 노드**.
+T870 자율주행 차량용 상대좌표 Pure Pursuit 경로추종 제어기.
+ROS 2 Humble, C++17, Component architecture.
+
 Planning 모듈이 생성한 base_link 기준 상대좌표 경로(Marker POINTS)를 입력받아,
 기하학적 경로 추종 알고리즘(Pure Pursuit)으로 **속도 적응형 lookahead**, **곡률 기반 속도 제어**, **rate-limited 가감속**을 적용하여
 조향각과 속도를 계산하고 T870 실차 및 ERP42 Gazebo 시뮬레이터에 전달한다.
+
+- **Node**: `pure_pursuit_relative_node` (50Hz wall timer)
+
+---
+
+## 제어 파이프라인
+
+```
+on_timer() — 50Hz (20ms)
+│
+│  control_dt = clamp(now - last_control_time, 1ms, 200ms)
+│  첫 콜백은 0.02s(50Hz) 기본값 사용
+│
+├── ⓪ CREEP ROI 디버그 마커 발행 (lazy)
+│     구독자가 있을 때만 /pp_debug/creep_roi 발행
+│     ROI 범위: 전방 (0 ~ roi_x) × (±roi_y) 직사각형
+│
+├── ① 정지 조건 판정 + Fail Counter
+│     [조건 검사]
+│       a) path_fresh() 실패 → 경로 미수신 또는 path_timeout_sec(0.5s) 초과
+│       b) latest_status_ == "FAIL - not enough seeds"
+│       c) latest_status_ == "FAIL - no valid path"
+│       d) latest_status_ == "WARNING - too short valid path"
+│       → 하나라도 해당 시 should_stop = true
+│
+│     [카운터 로직]
+│       should_stop == true:
+│         fail_counter_++ (1회 증가)
+│         ├─ counter < emergency_stop_count(40) → 이전 명령 유지, return
+│         │   (단발성 노이즈 필터링: 40회 × 20ms = 800ms 동안 마지막 정상 속도 유지)
+│         │
+│         └─ counter ≥ 40:
+│             ├─ is_forward_clear() == true → CREEP 모드
+│             │     전방 ROI (roi_x × roi_y) 내 bbox 없음
+│             │     v_cmd = rate_limit(creep_speed, last_cmd, dt, accel, decel)
+│             │     조향 0°로 직진, return
+│             │
+│             └─ is_forward_clear() == false → 긴급 감속
+│                   publish_emergency_decel(dt)
+│                   v_cmd = rate_limit(0.0, last_cmd, dt, accel, emergency_decel_rate)
+│                   목표속도 0으로 매 콜백마다 emergency_decel_rate로 감속
+│                   조향 0°, return
+│
+│       should_stop == false:
+│         fail_counter_ = 0 (즉시 리셋)
+│         → 이하 정상 파이프라인 진행
+│
+├── ② 최근접점 탐색 (find_nearest_index)
+│     경로 전체 점에서 차량 원점(0,0)까지 유클리드 거리가 최소인 점의 인덱스 반환
+│     nearest_i = argmin(sqrt(pts[i].x² + pts[i].y²))
+│
+├── ③ 전방 곡률 분석 (compute_preview_curvature)
+│     nearest_i부터 경로를 따라 arc length 누적, preview_distance(2.5m)까지 구간 결정
+│     구간 내 연속 3점(A,B,C)마다 Menger 곡률 계산:
+│       kappa = 2 × |cross(AB, BC)| / (|AB| × |BC| × |AC|)
+│     preview_kappa = 구간 내 최대 곡률
+│
+├── ④ 동적 Lookahead 거리 계산
+│     [preview 기반 목표 속도]
+│       preview_speed_target = sqrt(lateral_accel_limit / preview_kappa)
+│       clamp(preview_speed_target, speed_min, speed_max)
+│       → 전방에 급커브가 보이면 목표 속도↓
+│
+│     [동적 lookahead]
+│       lookahead_cmd = clamp(
+│         lookahead_min + speed_gain × preview_speed_target,
+│         lookahead_min,
+│         lookahead_max)
+│       → 느려질수록 lookahead 짧게 = 커브 대응력 향상
+│       → 빨라질수록 lookahead 길게 = 직선 안정성 향상
+│           * 실제 차량 속도 명령에는 쓰이지 않습니다. 
+            * 속도 결정(⑧단계)에서는 v_curvature와 v_path_end만 사용합니다.
+
+즉 preview_speed_target의 역할은 **"전방 곡률이 크면 lookahead를 짧게 → 커브 대응력 향상"**이라는 간접적 속도 반영 용도입니다.
+├── ⑤ 타겟 포인트 계산 (compute_target_relative)
+│     nearest_i부터 경로를 따라 arc length 누적
+│     누적 거리 ≥ lookahead_cmd 되는 첫 번째 점을 목표로 선택
+│     경로 끝까지 못 찾으면 마지막 점을 fallback 사용
+│     tx, ty = 목표점 좌표 (base_link 기준)
+│     Ld_used = 차량 원점 → 목표점 직선 거리 (arc length 아님)
+│
+│     [실패 시] 목표점 계산 불가 → publish_emergency_decel(), return
+│
+├── ⑥ 안전 조건 확인
+│     a) Ld_used < 1e-3 → 목표점이 차량 위에 있음 (0 나누기 방지)
+│        → publish_emergency_decel(), return
+│     b) tx ≤ min_x_target → 목표점이 차량 뒤쪽 (비정상)
+│        → publish_emergency_decel(), return
+│
+├── ⑦ Pure Pursuit 조향각 계산
+│     곡률:  kappa_pp = 2 × ty / Ld_used²
+│       ty > 0 → kappa > 0 → 좌회전
+│       ty < 0 → kappa < 0 → 우회전
+│       ty ≈ 0 → kappa ≈ 0 → 직진
+│
+│     조향각: delta = atan(wheelbase × kappa_pp)
+│             delta = clamp(delta, -delta_max, +delta_max)
+│       delta_max = 0.3249 rad (≈18.6°) = 물리적 조향 한계
+│
+├── ⑧ 속도 결정 (3개 후보 중 최소값)
+│     [a) 곡률 기반 목표 속도]
+│       effective_kappa = max(|kappa_pp|, preview_kappa)
+│         현재 조향 곡률과 전방 preview 곡률 중 큰 값 사용
+│       v_curvature = sqrt(lateral_accel_limit(상수,not parameter) / effective_kappa)
+│       clamp(v_curvature, speed_min, speed_max)
+│
+│     [b) 제동거리 기반 목표 속도]
+│       raw_remaining = nearest_i부터 경로 끝까지 arc length 합산
+│       filtered_remaining = compute_filtered_remaining(raw_remaining)
+│         이동평균 윈도우 크기 = path_length_filter_size(20)
+│         급락 감지: raw < avg × path_drop_ratio(0.4) 시 buffer 동결
+│           - 의심 중: pending에 보류, avg 반환 (노이즈 무시)
+│           - N프레임(path_drop_confirm_count=3) 연속 확정 → raw 즉시 반영
+│           - 중간에 정상 복귀 → pending 전부 buffer에 반영, avg 반환
+│       effective_remaining = max(0, filtered_remaining - stop_margin)
+│         stop_margin(1.3m) 남기고 속도 0 도달 목표
+│       v_path_end = sqrt(2 × decel_rate × effective_remaining) 
+│       clamp(v_path_end, 0, speed_max)
+│
+│     [c) 최종 선택]
+│       v_target = min(v_curvature, v_path_end)
+│         v_curvature: 곡률이 클수록 낮아지는 횡가속도 제한 속도
+│         v_path_end:  경로 끝까지 남은 거리로부터 역산한 정지 가능 속도
+│
+├── ⑨ Rate Limiting 적용 (rate_limit_speed)
+│     v_prev = last_cmd_speed_ (직전 프레임에서 발행한 속도)
+│     dt = 콜백 주기 (초)
+│
+│     가속: v_cmd = min(v_target, v_prev + accel_rate × dt)
+│       v_target > v_prev 일 때 적용
+│       한 프레임당 accel_rate×dt 만큼만 속도 증가 허용
+│       min() → v_target을 초과하지 않도록 상한 제한
+│
+│     감속: v_cmd = max(v_target, v_prev - decel_rate × dt)
+│       v_target < v_prev 일 때 적용
+│       한 프레임당 decel_rate×dt 만큼만 속도 감소 허용
+│       max() → v_target 아래로 내려가지 않도록 하한 제한
+│
+│     → 급격한 속도 변화 방지, 부드러운 가감속 보장
+│     → v_target이 갑자기 바뀌어도 실제 명령은 매 프레임 일정 폭씩만 변화
+│     last_cmd_speed_ = v_cmd (다음 콜백에서 v_prev로 사용)
+│
+├── ⑩ 제어 명령 발행
+│     cmd_pub_.publish(v_cmd, delta)
+│       /t870/control_command → T870 실차 (항상)
+│       /erp42/control_command → ERP42 Gazebo (lazy)
+│
+└── ⑪ 디버그 (lazy — 구독자 있을 때만)
+      [로그] 500ms마다 throttle 출력:
+        target=(tx, ty), Ld, kappa_pp, kappa_prev,
+        v_target, v_cmd, delta, remain, filtered, v_curv, v_end
+      [시각화]
+        /pp_debug/lookahead_point — 초록 SPHERE (목표점)
+        /pp_debug/pursuit_arc — 노란 LINE_STRIP (예상 원호 궤적)
+```
+
+---
+
+## 특수 기능
+
+### CREEP 모드
+
+전방 ROI 영역 내에 장애물이 없을 때(클리어) 저속 직진하는 모드.
+- 전방 ROI: `creep_roi_x` × `creep_roi_y` (1.0m × 0.5m)
+- CREEP 속도: `creep_speed` (0.4 m/s)
+- `/perception/bboxes`를 구독하여 전방 장애물 존재 여부를 판단
+
+### 비상감속 (Emergency Decel)
+
+급정지 시 역전기력(back-EMF)에 의한 하드웨어 손상을 방지하기 위해 점진적 감속.
+- `emergency_decel_rate` (2.0 m/s²)로 감속
+- `emergency_stop_count` (40회) 연속 FAIL 시 발동
+
+### Fail Counter
+
+planning FAIL 및 경로 타임아웃의 단발성 노이즈를 필터링하는 연속 카운터.
+- FAIL 1~39회: 이전 명령 유지 (노이즈 무시)
+- FAIL 40회 연속: 긴급 감속 시작
+- 정상 복귀 시: 카운터 즉시 리셋
 
 ---
 
@@ -13,31 +194,37 @@ Planning 모듈이 생성한 base_link 기준 상대좌표 경로(Marker POINTS)
 
 ```
 control/
-├── CMakeLists.txt                              # 빌드 설정
-├── package.xml                                 # 패키지 메타데이터 (pp_controller_cpp)
-├── PIPELINE.md                                 # 이 문서
-├── topic.md                                    # 토픽 인터페이스 요약
+├── CMakeLists.txt
+├── package.xml                                 # pp_controller_cpp
+├── PIPELINE.md
+├── topic.md
 ├── config/
-│   └── pure_pursuit.yaml                       # ROS 2 파라미터 설정
+│   └── pure_pursuit.yaml
 ├── launch/
-│   └── pure_pursuit.launch.py                  # 런치 파일
+│   └── pure_pursuit.launch.py
 ├── include/pp_controller_cpp/
 │   ├── common/
 │   │   ├── geometry.hpp                        # 2D 기하학 유틸 (norm2d, header-only)
 │   │   └── params.hpp                          # 파라미터 구조체 + load() (header-only)
 │   ├── pursuit/
-│   │   └── pursuit_algorithm.hpp               # Pure Pursuit 핵심 알고리즘 헤더
+│   │   ├── path_query.hpp                      # 경로 조회 알고리즘
+│   │   ├── speed_planning.hpp                  # 속도 계획 알고리즘
+│   │   └── steering.hpp                        # 조향 계산 알고리즘
 │   ├── debug/
-│   │   └── debug_visualizer.hpp                # RViz2 디버그 시각화 헤더
+│   │   └── debug_visualizer.hpp                # RViz2 디버그 시각화
 │   └── nodes/
-│       └── pure_pursuit_relative_node.hpp      # 노드 클래스 선언
+│       ├── pure_pursuit_relative_node.hpp      # 노드 클래스 선언
+│       └── command_publisher.hpp               # 제어 명령 발행 헬퍼
 └── src/
     ├── pursuit/
-    │   └── pursuit_algorithm.cpp               # Pure Pursuit 계산 (상태 없는 free 함수)
+    │   ├── path_query.cpp                      # 최근접점, 타겟포인트 탐색
+    │   ├── speed_planning.cpp                  # 곡률/제동거리 기반 속도 계산
+    │   └── steering.cpp                        # Pure Pursuit 조향각 계산
     ├── debug/
     │   └── debug_visualizer.cpp                # RViz2 마커 생성/발행
     └── nodes/
-        └── pure_pursuit_relative_node.cpp      # 노드 오케스트레이터 + main()
+        ├── pure_pursuit_relative_node.cpp      # 노드 오케스트레이터
+        └── command_publisher.cpp               # T870/ERP42 명령 발행
 ```
 
 ### 모듈 구조
@@ -46,311 +233,77 @@ control/
 |------|------|------|
 | `common/geometry.hpp` | `norm2d()` 2D 거리 유틸 | header-only, ROS 비의존 |
 | `common/params.hpp` | `PurePursuitParams` 구조체 + `load()` | header-only, 파라미터 declare/get |
-| `pursuit/pursuit_algorithm` | Pure Pursuit 수학 계산 (free 함수) | ROS 노드 비의존, 독립 테스트 가능 |
+| `pursuit/path_query` | 경로 조회 (최근접점, 타겟포인트) | ROS 비의존 |
+| `pursuit/speed_planning` | 곡률/제동거리 기반 속도 계산 | ROS 비의존 |
+| `pursuit/steering` | Pure Pursuit 조향각 계산 | ROS 비의존 |
 | `debug/debug_visualizer` | RViz2 마커 생성/발행 (lazy) | 알고리즘 비의존 |
 | `nodes/pure_pursuit_relative_node` | 노드 오케스트레이터 | 모듈 조합, 제어 루프 |
-
-### 모듈 의존성
-
-```
-geometry.hpp (의존성 없음)
-     │
-     v
-params.hpp (rclcpp)
-     │
-     v
-pursuit_algorithm (geometry.hpp, geometry_msgs)
-     │
-debug_visualizer (visualization_msgs, rclcpp)
-     │
-     v
-pure_pursuit_relative_node (전체 모듈 + t870_msgs + erp42_msgs + std_msgs)
-```
-
-### 의존성
-
-| 패키지 | 용도 |
-|--------|------|
-| `rclcpp` | ROS 2 C++ 클라이언트 라이브러리 |
-| `visualization_msgs` | 경로 입력 (Marker POINTS) + 디버그 시각화 (Marker SPHERE / LINE_STRIP) |
-| `t870_msgs` | T870 실차 제어 명령 (`ControlCommand`: speed, steering) |
-| `erp42_msgs` | ERP42 Gazebo 시뮬레이션 제어 명령 (`ControlCommand`: speed, steering, brake) |
+| `nodes/command_publisher` | T870/ERP42 제어 명령 발행 | 명령 포맷 캡슐화 |
 
 ---
 
-## 전체 시스템 내 위치
+## 빌드 타겟
 
-```
-[Perception] → [Planning] → [Control] → [Vehicle Interface]
-                              ^^^^^^^^
-                              이 패키지
-```
+| 타겟 | 타입 | 설명 |
+|------|------|------|
+| `pp_pursuit` | 공유 라이브러리 | pursuit/ 알고리즘 (path_query, speed_planning, steering) |
+| `pp_debug_viz` | 공유 라이브러리 | debug/ RViz2 시각화 |
+| `pp_controller_component` | ComposableNode | nodes/ 노드 오케스트레이터 + command_publisher |
 
-```
-velodyne_points (PointCloud2)        camera (LaneBoundaryArray)
-  → Patchwork++ (지면 분리)                │
-  → DBSCAN (클러스터링)                     │
-  → MakeBBox (BBox 생성)                   │
-  → /perception/bboxes (BBoxArray)         │
-          │                                │
-          └──────────────┬─────────────────┘
-                         ▼
-  → DirectionChainer (좌/우 경계 체인 생성)
-  → CostmapGenerator (Gaussian 비용 필드 생성)
-  → A* Planner (8방향 격자 최단 경로 탐색)
-  → PostProcessor (smooth + resample + curvature clamp)
-  → SafetyChecker (곡률 검증)
-  → /planning/path (Marker POINTS)              ← 이 노드의 입력
-  → /planning/status (String)                   ← FAIL 시 정지 조건
-  → PurePursuitRelativeNode (조향 + 속도 계산)   ← 이 노드
-  → /t870/control_command (ControlCommand)       ← 실차 출력
-  → /erp42/control_command (ControlCommand)      ← Gazebo 시뮬레이션 출력 (lazy)
-  → /pp_debug/lookahead_point (Marker SPHERE)    ← 디버그: lookahead 목표점 (lazy)
-  → /pp_debug/pursuit_arc (Marker LINE_STRIP)    ← 디버그: PP 원호 궤적 (lazy)
+### 빌드 명령
+
+```bash
+cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-select pp_controller_cpp
 ```
 
 ---
 
-## 토픽 인터페이스
+## 파라미터
 
-### 입력 (Subscribe)
+설정 파일: `config/pure_pursuit.yaml`
 
-| 토픽 | 타입 | QoS | 설명 |
-|------|------|-----|------|
-| `/planning/path` | `visualization_msgs/msg/Marker` (POINTS) | BestEffort, depth=10 | base_link 기준 상대좌표 경로. 각 Point의 x는 전방(+), y는 좌측(+). |
-| `/planning/status` | `std_msgs/msg/String` | BestEffort, depth=10 | planning 상태. FAIL 시 정지 (`not enough seeds` / `no valid path` / `too short valid path`). |
+### 차량 파라미터
 
-#### Marker(POINTS) 메시지 상세
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `wheelbase` | 0.87 | m | T870 축간거리 |
+| `delta_max` | 0.314 | rad | 최대 조향각 (~18°) |
 
-```
-visualization_msgs/msg/Marker
-├── header
-│   ├── stamp        # 원본 센서(perception) 타임스탬프 (topic delay 측정용)
-│   └── frame_id     # "base_link" (상대좌표)
-├── type             # Marker::POINTS
-└── points[]         # geometry_msgs/Point 배열
-    ├── x            # 차량 전방 거리 [m] (앞이 +)
-    ├── y            # 차량 횡방향 거리 [m] (좌가 +)
-    └── z            # 미사용 (0)
-```
+### Lookahead 파라미터
 
-### 출력 (Publish)
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `lookahead_min` | 0.85 | m | 코너 최소 주시 거리 |
+| `lookahead_max` | 1.50 | m | 직선 최대 주시 거리 |
+| `lookahead_speed_gain` | 0.35 | m/(m/s) | 속도 증가당 lookahead 증가량 |
 
-| 토픽 | 타입 | QoS | 설명 |
-|------|------|-----|------|
-| `/t870/control_command` | `t870_msgs/msg/ControlCommand` | BestEffort, depth=1 | T870 실차 제어 명령 (항상 발행) |
-| `/erp42/control_command` | `erp42_msgs/msg/ControlCommand` | depth=10 | ERP42 Gazebo 시뮬레이션 제어 명령 (lazy — 구독자 있을 때만) |
+### 속도 제어 파라미터
 
-### 디버그 출력 (Publish, lazy — 구독자가 있을 때만 발행)
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `speed_min` | 0.2 | m/s | 급코너 최소 속도 |
+| `speed_max` | 0.7 | m/s | 직선 최대 속도 |
+| `lateral_accel_limit` | 0.90 | m/s² | 곡률 기반 감속 횡가속도 한계 |
+| `preview_distance` | 2.50 | m | 전방 curvature preview 거리 |
+| `accel_rate` | 0.20 | m/s² | 직선 가속 rate limit |
+| `decel_rate` | 3.00 | m/s² | 코너 진입 감속 rate limit |
 
-| 토픽 | 타입 | QoS | 설명 |
-|------|------|-----|------|
-| `/pp_debug/lookahead_point` | `visualization_msgs/msg/Marker` (SPHERE) | BestEffort, depth=1 | PP가 선택한 lookahead 목표점 (초록 구, base_link) |
-| `/pp_debug/pursuit_arc` | `visualization_msgs/msg/Marker` (LINE_STRIP) | BestEffort, depth=1 | PP 예상 원호 궤적 (노란 선, base_link). kappa≈0이면 직선. |
+### 안전 파라미터
 
-#### T870 ControlCommand 메시지
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `emergency_decel_rate` | 2.0 | m/s² | 비상 감속 rate |
+| `emergency_stop_count` | 40 | 회 | 연속 FAIL 허용 횟수 |
+| `path_timeout_sec` | 0.5 | sec | 경로 타임아웃 |
+| `stop_margin` | 1.3 | m | 정지 마진 |
 
-```
-t870_msgs/msg/ControlCommand
-├── speed     # float64: 목표 속도 [m/s]
-└── steering  # float64: 조향각 [rad] (좌회전 +, 우회전 -)
-```
+### CREEP 모드 파라미터
 
-#### ERP42 ControlCommand 메시지
-
-```
-erp42_msgs/msg/ControlCommand
-├── speed     # float64: 목표 속도 [m/s]
-├── steering  # float64: 조향각 [rad] (좌회전 +, 우회전 -)
-└── brake     # uint8:   브레이크 [0~1] (정지 시 1, 주행 시 0)
-```
-
----
-
-## 노드 내부 파이프라인
-
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                   PurePursuitRelativeNode                        │
-│                                                                  │
-│  /planning/path ──→ [on_path 콜백]                               │
-│                        │                                         │
-│                        ▼                                         │
-│                   latest_points_ 저장                             │
-│                   last_path_time_ 기록 (stale 검사용)               │
-│                   last_path_stamp_ 기록 (원본 센서 stamp 전파)     │
-│                                                                  │
-│  50Hz 타이머 ──→ [on_timer 제어루프]                               │
-│                        │                                         │
-│                   ①  정지 조건 판정 + 연속 카운터                    │
-│                        │  - path_fresh() 실패 또는                 │
-│                        │    planning FAIL 시 fail_counter_++       │
-│                        │  - N회(emergency_stop_count) 연속 도달 시  │
-│                        │    emergency_decel_rate로 점진적 감속      │
-│                        │  - 정상이면 카운터 리셋                    │
-│                        ▼                                         │
-│                   ②  find_nearest_index()                        │
-│                        │  - 경로 전체에서 원점(0,0)에 최근접점 탐색  │
-│                        ▼                                         │
-│                   ③  compute_preview_curvature()                 │
-│                        │  - preview_distance(2.5m) 내 최대 곡률    │
-│                        ▼                                         │
-│                   ④  compute_speed_target()                      │
-│                        │  - v = √(a_lat / κ_preview)              │
-│                        │  - clamp(v, v_min, v_max)                │
-│                        ▼                                         │
-│                   ⑤  compute_dynamic_lookahead()                 │
-│                        │  - Ld = Ld_min + gain × speed            │
-│                        │  - clamp(Ld, Ld_min, Ld_max)             │
-│                        ▼                                         │
-│                   ⑥  compute_target_relative()                   │
-│                        │  - 최근접점부터 누적 arc length로          │
-│                        │    lookahead 목표점 선택                  │
-│                        ▼                                         │
-│                   ⑦  안전 조건 확인                                │
-│                        │  - Ld < 1e-3 → 점진적 긴급 감속           │
-│                        │  - tx ≤ min_x_target → 점진적 긴급 감속   │
-│                        ▼                                         │
-│                   ⑧  Pure Pursuit 조향각 계산                     │
-│                        │  kappa = 2*y / Ld²                       │
-│                        │  delta = atan(L * kappa)                 │
-│                        │  delta = clamp(delta, ±delta_max)        │
-│                        ▼                                         │
-│                   ⑨  최종 속도 결정                                │
-│                        │  v_curv = speed_target(effective_κ)      │
-│                        │  v_end  = √(2 × decel × remaining_len)  │
-│                        │  v_target = min(v_curv, v_end)           │
-│                        │  v_cmd = rate_limit(v_target, dt)        │
-│                        ▼                                         │
-│                   ⑩  제어 명령 발행                                │
-│                        │  → /t870/control_command                 │
-│                        │  → /erp42/control_command (lazy)         │
-│                        ▼                                         │
-│                   ⑪  디버그 시각화 발행 (lazy)                     │
-│                        │  → /pp_debug/lookahead_point (SPHERE)    │
-│                        │  → /pp_debug/pursuit_arc (LINE_STRIP)    │
-└──────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 긴급 감속 (Emergency Decel)
-
-급정지 시 역전기력(back-EMF)에 의한 하드웨어 손상을 방지하기 위해, 모든 정지 상황에서 `emergency_decel_rate`로 점진적 감속한다.
-
-### 발생 조건
-
-| 트리거 | 발생 위치 | 설명 |
-|---|---|---|
-| planning FAIL 연속 N회 | ① 정지 조건 판정 | `FAIL - not enough seeds` 또는 `FAIL - no valid path`가 `emergency_stop_count`(10회, 200ms) 연속 수신 시 |
-| 경로 미수신/타임아웃 | ① 정지 조건 판정 | `path_fresh()` 실패가 `emergency_stop_count` 연속 시 |
-| lookahead 목표점 계산 실패 | ⑥→⑦ 사이 | `compute_target_relative()`가 유효한 목표점을 찾지 못한 경우 |
-| Ld ≈ 0 | ⑦ 안전 조건 확인 | lookahead 거리가 1e-3 미만 → 조향 계산 불가 (0 나누기 방지) |
-| 목표점이 뒤쪽 | ⑦ 안전 조건 확인 | 목표점 x좌표 ≤ `min_x_target` → 전방 추종 불가 |
-
-### 노이즈 필터링 (① 한정)
-
-planning FAIL 및 경로 타임아웃은 단발성 노이즈일 수 있으므로, 연속 카운터로 필터링한다:
-- FAIL 1~9회: **이전 명령 유지** (감속 안 함, 노이즈 무시)
-- FAIL 10회 연속(200ms): **긴급 감속 시작**
-- 정상 복귀 시: 카운터 즉시 리셋, 정상 주행 재개
-
-### 감속 동작
-
-```
-v_cmd = rate_limit_speed(0.0, last_cmd_speed_, dt, accel_rate, emergency_decel_rate)
-```
-- 목표속도 = 0으로 설정하되, `emergency_decel_rate`(3.0 m/s²)로 점진적 감속
-- 매 사이클(dt=0.02초) 최대 0.06 m/s씩 감속
-- 최대속도 3.2 m/s에서 정지까지 약 1.07초
-- 속도가 0에 도달하면 ERP42에 brake=1 발행
-
----
-
-## 내부 함수 상세
-
-### 모듈: `common/geometry.hpp`
-
-#### `norm2d(x, y)` — 2D 유클리드 거리
-```cpp
-inline double norm2d(double x, double y) { return sqrt(x*x + y*y); }
-```
-- 두 점 사이의 거리(누적 arc length) 또는 원점→목표점 직선 거리(Ld) 계산에 사용.
-
-### 모듈: `common/params.hpp`
-
-#### `PurePursuitParams` — 파라미터 구조체
-- 서브구조체: `Topics`, `Vehicle`, `Lookahead`, `Speed`, `Safety`
-- `load(rclcpp::Node*)`: ROS2 파라미터 declare/get 후 멤버에 캐싱
-
-### 모듈: `pursuit/pursuit_algorithm` (상태 없는 free 함수)
-
-#### `find_nearest_index(pts)` — 최근접점 탐색
-- 경로의 모든 점에 대해 원점(0,0)과의 거리² 계산.
-- 가장 가까운 점의 인덱스를 반환.
-
-#### `compute_dynamic_lookahead(speed, min, max, gain)` — 속도 적응형 lookahead
-```
-Ld = clamp(Ld_min + Ld_gain × speed, Ld_min, Ld_max)
-```
-- 속도가 빠르면 → 더 먼 곳을 주시 (안정적 추종)
-- 속도가 느리면 → 가까운 곳을 주시 (민첩한 코너링)
-
-#### `compute_preview_curvature(pts, nearest_i, preview_distance)` — 전방 곡률 미리보기
-1. `nearest_i`부터 경로를 따라가며 `preview_distance`(2.5m) 내의 구간을 확인.
-2. 연속 3점(a, b, c)에서 외적 기반 곡률을 계산: `κ = 2|cross| / (|ab|·|bc|·|ac|)`.
-3. 구간 내 **최대 절대 곡률**을 반환.
-
-#### `compute_speed_target(abs_kappa, v_min, v_max, lat_accel)` — 곡률 기반 목표 속도
-```
-v = clamp(√(a_lat_limit / κ), v_min, v_max)
-```
-- 곡률이 0에 가까우면 → `v_max` (직선 최대 속도)
-- 곡률이 크면 → 횡가속도 한계에 맞춘 감속
-
-#### `compute_target_relative(pts, nearest_i, Ld, tx, ty, Ld_used)` — lookahead 목표점 탐색
-1. `nearest_i`부터 경로를 따라가며 점 간 거리를 누적.
-2. 누적 거리 ≥ `Ld`인 첫 번째 점을 목표로 선택.
-3. 경로 끝까지 가도 부족하면 마지막 점 사용 (폴백).
-4. `Ld_used`는 원점→목표점 **직선 거리** (Pure Pursuit 공식 요구).
-
-#### `rate_limit_speed(target, last_speed, dt, accel_rate, decel_rate)` — 가감속 rate 제한
-```
-가속 시: v_cmd = min(v_target, v_prev + accel_rate × dt)
-감속 시: v_cmd = max(v_target, v_prev - decel_rate × dt)
-```
-- 급격한 가감속 방지, 차량 안정성 확보.
-
-#### `compute_steering(ty, Ld, wheelbase, delta_max)` — Pure Pursuit 조향각 계산
-```
-κ = 2·ty / Ld², δ = clamp(atan(L·κ), ±δ_max)
-```
-
-### 모듈: `debug/debug_visualizer`
-
-#### `DebugVisualizer` 클래스
-- `publish_lookahead_point(tx, ty, stamp)`: lookahead 목표점을 초록색 SPHERE로 발행 (lazy)
-- `publish_pursuit_arc(tx, ty, kappa_pp, stamp)`: PP 원호 궤적을 노란색 LINE_STRIP으로 발행 (lazy)
-
-### 모듈: `nodes/pure_pursuit_relative_node` (오케스트레이터)
-
-#### `on_path(msg)` — 경로 수신 콜백
-- `latest_points_` ← `msg->points` (덮어쓰기, 최신 경로만 유지)
-- `last_path_time_` ← `now()` (타임아웃 판단용)
-- `last_path_stamp_` ← `msg->header.stamp` (원본 센서 타임스탬프 전파 — topic delay 측정용)
-
-#### `path_fresh()` — 경로 유효성 판단
-- `latest_points_`가 비어있거나, 마지막 수신 후 `path_timeout_sec` 초과 시 `false` 반환.
-- planning 노드 장애나 LiDAR 끊김 감지 역할.
-
-#### `publish_stop()` — 안전 정지 명령 발행
-- `speed=0, steering=0` 발행 (T870 + ERP42).
-- `last_cmd_speed_` 초기화.
-
-#### `on_timer()` — 메인 제어 루프 (20Hz)
-- `pursuit::*` 함수 호출로 알고리즘 수행
-- `debug_viz_` 메서드 호출로 시각화 발행 (원본 센서 타임스탬프 `last_path_stamp_` 전파)
-- 안전 조건 확인 및 정지 명령 처리
+| 파라미터 | 값 | 단위 | 설명 |
+|----------|-----|------|------|
+| `creep_speed` | 0.4 | m/s | CREEP 모드 속도 |
+| `creep_roi_x` | 1.0 | m | 전방 ROI X 범위 |
+| `creep_roi_y` | 0.5 | m | 전방 ROI Y 범위 |
 
 ---
 
@@ -365,114 +318,12 @@ v = clamp(√(a_lat_limit / κ), v_min, v_max)
 ```
 곡률:    κ = 2 · y_target / Ld²
 조향각:  δ = atan(L · κ)
+         δ = clamp(δ, -δ_max, +δ_max)
 ```
 
 - `y_target`: 목표점의 차량 기준 횡방향 거리 (좌: +, 우: -)
 - `Ld`: 차량 원점에서 목표점까지의 직선 거리
 - `L`: 차량 축간거리 (wheelbase, 0.87m)
-
-### 기하학적 유도
-
-```
-  ──────────────────────────────────────────────────────────
-  [기본 좌표계]
-
-        목표점 T = (tx, ty)
-           *
-          /|
-    Ld  /  |  ty (횡방향)
-       /   |
-      / α  |
-     *-----+
-   차량    tx (종방향)
-   (0,0)
-
-   - 차량은 원점 (0, 0), 전방이 +x
-   - Ld = sqrt(tx² + ty²)  ... 차량→목표점 직선거리
-   - α  = atan2(ty, tx)     ... 목표점 방위각
-
-  ──────────────────────────────────────────────────────────
-  [Step 1] 원호 모델 — 왜 원호인가?
-
-   Pure Pursuit는 "차량이 일정한 조향각으로 주행하면
-   원호를 그린다"는 사실을 이용한다.
-
-   차량(0,0)과 목표점 T를 동시에 지나는 원을 찾으면,
-   그 원의 반지름 R이 곧 필요한 회전 반지름이 된다.
-
-         원의 중심 O = (0, R)
-              |
-              |  R
-              |
-     차량 *---+        ← 원의 중심은 항상 차량의 좌측(y+) 또는 우측(y-)에 있음
-     (0,0)
-
-   원의 중심을 O = (0, R)로 놓으면 (좌회전 가정):
-     |O - 차량|  = R        ← 당연히 성립
-     |O - T|    = R        ← 목표점도 같은 원 위
-
-  ──────────────────────────────────────────────────────────
-  [Step 2] 반지름 R 유도
-
-   |O - T|² = R² 조건을 전개:
-     (tx - 0)² + (ty - R)² = R²
-     tx² + ty² - 2·ty·R + R² = R²
-     tx² + ty² - 2·ty·R = 0
-
-   Ld² = tx² + ty² 이므로:
-     Ld² = 2·ty·R
-
-   따라서:
-     R = Ld² / (2·ty)
-
-  ──────────────────────────────────────────────────────────
-  [Step 3] 곡률 κ (curvature)
-
-   곡률은 반지름의 역수:
-     κ = 1/R = 2·ty / Ld²
-
-   - ty > 0 → κ > 0 → 좌회전
-   - ty < 0 → κ < 0 → 우회전
-   - ty = 0 → κ = 0 → 직진
-
-  ──────────────────────────────────────────────────────────
-  [Step 4] 조향각 δ (Ackermann 기하학)
-
-   자전거 모델(bicycle model)에서:
-
-       ┌──── 앞바퀴 (조향)
-       │  δ ↙ (조향각)
-       │ /
-       │/
-       L  (wheelbase, 축간거리)
-       │
-       │
-       └──── 뒷바퀴 (고정)
-
-   회전 반지름과 조향각의 관계:
-     tan(δ) = L / R
-
-   따라서:
-     δ = atan(L / R)
-       = atan(L · κ)            ← κ = 1/R 대입
-       = atan(L · 2·ty / Ld²)   ← κ 전개
-
-  ──────────────────────────────────────────────────────────
-  [최종 공식 요약]
-
-     κ = 2·ty / Ld²           ... 목표점 횡방향 오프셋으로 곡률 결정
-     δ = atan(L · κ)           ... 곡률에 축간거리를 곱해 조향각 산출
-     δ = clamp(δ, -δ_max, +δ_max)  ... 하드웨어 한계로 클램핑
-
-  ──────────────────────────────────────────────────────────
-```
-
-### Lookahead 목표점 선택 과정
-
-1. **최근접점 탐색**: 경로의 모든 점 중 차량 원점(0,0)에 가장 가까운 점을 찾음
-2. **누적 arc length**: 최근접점부터 경로를 따라가며 점 간 거리를 누적
-3. **목표점 결정**: 누적 거리 ≥ lookahead 거리가 되는 첫 번째 점을 선택
-4. **폴백**: 경로 끝까지 가도 lookahead 미달 시 마지막 점 사용
 
 ### 왜 "Relative" 버전인가?
 
@@ -484,120 +335,40 @@ v = clamp(√(a_lat_limit / κ), v_min, v_max)
 
 ## 속도 제어 시스템
 
-기존 고정 속도 방식에서 **곡률 기반 적응형 속도 제어**로 업그레이드되었다.
-
 ### 전체 속도 결정 흐름
 
 ```
-                    전방 2.5m 구간
-                    ┌────────────┐
-경로 점들 ──→ compute_preview_curvature() ──→ κ_preview (전방 최대 곡률)
-                                                │
-                                                ▼
-                                     compute_speed_target(κ_preview)
-                                                │
-                                                ▼
-                                     v_preview = √(a_lat / κ_preview)
-                                                │
-                                                ▼
-                                     compute_dynamic_lookahead(v_preview)
-                                                │
-                                                ▼
-                                         Ld (적응형 lookahead)
-                                                │
-                    ┌───────────────────────────┘
-                    ▼
-        compute_target_relative(Ld) ──→ (tx, ty, Ld_used)
-                    │
-                    ▼
-            κ_pp = 2·ty / Ld²  (Pure Pursuit 곡률)
-                    │
-                    ▼
-            effective_κ = max(|κ_pp|, κ_preview)
-                    │
-                    ▼
-            v_target = compute_speed_target(effective_κ)
-                    │
-                    ▼
-            v_cmd = rate_limit_speed(v_target, dt)
-                    │
-                    ▼
-            최종 속도 명령 발행
+경로 점들 → compute_preview_curvature() → κ_preview (전방 최대 곡률)
+                                            │
+                                            ▼
+                                 compute_speed_target(κ_preview)
+                                            │
+                                            ▼
+                                 v_preview = √(a_lat / κ_preview)
+                                            │
+                                            ▼
+                                 compute_dynamic_lookahead(v_preview)
+                                            │
+                                            ▼
+                                     Ld (적응형 lookahead)
+                                            │
+                                            ▼
+                        compute_target_relative(Ld) → (tx, ty, Ld_used)
+                                            │
+                                            ▼
+                                 κ_pp = 2·ty / Ld²
+                                            │
+                                            ▼
+                                 effective_κ = max(|κ_pp|, κ_preview)
+                                            │
+                                            ▼
+                                 v_curv = compute_speed_target(effective_κ)
+                                 v_end  = √(2 × decel × remaining_len)
+                                 v_target = min(v_curv, v_end)
+                                            │
+                                            ▼
+                                 v_cmd = rate_limit_speed(v_target, dt)
 ```
-
-### Preview Curvature (전방 곡률 미리보기)
-
-- `preview_distance` (2.5m) 범위 내의 경로에서 **3점 외적 기반 곡률**을 계산.
-- 구간 내 최대 곡률을 반환하여 **선감속(코너 진입 전 미리 감속)**을 가능하게 함.
-
-### Dynamic Lookahead (속도 연동 주시 거리)
-
-```
-Ld = clamp(Ld_min + Ld_gain × speed, Ld_min, Ld_max)
-```
-
-| 상황 | 속도 | Lookahead | 효과 |
-|------|------|-----------|------|
-| 급코너 | 느림 (0.45 m/s) | 짧음 (~0.85m) | 경로 밀착 추종 |
-| 완만한 커브 | 중간 | 중간 | 균형 |
-| 직선 | 빠름 (1.20 m/s) | 길음 (~1.70m) | 안정적 직진 |
-
-### Rate Limiting (가감속 제한)
-
-| 구분 | Rate | 설명 |
-|------|------|------|
-| 가속 | `accel_rate` (1.20 m/s²) | 직선 진입 시 급가속 방지 |
-| 감속 | `decel_rate` (1.80 m/s²) | 코너 진입 시 빠르게 감속 (가속보다 빠름) |
-
-감속 rate가 가속 rate보다 큰 이유: 안전을 위해 감속은 빠르게, 가속은 부드럽게.
-
----
-
-## 파라미터
-
-설정 파일: `config/pure_pursuit.yaml`
-
-### 토픽 설정
-
-| 파라미터 | 타입 | 기본값 | 설명 |
-|----------|------|--------|------|
-| `path_topic` | string | `/planning/path` | 경로 입력 토픽 |
-| `cmd_topic` | string | `/t870/control_command` | T870 제어 출력 토픽 |
-
-### 차량 파라미터
-
-| 파라미터 | 타입 | 기본값 | 단위 | 설명 |
-|----------|------|--------|------|------|
-| `wheelbase` | double | 0.87 | m | T870 축간거리 (Ackermann 기하학 핵심) |
-| `delta_max` | double | 0.314 | rad | 최대 조향각 (~18°, 하드웨어 한계) |
-
-### Lookahead 파라미터 (속도 적응형)
-
-| 파라미터 | 타입 | 기본값 | 단위 | 설명 |
-|----------|------|--------|------|------|
-| `lookahead` | double | 1.2 | m | legacy fallback (min/max 미설정 시 사용) |
-| `lookahead_min` | double | 0.85 | m | 코너에서의 최소 주시 거리 |
-| `lookahead_max` | double | 1.70 | m | 직선에서의 최대 주시 거리 |
-| `lookahead_speed_gain` | double | 0.65 | m/(m/s) | 속도 1m/s 증가당 lookahead 증가량 |
-
-### 속도 제어 파라미터
-
-| 파라미터 | 타입 | 기본값 | 단위 | 설명 |
-|----------|------|--------|------|------|
-| `speed` | double | 1.0 | m/s | legacy fallback (min/max 미설정 시 사용) |
-| `speed_min` | double | 0.45 | m/s | 급코너 최소 속도 |
-| `speed_max` | double | 1.20 | m/s | 직선 최대 속도 |
-| `lateral_accel_limit` | double | 0.90 | m/s² | 곡률 기반 감속 횡가속도 한계 |
-| `preview_distance` | double | 2.50 | m | 전방 curvature preview 거리 |
-| `accel_rate` | double | 1.20 | m/s² | 직선 가속 rate limit |
-| `decel_rate` | double | 1.80 | m/s² | 코너 진입 감속 rate limit |
-
-### 안전 파라미터
-
-| 파라미터 | 타입 | 기본값 | 단위 | 설명 |
-|----------|------|--------|------|------|
-| `path_timeout_sec` | double | 0.5 | sec | 경로 타임아웃 (초과 시 정지) |
-| `min_x_target` | double | 0.05 | m | 목표점 최소 전방 거리 (이하 시 정지) |
 
 ---
 
@@ -609,7 +380,7 @@ Ld = clamp(Ld_min + Ld_gain × speed, Ld_min, Ld_max)
 | planning status FAIL | `not enough seeds` / `no valid path` / `too short valid path` | 유효하지 않은 경로 추종 |
 | `poses.size() < 2` | 경로 점 부족 | 방향 결정 불가 |
 | `Ld_used < 1e-3` | 목표점이 차량 위에 있음 | 0 나누기 → 조향 발산 |
-| `tx ≤ min_x_target` | 목표점이 뒤쪽/측면 | 180도 회전 등 비정상 동작 |
+| `tx ≤ min_x_target` | 목표점이 뒤쪽/측면 | 비정상 동작 |
 
 모든 정지 조건에서 T870: `speed=0, steering=0`, ERP42: `speed=0, steering=0, brake=1` 명령을 발행한다.
 
@@ -619,37 +390,11 @@ Ld = clamp(Ld_min + Ld_gain × speed, Ld_min, Ld_max)
 
 RViz2에서 확인 가능. **lazy publisher**로 구독자가 없으면 발행하지 않아 성능 부담 없음.
 
-### Lookahead Point (`/pp_debug/lookahead_point`)
-- **Marker 타입**: SPHERE (초록색 구)
-- **위치**: (tx, ty, 0) in base_link
-- **크기**: 지름 0.15m
-- **의미**: PP가 선택한 lookahead 목표점
-
-### Pursuit Arc (`/pp_debug/pursuit_arc`)
-- **Marker 타입**: LINE_STRIP (노란색 선)
-- **내용**: 약 30개 점으로 샘플링된 원호 또는 직선
-- **동작 방식**:
-  - `κ ≈ 0`: 원점 → 목표점 직선 보간
-  - `κ ≠ 0`: 회전 중심 `(0, R=1/κ)` 기준 원호를 그림
-- **의미**: 현재 조향으로 차량이 따라갈 예상 궤적
-
----
-
-## 로깅
-
-| 레벨 | Throttle | 내용 |
-|------|----------|------|
-| INFO | 시작 시 1회 | 전체 파라미터 덤프 (`path, cmd, L, Ld, v, a_lat, delta_max`) |
-| INFO | 500ms | 제어 상태 (`target, Ld, κ_pp, κ_preview, v_target, v_cmd, delta`) |
-| WARN | 1000ms | 경로 미수신/타임아웃, 목표점 계산 실패, 안전 위반 |
-
----
-
-## 스레드 안전성
-
-- ROS 2 **single-threaded executor** (기본) 사용.
-- `on_path()` 콜백과 `on_timer()` 타이머는 동시에 실행되지 않음.
-- `latest_points_`, `last_path_time_` 등 공유 변수에 대한 mutex 불필요.
+| 토픽 | 마커 타입 | 색상 | 의미 |
+|------|-----------|------|------|
+| `/pp_debug/lookahead_point` | SPHERE | 초록 | PP가 선택한 lookahead 목표점 |
+| `/pp_debug/pursuit_arc` | LINE_STRIP | 노란 | PP 곡률로부터 계산한 예상 원호 궤적 |
+| `/pp_debug/creep_roi` | LINE_STRIP | 노란 | CREEP 모드 전방 ROI 영역 박스 |
 
 ---
 
@@ -657,21 +402,13 @@ RViz2에서 확인 가능. **lazy publisher**로 구독자가 없으면 발행�
 
 ```bash
 # 빌드
-cd ~/ev_ws && colcon build --symlink-install --packages-select pp_controller_cpp
+cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-select pp_controller_cpp
 
-# 런치 파일로 실행 (권장 — config/pure_pursuit.yaml 자동 로드)
+# 런치 파일로 실행 (권장)
 ros2 launch pp_controller_cpp pure_pursuit.launch.py
 
-# 직접 실행 (기본 파라미터)
+# 직접 실행
 ros2 run pp_controller_cpp pure_pursuit_relative_node
-
-# 파라미터 오버라이드
-ros2 run pp_controller_cpp pure_pursuit_relative_node \
-  --ros-args \
-  -p lookahead_min:=1.0 \
-  -p lookahead_max:=2.0 \
-  -p speed_max:=1.5 \
-  -p delta_max:=0.5
 ```
 
 ---
@@ -686,6 +423,6 @@ ros2 run pp_controller_cpp pure_pursuit_relative_node \
 | 코너 진입 속도가 너무 빠름 | `lateral_accel_limit` ↓ 또는 `preview_distance` ↑ |
 | 코너 진입 감속이 너무 급격 | `decel_rate` ↓ |
 | 직선에서 가속이 너무 느림 | `accel_rate` ↑ 또는 `speed_max` ↑ |
-| 직선에서 미세한 좌우 떨림 | `lookahead_max` ↑ 또는 planning 측 smoothing 강화 |
-| 차량이 자주 멈춤 | `path_timeout_sec` ↑ 또는 `min_x_target` ↓ |
-| 전체적으로 속도가 너무 느림 | `speed_min` ↑, `speed_max` ↑, `lateral_accel_limit` ↑ |
+| 차량이 자주 멈춤 | `path_timeout_sec` ↑ 또는 `emergency_stop_count` ↑ |
+| CREEP 모드가 너무 빠름 | `creep_speed` ↓ |
+| CREEP ROI가 너무 좁음/넓음 | `creep_roi_x` / `creep_roi_y` 조정 |

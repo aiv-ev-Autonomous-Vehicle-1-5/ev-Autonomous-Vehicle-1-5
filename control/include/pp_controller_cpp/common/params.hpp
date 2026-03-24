@@ -53,6 +53,8 @@ struct PurePursuitParams
     double accel_rate{0.8};             // 가속 rate limit [m/s^2]
     double decel_rate{1.8};             // 감속 rate limit [m/s^2]
     int    path_length_filter_size{10}; // 경로 길이 이동 평균 윈도우 크기
+    int    path_drop_confirm_count{3};  // 급락 확정 연속 프레임 수 (50Hz 기준 3 = 60ms)
+    double path_drop_ratio{0.4};        // 급락 판정 비율 (avg 대비 이 비율 이하면 급락 후보)
     double stop_margin{1.5};            // 경로 끝 정지 여유거리 [m]
   } speed;
 
@@ -63,6 +65,17 @@ struct PurePursuitParams
     double emergency_decel_rate{3.0};   // 긴급 정지 감속 rate limit [m/s^2]
     int    emergency_stop_count{10};    // FAIL 연속 N회 시 긴급 감속 시작
   } safety;
+
+  // --- CREEP 모드 ---
+  // 경로 실패 시 전방에 장애물이 없으면 저속 직진
+  // 결승선 감지: bbox가 거의 없는데 planner FAIL → 차선만으로 막힌 상황 → 부스트
+  struct Creep {
+    double speed{0.2};                  // [m/s] 일반 CREEP 직진 속도
+    double roi_x{2.0};                  // [m] 전방 판정 거리
+    double roi_y{0.8};                  // [m] 좌우 판정 폭 (±)
+    double finish_speed{1.5};           // [m/s] 결승선 감지 시 부스트 속도
+    int    bbox_count_threshold{2};     // bbox 개수 ≤ 이 값이면 "장애물 없음" 판정 → 결승선 후보
+  } creep;
 
   // =========================================================================
   // load: ROS2 파라미터를 declare/get 하여 멤버에 캐싱
@@ -128,6 +141,11 @@ struct PurePursuitParams
     speed.decel_rate = std::max(1e-3, node->get_parameter("decel_rate").as_double());
     speed.path_length_filter_size = std::max(1, static_cast<int>(node->get_parameter("path_length_filter_size").as_int()));
 
+    node->declare_parameter<int>("path_drop_confirm_count", speed.path_drop_confirm_count);
+    node->declare_parameter<double>("path_drop_ratio", speed.path_drop_ratio);
+    speed.path_drop_confirm_count = std::max(1, static_cast<int>(node->get_parameter("path_drop_confirm_count").as_int()));
+    speed.path_drop_ratio = std::clamp(node->get_parameter("path_drop_ratio").as_double(), 0.1, 0.9);
+
     node->declare_parameter<double>("stop_margin", speed.stop_margin);
     speed.stop_margin = std::max(0.0, node->get_parameter("stop_margin").as_double());
 
@@ -140,6 +158,18 @@ struct PurePursuitParams
     safety.min_x_target         = node->get_parameter("min_x_target").as_double();
     safety.emergency_decel_rate = std::max(1e-3, node->get_parameter("emergency_decel_rate").as_double());
     safety.emergency_stop_count = std::max(1, static_cast<int>(node->get_parameter("emergency_stop_count").as_int()));
+
+    // CREEP
+    node->declare_parameter<double>("creep_speed", creep.speed);
+    node->declare_parameter<double>("creep_roi_x", creep.roi_x);
+    node->declare_parameter<double>("creep_roi_y", creep.roi_y);
+    node->declare_parameter<double>("creep_finish_speed", creep.finish_speed);
+    node->declare_parameter<int>("creep_bbox_threshold", creep.bbox_count_threshold);
+    creep.speed = node->get_parameter("creep_speed").as_double();
+    creep.roi_x = node->get_parameter("creep_roi_x").as_double();
+    creep.roi_y = node->get_parameter("creep_roi_y").as_double();
+    creep.finish_speed = node->get_parameter("creep_finish_speed").as_double();
+    creep.bbox_count_threshold = std::max(0, static_cast<int>(node->get_parameter("creep_bbox_threshold").as_int()));
   }
 };
 
