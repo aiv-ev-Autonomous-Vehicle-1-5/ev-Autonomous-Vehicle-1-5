@@ -97,12 +97,22 @@ PointCloud2 Display에서:
 - Full-cloud 모드: 원본 인덱스와 동일한 포인트 수를 유지하면서 `cluster_id`를 원래 인덱스 위치에 채워넣는 옵션을 추가
 - 더 나은 색 팔레트: 많은 서로 다른 클러스터를 식별하기 위한 색상생성 개선(예: 색상 테이블 + 색 충돌 방지)
 
+CUDA 복구 (suspend/resume 대응)
+----------------
+노트북을 닫았다 열면 GPU suspend/resume 과정에서 CUDA context가 손상될 수 있습니다.
+이 경우 `dbscan_gpu_query_neighbors()`가 `false`를 리턴하고, 내부에서 `cudaGetLastError()`로 에러 상태만 클리어합니다.
+(`cudaDeviceReset()`은 `component_container_mt` 내 전체 CUDA 컨텍스트를 파괴하므로 사용하지 않음)
+실패 후 3초 쿨다운 동안 CUDA 호출을 건너뛰고, 쿨다운 후 자동 재시도합니다.
+- 컨테이너 크래시 없이 자동 복구
+- 로그: `"CUDA error (likely suspend/resume) — skipping frame. GPU will recover next cycle."`
+
 문제 해결 체크리스트
 ----------------
 1. 토픽이 올바른가? (`input_topic` / `lidar_topic` 일치)
 2. 출력 PointCloud2에 `cluster_id`가 있는가? (`inspect_raw_hex.py`로 확인)
 3. RViz에서 Color Transformer가 `RGB8`인지 확인
 4. 클러스터 분포가 한 쪽으로 치우쳐 있지 않은가? (`count_clusters.py`)
+5. 노트북 suspend/resume 후 CUDA 에러 → 로그에 복구 메시지 확인, 자동으로 다음 프레임부터 정상 동작
 
 문의 및 기여
 ----------------

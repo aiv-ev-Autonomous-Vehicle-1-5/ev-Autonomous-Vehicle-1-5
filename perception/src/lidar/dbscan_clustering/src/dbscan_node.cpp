@@ -273,12 +273,19 @@ private:
     std::vector<int> neighbors(static_cast<size_t>(m) * static_cast<size_t>(max_neighbors_), -1);
     std::vector<int> neighbor_counts(static_cast<size_t>(m), 0);
 #ifdef DBSCAN_USE_CUDA
-    dbscan_gpu_query_neighbors(
+    if (!dbscan_gpu_query_neighbors(
+      xyz.data(), m, static_cast<float>(eps_), max_neighbors_,
+      neighbors.data(), neighbor_counts.data()))
+    {
+      RCLCPP_WARN(get_logger(),
+        "CUDA error (likely suspend/resume) — skipping frame. GPU will recover next cycle.");
+      return;
+    }
 #else
     dbscan_cpu_query_neighbors(
-#endif
       xyz.data(), m, static_cast<float>(eps_), max_neighbors_,
       neighbors.data(), neighbor_counts.data());
+#endif
 
     int saturated = 0;
     for (int i = 0; i < m; ++i) {

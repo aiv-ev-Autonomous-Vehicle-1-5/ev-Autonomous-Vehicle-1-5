@@ -17,5 +17,5 @@
 
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
-| `/tracker/debug/tracks` | `visualization_msgs/msg/Marker` (POINTS) | BestEffort, depth=1 | 전체 트랙 (초록=감지, 빨강=예측) |
-| `/tracker/debug/predicted` | `visualization_msgs/msg/Marker` (CUBE_LIST) | BestEffort, depth=1 | 예측 전용 트랙 (주황 큐브) |
+| `/tracker/debug/tracks` | `visualization_msgs/msg/Marker` (POINTS) | Reliable, depth=1 | 전체 트랙 (초록=감지, 빨강=예측) |
+| `/tracker/debug/predicted` | `visualization_msgs/msg/Marker` (CUBE_LIST) | Reliable, depth=1 | 예측 전용 트랙 (주황 큐브) |
