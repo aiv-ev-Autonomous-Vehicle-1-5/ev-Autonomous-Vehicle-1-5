@@ -3,7 +3,6 @@
  * @brief DirectionChainer v2 체이닝 타입 정의
  *
  * Component → Backbone 기반 좌/우 차선 경계 체이닝 시스템의 타입들:
- *   - ChainingGraph:         Undirected 그래프 (component 추출용)
  *   - StopReason:            Greedy chaining 종료 이유
  *   - NodeOwner:             노드 소유권 라벨
  *   - SideResult:            한쪽 side의 chaining 결과
@@ -20,18 +19,6 @@
 
 namespace chaining_costmap_ver
 {
-
-/**
- * @brief Undirected 그래프 — component 추출 전용
- *
- * undirected 그래프에는 "진행 방향" 개념이 없다.
- * BFS/DFS로 연결 컴포넌트를 찾을 때 방향이 있으면
- * 한쪽에서 도달 못하는 노드가 생기므로 무방향이 맞다.
- */
-struct ChainingGraph
-{
-  std::vector<std::vector<int>> undirected;  ///< [node_index] → [이웃 node_index 리스트]
-};
 
 /**
  * @brief Greedy chaining 종료 이유
@@ -76,6 +63,24 @@ struct SideResult
 };
 
 /**
+ * @brief Chainer 내부 서브스텝별 소요시간 (ms 단위)
+ *
+ * DirectionChainResult에 포함되어 노드에서 디버그 토픽으로 발행된다.
+ * 어느 서브스텝이 병목인지 식별하는 데 사용.
+ */
+struct ChainerTiming
+{
+  double seed_ms = 0.0;             ///< find_seed(L) + find_seed(R)
+  double left_backbone_ms = 0.0;    ///< extract_backbone(left)
+  double right_backbone_ms = 0.0;   ///< extract_backbone(right)
+  double overlap_ms = 0.0;          ///< resolve_overlaps()
+  double trim_ms = 0.0;             ///< trim_crossing_backbones()
+  double left_resample_ms = 0.0;    ///< resample_component(left)
+  double right_resample_ms = 0.0;   ///< resample_component(right)
+  double total_ms = 0.0;            ///< chain() 전체
+};
+
+/**
  * @brief DirectionChainer의 출력 결과 — 좌/우 side 전체
  *
  * 최소 한쪽 backbone이 성공적으로 생성되면 valid=true.
@@ -95,6 +100,9 @@ struct DirectionChainResult
   /// 교차 판정: 한쪽 backbone이 반대쪽 seed를 체이닝한 경우
   bool left_crossed_right = false;  ///< left backbone이 right seed를 포함
   bool right_crossed_left = false;  ///< right backbone이 left seed를 포함
+
+  /// 내부 서브스텝별 소요시간 (디버그 토픽용)
+  ChainerTiming timing;
 };
 
 }  // namespace chaining_costmap_ver

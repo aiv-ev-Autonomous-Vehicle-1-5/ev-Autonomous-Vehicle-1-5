@@ -27,9 +27,8 @@
  * [파이프라인 상세]
  *
  *   ┌─────────────────────────────────────────────────────────┐
- *   │ 준비: Seed 선택 + Undirected Graph 구성                  │
+ *   │ 준비: Seed 선택                                          │
  *   │   - 좌/우 각각 시작점(seed) 선택                         │
- *   │   - 모든 점에 대해 kNN + G1,G3 게이트로 그래프 구성       │
  *   ├─────────────────────────────────────────────────────────┤
  *   │ 1단계: Left Backbone 독립 추출                           │
  *   │   - left seed에서 독립 owner로 chaining                 │
@@ -190,38 +189,6 @@ private:
   int find_seed(
     const std::vector<ChainPoint> & points,
     bool is_left,
-    const PlanningParams::Chainer & cp) const;
-
-  // ═══════════════════════════════════════════════════════════
-  // Undirected Graph 구성 — kNN + 게이트 필터
-  // ═══════════════════════════════════════════════════════════
-  /**
-   * @brief 모든 점 간의 연결 관계를 kNN + 게이트로 구성
-   *
-   * [왜 kNN을 사용하는가?]
-   *   - 모든 점 쌍(O(n²))을 검사하면 비효율적이다.
-   *   - 각 점의 k개 최근접 이웃만 검사하면 O(n·k)로 충분하다.
-   *   - 경계점은 보통 수십~수백 개이므로 brute-force kNN으로 충분하다.
-   *
-   * [게이트의 역할]
-   *   - G1 (거리 게이트): d(i,j) ≤ d_max
-   *     → 너무 먼 점끼리 연결되면 다른 경계의 점이 섞일 수 있다.
-   *   - G3 (횡오차 게이트): |Δy| ≤ lateral_gate
-   *     → 좌/우 경계가 그래프에서 직접 연결되는 것을 방지한다.
-   *     → 방향 정보가 없으므로 단순 y 차이로 판정한다.
-   *   ※ G2 (전방 cone 게이트)는 여기서 적용하지 않는다.
-   *     → 방향 벡터가 없기 때문. backbone에서 동적으로 적용된다.
-   *
-   * [출력]
-   *   - ChainingGraph.undirected: 양방향 인접 리스트
-   *   - undirected[i] = {j1, j2, ...} → i와 연결된 이웃 인덱스들
-   *
-   * @param points  필터링된 경계점 배열
-   * @param cp      chainer 파라미터 (k, d_max, lateral_gate 사용)
-   * @return ChainingGraph  양방향 인접 리스트 그래프
-   */
-  ChainingGraph build_graph(
-    const std::vector<ChainPoint> & points,
     const PlanningParams::Chainer & cp) const;
 
   // ═══════════════════════════════════════════════════════════

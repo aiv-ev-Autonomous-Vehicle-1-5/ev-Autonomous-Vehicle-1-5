@@ -25,7 +25,7 @@ on_timer() — 10Hz (100ms)
 │
 ├── Stage 2: DirectionChainer v4  [chainer/*.cpp]
 │     독립 체이닝 + Backtracking 중복 해소 + L/R 백본 추출
-│     find_seed (2-pass bbox 우선) → build_graph
+│     find_seed (2-pass bbox 우선)
 │       → extract_backbone(L, 독립) → extract_backbone(R, 독립)
 │       → resolve_overlaps (backtracking) → trim_crossing → resample
 │     * find_seed 전략 (2-pass bbox 우선):
@@ -89,8 +89,59 @@ on_timer() — 10Hz (100ms)
 └── Stage 7: Publish  [nodes/debug_publisher.hpp]
       Core: path (Marker), status (String)
       Debug: costmap, obstacle_wall, curvature, raw_path,
-             pruned_path, chains, seeds, local_goal
+             pruned_path, chains, seeds, local_goal, pipeline_timing
 ```
+
+---
+
+## 성능 디버깅 토픽
+
+`/planning/debug/pipeline_timing` (std_msgs/String, lazy — 구독자가 있을 때만 발행)
+
+파이프라인 각 스테이지의 소요시간(ms)을 실시간으로 모니터링할 수 있다.
+chain 실패, seed 미검출, backbone 1개 노드 등 비정상 상황에서 어느 스테이지가 병목인지 식별 용도.
+
+```bash
+ros2 topic echo /planning/debug/pipeline_timing
+```
+
+출력 예시:
+```
+[Timing] total=15.32ms
+  stage1_input=0.12ms
+  stage2_chainer=3.45ms (seed=0.01 L_bb=0.95 R_bb=0.88 overlap=0.52 trim=0.01 L_resamp=0.12 R_resamp=0.14)
+  stage3_costmap=5.21ms
+  stage3_entry=0.34ms
+  stage3_center=1.82ms
+  stage3_goal=0.05ms
+  stage3_astar=2.88ms
+  stage5_post=0.92ms
+  stage6_safety=0.01ms
+  ---
+  pts=45 seeds(L:3 R:7) bb(L:12 R:15) comp(L:120 R:150) unchained:18 center:95 astar_path:87 valid:1 status:OK
+```
+
+| 필드 | 설명 |
+|------|------|
+| `stage1_input` | Input Parse + TF 변환 |
+| `stage2_chainer` | DirectionChainer 전체 (내부 서브스텝 괄호 안) |
+| `seed` | find_seed(L) + find_seed(R) |
+| `L_bb` / `R_bb` | extract_backbone (좌/우) |
+| `overlap` | resolve_overlaps() backtracking |
+| `trim` | trim_crossing_backbones() 선분 교차 검증 |
+| `L_resamp` / `R_resamp` | resample_component (좌/우) |
+| `stage3_costmap` | Gaussian costmap generate() |
+| `stage3_entry` | Entry walls 생성 |
+| `stage3_center` | 중앙선 유인 비용 적용 |
+| `stage3_goal` | Goal 계산 + clamp |
+| `stage3_astar` | A* 경로 탐색 |
+| `stage5_post` | Postprocess (prune→smooth→curvature_clamp→resample) |
+| `stage6_safety` | Safety check |
+| `pts` | 입력 포인트 수 |
+| `seeds` | 좌/우 seed 인덱스 (-1=미검출) |
+| `bb` | 좌/우 backbone 노드 수 |
+| `comp` | 좌/우 리샘플 컴포넌트 수 |
+| `unchained` | unchained 포인트 수 (costmap 장애물) |
 
 ---
 
@@ -105,7 +156,7 @@ chaining_costmap_ver/
 │   │   │   ├── point_types.hpp       # Point2D, PointType, ChainedPoint, ChainPoint
 │   │   │   ├── costmap_types.hpp     # CostmapResult
 │   │   │   ├── planner_types.hpp     # PostprocessResult, PlannerState
-│   │   │   └── chain_types.hpp       # ChainingGraph, StopReason, NodeOwner, SideResult, DirectionChainResult
+│   │   │   └── chain_types.hpp       # StopReason, NodeOwner, SideResult, DirectionChainResult
 │   │   ├── params.hpp                # PlanningParams (모든 파라미터 구조체)
 │   │   ├── geometry.hpp              # 2D 기하 유틸리티 (inline)
 │   │   └── debug_publish.hpp         # to_path_msg(), to_points_marker()
@@ -125,10 +176,9 @@ chaining_costmap_ver/
 │       ├── goal_calculator.hpp       # Stage 3c: calculate_goal() 선언
 │       └── debug_publisher.hpp       # Stage 7: 디버그 시각화 헬퍼 선언
 ├── src/
-│   ├── chainer/                      # DirectionChainer 구현 (5파일, 1클래스)
+│   ├── chainer/                      # DirectionChainer 구현 (4파일, 1클래스)
 │   │   ├── direction_chainer.cpp     # chain() 오케스트레이터
 │   │   ├── seed_selector.cpp         # find_seed(), knn()
-│   │   ├── graph_builder.cpp         # build_graph()
 │   │   ├── backbone_extractor.cpp    # extract_backbone(), chain_one_direction(),
 │   │   │                             #   compute_cost(), compute_cost_prime(),
 │   │   │                             #   resolve_overlaps(), compute_backtrack_cost(),
@@ -170,7 +220,7 @@ chaining_costmap_ver/
 
 | 타겟 | 타입 | 소스 파일 |
 |------|------|-----------|
-| `chaining_costmap_chainer` | 공유 라이브러리 | `src/chainer/*.cpp` (5파일) |
+| `chaining_costmap_chainer` | 공유 라이브러리 | `src/chainer/*.cpp` (4파일) |
 | `chaining_costmap_costmap` | 공유 라이브러리 | `src/costmap/costmap_generator.cpp` |
 | `chaining_costmap_astar` | 공유 라이브러리 | `src/planner/astar_planner.cpp` |
 | `chaining_costmap_postprocess` | 공유 라이브러리 | `src/postprocess/*.cpp` (4파일) |

@@ -203,6 +203,7 @@ private:
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_center_line_;     ///< 중앙선 포인트 시각화
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_left_chain_;   ///< resolve_overlaps 이전 raw left backbone
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_right_chain_;  ///< resolve_overlaps 이전 raw right backbone
+  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_dbg_timing_;         ///< 파이프라인 스테이지별 소요시간 (lazy)
 
   // ── TF2 (velodyne → base_link 변환) ──
   std::shared_ptr<tf2_ros::Buffer> tf_buffer_;

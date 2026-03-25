@@ -5,7 +5,6 @@
  * Owner-Label 기반 독립 체이닝의 메인 진입점만 포함.
  * 각 단계의 구현은 별도 .cpp 파일로 분리되어 있다:
  *   - seed_selector.cpp:      find_seed(), knn()
- *   - graph_builder.cpp:      build_graph()
  *   - backbone_extractor.cpp: extract_backbone(), chain_one_direction(),
  *                             compute_cost(), compute_cost_prime(),
  *                             resolve_overlaps(), compute_backtrack_cost(),
@@ -13,7 +12,7 @@
  *   - chain_resampler.cpp:    resample_component()
  *
  * [파이프라인 요약]
- *   준비: find_seed() → build_graph() → owner[] 초기화
+ *   준비: find_seed() → owner[] 초기화
  *   1단계: extract_backbone(left)   — 독립 owner 사용
  *   2단계: extract_backbone(right)  — 독립 owner 사용 (left와 무관)
  *   2.5단계: resolve_overlaps() — 중복 노드 backtracking 해소
@@ -28,6 +27,7 @@
 #include "chaining_costmap_ver/chainer/direction_chainer.hpp"
 
 #include <algorithm>
+#include <chrono>
 #include <cstdio>
 #include <vector>
 
@@ -38,6 +38,9 @@ DirectionChainResult DirectionChainer::chain(
   const std::vector<ChainPoint> & points,
   const PlanningParams & params) const
 {
+  using Clock = std::chrono::steady_clock;
+  auto t_total_start = Clock::now();
+
   DirectionChainResult result;
   const auto & cp = params.chainer;
 
@@ -46,12 +49,12 @@ DirectionChainResult DirectionChainer::chain(
   if (filtered.size() < 2) return result;
 
   // 준비: Seed 선택
+  auto t0 = Clock::now();
   int left_seed = find_seed(filtered, true, cp);
   int right_seed = find_seed(filtered, false, cp);
+  result.timing.seed_ms =
+    std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
   if (left_seed < 0 && right_seed < 0) return result;
-
-  // 준비: Undirected Graph 구성
-  auto graph = build_graph(filtered, cp);
 
   // 1단계: Left Backbone 독립 추출
   // owner_left는 left 전용 — right에 영향 없음
@@ -59,9 +62,12 @@ DirectionChainResult DirectionChainer::chain(
   StopReason left_stop_fwd = StopReason::NO_CANDIDATE;
   int left_seed_bb_pos = 0;
   if (left_seed >= 0) {
+    t0 = Clock::now();
     std::vector<NodeOwner> owner_left(filtered.size(), NodeOwner::NONE);
     left_backbone_ids = extract_backbone(
       filtered, owner_left, left_seed, true, left_stop_fwd, left_seed_bb_pos, cp);
+    result.timing.left_backbone_ms =
+      std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
   }
 
   // 2단계: Right Backbone 독립 추출
@@ -70,9 +76,12 @@ DirectionChainResult DirectionChainer::chain(
   StopReason right_stop_fwd = StopReason::NO_CANDIDATE;
   int right_seed_bb_pos = 0;
   if (right_seed >= 0) {
+    t0 = Clock::now();
     std::vector<NodeOwner> owner_right(filtered.size(), NodeOwner::NONE);
     right_backbone_ids = extract_backbone(
       filtered, owner_right, right_seed, false, right_stop_fwd, right_seed_bb_pos, cp);
+    result.timing.right_backbone_ms =
+      std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
   }
 
   // raw backbone 보존 (resolve_overlaps 이전 상태, 디버그용)
@@ -82,11 +91,14 @@ DirectionChainResult DirectionChainer::chain(
     result.raw_right_backbone.push_back(filtered[idx]);
 
   // 2.5단계: 독립 체이닝 중복 해소 — Backtracking
+  t0 = Clock::now();
   if (!left_backbone_ids.empty() && !right_backbone_ids.empty() &&
       cp.max_backtrack_count > 0) {
     resolve_overlaps(
       filtered, left_backbone_ids, right_backbone_ids, cp);
   }
+  result.timing.overlap_ms =
+    std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
 
   // 2.6단계: 교차 판정 — backbone 인덱스 리스트에서 직접 검색
   if (right_seed >= 0 && !left_backbone_ids.empty()) {
@@ -134,7 +146,10 @@ DirectionChainResult DirectionChainer::chain(
 
   // 2.75단계: 교차 검증 — 좌/우 backbone 선분 교차 시 양쪽 tail trim
   // resample 전에 수행하여 trimming 결과가 리샘플링에 반영되도록 함
+  t0 = Clock::now();
   trim_crossing_backbones(filtered, left_backbone_ids, right_backbone_ids, owner);
+  result.timing.trim_ms =
+    std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
 
   // 3단계: 좌/우 각각 Resample + SideResult 구성
   if (!left_backbone_ids.empty()) {
@@ -146,8 +161,11 @@ DirectionChainResult DirectionChainer::chain(
     for (int idx : left_backbone_ids) {
       result.left.backbone.push_back(filtered[idx]);
     }
+    t0 = Clock::now();
     result.left.component = resample_component(
       filtered, left_backbone_ids, cp.resample_ds);
+    result.timing.left_resample_ms =
+      std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
   }
 
   if (!right_backbone_ids.empty()) {
@@ -159,8 +177,11 @@ DirectionChainResult DirectionChainer::chain(
     for (int idx : right_backbone_ids) {
       result.right.backbone.push_back(filtered[idx]);
     }
+    t0 = Clock::now();
     result.right.component = resample_component(
       filtered, right_backbone_ids, cp.resample_ds);
+    result.timing.right_resample_ms =
+      std::chrono::duration<double, std::milli>(Clock::now() - t0).count();
   }
 
   // unchained 포인트 수집
@@ -172,6 +193,9 @@ DirectionChainResult DirectionChainer::chain(
 
   result.valid = (!result.left.backbone.empty() ||
                   !result.right.backbone.empty());
+
+  result.timing.total_ms =
+    std::chrono::duration<double, std::milli>(Clock::now() - t_total_start).count();
   return result;
 }
 

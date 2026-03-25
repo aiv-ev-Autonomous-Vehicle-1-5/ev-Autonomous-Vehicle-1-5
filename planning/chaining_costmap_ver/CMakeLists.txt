@@ -38,14 +38,12 @@ include_directories(include)
 # Library 1: chaining_costmap_chainer — DirectionChainer 라이브러리
 #   direction_chainer.cpp: chain() 오케스트레이터
 #   seed_selector.cpp:     find_seed(), knn()
-#   graph_builder.cpp:     build_graph()
 #   backbone_extractor.cpp: extract_backbone(), chain_one_direction(), compute_cost()
 #   chain_resampler.cpp:   resample_component()
 # ============================================================================
 add_library(chaining_costmap_chainer SHARED
   src/chainer/direction_chainer.cpp
   src/chainer/seed_selector.cpp
-  src/chainer/graph_builder.cpp
   src/chainer/backbone_extractor.cpp
   src/chainer/chain_resampler.cpp
 )

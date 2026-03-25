@@ -47,6 +47,7 @@
 #include <chrono>
 #include <cmath>
 #include <algorithm>
+#include <sstream>
 
 namespace chaining_costmap_ver
 {
@@ -125,6 +126,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/raw_left_chain", qos_dbg);
   pub_dbg_raw_right_chain_ = create_publisher<nav_msgs::msg::Path>(
     "/planning/debug/raw_right_chain", qos_dbg);
+  pub_dbg_timing_ = create_publisher<std_msgs::msg::String>(
+    "/planning/debug/pipeline_timing", qos_dbg);
 
   // ── 10Hz 타이머 ──
   timer_ = create_wall_timer(
@@ -159,6 +162,10 @@ bool LCPlannerNode::check_stale() const
 // ══════════════════════════════════════════════════════════════
 void LCPlannerNode::on_timer()
 {
+  using Clock = std::chrono::steady_clock;
+  const bool timing_subscribed = (pub_dbg_timing_->get_subscription_count() > 0);
+  auto t_pipeline_start = Clock::now();
+
   // 원본 센서 타임스탬프를 전파 — topic delay 측정 가능
   rclcpp::Time stamp(0, 0, RCL_ROS_TIME);
   if (last_raw_bboxes_) {
@@ -182,6 +189,7 @@ void LCPlannerNode::on_timer()
 
   // ======== Stage 1: Input Parse ========
   // raw_bboxes(tracker 이전)로 chaining — persisted bbox가 chain에 섞이는 것을 방지
+  auto t_stage1 = Clock::now();
   std::vector<ChainPoint> all_pts;
   parse_input(last_raw_bboxes_.get(), last_lanes_.get(), all_pts);
 
@@ -221,8 +229,11 @@ void LCPlannerNode::on_timer()
   }
 
   // ======== Stage 2: DirectionChainer ========
+  double t_stage1_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_stage1).count();
   std::fprintf(stderr, "[DBG] Stage2 start — all_pts:%zu\n", all_pts.size());
+  auto t_stage2 = Clock::now();
   auto dc_result = direction_chainer_.chain(all_pts, params_);
+  double t_stage2_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_stage2).count();
   std::fprintf(stderr, "[DBG] Stage2 done — valid=%d left_bb:%zu right_bb:%zu unchained:%zu\n",
     dc_result.valid ? 1 : 0,
     dc_result.left.backbone.size(), dc_result.right.backbone.size(),
@@ -268,13 +279,16 @@ void LCPlannerNode::on_timer()
   // 3b. Costmap 생성
   std::fprintf(stderr, "[DBG] Stage3b costmap gen — left:%zu right:%zu unchained:%zu\n",
     left_chained.size(), right_chained.size(), unchained_chained.size());
+  auto t_costmap = Clock::now();
   auto costmap = costmap_generator_.generate(
     left_chained, right_chained, unchained_chained, params_);
+  double t_costmap_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_costmap).count();
   std::fprintf(stderr, "[DBG] Stage3b costmap done — valid=%d rows=%d cols=%d\n",
     costmap.valid ? 1 : 0, costmap.rows, costmap.cols);
 
   // 3b-2. Entry walls
   std::fprintf(stderr, "[DBG] Stage3b-2 entry walls start\n");
+  auto t_entry = Clock::now();
   if (costmap.valid &&
       !dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
     Point2D left_seed = {
@@ -285,14 +299,17 @@ void LCPlannerNode::on_timer()
       dc_result.right.backbone.front().y};
     CostmapGenerator::apply_entry_walls(costmap, left_seed, right_seed, params_);
   }
+  double t_entry_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_entry).count();
 
   // 3b-3. 중앙선 유인 비용 적용
   std::fprintf(stderr, "[DBG] Stage3b-3 center attract start\n");
+  auto t_center = Clock::now();
   std::vector<Point2D> center_line;
   if (costmap.valid) {
     center_line = CostmapGenerator::apply_center_attraction(
       costmap, left_chained, right_chained, params_);
   }
+  double t_center_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_center).count();
 
   // 중앙선 디버그 발행 (POINTS 마커)
   if (pub_dbg_center_line_->get_subscription_count() > 0 && !center_line.empty()) {
@@ -322,14 +339,17 @@ void LCPlannerNode::on_timer()
 
   // 3c. Goal 계산
   std::fprintf(stderr, "[DBG] Stage3c goal calc — center_line:%zu\n", center_line.size());
+  auto t_goal = Clock::now();
   auto goal_result = calculate_goal(dc_result, costmap, center_line, params_);
 
   // 3d. Goal을 costmap 경계 안쪽으로 clamp
   if (goal_result.have_goal && costmap.valid) {
     clamp_goal_to_costmap(goal_result.goal, costmap);
   }
+  double t_goal_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_goal).count();
 
   // 3e. A* 경로 탐색
+  auto t_astar = Clock::now();
   std::vector<Point2D> raw_path;
   if (goal_result.have_goal && costmap.valid) {
     std::fprintf(stderr, "[DBG] Stage3e A* start — goal(%.2f,%.2f)\n",
@@ -337,9 +357,11 @@ void LCPlannerNode::on_timer()
     raw_path = astar_planner_.plan(costmap, {0.0, 0.0}, goal_result.goal, params_);
     std::fprintf(stderr, "[DBG] Stage3e A* done — path:%zu pts\n", raw_path.size());
   }
+  double t_astar_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_astar).count();
 
   // ======== Stage 5: Postprocess ========
   std::fprintf(stderr, "[DBG] Stage5 postprocess start — raw_path:%zu\n", raw_path.size());
+  auto t_post = Clock::now();
   auto pp_result = postprocessor_.process(
     raw_path,
     params_.postprocess.prune_max_dev,
@@ -347,11 +369,14 @@ void LCPlannerNode::on_timer()
     params_.postprocess.resample_ds,
     1.0 / params_.vehicle.r_min(),
     params_.postprocess.curvature_clamp_max_iter);
+  double t_post_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_post).count();
 
   // ======== Stage 6: Safety Check ========
   std::fprintf(stderr, "[DBG] Stage6 safety start — pp_path:%zu valid=%d\n",
     pp_result.path.size(), pp_result.valid ? 1 : 0);
+  auto t_safety = Clock::now();
   auto safety = safety_checker::check(pp_result, params_);
+  double t_safety_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_safety).count();
   std::fprintf(stderr, "[DBG] Stage6 done — %s\n", safety.reason.c_str());
 
   // ── 상태 로그 ──
@@ -484,6 +509,51 @@ void LCPlannerNode::on_timer()
       pub_dbg_local_goal_->publish(
         std::make_unique<visualization_msgs::msg::MarkerArray>(goal_ma));
     }
+  }
+
+  // ── Debug: pipeline timing (lazy) ──
+  if (timing_subscribed) {
+    double t_total_ms = std::chrono::duration<double, std::milli>(
+      Clock::now() - t_pipeline_start).count();
+    const auto & ct = dc_result.timing;  // chainer 내부 타이밍
+
+    std::ostringstream ss;
+    ss << std::fixed;
+    ss.precision(2);
+    ss << "[Timing] total=" << t_total_ms << "ms\n"
+       << "  stage1_input=" << t_stage1_ms << "ms\n"
+       << "  stage2_chainer=" << t_stage2_ms << "ms"
+       << " (seed=" << ct.seed_ms
+       << " L_bb=" << ct.left_backbone_ms
+       << " R_bb=" << ct.right_backbone_ms
+       << " overlap=" << ct.overlap_ms
+       << " trim=" << ct.trim_ms
+       << " L_resamp=" << ct.left_resample_ms
+       << " R_resamp=" << ct.right_resample_ms << ")\n"
+       << "  stage3_costmap=" << t_costmap_ms << "ms\n"
+       << "  stage3_entry=" << t_entry_ms << "ms\n"
+       << "  stage3_center=" << t_center_ms << "ms\n"
+       << "  stage3_goal=" << t_goal_ms << "ms\n"
+       << "  stage3_astar=" << t_astar_ms << "ms\n"
+       << "  stage5_post=" << t_post_ms << "ms\n"
+       << "  stage6_safety=" << t_safety_ms << "ms\n"
+       << "  ---\n"
+       << "  pts=" << all_pts.size()
+       << " seeds(L:" << dc_result.left.seed_idx
+       << " R:" << dc_result.right.seed_idx << ")"
+       << " bb(L:" << dc_result.left.backbone.size()
+       << " R:" << dc_result.right.backbone.size() << ")"
+       << " comp(L:" << left_chained.size()
+       << " R:" << right_chained.size() << ")"
+       << " unchained:" << unchained_chained.size()
+       << " center:" << center_line.size()
+       << " astar_path:" << raw_path.size()
+       << " valid:" << (dc_result.valid ? 1 : 0)
+       << " status:" << safety.reason;
+
+    auto timing_msg = std::make_unique<std_msgs::msg::String>();
+    timing_msg->data = ss.str();
+    pub_dbg_timing_->publish(std::move(timing_msg));
   }
 }
 
