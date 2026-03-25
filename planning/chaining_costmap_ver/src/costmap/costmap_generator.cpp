@@ -217,20 +217,30 @@ CostmapResult CostmapGenerator::generate(
   };
 
   // ── segment 기반 per-point 안쪽 코너 패딩 계산 ──
+  std::fprintf(stderr, "[DBG-gen] extras start (L:%zu R:%zu padding_max=%.2f)\n",
+    left_chain.size(), right_chain.size(), cm.inner_corner_padding_max);
+  fflush(stderr);
   std::vector<double> left_extras(left_chain.size(), 0.0);
   std::vector<double> right_extras(right_chain.size(), 0.0);
   if (cm.inner_corner_padding_max > 0.0) {
     compute_per_point_extras(left_chain, right_chain, params,
                              left_extras, right_extras);
   }
+  std::fprintf(stderr, "[DBG-gen] extras done\n"); fflush(stderr);
 
-  apply_chain(left_chain, left_extras);     // 좌측 경계 비용 적용
-  apply_chain(right_chain, right_extras);   // 우측 경계 비용 적용
+  apply_chain(left_chain, left_extras);
+  std::fprintf(stderr, "[DBG-gen] left chain done (%zu)\n", left_chain.size()); fflush(stderr);
+  apply_chain(right_chain, right_extras);
+  std::fprintf(stderr, "[DBG-gen] right chain done (%zu)\n", right_chain.size()); fflush(stderr);
 
   // ── unchained 포인트 처리 ──
-  // 체이닝 실패 = 좌/우 경계에 배정되지 못한 점
-  // BBOX: 정체 불명 장애물 → bbox_cost_max(100)으로 보수적 처리
-  // LANE: 차선 포인트 → lane_cost_max(50)으로 처리
+  int unch_bbox = 0, unch_lane = 0;
+  for (const auto & pt : unchained) {
+    if (pt.type == PointType::BBOX) ++unch_bbox; else ++unch_lane;
+  }
+  std::fprintf(stderr, "[DBG-gen] unchained start — bbox:%d lane:%d\n", unch_bbox, unch_lane);
+  fflush(stderr);
+  int unch_idx = 0;
   for (const auto & pt : unchained) {
     const Point2D src = pt.to_point2d();
     if (pt.type == PointType::BBOX) {
@@ -246,7 +256,13 @@ CostmapResult CostmapGenerator::generate(
         src, cm.lane_cost_max, cm.sigma, cm.cost_threshold,
         cm.lane_radius);
     }
+    if (unch_idx % 100 == 0) {
+      std::fprintf(stderr, "[DBG-gen] unchained[%d/%zu] done\n", unch_idx, unchained.size());
+      fflush(stderr);
+    }
+    ++unch_idx;
   }
+  std::fprintf(stderr, "[DBG-gen] unchained all done\n"); fflush(stderr);
 
   result.valid = true;
   return result;

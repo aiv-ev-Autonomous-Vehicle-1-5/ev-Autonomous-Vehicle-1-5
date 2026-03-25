@@ -223,7 +223,12 @@ void LCPlannerNode::on_timer()
   }
 
   // ======== Stage 2: DirectionChainer ========
+  std::fprintf(stderr, "[DBG] Stage2 start — all_pts:%zu\n", all_pts.size());
   auto dc_result = direction_chainer_.chain(all_pts, params_);
+  std::fprintf(stderr, "[DBG] Stage2 done — valid=%d left_bb:%zu right_bb:%zu unchained:%zu\n",
+    dc_result.valid ? 1 : 0,
+    dc_result.left.backbone.size(), dc_result.right.backbone.size(),
+    dc_result.unchained.size());
 
   // ======== Stage 2.5: Seed Gate ========
   if (!dc_result.valid) {
@@ -263,10 +268,15 @@ void LCPlannerNode::on_timer()
   }
 
   // 3b. Costmap 생성
+  std::fprintf(stderr, "[DBG] Stage3b costmap gen — left:%zu right:%zu unchained:%zu\n",
+    left_chained.size(), right_chained.size(), unchained_chained.size());
   auto costmap = costmap_generator_.generate(
     left_chained, right_chained, unchained_chained, params_);
+  std::fprintf(stderr, "[DBG] Stage3b costmap done — valid=%d rows=%d cols=%d\n",
+    costmap.valid ? 1 : 0, costmap.rows, costmap.cols);
 
-  // 3b-2. Entry walls (중앙선 유인보다 먼저 적용 — 중앙선이 마지막에 비용을 빼야 override되지 않음)
+  // 3b-2. Entry walls
+  std::fprintf(stderr, "[DBG] Stage3b-2 entry walls start\n");
   if (costmap.valid &&
       !dc_result.left.backbone.empty() && !dc_result.right.backbone.empty()) {
     Point2D left_seed = {
@@ -278,7 +288,8 @@ void LCPlannerNode::on_timer()
     CostmapGenerator::apply_entry_walls(costmap, left_seed, right_seed, params_);
   }
 
-  // 3b-3. 중앙선 유인 비용 적용 (가장 마지막에 적용하여 다른 비용이 덮어쓰지 못하게 함)
+  // 3b-3. 중앙선 유인 비용 적용
+  std::fprintf(stderr, "[DBG] Stage3b-3 center attract start\n");
   std::vector<Point2D> center_line;
   if (costmap.valid) {
     center_line = CostmapGenerator::apply_center_attraction(
@@ -311,7 +322,8 @@ void LCPlannerNode::on_timer()
     pub_dbg_center_line_->publish(std::move(m));
   }
 
-  // 3c. Goal 계산 — centerline 끝점을 goal로 사용 (goal_calculator.hpp)
+  // 3c. Goal 계산
+  std::fprintf(stderr, "[DBG] Stage3c goal calc — center_line:%zu\n", center_line.size());
   auto goal_result = calculate_goal(dc_result, costmap, center_line, params_);
 
   // 3d. Goal을 costmap 경계 안쪽으로 clamp
@@ -322,10 +334,14 @@ void LCPlannerNode::on_timer()
   // 3e. A* 경로 탐색
   std::vector<Point2D> raw_path;
   if (goal_result.have_goal && costmap.valid) {
+    std::fprintf(stderr, "[DBG] Stage3e A* start — goal(%.2f,%.2f)\n",
+      goal_result.goal.x, goal_result.goal.y);
     raw_path = astar_planner_.plan(costmap, {0.0, 0.0}, goal_result.goal, params_);
+    std::fprintf(stderr, "[DBG] Stage3e A* done — path:%zu pts\n", raw_path.size());
   }
 
   // ======== Stage 5: Postprocess ========
+  std::fprintf(stderr, "[DBG] Stage5 postprocess start — raw_path:%zu\n", raw_path.size());
   auto pp_result = postprocessor_.process(
     raw_path,
     params_.postprocess.prune_max_dev,
@@ -335,7 +351,10 @@ void LCPlannerNode::on_timer()
     params_.postprocess.curvature_clamp_max_iter);
 
   // ======== Stage 6: Safety Check ========
+  std::fprintf(stderr, "[DBG] Stage6 safety start — pp_path:%zu valid=%d\n",
+    pp_result.path.size(), pp_result.valid ? 1 : 0);
   auto safety = safety_checker::check(pp_result, params_);
+  std::fprintf(stderr, "[DBG] Stage6 done — %s\n", safety.reason.c_str());
 
   // ── 상태 로그 ──
   const double r_min = params_.vehicle.r_min();
@@ -357,6 +376,7 @@ void LCPlannerNode::on_timer()
   }
 
   // ======== Stage 7: Publish ========
+  std::fprintf(stderr, "[DBG] Stage7 publish start\n");
   // ── Core: 최종 경로 발행 ──
   auto path_msg = std::make_unique<visualization_msgs::msg::Marker>(
     to_points_marker(pp_result.path, frame_id, stamp,
