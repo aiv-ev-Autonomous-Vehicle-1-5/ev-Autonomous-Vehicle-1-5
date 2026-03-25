@@ -123,59 +123,6 @@ public:
     const Point2D & right_seed,
     const PlanningParams & params);
 
-  // ── segment 기반 안쪽 코너 패딩 ──
-
-  /// heading 극점 단위로 분할된 구간 정보
-  struct Segment {
-    size_t begin;   ///< chain 인덱스 시작 (inclusive)
-    size_t end;     ///< chain 인덱스 끝 (exclusive)
-    int    sign;    ///< +1=좌회전, -1=우회전, 0=직진
-  };
-
-  /**
-   * @brief chain 각 점의 회전 부호 계산 (외적 기반)
-   *
-   * 연속 3점(i-1, i, i+1)의 외적 부호로 좌/우회전 판정.
-   * 양수(+1)=좌회전, 음수(-1)=우회전, 0=직진(|외적|<eps).
-   * 첫/끝 점은 인접 점의 부호를 상속.
-   *
-   * @return chain.size() 길이의 부호 배열
-   */
-  static std::vector<int> compute_turning_signs(
-    const std::vector<ChainedPoint> & chain);
-
-  /**
-   * @brief 부호 배열에서 극점 단위 구간 분할
-   *
-   * 부호가 바뀌는 지점에서 구간 분할.
-   * min_segment_len 미만 구간은 인접 구간에 병합하여 노이즈 방지.
-   */
-  static std::vector<Segment> split_segments(
-    const std::vector<int> & signs,
-    size_t min_segment_len = 5);
-
-  /**
-   * @brief chain 특정 범위 [begin, end) 내 backbone 최대 |곡률| 계산
-   *
-   * Menger 곡률 절대값의 최대를 반환 (3점 미만이면 0.0).
-   */
-  static double compute_segment_curvature(
-    const std::vector<ChainedPoint> & chain,
-    size_t begin, size_t end);
-
-  /**
-   * @brief segment 기반 per-point 안쪽 코너 패딩 계산
-   *
-   * ref chain(더 긴 쪽)의 heading 극점으로 구간 분할 후,
-   * 각 구간마다 안쪽 사이드를 판정하여 해당 chain 점들에 패딩 할당.
-   * 곡률 정규화 범위: corner_curvature_threshold ~ 1/r_min(차량 한계).
-   */
-  static void compute_per_point_extras(
-    const std::vector<ChainedPoint> & left_chain,
-    const std::vector<ChainedPoint> & right_chain,
-    const PlanningParams & params,
-    std::vector<double> & left_extras,
-    std::vector<double> & right_extras);
 
 private:
   /**

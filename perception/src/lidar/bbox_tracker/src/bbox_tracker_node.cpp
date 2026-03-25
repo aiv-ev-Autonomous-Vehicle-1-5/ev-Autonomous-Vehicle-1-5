@@ -1,6 +1,9 @@
 // ============================================================================
 // bbox_tracker_node.cpp — BBox 트래커 노드 구현
 // ============================================================================
+// 간단한 Greedy NN 매칭 + Bicycle Model ego-motion prediction.
+// 고정 max_miss_count 프레임 초과 시 트랙 삭제.
+// ============================================================================
 
 #include "bbox_tracker/bbox_tracker_node.hpp"
 
@@ -17,20 +20,16 @@ BBoxTrackerNode::BBoxTrackerNode(const rclcpp::NodeOptions & options)
   // 파라미터
   declare_parameter<double>("wheelbase", wheelbase_);
   declare_parameter<double>("min_match_dist", min_match_dist_);
-  declare_parameter<double>("min_tracking_time", min_tracking_time_);
-  declare_parameter<double>("max_tracking_time", max_tracking_time_);
-  declare_parameter<double>("speed_for_min_tracking", speed_for_min_tracking_);
-  declare_parameter<std::string>("input_topic", "/perception/bboxes");
-  declare_parameter<std::string>("output_topic", "/tracked/bboxes");
+  declare_parameter<int>("max_miss_count", max_miss_count_);
+  declare_parameter<std::string>("input_topic", "/perception/raw_bboxes");
+  declare_parameter<std::string>("output_topic", "/perception/bboxes");
   declare_parameter<std::string>("control_topic", "/t870/control_command");
 
-  wheelbase_ = get_parameter("wheelbase").as_double();
+  wheelbase_      = get_parameter("wheelbase").as_double();
   min_match_dist_ = get_parameter("min_match_dist").as_double();
-  min_tracking_time_ = get_parameter("min_tracking_time").as_double();
-  max_tracking_time_ = get_parameter("max_tracking_time").as_double();
-  speed_for_min_tracking_ = get_parameter("speed_for_min_tracking").as_double();
-  const auto input_topic = get_parameter("input_topic").as_string();
-  const auto output_topic = get_parameter("output_topic").as_string();
+  max_miss_count_ = get_parameter("max_miss_count").as_int();
+  const auto input_topic   = get_parameter("input_topic").as_string();
+  const auto output_topic  = get_parameter("output_topic").as_string();
   const auto control_topic = get_parameter("control_topic").as_string();
 
   // Subscriber
@@ -53,9 +52,9 @@ BBoxTrackerNode::BBoxTrackerNode(const rclcpp::NodeOptions & options)
 
   RCLCPP_INFO(get_logger(),
     "bbox_tracker started: in=%s out=%s ctrl=%s wheelbase=%.2f "
-    "tracking_time=[%.2f, %.2f]s speed_thresh=%.1fm/s",
+    "min_match_dist=%.2f max_miss_count=%d",
     input_topic.c_str(), output_topic.c_str(), control_topic.c_str(),
-    wheelbase_, min_tracking_time_, max_tracking_time_, speed_for_min_tracking_);
+    wheelbase_, min_match_dist_, max_miss_count_);
 }
 
 // ===========================================================================
@@ -84,10 +83,10 @@ void BBoxTrackerNode::on_bboxes(ev_msgs::msg::BBoxArray::UniquePtr msg)
   // 1) Predict: ego-motion으로 기존 트랙 좌표 보정
   predict(dt);
 
-  // 2) Match + Update: 새 검출과 매칭
+  // 2) Match + Update
   match_and_update(*msg, dt);
 
-  // 3) Publish: 활성 트랙 발행
+  // 3) Publish
   publish_tracks(msg->header);
 }
 
@@ -120,13 +119,14 @@ void BBoxTrackerNode::predict(double dt)
 }
 
 // ===========================================================================
-// match_and_update: 검출-트랙 최근접 매칭 + 상태 갱신
+// match_and_update: 검출-트랙 Greedy NN 매칭 + 고정 프레임 수명 관리
 // ===========================================================================
 void BBoxTrackerNode::match_and_update(const ev_msgs::msg::BBoxArray & detections, double dt)
 {
   const int n_det = static_cast<int>(detections.bboxes.size());
   const int n_trk = static_cast<int>(tracks_.size());
-  // 동적 threshold: 속도 × dt (한 프레임 이동 거리), 최소 0.1m 보장
+
+  // 동적 threshold: 속도 × dt (한 프레임 이동 거리), 최소 min_match_dist_ 보장
   const double dynamic_thresh = std::max(min_match_dist_, std::abs(last_speed_) * dt);
   const double thresh2 = dynamic_thresh * dynamic_thresh;
 
@@ -134,7 +134,7 @@ void BBoxTrackerNode::match_and_update(const ev_msgs::msg::BBoxArray & detection
   std::vector<int> det_to_trk(n_det, -1);
   std::vector<bool> trk_matched(n_trk, false);
 
-  // 간단한 greedy nearest neighbor 매칭
+  // Greedy nearest neighbor 매칭
   for (int d = 0; d < n_det; ++d) {
     const double dx_d = detections.bboxes[d].position.x;
     const double dy_d = detections.bboxes[d].position.y;
@@ -181,16 +181,10 @@ void BBoxTrackerNode::match_and_update(const ev_msgs::msg::BBoxArray & detection
     }
   }
 
-  // 속도 반비례 동적 tracking time 계산
-  const double spd = std::abs(last_speed_);
-  const double ratio = std::clamp(spd / speed_for_min_tracking_, 0.0, 1.0);
-  const double tracking_time = max_tracking_time_ - ratio * (max_tracking_time_ - min_tracking_time_);
-  const int effective_max_miss = std::max(0, static_cast<int>(std::round(tracking_time / dt)));
-
-  // 오래된 트랙 삭제
+  // 고정 프레임 수명 초과 시 삭제
   tracks_.erase(
     std::remove_if(tracks_.begin(), tracks_.end(),
-      [effective_max_miss](const Track & t) { return t.miss_count > effective_max_miss; }),
+      [this](const Track & t) { return t.miss_count > max_miss_count_; }),
     tracks_.end());
 
   // 미매칭 검출: 새 트랙 생성
@@ -234,7 +228,7 @@ void BBoxTrackerNode::publish_tracks(const std_msgs::msg::Header & header)
   }
   pub_tracked_->publish(out);
 
-  // 디버그 마커 (lazy)
+  // 디버그: 전체 트랙 (초록=검출, 빨강=예측)
   if (pub_dbg_tracks_->get_subscription_count() > 0) {
     visualization_msgs::msg::Marker m;
     m.header = header;
@@ -254,20 +248,19 @@ void BBoxTrackerNode::publish_tracks(const std_msgs::msg::Header & header)
       p.z = 0.0;
       m.points.push_back(p);
 
-      // 검출 중 = 초록, 예측 유지 = 빨강
       std_msgs::msg::ColorRGBA c;
       c.a = 1.0f;
       if (t.miss_count == 0) {
-        c.r = 0.0f; c.g = 1.0f; c.b = 0.0f;  // 초록
+        c.r = 0.0f; c.g = 1.0f; c.b = 0.0f;
       } else {
-        c.r = 1.0f; c.g = 0.0f; c.b = 0.0f;  // 빨강
+        c.r = 1.0f; c.g = 0.0f; c.b = 0.0f;
       }
       m.colors.push_back(c);
     }
     pub_dbg_tracks_->publish(m);
   }
 
-  // 예측 유지 중 트랙만 별도 발행 (miss_count > 0인 트랙만)
+  // 디버그: 예측 유지 중 트랙만 (miss_count > 0)
   if (pub_dbg_predicted_->get_subscription_count() > 0) {
     visualization_msgs::msg::Marker m;
     m.header = header;

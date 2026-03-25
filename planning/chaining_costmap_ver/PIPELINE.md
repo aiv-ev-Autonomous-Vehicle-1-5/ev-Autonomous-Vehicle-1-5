@@ -64,16 +64,10 @@ on_timer() — 10Hz (100ms)
 │     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
 │     3b. Gaussian Costmap 생성
 │         * backbone 포인트는 bbox_cost_max + bbox_radius 적용
-│         * 코너 내측 패딩 (segment-based):
-│           ① heading 극점 단위로 backbone을 구간 분할
-│           ② 각 구간마다 안쪽 사이드(L/R)를 독립 판정
-│           ③ 안쪽으로 판정된 구간의 각 점에 per-point padding 적용
-│              곡률 정규화: threshold ~ 1/r_min(차량한계) 범위에서
-│              padding_min ~ padding_max 로 보간
 │     3b-2. Entry walls
 │     3b-3. 중앙선 유인 비용 (center line attraction) ← 가장 마지막에 적용
 │         * 양쪽 backbone 존재 시 2-Phase 중앙선 생성:
-            - Phase 1: 짧은 chain 길이(min_len)까지 양쪽 midpoint 연결
+            - Phase 1: 짧은 chain 길이(min_len)까지 양쪽 midpoint 연결 (chain 간 거리 > center_gap_threshold 시 스킵)
             - Phase 2: 긴 chain의 나머지 구간을 안쪽으로 track_half_width 오프셋
             음의 가우시안 비용 적용
 │         * 한쪽 backbone만 존재 시: track_half_width(0.75m) 수직 오프셋으로 centerline 계산
@@ -221,10 +215,8 @@ LiDAR bbox 좌표 변환은 `tf2_ros::Buffer::lookupTransform("base_link", "velo
 | `resolution` | 0.15 | m | 셀 해상도 |
 | `bbox_cost_max` | 100 | - | 장애물 최대 비용 |
 | `lane_cost_max` | 70 | - | 차선 최대 비용 |
-| `inner_corner_padding_min` | 0.05 | m | 코너 내측 최소 패딩 (곡률 정규화 범위: threshold ~ 1/r_min(차량한계)) |
-| `inner_corner_padding_max` | 0.25 | m | 코너 내측 최대 패딩 (곡률 정규화 범위: threshold ~ 1/r_min(차량한계)) |
-| `corner_curvature_threshold` | 0.2 | 1/m | 코너 판정 곡률 임계값 (0.2=반경 5m 이하) |
 | `track_half_width` | 0.75 | m | 트랙 반폭 — 한쪽 chain만으로 centerline 계산 시 수직 오프셋 |
+| `center_gap_threshold` | 2.5 | m | 양쪽 chain 간 거리 초과 시 centerline midpoint 생성 안 함 (노이즈 제거) |
 
 ### astar
 

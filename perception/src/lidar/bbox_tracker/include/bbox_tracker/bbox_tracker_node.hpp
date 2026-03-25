@@ -5,13 +5,13 @@
 // LiDAR 최소 인식거리 사각지대의 bbox를 예측 유지한다.
 //
 // [파이프라인]
-//   1) /perception/bboxes 수신 (raw bbox)
+//   1) /perception/raw_bboxes 수신 (raw bbox)
 //   2) /t870/control_command 수신 (steering, speed)
 //   3) 매 사이클:
 //      a) Predict: bicycle model로 ego-motion 계산 → 기존 트랙 좌표 보정
-//      b) Match:   새 검출과 기존 트랙 최근접 매칭
-//      c) Update:  매칭 트랙 갱신, 미매칭 유지, 새 트랙 생성
-//      d) Publish:  모든 활성 트랙을 /tracked/bboxes로 발행
+//      b) Match:   새 검출과 기존 트랙 최근접 매칭 (동적 거리 threshold)
+//      c) Update:  매칭 트랙 갱신, 미매칭 miss++, 고정 N프레임 초과 시 삭제
+//      d) Publish:  모든 활성 트랙을 /perception/bboxes로 발행
 //
 // [Bicycle Model]
 //   dθ = (v * tan(δ) / L) * dt
@@ -60,7 +60,7 @@ private:
   /// Bicycle model로 ego-motion 계산, 기존 트랙 좌표를 현재 base_link로 변환
   void predict(double dt);
 
-  /// 새 검출과 기존 트랙을 최근접 거리로 매칭
+  /// 새 검출과 기존 트랙을 최근접 거리로 매칭 + 고정 프레임 수명 관리
   void match_and_update(const ev_msgs::msg::BBoxArray & detections, double dt);
 
   /// 모든 활성 트랙을 BBoxArray로 발행
@@ -69,9 +69,7 @@ private:
   // ---- 파라미터 ----
   double wheelbase_{0.87};          ///< [m] 차량 축간거리
   double min_match_dist_{0.1};      ///< [m] 동적 매칭 최소 거리
-  double min_tracking_time_{0.3};   ///< [s] 최소 tracking 유지 시간 (고속 시)
-  double max_tracking_time_{2.0};   ///< [s] 최대 tracking 유지 시간 (저속/정지 시)
-  double speed_for_min_tracking_{3.0}; ///< [m/s] 이 속도 이상이면 min_tracking_time 적용
+  int max_miss_count_{5};           ///< 고정 미검출 허용 프레임 수
 
   // ---- 상태 ----
   std::vector<Track> tracks_;       ///< 활성 트랙 목록
@@ -84,8 +82,8 @@ private:
   rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_bboxes_;
   rclcpp::Subscription<t870_msgs::msg::ControlCommand>::SharedPtr sub_control_;
   rclcpp::Publisher<ev_msgs::msg::BBoxArray>::SharedPtr pub_tracked_;
-  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_tracks_;          ///< 전체 트랙 (초록=검출, 빨강=예측)
-  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_predicted_;       ///< 예측 유지 중 트랙만 (miss_count > 0)
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_tracks_;      ///< 전체 트랙 (초록=검출, 빨강=예측)
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_predicted_;   ///< 예측 유지 중 트랙만 (miss_count > 0)
 };
 
 }  // namespace bbox_tracker

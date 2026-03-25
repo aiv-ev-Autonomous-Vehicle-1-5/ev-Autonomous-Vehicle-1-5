@@ -29,5 +29,4 @@
 | `/planning/debug/local_goal` | `visualization_msgs/msg/MarkerArray` | Reliable | A* 골 포인트 (노란 구) |
 | `/planning/debug/obstacle_wall` | `visualization_msgs/msg/MarkerArray` | Reliable | 장애물 코스트 셀 (빨간 마커) |
 | `/planning/debug/curvature` | `visualization_msgs/msg/MarkerArray` | Reliable | 곡률 초과 지점 (노란 구) |
-| `/planning/debug/lane_points` | `visualization_msgs/msg/MarkerArray` | Reliable | 수신된 차선 포인트 (마젠타 구) |
 | `/planning/debug/center_line` | `visualization_msgs/msg/Marker` (POINTS) | Reliable | 중앙선 유도 포인트 (노란 포인트) |

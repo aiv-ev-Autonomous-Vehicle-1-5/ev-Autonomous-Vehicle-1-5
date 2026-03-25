@@ -200,7 +200,6 @@ private:
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_local_goal_;      ///< A* goal 시각화
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_obstacle_wall_;  ///< obstacle_cost 이상 셀 (빨간색)
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_curvature_;     ///< 곡률 초과 지점 (노란색 구)
-  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_lane_points_;  ///< 수신된 lane points 시각화 (분홍색 구)
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_center_line_;     ///< 중앙선 포인트 시각화
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_left_chain_;   ///< resolve_overlaps 이전 raw left backbone
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_right_chain_;  ///< resolve_overlaps 이전 raw right backbone

@@ -105,21 +105,11 @@ struct PlanningParams
     double center_attract_max = 30.0;   ///< 중앙선 최대 비용 감소량
     double center_attract_sigma = 0.5;  ///< [m] 중앙선 유인 가우시안 확산
     double track_half_width = 0.75;     ///< [m] 트랙 반폭 — 한쪽 chain만으로 centerline 계산 시 수직 오프셋
+    double center_gap_threshold = 2.5;  ///< [m] 양쪽 chain 간 거리가 이 값을 초과하면 centerline midpoint를 생성하지 않음 (노이즈 제거)
 
     // ── 코너 내측 패딩 ──
     // 코너 구간에서 안쪽 backbone chain의 bbox_radius에 이 값만큼 추가하여
     // A* 경로가 코너 바깥쪽으로 밀려나도록 유도한다.
-    // 0.0 = 패딩 없음 (기존 동작과 동일).
-
-    // [m] 코너 내측 패딩 최솟값 (곡률=0 일 때).
-    double inner_corner_padding_min = 0.0;
-
-    // [m] 코너 내측 패딩 최댓값 (곡률=κ_max 일 때).
-    double inner_corner_padding_max = 0.0;
-
-    // [1/m] 곡률 임계값. 안쪽 chain 최대 곡률이 이 값 이상이면 "코너 구간"으로 판정.
-    // 곡률 = 1/R. 예: 0.15 → 반경 ~6.7m 이하의 커브에서 패딩 적용.
-    double corner_curvature_threshold = 0.2;
   } costmap;
 
   // ============================================================
@@ -445,9 +435,7 @@ struct PlanningParams
     costmap.center_attract_max   = p("costmap.center_attract_max",   costmap.center_attract_max);
     costmap.center_attract_sigma = p("costmap.center_attract_sigma", costmap.center_attract_sigma);
     costmap.track_half_width     = p("costmap.track_half_width",     costmap.track_half_width);
-    costmap.inner_corner_padding_min    = p("costmap.inner_corner_padding_min",    costmap.inner_corner_padding_min);
-    costmap.inner_corner_padding_max    = p("costmap.inner_corner_padding_max",    costmap.inner_corner_padding_max);
-    costmap.corner_curvature_threshold  = p("costmap.corner_curvature_threshold",  costmap.corner_curvature_threshold);
+    costmap.center_gap_threshold = p("costmap.center_gap_threshold", costmap.center_gap_threshold);
 
     // ── AStar 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.astar.*

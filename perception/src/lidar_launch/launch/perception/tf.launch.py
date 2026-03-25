@@ -14,7 +14,7 @@ def generate_launch_description():
         executable='static_transform_publisher',
         name='static_tf_base_to_velodyne',
         arguments=[
-            "0.287", "0", "0.56",
+            "0.287", "0", "0.73",
             "0", "0", "0", "1",
             "base_link", "velodyne"
         ],

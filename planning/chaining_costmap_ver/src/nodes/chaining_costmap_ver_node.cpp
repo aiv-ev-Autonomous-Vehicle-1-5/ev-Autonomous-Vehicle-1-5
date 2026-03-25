@@ -119,8 +119,6 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/obstacle_wall", qos_dbg);
   pub_dbg_curvature_ = create_publisher<visualization_msgs::msg::MarkerArray>(
     "/planning/debug/curvature", qos_dbg);
-  pub_dbg_lane_points_ = create_publisher<visualization_msgs::msg::MarkerArray>(
-    "/planning/debug/lane_points", qos_dbg);
   pub_dbg_center_line_ = create_publisher<visualization_msgs::msg::Marker>(
     "/planning/debug/center_line", qos_dbg);
   pub_dbg_raw_left_chain_ = create_publisher<nav_msgs::msg::Path>(
@@ -387,43 +385,6 @@ void LCPlannerNode::on_timer()
   auto status_msg = std::make_unique<std_msgs::msg::String>();
   status_msg->data = safety.reason;
   pub_status_->publish(std::move(status_msg));
-
-  // ── Debug: lane points (수신된 차선점 시각화, 분홍색 SPHERE) ──
-  if (pub_dbg_lane_points_->get_subscription_count() > 0) {
-    visualization_msgs::msg::MarkerArray lane_ma;
-    visualization_msgs::msg::Marker del;
-    del.header.stamp = stamp;
-    del.header.frame_id = frame_id;
-    del.ns = "lane_points";
-    del.id = -1;
-    del.action = visualization_msgs::msg::Marker::DELETEALL;
-    lane_ma.markers.push_back(del);
-
-    int lane_id = 0;
-    for (const auto & pt : all_pts) {
-      if (pt.type != PointType::LANE) continue;
-      visualization_msgs::msg::Marker m;
-      m.header.stamp = stamp;
-      m.header.frame_id = frame_id;
-      m.ns = "lane_points";
-      m.id = lane_id++;
-      m.type = visualization_msgs::msg::Marker::SPHERE;
-      m.action = visualization_msgs::msg::Marker::ADD;
-      m.pose.position.x = pt.x;
-      m.pose.position.y = pt.y;
-      m.pose.position.z = 0.0;
-      m.pose.orientation.w = 1.0;
-      m.scale.x = m.scale.y = m.scale.z = 0.15;
-      m.color.r = 1.0f;
-      m.color.g = 0.41f;
-      m.color.b = 0.71f;
-      m.color.a = 1.0f;
-      m.lifetime = rclcpp::Duration::from_seconds(0.0);
-      lane_ma.markers.push_back(m);
-    }
-    pub_dbg_lane_points_->publish(
-      std::make_unique<visualization_msgs::msg::MarkerArray>(std::move(lane_ma)));
-  }
 
   // ── Debug: costmap (debug_publisher.hpp) ──
   publish_debug_costmap(pub_dbg_costmap_, costmap, frame_id, stamp);
