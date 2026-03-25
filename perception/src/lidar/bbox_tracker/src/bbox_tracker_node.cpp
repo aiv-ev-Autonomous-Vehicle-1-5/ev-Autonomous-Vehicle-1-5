@@ -47,9 +47,9 @@ BBoxTrackerNode::BBoxTrackerNode(const rclcpp::NodeOptions & options)
     output_topic, rclcpp::QoS(10).best_effort());
 
   pub_dbg_tracks_ = create_publisher<visualization_msgs::msg::Marker>(
-    "/tracker/debug/tracks", rclcpp::QoS(1).best_effort());
+    "/tracker/debug/tracks", rclcpp::QoS(1).reliable());
   pub_dbg_predicted_ = create_publisher<visualization_msgs::msg::Marker>(
-    "/tracker/debug/predicted", rclcpp::QoS(1).best_effort());
+    "/tracker/debug/predicted", rclcpp::QoS(1).reliable());
 
   RCLCPP_INFO(get_logger(),
     "bbox_tracker started: in=%s out=%s ctrl=%s wheelbase=%.2f "

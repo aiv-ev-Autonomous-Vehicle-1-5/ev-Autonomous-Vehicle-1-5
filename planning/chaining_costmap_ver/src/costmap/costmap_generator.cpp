@@ -294,20 +294,58 @@ std::vector<Point2D> CostmapGenerator::apply_center_attraction(
   std::vector<Point2D> raw_center;
 
   if (!left_bb.empty() && !right_bb.empty()) {
-    // 양쪽 backbone 존재 → 기존 midpoint 방식
-    raw_center.reserve(left_bb.size());
-    for (const auto & lp : left_bb) {
+    // 양쪽 backbone 존재 → Phase 1: midpoint + Phase 2: 긴 쪽 오프셋
+    const bool left_is_shorter = left_bb.size() <= right_bb.size();
+    const auto & shorter = left_is_shorter ? left_bb : right_bb;
+    const auto & longer  = left_is_shorter ? right_bb : left_bb;
+    // 긴 쪽이 left → 우측으로 오프셋(+1), 긴 쪽이 right → 좌측으로 오프셋(-1)
+    const double sign = left_is_shorter ? -1.0 : 1.0;
+
+    // Phase 1: 짧은 chain 길이까지 양쪽 midpoint
+    int max_matched_j = -1;
+    raw_center.reserve(longer.size());
+    for (const auto & sp : shorter) {
       double best_d2 = std::numeric_limits<double>::max();
       int best_j = 0;
-      for (int j = 0; j < static_cast<int>(right_bb.size()); ++j) {
-        double dx = right_bb[j].x - lp.x;
-        double dy = right_bb[j].y - lp.y;
+      for (int j = 0; j < static_cast<int>(longer.size()); ++j) {
+        double dx = longer[j].x - sp.x;
+        double dy = longer[j].y - sp.y;
         double d2 = dx * dx + dy * dy;
         if (d2 < best_d2) { best_d2 = d2; best_j = j; }
       }
       raw_center.push_back({
-        (lp.x + right_bb[best_j].x) * 0.5,
-        (lp.y + right_bb[best_j].y) * 0.5
+        (sp.x + longer[best_j].x) * 0.5,
+        (sp.y + longer[best_j].y) * 0.5
+      });
+      if (best_j > max_matched_j) max_matched_j = best_j;
+    }
+
+    // Phase 2: 긴 chain의 나머지를 안쪽으로 track_half_width 오프셋
+    const double offset = cm.track_half_width;
+    for (size_t i = static_cast<size_t>(max_matched_j + 1); i < longer.size(); ++i) {
+      double tx, ty;
+      if (i == 0) {
+        tx = longer[1].x - longer[0].x;
+        ty = longer[1].y - longer[0].y;
+      } else if (i == longer.size() - 1) {
+        tx = longer[i].x - longer[i - 1].x;
+        ty = longer[i].y - longer[i - 1].y;
+      } else {
+        tx = longer[i + 1].x - longer[i - 1].x;
+        ty = longer[i + 1].y - longer[i - 1].y;
+      }
+      double len = std::sqrt(tx * tx + ty * ty);
+      if (len < 1e-9) continue;
+      tx /= len;
+      ty /= len;
+
+      // 법선: sign>0(longer=left) → (ty,-tx) 우측, sign<0(longer=right) → (-ty,tx) 좌측
+      double nx = sign * ty;
+      double ny = sign * (-tx);
+
+      raw_center.push_back({
+        longer[i].x + offset * nx,
+        longer[i].y + offset * ny
       });
     }
   } else {

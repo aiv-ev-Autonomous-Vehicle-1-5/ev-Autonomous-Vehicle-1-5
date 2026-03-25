@@ -72,14 +72,17 @@ on_timer() — 10Hz (100ms)
 │              padding_min ~ padding_max 로 보간
 │     3b-2. Entry walls
 │     3b-3. 중앙선 유인 비용 (center line attraction) ← 가장 마지막에 적용
-│         * 양쪽 backbone 존재 시: 좌/우 중점 연결선에 음의 가우시안 비용 적용
+│         * 양쪽 backbone 존재 시 2-Phase 중앙선 생성:
+            - Phase 1: 짧은 chain 길이(min_len)까지 양쪽 midpoint 연결
+            - Phase 2: 긴 chain의 나머지 구간을 안쪽으로 track_half_width 오프셋
+            음의 가우시안 비용 적용
 │         * 한쪽 backbone만 존재 시: track_half_width(0.75m) 수직 오프셋으로 centerline 계산
 │           - 각 backbone 점의 접선(tangent) 방향을 구한 뒤 90° 회전하여 법선 산출
 │           - left only → 시계 방향 90° (트랙 안쪽=우측), right only → 반시계 방향 90° (트랙 안쪽=좌측)
 │         * 다른 비용이 덮어쓰지 못하도록 최종 단계에서 차감
 │     3c. Goal 계산
-│         * 교차 판정 처리: 교차 시 해당 backbone 중간점을 local_goal로 반환
-│         * 정상 시: 좌/우 끝점 선분 중점 or 폴백
+│         * 교차 판정 처리: 교차 시 해당 backbone 누적거리 중간점을 local_goal로 반환
+│         * 정상 시: centerline 마지막 점을 goal로 사용 (양쪽/한쪽 backbone 공통)
 │     3d. Goal → costmap 경계 clamp
 │     3e. A* 경로 탐색
 │

@@ -3,7 +3,7 @@
  * @brief [Stage 3c] A* 탐색 목표점(local_goal) 계산 유틸리티
  *
  * on_timer()의 Stage 3에서 호출되는 goal 계산 로직을 분리한 헤더.
- * 좌/우 backbone 끝점을 잇는 선분 위에서 통과 가능한 goal을 결정한다.
+ * apply_center_attraction()이 생성한 centerline의 마지막 점을 goal로 사용한다.
  *
  * [구현 파일] src/nodes/goal_calculator.cpp
  */
@@ -34,20 +34,21 @@ double world_to_cost(
 /**
  * @brief A* 탐색 목표점(local_goal) 계산
  *
- * Case 1: 양쪽 backbone 모두 존재
- *   1) 좌/우 끝점을 잇는 선분의 중점 cost가 goal_max_cost 미만 → 중점 사용
- *   2) 중점이 장애물 → 선분 위에서 cost < goal_max_cost인 점 중 중점에 가장 가까운 점
+ * 교차 상태: 해당 backbone 누적거리 중간점 사용 (기존 유지)
+ * 정상 상태: center_line 마지막 점을 goal로 사용
+ *   - 양쪽 backbone → midpoint 기반 centerline 끝점
+ *   - 한쪽만 존재 → track_half_width 수직 오프셋 centerline 끝점
+ *   - center_line이 비어있으면 goal 없음
  *
- * Case 2/3: 한쪽만 존재
- *   goal.x = 해당 끝점.x,  goal.y = 해당 끝점.y × 0.5 (중앙 쪽으로 보정)
- *
- * @param dc_result  DirectionChainer 결과
- * @param costmap    코스트맵 (goal 통과 가능 여부 판별용)
- * @param params     파라미터 (goal_max_cost)
+ * @param dc_result    DirectionChainer 결과
+ * @param costmap      코스트맵 (clamp용)
+ * @param center_line  apply_center_attraction()이 반환한 중앙선 점열
+ * @param params       파라미터
  */
 GoalResult calculate_goal(
   const DirectionChainResult & dc_result,
   const CostmapResult & costmap,
+  const std::vector<Point2D> & center_line,
   const PlanningParams & params);
 
 /**

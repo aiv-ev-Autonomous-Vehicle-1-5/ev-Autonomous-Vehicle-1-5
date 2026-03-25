@@ -98,7 +98,9 @@ public:
   /**
    * @brief backbone 중앙선을 따라 costmap 비용을 감소시켜 A*를 중앙으로 유도
    *
-   * 양쪽 backbone이 모두 존재하면 left/right midpoint를 연결한 중앙선을 사용.
+   * 양쪽 backbone이 모두 존재하면 2-Phase 방식으로 중앙선을 생성한다.
+   *   Phase 1: 짧은 chain 길이(min_len)까지 양쪽 left/right midpoint를 연결.
+   *   Phase 2: 긴 chain의 나머지 구간을 안쪽으로 track_half_width만큼 오프셋.
    * 한쪽 backbone만 존재하면 각 backbone 점의 접선 방향에 수직으로
    * track_half_width만큼 오프셋하여 추정 중앙선을 생성한다.
    * 양쪽 모두 비어 있을 때만 빈 벡터를 반환한다.

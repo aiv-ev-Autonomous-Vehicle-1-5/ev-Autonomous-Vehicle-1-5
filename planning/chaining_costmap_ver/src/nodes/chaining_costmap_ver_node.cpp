@@ -311,8 +311,8 @@ void LCPlannerNode::on_timer()
     pub_dbg_center_line_->publish(std::move(m));
   }
 
-  // 3c. Goal 계산 (goal_calculator.hpp)
-  auto goal_result = calculate_goal(dc_result, costmap, params_);
+  // 3c. Goal 계산 — centerline 끝점을 goal로 사용 (goal_calculator.hpp)
+  auto goal_result = calculate_goal(dc_result, costmap, center_line, params_);
 
   // 3d. Goal을 costmap 경계 안쪽으로 clamp
   if (goal_result.have_goal && costmap.valid) {
