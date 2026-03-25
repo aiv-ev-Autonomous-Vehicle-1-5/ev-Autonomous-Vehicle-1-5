@@ -41,7 +41,7 @@
  *
  *   Stage 1: Input Parse (입력 파싱) → nodes/input_parser.hpp
  *     → BBox/LaneBoundary ROS 메시지를 내부 ChainPoint 벡터로 변환.
- *       - LiDAR bbox: sensor_tf 오프셋(velodyne→base_link) 보정 적용
+ *       - LiDAR bbox: tf2_ros로 velodyne→base_link 좌표 변환 적용
  *       - 차선 점: 그대로 사용 (카메라는 base_link 기준이라 오프셋 불필요)
  *       - 좌/우 구분은 여기서 하지 않는다 (Stage 2에서 seed 기반으로 결정)
  *
@@ -89,6 +89,8 @@
 #include "chaining_costmap_ver/postprocess/path_postprocessor.hpp"
 
 #include <rclcpp/rclcpp.hpp>
+#include <tf2_ros/buffer.h>
+#include <tf2_ros/transform_listener.h>
 #include <nav_msgs/msg/path.hpp>
 #include <nav_msgs/msg/occupancy_grid.hpp>
 #include <std_msgs/msg/string.hpp>
@@ -155,7 +157,7 @@ private:
 
   // ── 파라미터 ──
   // yaml에서 로드한 모든 플래너 파라미터를 담는 구조체
-  // (sensor_tf, timeouts, chainer, costmap, astar, postprocess, vehicle)
+  // (timeouts, chainer, costmap, astar, postprocess, vehicle)
   PlanningParams params_;
 
   // ── 파이프라인 모듈들 ──
@@ -167,17 +169,20 @@ private:
 
   // ── 최신 입력 데이터 (콜백에서 갱신) ──
   // UniquePtr을 사용하여 소유권 이동(move)으로 복사 비용을 없앤다
-  ev_msgs::msg::LaneBoundaryArray::UniquePtr last_lanes_;   ///< 마지막으로 받은 차선 데이터
-  ev_msgs::msg::BBoxArray::UniquePtr          last_bboxes_; ///< 마지막으로 받은 bbox 데이터
+  ev_msgs::msg::LaneBoundaryArray::UniquePtr last_lanes_;       ///< 마지막으로 받은 차선 데이터
+  ev_msgs::msg::BBoxArray::UniquePtr          last_bboxes_;    ///< 마지막으로 받은 tracked bbox (costmap 전용)
+  ev_msgs::msg::BBoxArray::UniquePtr          last_raw_bboxes_; ///< 마지막으로 받은 raw bbox (chaining 전용)
 
   // ── 입력 타임스탬프 (stale 검사용) ──
   // 각 메시지를 마지막으로 수신한 시각 (ROS 시간 기준)
-  rclcpp::Time stamp_lanes_;    ///< 차선 데이터 수신 시각
-  rclcpp::Time stamp_bboxes_;   ///< bbox 데이터 수신 시각
+  rclcpp::Time stamp_lanes_;        ///< 차선 데이터 수신 시각
+  rclcpp::Time stamp_bboxes_;       ///< tracked bbox 수신 시각
+  rclcpp::Time stamp_raw_bboxes_;   ///< raw bbox 수신 시각
 
   // ── 구독자(Subscription) ──
-  rclcpp::Subscription<ev_msgs::msg::LaneBoundaryArray>::SharedPtr sub_lanes_;   ///< /perception/lane_boundaries 구독
-  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_bboxes_;          ///< /perception/bboxes 구독
+  rclcpp::Subscription<ev_msgs::msg::LaneBoundaryArray>::SharedPtr sub_lanes_;       ///< /perception/lane_boundaries 구독
+  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_bboxes_;              ///< /perception/bboxes 구독 (tracked, costmap용)
+  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_raw_bboxes_;          ///< /perception/raw_bboxes 구독 (chaining용)
 
   // ── Core 퍼블리셔 (항상 발행) ──
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_path_;       ///< /planning/path — 최종 경로 (POINTS 마커)
@@ -197,6 +202,12 @@ private:
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_curvature_;     ///< 곡률 초과 지점 (노란색 구)
   rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_lane_points_;  ///< 수신된 lane points 시각화 (분홍색 구)
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_dbg_center_line_;     ///< 중앙선 포인트 시각화
+  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_left_chain_;   ///< resolve_overlaps 이전 raw left backbone
+  rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_right_chain_;  ///< resolve_overlaps 이전 raw right backbone
+
+  // ── TF2 (velodyne → base_link 변환) ──
+  std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
+  std::shared_ptr<tf2_ros::TransformListener> tf_listener_;
 
   // ── 타이머 ──
   // 100ms(10Hz) 주기의 wall timer — on_timer() 콜백을 호출

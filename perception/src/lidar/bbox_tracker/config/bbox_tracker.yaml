@@ -1,10 +1,10 @@
 bbox_tracker_node:
   ros__parameters:
-    wheelbase: 0.87             # [m] T870 축간거리
-    min_match_dist: 0.3         # [m] 동적 매칭 최소 거리 (저속/정지 시 하한)
-    min_tracking_time: 0.3      # [s] 최소 tracking 유지 시간 (고속 시)
-    max_tracking_time: 2.0      # [s] 최대 tracking 유지 시간 (저속/정지 시)
-    speed_for_min_tracking: 3.0 # [m/s] 이 속도 이상이면 min_tracking_time 적용
+    wheelbase: 0.733             # [m] T870 축간거리
+    min_match_dist: 0.0         # [m] 동적 매칭 최소 거리 (저속/정지 시 하한)
+    min_tracking_time: 0.0      # [s] 최소 tracking 유지 시간 (고속 시)
+    max_tracking_time: 0.0      # [s] 최대 tracking 유지 시간 (저속/정지 시)
+    speed_for_min_tracking: 0.7 # [m/s] 이 속도 이상이면 min_tracking_time 적용
     input_topic: "/perception/raw_bboxes"
     output_topic: "/perception/bboxes"
     control_topic: "/t870/control_command"

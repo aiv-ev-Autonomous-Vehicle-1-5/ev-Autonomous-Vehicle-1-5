@@ -430,6 +430,18 @@ void DirectionChainer::resolve_overlaps(
 {
   std::unordered_set<int> excluded_set;  // 영구 제외 노드 (누적)
 
+  // 시드 위치 로그 (backbone 첫 번째 노드 ≈ backward 체이닝 끝 or seed)
+  if (!left_bb.empty() && !right_bb.empty()) {
+    int ls = left_bb.front(), rs = right_bb.front();
+    std::fprintf(stderr,
+      "[backtrack] === START === left_bb:%zu pts, right_bb:%zu pts\n"
+      "[backtrack] left_seed  node=%d (%.2f, %.2f)\n"
+      "[backtrack] right_seed node=%d (%.2f, %.2f)\n",
+      left_bb.size(), right_bb.size(),
+      ls, points[ls].x, points[ls].y,
+      rs, points[rs].x, points[rs].y);
+  }
+
   for (int iter = 0; iter < cp.max_backtrack_count; ++iter) {
     // 중복 노드 탐지: right_bb를 set으로 만들어 left_bb에서 검색
     std::unordered_set<int> right_set(right_bb.begin(), right_bb.end());
@@ -448,7 +460,10 @@ void DirectionChainer::resolve_overlaps(
       }
     }
 
-    if (overlap_node < 0) break;  // 중복 없음 → 해소 완료
+    if (overlap_node < 0) {
+      std::fprintf(stderr, "[backtrack] iter %d — no overlap, done\n", iter);
+      break;
+    }
 
     // right_bb에서 해당 노드의 위치 탐색
     for (int j = 0; j < static_cast<int>(right_bb.size()); ++j) {
@@ -464,30 +479,66 @@ void DirectionChainer::resolve_overlaps(
     double right_cost = compute_backtrack_cost(
       points, right_bb, right_overlap_pos, cp);
 
+    const auto & op = points[overlap_node];
+    int left_bb_len_before = static_cast<int>(left_bb.size());
+    int right_bb_len_before = static_cast<int>(right_bb.size());
+
     std::fprintf(stderr,
-      "[backtrack iter %d] overlap node=%d, left_pos=%d(cost=%.3f), "
-      "right_pos=%d(cost=%.3f)\n",
-      iter, overlap_node, left_overlap_pos, left_cost,
-      right_overlap_pos, right_cost);
+      "[backtrack] iter %d — overlap node=%d (%.2f, %.2f) type=%s\n"
+      "  left_pos=%d/%d cost=%.3f | right_pos=%d/%d cost=%.3f\n",
+      iter, overlap_node, op.x, op.y,
+      (op.type == PointType::BBOX ? "BBOX" : "LANE"),
+      left_overlap_pos, left_bb_len_before, left_cost,
+      right_overlap_pos, right_bb_len_before, right_cost);
 
     // 중복 노드를 영구 제외 리스트에 추가
     excluded_set.insert(overlap_node);
 
     if (left_cost > right_cost) {
       // left가 부자연스러움 → left에서 backtracking
-      rechain_from(points, left_bb, left_overlap_pos, true, excluded_set, cp);
+      // 상대(right) backbone 노드를 excluded에 포함 → 재체이닝 시 상대 영역 진입 방지
+      std::unordered_set<int> excl_with_opponent = excluded_set;
+      excl_with_opponent.insert(right_bb.begin(), right_bb.end());
+      std::fprintf(stderr, "  → LEFT loses (cost %.3f > %.3f), rechain left from pos %d (excl +%zu right nodes)\n",
+        left_cost, right_cost, left_overlap_pos, right_bb.size());
+      rechain_from(points, left_bb, left_overlap_pos, true, excl_with_opponent, cp);
+      std::fprintf(stderr, "  → left_bb: %d → %zu pts\n",
+        left_bb_len_before, left_bb.size());
     } else if (right_cost > left_cost) {
       // right가 부자연스러움 → right에서 backtracking
-      rechain_from(points, right_bb, right_overlap_pos, false, excluded_set, cp);
+      // 상대(left) backbone 노드를 excluded에 포함 → 재체이닝 시 상대 영역 진입 방지
+      std::unordered_set<int> excl_with_opponent = excluded_set;
+      excl_with_opponent.insert(left_bb.begin(), left_bb.end());
+      std::fprintf(stderr, "  → RIGHT loses (cost %.3f > %.3f), rechain right from pos %d (excl +%zu left nodes)\n",
+        right_cost, left_cost, right_overlap_pos, left_bb.size());
+      rechain_from(points, right_bb, right_overlap_pos, false, excl_with_opponent, cp);
+      std::fprintf(stderr, "  → right_bb: %d → %zu pts\n",
+        right_bb_len_before, right_bb.size());
     } else {
       // 비용 동일 → 양쪽 모두 중복 노드 이후 truncate (재체이닝 없음)
+      std::fprintf(stderr, "  → TIE (cost %.3f), both truncate\n", left_cost);
       if (left_overlap_pos < static_cast<int>(left_bb.size())) {
         left_bb.resize(left_overlap_pos);
       }
       if (right_overlap_pos < static_cast<int>(right_bb.size())) {
         right_bb.resize(right_overlap_pos);
       }
+      std::fprintf(stderr, "  → left_bb: %d → %zu, right_bb: %d → %zu\n",
+        left_bb_len_before, left_bb.size(),
+        right_bb_len_before, right_bb.size());
     }
+  }
+
+  // 총 중복 잔존 확인
+  if (!left_bb.empty() && !right_bb.empty()) {
+    std::unordered_set<int> right_set(right_bb.begin(), right_bb.end());
+    int remaining_overlaps = 0;
+    for (int idx : left_bb) {
+      if (right_set.count(idx)) ++remaining_overlaps;
+    }
+    std::fprintf(stderr,
+      "[backtrack] === END === left_bb:%zu right_bb:%zu remaining_overlaps=%d\n",
+      left_bb.size(), right_bb.size(), remaining_overlaps);
   }
 }
 

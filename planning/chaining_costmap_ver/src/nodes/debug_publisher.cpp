@@ -148,7 +148,7 @@ void publish_debug_curvature(
       m.color.g = static_cast<float>(1.0 - ratio);
       m.color.b = 0.0f;
       m.color.a = 0.9f;
-      m.lifetime = rclcpp::Duration::from_seconds(0.2);
+      m.lifetime = rclcpp::Duration::from_seconds(0.0);
       ma.markers.push_back(m);
     }
   }

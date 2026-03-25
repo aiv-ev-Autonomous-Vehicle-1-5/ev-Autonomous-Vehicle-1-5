@@ -40,6 +40,9 @@
 // ── ROS 2 컴포넌트 등록 매크로 ──
 #include <rclcpp_components/register_node_macro.hpp>
 
+// ── TF2 ──
+#include <tf2/exceptions.h>
+
 // ── 표준 라이브러리 ──
 #include <chrono>
 #include <cmath>
@@ -57,6 +60,10 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
   stamp_bboxes_(0, 0, RCL_ROS_TIME)
 {
   params_.load(this);
+
+  // ── TF2 초기화 (velodyne → base_link 변환용) ──
+  tf_buffer_ = std::make_shared<tf2_ros::Buffer>(get_clock());
+  tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 
   // ── QoS 설정: Best Effort, depth=1 ──
   rclcpp::QoS qos_be(1);
@@ -77,15 +84,22 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
       last_bboxes_ = std::move(msg);
     });
 
+  sub_raw_bboxes_ = create_subscription<ev_msgs::msg::BBoxArray>(
+    "/perception/raw_bboxes", qos_be,
+    [this](ev_msgs::msg::BBoxArray::UniquePtr msg) {
+      stamp_raw_bboxes_ = now();
+      last_raw_bboxes_ = std::move(msg);
+    });
+
   // ── Core 퍼블리셔 ──
   pub_path_ = create_publisher<visualization_msgs::msg::Marker>(
     "/planning/path", qos_be);
   pub_status_ = create_publisher<std_msgs::msg::String>(
     "/planning/status", qos_be);
 
-  // ── Debug 퍼블리셔 (Reliable QoS, lazy publishing) ──
+  // ── Debug 퍼블리셔 (Best Effort QoS, lazy publishing) ──
   rclcpp::QoS qos_dbg(1);
-  qos_dbg.reliable();
+  qos_dbg.best_effort();
 
   pub_dbg_costmap_ = create_publisher<nav_msgs::msg::OccupancyGrid>(
     "/planning/debug/costmap", qos_dbg);
@@ -109,6 +123,10 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/lane_points", qos_dbg);
   pub_dbg_center_line_ = create_publisher<visualization_msgs::msg::Marker>(
     "/planning/debug/center_line", qos_dbg);
+  pub_dbg_raw_left_chain_ = create_publisher<nav_msgs::msg::Path>(
+    "/planning/debug/raw_left_chain", qos_dbg);
+  pub_dbg_raw_right_chain_ = create_publisher<nav_msgs::msg::Path>(
+    "/planning/debug/raw_right_chain", qos_dbg);
 
   // ── 10Hz 타이머 ──
   timer_ = create_wall_timer(
@@ -130,8 +148,8 @@ bool LCPlannerNode::check_stale() const
     const double dt = (t - stamp_lanes_).nanoseconds() * 1e-6;
     if (dt <= params_.timeouts.perception_ms) have_perception = true;
   }
-  if (last_bboxes_) {
-    const double dt = (t - stamp_bboxes_).nanoseconds() * 1e-6;
+  if (last_raw_bboxes_) {
+    const double dt = (t - stamp_raw_bboxes_).nanoseconds() * 1e-6;
     if (dt <= params_.timeouts.perception_ms) have_perception = true;
   }
 
@@ -145,8 +163,8 @@ void LCPlannerNode::on_timer()
 {
   // 원본 센서 타임스탬프를 전파 — topic delay 측정 가능
   rclcpp::Time stamp(0, 0, RCL_ROS_TIME);
-  if (last_bboxes_) {
-    stamp = rclcpp::Time(last_bboxes_->header.stamp);
+  if (last_raw_bboxes_) {
+    stamp = rclcpp::Time(last_raw_bboxes_->header.stamp);
   }
   if (last_lanes_) {
     rclcpp::Time t(last_lanes_->header.stamp);
@@ -165,9 +183,44 @@ void LCPlannerNode::on_timer()
   }
 
   // ======== Stage 1: Input Parse ========
-  // input_parser.hpp의 free function 사용 (ROS 메시지 → ChainPoint 벡터)
+  // raw_bboxes(tracker 이전)로 chaining — persisted bbox가 chain에 섞이는 것을 방지
   std::vector<ChainPoint> all_pts;
-  parse_input(last_bboxes_.get(), last_lanes_.get(), params_, all_pts);
+  parse_input(last_raw_bboxes_.get(), last_lanes_.get(), all_pts);
+
+  // ── TF 변환: velodyne → base_link (bbox 좌표 보정) ──
+  double tf_bbox_x = 0.0, tf_bbox_y = 0.0;
+  try {
+    auto tf_stamped = tf_buffer_->lookupTransform(
+      "base_link", "velodyne", tf2::TimePointZero);
+    tf_bbox_x = tf_stamped.transform.translation.x;
+    tf_bbox_y = tf_stamped.transform.translation.y;
+  } catch (const tf2::TransformException & ex) {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
+      "[Stage1] TF lookup failed (base_link←velodyne): %s", ex.what());
+  }
+
+  // ── TF 변환: camera1 → base_link (lane 좌표 보정) ──
+  // lane points는 camera1 지면 투영 기준이므로 base_link 오프셋 적용
+  double tf_lane_x = 0.0, tf_lane_y = 0.0;
+  try {
+    auto tf_stamped = tf_buffer_->lookupTransform(
+      "base_link", "camera1", tf2::TimePointZero);
+    tf_lane_x = tf_stamped.transform.translation.x;
+    tf_lane_y = tf_stamped.transform.translation.y;
+  } catch (const tf2::TransformException & ex) {
+    RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
+      "[Stage1] TF lookup failed (base_link←camera1): %s", ex.what());
+  }
+
+  for (auto & p : all_pts) {
+    if (p.type == PointType::BBOX) {
+      p.x += tf_bbox_x;
+      p.y += tf_bbox_y;
+    } else if (p.type == PointType::LANE) {
+      p.x += tf_lane_x;
+      p.y += tf_lane_y;
+    }
+  }
 
   // ======== Stage 2: DirectionChainer ========
   auto dc_result = direction_chainer_.chain(all_pts, params_);
@@ -196,6 +249,18 @@ void LCPlannerNode::on_timer()
     right_chained.push_back(p.to_chained_point());
   for (const auto & p : dc_result.unchained)
     unchained_chained.push_back(p.to_chained_point());
+
+  // 3a-2. tracked bbox를 costmap 장애물로 추가 (chaining에는 미사용)
+  //        velodyne → base_link TF 변환 적용
+  if (last_bboxes_) {
+    for (const auto & b : last_bboxes_->bboxes) {
+      ChainedPoint cp;
+      cp.x = b.position.x + tf_bbox_x;
+      cp.y = b.position.y + tf_bbox_y;
+      cp.type = PointType::BBOX;
+      unchained_chained.push_back(cp);
+    }
+  }
 
   // 3b. Costmap 생성
   auto costmap = costmap_generator_.generate(
@@ -243,7 +308,7 @@ void LCPlannerNode::on_timer()
       p.z = 0.0;
       m.points.push_back(p);
     }
-    pub_dbg_center_line_->publish(m);
+    pub_dbg_center_line_->publish(std::move(m));
   }
 
   // 3c. Goal 계산 (goal_calculator.hpp)
@@ -333,11 +398,11 @@ void LCPlannerNode::on_timer()
       m.color.g = 0.41f;
       m.color.b = 0.71f;
       m.color.a = 1.0f;
-      m.lifetime = rclcpp::Duration::from_seconds(0.2);
+      m.lifetime = rclcpp::Duration::from_seconds(0.0);
       lane_ma.markers.push_back(m);
     }
     pub_dbg_lane_points_->publish(
-      std::make_unique<visualization_msgs::msg::MarkerArray>(lane_ma));
+      std::make_unique<visualization_msgs::msg::MarkerArray>(std::move(lane_ma)));
   }
 
   // ── Debug: costmap (debug_publisher.hpp) ──
@@ -387,6 +452,26 @@ void LCPlannerNode::on_timer()
         right_pts.push_back(p.to_point2d());
       pub_dbg_right_chain_->publish(std::make_unique<nav_msgs::msg::Path>(
         to_path_msg(right_pts, frame_id, stamp)));
+    }
+
+    // raw left backbone (resolve_overlaps 이전)
+    if (pub_dbg_raw_left_chain_->get_subscription_count() > 0) {
+      std::vector<Point2D> raw_left_pts;
+      raw_left_pts.reserve(dc_result.raw_left_backbone.size());
+      for (const auto & p : dc_result.raw_left_backbone)
+        raw_left_pts.push_back(p.to_point2d());
+      pub_dbg_raw_left_chain_->publish(std::make_unique<nav_msgs::msg::Path>(
+        to_path_msg(raw_left_pts, frame_id, stamp)));
+    }
+
+    // raw right backbone (resolve_overlaps 이전)
+    if (pub_dbg_raw_right_chain_->get_subscription_count() > 0) {
+      std::vector<Point2D> raw_right_pts;
+      raw_right_pts.reserve(dc_result.raw_right_backbone.size());
+      for (const auto & p : dc_result.raw_right_backbone)
+        raw_right_pts.push_back(p.to_point2d());
+      pub_dbg_raw_right_chain_->publish(std::make_unique<nav_msgs::msg::Path>(
+        to_path_msg(raw_right_pts, frame_id, stamp)));
     }
 
     // seeds & goals (debug_publisher.hpp)

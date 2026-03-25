@@ -25,7 +25,7 @@ namespace chaining_costmap_ver
 // ============================================================================
 //
 // [seed 선택 전략 — 2-pass bbox 우선]
-//   Pass 1: bbox만 탐색 (x ≥ -2.0, side_seed_y 가드, d ≤ seed_bbox_max_dist)
+//   Pass 1: bbox만 탐색 (x ≥ -seed_rear_limit, side_seed_y 가드, d ≤ seed_bbox_max_dist)
 //           → 조건 만족 bbox 중 가장 가까운 것 반환
 //   Pass 2: Pass 1 실패 시 bbox+lane 전체에서 가장 가까운 점 (기존 로직)
 //
@@ -42,7 +42,7 @@ int DirectionChainer::find_seed(
   double best_bbox_sq = std::numeric_limits<double>::max();
 
   for (int i = 0; i < n; ++i) {
-    if (points[i].x < -2.0) continue;
+    if (points[i].x < -cp.seed_rear_limit) continue;
     if (points[i].type != PointType::BBOX) continue;
 
     if (is_left) {
@@ -68,7 +68,7 @@ int DirectionChainer::find_seed(
   double best_dist_sq = std::numeric_limits<double>::max();
 
   for (int i = 0; i < n; ++i) {
-    if (points[i].x < -2.0) continue;
+    if (points[i].x < -cp.seed_rear_limit) continue;
 
     if (is_left) {
       if (points[i].y < cp.side_seed_y) continue;

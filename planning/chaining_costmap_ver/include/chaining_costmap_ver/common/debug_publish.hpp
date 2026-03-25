@@ -129,7 +129,7 @@ inline visualization_msgs::msg::Marker to_points_marker(
   m.color.g = g;
   m.color.b = b;
   m.color.a = a;
-  m.lifetime = rclcpp::Duration::from_seconds(0.2);
+  m.lifetime = rclcpp::Duration::from_seconds(0.0);
   m.points.reserve(pts.size());
   for (const auto & pt : pts) {
     geometry_msgs::msg::Point p;

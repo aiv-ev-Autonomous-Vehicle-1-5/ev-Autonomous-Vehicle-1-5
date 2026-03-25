@@ -75,6 +75,12 @@ DirectionChainResult DirectionChainer::chain(
       filtered, owner_right, right_seed, false, right_stop_fwd, right_seed_bb_pos, cp);
   }
 
+  // raw backbone 보존 (resolve_overlaps 이전 상태, 디버그용)
+  for (int idx : left_backbone_ids)
+    result.raw_left_backbone.push_back(filtered[idx]);
+  for (int idx : right_backbone_ids)
+    result.raw_right_backbone.push_back(filtered[idx]);
+
   // 2.5단계: 독립 체이닝 중복 해소 — Backtracking
   if (!left_backbone_ids.empty() && !right_backbone_ids.empty() &&
       cp.max_backtrack_count > 0) {
@@ -87,13 +93,34 @@ DirectionChainResult DirectionChainer::chain(
     if (std::find(left_backbone_ids.begin(), left_backbone_ids.end(), right_seed)
         != left_backbone_ids.end()) {
       result.left_crossed_right = true;
+      std::fprintf(stderr, "[cross] left_bb contains right_seed=%d (%.2f, %.2f)\n",
+        right_seed, filtered[right_seed].x, filtered[right_seed].y);
     }
   }
   if (left_seed >= 0 && !right_backbone_ids.empty()) {
     if (std::find(right_backbone_ids.begin(), right_backbone_ids.end(), left_seed)
         != right_backbone_ids.end()) {
       result.right_crossed_left = true;
+      std::fprintf(stderr, "[cross] right_bb contains left_seed=%d (%.2f, %.2f)\n",
+        left_seed, filtered[left_seed].x, filtered[left_seed].y);
     }
+  }
+
+  // 최종 backbone 요약 로그
+  if (!left_backbone_ids.empty() || !right_backbone_ids.empty()) {
+    auto tail_pos = [&](const std::vector<int> & bb) -> std::pair<double,double> {
+      if (bb.empty()) return {0,0};
+      return {filtered[bb.back()].x, filtered[bb.back()].y};
+    };
+    auto [lx, ly] = tail_pos(left_backbone_ids);
+    auto [rx, ry] = tail_pos(right_backbone_ids);
+    std::fprintf(stderr,
+      "[chain] final — left_bb:%zu tail(%.2f,%.2f) | right_bb:%zu tail(%.2f,%.2f) | "
+      "cross L→R=%d R→L=%d\n",
+      left_backbone_ids.size(), lx, ly,
+      right_backbone_ids.size(), rx, ry,
+      result.left_crossed_right ? 1 : 0,
+      result.right_crossed_left ? 1 : 0);
   }
 
   // 최종 owner 배열 병합 (trim_crossing + unchained 수집용)

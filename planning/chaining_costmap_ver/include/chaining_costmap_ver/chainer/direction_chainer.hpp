@@ -170,7 +170,7 @@ private:
    *
    * [알고리즘 — 2-pass bbox 우선 전략]
    *   공통 필터:
-   *     - x ≥ -2.0 필터: 후방 2m 이상인 점은 seed 후보에서 제외
+   *     - x ≥ seed_rear_limit 필터: 후방 제한 이상인 점은 seed 후보에서 제외
    *     - side_seed_y 가드:
    *       - 좌측(is_left=true):  y ≥ side_seed_y 인 점만 후보
    *       - 우측(is_left=false): y ≤ -side_seed_y 인 점만 후보

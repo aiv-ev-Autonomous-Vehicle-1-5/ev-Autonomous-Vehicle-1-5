@@ -30,6 +30,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(ev_msgs REQUIRED)
 find_package(visualization_msgs REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 include_directories(include)
 
@@ -131,6 +132,7 @@ target_link_libraries(lc_planner_component
 ament_target_dependencies(lc_planner_component
   rclcpp rclcpp_components
   nav_msgs geometry_msgs std_msgs ev_msgs visualization_msgs
+  tf2_ros
 )
 
 rclcpp_components_register_node(lc_planner_component

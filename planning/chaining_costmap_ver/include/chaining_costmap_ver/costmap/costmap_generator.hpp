@@ -96,15 +96,18 @@ public:
    * @param params       costmap 파라미터 (entry_wall_ego_y, bbox_cost_max 등)
    */
   /**
-   * @brief 양쪽 backbone 중앙선을 따라 costmap 비용을 감소시켜 A*를 중앙으로 유도
+   * @brief backbone 중앙선을 따라 costmap 비용을 감소시켜 A*를 중앙으로 유도
    *
-   * left/right backbone의 중점(midpoint)을 연결한 중앙선에 음의 가우시안을 적용.
+   * 양쪽 backbone이 모두 존재하면 left/right midpoint를 연결한 중앙선을 사용.
+   * 한쪽 backbone만 존재하면 각 backbone 점의 접선 방향에 수직으로
+   * track_half_width만큼 오프셋하여 추정 중앙선을 생성한다.
+   * 양쪽 모두 비어 있을 때만 빈 벡터를 반환한다.
    * cost >= bbox_cost_max인 장애물 셀은 건드리지 않는다.
    *
    * @param costmap      generate()로 생성된 costmap (in-place 수정)
    * @param left_chain   좌측 경계 체인
    * @param right_chain  우측 경계 체인
-   * @param params       center_attract_max, center_attract_sigma 사용
+   * @param params       center_attract_max, center_attract_sigma, track_half_width 사용
    */
   static std::vector<Point2D> apply_center_attraction(
     CostmapResult & costmap,
@@ -118,29 +121,59 @@ public:
     const Point2D & right_seed,
     const PlanningParams & params);
 
+  // ── segment 기반 안쪽 코너 패딩 ──
+
+  /// heading 극점 단위로 분할된 구간 정보
+  struct Segment {
+    size_t begin;   ///< chain 인덱스 시작 (inclusive)
+    size_t end;     ///< chain 인덱스 끝 (exclusive)
+    int    sign;    ///< +1=좌회전, -1=우회전, 0=직진
+  };
+
   /**
-   * @brief chain backbone의 시작→끝 heading 변화량 계산
+   * @brief chain 각 점의 회전 부호 계산 (외적 기반)
    *
-   * backbone(is_backbone=true) 점의 첫 2점으로 시작 heading,
-   * 마지막 2점으로 끝 heading을 구해 차이를 반환한다.
-   * 양수 = 좌회전, 음수 = 우회전. [-π, +π] 정규화.
+   * 연속 3점(i-1, i, i+1)의 외적 부호로 좌/우회전 판정.
+   * 양수(+1)=좌회전, 음수(-1)=우회전, 0=직진(|외적|<eps).
+   * 첫/끝 점은 인접 점의 부호를 상속.
    *
-   * @param chain  좌 또는 우측 체인
-   * @return heading 변화량 [rad] (backbone 2개 미만이면 0.0)
+   * @return chain.size() 길이의 부호 배열
    */
-  static double compute_heading_delta(
+  static std::vector<int> compute_turning_signs(
     const std::vector<ChainedPoint> & chain);
 
   /**
-   * @brief chain backbone의 최대 |곡률| 계산
+   * @brief 부호 배열에서 극점 단위 구간 분할
    *
-   * backbone(is_backbone=true) 점열에서 Menger 곡률 절대값의 최대를 반환.
-   *
-   * @param chain  좌 또는 우측 체인
-   * @return 최대 |곡률| [1/m] (backbone 3개 미만이면 0.0)
+   * 부호가 바뀌는 지점에서 구간 분할.
+   * min_segment_len 미만 구간은 인접 구간에 병합하여 노이즈 방지.
    */
-  static double compute_max_curvature(
-    const std::vector<ChainedPoint> & chain);
+  static std::vector<Segment> split_segments(
+    const std::vector<int> & signs,
+    size_t min_segment_len = 5);
+
+  /**
+   * @brief chain 특정 범위 [begin, end) 내 backbone 최대 |곡률| 계산
+   *
+   * Menger 곡률 절대값의 최대를 반환 (3점 미만이면 0.0).
+   */
+  static double compute_segment_curvature(
+    const std::vector<ChainedPoint> & chain,
+    size_t begin, size_t end);
+
+  /**
+   * @brief segment 기반 per-point 안쪽 코너 패딩 계산
+   *
+   * ref chain(더 긴 쪽)의 heading 극점으로 구간 분할 후,
+   * 각 구간마다 안쪽 사이드를 판정하여 해당 chain 점들에 패딩 할당.
+   * 곡률 정규화 범위: corner_curvature_threshold ~ 1/r_min(차량 한계).
+   */
+  static void compute_per_point_extras(
+    const std::vector<ChainedPoint> & left_chain,
+    const std::vector<ChainedPoint> & right_chain,
+    const PlanningParams & params,
+    std::vector<double> & left_extras,
+    std::vector<double> & right_extras);
 
 private:
   /**

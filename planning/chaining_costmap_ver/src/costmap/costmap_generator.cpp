@@ -191,11 +191,14 @@ CostmapResult CostmapGenerator::generate(
   // BBOX:      bbox_cost_max + bbox_radius flat zone → 강한 비용 장벽
   // LANE:      lane_cost_max + lane_radius flat zone → 약한 비용 장벽 (넘을 수 있음)
   //
-  // ── 코너 내측 패딩 ──
-  // inner_corner_padding > 0 이면, 더 긴 chain의 heading 변화량으로 회전 방향 판정,
-  // 안쪽 chain의 최대 곡률이 threshold 이상이면 해당 chain 전체에 padding 적용.
-  auto apply_chain = [&](const std::vector<ChainedPoint> & chain, double extra) {
-    for (const auto & pt : chain) {
+  // ── segment 기반 안쪽 코너 패딩 ──
+  // heading 극점(부호 반전) 단위로 구간 분할 후, 각 구간마다 안쪽 사이드를
+  // 독립 판정하여 per-point padding 적용. S자 커브에서도 올바르게 동작.
+  auto apply_chain = [&](const std::vector<ChainedPoint> & chain,
+                         const std::vector<double> & extras) {
+    for (size_t i = 0; i < chain.size(); ++i) {
+      const auto & pt = chain[i];
+      const double extra = extras[i];
       const Point2D src = pt.to_point2d();
       if (pt.is_backbone || pt.type == PointType::BBOX) {
         apply_source(
@@ -213,36 +216,16 @@ CostmapResult CostmapGenerator::generate(
     }
   };
 
-  // ── 안쪽 코너 패딩 계산 ──
-  double left_extra = 0.0, right_extra = 0.0;
-  if (cm.inner_corner_padding > 0.0) {
-    // 1) 더 긴 chain의 backbone heading 변화량으로 회전 방향 판정
-    const auto & ref_chain = (left_chain.size() >= right_chain.size())
-                              ? left_chain : right_chain;
-    double heading_delta = compute_heading_delta(ref_chain);
-
-    // 2) 안쪽 사이드 결정: 양수 = 좌회전 → left 안쪽, 음수 = 우회전 → right 안쪽
-    bool inner_is_left = (heading_delta > 0.0);
-    const auto & inner_chain = inner_is_left ? left_chain : right_chain;
-
-    // 3) 안쪽 chain의 backbone 최대 곡률 계산
-    double max_kappa = compute_max_curvature(inner_chain);
-
-    // 4) threshold 이상이면 안쪽 chain 전체에 패딩 적용
-    if (max_kappa >= cm.corner_curvature_threshold) {
-      double ratio = (max_kappa - cm.corner_curvature_threshold)
-                   / cm.corner_curvature_threshold;
-      ratio = std::clamp(ratio, 0.0, 1.0);
-      if (inner_is_left) {
-        left_extra = cm.inner_corner_padding * ratio;
-      } else {
-        right_extra = cm.inner_corner_padding * ratio;
-      }
-    }
+  // ── segment 기반 per-point 안쪽 코너 패딩 계산 ──
+  std::vector<double> left_extras(left_chain.size(), 0.0);
+  std::vector<double> right_extras(right_chain.size(), 0.0);
+  if (cm.inner_corner_padding_max > 0.0) {
+    compute_per_point_extras(left_chain, right_chain, params,
+                             left_extras, right_extras);
   }
 
-  apply_chain(left_chain, left_extra);     // 좌측 경계 비용 적용
-  apply_chain(right_chain, right_extra);   // 우측 경계 비용 적용
+  apply_chain(left_chain, left_extras);     // 좌측 경계 비용 적용
+  apply_chain(right_chain, right_extras);   // 우측 경계 비용 적용
 
   // ── unchained 포인트 처리 ──
   // 체이닝 실패 = 좌/우 경계에 배정되지 못한 점
@@ -279,10 +262,12 @@ CostmapResult CostmapGenerator::generate(
 //   "입구(시드 사이)"로만 진입하도록 유도한다.
 
 // ============================================================================
-// 중앙선 유인 비용 — 양쪽 backbone 중점에 음의 가우시안 적용
+// 중앙선 유인 비용 — backbone 기반 중앙선에 음의 가우시안 적용
 // ============================================================================
-// left/right backbone의 중점을 연결한 중앙선에 비용 감소를 적용하여
-// A*가 자연스럽게 중앙으로 유도되게 한다.
+// 양쪽 backbone이 모두 존재하면 left/right midpoint를 연결한 중앙선을 사용.
+// 한쪽 backbone만 존재하면 각 backbone 점의 접선 방향에 수직으로
+// track_half_width만큼 오프셋하여 추정 중앙선을 생성한다.
+// 양쪽 모두 비어 있을 때만 빈 벡터를 반환한다.
 // cost >= bbox_cost_max인 장애물 셀은 건드리지 않는다.
 // ============================================================================
 
@@ -303,24 +288,64 @@ std::vector<Point2D> CostmapGenerator::apply_center_attraction(
   for (const auto & pt : right_chain) {
     if (pt.is_backbone) right_bb.push_back({pt.x, pt.y});
   }
-  if (left_bb.empty() || right_bb.empty()) return {};
+  if (left_bb.empty() && right_bb.empty()) return {};
 
-  // 2) left 각 점에 대해 right 최근접 매칭 → midpoint 계산
+  // 2) raw_center 계산 — 양쪽 존재 시 midpoint, 한쪽만 존재 시 수직 오프셋
   std::vector<Point2D> raw_center;
-  raw_center.reserve(left_bb.size());
-  for (const auto & lp : left_bb) {
-    double best_d2 = std::numeric_limits<double>::max();
-    int best_j = 0;
-    for (int j = 0; j < static_cast<int>(right_bb.size()); ++j) {
-      double dx = right_bb[j].x - lp.x;
-      double dy = right_bb[j].y - lp.y;
-      double d2 = dx * dx + dy * dy;
-      if (d2 < best_d2) { best_d2 = d2; best_j = j; }
+
+  if (!left_bb.empty() && !right_bb.empty()) {
+    // 양쪽 backbone 존재 → 기존 midpoint 방식
+    raw_center.reserve(left_bb.size());
+    for (const auto & lp : left_bb) {
+      double best_d2 = std::numeric_limits<double>::max();
+      int best_j = 0;
+      for (int j = 0; j < static_cast<int>(right_bb.size()); ++j) {
+        double dx = right_bb[j].x - lp.x;
+        double dy = right_bb[j].y - lp.y;
+        double d2 = dx * dx + dy * dy;
+        if (d2 < best_d2) { best_d2 = d2; best_j = j; }
+      }
+      raw_center.push_back({
+        (lp.x + right_bb[best_j].x) * 0.5,
+        (lp.y + right_bb[best_j].y) * 0.5
+      });
     }
-    raw_center.push_back({
-      (lp.x + right_bb[best_j].x) * 0.5,
-      (lp.y + right_bb[best_j].y) * 0.5
-    });
+  } else {
+    // 한쪽 backbone만 존재 → track_half_width 수직 오프셋으로 centerline 계산
+    const auto & bb = left_bb.empty() ? right_bb : left_bb;
+    // left only → 시계 방향 90° 회전 (트랙 안쪽 = 우측)
+    // right only → 반시계 방향 90° 회전 (트랙 안쪽 = 좌측)
+    const double sign = left_bb.empty() ? -1.0 : 1.0;
+    const double offset = cm.track_half_width;
+
+    raw_center.reserve(bb.size());
+    for (size_t i = 0; i < bb.size(); ++i) {
+      // 접선 계산: 양 끝점은 편측 차분, 내부는 중앙 차분
+      double tx, ty;
+      if (i == 0) {
+        tx = bb[1].x - bb[0].x;
+        ty = bb[1].y - bb[0].y;
+      } else if (i == bb.size() - 1) {
+        tx = bb[i].x - bb[i - 1].x;
+        ty = bb[i].y - bb[i - 1].y;
+      } else {
+        tx = bb[i + 1].x - bb[i - 1].x;
+        ty = bb[i + 1].y - bb[i - 1].y;
+      }
+      double len = std::sqrt(tx * tx + ty * ty);
+      if (len < 1e-9) continue;
+      tx /= len;
+      ty /= len;
+
+      // 법선: sign>0(left) → (ty, -tx) 시계90°, sign<0(right) → (-ty, tx) 반시계90°
+      double nx = sign * ty;
+      double ny = sign * (-tx);
+
+      raw_center.push_back({
+        bb[i].x + offset * nx,
+        bb[i].y + offset * ny
+      });
+    }
   }
 
   // 2.5) midpoint를 resolution 간격으로 리샘플링하여 빈틈 없는 중앙선 생성
@@ -453,68 +478,128 @@ void CostmapGenerator::apply_entry_walls(
 }
 
 // ============================================================================
-// compute_heading_delta — chain backbone의 시작→끝 heading 변화량 계산
+// compute_turning_signs — chain 각 점의 회전 부호 계산
 // ============================================================================
 //
 // [동작]
-//   backbone(is_backbone=true)의 첫 2점으로 시작 heading,
-//   마지막 2점으로 끝 heading을 구한 뒤 차이를 반환한다.
-//
-// [부호]
-//   양수 = 좌회전 (반시계), 음수 = 우회전 (시계)
-//   atan2 차이를 [-π, +π]로 정규화.
+//   연속 3점(i-1, i, i+1)의 외적 부호로 좌/우회전 판정.
+//   양수(+1) = 좌회전(반시계), 음수(-1) = 우회전(시계).
+//   |외적| < eps 이면 직진(0).
+//   첫/끝 점은 인접 점의 부호를 상속.
 //
 // ============================================================================
 
-double CostmapGenerator::compute_heading_delta(
+std::vector<int> CostmapGenerator::compute_turning_signs(
   const std::vector<ChainedPoint> & chain)
 {
-  // backbone 점만 추출
-  std::vector<Point2D> bb;
-  for (const auto & pt : chain) {
-    if (pt.is_backbone) bb.push_back({pt.x, pt.y});
+  const size_t n = chain.size();
+  std::vector<int> signs(n, 0);
+  if (n < 3) return signs;
+
+  constexpr double eps = 1e-6;
+  for (size_t i = 1; i + 1 < n; ++i) {
+    // 외적: (P[i]-P[i-1]) × (P[i+1]-P[i])
+    double ax = chain[i].x - chain[i - 1].x;
+    double ay = chain[i].y - chain[i - 1].y;
+    double bx = chain[i + 1].x - chain[i].x;
+    double by = chain[i + 1].y - chain[i].y;
+    double cross = ax * by - ay * bx;
+
+    if (cross > eps)       signs[i] = +1;  // 좌회전
+    else if (cross < -eps) signs[i] = -1;  // 우회전
+    // else 0 (직진)
   }
-  if (bb.size() < 2) return 0.0;
 
-  // 시작 heading (첫 2점)
-  double h0 = std::atan2(bb[1].y - bb[0].y, bb[1].x - bb[0].x);
-  // 끝 heading (마지막 2점)
-  size_t n = bb.size();
-  double h1 = std::atan2(bb[n - 1].y - bb[n - 2].y, bb[n - 1].x - bb[n - 2].x);
-
-  // [-π, +π] 정규화
-  double delta = h1 - h0;
-  while (delta >  M_PI) delta -= 2.0 * M_PI;
-  while (delta < -M_PI) delta += 2.0 * M_PI;
-  return delta;
+  // 첫/끝 점은 인접 점의 부호 상속
+  signs[0]     = signs[1];
+  signs[n - 1] = signs[n - 2];
+  return signs;
 }
 
 // ============================================================================
-// compute_max_curvature — chain backbone의 최대 |곡률| 계산
+// split_segments — 부호 배열에서 극점 단위 구간 분할
 // ============================================================================
 //
 // [동작]
-//   backbone(is_backbone=true) 점열에서 Menger 곡률의 절대값 최대를 반환.
-//   kappa(i) = 2 * |cross(a, b)| / (|a| * |b| * |c|)
+//   1) 부호가 바뀌는 지점에서 구간 분할
+//   2) min_segment_len 미만 구간은 인접 구간에 병합 (노이즈 방지)
+//   3) 부호 0(직진) 구간은 독립 구간으로 유지
 //
 // ============================================================================
 
-double CostmapGenerator::compute_max_curvature(
-  const std::vector<ChainedPoint> & chain)
+std::vector<CostmapGenerator::Segment> CostmapGenerator::split_segments(
+  const std::vector<int> & signs,
+  size_t min_segment_len)
 {
-  std::vector<Point2D> bb;
-  for (const auto & pt : chain) {
-    if (pt.is_backbone) bb.push_back({pt.x, pt.y});
+  std::vector<Segment> segs;
+  if (signs.empty()) return segs;
+
+  // 1) 부호 변화 지점에서 분할
+  size_t begin = 0;
+  int cur_sign = signs[0];
+  for (size_t i = 1; i < signs.size(); ++i) {
+    if (signs[i] != cur_sign) {
+      segs.push_back({begin, i, cur_sign});
+      begin = i;
+      cur_sign = signs[i];
+    }
   }
-  if (bb.size() < 3) return 0.0;
+  segs.push_back({begin, signs.size(), cur_sign});
+
+  // 2) 짧은 구간 병합 — 인접 구간에 흡수
+  bool merged = true;
+  while (merged) {
+    merged = false;
+    for (size_t i = 0; i < segs.size(); ++i) {
+      size_t len = segs[i].end - segs[i].begin;
+      if (len >= min_segment_len) continue;
+
+      // 짧은 구간 → 인접 중 더 긴 쪽에 병합
+      if (i > 0 && (i + 1 >= segs.size() ||
+          (segs[i - 1].end - segs[i - 1].begin) >=
+          (segs[i + 1].end - segs[i + 1].begin))) {
+        // 이전 구간에 병합
+        segs[i - 1].end = segs[i].end;
+        segs.erase(segs.begin() + static_cast<long>(i));
+      } else if (i + 1 < segs.size()) {
+        // 다음 구간에 병합
+        segs[i + 1].begin = segs[i].begin;
+        segs.erase(segs.begin() + static_cast<long>(i));
+      }
+      merged = true;
+      break;  // 처음부터 다시
+    }
+  }
+
+  return segs;
+}
+
+// ============================================================================
+// compute_segment_curvature — 구간 [begin, end) 내 최대 |곡률| 계산
+// ============================================================================
+//
+// [동작]
+//   Menger 곡률: kappa(i) = 2 * |cross(a, b)| / (|a| * |b| * |c|)
+//   범위를 [begin, end)로 제한하여 해당 구간의 최대 곡률만 반환.
+//
+// ============================================================================
+
+double CostmapGenerator::compute_segment_curvature(
+  const std::vector<ChainedPoint> & chain,
+  size_t begin, size_t end)
+{
+  if (end - begin < 3) return 0.0;
 
   double max_kappa = 0.0;
-  for (size_t i = 1; i + 1 < bb.size(); ++i) {
-    double ax = bb[i].x - bb[i - 1].x, ay = bb[i].y - bb[i - 1].y;
-    double bx = bb[i + 1].x - bb[i].x, by = bb[i + 1].y - bb[i].y;
+  for (size_t i = begin + 1; i + 1 < end; ++i) {
+    double ax = chain[i].x - chain[i - 1].x;
+    double ay = chain[i].y - chain[i - 1].y;
+    double bx = chain[i + 1].x - chain[i].x;
+    double by = chain[i + 1].y - chain[i].y;
     double la = std::sqrt(ax * ax + ay * ay);
     double lb = std::sqrt(bx * bx + by * by);
-    double cx = bb[i + 1].x - bb[i - 1].x, cy = bb[i + 1].y - bb[i - 1].y;
+    double cx = chain[i + 1].x - chain[i - 1].x;
+    double cy = chain[i + 1].y - chain[i - 1].y;
     double lc = std::sqrt(cx * cx + cy * cy);
     double denom = la * lb * lc;
     if (denom < 1e-9) continue;
@@ -524,6 +609,127 @@ double CostmapGenerator::compute_max_curvature(
     if (kappa > max_kappa) max_kappa = kappa;
   }
   return max_kappa;
+}
+
+// ============================================================================
+// compute_per_point_extras — segment 기반 per-point 안쪽 코너 패딩
+// ============================================================================
+//
+// [동작]
+//   1) ref chain(더 긴 쪽)의 turning signs 계산
+//   2) 극점 단위로 segment 분할
+//   3) 각 segment마다:
+//      - sign으로 안쪽 사이드 판정 (+1=좌회전→left 안쪽)
+//      - ref chain 인덱스를 inner chain 인덱스로 비례 매핑
+//      - inner chain 해당 범위의 max curvature 계산
+//      - threshold~차량한계 범위로 정규화하여 padding_min~max 보간
+//   4) 경계 테이퍼링: 구간 경계에서 패딩 급변 방지
+//
+// ============================================================================
+
+void CostmapGenerator::compute_per_point_extras(
+  const std::vector<ChainedPoint> & left_chain,
+  const std::vector<ChainedPoint> & right_chain,
+  const PlanningParams & params,
+  std::vector<double> & left_extras,
+  std::vector<double> & right_extras)
+{
+  const auto & cm = params.costmap;
+  if (left_chain.empty() || right_chain.empty()) return;
+
+  // ref chain = 더 긴 쪽 (회전 방향 판정 기준)
+  bool ref_is_left = (left_chain.size() >= right_chain.size());
+  const auto & ref_chain   = ref_is_left ? left_chain : right_chain;
+  const auto & other_chain = ref_is_left ? right_chain : left_chain;
+
+  // 1) ref chain의 turning signs + segment 분할
+  auto signs = compute_turning_signs(ref_chain);
+  auto segs  = split_segments(signs);
+
+  // 차량 최대 곡률: κ_max = tan(δ_max) / wheelbase
+  const double kappa_max = 1.0 / params.vehicle.r_min();
+  const double kappa_range = kappa_max - cm.corner_curvature_threshold;
+  if (kappa_range <= 0.0) return;  // threshold가 차량 한계 이상이면 패딩 불가
+
+  // 2) 각 segment 처리
+  for (const auto & seg : segs) {
+    if (seg.sign == 0) continue;  // 직진 구간은 패딩 없음
+
+    // 안쪽 사이드 판정:
+    //   ref가 left일 때: sign>0(좌회전) → left가 안쪽
+    //   ref가 right일 때: sign>0 → ref(right)에서 좌회전 = right가 안쪽
+    bool inner_is_ref = (seg.sign > 0);
+    // ref가 left이고 inner_is_ref → left 안쪽
+    // ref가 left이고 !inner_is_ref → right(other) 안쪽
+    bool inner_is_left = ref_is_left ? inner_is_ref : !inner_is_ref;
+
+    const auto & inner_chain = inner_is_left ? left_chain : right_chain;
+    auto & inner_extras      = inner_is_left ? left_extras : right_extras;
+
+    // ref chain 구간 인덱스를 inner chain 인덱스로 비례 매핑
+    size_t inner_begin, inner_end;
+    if (&inner_chain == &ref_chain) {
+      // inner = ref → 인덱스 그대로
+      inner_begin = seg.begin;
+      inner_end   = seg.end;
+    } else {
+      // inner = other → 비례 매핑
+      double scale = (other_chain.size() <= 1) ? 0.0
+                   : static_cast<double>(other_chain.size() - 1)
+                   / static_cast<double>(ref_chain.size() - 1);
+      inner_begin = static_cast<size_t>(seg.begin * scale);
+      inner_end   = static_cast<size_t>(
+        std::min(static_cast<size_t>(std::ceil(seg.end * scale)),
+                 other_chain.size()));
+    }
+    if (inner_end <= inner_begin) continue;
+
+    // 구간 내 최대 곡률
+    double seg_kappa = compute_segment_curvature(inner_chain, inner_begin, inner_end);
+    if (seg_kappa < cm.corner_curvature_threshold) continue;
+
+    // threshold ~ 차량한계 범위로 정규화
+    double ratio = (seg_kappa - cm.corner_curvature_threshold) / kappa_range;
+    ratio = std::clamp(ratio, 0.0, 1.0);
+    double padding = cm.inner_corner_padding_min
+                   + ratio * (cm.inner_corner_padding_max - cm.inner_corner_padding_min);
+
+    // inner chain 해당 구간에 패딩 할당
+    for (size_t i = inner_begin; i < inner_end && i < inner_extras.size(); ++i) {
+      inner_extras[i] = std::max(inner_extras[i], padding);
+    }
+  }
+
+  // 3) 경계 테이퍼링 — 패딩 급변 방지 (5점 선형 ramp)
+  auto taper = [](std::vector<double> & extras) {
+    constexpr size_t TAPER = 5;
+    const size_t n = extras.size();
+    if (n < 2) return;
+    for (size_t i = 1; i < n; ++i) {
+      double diff = std::abs(extras[i] - extras[i - 1]);
+      if (diff < 1e-6) continue;
+      // 패딩이 0→X 또는 X→0 으로 변하는 경계 감지
+      size_t ramp_len = std::min(TAPER, std::min(i, n - i));
+      if (extras[i - 1] < extras[i]) {
+        // 0→X: i 이전 ramp_len개 점에 선형 증가
+        for (size_t k = 0; k < ramp_len; ++k) {
+          size_t idx = i - 1 - k;
+          double t = static_cast<double>(k + 1) / (ramp_len + 1);
+          double ramped = extras[i] * (1.0 - t);
+          extras[idx] = std::max(extras[idx], ramped);
+        }
+      } else {
+        // X→0: i 이후 ramp_len개 점에 선형 감소
+        for (size_t k = 0; k < ramp_len && (i + k) < n; ++k) {
+          double t = static_cast<double>(k + 1) / (ramp_len + 1);
+          double ramped = extras[i - 1] * (1.0 - t);
+          extras[i + k] = std::max(extras[i + k], ramped);
+        }
+      }
+    }
+  };
+  taper(left_extras);
+  taper(right_extras);
 }
 
 }  // namespace chaining_costmap_ver

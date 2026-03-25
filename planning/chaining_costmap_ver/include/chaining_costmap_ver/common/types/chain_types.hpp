@@ -88,6 +88,10 @@ struct DirectionChainResult
   std::vector<ChainPoint> unchained;  ///< 어떤 체인에도 속하지 못한 포인트들
   bool valid = false;         ///< 최소 한쪽 backbone 생성 성공 여부
 
+  /// 독립 체이닝 직후 raw backbone (resolve_overlaps 이전)
+  std::vector<ChainPoint> raw_left_backbone;
+  std::vector<ChainPoint> raw_right_backbone;
+
   /// 교차 판정: 한쪽 backbone이 반대쪽 seed를 체이닝한 경우
   bool left_crossed_right = false;  ///< left backbone이 right seed를 포함
   bool right_crossed_left = false;  ///< right backbone이 left seed를 포함

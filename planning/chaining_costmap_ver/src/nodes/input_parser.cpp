@@ -4,12 +4,11 @@
  *
  * BBox(LiDAR 장애물)와 LaneBoundary(카메라 차선)를
  * 단일 ChainPoint 벡터로 변환한다.
- * LiDAR bbox에는 sensor_tf 오프셋 보정이 적용됨.
+ * 좌표 변환은 노드의 on_timer()에서 tf2로 처리 (velodyne→base_link).
  *
  * [의존 관계]
  *   - input_parser.hpp: parse_input() 선언
  *   - types.hpp: ChainPoint, PointType
- *   - params.hpp: PlanningParams::SensorTF
  */
 #include "chaining_costmap_ver/nodes/input_parser.hpp"
 
@@ -19,17 +18,14 @@ namespace chaining_costmap_ver
 void parse_input(
   const ev_msgs::msg::BBoxArray * bboxes,
   const ev_msgs::msg::LaneBoundaryArray * lanes,
-  const PlanningParams & params,
   std::vector<ChainPoint> & all_pts)
 {
-  // BBox 수집 (LiDAR → base_link 변환)
+  // BBox 수집 (velodyne 프레임 — on_timer()에서 tf2로 base_link 변환)
   if (bboxes) {
-    const double ox = params.sensor_tf.tf_x;
-    const double oy = params.sensor_tf.tf_y;
     for (const auto & b : bboxes->bboxes) {
       ChainPoint cp;
-      cp.x = b.position.x + ox;
-      cp.y = b.position.y + oy;
+      cp.x = b.position.x;
+      cp.y = b.position.y;
       cp.type = PointType::BBOX;
       cp.label = b.label;
       cp.size_x = b.size_x;

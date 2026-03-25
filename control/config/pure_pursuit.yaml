@@ -13,7 +13,7 @@ pure_pursuit_relative_node:
     speed: 0.45               # [m/s] legacy fallback
     speed_min: 0.1         # [m/s] 급코너 최소 속도
     speed_max: 1.0            # [m/s] 직선 최대 속도
-    lateral_accel_limit: 0.17  # [m/s^2] 곡률 기반 감속 한계 (v=√(a/κ), 반경5.6m부터 감속, 하드웨어한계 κ=0.443에서 v=0.64) 0.1 부근에서 +-0.5정도만 바꾸는게 좋을듯?
+    lateral_accel_limit: 0.19  # [m/s^2] 곡률 기반 감속 한계 (v=√(a/κ), 반경5.6m부터 감속, 하드웨어한계 κ=0.443에서 v=0.64) 0.1 부근에서 +-0.5정도만 바꾸는게 좋을듯?
     preview_distance: 2.50   # [m] 전방 curvature preview 거리
     preview_curvature_percentile: 0.90  # [0~1] preview 곡률 percentile (1.0=max, 0.9=상위10% 노이즈 제거)
     accel_rate: 0.4         # [m/s^2] 직선 가속 rate limit

@@ -104,6 +104,7 @@ struct PlanningParams
     // cost >= bbox_cost_max인 장애물 셀은 건드리지 않는다.
     double center_attract_max = 30.0;   ///< 중앙선 최대 비용 감소량
     double center_attract_sigma = 0.5;  ///< [m] 중앙선 유인 가우시안 확산
+    double track_half_width = 0.75;     ///< [m] 트랙 반폭 — 한쪽 chain만으로 centerline 계산 시 수직 오프셋
 
     // ── 코너 내측 패딩 ──
     // 코너 구간에서 안쪽 backbone chain의 bbox_radius에 이 값만큼 추가하여
@@ -238,32 +239,6 @@ struct PlanningParams
   } safety;
 
   // ============================================================
-  // SensorTf — velodyne → base_link 좌표 오프셋
-  //
-  // LiDAR(velodyne) 센서의 물리적 장착 위치를 base_link 기준으로 표현.
-  // 인식 결과가 velodyne 프레임으로 들어오면, 이 오프셋을 빼서
-  // base_link(차량 뒷축 중심) 좌표계로 변환한다.
-  //
-  // 양수 방향: tf_x=전방, tf_y=좌측, tf_z=위쪽.
-  // ============================================================
-  struct SensorTf
-  {
-    // [m] LiDAR가 base_link 기준 전방으로 얼마나 떨어져 있는지.
-    // yaml에서 0.0 → LiDAR가 차량 뒷축 바로 위에 장착된 경우.
-    // 코드 기본값 0.7 → 70cm 전방 (실제 장착 위치에 맞게 yaml에서 오버라이드).
-    double tf_x = 0.7;
-
-    // [m] LiDAR가 base_link 기준 좌측으로 얼마나 떨어져 있는지.
-    // 보통 차량 중앙에 장착하므로 0.0.
-    double tf_y = 0.0;
-
-    // [m] LiDAR가 base_link 기준 위로 얼마나 떨어져 있는지.
-    // 0.7m = 지면에서 70cm 높이에 LiDAR 장착.
-    // 지면 분리(Patchwork++) 결과와는 무관하고, costmap 좌표 변환에만 사용.
-    double tf_z = 0.7;
-  } sensor_tf;
-
-  // ============================================================
   // Timeouts — 인식 데이터 타임아웃
   //
   // 인식(Perception) 모듈에서 받은 데이터가 얼마나 오래되면
@@ -316,6 +291,11 @@ struct PlanningParams
     // Pass 1 실패 시 Pass 2: bbox+lane 전체에서 가장 가까운 점 선택 (기존 로직).
     // d_max보다 넓게 잡아 chaining 범위 밖 bbox도 seed 후보로 허용.
     double seed_bbox_max_dist = 3.0;    ///< [m] seed bbox 우선 탐색 최대 거리
+
+    // [m] seed 후보에서 제외할 후방 한계 거리.
+    // x < -seed_rear_limit 인 점은 seed 후보에서 제외.
+    // 차량 뒤쪽에 있는 점이 seed로 선택되는 것을 방지.
+    double seed_rear_limit = 2.0;      ///< [m] seed 후방 제한 거리
 
     // ── kNN + 게이트 ──
     // [개] k-최근접 이웃(kNN) 탐색 시 후보 수.
@@ -464,6 +444,7 @@ struct PlanningParams
     costmap.origin_x          = p("costmap.origin_x",          costmap.origin_x);
     costmap.center_attract_max   = p("costmap.center_attract_max",   costmap.center_attract_max);
     costmap.center_attract_sigma = p("costmap.center_attract_sigma", costmap.center_attract_sigma);
+    costmap.track_half_width     = p("costmap.track_half_width",     costmap.track_half_width);
     costmap.inner_corner_padding_min    = p("costmap.inner_corner_padding_min",    costmap.inner_corner_padding_min);
     costmap.inner_corner_padding_max    = p("costmap.inner_corner_padding_max",    costmap.inner_corner_padding_max);
     costmap.corner_curvature_threshold  = p("costmap.corner_curvature_threshold",  costmap.corner_curvature_threshold);
@@ -492,13 +473,6 @@ struct PlanningParams
     // ── Safety 파라미터 로드 ──
     safety.min_path_length = p("safety.min_path_length", safety.min_path_length);
 
-    // ── SensorTf 파라미터 로드 ──
-    // 주의: 코드 기본값(tf_x=0.7)과 yaml 값(tf_x=0.0)이 다를 수 있음.
-    // yaml이 로드되면 yaml 값이 우선.
-    sensor_tf.tf_x = p("sensor_tf.tf_x", sensor_tf.tf_x);
-    sensor_tf.tf_y = p("sensor_tf.tf_y", sensor_tf.tf_y);
-    sensor_tf.tf_z = p("sensor_tf.tf_z", sensor_tf.tf_z);
-
     // ── Timeouts 파라미터 로드 ──
     timeouts.perception_ms = p("timeouts.perception_ms", timeouts.perception_ms);
 
@@ -506,6 +480,7 @@ struct PlanningParams
     // yaml 경로: lc_planner_node.ros__parameters.chainer.*
     chainer.side_seed_y           = p("chainer.side_seed_y",           chainer.side_seed_y);
     chainer.seed_bbox_max_dist    = p("chainer.seed_bbox_max_dist",    chainer.seed_bbox_max_dist);
+    chainer.seed_rear_limit       = p("chainer.seed_rear_limit",       chainer.seed_rear_limit);
     chainer.k                     = p("chainer.k",                     chainer.k);
     chainer.d_max             = p("chainer.d_max",             chainer.d_max);
     chainer.forward_cone_deg  = p("chainer.forward_cone_deg",  chainer.forward_cone_deg);
