@@ -2,3 +2,4 @@ rosbag/
 build/
 install/
 log/
+dbg_logs/

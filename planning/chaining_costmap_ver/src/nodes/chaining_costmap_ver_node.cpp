@@ -129,6 +129,28 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
   pub_dbg_timing_ = create_publisher<std_msgs::msg::String>(
     "/planning/debug/pipeline_timing", qos_dbg);
 
+  // ── 타이밍 파일 로깅 초기화 ──
+  // ~/ev-Autonomous-Vehicle-1-5/dbg_logs/timing_YYYYMMDD_HHMMSS.log
+  {
+    auto sys_now = std::chrono::system_clock::now();
+    auto time_t_now = std::chrono::system_clock::to_time_t(sys_now);
+    std::tm tm_buf{};
+    localtime_r(&time_t_now, &tm_buf);
+    char fname[256];
+    std::snprintf(fname, sizeof(fname),
+      "%s/ev-Autonomous-Vehicle-1-5/dbg_logs/timing_%04d%02d%02d_%02d%02d%02d.log",
+      std::getenv("HOME") ? std::getenv("HOME") : "/tmp",
+      tm_buf.tm_year + 1900, tm_buf.tm_mon + 1, tm_buf.tm_mday,
+      tm_buf.tm_hour, tm_buf.tm_min, tm_buf.tm_sec);
+
+    timing_log_file_.open(fname, std::ios::out | std::ios::app);
+    if (timing_log_file_.is_open()) {
+      RCLCPP_INFO(get_logger(), "Timing log: %s", fname);
+    } else {
+      RCLCPP_WARN(get_logger(), "Failed to open timing log: %s", fname);
+    }
+  }
+
   // ── 10Hz 타이머 ──
   timer_ = create_wall_timer(
     std::chrono::milliseconds(100),
@@ -252,6 +274,30 @@ void LCPlannerNode::on_timer()
                        "final_path", 0.0f, 1.0f, 0.0f, 1.0f, 0.08));
     pub_path_->publish(std::move(path_msg));
     return;
+  }
+
+  // ======== Stage 2.6: Backbone Quality Gate ========
+  // 양쪽 backbone이 모두 빈약하면 costmap/A* 스킵 (연산량 절감)
+  // FAIL 조건: min(left, right) <= 1 AND max(left, right) <= 2
+  //   (1,1) (1,2) (2,1) → FAIL, (2,2) (3,1) (1,5) → 진행
+  {
+    const size_t left_sz = dc_result.left.backbone.size();
+    const size_t right_sz = dc_result.right.backbone.size();
+    const size_t min_bb = std::min(left_sz, right_sz);
+    const size_t max_bb = std::max(left_sz, right_sz);
+    if (min_bb <= 1 && max_bb <= 2) {
+      RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
+        "[Stage2.6] FAIL — backbone too short (L:%zu R:%zu)", left_sz, right_sz);
+      auto status_msg = std::make_unique<std_msgs::msg::String>();
+      status_msg->data = "FAIL - backbone too short";
+      pub_status_->publish(std::move(status_msg));
+
+      auto path_msg = std::make_unique<visualization_msgs::msg::Marker>(
+        to_points_marker({}, frame_id, stamp,
+                         "final_path", 0.0f, 1.0f, 0.0f, 1.0f, 0.08));
+      pub_path_->publish(std::move(path_msg));
+      return;
+    }
   }
 
   // ======== Stage 3: Costmap Generation + A* Path Planning ========
@@ -511,8 +557,8 @@ void LCPlannerNode::on_timer()
     }
   }
 
-  // ── Debug: pipeline timing (lazy) ──
-  if (timing_subscribed) {
+  // ── Debug: pipeline timing (토픽 발행 + 파일 로깅) ──
+  if (timing_subscribed || timing_log_file_.is_open()) {
     double t_total_ms = std::chrono::duration<double, std::milli>(
       Clock::now() - t_pipeline_start).count();
     const auto & ct = dc_result.timing;  // chainer 내부 타이밍
@@ -520,40 +566,53 @@ void LCPlannerNode::on_timer()
     std::ostringstream ss;
     ss << std::fixed;
     ss.precision(2);
-    ss << "[Timing] total=" << t_total_ms << "ms\n"
-       << "  stage1_input=" << t_stage1_ms << "ms\n"
-       << "  stage2_chainer=" << t_stage2_ms << "ms"
+    ss << "[Timing] total=" << t_total_ms << "ms"
+       << " | input=" << t_stage1_ms
+       << " chainer=" << t_stage2_ms
        << " (seed=" << ct.seed_ms
        << " L_bb=" << ct.left_backbone_ms
        << " R_bb=" << ct.right_backbone_ms
        << " overlap=" << ct.overlap_ms
        << " trim=" << ct.trim_ms
        << " L_resamp=" << ct.left_resample_ms
-       << " R_resamp=" << ct.right_resample_ms << ")\n"
-       << "  stage3_costmap=" << t_costmap_ms << "ms\n"
-       << "  stage3_entry=" << t_entry_ms << "ms\n"
-       << "  stage3_center=" << t_center_ms << "ms\n"
-       << "  stage3_goal=" << t_goal_ms << "ms\n"
-       << "  stage3_astar=" << t_astar_ms << "ms\n"
-       << "  stage5_post=" << t_post_ms << "ms\n"
-       << "  stage6_safety=" << t_safety_ms << "ms\n"
-       << "  ---\n"
-       << "  pts=" << all_pts.size()
+       << " R_resamp=" << ct.right_resample_ms << ")"
+       << " costmap=" << t_costmap_ms
+       << " entry=" << t_entry_ms
+       << " center=" << t_center_ms
+       << " goal=" << t_goal_ms
+       << " astar=" << t_astar_ms
+       << " post=" << t_post_ms
+       << " safety=" << t_safety_ms
+       << " | pts=" << all_pts.size()
        << " seeds(L:" << dc_result.left.seed_idx
        << " R:" << dc_result.right.seed_idx << ")"
        << " bb(L:" << dc_result.left.backbone.size()
        << " R:" << dc_result.right.backbone.size() << ")"
        << " comp(L:" << left_chained.size()
        << " R:" << right_chained.size() << ")"
-       << " unchained:" << unchained_chained.size()
+       << " unch:" << unchained_chained.size()
        << " center:" << center_line.size()
-       << " astar_path:" << raw_path.size()
+       << " astar:" << raw_path.size()
        << " valid:" << (dc_result.valid ? 1 : 0)
-       << " status:" << safety.reason;
+       << " " << safety.reason;
 
-    auto timing_msg = std::make_unique<std_msgs::msg::String>();
-    timing_msg->data = ss.str();
-    pub_dbg_timing_->publish(std::move(timing_msg));
+    const std::string timing_str = ss.str();
+
+    // 토픽 발행 (lazy)
+    if (timing_subscribed) {
+      auto timing_msg = std::make_unique<std_msgs::msg::String>();
+      timing_msg->data = timing_str;
+      pub_dbg_timing_->publish(std::move(timing_msg));
+    }
+
+    // 파일 로깅 (항상, 10사이클마다 flush)
+    if (timing_log_file_.is_open()) {
+      timing_log_file_ << timing_str << '\n';
+      if (++timing_flush_counter_ >= 10) {
+        timing_log_file_.flush();
+        timing_flush_counter_ = 0;
+      }
+    }
   }
 }
 

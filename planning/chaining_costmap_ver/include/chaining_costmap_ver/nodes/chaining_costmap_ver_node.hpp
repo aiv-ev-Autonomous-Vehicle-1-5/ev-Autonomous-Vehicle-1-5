@@ -98,6 +98,7 @@
 #include <ev_msgs/msg/lane_boundary_array.hpp>
 #include <ev_msgs/msg/b_box_array.hpp>
 
+#include <fstream>
 #include <vector>
 
 namespace chaining_costmap_ver
@@ -212,6 +213,13 @@ private:
   // ── 타이머 ──
   // 100ms(10Hz) 주기의 wall timer — on_timer() 콜백을 호출
   rclcpp::TimerBase::SharedPtr timer_;
+
+  // ── 타이밍 파일 로깅 ──
+  // 노드 시작 시 dbg_logs/timing_YYYYMMDD_HHMMSS.log 를 열고,
+  // 매 사이클마다 타이밍 문자열을 기록한다.
+  // 10사이클(1초)마다 flush하여 I/O 부하 최소화.
+  std::ofstream timing_log_file_;
+  int timing_flush_counter_ = 0;
 };
 
 }  // namespace chaining_costmap_ver

@@ -304,6 +304,7 @@ void PurePursuitRelativeNode::on_timer()
     should_stop = true;
     stop_reason = "Path is missing or stale";
   } else if (latest_status_ == "FAIL - not enough seeds" ||
+             latest_status_ == "FAIL - backbone too short" ||
              latest_status_ == "FAIL - no valid path" ||
              latest_status_ == "WARNING - too short valid path")
   {

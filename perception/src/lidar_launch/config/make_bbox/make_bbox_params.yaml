@@ -18,7 +18,7 @@ make_bbox:
     #   - 가로(X): 약 0.500 m
     #   - 세로(Y): 약 0.500 m
     #   - 높이(Z): 약 0.840 m
-    max_size_x: 1.75
-    max_size_y: 1.75
-    max_size_z: 1.5
+    max_size_x: 0.5
+    max_size_y: 0.5
+    max_size_z: 0.60
 

@@ -94,31 +94,33 @@ on_timer() — 10Hz (100ms)
 
 ---
 
-## 성능 디버깅 토픽
+## 성능 디버깅
+
+### 1) 실시간 토픽
 
 `/planning/debug/pipeline_timing` (std_msgs/String, lazy — 구독자가 있을 때만 발행)
 
-파이프라인 각 스테이지의 소요시간(ms)을 실시간으로 모니터링할 수 있다.
-chain 실패, seed 미검출, backbone 1개 노드 등 비정상 상황에서 어느 스테이지가 병목인지 식별 용도.
+```bash
+ros2 topic echo /planning/debug/pipeline_timing --field data
+```
+
+### 2) 파일 로깅 (항상 기록)
+
+노드 시작 시 `~/dbg_logs/timing_YYYYMMDD_HHMMSS.log` 파일을 자동 생성.
+토픽 구독 여부와 무관하게 매 사이클(10Hz) 기록, 10사이클(1초)마다 flush.
 
 ```bash
-ros2 topic echo /planning/debug/pipeline_timing
+# 최신 로그 확인
+tail -f ~/dbg_logs/timing_*.log
+
+# chain 실패한 사이클만 필터
+grep "valid:0" ~/dbg_logs/timing_*.log
 ```
 
-출력 예시:
+### 출력 포맷 (한 줄)
+
 ```
-[Timing] total=15.32ms
-  stage1_input=0.12ms
-  stage2_chainer=3.45ms (seed=0.01 L_bb=0.95 R_bb=0.88 overlap=0.52 trim=0.01 L_resamp=0.12 R_resamp=0.14)
-  stage3_costmap=5.21ms
-  stage3_entry=0.34ms
-  stage3_center=1.82ms
-  stage3_goal=0.05ms
-  stage3_astar=2.88ms
-  stage5_post=0.92ms
-  stage6_safety=0.01ms
-  ---
-  pts=45 seeds(L:3 R:7) bb(L:12 R:15) comp(L:120 R:150) unchained:18 center:95 astar_path:87 valid:1 status:OK
+[Timing] total=15.32ms | input=0.12 chainer=3.45 (seed=0.01 L_bb=0.95 R_bb=0.88 overlap=0.52 trim=0.01 L_resamp=0.12 R_resamp=0.14) costmap=5.21 entry=0.34 center=1.82 goal=0.05 astar=2.88 post=0.92 safety=0.01 | pts=45 seeds(L:3 R:7) bb(L:12 R:15) comp(L:120 R:150) unch:18 center:95 astar:87 valid:1 OK
 ```
 
 | 필드 | 설명 |
