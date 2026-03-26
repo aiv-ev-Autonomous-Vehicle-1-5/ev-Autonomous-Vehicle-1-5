@@ -39,7 +39,7 @@ class YoloInstanceSegNode(Node):
         self.get_logger().info(f"사용 디바이스: {self.device}")
 
         self.get_logger().info("YOLO 모델 로딩 중...")
-        model_path = os.path.expanduser('~/ev-Autonomous-Vehicle-1-5/perception/src/camera/lane_seg/config/eighth_best.pt')
+        model_path = os.path.expanduser('~/ev-Autonomous-Vehicle-1-5/perception/src/camera/lane_seg/config/ninth_best.pt')
 
         try:
             self.model = YOLO(model_path)
