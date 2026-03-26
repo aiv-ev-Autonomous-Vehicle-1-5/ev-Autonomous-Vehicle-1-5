@@ -24,7 +24,7 @@ pure_pursuit_relative_node:
                                  # 아예 버퍼 기능을 빼버리려면 1로 설정 ㄱㄱ
     path_drop_confirm_count: 4   # 급락 확정 연속 프레임 수 (50Hz 기준 3 = 60ms)
     path_drop_ratio: 0.4         # avg 대비 이 비율 이하면 급락 후보
-    stop_margin: 4.0             # [m] 경로 끝 정지 여유거리 (남은 경로 ≤ 이 값이면 속도 0)
+    stop_margin: 3.0             # [m] 경로 끝 정지 여유거리 (남은 경로 ≤ 이 값이면 속도 0)
     delta_max: 0.3249         # [rad] 최대 조향각 (~18도)
     path_timeout_sec: 0.5    # [s] 경로 타임아웃
     min_x_target: 0.05       # [m] 목표점 최소 전방 거리

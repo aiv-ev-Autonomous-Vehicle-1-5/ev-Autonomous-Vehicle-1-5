@@ -1,6 +1,6 @@
 """Launch Velodyne full perception pipeline for real hardware.
 
-Pipeline: Driver -> Transform -> Patchwork++ -> DBSCAN(GPU) -> ClusterSplitter
+Pipeline: Driver -> Transform -> Patchwork++ -> DBSCAN(GPU) -> MakeBBox
 All nodes run as components in a single container for intra-process communication.
 """
 
@@ -39,11 +39,6 @@ def generate_launch_description():
     dbscan_params_file = os.path.join(launch_share_dir, 'config', 'dbscan_clustering', 'dbscan_params.yaml')
     with open(dbscan_params_file, 'r') as f:
         dbscan_params = yaml.safe_load(f)['dbscan_clustering']['ros__parameters']
-
-    splitter_params_file = os.path.join(
-        launch_share_dir, 'config', 'cluster_splitter', 'cluster_splitter_params.yaml')
-    with open(splitter_params_file, 'r') as f:
-        splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
 
     bbox_params_file = os.path.join(
         launch_share_dir, 'config', 'make_bbox', 'make_bbox_params.yaml')
@@ -98,15 +93,7 @@ def generate_launch_description():
                     parameters=[dbscan_params],
                     ),  # intra-process disabled
 
-                # 5. Cluster Splitter - split over-merged cone clusters
-                ComposableNode(
-                    package='cluster_splitter',
-                    plugin='cluster_splitter::ClusterSplitterNode',
-                    name='cluster_splitter',
-                    parameters=[splitter_params],
-                    ),  # intra-process disabled
-
-                # 6. make_bbox
+                # 5. make_bbox
                 ComposableNode(
                     package='make_bbox',
                     plugin='make_bbox::MakeBBoxNode',

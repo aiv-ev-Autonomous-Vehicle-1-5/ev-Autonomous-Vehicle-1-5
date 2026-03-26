@@ -1,4 +1,4 @@
-"""Debug Stage 6: Patchwork++ + DBSCAN + ClusterSplitter + MakeBBox 출력 검증.
+"""Debug Stage 6: Patchwork++ + DBSCAN + MakeBBox 출력 검증.
 
 make_bbox가 생성하는 /perception/bboxes (ev_msgs/BBoxArray)와
 /perception/bboxes_marker (MarkerArray)를 검증한다.
@@ -28,11 +28,6 @@ def generate_launch_description():
         launch_share_dir, 'config', 'dbscan_clustering', 'dbscan_params.yaml')
     with open(dbscan_params_file, 'r') as f:
         dbscan_params = yaml.safe_load(f)['dbscan_clustering']['ros__parameters']
-
-    splitter_params_file = os.path.join(
-        launch_share_dir, 'config', 'cluster_splitter', 'cluster_splitter_params.yaml')
-    with open(splitter_params_file, 'r') as f:
-        splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
 
     bbox_params_file = os.path.join(
         launch_share_dir, 'config', 'make_bbox', 'make_bbox_params.yaml')
@@ -72,13 +67,6 @@ def generate_launch_description():
                 parameters=[dbscan_params],
                 # extra_arguments=[{'use_intra_process_comms': True}],
             ),
-            # ComposableNode(
-            #     package='cluster_splitter',
-            #     plugin='cluster_splitter::ClusterSplitterNode',
-            #     name='cluster_splitter',
-            #     parameters=[splitter_params],
-            #     # extra_arguments=[{'use_intra_process_comms': True}],
-            # ),
             ComposableNode(
                 package='make_bbox',
                 plugin='make_bbox::MakeBBoxNode',

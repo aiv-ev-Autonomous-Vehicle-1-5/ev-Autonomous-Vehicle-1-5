@@ -3,7 +3,7 @@
 Gazebo's velodyne plugin publishes PointCloud2 directly to /velodyne_points,
 so velodyne_driver and velodyne_transform are not needed.
 
-Pipeline: /velodyne_points -> Patchwork++ -> DBSCAN(GPU) -> ClusterSplitter -> MakeBBox
+Pipeline: /velodyne_points -> Patchwork++ -> DBSCAN(GPU) -> MakeBBox
 """
 
 import os
@@ -26,11 +26,6 @@ def generate_launch_description():
     dbscan_params_file = os.path.join(launch_share_dir, 'config', 'dbscan_clustering', 'dbscan_params.yaml')
     with open(dbscan_params_file, 'r') as f:
         dbscan_params = yaml.safe_load(f)['dbscan_clustering']['ros__parameters']
-
-    splitter_params_file = os.path.join(
-        launch_share_dir, 'config', 'cluster_splitter', 'cluster_splitter_params.yaml')
-    with open(splitter_params_file, 'r') as f:
-        splitter_params = yaml.safe_load(f)['cluster_splitter']['ros__parameters']
 
     bbox_params_file = os.path.join(
         launch_share_dir, 'config', 'make_bbox', 'make_bbox_params.yaml')
@@ -62,15 +57,7 @@ def generate_launch_description():
                 parameters=[dbscan_params],
                 ),  # intra-process disabled
 
-            # 3. Cluster Splitter - split over-merged cone clusters
-            ComposableNode(
-                package='cluster_splitter',
-                plugin='cluster_splitter::ClusterSplitterNode',
-                name='cluster_splitter',
-                parameters=[splitter_params],
-                ),  # intra-process disabled
-
-            # 4. MakeBBox - PointCloud2 -> BBoxArray + MarkerArray
+            # 3. MakeBBox - PointCloud2 -> BBoxArray + MarkerArray
             ComposableNode(
                 package='make_bbox',
                 plugin='make_bbox::MakeBBoxNode',

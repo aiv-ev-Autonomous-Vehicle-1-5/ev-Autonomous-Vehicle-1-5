@@ -69,7 +69,7 @@ lc_planner_node:
       bbox_cost_max: 100.0      # bbox 최대 비용(==costmap max cost)
       lane_cost_max: 80.0       # 차선 최대 비용 (낮아서 넘을 수 있음)
       bbox_radius: 0.4         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
-      unchained_bbox_radius: 0.9  # unchained bbox 전용 flat zone 반경 [m] (backbone 미체이닝 장애물)
+      unchained_bbox_radius: 1.0  # unchained bbox 전용 flat zone 반경 [m] (backbone 미체이닝 장애물)
       lane_radius: 0.5           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
       sigma: 1.0                # [m] 가우시안 확산
       cost_threshold: 15.0       # 이 이하 비용 무시
