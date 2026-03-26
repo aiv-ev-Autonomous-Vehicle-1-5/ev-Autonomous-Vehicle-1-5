@@ -65,15 +65,15 @@ lc_planner_node:
       size_x: 16.0              # [m] costmap X 전체 크기
       size_y: 16.0              # [m] costmap Y 전체 크기
       resolution: 0.15          # [m/cell] (1.5m 차로 = 10셀)
-      bbox_cost_max: 1000.0      # bbox 최대 비용(==costmap max cost)
-      lane_cost_max: 700.0       # 차선 최대 비용 (낮아서 넘을 수 있음)
+      bbox_cost_max: 100.0      # bbox 최대 비용(==costmap max cost)
+      lane_cost_max: 70.0       # 차선 최대 비용 (낮아서 넘을 수 있음)
       bbox_radius: 0.7         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
       lane_radius: 0.10           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
       sigma: 1.0                # [m] 가우시안 확산
       cost_threshold: 2.0       # 이 이하 비용 무시
       entry_wall_ego_y: 2.5     # [m] costmap 하단 양옆 가상 bbox 시작점 횡방향 오프셋
       origin_x: -4.0            # [m] costmap X 원점 (base_link 기준). -4 = 후방 4m 포함
-      center_attract_max: 1000.0  # 중앙선 최대 비용 감소량
+      center_attract_max: 90.0  # 중앙선 최대 비용 감소량
       center_attract_sigma: 0.07 # [m] 중앙선 유인 가우시안 확산
       track_half_width: 1.4     # [m] 트랙 반폭 — 한쪽 chain만으로 centerline 계산 시 수직 오프셋
       center_gap_threshold: 3.3  # [m] 양쪽 chain 간 거리가 이 값 초과 시 centerline midpoint 생성 안 함 (노이즈 제거)
@@ -84,9 +84,9 @@ lc_planner_node:
     astar:
       max_iterations: 5000
       goal_tolerance: 0.3       # [m]
-      cost_weight: 100.5         # costmap 비용 가중치
-      obstacle_cost: 1000.0       # 통과 불가 비용 임계값
-      goal_max_cost: 1000.0        # local goal 허용 최대 비용 (이 미만인 픽셀만 goal 후보)
+      cost_weight: 20.0         # costmap 비용 가중치
+      obstacle_cost: 100.0       # 통과 불가 비용 임계값
+      goal_max_cost: 99.0        # local goal 허용 최대 비용 (이 미만인 픽셀만 goal 후보)
 
     # ============================================================
     # [Stage 5] Postprocess — prune → smooth → curvature_clamp → resample → yaw

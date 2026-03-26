@@ -23,7 +23,8 @@
        │
        ▼
 5. 크기 필터링
-   (max_size_x = 1.75, max_size_y = 1.75, max_size_z = 1.5)
+   - 하한: min_size_z = 0.12 (납작한 바닥 노이즈 제거)
+   - 상한: max_size_x = 0.4, max_size_y = 0.4, max_size_z = 0.60
        │
        ▼
 6. BBoxArray + MarkerArray 발행
@@ -33,9 +34,10 @@
 
 | 파라미터 | 기본값 | 설명 |
 |---------|--------|------|
-| `max_size_x` | 1.75 | BBox X 최대 크기 (m) |
-| `max_size_y` | 1.75 | BBox Y 최대 크기 (m) |
-| `max_size_z` | 1.5 | BBox Z 최대 크기 (m) |
+| `max_size_x` | 0.4 | BBox X 최대 크기 (m) |
+| `max_size_y` | 0.4 | BBox Y 최대 크기 (m) |
+| `max_size_z` | 0.60 | BBox Z 최대 크기 (m) |
+| `min_size_z` | 0.12 | BBox Z 최소 크기 (m) — 납작한 바닥 노이즈 제거 |
 | `enable_cluster_split` | true | K-means 클러스터 분할 활성화 |
 | `split_cone_diameter_m` | 0.5 | 분할 기준 콘 직경 (m) |
 | `split_kmeans_max_iter` | 15 | K-means 최대 반복 횟수 |

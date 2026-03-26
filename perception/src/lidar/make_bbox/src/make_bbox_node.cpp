@@ -52,6 +52,7 @@ MakeBBoxNode::MakeBBoxNode(const rclcpp::NodeOptions & options)
   max_size_x_    = static_cast<float>(declare_parameter<double>("max_size_x", 0.55));
   max_size_y_    = static_cast<float>(declare_parameter<double>("max_size_y", 0.55));
   max_size_z_    = static_cast<float>(declare_parameter<double>("max_size_z", 0.89));
+  min_size_z_    = static_cast<float>(declare_parameter<double>("min_size_z", 0.12));
 
   // 클러스터 분할 파라미터
   enable_split_          = declare_parameter<bool>("enable_cluster_split", true);
@@ -222,8 +223,9 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     const float size_y = bmax_y - bmin_y;
     const float size_z = bmax_z - bmin_z;
 
-    // 크기 상한 필터: 라바콘보다 큰 물체 탈락
-    if (size_x > max_size_x_ || size_y > max_size_y_ || size_z > max_size_z_) {
+    // 크기 필터: 납작한 바닥 노이즈 제거 + 라바콘보다 큰 물체 탈락
+    if (size_z < min_size_z_ ||
+        size_x > max_size_x_ || size_y > max_size_y_ || size_z > max_size_z_) {
       continue;
     }
 

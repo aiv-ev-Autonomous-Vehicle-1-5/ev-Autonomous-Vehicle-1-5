@@ -18,7 +18,12 @@ make_bbox:
     #   - 가로(X): 약 0.500 m
     #   - 세로(Y): 약 0.500 mz
     #   - 높이(Z): 약 0.840 m
-    max_size_x: 0.35
-    max_size_y: 0.35
+    max_size_x: 0.4
+    max_size_y: 0.4
     max_size_z: 0.60
+
+    # bbox 크기 하한 필터 (납작한 바닥 노이즈 클러스터 제거)
+    # 클러스터에 속한 포인트들의 z_max - z_min (= 높이 extent)이 0.12m 이하면 납작한 바닥 노이즈로 판단하고 bbox를 생성하지 않습니다.
+    # rosbag 분석 결과: z < 0.10m 구간에 8.9% 노이즈 집중, 0.10~0.15m 갭 존재
+    min_size_z: 0.12
 
