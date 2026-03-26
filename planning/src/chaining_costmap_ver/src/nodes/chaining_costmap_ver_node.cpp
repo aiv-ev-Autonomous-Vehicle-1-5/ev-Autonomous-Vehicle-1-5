@@ -201,6 +201,13 @@ void LCPlannerNode::on_timer()
     auto status_msg = std::make_unique<std_msgs::msg::String>();
     status_msg->data = "STALE";
     pub_status_->publish(std::move(status_msg));
+    // stale 중에도 빈 costmap 발행하여 rviz2 10Hz 유지
+    if (pub_dbg_costmap_->get_subscription_count() > 0) {
+      auto empty_grid = std::make_unique<nav_msgs::msg::OccupancyGrid>();
+      empty_grid->header.stamp = stamp;
+      empty_grid->header.frame_id = frame_id;
+      pub_dbg_costmap_->publish(std::move(empty_grid));
+    }
     return;
   }
 

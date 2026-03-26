@@ -29,11 +29,21 @@ void publish_debug_costmap(
   const std::string & frame_id,
   const rclcpp::Time & stamp)
 {
-  if (pub->get_subscription_count() == 0 || !costmap.valid) return;
+  if (pub->get_subscription_count() == 0) return;
 
   auto grid_msg = std::make_unique<nav_msgs::msg::OccupancyGrid>();
   grid_msg->header.stamp = stamp;
   grid_msg->header.frame_id = frame_id;
+
+  if (!costmap.valid) {
+    // invalid일 때 빈 맵 발행 (rviz2에서 10Hz 유지)
+    grid_msg->info.resolution = 1.0f;
+    grid_msg->info.width = 0;
+    grid_msg->info.height = 0;
+    pub->publish(std::move(grid_msg));
+    return;
+  }
+
   grid_msg->info.resolution = static_cast<float>(costmap.resolution);
   grid_msg->info.width = costmap.cols;
   grid_msg->info.height = costmap.rows;

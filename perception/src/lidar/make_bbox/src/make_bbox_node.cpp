@@ -53,6 +53,7 @@ MakeBBoxNode::MakeBBoxNode(const rclcpp::NodeOptions & options)
   max_size_y_    = static_cast<float>(declare_parameter<double>("max_size_y", 0.55));
   max_size_z_    = static_cast<float>(declare_parameter<double>("max_size_z", 0.89));
   min_size_z_    = static_cast<float>(declare_parameter<double>("min_size_z", 0.12));
+  max_center_z_  = static_cast<float>(declare_parameter<double>("max_center_z", 0.5));
 
   // 클러스터 분할 파라미터
   enable_split_          = declare_parameter<bool>("enable_cluster_split", true);
@@ -232,6 +233,11 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     const float cx = (bmin_x + bmax_x) * 0.5F;
     const float cy = (bmin_y + bmax_y) * 0.5F;
     const float cz = (bmin_z + bmax_z) * 0.5F;
+
+    // 클러스터 중심 z 필터: 너무 높은 물체 제거
+    if (cz > max_center_z_) {
+      continue;
+    }
 
     ev_msgs::msg::BBox bbox;
     bbox.position.x = static_cast<double>(cx);

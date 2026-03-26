@@ -26,13 +26,13 @@ lc_planner_node:
     chainer:
       # --- Seed 선택 ---
       side_seed_y: 0.05        # [m] |y| < 이 값이면 seed 후보 제외
-      seed_max_dist: 1.5 # [m] seed 탐색 최대 거리 (Pass 1/2 공통)
+      seed_max_dist: 1.8 # [m] seed 탐색 최대 거리 (Pass 1/2 공통)
       seed_rear_limit: 0.5   # [m] x < -이 값이면 seed 후보 제외 (후방 제한)
 
       # --- kNN + 게이트 ---
       k: 20                    # centroid kNN 후보 수
       d_max: 2.5          # [m] neighbor 최대 거리 real : 1.5 m
-      forward_cone_deg: 120.0 # [deg] 전방 cone 전체 각도 (±60°)
+      forward_cone_deg: 100.0 # [deg] 전방 cone 전체 각도 (±60°)
       lateral_gate: 1.4      # [m] 횡방향 오차 한계
 
       # --- 비용함수 가중치 ---

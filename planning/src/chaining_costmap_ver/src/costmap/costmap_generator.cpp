@@ -79,6 +79,8 @@ double CostmapGenerator::effective_radius(
 //   - inv_2sigma2를 미리 계산하여 루프 내 나눗셈 제거
 //   - effective_radius로 순회 범위 제한 → O(πr²/res²) 셀만 처리
 //     전체 격자 O(rows×cols) 대비 대폭 절감
+//   - P3: inner_radius_sq로 flat zone 판정 (sqrt 제거 — flat zone 셀에서 sqrt 불필요)
+//   - P4: row-level 원형 col 범위 클리핑 (사각 bbox 대신 원형 범위만 순회)
 //
 // ============================================================================
 
@@ -96,48 +98,56 @@ void CostmapGenerator::apply_source(
   // 유효 반경: inner_radius(flat zone) + 가우시안 감쇠 거리
   double r_decay = effective_radius(cost_max, sigma, threshold);
   double r_total = inner_radius + r_decay;
-  double r_total_sq = r_total * r_total;   // P1: 원형 클리핑용 거리² 임계값
+  double r_total_sq = r_total * r_total;
   int r_cells = static_cast<int>(std::ceil(r_total / resolution));
+
+  // P3: flat zone 판정용 거리² 임계값 (sqrt 제거)
+  const double inner_radius_sq = inner_radius * inner_radius;
 
   // 가우시안 지수부의 상수: -1 / (2σ²)
   // exp(inv_2sigma2 * d²) = exp(-d² / (2σ²))
   // 루프 내에서 나눗셈 대신 곱셈으로 처리하여 성능 향상
   const double inv_2sigma2 = -1.0 / (2.0 * sigma * sigma);
+  const double inv_resolution = 1.0 / resolution;
 
-  // source의 그리드 좌표 (가장 가까운 셀)
-  int src_col = static_cast<int>(std::round((source.x - origin_x) / resolution));
-  int src_row = static_cast<int>(std::round((source.y - origin_y) / resolution));
-
-  // 순회 범위를 격자 경계 내로 클리핑
+  // source의 그리드 row 좌표 → row 범위 클리핑
+  int src_row = static_cast<int>(std::round((source.y - origin_y) * inv_resolution));
   int row_min = std::max(0, src_row - r_cells);
   int row_max = std::min(rows - 1, src_row + r_cells);
-  int col_min = std::max(0, src_col - r_cells);
-  int col_max = std::min(cols - 1, src_col + r_cells);
 
   for (int r = row_min; r <= row_max; ++r) {
     double wy = origin_y + (r + 0.5) * resolution;
     double dy = wy - source.y;
-    for (int c = col_min; c <= col_max; ++c) {
+    double dy2 = dy * dy;
+
+    // P4: row-level 스킵 — dy²만으로 원 밖이면 해당 row 전체 건너뜀
+    if (dy2 > r_total_sq) continue;
+
+    // P4: row-level 원형 col 범위 클리핑
+    //   원 방정식 dx² + dy² ≤ r² → dx ≤ √(r² - dy²)
+    //   해당 row에서 유효한 col 범위만 순회
+    double dx_max = std::sqrt(r_total_sq - dy2);
+    int col_lo = std::max(0, static_cast<int>(std::ceil(
+      (source.x - dx_max - origin_x) * inv_resolution - 0.5)));
+    int col_hi = std::min(cols - 1, static_cast<int>(std::floor(
+      (source.x + dx_max - origin_x) * inv_resolution - 0.5)));
+
+    for (int c = col_lo; c <= col_hi; ++c) {
       // P2: 포화 셀 조기 스킵 — 이미 cost_max 이상이면 계산 불필요 (max-merge)
       int idx = r * cols + c;
       if (grid[idx] >= cost_max) continue;
 
       double wx = origin_x + (c + 0.5) * resolution;
       double dx = wx - source.x;
-
-      // P1: 원형 클리핑 — 원 밖 셀은 sqrt/exp 계산 없이 즉시 스킵
-      double d2 = dx * dx + dy * dy;
-      if (d2 > r_total_sq) continue;
-
-      double d = std::sqrt(d2);
+      double d2 = dx * dx + dy2;
 
       double cost;
-      if (d <= inner_radius) {
-        // ── flat zone ──
+      // P3: flat zone 판정에 d² 비교 사용 (sqrt 제거)
+      if (d2 <= inner_radius_sq) {
         cost = cost_max;
       } else {
-        // ── 가우시안 감쇠 ──
-        double d_eff = d - inner_radius;
+        // 가우시안 감쇠 구간에서만 sqrt 계산
+        double d_eff = std::sqrt(d2) - inner_radius;
         cost = cost_max * std::exp(inv_2sigma2 * d_eff * d_eff);
         if (cost < threshold) continue;
       }
@@ -496,7 +506,7 @@ void CostmapGenerator::apply_entry_walls(
   const PlanningParams & params)
 {
   const auto & cm = params.costmap;
-  const double step = 0.6;  // 가상 bbox 간격 [m] (sigma=1.0m이므로 0.6m 간격이면 가우시안 충분히 겹침)
+  const double step = 0.4;  // 가상 bbox 간격 [m] (sigma=1.0m이므로 0.4m 간격이면 가우시안 충분히 겹침)
 
   // costmap 하단 x좌표 (= origin_x, 그리드 좌하단의 x값)
   const double bottom_x = costmap.origin_x;

@@ -62,8 +62,16 @@ on_timer() — 10Hz (100ms)
 │
 ├── Stage 3: Costmap + A*  [costmap/, planner/, nodes/goal_calculator.hpp]
 │     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
-│     3b. Gaussian Costmap 생성
+│     3b. Gaussian Costmap 생성 (apply_source 최적화 적용)
 │         * backbone 포인트는 bbox_cost_max + bbox_radius 적용
+│         * apply_source 성능 최적화:
+│           - inv_resolution 미리 계산하여 루프 내 나눗셈 제거
+│           - P3: flat zone 판정에서 sqrt 제거 — inner_radius_sq로 d² 비교
+│                 sqrt는 가우시안 감쇠 구간(d > inner_radius)에서만 호출
+│           - P4: row-level 원형 col 범위 클리핑
+│                 사각형 bounding box 대신, 각 row에서 dx_max = sqrt(r_total_sq - dy²)로
+│                 유효 col 범위를 좁혀 순회 셀 수를 줄임
+│                 기존 내부 루프의 원형 클리핑(if d2 > r_total_sq continue) 불필요
 │     3b-2. Entry walls
 │     3b-3. 중앙선 유인 비용 (center line attraction) ← 가장 마지막에 적용
 │         * 양쪽 backbone 존재 시 2-Phase 중앙선 생성:
@@ -132,7 +140,7 @@ grep "valid:0" ~/dbg_logs/timing_*.log
 | `overlap` | resolve_overlaps() backtracking |
 | `trim` | trim_crossing_backbones() 선분 교차 검증 |
 | `L_resamp` / `R_resamp` | resample_component (좌/우) |
-| `stage3_costmap` | Gaussian costmap generate() |
+| `stage3_costmap` | Gaussian costmap generate() (P3/P4 최적화 적용: sqrt 최소화 + 원형 col 클리핑) |
 | `stage3_entry` | Entry walls 생성 |
 | `stage3_center` | 중앙선 유인 비용 적용 |
 | `stage3_goal` | Goal 계산 + clamp |
@@ -210,7 +218,7 @@ chaining_costmap_ver/
 | 모듈 | 역할 |
 |------|------|
 | `chainer/` | DirectionChainer v3 — 컴포넌트 분류 + L/R 백본 추출 |
-| `costmap/` | Gaussian Costmap 생성 |
+| `costmap/` | Gaussian Costmap 생성 (apply_source: P3 sqrt 제거 + P4 원형 col 클리핑 최적화) |
 | `planner/` | A* 경로 탐색 |
 | `postprocess/` | 경로 후처리 (prune, smooth, curvature_clamp, resample, yaw) |
 | `safety/` | 경로 유효성 + 곡률 검증 |
