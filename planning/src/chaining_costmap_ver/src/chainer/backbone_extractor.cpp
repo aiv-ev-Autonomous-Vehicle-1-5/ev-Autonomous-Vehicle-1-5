@@ -106,10 +106,14 @@ double DirectionChainer::compute_cost_prime(
 // ============================================================================
 // seed에서 주어진 초기 방향(init_dir)으로 한 방향만 greedy chaining.
 //
-// [단일 패스 탐색]
+// [단일 패스 탐색 + 클러스터 락]
 //   d_max 범위 내 모든 후보(bbox + lane)를 동일 가중치로 탐색.
 //   G0(lane_side) + G1(거리) + G2(cone) + G3(lateral) 게이트 적용 후
-//   compute_cost_prime()으로 최소 비용 후보 선택. bbox/lane 타입 우선 없음.
+//   compute_cost_prime()으로 최소 비용 후보 선택.
+//
+//   클러스터 락: best가 자기 쪽 lane point이면 해당 클러스터(label)만
+//   후보로 제한하여 기존 게이트로 클러스터 전체를 chaining.
+//   클러스터 후보 소진 시 락 해제 → 정상 탐색 복귀.
 //
 std::vector<int> DirectionChainer::chain_one_direction(
   const std::vector<ChainPoint> & points,
@@ -130,6 +134,10 @@ std::vector<int> DirectionChainer::chain_one_direction(
 
   // 반대편 lane_side — lane 포인트 중 반대쪽 소속은 chaining 후보에서 제외
   const LaneSide opp_side = is_left ? LaneSide::RIGHT : LaneSide::LEFT;
+  const LaneSide my_side  = is_left ? LaneSide::LEFT  : LaneSide::RIGHT;
+
+  // 클러스터 락: 자기 쪽 lane 포인트가 선택되면 해당 클러스터만 후보로 제한
+  int32_t locked_cluster_label = -1;
 
   while (static_cast<int>(chain.size()) < remaining_len) {
     std::vector<int> gated;
@@ -140,10 +148,16 @@ std::vector<int> DirectionChainer::chain_one_direction(
                               ? cp.d_max_bbox : cp.d_max_lane;
     const double d_max_sq = d_max_cur * d_max_cur;
 
-    // ── 단일 패스: d_max 범위 내 모든 후보 (bbox + lane) 동일 가중치 탐색 ──
-    // bbox/lane 타입 우선 없이, 동일한 게이트와 비용함수로 최소 비용 선택
+    // ── 단일 패스: d_max 범위 내 후보 탐색 ──
+    // 클러스터 락 중이면 해당 클러스터 lane point만, 아니면 전체(bbox+lane)
     for (int i = 0; i < n; ++i) {
       if (i == current) continue;
+
+      // 클러스터 락: 해당 클러스터의 lane 포인트만 후보
+      if (locked_cluster_label >= 0) {
+        if (points[i].type != PointType::LANE ||
+            points[i].label != locked_cluster_label) continue;
+      }
 
       // G0: lane_side 게이트 — 반대편 차선 포인트 제외 (BBOX는 NONE이라 통과)
       if (points[i].lane_side == opp_side) continue;
@@ -177,6 +191,11 @@ std::vector<int> DirectionChainer::chain_one_direction(
     }
 
     if (gated.empty()) {
+      // 클러스터 락 중 후보 소진 → 락 해제, 정상 탐색으로 복귀
+      if (locked_cluster_label >= 0) {
+        locked_cluster_label = -1;
+        continue;
+      }
       stop_reason = had_candidates ? StopReason::ALL_GATED
                                    : StopReason::NO_CANDIDATE;
       break;
@@ -194,6 +213,13 @@ std::vector<int> DirectionChainer::chain_one_direction(
         best_cost = c;
         best = gated[i];
       }
+    }
+
+    // 클러스터 락 진입: 자기 쪽 lane point가 선택되면 해당 클러스터 잠금
+    if (locked_cluster_label < 0 &&
+        points[best].type == PointType::LANE &&
+        points[best].lane_side == my_side) {
+      locked_cluster_label = points[best].label;
     }
 
     // 이동 (진행 방향 갱신)

@@ -37,9 +37,11 @@ on_timer() — 10Hz (100ms)
 │       G2 (전방 cone 게이트):  angle(v, u_ij) ≤ forward_cone_deg/2
 │       G3 (횡오차 게이트):     |lateral_proj| ≤ lateral_gate
 │       G4 (시드 기준 횡편차 가드): candidate.y ∈ seed_y ± max_lateral_deviation
-│     * backbone chaining 단일 패스 탐색:
+│     * backbone chaining 단일 패스 탐색 + 클러스터 락:
 │       d_max 범위 내 모든 후보(bbox+lane)를 동일 가중치로 탐색
 │       G0(lane_side)+G1(거리)+G2(cone)+G3(lateral) 게이트 적용 후 최소 비용 선택
+│       클러스터 락: best가 자기 쪽 lane point이면 해당 클러스터(label)만
+│       후보로 제한하여 기존 게이트로 클러스터 전체 chaining → 소진 시 락 해제
 │     * 독립 체이닝 (v4):
 │       좌/우 각각 독립 owner 배열로 체이닝 → 상대 chain의 영향 없음
 │     * 2.5단계 — Backtracking 중복 해소 (resolve_overlaps):

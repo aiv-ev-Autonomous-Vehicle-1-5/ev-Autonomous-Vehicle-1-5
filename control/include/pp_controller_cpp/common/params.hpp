@@ -33,7 +33,7 @@ struct PurePursuitParams
 
   // --- 차량/알고리즘 파라미터 ---
   struct Vehicle {
-    double wheelbase{0.87};     // T870 축간거리 [m]
+    double wheelbase{0.733};     // T870 축간거리 [m]
     double delta_max{0.314};    // 최대 조향각 [rad] (≈18도)
   } vehicle;
 
