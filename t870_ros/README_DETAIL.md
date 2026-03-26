@@ -63,8 +63,9 @@ T870 플랫폼과의 ROS 2 통신 인터페이스를 정의합니다.
 #### ControlCommand.msg
 
 ```
-float64 speed      # 목표 속도 (m/s)
-float64 steering   # 목표 조향각 (rad)
+std_msgs/Header header   # 센서 타임스탬프 전파 (ros2 topic delay 측정용)
+float64 speed            # 목표 속도 (m/s)
+float64 steering         # 목표 조향각 (rad)
 ```
 
 #### Feedback.msg

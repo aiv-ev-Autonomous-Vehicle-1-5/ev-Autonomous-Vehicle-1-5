@@ -4,7 +4,7 @@
 
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
-| `/erp42/control_command` | `erp42_msgs/msg/ControlCommand` | Reliable, depth=1 | 차량 제어 명령 (speed, steering, brake) |
+| `/erp42/control_command` | `erp42_msgs/msg/ControlCommand` | Reliable, depth=1 | 차량 제어 명령 (header, speed, steering, brake). header는 센서 타임스탬프 전파용 |
 
 ## 발행 토픽
 

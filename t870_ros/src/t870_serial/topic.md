@@ -4,7 +4,7 @@
 
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
-| `/t870/control_command` | `t870_msgs/msg/ControlCommand` | BestEffort, depth=1 | 차량 제어 명령 (speed m/s, steering rad) |
+| `/t870/control_command` | `t870_msgs/msg/ControlCommand` | BestEffort, depth=1 | 차량 제어 명령 (header, speed m/s, steering rad). header는 센서 타임스탬프 전파용 |
 
 ## 발행 토픽
 

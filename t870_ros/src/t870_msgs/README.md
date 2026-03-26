@@ -4,11 +4,12 @@ ERP42 Racing ROS2 communication interfaces
 <br/>
 
 ## ControlCommand.msg
-Henes T870 control command includes speed, steering
-| Field        | Type    | Unit        | Description                                                                                                                             |
-| ------------ | ------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| **speed**    | float64 | **m/s**     | The linear speed of the vehicle. Negative values are not allowed. If backward is required, the gear must be changed in ModeCommand.srv. |
-| **steering** | float64 | **rad**     | The steering angle of the vehicle. **Positive values are for the left side** and **negative values are for the right side.**            |
+Henes T870 control command includes header, speed, steering. The header carries the original sensor timestamp (from velodyne_points) through the pipeline for `ros2 topic delay` measurement.
+| Field        | Type             | Unit        | Description                                                                                                                             |
+| ------------ | ---------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **header**   | std_msgs/Header  | **-**       | Propagated sensor timestamp for pipeline delay measurement (`ros2 topic delay`).                                                        |
+| **speed**    | float64          | **m/s**     | The linear speed of the vehicle. Negative values are not allowed. If backward is required, the gear must be changed in ModeCommand.srv. |
+| **steering** | float64          | **rad**     | The steering angle of the vehicle. **Positive values are for the left side** and **negative values are for the right side.**            |
 
 <br/>
 

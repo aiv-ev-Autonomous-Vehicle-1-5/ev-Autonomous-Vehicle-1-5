@@ -14,7 +14,7 @@
 //   7) 안전 조건 확인
 //   8) Pure Pursuit 조향각 계산
 //   9) 속도 결정 + rate limit
-//  10) 제어 명령 발행 (T870 / ERP42)
+//  10) 제어 명령 발행 (T870 / ERP42) — header에 원본 센서 타임스탬프(velodyne_points) 전파
 //  11) 디버그 시각화 발행 (원본 센서 타임스탬프 전파 → topic delay 측정 가능)
 // ============================================================================
 
@@ -155,7 +155,7 @@ void PurePursuitRelativeNode::publish_emergency_decel(double dt)
     params_.speed.accel_rate,
     params_.safety.emergency_decel_rate);
   last_cmd_speed_ = v_cmd;
-  cmd_pub_.publish(v_cmd, 0.0);
+  cmd_pub_.publish(v_cmd, 0.0, last_path_stamp_);
   last_control_time_ = this->now();
 }
 
@@ -321,7 +321,7 @@ void PurePursuitRelativeNode::on_timer()
           params_.creep.speed, last_cmd_speed_, control_dt,
           params_.speed.accel_rate, params_.speed.decel_rate);
         last_cmd_speed_ = v_cmd;
-        cmd_pub_.publish(v_cmd, 0.0);
+        cmd_pub_.publish(v_cmd, 0.0, last_path_stamp_);
         last_control_time_ = this->now();
         RCLCPP_WARN_THROTTLE(
           this->get_logger(), *this->get_clock(), 1000,
@@ -419,7 +419,7 @@ void PurePursuitRelativeNode::on_timer()
   last_cmd_speed_ = v_cmd;
 
   // ----- 제어 명령 발행 (T870 + ERP42) -----
-  cmd_pub_.publish(v_cmd, delta);
+  cmd_pub_.publish(v_cmd, delta, last_path_stamp_);
 
   // ----- 디버깅 로그 (500ms마다 throttle) -----
   RCLCPP_INFO_THROTTLE(

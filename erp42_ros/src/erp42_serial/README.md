@@ -13,7 +13,7 @@ $ ros2 launch erp42_serial serial_bridge.launch.py
 ### Topic / Service Names
 | Interface | Entitiy      | Type                              | Name                       | Description                                      |
 | --------- | ------------ | --------------------------------- |--------------------------- | ------------------------------------------------ |
-| Topic     | Subscription | **erp42_msgs/msg/ControlCommand** | **/erp42/control_command** | Control command includes speed, steering, brake  |
+| Topic     | Subscription | **erp42_msgs/msg/ControlCommand** | **/erp42/control_command** | Control command includes header (sensor timestamp for delay measurement), speed, steering, brake |
 | Topic     | Publisher    | **erp42_msgs/msg/Feedback**       | **/erp42/feedback**        | Feedback from ERP42                              |
 | Servie    | Server       | **erp42_msgs/srv/ModeCommand**    | **/erp42/mode_command**    | Mode command includes control mode, E-stop, gear |
 

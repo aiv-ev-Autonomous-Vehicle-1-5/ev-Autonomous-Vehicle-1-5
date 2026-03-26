@@ -153,7 +153,8 @@ on_timer() — 50Hz (20ms)
 │     last_cmd_speed_ = v_cmd (다음 콜백에서 v_prev로 사용)
 │
 ├── ⑩ 제어 명령 발행
-│     cmd_pub_.publish(v_cmd, delta)
+│     cmd_pub_.publish(v_cmd, delta, stamp)
+│       stamp: 원본 센서 타임스탬프(velodyne_points)를 header에 전파 → ros2 topic delay 측정용
 │       /t870/control_command → T870 실차 (항상)
 │       /erp42/control_command → ERP42 Gazebo (lazy)
 │

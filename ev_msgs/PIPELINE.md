@@ -34,6 +34,7 @@
 | `header` | `std_msgs/Header` | 메시지 헤더 (타임스탬프, 프레임 ID) |
 | `points` | `geometry_msgs/Point[]` | 차선 경계 포인트 배열 |
 | `confidence` | `float32` | 검출 신뢰도 |
+| `lane_id` | `int32` | 차선 클러스터 ID (YOLO 인스턴스 세그멘테이션 기준) |
 
 ### 4. LaneBoundaryArray.msg
 차선 경계 배열 메시지

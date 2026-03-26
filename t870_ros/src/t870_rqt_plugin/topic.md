@@ -6,7 +6,7 @@
 
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
-| `/t870/control_command` | `t870_msgs/msg/ControlCommand` | Reliable, depth=1 | 수동 차량 제어 명령 |
+| `/t870/control_command` | `t870_msgs/msg/ControlCommand` | Reliable, depth=1 | 수동 차량 제어 명령 (header에 센서 타임스탬프 전파 가능) |
 
 ### 서비스 (클라이언트)
 

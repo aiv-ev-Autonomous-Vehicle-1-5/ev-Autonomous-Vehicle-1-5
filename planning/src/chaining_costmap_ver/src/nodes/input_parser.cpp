@@ -42,7 +42,7 @@ void parse_input(
         cp.x = p.x;
         cp.y = p.y;
         cp.type = PointType::LANE;
-        cp.label = -1;
+        cp.label = bd.lane_id;
         all_pts.push_back(cp);
       }
     }

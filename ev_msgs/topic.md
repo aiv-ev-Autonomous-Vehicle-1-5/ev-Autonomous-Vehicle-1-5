@@ -8,13 +8,13 @@
 |---|---|---|
 | `BBox` | `geometry_msgs/Point position`, `float32 size_x/y/z`, `int32 label` | 단일 바운딩 박스 |
 | `BBoxArray` | `std_msgs/Header header`, `BBox[] bboxes` | 바운딩 박스 배열 |
-| `LaneBoundary` | `std_msgs/Header header`, `geometry_msgs/Point[] points`, `float32 confidence` | 단일 차선 경계 |
+| `LaneBoundary` | `std_msgs/Header header`, `geometry_msgs/Point[] points`, `float32 confidence`, `int32 lane_id` | 단일 차선 경계 |
 | `LaneBoundaryArray` | `std_msgs/Header header`, `LaneBoundary[] boundaries` | 차선 경계 배열 |
 
 ## 사용하는 토픽
 
 | 토픽 이름 | 메시지 타입 | 발행 노드 | 구독 노드 |
 |---|---|---|---|
-| `/perception/bboxes` | `BBoxArray` | bbox_tracker | chaining_costmap_ver, pure_pursuit |
-| `/perception/raw_bboxes` | `BBoxArray` | make_bbox | bbox_tracker |
-| `/perception/lane_boundaries` | `LaneBoundaryArray` | yolo_db_seg_node | chaining_costmap_ver |
+| `/perception/bboxes` | `BBoxArray` | make_bbox | chaining_costmap_ver, pure_pursuit |
+| `/perception/raw_lane_boundaries` | `LaneBoundaryArray` | yolo_instance_seg_node | lane_chaining |
+| `/perception/lane_boundaries` | `LaneBoundaryArray` | lane_chaining | chaining_costmap_ver |

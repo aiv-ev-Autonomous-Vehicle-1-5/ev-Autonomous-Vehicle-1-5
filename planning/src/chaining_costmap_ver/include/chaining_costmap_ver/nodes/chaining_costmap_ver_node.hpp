@@ -16,7 +16,7 @@
  *
  * [입력 토픽] (Best Effort QoS, depth=1)
  *   - /perception/lane_boundaries : 카메라 차선 인식 결과 (LaneBoundaryArray)
- *   - /perception/bboxes          : LiDAR 장애물 바운딩 박스 (BBoxArray)
+ *   - /perception/bboxes          : LiDAR 장애물 바운딩 박스 (BBoxArray, make_bbox에서 직접 수신)
  *
  *   ※ Best Effort QoS를 사용하는 이유:
  *     인지 데이터는 실시간성이 중요하며, 오래된 데이터를 재전송 받는 것보다
@@ -172,19 +172,16 @@ private:
   // ── 최신 입력 데이터 (콜백에서 갱신) ──
   // UniquePtr을 사용하여 소유권 이동(move)으로 복사 비용을 없앤다
   ev_msgs::msg::LaneBoundaryArray::UniquePtr last_lanes_;       ///< 마지막으로 받은 차선 데이터
-  ev_msgs::msg::BBoxArray::UniquePtr          last_bboxes_;    ///< 마지막으로 받은 tracked bbox (costmap 전용)
-  ev_msgs::msg::BBoxArray::UniquePtr          last_raw_bboxes_; ///< 마지막으로 받은 raw bbox (chaining 전용)
+  ev_msgs::msg::BBoxArray::UniquePtr          last_bboxes_;    ///< 마지막으로 받은 bbox (chaining + costmap 공용)
 
   // ── 입력 타임스탬프 (stale 검사용) ──
   // 각 메시지를 마지막으로 수신한 시각 (ROS 시간 기준)
   rclcpp::Time stamp_lanes_;        ///< 차선 데이터 수신 시각
-  rclcpp::Time stamp_bboxes_;       ///< tracked bbox 수신 시각
-  rclcpp::Time stamp_raw_bboxes_;   ///< raw bbox 수신 시각
+  rclcpp::Time stamp_bboxes_;       ///< bbox 수신 시각
 
   // ── 구독자(Subscription) ──
   rclcpp::Subscription<ev_msgs::msg::LaneBoundaryArray>::SharedPtr sub_lanes_;       ///< /perception/lane_boundaries 구독
-  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_bboxes_;              ///< /perception/bboxes 구독 (tracked, costmap용)
-  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_raw_bboxes_;          ///< /perception/raw_bboxes 구독 (chaining용)
+  rclcpp::Subscription<ev_msgs::msg::BBoxArray>::SharedPtr sub_bboxes_;              ///< /perception/bboxes 구독 (make_bbox에서 직접 수신, chaining + costmap 공용)
 
   // ── Core 퍼블리셔 (항상 발행) ──
   rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr pub_path_;       ///< /planning/path — 최종 경로 (POINTS 마커)

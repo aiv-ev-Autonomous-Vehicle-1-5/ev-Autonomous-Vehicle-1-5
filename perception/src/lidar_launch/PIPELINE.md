@@ -31,21 +31,14 @@ Velodyne VLP-16 (UDP)
 /pointcloud/clustered
     │
     ├─ make_bbox (클러스터 → BBox 변환 + 크기 필터 + 분할)
-    │   ├─ /perception/raw_bboxes  (ev_msgs/BBoxArray)  ← tracker 입력
-    │   └─ /perception/bboxes_marker (MarkerArray)       ← 시각화
-    │
-    ▼
-/perception/raw_bboxes
-    │
-    ├─ bbox_tracker (ego-motion 기반 트래킹)
-    │   │   ← /t870/control_command (조향/속도)
-    │   │
-    │   ├─ /perception/bboxes       (ev_msgs/BBoxArray)  ← planning 입력
-    │   ├─ /tracker/debug/tracks    (Marker, lazy)        ← 초록=검출, 빨강=예측
-    │   └─ /tracker/debug/predicted (Marker, lazy)        ← 예측 유지만 (주황)
+    │   ├─ /perception/bboxes        (ev_msgs/BBoxArray)  ← planning 직접 구독
+    │   └─ /perception/bboxes_marker (MarkerArray)        ← 시각화
     │
     ▼
 /perception/bboxes → planning (chaining_costmap_ver)
+
+    [DEPRECATED: bbox_tracker는 파이프라인에서 제거됨]
+    [make_bbox가 /perception/bboxes로 직접 발행 → planning이 직접 구독]
 ```
 
 ## 런치 파일
@@ -67,10 +60,8 @@ lidar_launch/config/
 │   └── dbscan_params.yaml
 ├── lidar_voxel_grid/
 │   └── voxel_grid_params.yaml
-├── make_bbox/
-│   └── make_bbox_params.yaml
-└── bbox_tracker/
-    └── bbox_tracker_params.yaml
+└── make_bbox/
+    └── make_bbox_params.yaml
 ```
 
 ## 노드별 토픽
@@ -101,18 +92,12 @@ lidar_launch/config/
 | 방향 | 토픽 | 타입 |
 |------|------|------|
 | Sub | `/pointcloud/clustered` | `sensor_msgs/PointCloud2` |
-| Pub | `/perception/raw_bboxes` | `ev_msgs/BBoxArray` |
+| Pub | `/perception/bboxes` | `ev_msgs/BBoxArray` |
 | Pub | `/perception/bboxes_marker` | `visualization_msgs/MarkerArray` |
 
-### 5. bbox_tracker (트래킹)
+### ~~5. bbox_tracker (트래킹)~~ [DEPRECATED]
 
-| 방향 | 토픽 | 타입 | 설명 |
-|------|------|------|------|
-| Sub | `/perception/raw_bboxes` | `ev_msgs/BBoxArray` | raw 검출 |
-| Sub | `/t870/control_command` | `t870_msgs/ControlCommand` | 조향/속도 |
-| Pub | `/perception/bboxes` | `ev_msgs/BBoxArray` | tracked bbox → planning |
-| Pub | `/tracker/debug/tracks` | `visualization_msgs/Marker` | 전체 트랙 (lazy) |
-| Pub | `/tracker/debug/predicted` | `visualization_msgs/Marker` | 예측 유지만 (lazy) |
+> bbox_tracker는 파이프라인에서 제거되었습니다. make_bbox가 `/perception/bboxes`로 직접 발행합니다.
 
 ## 메시지 타입
 
@@ -137,7 +122,6 @@ BBox[] bboxes
 # ev.yaml / ev_real.yaml
 - Gazebo / T870 serial          # 차량
 - lidar_launch make_bbox        # perception 파이프라인
-- bbox_tracker                  # 트래킹
 - chaining_costmap_ver          # planning
 - pure_pursuit                  # control
 ```

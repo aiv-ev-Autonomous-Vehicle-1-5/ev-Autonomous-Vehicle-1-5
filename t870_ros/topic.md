@@ -24,6 +24,7 @@
 **필드:**
 | 필드 | 타입 | 설명 |
 |------|------|------|
+| `header` | `std_msgs/Header` | 센서 타임스탬프 전파 (ros2 topic delay 측정용) |
 | `speed` | `float64` | 목표 속도 (m/s) |
 | `steering` | `float64` | 목표 조향각 (rad) |
 

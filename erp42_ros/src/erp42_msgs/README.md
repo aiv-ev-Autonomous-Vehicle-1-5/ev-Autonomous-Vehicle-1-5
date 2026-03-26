@@ -4,12 +4,13 @@ ERP42 ROS2 communication interfaces
 <br/>
 
 ## ControlCommand.msg
-ERP42 control command includes speed, steering, brake
-| Field        | Type    | Unit        | Description                                                                                                                            |
-| ------------ | ------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| **speed**    | float64 | **m/s**     | The linear speed of the vehicle. Negative values are not allowed. If reverse is required, the gear must be changed in ModeCommand.srv. |
-| **steering** | float64 | **rad**     | The steering angle of the vehicle. **Positive values are for the left side** and **negative values are for the right side.**           |
-| **brake**    | uint8   | **0 - 150** | The braking strength of the vehicle. A value between **0 and 150** is required.                                                        |
+ERP42 control command includes header, speed, steering, brake. The header carries the original sensor timestamp (from velodyne_points) through the pipeline for `ros2 topic delay` measurement.
+| Field        | Type             | Unit        | Description                                                                                                                            |
+| ------------ | ---------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| **header**   | std_msgs/Header  | **-**       | Propagated sensor timestamp for pipeline delay measurement (`ros2 topic delay`).                                                       |
+| **speed**    | float64          | **m/s**     | The linear speed of the vehicle. Negative values are not allowed. If reverse is required, the gear must be changed in ModeCommand.srv. |
+| **steering** | float64          | **rad**     | The steering angle of the vehicle. **Positive values are for the left side** and **negative values are for the right side.**           |
+| **brake**    | uint8            | **0 - 150** | The braking strength of the vehicle. A value between **0 and 150** is required.                                                        |
 
 <br/>
 

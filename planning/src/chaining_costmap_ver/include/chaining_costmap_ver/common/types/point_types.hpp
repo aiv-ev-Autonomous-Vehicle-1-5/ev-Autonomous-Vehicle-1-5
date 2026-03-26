@@ -85,14 +85,14 @@ struct ChainedPoint
  *
  * 데이터 흐름:
  *   LiDAR DBSCAN → BBox 메시지 → ChainPoint (type=BBOX, label=cluster_id)
- *   카메라 차선  → LaneBoundary → ChainPoint (type=LANE, label=-1)
+ *   카메라 차선  → LaneBoundary → ChainPoint (type=LANE, label=lane_id)
  */
 struct ChainPoint
 {
   double x = 0.0;             ///< [m] base_link 기준 전방(+)/후방(-)
   double y = 0.0;             ///< [m] base_link 기준 좌측(+)/우측(-)
   PointType type = PointType::LANE;  ///< bbox/차선 구분
-  int32_t label = -1;         ///< 원본 cluster_id (bbox: DBSCAN 번호, 차선: -1)
+  int32_t label = -1;         ///< 원본 cluster_id (bbox: DBSCAN 번호, 차선: YOLO lane_id)
   double size_x = 0.0;        ///< AABB X 크기 [m] (bbox만 유효)
   double size_y = 0.0;        ///< AABB Y 크기 [m] (bbox만 유효)
   bool is_backbone = false;   ///< backbone 포인트 여부 — true이면 costmap에서 bbox_cost_max 적용

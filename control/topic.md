@@ -14,8 +14,8 @@
 
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
-| `/t870/control_command` | `t870_msgs/msg/ControlCommand` | BestEffort, depth=1 | T870 실차 제어 (속도, 조향) |
-| `/erp42/control_command` | `erp42_msgs/msg/ControlCommand` | Reliable, depth=10 | Gazebo ERP42 시뮬레이터 제어 (Lazy) |
+| `/t870/control_command` | `t870_msgs/msg/ControlCommand` | BestEffort, depth=1 | T870 실차 제어 (header, 속도, 조향). header에 센서 타임스탬프 전파 |
+| `/erp42/control_command` | `erp42_msgs/msg/ControlCommand` | Reliable, depth=10 | Gazebo ERP42 시뮬레이터 제어 (Lazy). header에 센서 타임스탬프 전파 |
 
 ### 디버그 토픽 (Lazy)
 

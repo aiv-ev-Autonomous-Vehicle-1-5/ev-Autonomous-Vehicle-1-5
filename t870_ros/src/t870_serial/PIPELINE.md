@@ -47,7 +47,7 @@
 
 ```
 [제어 경로 (ROS -> PCU)]
-  /t870/control_command (ControlCommand)
+  /t870/control_command (ControlCommand)  ← header에 센서 타임스탬프 포함
     -> 타임아웃 검사 (0.5초)
     -> 속도/조향 클램핑 (max_speed_mps, max_steering_deg)
     -> MPS2BYTE, RAD2BYTE 변환

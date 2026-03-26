@@ -19,11 +19,12 @@ BEV 이미지에서 YOLO 세그멘테이션을 수행하여 단순 차선 좌표
 - **모델**: `second_best.pt`, conf=0.7, imgsz=320
 - **좌표 변환**: BEV 기준점(226, 419), 1px=0.01m
 
-### 3. yolo_db_seg_node (주 사용 노드)
-BEV 이미지에서 YOLO + DBSCAN 클러스터링을 수행하여 구조화된 차선 경계를 출력하는 노드.
+### 3. yolo_instance_seg_node (주 사용 노드)
+BEV 이미지에서 YOLO 인스턴스 세그멘테이션을 수행하여 구조화된 차선 경계를 출력하는 노드.
 
-- **클러스터링**: 1D gap-sort 클러스터링 (eps=30, min_samples=50)
-- **출력**: `LaneBoundaryArray` (각 boundary에 ordered `Point[]` + confidence)
+- **인스턴스 세그멘테이션**: 각 마스크(인스턴스)를 개별 차선으로 처리 — 합치지 않음
+- **출력**: `LaneBoundaryArray` (각 boundary에 ordered `Point[]` + confidence + lane_id)
+- **lane_id**: YOLO 인스턴스별 클러스터 ID 부여 (planning에서 label로 활용)
 - **CUDA 지원** (CPU 폴백)
 
 ### 4. lane_coord_viewer
@@ -41,10 +42,10 @@ BEV 이미지에서 YOLO + DBSCAN 클러스터링을 수행하여 구조화된 �
    /bev_image
        |
        v
- yolo_db_seg_node
+ yolo_instance_seg_node
        |
        v
 /perception/lane_boundaries
 ```
 
-**전체 파이프라인**: `/camera1/image_raw` -> `bev_lut_node` -> `/bev_image` -> `yolo_db_seg_node` -> `/perception/lane_boundaries`
+**전체 파이프라인**: `/camera1/image_raw` -> `bev_lut_node` -> `/bev_image` -> `yolo_instance_seg_node` -> `/perception/lane_boundaries`

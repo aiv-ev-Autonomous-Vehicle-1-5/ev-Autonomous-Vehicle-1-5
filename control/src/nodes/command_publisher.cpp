@@ -13,10 +13,12 @@ CommandPublisher::CommandPublisher(T870Pub t870_pub, ERP42Pub erp42_pub)
 {
 }
 
-void CommandPublisher::publish(double speed, double steering)
+void CommandPublisher::publish(double speed, double steering,
+                               const builtin_interfaces::msg::Time & stamp)
 {
   // T870 실차 명령
   t870_msgs::msg::ControlCommand cmd;
+  cmd.header.stamp = stamp;
   cmd.speed = speed;
   cmd.steering = steering;
   t870_pub_->publish(cmd);
@@ -24,6 +26,7 @@ void CommandPublisher::publish(double speed, double steering)
   // ERP42 Gazebo 시뮬레이션 명령 (구독자가 있을 때만)
   if (erp42_pub_->get_subscription_count() > 0) {
     erp42_msgs::msg::ControlCommand erp_cmd;
+    erp_cmd.header.stamp = stamp;
     erp_cmd.speed = speed;
     erp_cmd.steering = steering;
     erp_cmd.brake = (speed < 1e-3) ? 75 : 0;

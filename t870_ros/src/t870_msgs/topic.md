@@ -6,7 +6,7 @@
 
 | 메시지 타입 | 필드 | 설명 |
 |---|---|---|
-| `ControlCommand` | `float64 speed`, `float64 steering` | 차량 제어 명령 (m/s, rad) |
+| `ControlCommand` | `std_msgs/Header header`, `float64 speed`, `float64 steering` | 차량 제어 명령 (m/s, rad). header는 원본 센서 타임스탬프 전파용 (ros2 topic delay 측정) |
 | `Feedback` | `header`, `manual_mode`, `emergency_stop`, `gear`, `speed`, `steering`, `heartbeat` | 차량 상태 피드백 |
 
 ## 정의된 서비스 타입
@@ -19,6 +19,6 @@
 
 | 토픽 이름 | 메시지 타입 | 발행 노드 | 구독 노드 |
 |---|---|---|---|
-| `/t870/control_command` | `ControlCommand` | pure_pursuit_relative_node | serial_bridge, bbox_tracker |
+| `/t870/control_command` | `ControlCommand` | pure_pursuit_relative_node | serial_bridge |
 | `/t870/feedback` | `Feedback` | serial_bridge | rqt_feedback_monitor |
 | `/t870/mode_command` | `ModeCommand` (srv) | serial_bridge (server) | serial_bridge launch (client) |

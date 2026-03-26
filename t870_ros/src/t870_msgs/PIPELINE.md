@@ -12,6 +12,7 @@
 
 | 필드 | 타입 | 단위 | 설명 |
 |------|------|------|------|
+| `header` | std_msgs/Header | - | 센서 타임스탬프 전파 (velodyne_points 원본 stamp → ros2 topic delay 측정용) |
 | `speed` | float64 | m/s | 목표 속도 |
 | `steering` | float64 | rad | 목표 조향각 (+좌/-우) |
 

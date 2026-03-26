@@ -37,13 +37,14 @@ The world file must contain the following items. Without these, speed and steeri
 <br/>
 
 ## gazebo_bridge
-This function allows you to control ERP42 in the Gazebo simulation via **erp42_msgs/msg/ControlCommand** and **erp42_msgs/srv/ModeCommand**.  
+This function allows you to control ERP42 in the Gazebo simulation via **erp42_msgs/msg/ControlCommand** and **erp42_msgs/srv/ModeCommand**.
 It also publishes **erp42_msgs/msg/Feedback**.
+Note: ControlCommand now includes a `std_msgs/Header header` field that carries the original sensor timestamp through the pipeline for `ros2 topic delay` measurement.
 
 ### Topic / Service Names
 | Interface | Entitiy      | Type                              | Name                       | Description                                      |
 | --------- | ------------ | --------------------------------- |--------------------------- | ------------------------------------------------ |
-| Topic     | Subscription | **erp42_msgs/msg/ControlCommand** | **/erp42/control_command** | Control command includes speed, steering, brake  |
+| Topic     | Subscription | **erp42_msgs/msg/ControlCommand** | **/erp42/control_command** | Control command includes header (sensor timestamp for delay measurement), speed, steering, brake |
 | Topic     | Publisher    | **erp42_msgs/msg/Feedback**       | **/erp42/feedback**        | Feedback from ERP42                              |
 | Servie    | Server       | **erp42_msgs/srv/ModeCommand**    | **/erp42/mode_command**    | Mode command includes control mode, E-stop, gear |
 

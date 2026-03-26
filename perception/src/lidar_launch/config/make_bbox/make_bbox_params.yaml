@@ -1,7 +1,7 @@
 make_bbox:
   ros__parameters:
     input_topic: "/pointcloud/clustered"
-    output_topic: "/perception/raw_bboxes"
+    output_topic: "/perception/bboxes"
     marker_topic: "/perception/bboxes_marker"
     
     # 클러스터 분할 (붙어있는 콘 분리용)

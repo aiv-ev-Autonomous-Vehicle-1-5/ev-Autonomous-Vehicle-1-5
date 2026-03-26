@@ -1,29 +1,37 @@
 # bbox_tracker — 자전거 모델 기반 BBox 트래킹
 
+> **[DEPRECATED]** bbox_tracker는 현재 파이프라인에서 제거되었습니다.
+> make_bbox가 `/perception/bboxes`로 직접 발행하고, planning이 이를 직접 구독합니다.
+> 소스 코드는 참고용으로 보존되어 있으나, 활성 파이프라인에서는 사용되지 않습니다.
+
 ## 개요
 
 자전거 모델 기반 자아운동 예측을 활용한 BBox 트래킹 노드. LiDAR 최소 인식거리 사각지대에 진입한 라바콘을 ego-motion(조향/속도) 기반으로 예측 유지하여, 인식 끊김 없는 연속적인 bbox 데이터를 planning에 제공한다.
 
 - Node: `BBoxTrackerNode` (ComposableNode)
 
-## 파이프라인 위치
+## 파이프라인 위치 (DEPRECATED)
 
 ```
-perception (make_bbox)
-    │
-    ├─ /perception/raw_bboxes (ev_msgs/BBoxArray)
-    │
-    ▼
-bbox_tracker
-    │   ← /t870/control_command (t870_msgs/ControlCommand)
-    │
-    ├─ /perception/bboxes (ev_msgs/BBoxArray)  ← planning이 구독
-    │
-    ├─ /tracker/debug/tracks    (Marker POINTS, lazy)     ← 전체 트랙 시각화
-    └─ /tracker/debug/predicted (Marker CUBE_LIST, lazy)  ← 예측 유지 트랙만
-```
+[DEPRECATED — bbox_tracker는 더 이상 파이프라인에 포함되지 않음]
 
-planning 코드 변경 없이, 토픽명만 중간에 remap하여 파이프라인에 삽입.
+현재 파이프라인:
+  make_bbox → /perception/bboxes → planning (직접 연결)
+
+과거 파이프라인 (참고용):
+  perception (make_bbox)
+      │
+      ├─ /perception/raw_bboxes (ev_msgs/BBoxArray)
+      │
+      ▼
+  bbox_tracker
+      │   ← /t870/control_command (t870_msgs/ControlCommand, header에 센서 타임스탬프 포함)
+      │
+      ├─ /perception/bboxes (ev_msgs/BBoxArray)  ← planning이 구독
+      │
+      ├─ /tracker/debug/tracks    (Marker POINTS, lazy)     ← 전체 트랙 시각화
+      └─ /tracker/debug/predicted (Marker CUBE_LIST, lazy)  ← 예측 유지 트랙만
+```
 
 ## 알고리즘 — 트래킹 사이클 (bbox 수신 시마다 실행)
 

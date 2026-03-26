@@ -24,10 +24,10 @@ class YoloInstanceSegNode(Node):
 
         self.img_publisher = self.create_publisher(Image, '/yolo_instance_seg_image', 10)
 
-        # Planning 노드와 동일한 Best Effort QoS (depth=1)
+        # lane_chaining 노드로 전달 — Best Effort QoS (depth=1)
         qos_be = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
         self.coord_publisher = self.create_publisher(
-            LaneBoundaryArray, '/perception/lane_boundaries', qos_be)
+            LaneBoundaryArray, '/perception/raw_lane_boundaries', qos_be)
 
         # BEV 좌표 변환 (bev_cali.py / bev_node.py 기준 동기화)
         self.car_x_px = 226
@@ -67,6 +67,7 @@ class YoloInstanceSegNode(Node):
             lane_arr_msg.header.frame_id = 'base_link'
 
             center_points = []
+            lane_id_counter = 0
 
             if result.masks is not None:
                 masks = result.masks.data.cpu().numpy()
@@ -117,19 +118,33 @@ class YoloInstanceSegNode(Node):
                         pt.z = 0.0
                         boundary_points.append(pt)
 
+                    if not boundary_points:
+                        continue
+
                     # 차량에서 가까운 점부터 정렬 (x 오름차순)
                     boundary_points.sort(key=lambda p: p.x)
                     boundary.points = boundary_points
+                    boundary.lane_id = lane_id_counter
                     lane_arr_msg.boundaries.append(boundary)
+                    lane_id_counter += 1
 
             self.coord_publisher.publish(lane_arr_msg)
 
             # 시각화
             final_result = cv2.addWeighted(bev_frame, 1, color_mask, 0.5, 0)
 
-            if result.masks is not None:
-                for (cx, cy) in center_points:
-                    cv2.circle(final_result, (cx, cy), 3, (0, 0, 255), -1)
+            for (cx, cy) in center_points:
+                cv2.circle(final_result, (cx, cy), 3, (0, 0, 255), -1)
+
+            # 차선 ID 텍스트 표시
+            for boundary in lane_arr_msg.boundaries:
+                if boundary.points:
+                    first_pt = boundary.points[0]
+                    px = int(self.car_x_px - first_pt.y / self.interval)
+                    py = int(self.car_y_px - first_pt.x / self.interval)
+                    cv2.putText(final_result, f"ID:{boundary.lane_id}",
+                                (px, max(20, py - 10)),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
             if result.boxes is not None:
                 for box in result.boxes.data.cpu().numpy():

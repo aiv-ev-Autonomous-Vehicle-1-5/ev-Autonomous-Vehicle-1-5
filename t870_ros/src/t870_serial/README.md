@@ -16,7 +16,7 @@ the serial stream starts with a stray leading byte or the port is opened mid-pac
 ### Topic / Service Names
 | Interface | Entitiy      | Type                             | Name                      | Description                                      |
 | --------- | ------------ | -------------------------------- | ------------------------- | ------------------------------------------------ |
-| Topic     | Subscription | **t870_msgs/msg/ControlCommand** | **/t870/control_command** | Control command includes speed, steering         |
+| Topic     | Subscription | **t870_msgs/msg/ControlCommand** | **/t870/control_command** | Control command includes header (sensor timestamp for delay measurement), speed, steering |
 | Topic     | Publisher    | **t870_msgs/msg/Feedback**       | **/t870/feedback**        | Feedback from Henes T870                         |
 | Servie    | Server       | **t870_msgs/srv/ModeCommand**    | **/t870/mode_command**    | Mode command includes control mode, E-stop, gear |
 

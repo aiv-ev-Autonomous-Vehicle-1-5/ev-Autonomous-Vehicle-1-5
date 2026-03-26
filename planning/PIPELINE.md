@@ -54,7 +54,7 @@
 
 #### `/perception/bboxes` — LiDAR 장애물 바운딩 박스
 
-- **발행자**: `make_bbox` 노드 (perception 패키지)
+- **발행자**: `make_bbox` 노드 (perception 패키지) — planning에 직접 발행 (bbox_tracker 미사용)
 - **주기**: LiDAR 스캔 주기 (~10Hz)
 - **좌표계**: `velodyne` (노드 내부에서 `sensor_tf` 오프셋으로 `base_link`로 변환)
 - **사용 Stage**: Stage 1 (Input Parse) → ChainPoint(type=CONE)로 변환

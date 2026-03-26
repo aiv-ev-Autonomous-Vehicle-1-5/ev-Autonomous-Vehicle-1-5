@@ -85,13 +85,6 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
       last_bboxes_ = std::move(msg);
     });
 
-  sub_raw_bboxes_ = create_subscription<ev_msgs::msg::BBoxArray>(
-    "/perception/raw_bboxes", qos_be,
-    [this](ev_msgs::msg::BBoxArray::UniquePtr msg) {
-      stamp_raw_bboxes_ = now();
-      last_raw_bboxes_ = std::move(msg);
-    });
-
   // ── Core 퍼블리셔 ──
   pub_path_ = create_publisher<visualization_msgs::msg::Marker>(
     "/planning/path", qos_be);
@@ -173,8 +166,8 @@ bool LCPlannerNode::check_stale() const
     const double dt = (t - stamp_lanes_).nanoseconds() * 1e-6;
     if (dt <= params_.timeouts.perception_ms) have_perception = true;
   }
-  if (last_raw_bboxes_) {
-    const double dt = (t - stamp_raw_bboxes_).nanoseconds() * 1e-6;
+  if (last_bboxes_) {
+    const double dt = (t - stamp_bboxes_).nanoseconds() * 1e-6;
     if (dt <= params_.timeouts.perception_ms) have_perception = true;
   }
 
@@ -192,8 +185,8 @@ void LCPlannerNode::on_timer()
 
   // 원본 센서 타임스탬프를 전파 — topic delay 측정 가능
   rclcpp::Time stamp(0, 0, RCL_ROS_TIME);
-  if (last_raw_bboxes_) {
-    stamp = rclcpp::Time(last_raw_bboxes_->header.stamp);
+  if (last_bboxes_) {
+    stamp = rclcpp::Time(last_bboxes_->header.stamp);
   }
   if (last_lanes_) {
     rclcpp::Time t(last_lanes_->header.stamp);
@@ -212,10 +205,10 @@ void LCPlannerNode::on_timer()
   }
 
   // ======== Stage 1: Input Parse ========
-  // raw_bboxes(tracker 이전)로 chaining — persisted bbox가 chain에 섞이는 것을 방지
+  // make_bbox에서 직접 수신한 bbox로 chaining 수행
   auto t_stage1 = Clock::now();
   std::vector<ChainPoint> all_pts;
-  parse_input(last_raw_bboxes_.get(), last_lanes_.get(), all_pts);
+  parse_input(last_bboxes_.get(), last_lanes_.get(), all_pts);
 
   // ── TF 변환: velodyne → base_link (bbox 좌표 보정) ──
   double tf_bbox_x = 0.0, tf_bbox_y = 0.0;
@@ -312,19 +305,8 @@ void LCPlannerNode::on_timer()
   for (const auto & p : dc_result.unchained)
     unchained_chained.push_back(p.to_chained_point());
 
-  // 3a-2. tracked bbox를 costmap 장애물로 추가 (chaining에는 미사용)
-  //        velodyne → base_link TF 변환 적용
-  if (last_bboxes_) {
-    for (const auto & b : last_bboxes_->bboxes) {
-      ChainedPoint cp;
-      cp.x = b.position.x + tf_bbox_x;
-      cp.y = b.position.y + tf_bbox_y;
-      cp.type = PointType::BBOX;
-      unchained_chained.push_back(cp);
-    }
-  }
-
   // 3b. Costmap 생성
+  // bbox는 Stage 1 parse_input에서 이미 chaining을 통해 left/right/unchained에 반영됨
   std::fprintf(stderr, "[DBG] Stage3b costmap gen — left:%zu right:%zu unchained:%zu\n",
     left_chained.size(), right_chained.size(), unchained_chained.size());
   auto t_costmap = Clock::now();

@@ -26,4 +26,4 @@ windows:
       # Pane 7: LiDAR TF (base_link → velodyne)
       - ros2 launch lidar_launch tf.launch.py
       # Pane 8: RViz2
-      - rviz2
+      - rviz2 -d ~/.rviz2/ev_real.rviz

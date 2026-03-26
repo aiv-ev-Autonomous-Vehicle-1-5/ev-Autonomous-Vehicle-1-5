@@ -26,7 +26,7 @@ namespace chaining_costmap_ver
  *
  * [변환 규칙]
  *   BBox → ChainPoint: type=BBOX (velodyne 프레임, 노드에서 tf2로 base_link 변환)
- *   LaneBoundary → ChainPoint: 그대로 사용 (base_link 기준), type=LANE
+ *   LaneBoundary → ChainPoint: 그대로 사용 (base_link 기준), type=LANE, label=lane_id
  *
  * @param bboxes    LiDAR bbox 메시지 (nullptr 가능)
  * @param lanes     카메라 차선 메시지 (nullptr 가능)

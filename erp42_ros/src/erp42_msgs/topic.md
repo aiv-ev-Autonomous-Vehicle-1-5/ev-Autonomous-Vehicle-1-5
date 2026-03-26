@@ -6,7 +6,7 @@
 
 | 메시지 타입 | 필드 | 설명 |
 |---|---|---|
-| `ControlCommand` | `float64 speed`, `float64 steering`, `uint8 brake` | 차량 제어 명령 |
+| `ControlCommand` | `std_msgs/Header header`, `float64 speed`, `float64 steering`, `uint8 brake` | 차량 제어 명령. header는 원본 센서 타임스탬프 전파용 (ros2 topic delay 측정) |
 | `Feedback` | `header`, `manual_mode`, `emergency_stop`, `gear`, `speed`, `steering`, `brake`, `encoder_count`, `heartbeat` | 차량 상태 피드백 |
 
 ## 정의된 서비스 타입

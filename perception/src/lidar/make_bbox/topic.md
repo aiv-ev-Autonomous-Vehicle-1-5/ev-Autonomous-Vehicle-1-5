@@ -10,5 +10,5 @@
 
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
-| `/perception/raw_bboxes` | `ev_msgs/msg/BBoxArray` | SensorDataQoS | 원시 바운딩 박스 배열 |
+| `/perception/bboxes` | `ev_msgs/msg/BBoxArray` | SensorDataQoS | 바운딩 박스 배열 (planning 직접 구독) |
 | `/perception/bboxes_marker` | `visualization_msgs/msg/MarkerArray` | SensorDataQoS | 바운딩 박스 시각화 마커 |

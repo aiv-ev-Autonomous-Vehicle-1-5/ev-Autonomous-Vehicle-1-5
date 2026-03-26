@@ -7,10 +7,11 @@
 ## 메시지 정의
 
 ### 1. ControlCommand.msg
-차량 제어 명령 메시지
+차량 제어 명령 메시지. header에 원본 센서 타임스탬프(velodyne_points)를 전파하여 `ros2 topic delay`로 파이프라인 지연을 측정할 수 있다.
 
 | 필드 | 타입 | 단위 | 설명 |
 |---|---|---|---|
+| `header` | `std_msgs/Header` | - | 센서 타임스탬프 전파 (ros2 topic delay 측정용) |
 | `speed` | `float64` | m/s | 차량 선속도 (음수 불가, 후진시 기어 변경 필요) |
 | `steering` | `float64` | rad | 조향각 (+좌 / -우) |
 | `brake` | `uint8` | 0~150 | 제동 강도 |

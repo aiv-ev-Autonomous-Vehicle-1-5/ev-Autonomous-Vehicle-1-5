@@ -378,6 +378,9 @@ void t870_rqt_plugin::ControlPanelPlugin::control_command_timer_callback()
         return;
     }
 
+    // Header (rqt 수동 조작이므로 현재 시각 사용)
+    control_command_msg_.header.stamp = node_->now();
+
     // Speed (m/s)
     control_command_msg_.speed = control_panel_widget_->speed_spin_box->value();
 
