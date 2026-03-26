@@ -96,6 +96,7 @@ void CostmapGenerator::apply_source(
   // 유효 반경: inner_radius(flat zone) + 가우시안 감쇠 거리
   double r_decay = effective_radius(cost_max, sigma, threshold);
   double r_total = inner_radius + r_decay;
+  double r_total_sq = r_total * r_total;   // P1: 원형 클리핑용 거리² 임계값
   int r_cells = static_cast<int>(std::ceil(r_total / resolution));
 
   // 가우시안 지수부의 상수: -1 / (2σ²)
@@ -114,34 +115,34 @@ void CostmapGenerator::apply_source(
   int col_max = std::min(cols - 1, src_col + r_cells);
 
   for (int r = row_min; r <= row_max; ++r) {
+    double wy = origin_y + (r + 0.5) * resolution;
+    double dy = wy - source.y;
     for (int c = col_min; c <= col_max; ++c) {
-      // 셀 중심의 월드 좌표 (+0.5: 셀 중심)
-      double wx = origin_x + (c + 0.5) * resolution;
-      double wy = origin_y + (r + 0.5) * resolution;
+      // P2: 포화 셀 조기 스킵 — 이미 cost_max 이상이면 계산 불필요 (max-merge)
+      int idx = r * cols + c;
+      if (grid[idx] >= cost_max) continue;
 
-      // source ↔ 셀 중심 거리
+      double wx = origin_x + (c + 0.5) * resolution;
       double dx = wx - source.x;
-      double dy = wy - source.y;
-      double d = std::sqrt(dx * dx + dy * dy);
+
+      // P1: 원형 클리핑 — 원 밖 셀은 sqrt/exp 계산 없이 즉시 스킵
+      double d2 = dx * dx + dy * dy;
+      if (d2 > r_total_sq) continue;
+
+      double d = std::sqrt(d2);
 
       double cost;
       if (d <= inner_radius) {
         // ── flat zone ──
-        // bbox/lane의 flat zone(inner_radius) 이내 → 최대 비용 유지
         cost = cost_max;
       } else {
         // ── 가우시안 감쇠 ──
-        // d_eff: flat zone 바깥 경계로부터의 거리
-        // cost = cost_max * exp(-d_eff² / (2σ²))
         double d_eff = d - inner_radius;
         cost = cost_max * std::exp(inv_2sigma2 * d_eff * d_eff);
-        if (cost < threshold) continue;  // 미미한 비용은 건너뜀
+        if (cost < threshold) continue;
       }
 
       // ── max-merge ──
-      // 여러 source가 겹치면 큰 값을 유지한다.
-      // 덧셈이 아닌 max: 밀집된 bbox가 비정상적으로 높은 비용을 만들지 않도록.
-      int idx = r * cols + c;
       if (cost > grid[idx]) {
         grid[idx] = cost;
       }

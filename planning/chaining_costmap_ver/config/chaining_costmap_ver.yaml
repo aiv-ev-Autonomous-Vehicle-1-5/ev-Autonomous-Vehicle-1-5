@@ -70,7 +70,7 @@ lc_planner_node:
       bbox_radius: 0.7         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
       lane_radius: 0.10           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
       sigma: 1.0                # [m] 가우시안 확산
-      cost_threshold: 2.0       # 이 이하 비용 무시
+      cost_threshold: 15.0       # 이 이하 비용 무시
       entry_wall_ego_y: 2.5     # [m] costmap 하단 양옆 가상 bbox 시작점 횡방향 오프셋
       origin_x: -4.0            # [m] costmap X 원점 (base_link 기준). -4 = 후방 4m 포함
       center_attract_max: 90.0  # 중앙선 최대 비용 감소량
@@ -82,7 +82,7 @@ lc_planner_node:
     # [Stage 3] A* — 격자 경로 탐색
     # ============================================================
     astar:
-      max_iterations: 5000
+      max_iterations: 1000
       goal_tolerance: 0.3       # [m]
       cost_weight: 20.0         # costmap 비용 가중치
       obstacle_cost: 100.0       # 통과 불가 비용 임계값
