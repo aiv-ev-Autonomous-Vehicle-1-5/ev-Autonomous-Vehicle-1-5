@@ -37,14 +37,16 @@ chaining_costmap_ver (기존 로직 변경 없음)
 - 매칭 실패 시: 시드 중심 마지막 위치 유지
 - 차선 소실 후 재등장 시 마지막 시드 위치 근처에서 매칭
 
-### Step 3: 가상 차선 생성
-- 한쪽만 매칭 시 반대편 가상 차선 생성
-- 각 point의 tangent(방향벡터) 수직으로 track_width(1.5m) 안쪽 오프셋
+### Step 3: 가상 차선 생성 + LEFT/RIGHT 라벨링
+- **양쪽 다 매칭 시**: 총 경로 길이가 긴 쪽을 채택, track_width 안쪽 오프셋으로 반대편 가상 차선 생성 (짧은 쪽 폐기)
+- **한쪽만 매칭 시**: 기존 로직대로 반대편 가상 차선 생성
+- 각 point의 tangent(방향벡터) 수직으로 track_width 안쪽 오프셋
 - 가상 차선 lane_id = -1
+- **모든 boundary에 lane_side 라벨 설정** (SIDE_LEFT=1 / SIDE_RIGHT=2)
 
 ### Step 4: 출력
-- 실제 + 가상 boundary를 LaneBoundaryArray로 발행
-- planning이 기존 로직 그대로 처리 (backbone chaining → centerline → goal)
+- 실제 + 가상 boundary를 LaneBoundaryArray로 발행 (각 boundary에 lane_side 라벨 포함)
+- planning의 input_parser가 LaneBoundary.msg의 lane_side 필드에서 직접 LEFT/RIGHT를 읽음
 
 ---
 
@@ -57,7 +59,7 @@ yolo_lane_cluster/
 ├── src/
 │   ├── yolo_lane_cluster_node.cpp    # 노드 생성자 + 콜백 오케스트레이션
 │   ├── seed_tracker.cpp              # 시드 매칭/업데이트 로직
-│   ├── virtual_lane_gen.cpp          # 가상 차선 생성 (1.5m 오프셋)
+│   ├── virtual_lane_gen.cpp          # 가상 차선 생성 (track_width 오프셋)
 │   └── debug_publisher.cpp           # 디버그 마커 발행 (lazy)
 ├── config/
 │   └── yolo_lane_cluster.yaml        # 파라미터
@@ -87,7 +89,7 @@ yolo_lane_cluster/
 
 | 파라미터 | 기본값 | 단위 | 설명 |
 |----------|--------|------|------|
-| `track_width` | 1.5 | m | 트랙 폭 (가상 차선 오프셋 거리) |
+| `track_width` | 1.6 | m | 트랙 폭 (가상 차선 오프셋 거리) |
 
 ---
 

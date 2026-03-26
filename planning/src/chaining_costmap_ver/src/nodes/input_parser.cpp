@@ -35,14 +35,23 @@ void parse_input(
   }
 
   // 차선 점 수집 (이미 base_link 기준)
+  // LaneBoundary.msg의 lane_side 필드에서 직접 LEFT/RIGHT 라벨을 읽음
+  // (기존: 배열 인덱스 기반 추정 → 변경: 메시지 필드 기반 명시적 라벨)
   if (lanes) {
     for (const auto & bd : lanes->boundaries) {
+      LaneSide side = LaneSide::NONE;
+      if (bd.lane_side == ev_msgs::msg::LaneBoundary::SIDE_LEFT) {
+        side = LaneSide::LEFT;
+      } else if (bd.lane_side == ev_msgs::msg::LaneBoundary::SIDE_RIGHT) {
+        side = LaneSide::RIGHT;
+      }
       for (const auto & p : bd.points) {
         ChainPoint cp;
         cp.x = p.x;
         cp.y = p.y;
         cp.type = PointType::LANE;
         cp.label = bd.lane_id;
+        cp.lane_side = side;
         all_pts.push_back(cp);
       }
     }

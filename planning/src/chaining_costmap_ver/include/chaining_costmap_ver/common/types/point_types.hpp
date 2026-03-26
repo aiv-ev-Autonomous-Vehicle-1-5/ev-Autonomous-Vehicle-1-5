@@ -5,6 +5,7 @@
  * 패키지 전반에서 사용하는 최소 단위 구조체:
  *   - Point2D:      순수 2D 좌표
  *   - PointType:    bbox/차선 구분 열거형
+ *   - LaneSide:     차선 좌/우 소속 열거형 (yolo_lane_cluster boundary 순서 기반)
  *   - ChainedPoint: 체이닝된 경계점 (위치 + 타입 + is_backbone 플래그)
  *                   is_backbone=true이면 costmap에서 타입 무관하게 bbox_cost_max 적용
  *   - ChainPoint:   DirectionChainer 입력 포인트 (위치 + 메타정보 + is_backbone 플래그)
@@ -59,6 +60,22 @@ enum class PointType : uint8_t
 };
 
 /**
+ * @brief 차선 포인트의 좌/우 소속 — LaneBoundary.msg의 lane_side 필드 기반
+ *
+ * yolo_lane_cluster가 발행하는 LaneBoundary 메시지의 lane_side 필드에서
+ * LEFT/RIGHT 라벨을 직접 읽어 ChainPoint.lane_side에 설정한다.
+ * DirectionChainer가 좌/우 체이닝 시 반대편 차선 포인트를 제외할 수 있게 한다.
+ *
+ * BBOX 포인트는 NONE — 양쪽 chain 모두 사용 가능.
+ */
+enum class LaneSide : uint8_t
+{
+  NONE  = 0,  ///< BBOX 또는 소속 불명 — 좌/우 제약 없음
+  LEFT  = 1,  ///< 왼쪽 차선 (boundaries[0])
+  RIGHT = 2   ///< 오른쪽 차선 (boundaries[1])
+};
+
+/**
  * @brief 체이닝된 경계점 — 위치 + 원본 타입 정보
  *
  * DirectionChainer의 SideResult.component[]에 담긴 ChainPoint들이
@@ -93,6 +110,7 @@ struct ChainPoint
   double y = 0.0;             ///< [m] base_link 기준 좌측(+)/우측(-)
   PointType type = PointType::LANE;  ///< bbox/차선 구분
   int32_t label = -1;         ///< 원본 cluster_id (bbox: DBSCAN 번호, 차선: YOLO lane_id)
+  LaneSide lane_side = LaneSide::NONE;  ///< 차선 좌/우 소속 (yolo_lane_cluster boundary 순서 기반, BBOX는 NONE)
   double size_x = 0.0;        ///< AABB X 크기 [m] (bbox만 유효)
   double size_y = 0.0;        ///< AABB Y 크기 [m] (bbox만 유효)
   bool is_backbone = false;   ///< backbone 포인트 여부 — true이면 costmap에서 bbox_cost_max 적용

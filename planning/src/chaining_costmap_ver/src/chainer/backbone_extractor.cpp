@@ -3,13 +3,11 @@
  * @brief DirectionChainer — Backbone 추출 + 비용함수 + Backtracking 구현
  *
  * [포함 함수]
- *   - extract_backbone():        양방향(backward+forward) greedy chaining
- *                                reverse(backward) + [seed] + forward
+ *   - extract_backbone():        단방향(forward only) greedy chaining
+ *                                [seed] + forward
  *   - chain_one_direction():     단방향 greedy chaining 헬퍼
- *                                (2-phase BBOX 최우선 탐색:
- *                                 Phase 1 — d_max 범위 내 모든 bbox를 knn 없이
- *                                 직접 전수 탐색 → 게이트 적용,
- *                                 Phase 2 — bbox 후보 없으면 knn fallback)
+ *                                (단일 패스: d_max 범위 내 모든 후보를
+ *                                 동일 가중치로 탐색, 비용함수 최소 선택)
  *   - compute_cost():            기본 비용함수 w(i,j)
  *   - compute_cost_prime():      확장 비용함수 w'(i,j) = w + λ·C_side
  *   - resolve_overlaps():        독립 체이닝 중복 해소 backtracking 루프
@@ -108,10 +106,10 @@ double DirectionChainer::compute_cost_prime(
 // ============================================================================
 // seed에서 주어진 초기 방향(init_dir)으로 한 방향만 greedy chaining.
 //
-// [2-phase BBOX 최우선 탐색]
-//   Phase 1: d_max 범위 내 모든 bbox를 knn 없이 직접 전수 탐색 → G2+G3 게이트
-//            (lane point가 많아도 bbox가 k개 제한에 밀리지 않음)
-//   Phase 2: bbox 후보 없으면 기존 knn(k) → G1+G2+G3 게이트 → bbox-first 선택
+// [단일 패스 탐색]
+//   d_max 범위 내 모든 후보(bbox + lane)를 동일 가중치로 탐색.
+//   G0(lane_side) + G1(거리) + G2(cone) + G3(lateral) 게이트 적용 후
+//   compute_cost_prime()으로 최소 비용 후보 선택. bbox/lane 타입 우선 없음.
 //
 std::vector<int> DirectionChainer::chain_one_direction(
   const std::vector<ChainPoint> & points,
@@ -130,6 +128,9 @@ std::vector<int> DirectionChainer::chain_one_direction(
   stop_reason = StopReason::MAX_LEN;
   const double cone_half_rad = cp.forward_cone_deg * M_PI / 360.0;
 
+  // 반대편 lane_side — lane 포인트 중 반대쪽 소속은 chaining 후보에서 제외
+  const LaneSide opp_side = is_left ? LaneSide::RIGHT : LaneSide::LEFT;
+
   while (static_cast<int>(chain.size()) < remaining_len) {
     std::vector<int> gated;
     bool had_candidates = false;
@@ -139,15 +140,18 @@ std::vector<int> DirectionChainer::chain_one_direction(
                               ? cp.d_max_bbox : cp.d_max_lane;
     const double d_max_sq = d_max_cur * d_max_cur;
 
-    // G1 : 거리 게이트
-    // ── Phase 1: BBOX 최우선 — d_max 범위 내 모든 bbox를 knn 없이 직접 탐색
-    //    knn k개 제한 때문에 lane point에 밀려 bbox가 후보에서 빠지는 것을 방지
+    // ── 단일 패스: d_max 범위 내 모든 후보 (bbox + lane) 동일 가중치 탐색 ──
+    // bbox/lane 타입 우선 없이, 동일한 게이트와 비용함수로 최소 비용 선택
     for (int i = 0; i < n; ++i) {
       if (i == current) continue;
-      if (points[i].type != PointType::BBOX) continue;
+
+      // G0: lane_side 게이트 — 반대편 차선 포인트 제외 (BBOX는 NONE이라 통과)
+      if (points[i].lane_side == opp_side) continue;
 
       const double dx = points[i].x - points[current].x;
       const double dy = points[i].y - points[current].y;
+
+      // G1: 거리 게이트 — 현재 노드 타입 기준 d_max
       if (dx * dx + dy * dy > d_max_sq) continue;
 
       if (owner[i] != NodeOwner::NONE) continue;
@@ -164,61 +168,12 @@ std::vector<int> DirectionChainer::chain_one_direction(
       if (std::acos(cos_angle) > cone_half_rad) continue;
 
       // G3: 횡오차 게이트 (편측) — 안쪽(중심) 방향만 제한
-      // perp = 방향벡터의 왼쪽 수직벡터 (왼쪽 +, 오른쪽 -)
       Point2D perp = {-v.y, v.x};
       double signed_lat = dx * perp.x + dy * perp.y;
       if (is_left  && signed_lat < -cp.lateral_gate) continue;  // 안쪽(오른쪽) 초과
       if (!is_left && signed_lat >  cp.lateral_gate) continue;  // 안쪽(왼쪽) 초과
 
       gated.push_back(i);
-    }
-
-    // ── Phase 2: bbox 후보가 없으면 기존 knn fallback (lane + bbox 혼합)
-    if (gated.empty()) {
-      auto neighbors = knn(points, current, cp.k);
-
-      for (int j : neighbors) {
-        if (owner[j] != NodeOwner::NONE) continue;
-        had_candidates = true;
-        if (visited_set.count(j)) continue;
-
-        const double dx = points[j].x - points[current].x;
-        const double dy = points[j].y - points[current].y;
-        const double d = std::sqrt(dx * dx + dy * dy);
-
-        // G1: 거리 게이트 — 현재 노드 타입 기준 d_max 사용
-        if (d > d_max_cur || d < 1e-9) continue;
-
-        // G2: 전방 cone 게이트
-        Point2D u_ij = {dx / d, dy / d};
-        double cos_angle = dot2(v, u_ij);
-        cos_angle = std::clamp(cos_angle, -1.0, 1.0);
-        if (std::acos(cos_angle) > cone_half_rad) continue;
-
-        // G3: 횡오차 게이트 (편측) — 안쪽(중심) 방향만 제한
-        Point2D perp = {-v.y, v.x};
-        double signed_lat = dx * perp.x + dy * perp.y;
-        if (is_left  && signed_lat < -cp.lateral_gate) continue;
-        if (!is_left && signed_lat >  cp.lateral_gate) continue;
-
-        gated.push_back(j);
-      }
-
-      // knn fallback에서도 bbox 우선 선택 유지
-      if (!gated.empty()) {
-        std::vector<int> bbox_gated;
-        std::vector<int> lane_gated;
-        for (int idx : gated) {
-          if (points[idx].type == PointType::BBOX) {
-            bbox_gated.push_back(idx);
-          } else {
-            lane_gated.push_back(idx);
-          }
-        }
-        if (!bbox_gated.empty()) {
-          gated = std::move(bbox_gated);
-        }
-      }
     }
 
     if (gated.empty()) {
@@ -256,11 +211,10 @@ std::vector<int> DirectionChainer::chain_one_direction(
 }
 
 // ============================================================================
-// Backbone 추출 — 양방향 Greedy Chaining
+// Backbone 추출 — Forward-only Greedy Chaining
 // ============================================================================
-// seed에서 backward(-x) + forward(+x) 양방향 체이닝하여
-// reverse(backward) + [seed] + forward → 최종 backbone.
-// 전방/후방 각각 max_chain_len - 1 개까지 확장 가능.
+// seed에서 forward(+x) 방향으로만 greedy chaining.
+// backbone = [seed] + forward.
 //
 std::vector<int> DirectionChainer::extract_backbone(
   const std::vector<ChainPoint> & points,
@@ -276,26 +230,16 @@ std::vector<int> DirectionChainer::extract_backbone(
 
   const int max_extend = cp.max_chain_len - 1;
 
-  // Backward pass (-x 방향)
-  StopReason stop_reason_backward = StopReason::MAX_LEN;
-  auto backward_chain = chain_one_direction(
-    points, owner, seed_idx,
-    {-1.0, 0.0}, is_left, visited_set,
-    max_extend, stop_reason_backward, cp);
-
   // Forward pass (+x 방향)
   auto forward_chain = chain_one_direction(
     points, owner, seed_idx,
     {1.0, 0.0}, is_left, visited_set,
     max_extend, stop_reason_forward, cp);
 
-  // reverse(backward) + [seed] + forward → backbone
-  seed_backbone_pos = static_cast<int>(backward_chain.size());
+  // [seed] + forward → backbone
+  seed_backbone_pos = 0;
   std::vector<int> backbone;
-  backbone.reserve(backward_chain.size() + 1 + forward_chain.size());
-  for (auto it = backward_chain.rbegin(); it != backward_chain.rend(); ++it) {
-    backbone.push_back(*it);
-  }
+  backbone.reserve(1 + forward_chain.size());
   backbone.push_back(seed_idx);
   backbone.insert(backbone.end(), forward_chain.begin(), forward_chain.end());
   return backbone;
@@ -436,7 +380,7 @@ void DirectionChainer::resolve_overlaps(
 {
   std::unordered_set<int> excluded_set;  // 영구 제외 노드 (누적)
 
-  // 시드 위치 로그 (backbone 첫 번째 노드 ≈ backward 체이닝 끝 or seed)
+  // 시드 위치 로그 (backbone 첫 번째 노드 = seed)
   if (!left_bb.empty() && !right_bb.empty()) {
     int ls = left_bb.front(), rs = right_bb.front();
     std::fprintf(stderr,

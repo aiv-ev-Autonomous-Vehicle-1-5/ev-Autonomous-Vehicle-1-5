@@ -30,9 +30,9 @@ lc_planner_node:
       seed_rear_limit: 0.5   # [m] x < -이 값이면 seed 후보 제외 (후방 제한)
 
       # --- kNN + 게이트 ---
-      k: 20                    # centroid kNN 후보 수
+      k: 30                    # centroid kNN 후보 수
       d_max_bbox: 2.5     # [m] 현재 노드가 BBOX일 때 탐색 최대 거리
-      d_max_lane: 1.5     # [m] 현재 노드가 LANE일 때 탐색 최대 거리
+      d_max_lane: 2.5     # [m] 현재 노드가 LANE일 때 탐색 최대 거리
       forward_cone_deg: 100.0 # [deg] 전방 cone 전체 각도 (±60°)
       lateral_gate: 1.4      # [m] 횡방향 오차 한계
 

@@ -407,10 +407,19 @@ void PurePursuitRelativeNode::on_timer()
   const double raw_remaining = pursuit::compute_remaining_length(pts, nearest_i);
   const double filtered_remaining = compute_filtered_remaining(raw_remaining);
 
-  // 남은 거리에서 정지 여유거리를 빼서, stop_margin 지점에서 속도 0으로 정지
-  const double effective_remaining = std::max(0.0, filtered_remaining - p.speed.stop_margin);
-  const double v_path_end = pursuit::compute_path_end_speed(
+  // 속도 비례 동적 stop_margin: speed_low 이하→margin_low, speed_high 이상→margin_high, 사이는 선형 보간
+  const double margin_t = std::clamp(
+    (last_cmd_speed_ - p.speed.stop_margin_speed_low) /
+    (p.speed.stop_margin_speed_high - p.speed.stop_margin_speed_low), 0.0, 1.0);
+  const double stop_margin = p.speed.stop_margin_low + margin_t * (p.speed.stop_margin_high - p.speed.stop_margin_low);
+  const double effective_remaining = std::max(0.0, filtered_remaining - stop_margin);
+  double v_path_end = pursuit::compute_path_end_speed(
     effective_remaining, p.speed.decel_rate, 0.0, p.speed.max);
+
+  // stop_margin으로 정지했지만 path가 남아 있고 전방 clear → creep speed로 path 따라 전진
+  if (effective_remaining < 0.1 && filtered_remaining > 0.1 && is_forward_clear()) {
+    v_path_end = p.creep.speed;
+  }
 
   // c) 두 목표 속도 중 작은 값 선택
   const double v_target = std::min(v_curvature, v_path_end);
@@ -426,9 +435,9 @@ void PurePursuitRelativeNode::on_timer()
     this->get_logger(), *this->get_clock(), 500,
     "[PP Relative] target=(%.2f, %.2f), Ld=%.2f, kappa_pp=%.3f, kappa_prev=%.3f, "
     "v_target=%.2f, v_cmd=%.2f, delta=%.3f, "
-    "remain=%.2f, filtered=%.2f, v_curv=%.2f, v_end=%.2f",
+    "remain=%.2f, filtered=%.2f, v_curv=%.2f, v_end=%.2f, stop_margin=%.2f",
     tx, ty, Ld_used, kappa_pp, preview_kappa, v_target, v_cmd, delta,
-    raw_remaining, filtered_remaining, v_curvature, v_path_end);
+    raw_remaining, filtered_remaining, v_curvature, v_path_end, stop_margin);
 
   // ----- 디버그 시각화 발행 (lazy) — 원본 센서 타임스탬프 전파 -----
   debug_viz_.publish_lookahead_point(tx, ty, last_path_stamp_);

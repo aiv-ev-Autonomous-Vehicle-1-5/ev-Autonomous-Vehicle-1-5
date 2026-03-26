@@ -1,9 +1,10 @@
 /**
  * @file virtual_lane_gen.cpp
- * @brief 가상 차선 생성 — 실제 차선에서 track_width(1.5m) 안쪽 오프셋
+ * @brief 가상 차선 생성 — 실제 차선에서 track_width 안쪽 오프셋
  *
  * 각 point의 방향벡터(tangent)를 구하고,
  * 수직 방향(normal)으로 track_width만큼 이동하여 가상 반대편 차선을 생성한다.
+ * 양쪽 차선이 모두 인식된 경우에도, 긴 쪽을 채택하여 이 함수로 반대편을 생성한다.
  *
  * 오프셋 방향:
  *   - 왼쪽 차선(LEFT)  → 오른쪽(안쪽)으로 오프셋: normal = ( ty, -tx)

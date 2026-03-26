@@ -56,7 +56,10 @@ struct PurePursuitParams
     int    path_length_filter_size{10}; // 경로 길이 이동 평균 윈도우 크기
     int    path_drop_confirm_count{3};  // 급락 확정 연속 프레임 수 (50Hz 기준 3 = 60ms)
     double path_drop_ratio{0.4};        // 급락 판정 비율 (avg 대비 이 비율 이하면 급락 후보)
-    double stop_margin{1.5};            // 경로 끝 정지 여유거리 [m]
+    double stop_margin_speed_low{0.5};   // stop_margin 하한 속도 [m/s]
+    double stop_margin_speed_high{1.0};  // stop_margin 상한 속도 [m/s]
+    double stop_margin_low{1.5};         // 하한 속도에서의 정지 여유거리 [m]
+    double stop_margin_high{2.5};        // 상한 속도에서의 정지 여유거리 [m]
   } speed;
 
   // --- 안전 파라미터 ---
@@ -149,8 +152,14 @@ struct PurePursuitParams
     speed.path_drop_confirm_count = std::max(1, static_cast<int>(node->get_parameter("path_drop_confirm_count").as_int()));
     speed.path_drop_ratio = std::clamp(node->get_parameter("path_drop_ratio").as_double(), 0.1, 0.9);
 
-    node->declare_parameter<double>("stop_margin", speed.stop_margin);
-    speed.stop_margin = std::max(0.0, node->get_parameter("stop_margin").as_double());
+    node->declare_parameter<double>("stop_margin_speed_low", speed.stop_margin_speed_low);
+    node->declare_parameter<double>("stop_margin_speed_high", speed.stop_margin_speed_high);
+    node->declare_parameter<double>("stop_margin_low", speed.stop_margin_low);
+    node->declare_parameter<double>("stop_margin_high", speed.stop_margin_high);
+    speed.stop_margin_speed_low  = std::max(0.0, node->get_parameter("stop_margin_speed_low").as_double());
+    speed.stop_margin_speed_high = std::max(speed.stop_margin_speed_low + 1e-3, node->get_parameter("stop_margin_speed_high").as_double());
+    speed.stop_margin_low  = std::max(0.0, node->get_parameter("stop_margin_low").as_double());
+    speed.stop_margin_high = std::max(0.0, node->get_parameter("stop_margin_high").as_double());
 
     // --- 안전 ---
     node->declare_parameter<double>("path_timeout_sec", safety.path_timeout_sec);

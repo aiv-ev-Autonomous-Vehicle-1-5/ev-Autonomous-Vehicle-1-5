@@ -124,8 +124,9 @@ on_timer() — 50Hz (20ms)
 │           - 의심 중: pending에 보류, avg 반환 (노이즈 무시)
 │           - N프레임(path_drop_confirm_count=3) 연속 확정 → raw 즉시 반영
 │           - 중간에 정상 복귀 → pending 전부 buffer에 반영, avg 반환
+│       stop_margin = 속도 비례 동적 계산 (last_cmd_speed 기준)
+│         speed_low(0.5m/s)→margin_low(1.5m), speed_high(1.0m/s)→margin_high(2.5m), 사이 선형 보간
 │       effective_remaining = max(0, filtered_remaining - stop_margin)
-│         stop_margin(1.3m) 남기고 속도 0 도달 목표
 │       v_path_end = sqrt(2 × decel_rate × effective_remaining) 
 │       clamp(v_path_end, 0, speed_max)
 │
@@ -298,7 +299,10 @@ cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-sele
 | `emergency_decel_rate` | 2.0 | m/s² | 비상 감속 rate |
 | `emergency_stop_count` | 40 | 회 | 연속 FAIL 허용 횟수 |
 | `path_timeout_sec` | 0.5 | sec | 경로 타임아웃 |
-| `stop_margin` | 1.3 | m | 정지 마진 |
+| `stop_margin_speed_low` | 0.5 | m/s | stop_margin 하한 속도 |
+| `stop_margin_speed_high` | 1.0 | m/s | stop_margin 상한 속도 |
+| `stop_margin_low` | 1.5 | m | 하한 속도에서의 정지 여유거리 |
+| `stop_margin_high` | 2.5 | m | 상한 속도에서의 정지 여유거리 |
 
 ### CREEP 모드 파라미터
 

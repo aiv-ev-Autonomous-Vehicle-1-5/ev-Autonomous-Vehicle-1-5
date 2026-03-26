@@ -1,11 +1,13 @@
 /**
  * @file yolo_lane_cluster_node.hpp
- * @brief 차선 전처리 노드 — 시드 기반 좌/우 판별 + 가상 차선 생성
+ * @brief 차선 전처리 노드 — 시드 기반 좌/우 판별 + 가상 차선 생성 + LEFT/RIGHT 라벨링
  *
  * camera(yolo_instance_seg)에서 클러스터링된 차선 boundary를 받아서:
  *   1) 왼쪽/오른쪽 시드로 각 클러스터를 좌/우 판별
- *   2) 한쪽만 보이면 1.5m 오프셋으로 가상 반대편 차선 생성
- *   3) 가공된 LaneBoundaryArray를 planning에 전달
+ *   2) 양쪽 다 보이면 총 경로 길이가 긴 쪽을 채택, track_width 안쪽 오프셋으로 반대편 가상 차선 생성
+ *      한쪽만 보이면 기존 로직대로 가상 반대편 차선 생성
+ *   3) 모든 boundary에 lane_side 라벨 (LEFT/RIGHT) 설정
+ *   4) 가공된 LaneBoundaryArray를 planning에 전달
  *
  * [데이터 흐름]
  *   /perception/raw_lane_boundaries (카메라) → yolo_lane_cluster → /perception/lane_boundaries (planning)
@@ -92,6 +94,9 @@ private:
   ev_msgs::msg::LaneBoundary generate_virtual_lane(
     const ev_msgs::msg::LaneBoundary & real_lane,
     LaneSide real_side) const;
+
+  /// 경계점 배열의 총 경로 길이 (유클리디안 거리 합) [m]
+  static double path_length(const ev_msgs::msg::LaneBoundary & bd);
 
   // ── 디버그 (debug_publisher.cpp) ──
   /// lazy Marker 토픽으로 lane points + seed 위치 시각화

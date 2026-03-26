@@ -5,11 +5,15 @@
  * [처리 흐름]
  *   1. /perception/raw_lane_boundaries 수신
  *   2. 왼쪽/오른쪽 시드로 클러스터 매칭
- *   3. 한쪽만 매칭 시 가상 차선 생성
- *   4. /perception/lane_boundaries 발행
- *   5. 디버그 마커 발행 (lazy)
+ *   3. 양쪽 매칭 시 긴 쪽 선택 → track_width 안쪽 오프셋으로 반대편 가상 차선 생성
+ *      한쪽만 매칭 시 가상 반대편 차선 생성 (기존 로직)
+ *   4. 모든 boundary에 lane_side 라벨 (LEFT/RIGHT) 설정
+ *   5. /perception/lane_boundaries 발행
+ *   6. 디버그 마커 발행 (lazy)
  */
 #include "yolo_lane_cluster/yolo_lane_cluster_node.hpp"
+
+#include <cmath>
 
 namespace yolo_lane_cluster
 {
@@ -78,18 +82,46 @@ void YoloLaneClusterNode::on_lane_boundaries(
   bool right_virtual = false;
 
   if (left_matched && right_matched) {
-    // 양쪽 다 보임 → 그대로 전달
-    output.boundaries.push_back(msg->boundaries[left_idx]);
-    output.boundaries.push_back(msg->boundaries[right_idx]);
-    update_seed(left_seed_, msg->boundaries[left_idx]);
-    update_seed(right_seed_, msg->boundaries[right_idx]);
+    // 양쪽 다 보임 → 긴 쪽 선택, 반대편은 가상 생성
+    const auto & left_bd  = msg->boundaries[left_idx];
+    const auto & right_bd = msg->boundaries[right_idx];
+    double left_len  = path_length(left_bd);
+    double right_len = path_length(right_bd);
+
+    if (left_len >= right_len) {
+      // 왼쪽이 길거나 같음 → 왼쪽 채택, 가상 오른쪽 생성
+      auto virtual_right = generate_virtual_lane(left_bd, LaneSide::LEFT);
+      auto real_left = left_bd;
+      real_left.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
+      output.boundaries.push_back(real_left);
+      if (!virtual_right.points.empty()) {
+        virtual_right.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
+        output.boundaries.push_back(virtual_right);
+        right_virtual = true;
+      }
+    } else {
+      // 오른쪽이 길음 → 오른쪽 채택, 가상 왼쪽 생성
+      auto virtual_left = generate_virtual_lane(right_bd, LaneSide::RIGHT);
+      if (!virtual_left.points.empty()) {
+        virtual_left.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
+        output.boundaries.push_back(virtual_left);
+        left_virtual = true;
+      }
+      auto real_right = right_bd;
+      real_right.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
+      output.boundaries.push_back(real_right);
+    }
+    update_seed(left_seed_, left_bd);
+    update_seed(right_seed_, right_bd);
 
   } else if (left_matched) {
     // 왼쪽만 보임 → 가상 오른쪽 차선 생성
-    const auto & left_bd = msg->boundaries[left_idx];
+    auto left_bd = msg->boundaries[left_idx];
+    left_bd.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
     auto virtual_right = generate_virtual_lane(left_bd, LaneSide::LEFT);
     output.boundaries.push_back(left_bd);
     if (!virtual_right.points.empty()) {
+      virtual_right.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
       output.boundaries.push_back(virtual_right);
       right_virtual = true;
     }
@@ -97,9 +129,11 @@ void YoloLaneClusterNode::on_lane_boundaries(
 
   } else if (right_matched) {
     // 오른쪽만 보임 → 가상 왼쪽 차선 생성
-    const auto & right_bd = msg->boundaries[right_idx];
+    auto right_bd = msg->boundaries[right_idx];
+    right_bd.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
     auto virtual_left = generate_virtual_lane(right_bd, LaneSide::RIGHT);
     if (!virtual_left.points.empty()) {
+      virtual_left.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
       output.boundaries.push_back(virtual_left);
       left_virtual = true;
     }
@@ -113,6 +147,17 @@ void YoloLaneClusterNode::on_lane_boundaries(
   // ── Step 3: 디버그 ──
   publish_debug_markers(output, left_matched, right_matched,
                         left_virtual, right_virtual);
+}
+
+double YoloLaneClusterNode::path_length(const ev_msgs::msg::LaneBoundary & bd)
+{
+  double total = 0.0;
+  for (size_t i = 1; i < bd.points.size(); ++i) {
+    double dx = bd.points[i].x - bd.points[i - 1].x;
+    double dy = bd.points[i].y - bd.points[i - 1].y;
+    total += std::sqrt(dx * dx + dy * dy);
+  }
+  return total;
 }
 
 }  // namespace yolo_lane_cluster

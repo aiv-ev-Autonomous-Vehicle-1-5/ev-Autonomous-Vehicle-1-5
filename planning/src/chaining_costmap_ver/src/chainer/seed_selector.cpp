@@ -3,7 +3,7 @@
  * @brief DirectionChainer — Seed 선택 + kNN 탐색 구현
  *
  * [포함 함수]
- *   - find_seed(): 좌/우 시작점(seed) 선택 (2-pass bbox 우선)
+ *   - find_seed(): 좌/우 시작점(seed) 선택 (단일 패스, bbox/lane 동일 가중치)
  *   - knn():       brute-force k-최근접 이웃 탐색
  *
  * [의존 관계]
@@ -25,10 +25,10 @@ namespace chaining_costmap_ver
 // Seed 선택 — 체이닝 시작점 결정
 // ============================================================================
 //
-// [seed 선택 전략 — 2-pass bbox 우선]
-//   Pass 1: bbox만 탐색 (x ≥ -seed_rear_limit, side_seed_y 가드, d ≤ seed_max_dist)
-//           → 조건 만족 bbox 중 가장 가까운 것 반환
-//   Pass 2: Pass 1 실패 시 bbox+lane에서 d ≤ seed_max_dist 이내 가장 가까운 점
+// [seed 선택 전략 — 단일 패스, bbox/lane 동일 가중치]
+//   bbox와 lane 포인트를 동일하게 취급하여
+//   (x ≥ -seed_rear_limit, side_seed_y 가드, d ≤ seed_max_dist) 조건 내
+//   가장 가까운 점을 seed로 선택
 //
 int DirectionChainer::find_seed(
   const std::vector<ChainPoint> & points,
@@ -37,90 +37,33 @@ int DirectionChainer::find_seed(
 {
   const char * side_str = is_left ? "LEFT" : "RIGHT";
   const int n = static_cast<int>(points.size());
-  const double bbox_max_sq = cp.seed_max_dist * cp.seed_max_dist;
+  const double max_dist_sq = cp.seed_max_dist * cp.seed_max_dist;
 
-  // 전체 bbox 후보 현황 로그
-  int total_bbox = 0, bbox_rear_skip = 0, bbox_side_skip = 0, bbox_dist_skip = 0;
+  // 반대편 lane_side — lane 포인트 중 반대쪽 소속은 seed 후보에서 제외
+  const LaneSide opp_side  = is_left ? LaneSide::RIGHT : LaneSide::LEFT;
 
-  // ── Pass 1: bbox 우선 탐색 (seed_max_dist 이내) ──
-  int best_bbox = -1;
-  double best_bbox_sq = std::numeric_limits<double>::max();
-
-  for (int i = 0; i < n; ++i) {
-    if (points[i].type != PointType::BBOX) continue;
-    ++total_bbox;
-
-    if (points[i].x < -cp.seed_rear_limit) {
-      ++bbox_rear_skip;
-      std::fprintf(stderr, "[seed:%s] P1 skip i=%d (%.2f,%.2f) reason=REAR (x<%.2f)\n",
-        side_str, i, points[i].x, points[i].y, -cp.seed_rear_limit);
-      continue;
-    }
-
-    if (is_left) {
-      if (points[i].y < cp.side_seed_y) {
-        ++bbox_side_skip;
-        std::fprintf(stderr, "[seed:%s] P1 skip i=%d (%.2f,%.2f) reason=SIDE (y<%.2f)\n",
-          side_str, i, points[i].x, points[i].y, cp.side_seed_y);
-        continue;
-      }
-    } else {
-      if (points[i].y > -cp.side_seed_y) {
-        ++bbox_side_skip;
-        std::fprintf(stderr, "[seed:%s] P1 skip i=%d (%.2f,%.2f) reason=SIDE (y>%.2f)\n",
-          side_str, i, points[i].x, points[i].y, -cp.side_seed_y);
-        continue;
-      }
-    }
-
-    const double d_sq = points[i].x * points[i].x +
-                        points[i].y * points[i].y;
-    const double d = std::sqrt(d_sq);
-    if (d_sq > bbox_max_sq) {
-      ++bbox_dist_skip;
-      std::fprintf(stderr, "[seed:%s] P1 skip i=%d (%.2f,%.2f) reason=DIST (d=%.2f > max=%.2f)\n",
-        side_str, i, points[i].x, points[i].y, d, cp.seed_max_dist);
-      continue;
-    }
-
-    std::fprintf(stderr, "[seed:%s] P1 candidate i=%d (%.2f,%.2f) d=%.2f%s\n",
-      side_str, i, points[i].x, points[i].y, d,
-      (d_sq < best_bbox_sq) ? " ★ new best" : "");
-
-    if (d_sq < best_bbox_sq) {
-      best_bbox_sq = d_sq;
-      best_bbox = i;
-    }
-  }
-
-  std::fprintf(stderr, "[seed:%s] P1 summary: total_bbox=%d rear_skip=%d side_skip=%d dist_skip=%d → best=%d\n",
-    side_str, total_bbox, bbox_rear_skip, bbox_side_skip, bbox_dist_skip, best_bbox);
-
-  if (best_bbox >= 0) {
-    std::fprintf(stderr, "[seed:%s] ✓ P1 HIT → idx=%d (%.2f,%.2f) d=%.2f\n",
-      side_str, best_bbox, points[best_bbox].x, points[best_bbox].y, std::sqrt(best_bbox_sq));
-    return best_bbox;
-  }
-
-  std::fprintf(stderr, "[seed:%s] P1 MISS → fallback to P2 (all types)\n", side_str);
-
-  // ── Pass 2: bbox 없으면 전체(bbox+lane)에서 seed_max_dist 이내 가장 가까운 점 ──
   int best = -1;
   double best_dist_sq = std::numeric_limits<double>::max();
-  int p2_rear_skip = 0, p2_side_skip = 0, p2_dist_skip = 0;
+  int rear_skip = 0, side_skip = 0, dist_skip = 0, lane_side_skip = 0;
 
   for (int i = 0; i < n; ++i) {
-    if (points[i].x < -cp.seed_rear_limit) { ++p2_rear_skip; continue; }
+    // lane_side 기반 필터: 반대편 차선 포인트 제외
+    if (points[i].type == PointType::LANE && points[i].lane_side == opp_side) {
+      ++lane_side_skip;
+      continue;
+    }
+
+    if (points[i].x < -cp.seed_rear_limit) { ++rear_skip; continue; }
 
     if (is_left) {
-      if (points[i].y < cp.side_seed_y) { ++p2_side_skip; continue; }
+      if (points[i].y < cp.side_seed_y) { ++side_skip; continue; }
     } else {
-      if (points[i].y > -cp.side_seed_y) { ++p2_side_skip; continue; }
+      if (points[i].y > -cp.side_seed_y) { ++side_skip; continue; }
     }
 
     const double d_sq = points[i].x * points[i].x +
                         points[i].y * points[i].y;
-    if (d_sq > bbox_max_sq) { ++p2_dist_skip; continue; }
+    if (d_sq > max_dist_sq) { ++dist_skip; continue; }
     if (d_sq < best_dist_sq) {
       best_dist_sq = d_sq;
       best = i;
@@ -128,13 +71,13 @@ int DirectionChainer::find_seed(
   }
 
   if (best >= 0) {
-    std::fprintf(stderr, "[seed:%s] ✓ P2 HIT → idx=%d (%.2f,%.2f) type=%s d=%.2f (rear_skip=%d side_skip=%d dist_skip=%d)\n",
+    std::fprintf(stderr, "[seed:%s] ✓ HIT → idx=%d (%.2f,%.2f) type=%s d=%.2f (rear_skip=%d side_skip=%d dist_skip=%d lane_side_skip=%d)\n",
       side_str, best, points[best].x, points[best].y,
       (points[best].type == PointType::BBOX ? "BBOX" : "LANE"),
-      std::sqrt(best_dist_sq), p2_rear_skip, p2_side_skip, p2_dist_skip);
+      std::sqrt(best_dist_sq), rear_skip, side_skip, dist_skip, lane_side_skip);
   } else {
-    std::fprintf(stderr, "[seed:%s] ✗ P2 MISS — no seed found (rear_skip=%d side_skip=%d dist_skip=%d)\n",
-      side_str, p2_rear_skip, p2_side_skip, p2_dist_skip);
+    std::fprintf(stderr, "[seed:%s] ✗ MISS — no seed found (rear_skip=%d side_skip=%d dist_skip=%d lane_side_skip=%d)\n",
+      side_str, rear_skip, side_skip, dist_skip, lane_side_skip);
   }
 
   return best;
