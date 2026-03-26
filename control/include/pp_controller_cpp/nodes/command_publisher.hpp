@@ -3,8 +3,9 @@
 // ============================================================================
 // T870 실차와 ERP42 Gazebo 시뮬레이터에 동시에 제어 명령을 발행한다.
 // ERP42는 구독자가 있을 때만 발행 (lazy).
-// 제어 명령(ControlCommand)에 원본 센서 타임스탬프(velodyne_points)를
-// header.stamp으로 전파하여 ros2 topic delay로 파이프라인 지연 측정이 가능하다.
+// header.stamp에 원본 센서 타임스탬프(velodyne_points)를 전파하여
+// ros2 topic delay로 파이프라인 총 지연을 측정할 수 있다.
+// (rosbag 재생 시 --clock 옵션으로 sim_time 사용 필요)
 // ============================================================================
 
 #ifndef PP_CONTROLLER_CPP__NODES__COMMAND_PUBLISHER_HPP_

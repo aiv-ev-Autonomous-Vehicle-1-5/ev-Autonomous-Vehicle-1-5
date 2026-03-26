@@ -26,9 +26,9 @@ namespace chaining_costmap_ver
 // ============================================================================
 //
 // [seed 선택 전략 — 2-pass bbox 우선]
-//   Pass 1: bbox만 탐색 (x ≥ -seed_rear_limit, side_seed_y 가드, d ≤ seed_bbox_max_dist)
+//   Pass 1: bbox만 탐색 (x ≥ -seed_rear_limit, side_seed_y 가드, d ≤ seed_max_dist)
 //           → 조건 만족 bbox 중 가장 가까운 것 반환
-//   Pass 2: Pass 1 실패 시 bbox+lane 전체에서 가장 가까운 점 (기존 로직)
+//   Pass 2: Pass 1 실패 시 bbox+lane에서 d ≤ seed_max_dist 이내 가장 가까운 점
 //
 int DirectionChainer::find_seed(
   const std::vector<ChainPoint> & points,
@@ -37,12 +37,12 @@ int DirectionChainer::find_seed(
 {
   const char * side_str = is_left ? "LEFT" : "RIGHT";
   const int n = static_cast<int>(points.size());
-  const double bbox_max_sq = cp.seed_bbox_max_dist * cp.seed_bbox_max_dist;
+  const double bbox_max_sq = cp.seed_max_dist * cp.seed_max_dist;
 
   // 전체 bbox 후보 현황 로그
   int total_bbox = 0, bbox_rear_skip = 0, bbox_side_skip = 0, bbox_dist_skip = 0;
 
-  // ── Pass 1: bbox 우선 탐색 (seed_bbox_max_dist 이내) ──
+  // ── Pass 1: bbox 우선 탐색 (seed_max_dist 이내) ──
   int best_bbox = -1;
   double best_bbox_sq = std::numeric_limits<double>::max();
 
@@ -79,7 +79,7 @@ int DirectionChainer::find_seed(
     if (d_sq > bbox_max_sq) {
       ++bbox_dist_skip;
       std::fprintf(stderr, "[seed:%s] P1 skip i=%d (%.2f,%.2f) reason=DIST (d=%.2f > max=%.2f)\n",
-        side_str, i, points[i].x, points[i].y, d, cp.seed_bbox_max_dist);
+        side_str, i, points[i].x, points[i].y, d, cp.seed_max_dist);
       continue;
     }
 
@@ -104,10 +104,10 @@ int DirectionChainer::find_seed(
 
   std::fprintf(stderr, "[seed:%s] P1 MISS → fallback to P2 (all types)\n", side_str);
 
-  // ── Pass 2: bbox 없으면 전체(bbox+lane)에서 가장 가까운 점 ──
+  // ── Pass 2: bbox 없으면 전체(bbox+lane)에서 seed_max_dist 이내 가장 가까운 점 ──
   int best = -1;
   double best_dist_sq = std::numeric_limits<double>::max();
-  int p2_rear_skip = 0, p2_side_skip = 0;
+  int p2_rear_skip = 0, p2_side_skip = 0, p2_dist_skip = 0;
 
   for (int i = 0; i < n; ++i) {
     if (points[i].x < -cp.seed_rear_limit) { ++p2_rear_skip; continue; }
@@ -120,6 +120,7 @@ int DirectionChainer::find_seed(
 
     const double d_sq = points[i].x * points[i].x +
                         points[i].y * points[i].y;
+    if (d_sq > bbox_max_sq) { ++p2_dist_skip; continue; }
     if (d_sq < best_dist_sq) {
       best_dist_sq = d_sq;
       best = i;
@@ -127,13 +128,13 @@ int DirectionChainer::find_seed(
   }
 
   if (best >= 0) {
-    std::fprintf(stderr, "[seed:%s] ✓ P2 HIT → idx=%d (%.2f,%.2f) type=%s d=%.2f (rear_skip=%d side_skip=%d)\n",
+    std::fprintf(stderr, "[seed:%s] ✓ P2 HIT → idx=%d (%.2f,%.2f) type=%s d=%.2f (rear_skip=%d side_skip=%d dist_skip=%d)\n",
       side_str, best, points[best].x, points[best].y,
       (points[best].type == PointType::BBOX ? "BBOX" : "LANE"),
-      std::sqrt(best_dist_sq), p2_rear_skip, p2_side_skip);
+      std::sqrt(best_dist_sq), p2_rear_skip, p2_side_skip, p2_dist_skip);
   } else {
-    std::fprintf(stderr, "[seed:%s] ✗ P2 MISS — no seed found (rear_skip=%d side_skip=%d)\n",
-      side_str, p2_rear_skip, p2_side_skip);
+    std::fprintf(stderr, "[seed:%s] ✗ P2 MISS — no seed found (rear_skip=%d side_skip=%d dist_skip=%d)\n",
+      side_str, p2_rear_skip, p2_side_skip, p2_dist_skip);
   }
 
   return best;

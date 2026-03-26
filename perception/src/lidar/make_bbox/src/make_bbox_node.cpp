@@ -254,7 +254,7 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     m.scale.x = 0.03;
     m.color = id_to_color(cl.label);
     m.color.a = 1.0F;
-    m.lifetime = rclcpp::Duration::from_seconds(0.2);
+
 
     const double x0 = static_cast<double>(bmin_x), x1 = static_cast<double>(bmax_x);
     const double y0 = static_cast<double>(bmin_y), y1 = static_cast<double>(bmax_y);

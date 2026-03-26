@@ -29,9 +29,9 @@ on_timer() — 10Hz (100ms)
 │       → extract_backbone(L, 독립) → extract_backbone(R, 독립)
 │       → resolve_overlaps (backtracking) → trim_crossing → resample
 │     * find_seed 전략 (2-pass bbox 우선):
-│       Pass 1 — bbox만 탐색 (x ≥ seed_rear_limit, side_seed_y 가드, d ≤ seed_bbox_max_dist)
+│       Pass 1 — bbox만 탐색 (x ≥ seed_rear_limit, side_seed_y 가드, d ≤ seed_max_dist)
 │                조건 만족 bbox 중 가장 가까운 것 반환
-│       Pass 2 — Pass 1 실패 시 bbox+lane 전체에서 가장 가까운 점 (기존 로직)
+│       Pass 2 — Pass 1 실패 시 bbox+lane에서 d ≤ seed_max_dist 이내 가장 가까운 점
 │     * backbone chaining 게이트:
 │       G1 (거리 게이트):       d(i,j) ≤ d_max
 │       G2 (전방 cone 게이트):  angle(v, u_ij) ≤ forward_cone_deg/2
@@ -252,7 +252,7 @@ LiDAR bbox 좌표 변환은 `tf2_ros::Buffer::lookupTransform("base_link", "velo
 |----------|-----|------|------|
 | `side_seed_y` | 0.1 | m | 시드 Y 오프셋 |
 | `seed_rear_limit` | -2.0 | m | seed 후보 후방 제한 (x ≥ 이 값인 점만 후보) |
-| `seed_bbox_max_dist` | 3.0 | m | seed bbox 우선 탐색 최대 거리 (Pass 1) |
+| `seed_max_dist` | 1.5 | m | seed 탐색 최대 거리 (Pass 1/2 공통) |
 | `k` | 10 | - | KNN 이웃 수 |
 | `d_max` | 2.0 | m | 최대 연결 거리 |
 | `forward_cone_deg` | 130 | deg | 전방 cone 각도 |

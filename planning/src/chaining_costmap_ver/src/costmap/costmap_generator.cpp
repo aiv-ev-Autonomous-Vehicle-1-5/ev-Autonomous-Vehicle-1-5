@@ -496,7 +496,7 @@ void CostmapGenerator::apply_entry_walls(
   const PlanningParams & params)
 {
   const auto & cm = params.costmap;
-  const double step = cm.resolution * 2.0;  // 가상 bbox 간격 (resolution의 2배)
+  const double step = 0.6;  // 가상 bbox 간격 [m] (sigma=1.0m이므로 0.6m 간격이면 가우시안 충분히 겹침)
 
   // costmap 하단 x좌표 (= origin_x, 그리드 좌하단의 x값)
   const double bottom_x = costmap.origin_x;

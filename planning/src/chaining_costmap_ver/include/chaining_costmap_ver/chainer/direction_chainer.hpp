@@ -175,11 +175,11 @@ private:
    *       - 우측(is_left=false): y ≤ -side_seed_y 인 점만 후보
    *       → 중심선(y≈0) 근처 점이 잘못된 방향의 seed가 되는 것 방지
    *   Pass 1 (bbox 우선):
-   *     - bbox만 대상, d ≤ seed_bbox_max_dist 이내
+   *     - bbox만 대상, d ≤ seed_max_dist 이내
    *     - 조건 만족 bbox 중 ego(원점)에서 가장 가까운 것을 seed로 선택
    *   Pass 2 (fallback):
    *     - Pass 1에서 bbox를 찾지 못한 경우에만 실행
-   *     - bbox+lane 전체에서 ego(원점)에서 가장 가까운 점을 seed로 선택
+   *     - bbox+lane에서 d ≤ seed_max_dist 이내, ego(원점)에서 가장 가까운 점을 seed로 선택
    *
    * @param points   필터링된 경계점 배열
    * @param is_left  true=좌측 seed, false=우측 seed

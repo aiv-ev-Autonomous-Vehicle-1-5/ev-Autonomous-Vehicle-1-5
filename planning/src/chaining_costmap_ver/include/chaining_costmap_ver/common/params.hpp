@@ -256,7 +256,7 @@ struct PlanningParams
   //
   // 동작 순서:
   //   1. Seed 선택 : 2-pass bbox 우선 전략으로 좌/우 시작점 선택
-  //                  Pass 1: seed_bbox_max_dist 이내 bbox 중 가장 가까운 것
+  //                  Pass 1: seed_max_dist 이내 bbox 중 가장 가까운 것
   //                  Pass 2: bbox 없으면 bbox+lane 전체에서 가장 가까운 점
   //   2. Backbone  : seed에서 greedy kNN으로 전방 포인트를 하나씩 연결
   //   3. 결과      : 좌/우 경계선 → Costmap에 전달
@@ -276,11 +276,11 @@ struct PlanningParams
     // 줄이면 중앙 가까운 점도 seed 가능, 키우면 확실히 좌/우인 점만 사용.
     double side_seed_y = 0.3;           ///< [m] |y| < 이 값이면 seed 후보 제외
 
-    // [m] seed 선택 시 bbox 우선 탐색 최대 거리.
+    // [m] seed 선택 시 최대 거리 (Pass 1, Pass 2 공통).
     // Pass 1: 이 거리 이내의 bbox만 seed 후보로 탐색.
-    // Pass 1 실패 시 Pass 2: bbox+lane 전체에서 가장 가까운 점 선택 (기존 로직).
+    // Pass 2: 이 거리 이내의 bbox+lane에서 가장 가까운 점 선택.
     // d_max보다 넓게 잡아 chaining 범위 밖 bbox도 seed 후보로 허용.
-    double seed_bbox_max_dist = 3.0;    ///< [m] seed bbox 우선 탐색 최대 거리
+    double seed_max_dist = 3.0;    ///< [m] seed 탐색 최대 거리 (Pass 1/2 공통)
 
     // [m] seed 후보에서 제외할 후방 한계 거리.
     // x < -seed_rear_limit 인 점은 seed 후보에서 제외.
@@ -467,7 +467,7 @@ struct PlanningParams
     // ── Chainer (v2 DirectionChainer) 파라미터 로드 ──
     // yaml 경로: lc_planner_node.ros__parameters.chainer.*
     chainer.side_seed_y           = p("chainer.side_seed_y",           chainer.side_seed_y);
-    chainer.seed_bbox_max_dist    = p("chainer.seed_bbox_max_dist",    chainer.seed_bbox_max_dist);
+    chainer.seed_max_dist    = p("chainer.seed_max_dist",    chainer.seed_max_dist);
     chainer.seed_rear_limit       = p("chainer.seed_rear_limit",       chainer.seed_rear_limit);
     chainer.k                     = p("chainer.k",                     chainer.k);
     chainer.d_max             = p("chainer.d_max",             chainer.d_max);

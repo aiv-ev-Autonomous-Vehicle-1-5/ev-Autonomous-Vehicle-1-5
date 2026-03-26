@@ -25,8 +25,8 @@ lc_planner_node:
     # ============================================================
     chainer:
       # --- Seed 선택 ---
-      side_seed_y: 0.1        # [m] |y| < 이 값이면 seed 후보 제외
-      seed_bbox_max_dist: 1.5 # [m] seed bbox 우선 탐색 최대 거리
+      side_seed_y: 0.05        # [m] |y| < 이 값이면 seed 후보 제외
+      seed_max_dist: 1.5 # [m] seed 탐색 최대 거리 (Pass 1/2 공통)
       seed_rear_limit: 0.5   # [m] x < -이 값이면 seed 후보 제외 (후방 제한)
 
       # --- kNN + 게이트 ---
@@ -95,7 +95,7 @@ lc_planner_node:
       resample_ds: 0.10              # [m] 등간격 리샘플링 간격 (제어기가 등간격 waypoint를 기대)
       smooth_window: 5               # 이동 평균 윈도우 크기 (앞뒤 2개씩 총 5개 평균)
       prune_max_dev: 0.15            # [m] prune 허용 최대 수직 편차 (이내면 직선으로 간주, 중간점 제거)
-      curvature_clamp_max_iter: 500  # 곡률 제한 최대 반복 횟수 (kappa > kappa_max인 점을 중점 방향으로 이동)
+      curvature_clamp_max_iter: 200  # 곡률 제한 최대 반복 횟수 (kappa > kappa_max인 점을 중점 방향으로 이동)
 
     # ============================================================
     # [Stage 6] Safety — 안전 검사 파라미터
