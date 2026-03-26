@@ -1,4 +1,4 @@
-# camera 패키지 토픽 정리
+# Camera 패키지 토픽 정리
 
 ## usb_cam (C++ 노드)
 
@@ -12,7 +12,7 @@
 
 ---
 
-## bev_lut_node
+## bev_lut_node (Python)
 
 ### 구독 토픽
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
@@ -26,7 +26,7 @@
 
 ---
 
-## yolo_instance_seg_node (주 사용 노드)
+## yolo_instance_seg_node (Python, 주 사용 노드)
 
 ### 구독 토픽
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
@@ -36,12 +36,12 @@
 ### 발행 토픽
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
 |---|---|---|---|
-| `/perception/raw_lane_boundaries` | `ev_msgs/msg/LaneBoundaryArray` | BestEffort, depth=1 | 원본 차선 경계 (인스턴스별 lane_id 포함) → yolo_lane_cluster 노드로 전달 |
-| `/yolo_instance_seg_image` | `sensor_msgs/msg/Image` | depth=10 | 인스턴스 세그멘테이션 시각화 이미지 |
+| `/perception/raw_lane_boundaries` | `ev_msgs/msg/LaneBoundaryArray` | BestEffort, depth=1 | 원본 차선 경계 (인스턴스별 lane_id 포함) -> yolo_lane_cluster 노드로 전달 |
+| `/yolo_instance_seg_image` | `sensor_msgs/msg/Image` | depth=10 | 인스턴스 세그멘테이션 시각화 이미지 (디버그용) |
 
 ---
 
-## yolo_db_seg_node (미사용)
+## yolo_db_seg_node (Python, 미사용)
 
 ### 구독 토픽
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
@@ -56,7 +56,7 @@
 
 ---
 
-## yolo_seg_node (미사용)
+## yolo_seg_node (Python, 미사용)
 
 ### 구독 토픽
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
@@ -71,7 +71,7 @@
 
 ---
 
-## lane_coord_viewer (디버그 유틸)
+## lane_coord_viewer (Python, 디버그 유틸)
 
 ### 구독 토픽
 | 토픽 이름 | 메시지 타입 | QoS | 설명 |
@@ -84,16 +84,16 @@
 
 ```
 usb_cam (/camera1/image_raw)
-    │
-    ▼
+    |
+    v
 bev_lut_node (/bev_image)
-    │
-    ▼
+    |
+    v
 yolo_instance_seg_node (/perception/raw_lane_boundaries)
-    │
-    ▼
+    |
+    v
 yolo_lane_cluster_node (/perception/lane_boundaries)
-    │
-    ▼
+    |
+    v
 chaining_costmap_ver (planning)
 ```

@@ -244,7 +244,7 @@ bool PurePursuitRelativeNode::is_forward_clear() const
 
   const auto & cp = params_.creep;
   for (const auto & b : latest_bboxes_->bboxes) {
-    if (b.position.x > 0.0 && b.position.x < cp.roi_x &&
+    if (b.position.x > cp.roi_x_offset && b.position.x < cp.roi_x_offset + cp.roi_x &&
         b.position.y > -cp.roi_y && b.position.y < cp.roi_y)
     {
       return false;  // ROI 내 장애물 있음
@@ -288,11 +288,11 @@ void PurePursuitRelativeNode::on_timer()
     auto pt = [](double x, double y) {
       geometry_msgs::msg::Point p; p.x = x; p.y = y; p.z = 0.0; return p;
     };
-    m.points.push_back(pt(0.0, -cp.roi_y));
-    m.points.push_back(pt(cp.roi_x, -cp.roi_y));
-    m.points.push_back(pt(cp.roi_x,  cp.roi_y));
-    m.points.push_back(pt(0.0,  cp.roi_y));
-    m.points.push_back(pt(0.0, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x_offset, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x_offset + cp.roi_x, -cp.roi_y));
+    m.points.push_back(pt(cp.roi_x_offset + cp.roi_x,  cp.roi_y));
+    m.points.push_back(pt(cp.roi_x_offset,  cp.roi_y));
+    m.points.push_back(pt(cp.roi_x_offset, -cp.roi_y));
     pub_dbg_creep_roi_->publish(m);
   }
 

@@ -40,6 +40,18 @@ struct CostmapResult
   double origin_x = -5.0;     ///< 그리드 좌하단의 x 좌표 [m] (base_link 기준)
   double origin_y = -5.0;     ///< 그리드 좌하단의 y 좌표 [m] (base_link 기준)
   bool valid = false;          ///< true: 코스트맵 정상 생성됨
+
+  /**
+   * @brief 실제 좌표(x,y)에 해당하는 costmap 셀 비용을 반환
+   * @return 셀 비용. 범위 밖이면 0.0 (free space 취급)
+   */
+  double cost_at(double x, double y) const
+  {
+    int c = static_cast<int>((x - origin_x) / resolution);
+    int r = static_cast<int>((y - origin_y) / resolution);
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return 0.0;
+    return data[r * cols + c];
+  }
 };
 
 }  // namespace chaining_costmap_ver

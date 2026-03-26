@@ -25,26 +25,29 @@ PostprocessResult PathPostprocessor::process(
   int smooth_window,
   double resample_ds,
   double kappa_max,
-  int curvature_clamp_max_iter)
+  int curvature_clamp_max_iter,
+  const CostmapResult * costmap,
+  double obstacle_cost)
 {
   PostprocessResult result;
 
   // 경로가 2점 미만이면 의미 있는 후처리 불가
   if (raw_path.size() < 2) return result;
 
-  // ① Prune: 직선 구간의 중간점 제거 (점 수 대폭 감소)
-  auto pruned = prune(raw_path, prune_max_dev);
+  // ① Prune: 직선 구간의 중간점 제거 (costmap obstacle 관통 shortcut 거부)
+  auto pruned = prune(raw_path, prune_max_dev, costmap, obstacle_cost);
   result.pruned = pruned;
 
   // ② Resample: 등간격(ds) 리샘플링
   auto resampled = resample_polyline(pruned, resample_ds);
 
-  // ③ Smooth: 이동 평균 필터로 잔여 꺾임 완화
-  auto smoothed = smooth(resampled, smooth_window);
+  // ③ Smooth: 이동 평균 필터 (obstacle 셀 침범 시 원래 좌표 유지)
+  auto smoothed = smooth(resampled, smooth_window, costmap, obstacle_cost);
 
-  // ④ Curvature Clamp: 최대 곡률 제한
+  // ④ Curvature Clamp: 최대 곡률 제한 (obstacle 셀 침범 시 이동 거부)
   if (kappa_max > 0.0 && smoothed.size() >= 3) {
-    smoothed = curvature_clamp(smoothed, kappa_max, curvature_clamp_max_iter);
+    smoothed = curvature_clamp(smoothed, kappa_max, curvature_clamp_max_iter,
+                               costmap, obstacle_cost);
   }
 
   result.path = smoothed;

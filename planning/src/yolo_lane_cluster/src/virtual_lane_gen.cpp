@@ -12,14 +12,14 @@
  * 좌표계 (ego, base_link 기준):
  *   x = 전방(+), y = 좌측(+)
  */
-#include "lane_chaining/lane_chaining_node.hpp"
+#include "yolo_lane_cluster/yolo_lane_cluster_node.hpp"
 
 #include <cmath>
 
-namespace lane_chaining
+namespace yolo_lane_cluster
 {
 
-ev_msgs::msg::LaneBoundary LaneChainingNode::generate_virtual_lane(
+ev_msgs::msg::LaneBoundary YoloLaneClusterNode::generate_virtual_lane(
   const ev_msgs::msg::LaneBoundary & real_lane,
   LaneSide real_side) const
 {
@@ -75,4 +75,4 @@ ev_msgs::msg::LaneBoundary LaneChainingNode::generate_virtual_lane(
   return vl;
 }
 
-}  // namespace lane_chaining
+}  // namespace yolo_lane_cluster

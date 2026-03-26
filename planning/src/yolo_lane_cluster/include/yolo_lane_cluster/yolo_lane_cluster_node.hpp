@@ -1,5 +1,5 @@
 /**
- * @file lane_chaining_node.hpp
+ * @file yolo_lane_cluster_node.hpp
  * @brief 차선 전처리 노드 — 시드 기반 좌/우 판별 + 가상 차선 생성
  *
  * camera(yolo_instance_seg)에서 클러스터링된 차선 boundary를 받아서:
@@ -8,10 +8,10 @@
  *   3) 가공된 LaneBoundaryArray를 planning에 전달
  *
  * [데이터 흐름]
- *   /perception/raw_lane_boundaries (카메라) → lane_chaining → /perception/lane_boundaries (planning)
+ *   /perception/raw_lane_boundaries (카메라) → yolo_lane_cluster → /perception/lane_boundaries (planning)
  */
-#ifndef LANE_CHAINING__LANE_CHAINING_NODE_HPP_
-#define LANE_CHAINING__LANE_CHAINING_NODE_HPP_
+#ifndef YOLO_LANE_CLUSTER__YOLO_LANE_CLUSTER_NODE_HPP_
+#define YOLO_LANE_CLUSTER__YOLO_LANE_CLUSTER_NODE_HPP_
 
 #include <rclcpp/rclcpp.hpp>
 #include <ev_msgs/msg/lane_boundary.hpp>
@@ -20,7 +20,7 @@
 
 #include <vector>
 
-namespace lane_chaining
+namespace yolo_lane_cluster
 {
 
 // ============================================================================
@@ -46,7 +46,7 @@ struct SeedState
 // 파라미터 구조체
 // ============================================================================
 
-struct LaneChainingParams
+struct YoloLaneClusterParams
 {
   // 시드 초기 위치
   double seed_init_x    = 0.0;    ///< 시드 초기 x 위치 [m]
@@ -65,10 +65,10 @@ struct LaneChainingParams
 // 노드 클래스
 // ============================================================================
 
-class LaneChainingNode : public rclcpp::Node
+class YoloLaneClusterNode : public rclcpp::Node
 {
 public:
-  explicit LaneChainingNode(const rclcpp::NodeOptions & options);
+  explicit YoloLaneClusterNode(const rclcpp::NodeOptions & options);
 
 private:
   // ── 콜백 ──
@@ -108,9 +108,9 @@ private:
   // ── 상태 ──
   SeedState left_seed_;
   SeedState right_seed_;
-  LaneChainingParams params_;
+  YoloLaneClusterParams params_;
 };
 
-}  // namespace lane_chaining
+}  // namespace yolo_lane_cluster
 
-#endif  // LANE_CHAINING__LANE_CHAINING_NODE_HPP_
+#endif  // YOLO_LANE_CLUSTER__YOLO_LANE_CLUSTER_NODE_HPP_

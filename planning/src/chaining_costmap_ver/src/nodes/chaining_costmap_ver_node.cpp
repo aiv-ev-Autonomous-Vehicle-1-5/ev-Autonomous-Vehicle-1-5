@@ -405,7 +405,9 @@ void LCPlannerNode::on_timer()
     params_.postprocess.smooth_window,
     params_.postprocess.resample_ds,
     1.0 / params_.vehicle.r_min(),
-    params_.postprocess.curvature_clamp_max_iter);
+    params_.postprocess.curvature_clamp_max_iter,
+    costmap.valid ? &costmap : nullptr,
+    params_.astar.obstacle_cost);
   double t_post_ms = std::chrono::duration<double, std::milli>(Clock::now() - t_post).count();
 
   // ======== Stage 6: Safety Check ========

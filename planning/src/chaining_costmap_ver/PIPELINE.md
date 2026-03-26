@@ -63,7 +63,9 @@ on_timer() — 10Hz (100ms)
 ├── Stage 3: Costmap + A*  [costmap/, planner/, nodes/goal_calculator.hpp]
 │     3a. ChainPoint → ChainedPoint 변환 (is_backbone 플래그 전파)
 │     3b. Gaussian Costmap 생성 (apply_source 최적화 적용)
-│         * backbone 포인트는 bbox_cost_max + bbox_radius 적용
+│         * BBOX: bbox_cost_max + bbox_radius
+│         * LANE + backbone 연결: bbox_cost_max + lane_radius (max cost, radius 독립)
+│         * LANE + backbone 미연결: lane_cost_max + lane_radius (기존 약한 비용)
 │         * apply_source 성능 최적화:
 │           - inv_resolution 미리 계산하여 루프 내 나눗셈 제거
 │           - P3: flat zone 판정에서 sqrt 제거 — inner_radius_sq로 d² 비교
@@ -88,8 +90,12 @@ on_timer() — 10Hz (100ms)
 │     3d. Goal → costmap 경계 clamp
 │     3e. A* 경로 탐색
 │
-├── Stage 5: Postprocess  [postprocess/*.cpp]
-│     prune → smooth → curvature_clamp → resample → yaw
+├── Stage 5: Postprocess  [postprocess/*.cpp]  (costmap-aware)
+│     prune → resample → smooth → curvature_clamp → yaw
+│     * costmap-aware 후처리: costmap + obstacle_cost를 참조하여 장애물 침범 방지
+│       - prune: shortcut 직선을 resolution 간격으로 샘플링, obstacle 셀 통과 시 shortcut 거부
+│       - smooth: 이동평균 결과가 obstacle 셀이면 원래 좌표 유지
+│       - curvature_clamp: 중점 방향 이동 결과가 obstacle 셀이면 이동 거부
 │
 ├── Stage 6: Safety Check  [safety/safety_checker.hpp]
 │     경로 유효성 + 곡률 검증 → OK / FAIL / WARNING
@@ -220,7 +226,7 @@ chaining_costmap_ver/
 | `chainer/` | DirectionChainer v3 — 컴포넌트 분류 + L/R 백본 추출 |
 | `costmap/` | Gaussian Costmap 생성 (apply_source: P3 sqrt 제거 + P4 원형 col 클리핑 최적화) |
 | `planner/` | A* 경로 탐색 |
-| `postprocess/` | 경로 후처리 (prune, smooth, curvature_clamp, resample, yaw) |
+| `postprocess/` | 경로 후처리 (prune, smooth, curvature_clamp, resample, yaw) — costmap-aware: obstacle 셀 침범 방지 |
 | `safety/` | 경로 유효성 + 곡률 검증 |
 | `nodes/` | 노드 오케스트레이터 + 입력 파서 + 골 계산 + 디버그 발행 |
 

@@ -54,6 +54,8 @@ MakeBBoxNode::MakeBBoxNode(const rclcpp::NodeOptions & options)
   max_size_z_    = static_cast<float>(declare_parameter<double>("max_size_z", 0.89));
   min_size_z_    = static_cast<float>(declare_parameter<double>("min_size_z", 0.12));
   max_center_z_  = static_cast<float>(declare_parameter<double>("max_center_z", 0.5));
+  min_center_z_  = static_cast<float>(declare_parameter<double>("min_center_z", -1.2));
+  max_base_height_ratio_ = static_cast<float>(declare_parameter<double>("max_base_height_ratio", 0.9));
 
   // 클러스터 분할 파라미터
   enable_split_          = declare_parameter<bool>("enable_cluster_split", true);
@@ -230,12 +232,20 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
       continue;
     }
 
+    // 밑변/높이 비율 필터: 라바콘은 높이 > 밑변이므로 ratio가 낮음
+    // 넓적한 비-라바콘 클러스터(ratio >= threshold)를 제거
+    const float base = std::max(size_x, size_y);
+    const float ratio = base / (size_z + 1e-6F);
+    if (ratio > max_base_height_ratio_) {
+      continue;
+    }
+
     const float cx = (bmin_x + bmax_x) * 0.5F;
     const float cy = (bmin_y + bmax_y) * 0.5F;
     const float cz = (bmin_z + bmax_z) * 0.5F;
 
-    // 클러스터 중심 z 필터: 너무 높은 물체 제거
-    if (cz > max_center_z_) {
+    // 클러스터 중심 z 필터: 너무 높거나 낮은 물체 제거
+    if (cz > max_center_z_ || cz < min_center_z_) {
       continue;
     }
 

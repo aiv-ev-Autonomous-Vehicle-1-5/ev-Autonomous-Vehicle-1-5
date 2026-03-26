@@ -1,6 +1,6 @@
 /**
- * @file lane_chaining_node.cpp
- * @brief LaneChainingNode 생성자 + 콜백 오케스트레이션
+ * @file yolo_lane_cluster_node.cpp
+ * @brief YoloLaneClusterNode 생성자 + 콜백 오케스트레이션
  *
  * [처리 흐름]
  *   1. /perception/raw_lane_boundaries 수신
@@ -9,13 +9,13 @@
  *   4. /perception/lane_boundaries 발행
  *   5. 디버그 마커 발행 (lazy)
  */
-#include "lane_chaining/lane_chaining_node.hpp"
+#include "yolo_lane_cluster/yolo_lane_cluster_node.hpp"
 
-namespace lane_chaining
+namespace yolo_lane_cluster
 {
 
-LaneChainingNode::LaneChainingNode(const rclcpp::NodeOptions & options)
-: Node("lane_chaining_node", options)
+YoloLaneClusterNode::YoloLaneClusterNode(const rclcpp::NodeOptions & options)
+: Node("yolo_lane_cluster_node", options)
 {
   // ── 파라미터 선언 ──
   params_.seed_init_x        = declare_parameter("seed.init_x", 0.0);
@@ -48,12 +48,12 @@ LaneChainingNode::LaneChainingNode(const rclcpp::NodeOptions & options)
   rclcpp::QoS qos_debug(1);
   qos_debug.best_effort();
   debug_pub_ = create_publisher<visualization_msgs::msg::MarkerArray>(
-    "/lane_chaining/debug/lane_points", qos_debug);
+    "/yolo_lane_cluster/debug/lane_points", qos_debug);
 
-  RCLCPP_INFO(get_logger(), "Lane Chaining 노드 가동!");
+  RCLCPP_INFO(get_logger(), "Yolo Lane Cluster 노드 가동!");
 }
 
-void LaneChainingNode::on_lane_boundaries(
+void YoloLaneClusterNode::on_lane_boundaries(
   const ev_msgs::msg::LaneBoundaryArray::SharedPtr msg)
 {
   ev_msgs::msg::LaneBoundaryArray output;
@@ -115,7 +115,7 @@ void LaneChainingNode::on_lane_boundaries(
                         left_virtual, right_virtual);
 }
 
-}  // namespace lane_chaining
+}  // namespace yolo_lane_cluster
 
 #include <rclcpp_components/register_node_macro.hpp>
-RCLCPP_COMPONENTS_REGISTER_NODE(lane_chaining::LaneChainingNode)
+RCLCPP_COMPONENTS_REGISTER_NODE(yolo_lane_cluster::YoloLaneClusterNode)

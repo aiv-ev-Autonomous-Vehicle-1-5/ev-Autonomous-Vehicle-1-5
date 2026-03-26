@@ -26,6 +26,8 @@ private:
   float max_size_z_;
   float min_size_z_;  // 납작한 바닥 노이즈 클러스터 필터링용
   float max_center_z_;  // 클러스터 중심 z가 이 값 초과 시 필터링
+  float min_center_z_;  // 클러스터 중심 z가 이 값 미만 시 필터링
+  float max_base_height_ratio_;  // 밑변/높이 비율 상한 (라바콘 형상 필터)
 
   // 클러스터 분할 파라미터
   bool enable_split_;

@@ -23,7 +23,7 @@ on_timer() — 50Hz (20ms)
 │
 ├── ⓪ CREEP ROI 디버그 마커 발행 (lazy)
 │     구독자가 있을 때만 /pp_debug/creep_roi 발행
-│     ROI 범위: 전방 (0 ~ roi_x) × (±roi_y) 직사각형
+│     ROI 범위: 전방 (roi_x_offset ~ roi_x_offset + roi_x) × (±roi_y) 직사각형
 │
 ├── ① 정지 조건 판정 + Fail Counter
 │     [조건 검사]
@@ -41,7 +41,7 @@ on_timer() — 50Hz (20ms)
 │         │
 │         └─ counter ≥ 40:
 │             ├─ is_forward_clear() == true → CREEP 모드
-│             │     전방 ROI (roi_x × roi_y) 내 bbox 없음
+│             │     전방 ROI (roi_x_offset ~ roi_x_offset+roi_x) × (±roi_y) 내 bbox 없음
 │             │     v_cmd = rate_limit(creep_speed, last_cmd, dt, accel, decel)
 │             │     조향 0°로 직진, return
 │             │
@@ -174,7 +174,7 @@ on_timer() — 50Hz (20ms)
 ### CREEP 모드
 
 전방 ROI 영역 내에 장애물이 없을 때(클리어) 저속 직진하는 모드.
-- 전방 ROI: `creep_roi_x` × `creep_roi_y` (1.0m × 0.5m)
+- 전방 ROI: `creep_roi_x_offset`(0.9m, 앞범퍼) ~ `creep_roi_x_offset + creep_roi_x` × `±creep_roi_y`
 - CREEP 속도: `creep_speed` (0.4 m/s)
 - `/perception/bboxes`를 구독하여 전방 장애물 존재 여부를 판단
 
@@ -305,7 +305,8 @@ cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-sele
 | 파라미터 | 값 | 단위 | 설명 |
 |----------|-----|------|------|
 | `creep_speed` | 0.4 | m/s | CREEP 모드 속도 |
-| `creep_roi_x` | 1.0 | m | 전방 ROI X 범위 |
+| `creep_roi_x_offset` | 0.9 | m | ROI 시작 x 오프셋 (앞범퍼 위치, base_link 기준) |
+| `creep_roi_x` | 1.5 | m | 전방 ROI X 범위 (roi_x_offset부터) |
 | `creep_roi_y` | 0.5 | m | 전방 ROI Y 범위 |
 
 ---
@@ -428,4 +429,4 @@ ros2 run pp_controller_cpp pure_pursuit_relative_node
 | 직선에서 가속이 너무 느림 | `accel_rate` ↑ 또는 `speed_max` ↑ |
 | 차량이 자주 멈춤 | `path_timeout_sec` ↑ 또는 `emergency_stop_count` ↑ |
 | CREEP 모드가 너무 빠름 | `creep_speed` ↓ |
-| CREEP ROI가 너무 좁음/넓음 | `creep_roi_x` / `creep_roi_y` 조정 |
+| CREEP ROI가 너무 좁음/넓음 | `creep_roi_x_offset` / `creep_roi_x` / `creep_roi_y` 조정 |

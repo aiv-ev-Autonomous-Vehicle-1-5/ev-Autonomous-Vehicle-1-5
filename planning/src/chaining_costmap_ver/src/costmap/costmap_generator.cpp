@@ -6,11 +6,11 @@
  * 2D 격자 비용 지도를 생성한다.
  *
  * ── 비용 분기 ──
- *   backbone  : is_backbone=true → 타입 무관하게 bbox_cost_max + bbox_radius 적용
- *               (lane↔bbox 전환 구간에서도 끊김 없는 강한 비용 장벽 형성)
  *   BBOX      : bbox_cost_max(100) + bbox_radius flat zone + 가우시안 감쇠
  *   LANE      : lane_cost_max(50)  + lane_radius flat zone + 가우시안 감쇠
- *   unchained : bbox 비용으로 보수적 처리 (체이닝 실패 = 미확인 장애물)
+ *               (backbone 연결 여부와 무관하게 원래 타입별 cost/radius 적용)
+ *   unchained : bbox → unchained_bbox_radius, lane → lane_radius 적용
+ *               (chained bbox와 독립적인 radius로 보수적 처리)
  *
  * ── max-merge 정책 ──
  *   여러 source의 비용이 같은 셀에 겹치면, 큰 값을 유지한다.
@@ -197,10 +197,10 @@ CostmapResult CostmapGenerator::generate(
   // 전체 격자를 0.0(자유 공간)으로 초기화
   result.data.assign(result.rows * result.cols, 0.0);
 
-  // ── 체인 포인트 비용 적용 (backbone / BBOX / LANE 분기) ──
-  // backbone:  is_backbone=true → bbox_cost_max + bbox_radius (타입 무관, 단단한 벽)
-  // BBOX:      bbox_cost_max + bbox_radius flat zone → 강한 비용 장벽
-  // LANE:      lane_cost_max + lane_radius flat zone → 약한 비용 장벽 (넘을 수 있음)
+  // ── 체인 포인트 비용 적용 (BBOX / LANE 분기) ──
+  // BBOX:                       bbox_cost_max + bbox_radius flat zone → 강한 비용 장벽
+  // LANE + backbone 연결:       bbox_cost_max + lane_radius flat zone → 강한 비용 (radius 독립)
+  // LANE + backbone 미연결:     lane_cost_max + lane_radius flat zone → 약한 비용 장벽
   //
   // ── segment 기반 안쪽 코너 패딩 ──
   // heading 극점(부호 반전) 단위로 구간 분할 후, 각 구간마다 안쪽 사이드를
@@ -211,17 +211,19 @@ CostmapResult CostmapGenerator::generate(
       const auto & pt = chain[i];
       const double extra = extras[i];
       const Point2D src = pt.to_point2d();
-      if (pt.is_backbone || pt.type == PointType::BBOX) {
+      if (pt.type == PointType::BBOX) {
         apply_source(
           result.data, result.rows, result.cols,
           result.resolution, result.origin_x, result.origin_y,
           src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
           cm.bbox_radius + extra);
       } else {
+        // LANE: backbone 연결 시 max cost, 미연결 시 기존 lane cost (radius는 독립 유지)
+        const double cost = pt.is_backbone ? cm.bbox_cost_max : cm.lane_cost_max;
         apply_source(
           result.data, result.rows, result.cols,
           result.resolution, result.origin_x, result.origin_y,
-          src, cm.lane_cost_max, cm.sigma, cm.cost_threshold,
+          src, cost, cm.sigma, cm.cost_threshold,
           cm.lane_radius + extra);
       }
     }
@@ -250,7 +252,7 @@ CostmapResult CostmapGenerator::generate(
         result.data, result.rows, result.cols,
         result.resolution, result.origin_x, result.origin_y,
         src, cm.bbox_cost_max, cm.sigma, cm.cost_threshold,
-        cm.bbox_radius);
+        cm.unchained_bbox_radius);
     } else {
       apply_source(
         result.data, result.rows, result.cols,

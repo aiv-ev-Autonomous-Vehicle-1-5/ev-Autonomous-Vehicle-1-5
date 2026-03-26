@@ -27,7 +27,12 @@
    - 상한: max_size_x = 0.4, max_size_y = 0.4, max_size_z = 0.60
        │
        ▼
-6. BBoxArray + MarkerArray 발행
+6. 밑변/높이 비율 필터링
+   - base = max(size_x, size_y), ratio = base / size_z
+   - ratio > max_base_height_ratio(0.9) → 제거 (넓적한 비-라바콘)
+       │
+       ▼
+7. BBoxArray + MarkerArray 발행
 ```
 
 ## 파라미터
@@ -38,6 +43,9 @@
 | `max_size_y` | 0.4 | BBox Y 최대 크기 (m) |
 | `max_size_z` | 0.60 | BBox Z 최대 크기 (m) |
 | `min_size_z` | 0.12 | BBox Z 최소 크기 (m) — 납작한 바닥 노이즈 제거 |
+| `max_center_z` | 0.5 | 클러스터 중심 z 상한 (velodyne 프레임 기준) |
+| `min_center_z` | -1.2 | 클러스터 중심 z 하한 (velodyne 프레임 기준) |
+| `max_base_height_ratio` | 0.9 | 밑변/높이 비율 상한 — 넓적한 비-라바콘 제거 |
 | `enable_cluster_split` | true | K-means 클러스터 분할 활성화 |
 | `split_cone_diameter_m` | 0.5 | 분할 기준 콘 직경 (m) |
 | `split_kmeans_max_iter` | 15 | K-means 최대 반복 횟수 |

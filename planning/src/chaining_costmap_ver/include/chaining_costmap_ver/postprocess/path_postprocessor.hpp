@@ -54,6 +54,7 @@
 #define CHAINING_COSTMAP_VER__POSTPROCESS__PATH_POSTPROCESSOR_HPP_
 
 #include "chaining_costmap_ver/common/types.hpp"
+#include "chaining_costmap_ver/common/types/costmap_types.hpp"
 
 #include <vector>
 
@@ -100,7 +101,9 @@ public:
     int smooth_window,
     double resample_ds,
     double kappa_max = 0.0,
-    int curvature_clamp_max_iter = 30);
+    int curvature_clamp_max_iter = 30,
+    const CostmapResult * costmap = nullptr,
+    double obstacle_cost = 100.0);
 
 private:
   /**
@@ -126,7 +129,9 @@ private:
    * @return 단순화된 경로 점 배열 (점 수 ≤ 입력 점 수)
    */
   static std::vector<Point2D> prune(
-    const std::vector<Point2D> & pts, double max_dev);
+    const std::vector<Point2D> & pts, double max_dev,
+    const CostmapResult * costmap = nullptr,
+    double obstacle_cost = 100.0);
 
   /**
    * @brief ② Smooth 단계 — 이동 평균(Moving Average) 필터로 경로 평활화
@@ -135,34 +140,38 @@ private:
    *   각 중간점 i에 대해, 윈도우 범위 [i - half, i + half] 내의
    *   점들의 x, y 좌표를 산술 평균하여 새 좌표로 대체한다.
    *
-   *   이동 평균 필터는 고주파 노이즈(지그재그)를 제거하면서도
-   *   저주파 형태(커브의 대략적 형태)는 보존하는 효과가 있다.
-   *
-   * [시작점/끝점 보존 이유]
-   *   - 시작점: 차량의 현재 위치에 해당 → 이동시키면 안 됨
-   *   - 끝점:   목표 지점에 해당 → 이동시키면 경로가 목표에 도달하지 못함
-   *   - 따라서 index 0과 index (n-1)은 평균 처리에서 제외
+   *   costmap이 주어지면, 이동평균 결과가 obstacle_cost 이상인 셀에
+   *   위치할 경우 원래 좌표를 유지하여 장애물 침범을 방지한다.
    *
    * @param pts    입력 경로 점 배열
    * @param window 이동 평균 윈도우 크기 (예: 5이면 앞뒤 2개씩 총 5개 평균)
+   * @param costmap 코스트맵 (nullptr이면 기존 동작)
+   * @param obstacle_cost 통과 불가 비용 임계값
    * @return 평활화된 경로 점 배열 (점 수 동일, 시작/끝점 좌표 보존)
    */
   static std::vector<Point2D> smooth(
-    const std::vector<Point2D> & pts, int window);
+    const std::vector<Point2D> & pts, int window,
+    const CostmapResult * costmap = nullptr,
+    double obstacle_cost = 100.0);
 
   /**
    * @brief ②½ Curvature Clamp — 최대 곡률 제한
    *
    * 각 triplet(i-1, i, i+1)의 Menger 곡률이 kappa_max를 초과하면
    * 중간점 i를 곡률 원의 중심 방향으로 밀어서 곡률을 낮춘다.
-   * 차량의 최소 회전 반경을 보장하기 위한 후처리.
+   * costmap이 주어지면, 이동 결과가 obstacle 셀에 위치할 경우
+   * 이동을 거부하여 장애물 침범을 방지한다.
    *
    * @param pts       입력 경로
    * @param kappa_max [1/m] 최대 허용 곡률
+   * @param costmap   코스트맵 (nullptr이면 기존 동작)
+   * @param obstacle_cost 통과 불가 비용 임계값
    * @return 곡률이 제한된 경로
    */
   static std::vector<Point2D> curvature_clamp(
-    const std::vector<Point2D> & pts, double kappa_max, int max_iter = 30);
+    const std::vector<Point2D> & pts, double kappa_max, int max_iter = 30,
+    const CostmapResult * costmap = nullptr,
+    double obstacle_cost = 100.0);
 };
 
 }  // namespace chaining_costmap_ver

@@ -71,7 +71,8 @@ struct PurePursuitParams
   // 경로 실패 시 전방에 장애물이 없으면 저속 직진
   struct Creep {
     double speed{0.2};                  // [m/s] CREEP 시 직진 속도
-    double roi_x{2.0};                  // [m] 전방 판정 거리
+    double roi_x_offset{0.9};           // [m] ROI 시작 x 오프셋 (앞범퍼 위치, base_link 기준)
+    double roi_x{2.0};                  // [m] 전방 판정 거리 (roi_x_offset부터)
     double roi_y{0.8};                  // [m] 좌우 판정 폭 (±)
   } creep;
 
@@ -163,9 +164,11 @@ struct PurePursuitParams
 
     // CREEP
     node->declare_parameter<double>("creep_speed", creep.speed);
+    node->declare_parameter<double>("creep_roi_x_offset", creep.roi_x_offset);
     node->declare_parameter<double>("creep_roi_x", creep.roi_x);
     node->declare_parameter<double>("creep_roi_y", creep.roi_y);
     creep.speed = node->get_parameter("creep_speed").as_double();
+    creep.roi_x_offset = node->get_parameter("creep_roi_x_offset").as_double();
     creep.roi_x = node->get_parameter("creep_roi_x").as_double();
     creep.roi_y = node->get_parameter("creep_roi_y").as_double();
   }

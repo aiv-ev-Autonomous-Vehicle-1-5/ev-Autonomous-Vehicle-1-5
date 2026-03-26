@@ -16,18 +16,38 @@ make_bbox:
 
     # 대회 라바콘 규격 :
     #   - 가로(X): 약 0.500 m
-    #   - 세로(Y): 약 0.500 mz
+    #   - 세로(Y): 약 0.500 m
     #   - 높이(Z): 약 0.840 m
-    max_size_x: 0.4
-    max_size_y: 0.4
+    max_size_x: 0.3
+    max_size_y: 0.3
     max_size_z: 0.60
 
-    # 클러스터 중심 z 상한 필터
-    # 클러스터 중심(center)의 z좌표가 이 값을 초과하면 bbox를 생성하지 않음
+    # 클러스터 중심 z 필터 (velodyne 프레임 기준, tf변환 전)
+    # 클러스터 중심(center)의 z좌표가 범위 밖이면 bbox를 생성하지 않음
     max_center_z: 0.5
+    min_center_z: -0.4
 
     # bbox 크기 하한 필터 (납작한 바닥 노이즈 클러스터 제거)
     # 클러스터에 속한 포인트들의 z_max - z_min (= 높이 extent)이 0.12m 이하면 납작한 바닥 노이즈로 판단하고 bbox를 생성하지 않습니다.
     # rosbag 분석 결과: z < 0.10m 구간에 8.9% 노이즈 집중, 0.10~0.15m 갭 존재
     min_size_z: 0.12
+
+    # ── 밑변/높이 비율 필터 (라바콘 형상 필터) ──
+    # base = max(size_x, size_y), ratio = base / size_z
+    # 라바콘은 높이 > 밑변이므로 ratio < 1.0, 넓적한 비-라바콘은 ratio >= 1.0
+    #
+    # [rosbag 통계] 2026-03-26 15개 rosbag, 30,356 bbox 분석 결과
+    #   밑변/높이 비율 (base/height):
+    #     mean=0.50  p25=0.39  p50=0.44  p75=0.54  p90=0.71  p95=0.87
+    #
+    #   거리별 분포:
+    #     0-5m  : n=23347  ratio_mean=0.46  base=0.17m  height=0.37m
+    #     5-10m : n= 6873  ratio_mean=0.63  base=0.17m  height=0.28m
+    #     10-15m: n=  136  ratio_mean=0.84  base=0.33m  height=0.39m
+    #
+    #   라바콘(ratio<1.0): 97.0% (29437개)  base=0.16m  height=0.36m
+    #   비-라바콘(ratio>=1.0): 3.0% (919개)  base=0.33m  height=0.26m
+    #
+    # 0.9 = p95 기준, 라바콘 95%+ 유지하면서 넓적한 비-라바콘 제거
+    max_base_height_ratio: 0.75
 

@@ -134,7 +134,7 @@ std::vector<int> DirectionChainer::chain_one_direction(
     bool had_candidates = false;
     const int n = static_cast<int>(points.size());
     const double d_max_sq = cp.d_max * cp.d_max;
-    
+
     // G1 : 거리 게이트
     // ── Phase 1: BBOX 최우선 — d_max 범위 내 모든 bbox를 knn 없이 직접 탐색
     //    knn k개 제한 때문에 lane point에 밀려 bbox가 후보에서 빠지는 것을 방지

@@ -1,15 +1,15 @@
 # ============================================================================
-# CMakeLists.txt — lane_chaining 패키지 빌드 설정
+# CMakeLists.txt — yolo_lane_cluster 패키지 빌드 설정
 #
 # 빌드 결과물:
-#   lane_chaining_component (ComposableNode) — 차선 전처리 노드
+#   yolo_lane_cluster_component (ComposableNode) — 차선 전처리 노드
 #     시드 기반 좌/우 판별 + 가상 차선 생성
 #
 # 빌드 명령:
-#   cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-select lane_chaining
+#   cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-select yolo_lane_cluster
 # ============================================================================
 cmake_minimum_required(VERSION 3.14)
-project(lane_chaining)
+project(yolo_lane_cluster)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -30,25 +30,25 @@ find_package(visualization_msgs REQUIRED)
 include_directories(include)
 
 # ============================================================================
-# Component: lane_chaining_component — 차선 전처리 노드 (ComposableNode)
+# Component: yolo_lane_cluster_component — 차선 전처리 노드 (ComposableNode)
 # ============================================================================
-add_library(lane_chaining_component SHARED
-  src/lane_chaining_node.cpp
+add_library(yolo_lane_cluster_component SHARED
+  src/yolo_lane_cluster_node.cpp
   src/seed_tracker.cpp
   src/virtual_lane_gen.cpp
   src/debug_publisher.cpp
 )
-ament_target_dependencies(lane_chaining_component
+ament_target_dependencies(yolo_lane_cluster_component
   rclcpp rclcpp_components
   geometry_msgs std_msgs ev_msgs visualization_msgs
 )
 
-rclcpp_components_register_node(lane_chaining_component
-  PLUGIN "lane_chaining::LaneChainingNode"
-  EXECUTABLE lane_chaining_node_exe
+rclcpp_components_register_node(yolo_lane_cluster_component
+  PLUGIN "yolo_lane_cluster::YoloLaneClusterNode"
+  EXECUTABLE yolo_lane_cluster_node_exe
 )
 
-install(TARGETS lane_chaining_component
+install(TARGETS yolo_lane_cluster_component
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin

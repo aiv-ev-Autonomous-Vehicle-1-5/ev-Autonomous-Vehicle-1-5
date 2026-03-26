@@ -5,6 +5,10 @@
  * 이동 평균(Moving Average) 필터로 경로의 잔여 꺾임을 완화.
  * 시작점/끝점은 보존하고, 중간점만 윈도우 내 이웃의 산술 평균으로 대체.
  *
+ * [costmap-aware 확장]
+ *   costmap이 주어지면, 이동평균 결과가 obstacle_cost 이상인 셀에
+ *   위치할 경우 원래 좌표를 유지하여 장애물 침범을 방지한다.
+ *
  * [의존 관계]
  *   - path_postprocessor.hpp: PathPostprocessor 클래스 선언
  */
@@ -17,15 +21,17 @@ namespace chaining_costmap_ver
 {
 
 // ============================================================================
-// ③ Smooth 단계 — 이동 평균(Moving Average) 필터
+// ③ Smooth 단계 — 이동 평균(Moving Average) 필터 (costmap-aware)
 // ============================================================================
 //
 // 각 중간점 i에 대해, 윈도우 [i - half, i + half] 범위의
 // 이웃 점들의 좌표를 산술 평균하여 새 좌표로 대체한다.
-// 경계 근처에서는 윈도우가 잘리므로 실제 평균 대상 수가 줄어든다.
+// costmap이 주어지면, 새 좌표가 obstacle 셀이면 원래 좌표를 유지.
 //
 std::vector<Point2D> PathPostprocessor::smooth(
-  const std::vector<Point2D> & pts, int window)
+  const std::vector<Point2D> & pts, int window,
+  const CostmapResult * costmap,
+  double obstacle_cost)
 {
   if (pts.size() <= 2 || window <= 1) return pts;
 
@@ -49,7 +55,17 @@ std::vector<Point2D> PathPostprocessor::smooth(
       ++count;
     }
 
-    result[i] = {sx / count, sy / count};
+    const double new_x = sx / count;
+    const double new_y = sy / count;
+
+    // costmap-aware: 이동평균 결과가 obstacle 셀이면 원래 좌표 유지
+    if (costmap && costmap->valid &&
+        costmap->cost_at(new_x, new_y) >= obstacle_cost)
+    {
+      result[i] = pts[i];
+    } else {
+      result[i] = {new_x, new_y};
+    }
   }
 
   return result;

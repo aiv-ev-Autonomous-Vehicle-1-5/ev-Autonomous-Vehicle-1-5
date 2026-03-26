@@ -16,5 +16,5 @@
 | 토픽 이름 | 메시지 타입 | 발행 노드 | 구독 노드 |
 |---|---|---|---|
 | `/perception/bboxes` | `BBoxArray` | make_bbox | chaining_costmap_ver, pure_pursuit |
-| `/perception/raw_lane_boundaries` | `LaneBoundaryArray` | yolo_instance_seg_node | lane_chaining |
-| `/perception/lane_boundaries` | `LaneBoundaryArray` | lane_chaining | chaining_costmap_ver |
+| `/perception/raw_lane_boundaries` | `LaneBoundaryArray` | yolo_instance_seg_node | yolo_lane_cluster |
+| `/perception/lane_boundaries` | `LaneBoundaryArray` | yolo_lane_cluster | chaining_costmap_ver |

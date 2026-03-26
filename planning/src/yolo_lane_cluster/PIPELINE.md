@@ -1,11 +1,11 @@
-# lane_chaining — 차선 전처리 파이프라인
+# yolo_lane_cluster — 차선 전처리 파이프라인
 
 ## 패키지 개요
 
-- **Package**: lane_chaining
+- **Package**: yolo_lane_cluster
 - **Description**: 카메라 차선 전처리 — 시드 기반 좌/우 판별 + 가상 차선 생성
 - ROS 2 Humble, C++17, Component architecture
-- **Node**: LaneChainingNode (ComposableNode, 이벤트 기반)
+- **Node**: YoloLaneClusterNode (ComposableNode, 이벤트 기반)
 
 ---
 
@@ -15,9 +15,9 @@
 yolo_instance_seg_node
     │  /perception/raw_lane_boundaries (LaneBoundaryArray, Best Effort)
     ▼
-lane_chaining_node
+yolo_lane_cluster_node
     │  /perception/lane_boundaries (LaneBoundaryArray, Best Effort)
-    │  /lane_chaining/debug/lane_points (MarkerArray, lazy)
+    │  /yolo_lane_cluster/debug/lane_points (MarkerArray, lazy)
     ▼
 chaining_costmap_ver (기존 로직 변경 없음)
 ```
@@ -51,18 +51,18 @@ chaining_costmap_ver (기존 로직 변경 없음)
 ## 디렉토리 구조
 
 ```
-lane_chaining/
-├── include/lane_chaining/
-│   └── lane_chaining_node.hpp    # 노드 선언 + 타입 + 파라미터
+yolo_lane_cluster/
+├── include/yolo_lane_cluster/
+│   └── yolo_lane_cluster_node.hpp    # 노드 선언 + 타입 + 파라미터
 ├── src/
-│   ├── lane_chaining_node.cpp    # 노드 생성자 + 콜백 오케스트레이션
-│   ├── seed_tracker.cpp          # 시드 매칭/업데이트 로직
-│   ├── virtual_lane_gen.cpp      # 가상 차선 생성 (1.5m 오프셋)
-│   └── debug_publisher.cpp       # 디버그 마커 발행 (lazy)
+│   ├── yolo_lane_cluster_node.cpp    # 노드 생성자 + 콜백 오케스트레이션
+│   ├── seed_tracker.cpp              # 시드 매칭/업데이트 로직
+│   ├── virtual_lane_gen.cpp          # 가상 차선 생성 (1.5m 오프셋)
+│   └── debug_publisher.cpp           # 디버그 마커 발행 (lazy)
 ├── config/
-│   └── lane_chaining.yaml        # 파라미터
+│   └── yolo_lane_cluster.yaml        # 파라미터
 ├── launch/
-│   └── lane_chaining.launch.py   # 런치 파일
+│   └── yolo_lane_cluster.launch.py   # 런치 파일
 ├── CMakeLists.txt
 └── package.xml
 ```
@@ -71,7 +71,7 @@ lane_chaining/
 
 ## 주요 파라미터
 
-설정 파일: `config/lane_chaining.yaml`
+설정 파일: `config/yolo_lane_cluster.yaml`
 
 ### seed
 
@@ -94,5 +94,5 @@ lane_chaining/
 ## 빌드 명령
 
 ```bash
-cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-select lane_chaining
+cd ~/ev-Autonomous-Vehicle-1-5 && colcon build --symlink-install --packages-select yolo_lane_cluster
 ```

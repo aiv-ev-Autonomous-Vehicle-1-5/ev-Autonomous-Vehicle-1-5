@@ -72,6 +72,11 @@ struct PlanningParams
     // 이 반경 밖에서부터 가우시안 감쇠 시작.
     double bbox_radius = 0.65;
 
+    // [m] unchained bbox 전용 flat zone 반경.
+    // backbone에 체이닝되지 않은 bbox(미확인 장애물)에 적용.
+    // chained bbox(bbox_radius)와 독립적으로 조절 가능.
+    double unchained_bbox_radius = 0.65;
+
     // [m] lane의 flat zone(최대 비용 유지) 반경.
     // 0.0m = 기본값은 flat zone 없음 (가우시안 감쇠만 적용).
     // 이 반경 이내에서는 비용이 lane_cost_max로 일정.
@@ -427,6 +432,7 @@ struct PlanningParams
     costmap.bbox_cost_max  = p("costmap.bbox_cost_max",  costmap.bbox_cost_max);
     costmap.lane_cost_max  = p("costmap.lane_cost_max",  costmap.lane_cost_max);
     costmap.bbox_radius    = p("costmap.bbox_radius",    costmap.bbox_radius);
+    costmap.unchained_bbox_radius = p("costmap.unchained_bbox_radius", costmap.unchained_bbox_radius);
     costmap.lane_radius    = p("costmap.lane_radius",    costmap.lane_radius);
     costmap.sigma          = p("costmap.sigma",          costmap.sigma);
     costmap.cost_threshold = p("costmap.cost_threshold", costmap.cost_threshold);

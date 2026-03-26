@@ -24,7 +24,7 @@ class YoloInstanceSegNode(Node):
 
         self.img_publisher = self.create_publisher(Image, '/yolo_instance_seg_image', 10)
 
-        # lane_chaining 노드로 전달 — Best Effort QoS (depth=1)
+        # yolo_lane_cluster 노드로 전달 — Best Effort QoS (depth=1)
         qos_be = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
         self.coord_publisher = self.create_publisher(
             LaneBoundaryArray, '/perception/raw_lane_boundaries', qos_be)

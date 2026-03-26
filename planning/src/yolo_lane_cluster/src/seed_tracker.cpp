@@ -9,15 +9,15 @@
  *   - 매칭 성공 시: 시드 중심 x = 매칭된 클러스터의 x_min (y는 초기값 유지)
  *   - 매칭 실패 시: 시드 중심 유지 (마지막 위치 보존)
  */
-#include "lane_chaining/lane_chaining_node.hpp"
+#include "yolo_lane_cluster/yolo_lane_cluster_node.hpp"
 
 #include <cmath>
 #include <limits>
 
-namespace lane_chaining
+namespace yolo_lane_cluster
 {
 
-int LaneChainingNode::match_cluster_to_seed(
+int YoloLaneClusterNode::match_cluster_to_seed(
   const SeedState & seed,
   const ev_msgs::msg::LaneBoundaryArray & msg,
   int exclude_idx) const
@@ -53,7 +53,7 @@ int LaneChainingNode::match_cluster_to_seed(
   return best_idx;
 }
 
-void LaneChainingNode::update_seed(
+void YoloLaneClusterNode::update_seed(
   SeedState & seed,
   const ev_msgs::msg::LaneBoundary & boundary)
 {
@@ -72,7 +72,7 @@ void LaneChainingNode::update_seed(
   seed.has_match = true;
 }
 
-void LaneChainingNode::reset_seed(SeedState & seed, LaneSide side)
+void YoloLaneClusterNode::reset_seed(SeedState & seed, LaneSide side)
 {
   seed.center_x = params_.seed_init_x;
   seed.center_y = (side == LaneSide::LEFT)
@@ -81,4 +81,4 @@ void LaneChainingNode::reset_seed(SeedState & seed, LaneSide side)
   seed.has_match = false;
 }
 
-}  // namespace lane_chaining
+}  // namespace yolo_lane_cluster

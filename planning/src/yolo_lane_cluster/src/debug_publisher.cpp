@@ -9,9 +9,9 @@
  *   - 오른쪽 시드 위치 (빨간색 구)
  *   - 시드 탐색 직사각형 (LINE_STRIP)
  */
-#include "lane_chaining/lane_chaining_node.hpp"
+#include "yolo_lane_cluster/yolo_lane_cluster_node.hpp"
 
-namespace lane_chaining
+namespace yolo_lane_cluster
 {
 
 namespace
@@ -113,7 +113,7 @@ visualization_msgs::msg::Marker make_points_marker(
 
 }  // anonymous namespace
 
-void LaneChainingNode::publish_debug_markers(
+void YoloLaneClusterNode::publish_debug_markers(
   const ev_msgs::msg::LaneBoundaryArray & output,
   bool /*left_matched*/, bool /*right_matched*/,
   bool /*left_virtual*/, bool /*right_virtual*/)
@@ -154,4 +154,4 @@ void LaneChainingNode::publish_debug_markers(
   debug_pub_->publish(ma);
 }
 
-}  // namespace lane_chaining
+}  // namespace yolo_lane_cluster
