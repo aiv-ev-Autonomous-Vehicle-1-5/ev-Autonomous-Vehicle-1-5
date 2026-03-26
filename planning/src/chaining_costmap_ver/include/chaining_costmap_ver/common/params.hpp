@@ -299,11 +299,13 @@ struct PlanningParams
     // 작은 값 = 빠르지만 최적 연결을 놓칠 수 있음.
     int k = 8;                          ///< centroid kNN 후보 수
 
-    // [m] kNN 후보의 최대 허용 거리.
-    // 이 거리보다 먼 포인트는 후보에서 제거.
-    // 1.5m = bbox 간격이 보통 1~2m이므로 적절한 값.
-    // 줄이면 가까운 것만 연결 (조밀한 bbox), 키우면 듬성듬성한 bbox도 연결.
-    double d_max = 1.5;                 ///< [m] neighbor 최대 거리
+    // [m] 현재 노드가 BBOX일 때 다음 노드 탐색 최대 거리.
+    // bbox 간격이 보통 1~2m이므로 2.5m이면 듬성듬성한 bbox도 연결 가능.
+    double d_max_bbox = 2.5;            ///< [m] BBOX 노드에서의 탐색 최대 거리
+
+    // [m] 현재 노드가 LANE일 때 다음 노드 탐색 최대 거리.
+    // lane point는 조밀하므로 짧은 범위로 제한.
+    double d_max_lane = 0.5;            ///< [m] LANE 노드에서의 탐색 최대 거리
 
     // [deg] 전방 탐색 원뿔의 전체 각도.
     // 120° = 좌우 ±60° 범위만 "전방"으로 인정.
@@ -476,7 +478,8 @@ struct PlanningParams
     chainer.seed_max_dist    = p("chainer.seed_max_dist",    chainer.seed_max_dist);
     chainer.seed_rear_limit       = p("chainer.seed_rear_limit",       chainer.seed_rear_limit);
     chainer.k                     = p("chainer.k",                     chainer.k);
-    chainer.d_max             = p("chainer.d_max",             chainer.d_max);
+    chainer.d_max_bbox        = p("chainer.d_max_bbox",        chainer.d_max_bbox);
+    chainer.d_max_lane        = p("chainer.d_max_lane",        chainer.d_max_lane);
     chainer.forward_cone_deg  = p("chainer.forward_cone_deg",  chainer.forward_cone_deg);
     chainer.lateral_gate      = p("chainer.lateral_gate",      chainer.lateral_gate);
     chainer.alpha             = p("chainer.alpha",             chainer.alpha);
@@ -495,10 +498,10 @@ struct PlanningParams
     // 디버깅 시 "yaml 값이 제대로 반영됐는지" 확인하는 데 유용.
     RCLCPP_INFO(
       node->get_logger(),
-      "LC PlanningParams loaded: Costmap(%.0fx%.0f res=%.2f) AStar(iter=%d tol=%.1f) d_max=%.1f lat_gate=%.2f",
+      "LC PlanningParams loaded: Costmap(%.0fx%.0f res=%.2f) AStar(iter=%d tol=%.1f) d_max_bbox=%.1f d_max_lane=%.1f lat_gate=%.2f",
       costmap.size_x, costmap.size_y, costmap.resolution,
       astar.max_iterations, astar.goal_tolerance,
-      chainer.d_max, chainer.lateral_gate);
+      chainer.d_max_bbox, chainer.d_max_lane, chainer.lateral_gate);
   }
 };
 

@@ -65,7 +65,9 @@
  *   ┌────────┬──────────────────────────────────────────────┐
  *   │ 비용   │ 물리적 의미                                   │
  *   ├────────┼──────────────────────────────────────────────┤
- *   │ C_d    │ 거리 비용: d(i,j)/d_max                      │
+ *   │ C_d    │ 거리 비용: d(i,j)/d_max_cur                   │
+ *   │        │ (d_max_cur = 현재 노드가 BBOX면 d_max_bbox,  │
+ *   │        │  LANE이면 d_max_lane)                         │
  *   │        │ → 가까운 점을 선호 (짧은 연결 유도)            │
  *   ├────────┼──────────────────────────────────────────────┤
  *   │ C_a    │ 방향 오차: angle(v_i, u_ij)/θ_max            │
@@ -89,7 +91,7 @@
  * ──────────────────────────────────────────────────────────────
  * [게이트(Gate) 상세]
  *
- *   G1 (거리 게이트):  d(i,j) ≤ d_max
+ *   G1 (거리 게이트):  d(i,j) ≤ d_max_bbox or d_max_lane (현재 노드 타입 기준)
  *     → 너무 먼 점은 같은 경계가 아님 (연결 차단)
  *
  *   G2 (전방 cone 게이트): angle(v_i, u_ij) ≤ forward_cone_deg/2
@@ -206,7 +208,7 @@ private:
    *     [S] → ● → ● → ● → ●
    *
    * [게이트 적용]
-   *   - G1: d(cur, j) ≤ d_max (거리)
+   *   - G1: d(cur, j) ≤ d_max_bbox or d_max_lane (현재 노드 타입 기준)
    *   - G2: angle(v, u_ij) ≤ cone_half (전방 cone)
    *   - G3: |lateral_proj| ≤ lateral_gate (횡오차)
    *   - G4: candidate.y ∈ seed_y ± max_lateral_deviation (시드 기준 횡편차 가드)
@@ -325,7 +327,7 @@ private:
    * w = α·C_d + β·C_a + γ·C_lat + δ·C_size
    *
    * [각 비용 항의 물리적 의미]
-   *   C_d   : 거리 비용 — 가까운 점 선호 (d/d_max, 0~1 정규화)
+   *   C_d   : 거리 비용 — 가까운 점 선호 (d/d_max_cur, 0~1 정규화, 현재 노드 타입 기준)
    *   C_a   : 방향 오차 비용 — 현재 진행 방향과 일치하는 점 선호
    *           (angle/θ_max, 0~1+ 정규화)
    *   C_lat : 횡오차 비용 — 진행 방향 수직 성분이 작은 점 선호
@@ -432,7 +434,7 @@ private:
    *   v1 = B - A, v2 = C - B
    *   곡률 변화 = acos(dot(v1,v2) / (|v1|·|v2|))
    *   거리 = |v2| (B→C 거리)
-   *   cost = w_curv * 곡률변화 + w_dist * 거리/d_max
+   *   cost = w_curv * 곡률변화 + w_dist * 거리/d_max_cur (B 노드 타입 기준)
    *
    * @param points       경계점 배열
    * @param backbone     backbone 인덱스 배열

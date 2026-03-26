@@ -16,7 +16,9 @@
        │
        ▼
 3. K-means 기반 클러스터 분할
-   (enable_cluster_split, split_cone_diameter_m = 0.5)
+   (enable_cluster_split, split_cone_diameter_m = 0.3)
+   ROI: 앞 범퍼(0.8,0)부터 전방 6m, 폭 4m
+   클러스터 중심이 ROI 안에 있을 때만 분할 적용
        │
        ▼
 4. 바운딩 박스 생성 (center, size_x/y/z)
@@ -50,6 +52,10 @@
 | `split_cone_diameter_m` | 0.5 | 분할 기준 콘 직경 (m) |
 | `split_kmeans_max_iter` | 15 | K-means 최대 반복 횟수 |
 | `split_min_points` | 0 | 분할 최소 포인트 수 |
+| `split_roi_x_min` | 0.8 | 분할 ROI x 하한 — 앞 범퍼 위치 (m) |
+| `split_roi_x_max` | 6.8 | 분할 ROI x 상한 — 앞 범퍼 + 6m (m) |
+| `split_roi_y_min` | -2.0 | 분할 ROI y 하한 (m) |
+| `split_roi_y_max` | 2.0 | 분할 ROI y 상한 (m) |
 
 ## 소스 파일
 

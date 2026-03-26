@@ -2,7 +2,7 @@ dbscan_clustering:
   ros__parameters:
     input_topic: "/patchworkpp/nonground"
     output_topic: "/pointcloud/clustered"
-    eps: 0.10
+    eps: 0.15
     min_points: 10
     max_neighbors: 1024
     max_points: 80000
@@ -25,6 +25,8 @@ dbscan_clustering:
     
     # z축 거리 적응형 가중치 (cluster_xy_only: false 일 때만 동작)
     # z_scaled = z * z_weight / (1 + range_xy * z_distance_scale)
+    # 현재 라바콘이 제대로 하나의 클러스터로 묶이고 있다면 유지해도 됨
+    # 만약 먼 라바콘이 위/아래로 쪼개지는 현상이 보인다면 z_weight를 0.2로 낮추면 꼭대기 z_scaled가 eps 근처(~0.13)로 내려와 개선됨
     z_weight: 0.3
     z_distance_scale: 0.05
 

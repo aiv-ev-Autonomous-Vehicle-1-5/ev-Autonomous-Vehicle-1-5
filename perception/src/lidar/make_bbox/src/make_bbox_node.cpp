@@ -63,6 +63,12 @@ MakeBBoxNode::MakeBBoxNode(const rclcpp::NodeOptions & options)
   split_kmeans_max_iter_ = declare_parameter<int>("split_kmeans_max_iter", 15);
   split_min_points_      = declare_parameter<int>("split_min_points", 5);
 
+  // 분할 ROI (base_link 기준)
+  split_roi_x_min_ = static_cast<float>(declare_parameter<double>("split_roi_x_min", 0.8));
+  split_roi_x_max_ = static_cast<float>(declare_parameter<double>("split_roi_x_max", 6.8));
+  split_roi_y_min_ = static_cast<float>(declare_parameter<double>("split_roi_y_min", -2.0));
+  split_roi_y_max_ = static_cast<float>(declare_parameter<double>("split_roi_y_max", 2.0));
+
   auto qos = rclcpp::SensorDataQoS();
 
   sub_ = create_subscription<sensor_msgs::msg::PointCloud2>(
@@ -134,6 +140,15 @@ void MakeBBoxNode::callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg)
     const float range_x = max_x - min_x;
     const float range_y = max_y - min_y;
     const float longest = std::max(range_x, range_y);
+
+    // ROI 체크: 클러스터 중심이 분할 ROI 밖이면 분할 스킵
+    const float cent_x = (min_x + max_x) * 0.5F;
+    const float cent_y = (min_y + max_y) * 0.5F;
+    if (cent_x < split_roi_x_min_ || cent_x > split_roi_x_max_ ||
+        cent_y < split_roi_y_min_ || cent_y > split_roi_y_max_) {
+      final_clusters.push_back({std::move(pts), next_label++});
+      continue;
+    }
 
     // 분할이 필요한지 판단: 최장축이 콘 지름보다 커야 함
     const int k = static_cast<int>(std::round(longest / split_cone_diameter_));

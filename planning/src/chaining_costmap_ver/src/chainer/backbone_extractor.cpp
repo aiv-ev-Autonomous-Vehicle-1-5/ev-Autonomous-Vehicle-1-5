@@ -47,8 +47,9 @@ double DirectionChainer::compute_cost(
   const double dy = pj.y - pi.y;
   const double d = std::sqrt(dx * dx + dy * dy);
 
-  // C_d: 거리 비용
-  const double C_d = d / cp.d_max;
+  // C_d: 거리 비용 — 현재 노드(pi) 타입 기준 d_max로 정규화
+  const double d_max_cur = (pi.type == PointType::BBOX) ? cp.d_max_bbox : cp.d_max_lane;
+  const double C_d = d / d_max_cur;
 
   // C_a: 방향 오차 비용
   double C_a = 0.0;
@@ -133,7 +134,10 @@ std::vector<int> DirectionChainer::chain_one_direction(
     std::vector<int> gated;
     bool had_candidates = false;
     const int n = static_cast<int>(points.size());
-    const double d_max_sq = cp.d_max * cp.d_max;
+    // 현재 노드 타입에 따라 탐색 범위 결정
+    const double d_max_cur = (points[current].type == PointType::BBOX)
+                              ? cp.d_max_bbox : cp.d_max_lane;
+    const double d_max_sq = d_max_cur * d_max_cur;
 
     // G1 : 거리 게이트
     // ── Phase 1: BBOX 최우선 — d_max 범위 내 모든 bbox를 knn 없이 직접 탐색
@@ -182,8 +186,8 @@ std::vector<int> DirectionChainer::chain_one_direction(
         const double dy = points[j].y - points[current].y;
         const double d = std::sqrt(dx * dx + dy * dy);
 
-        // G1: 거리 게이트
-        if (d > cp.d_max || d < 1e-9) continue;
+        // G1: 거리 게이트 — 현재 노드 타입 기준 d_max 사용
+        if (d > d_max_cur || d < 1e-9) continue;
 
         // G2: 전방 cone 게이트
         Point2D u_ij = {dx / d, dy / d};
@@ -325,8 +329,10 @@ double DirectionChainer::compute_backtrack_cost(
   const double dy_bc = points[idx_c].y - points[idx_b].y;
   const double dist_bc = std::sqrt(dx_bc * dx_bc + dy_bc * dy_bc);
 
-  // 거리 비용 (d_max로 정규화)
-  const double cost_dist = dist_bc / cp.d_max;
+  // 거리 비용 — B 노드(직전 노드) 타입 기준 d_max로 정규화
+  const double d_max_b = (points[idx_b].type == PointType::BBOX)
+                          ? cp.d_max_bbox : cp.d_max_lane;
+  const double cost_dist = dist_bc / d_max_b;
 
   // 곡률 비용: 3-node 윈도우가 있을 때만
   double cost_curv = 0.0;

@@ -34,6 +34,12 @@ private:
   float split_cone_diameter_;
   int split_kmeans_max_iter_;
   int split_min_points_;
+
+  // 분할 ROI (클러스터 중심이 ROI 안에 있을 때만 분할)
+  float split_roi_x_min_;
+  float split_roi_x_max_;
+  float split_roi_y_min_;
+  float split_roi_y_max_;
 };
 
 }  // namespace make_bbox

@@ -31,7 +31,8 @@ lc_planner_node:
 
       # --- kNN + 게이트 ---
       k: 20                    # centroid kNN 후보 수
-      d_max: 2.5          # [m] neighbor 최대 거리 real : 1.5 m
+      d_max_bbox: 2.5     # [m] 현재 노드가 BBOX일 때 탐색 최대 거리
+      d_max_lane: 1.5     # [m] 현재 노드가 LANE일 때 탐색 최대 거리
       forward_cone_deg: 100.0 # [deg] 전방 cone 전체 각도 (±60°)
       lateral_gate: 1.4      # [m] 횡방향 오차 한계
 
@@ -83,7 +84,7 @@ lc_planner_node:
     # [Stage 3] A* — 격자 경로 탐색
     # ============================================================
     astar:
-      max_iterations: 1000
+      max_iterations: 5000
       goal_tolerance: 0.3       # [m]
       cost_weight: 20.0         # costmap 비용 가중치
       obstacle_cost: 100.0       # 통과 불가 비용 임계값

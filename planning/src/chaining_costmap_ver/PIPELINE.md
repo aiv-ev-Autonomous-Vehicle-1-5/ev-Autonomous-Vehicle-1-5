@@ -33,12 +33,12 @@ on_timer() — 10Hz (100ms)
 │                조건 만족 bbox 중 가장 가까운 것 반환
 │       Pass 2 — Pass 1 실패 시 bbox+lane에서 d ≤ seed_max_dist 이내 가장 가까운 점
 │     * backbone chaining 게이트:
-│       G1 (거리 게이트):       d(i,j) ≤ d_max
+│       G1 (거리 게이트):       d(i,j) ≤ d_max_bbox or d_max_lane (현재 노드 타입 기준)
 │       G2 (전방 cone 게이트):  angle(v, u_ij) ≤ forward_cone_deg/2
 │       G3 (횡오차 게이트):     |lateral_proj| ≤ lateral_gate
 │       G4 (시드 기준 횡편차 가드): candidate.y ∈ seed_y ± max_lateral_deviation
 │     * backbone chaining 시 2-phase BBOX 최우선 탐색:
-│       Phase 1 — d_max 범위 내 모든 bbox를 직접 전수 탐색
+│       Phase 1 — d_max_bbox/d_max_lane(현재 노드 타입) 범위 내 모든 bbox를 직접 전수 탐색
 │       Phase 2 — bbox 후보 없으면 knn fallback → bbox-first 선택
 │     * 독립 체이닝 (v4):
 │       좌/우 각각 독립 owner 배열로 체이닝 → 상대 chain의 영향 없음
@@ -268,7 +268,8 @@ LiDAR bbox 좌표 변환은 `tf2_ros::Buffer::lookupTransform("base_link", "velo
 | `seed_rear_limit` | -2.0 | m | seed 후보 후방 제한 (x ≥ 이 값인 점만 후보) |
 | `seed_max_dist` | 1.5 | m | seed 탐색 최대 거리 (Pass 1/2 공통) |
 | `k` | 10 | - | KNN 이웃 수 |
-| `d_max` | 2.0 | m | 최대 연결 거리 |
+| `d_max_bbox` | 2.5 | m | BBOX 노드에서의 탐색 최대 거리 |
+| `d_max_lane` | 0.5 | m | LANE 노드에서의 탐색 최대 거리 |
 | `forward_cone_deg` | 130 | deg | 전방 cone 각도 |
 | `lateral_gate` | 1.2 | m | 횡오차 게이트 |
 
