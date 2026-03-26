@@ -69,15 +69,15 @@ lc_planner_node:
       bbox_cost_max: 100.0      # bbox 최대 비용(==costmap max cost)
       lane_cost_max: 80.0       # 차선 최대 비용 (낮아서 넘을 수 있음)
       bbox_radius: 0.4         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
-      unchained_bbox_radius: 1.0  # unchained bbox 전용 flat zone 반경 [m] (backbone 미체이닝 장애물)
-      lane_radius: 0.5           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
+      unchained_bbox_radius: 0.75  # unchained bbox 전용 flat zone 반경 [m] (backbone 미체이닝 장애물)
+      lane_radius: 0.3           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
       sigma: 1.0                # [m] 가우시안 확산
       cost_threshold: 15.0       # 이 이하 비용 무시
       entry_wall_ego_y: 2.5     # [m] costmap 하단 양옆 가상 bbox 시작점 횡방향 오프셋
       origin_x: -4.0            # [m] costmap X 원점 (base_link 기준). -4 = 후방 4m 포함
       center_attract_max: 90.0  # 중앙선 최대 비용 감소량
       center_attract_sigma: 0.1 # [m] 중앙선 유인 가우시안 확산
-      track_half_width: 1.4     # [m] 트랙 반폭 — 한쪽 chain만으로 centerline 계산 시 수직 오프셋
+      track_half_width: 1.2     # [m] 트랙 반폭 — 한쪽 chain만으로 centerline 계산 시 수직 오프셋
       center_gap_threshold: 3.3  # [m] 양쪽 chain 간 거리가 이 값 초과 시 centerline midpoint 생성 안 함 (노이즈 제거)
 
     # ============================================================
