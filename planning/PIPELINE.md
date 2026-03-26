@@ -200,7 +200,7 @@ if (publisher->get_subscription_count() > 0) {
 
 | 토픽 그룹 | 게이팅 조건 |
 |-----------|------------|
-| costmap, raw_path, obstacle_wall, curvature | lazy publish만 (구독자 있으면 항상 발행) |
+| costmap, raw_path, obstacle_wall, curvature, lane_points | lazy publish만 (구독자 있으면 항상 발행) |
 | left/right_chain, seeds, local_goal | `publish_debug: true` 파라미터 **AND** lazy publish |
 
 #### `/planning/debug/costmap` — 2D Gaussian 코스트맵
@@ -286,6 +286,16 @@ nav_msgs/OccupancyGrid
   - `ratio = min((kappa/kappa_limit - 1) × 2, 1.0)`
   - `r=1.0, g=1.0-ratio, b=0.0`
 - 매 프레임 DELETEALL로 이전 마커 제거
+
+#### `/planning/debug/lane_points` — 카메라 수신 차선 포인트
+
+- **Type**: `visualization_msgs::msg::MarkerArray` (내부 POINTS 마커)
+- **생성 Stage**: Stage 7 (Publish)
+- **RViz2 Display**: MarkerArray
+- POINTS 마커, 스케일 8cm
+- all_pts에서 `type == LANE`인 포인트만 필터링하여 표시
+- 마젠타 색상 (r=1.0, g=0.0, b=1.0)
+- 카메라 차선 인식 결과가 올바르게 수신되고 파싱되었는지 확인용
 
 ---
 

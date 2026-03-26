@@ -2,7 +2,7 @@ dbscan_clustering:
   ros__parameters:
     input_topic: "/patchworkpp/nonground"
     output_topic: "/pointcloud/clustered"
-    eps: 0.15
+    eps: 0.3
     min_points: 10
     max_neighbors: 1024
     max_points: 80000
@@ -14,7 +14,7 @@ dbscan_clustering:
     roi_min_y: -8.0
     roi_max_y: 8.0
     roi_min_z: -3.0
-    roi_max_z: 1.0
+    roi_max_z: 2.0
 
     enable_azimuth_ground_suppression: true
     azimuth_ground_min_range: 2.0

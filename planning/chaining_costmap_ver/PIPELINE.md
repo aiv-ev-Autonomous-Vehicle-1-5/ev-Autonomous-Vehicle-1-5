@@ -89,7 +89,7 @@ on_timer() — 10Hz (100ms)
 └── Stage 7: Publish  [nodes/debug_publisher.hpp]
       Core: path (Marker), status (String)
       Debug: costmap, obstacle_wall, curvature, raw_path,
-             pruned_path, chains, seeds, local_goal, pipeline_timing
+             pruned_path, chains, seeds, local_goal, lane_points, pipeline_timing
 ```
 
 ---

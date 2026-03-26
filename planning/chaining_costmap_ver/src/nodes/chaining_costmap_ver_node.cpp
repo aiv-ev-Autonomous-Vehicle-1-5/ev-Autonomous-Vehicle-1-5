@@ -128,6 +128,8 @@ LCPlannerNode::LCPlannerNode(const rclcpp::NodeOptions & options)
     "/planning/debug/raw_right_chain", qos_dbg);
   pub_dbg_timing_ = create_publisher<std_msgs::msg::String>(
     "/planning/debug/pipeline_timing", qos_dbg);
+  pub_dbg_lane_points_ = create_publisher<visualization_msgs::msg::MarkerArray>(
+    "/planning/debug/lane_points", qos_dbg);
 
   // ── 타이밍 파일 로깅 초기화 ──
   // ~/ev-Autonomous-Vehicle-1-5/dbg_logs/timing_YYYYMMDD_HHMMSS.log
@@ -555,6 +557,36 @@ void LCPlannerNode::on_timer()
       pub_dbg_local_goal_->publish(
         std::make_unique<visualization_msgs::msg::MarkerArray>(goal_ma));
     }
+  }
+
+  // ── Debug: lane_points (카메라 차선 포인트 — 마젠타 POINTS) ──
+  if (pub_dbg_lane_points_->get_subscription_count() > 0) {
+    visualization_msgs::msg::Marker lm;
+    lm.header.stamp = stamp;
+    lm.header.frame_id = frame_id;
+    lm.ns = "lane_points";
+    lm.id = 0;
+    lm.type = visualization_msgs::msg::Marker::POINTS;
+    lm.action = visualization_msgs::msg::Marker::ADD;
+    lm.scale.x = 0.08;
+    lm.scale.y = 0.08;
+    lm.color.r = 1.0f;
+    lm.color.g = 0.0f;
+    lm.color.b = 1.0f;
+    lm.color.a = 1.0f;
+    for (const auto & p : all_pts) {
+      if (p.type == PointType::LANE) {
+        geometry_msgs::msg::Point gp;
+        gp.x = p.x;
+        gp.y = p.y;
+        gp.z = 0.0;
+        lm.points.push_back(gp);
+      }
+    }
+    visualization_msgs::msg::MarkerArray ma;
+    ma.markers.push_back(lm);
+    pub_dbg_lane_points_->publish(
+      std::make_unique<visualization_msgs::msg::MarkerArray>(ma));
   }
 
   // ── Debug: pipeline timing (토픽 발행 + 파일 로깅) ──

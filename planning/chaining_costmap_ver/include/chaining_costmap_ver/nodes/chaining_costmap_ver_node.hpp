@@ -30,6 +30,7 @@
  *     - /planning/debug/left_chain   : 왼쪽 backbone 체인 (Path)
  *     - /planning/debug/right_chain  : 오른쪽 backbone 체인 (Path)
  *     - /chaining/debug/seeds          : 체이닝 시드/골 마커 (MarkerArray)
+ *     - /planning/debug/lane_points  : 카메라 수신 차선 포인트 (마젠타 POINTS, MarkerArray)
  *
  * ──────────────────────────────────────────────────────────────
  *  7단계 파이프라인 (on_timer 콜백에서 순차 실행)
@@ -65,7 +66,7 @@
  *
  *   Stage 7: Publish (발행) → nodes/debug_publisher.hpp
  *     → Core: 최종 경로 + 플래너 상태
- *     → Debug: costmap, raw_path, chains, seeds
+ *     → Debug: costmap, raw_path, chains, seeds, lane_points
  *       (디버그 토픽은 구독자가 있을 때만 발행 → 연산 절약)
  *
  * ──────────────────────────────────────────────────────────────
@@ -205,6 +206,7 @@ private:
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_left_chain_;   ///< resolve_overlaps 이전 raw left backbone
   rclcpp::Publisher<nav_msgs::msg::Path>::SharedPtr pub_dbg_raw_right_chain_;  ///< resolve_overlaps 이전 raw right backbone
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr pub_dbg_timing_;         ///< 파이프라인 스테이지별 소요시간 (lazy)
+  rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr pub_dbg_lane_points_;  ///< 카메라 수신 차선 포인트 (마젠타 POINTS)
 
   // ── TF2 (velodyne → base_link 변환) ──
   std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
