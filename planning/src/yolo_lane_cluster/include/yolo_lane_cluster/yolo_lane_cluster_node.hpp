@@ -83,6 +83,9 @@ struct YoloLaneClusterParams
   // 시드 타임아웃 — 이 시간 동안 chaining 미성공 시 seed 초기 위치로 리셋
   double seed_timeout_sec = 3.0;
 
+  // Holdover — chaining 실패 시 이전 결과 재발행
+  int holdover_frames = 3;   ///< 최대 holdover 프레임 수
+
   // 가상 차선
   double track_width = 1.6;
 
@@ -192,6 +195,10 @@ private:
   SeedState right_seed_;
   rclcpp::Time left_seed_last_seen_;    ///< 왼쪽 seed 마지막 chaining 성공 시각
   rclcpp::Time right_seed_last_seen_;   ///< 오른쪽 seed 마지막 chaining 성공 시각
+
+  // ── Holdover: 이전 프레임 결과 버퍼 ──
+  ev_msgs::msg::LaneBoundaryArray last_output_;   ///< 마지막 유효 출력
+  int holdover_remaining_ = 0;                     ///< 남은 holdover 프레임 수
 
   // ── 파라미터 ──
   YoloLaneClusterParams params_;

@@ -16,7 +16,7 @@ pure_pursuit_relative_node:
     lateral_accel_limit: 0.4  # [m/s^2] 곡률 기반 감속 한계 (v=√(a/κ), 반경5.6m부터 감속, 하드웨어한계 κ=0.443에서 v=0.64) 0.1 부근에서 +-0.05정도만 바꾸는게 좋을듯?
     preview_distance: 2.50   # [m] 전방 curvature preview 거리
     preview_curvature_percentile: 0.90  # [0~1] preview 곡률 percentile (1.0=max, 0.9=상위10% 노이즈 제거)
-    accel_rate: 0.65         # [m/s^2] 직선 가속 rate limit
+    accel_rate: 0.50         # [m/s^2] 직선 가속 rate limit
     decel_rate: 3.0         # [m/s^2] 정상 감속 rate limit (코너 진입 + 제동거리 기반 감속)
     emergency_decel_rate: 3.0  # [m/s^2] 긴급 정지 감속 rate limit (FAIL, timeout 등)
     emergency_stop_count: 30   # FAIL 연속 N회 시 긴급 감속 시작 (50Hz 기준 10회 = 200ms)

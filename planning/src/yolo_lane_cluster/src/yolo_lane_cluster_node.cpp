@@ -29,6 +29,7 @@ YoloLaneClusterNode::YoloLaneClusterNode(const rclcpp::NodeOptions & options)
   params_.seed_left_y        = declare_parameter("seed.left_y", 0.8);
   params_.seed_right_y       = declare_parameter("seed.right_y", -0.8);
   params_.seed_timeout_sec   = declare_parameter("seed.timeout_sec", 3.0);
+  params_.holdover_frames    = declare_parameter("holdover.frames", 3);
   params_.track_width        = declare_parameter("virtual_lane.track_width", 1.6);
 
   auto & cp = params_.chainer;
@@ -191,28 +192,16 @@ void YoloLaneClusterNode::on_lane_boundaries(
   int right_chain_seed = (right_cluster >= 0) ? find_xmin_in_cluster(right_cluster) : -1;
 
   // ── Step 4: Backbone Chaining ──
-  // chaining 결과가 6개 이하면 fallback: 클러스터 전체 포인트 사용
-  auto collect_cluster = [&](int cluster_label) -> std::vector<int> {
-    std::vector<int> idxs;
-    for (int i = 0; i < static_cast<int>(points.size()); ++i) {
-      if (points[i].label == cluster_label) idxs.push_back(i);
-    }
-    return idxs;
-  };
-
+  // chaining 결과 ≤ 5이면 버리고 holdover에 맡김
   std::vector<int> left_bb, right_bb;
 
   if (left_chain_seed >= 0) {
     left_bb = extract_backbone(points, left_chain_seed, true);
-    if (left_bb.size() <= 6) {
-      left_bb = collect_cluster(left_cluster);
-    }
+    if (left_bb.size() <= 5) left_bb.clear();
   }
   if (right_chain_seed >= 0) {
     right_bb = extract_backbone(points, right_chain_seed, false);
-    if (right_bb.size() <= 6) {
-      right_bb = collect_cluster(right_cluster);
-    }
+    if (right_bb.size() <= 5) right_bb.clear();
   }
 
   // ── Step 5: Overlap 해소 ──
@@ -224,8 +213,11 @@ void YoloLaneClusterNode::on_lane_boundaries(
   bool left_chained  = (left_bb.size() >= 2);
   bool right_chained = (right_bb.size() >= 2);
 
+  // seed x는 ego 근처에 머물러야 함 — 앞으로 drift 방지
+  constexpr double SEED_X_MAX = 1.0;
+
   if (left_chained && left_chain_seed >= 0) {
-    left_seed_.center_x = points[left_chain_seed].x;
+    left_seed_.center_x = std::min(points[left_chain_seed].x, SEED_X_MAX);
     left_seed_.center_y = points[left_chain_seed].y;
     left_seed_last_seen_ = now;
     // y가 반대쪽으로 drift하면 초기값으로 리셋
@@ -235,7 +227,7 @@ void YoloLaneClusterNode::on_lane_boundaries(
     }
   }
   if (right_chained && right_chain_seed >= 0) {
-    right_seed_.center_x = points[right_chain_seed].x;
+    right_seed_.center_x = std::min(points[right_chain_seed].x, SEED_X_MAX);
     right_seed_.center_y = points[right_chain_seed].y;
     right_seed_last_seen_ = now;
     if (right_seed_.center_y >= 0.0) {
@@ -251,6 +243,9 @@ void YoloLaneClusterNode::on_lane_boundaries(
   if (left_chained && right_chained) {
     auto left_bd  = backbone_to_boundary(points, left_bb, msg->header);
     auto right_bd = backbone_to_boundary(points, right_bb, msg->header);
+    // 실제 차선 backbone에도 outlier 필터 적용
+    filter_virtual_lane_outliers(left_bd);
+    filter_virtual_lane_outliers(right_bd);
     double left_len  = path_length(left_bd);
     double right_len = path_length(right_bd);
 
@@ -278,6 +273,7 @@ void YoloLaneClusterNode::on_lane_boundaries(
 
   } else if (left_chained) {
     auto left_bd = backbone_to_boundary(points, left_bb, msg->header);
+    filter_virtual_lane_outliers(left_bd);
     left_bd.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
     auto virtual_right = generate_virtual_lane(left_bd, LaneSide::LEFT);
     filter_virtual_lane_outliers(virtual_right);
@@ -290,6 +286,7 @@ void YoloLaneClusterNode::on_lane_boundaries(
 
   } else if (right_chained) {
     auto right_bd = backbone_to_boundary(points, right_bb, msg->header);
+    filter_virtual_lane_outliers(right_bd);
     right_bd.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
     auto virtual_left = generate_virtual_lane(right_bd, LaneSide::RIGHT);
     filter_virtual_lane_outliers(virtual_left);
@@ -299,6 +296,21 @@ void YoloLaneClusterNode::on_lane_boundaries(
       left_virtual = true;
     }
     output.boundaries.push_back(right_bd);
+  }
+
+  // ── Holdover: 결과가 없으면 이전 프레임 결과 재발행 ──
+  if (output.boundaries.empty()) {
+    if (holdover_remaining_ > 0) {
+      last_output_.header = msg->header;  // 타임스탬프만 갱신
+      pub_->publish(last_output_);
+      --holdover_remaining_;
+      publish_debug_markers(last_output_, false, false, false, false);
+      return;
+    }
+  } else {
+    // 유효 결과 → 버퍼 저장 + holdover 카운터 리셋
+    last_output_ = output;
+    holdover_remaining_ = params_.holdover_frames;
   }
 
   pub_->publish(output);
