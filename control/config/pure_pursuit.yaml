@@ -13,7 +13,7 @@ pure_pursuit_relative_node:
     speed: 0.7               # [m/s] legacy fallback
     speed_min: 0.2         # [m/s] 급코너 최소 속도
     speed_max: 1.0            # [m/s] 직선 최대 속도
-    lateral_accel_limit: 0.4  # [m/s^2] 곡률 기반 감속 한계 (v=√(a/κ), 반경5.6m부터 감속, 하드웨어한계 κ=0.443에서 v=0.64) 0.1 부근에서 +-0.05정도만 바꾸는게 좋을듯?
+    lateral_accel_limit: 0.24  # [m/s^2] 곡률 기반 감속 한계 (v=√(a/κ), 반경5.6m부터 감속, 하드웨어한계 κ=0.443에서 v=0.64) 0.1 부근에서 +-0.05정도만 바꾸는게 좋을듯?
     preview_distance: 2.50   # [m] 전방 curvature preview 거리
     preview_curvature_percentile: 0.90  # [0~1] preview 곡률 percentile (1.0=max, 0.9=상위10% 노이즈 제거)
     accel_rate: 0.5         # [m/s^2] 직선 가속 rate limit
@@ -26,7 +26,7 @@ pure_pursuit_relative_node:
     path_drop_ratio: 0.4         # avg 대비 이 비율 이하면 급락 후보
     stop_margin_speed_low: 0.5   # [m/s] stop_margin 하한 속도
     stop_margin_speed_high: 1.0  # [m/s] stop_margin 상한 속도
-    stop_margin_low: 1.5         # [m] 하한 속도에서의 정지 여유거리
+    stop_margin_low: 1.6         # [m] 하한 속도에서의 정지 여유거리
     stop_margin_high: 2.5        # [m] 상한 속도에서의 정지 여유거리
     delta_max: 0.3249         # [rad] 최대 조향각 (~18도)
     path_timeout_sec: 0.5    # [s] 경로 타임아웃
@@ -35,5 +35,5 @@ pure_pursuit_relative_node:
     # --- CREEP 모드 (경로 실패 시 전방 clear면 저속 직진) ---
     creep_speed: 0.4         # [m/s] CREEP 시 직진 속도
     creep_roi_x_offset: 0.9  # [m] ROI 시작 x 오프셋 (앞범퍼 위치, base_link 기준)
-    creep_roi_x: 0.4         # [m] 전방 판정 거리 (roi_x_offset부터)
-    creep_roi_y: 1.6         # [m] 좌우 판정 폭 (±)
+    creep_roi_x: 0.5         # [m] 전방 판정 거리 (roi_x_offset부터)
+    creep_roi_y: 1.4         # [m] 좌우 판정 폭 (±)

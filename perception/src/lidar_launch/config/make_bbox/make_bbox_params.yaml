@@ -14,9 +14,9 @@ make_bbox:
     # 클러스터 분할 (붙어있는 콘 분리용)
     # XY 최장축이 cone_diameter보다 크면 k=round(최장축/cone_diameter)로 K-means 분할
     enable_cluster_split: true
-    split_cone_diameter_m: 0.3    # 콘 지름 기준 (m)
+    split_cone_diameter_m: 0.6    # 콘 지름 기준 (m)
     split_kmeans_max_iter: 15     # K-means 최대 반복
-    split_min_points: 10           # 분할 후 최소 포인트 수 (미달 시 버림)
+    split_min_points: 0           # 분할 후 최소 포인트 수 (미달 시 버림)
 
 
     # bbox 크기 상한 필터 (대회 라바콘 규격 + 0.05m 패딩)
@@ -26,13 +26,13 @@ make_bbox:
     #   - 가로(X): 약 0.500 m
     #   - 세로(Y): 약 0.500 m
     #   - 높이(Z): 약 0.840 m
-    max_size_x: 0.3
-    max_size_y: 0.3
-    max_size_z: 0.60
+    max_size_x: 0.35
+    max_size_y: 0.35
+    max_size_z: 0.7
 
     # 클러스터 중심 z 필터 (velodyne 프레임 기준, tf변환 전)
     # 클러스터 중심(center)의 z좌표가 범위 밖이면 bbox를 생성하지 않음
-    max_center_z: 0.5
+    max_center_z: 0.7
     min_center_z: -0.4
 
     # bbox 크기 하한 필터 (납작한 바닥 노이즈 클러스터 제거)
@@ -57,5 +57,5 @@ make_bbox:
     #   비-라바콘(ratio>=1.0): 3.0% (919개)  base=0.33m  height=0.26m
     #
     # 0.9 = p95 기준, 라바콘 95%+ 유지하면서 넓적한 비-라바콘 제거
-    max_base_height_ratio: 0.75
+    max_base_height_ratio: 0.95
 
