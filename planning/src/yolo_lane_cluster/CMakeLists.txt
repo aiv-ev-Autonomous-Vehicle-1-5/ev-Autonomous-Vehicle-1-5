@@ -34,7 +34,7 @@ include_directories(include)
 # ============================================================================
 add_library(yolo_lane_cluster_component SHARED
   src/yolo_lane_cluster_node.cpp
-  src/seed_tracker.cpp
+  src/lane_chainer.cpp
   src/virtual_lane_gen.cpp
   src/debug_publisher.cpp
 )

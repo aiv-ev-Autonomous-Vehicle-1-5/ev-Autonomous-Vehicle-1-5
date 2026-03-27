@@ -26,13 +26,13 @@ lc_planner_node:
     chainer:
       # --- Seed 선택 ---
       side_seed_y: 0.15        # [m] |y| < 이 값이면 seed 후보 제외
-      seed_max_dist: 3.5 # [m] seed 탐색 최대 거리 (Pass 1/2 공통)
+      seed_max_dist: 4.0 # [m] seed 탐색 최대 거리 (Pass 1/2 공통)
       seed_rear_limit: 1.0   # [m] x < -이 값이면 seed 후보 제외 (후방 제한)
 
       # --- kNN + 게이트 ---
       k: 30                    # centroid kNN 후보 수
-      d_max_bbox: 2.5     # [m] 현재 노드가 BBOX일 때 탐색 최대 거리
-      d_max_lane: 2.5     # [m] 현재 노드가 LANE일 때 탐색 최대 거리
+      d_max_bbox: 2.25    # [m] 현재 노드가 BBOX일 때 탐색 최대 거리
+      d_max_lane: 2.25     # [m] 현재 노드가 LANE일 때 탐색 최대 거리
       forward_cone_deg: 120.0 # [deg] 전방 cone 전체 각도 (±60°)
       lateral_gate: 1.3      # [m] 횡방향 오차 한계
 
@@ -68,9 +68,9 @@ lc_planner_node:
       resolution: 0.15          # [m/cell] (1.5m 차로 = 10셀)
       bbox_cost_max: 100.0      # bbox 최대 비용(==costmap max cost)
       lane_cost_max: 80.0       # 차선 최대 비용 (낮아서 넘을 수 있음)
-      bbox_radius: 0.4         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
-      unchained_bbox_radius: 0.56  # unchained bbox 전용 flat zone 반경 [m] (backbone 미체이닝 장애물)
-      lane_radius: 0.4           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
+      bbox_radius: 0.55         # bbox flat zone 반경: 0.65 + (width/2) = 0.65 + 0.375 ≈ 1.025
+      unchained_bbox_radius: 0.55  # unchained bbox 전용 flat zone 반경 [m] (backbone 미체이닝 장애물)
+      lane_radius: 0.3           # lane flat zone 반경 [m] (0.0 = flat zone 없음)
       sigma: 1.0                # [m] 가우시안 확산
       cost_threshold: 15.0       # 이 이하 비용 무시
       entry_wall_ego_y: 2.5     # [m] costmap 하단 양옆 가상 bbox 시작점 횡방향 오프셋

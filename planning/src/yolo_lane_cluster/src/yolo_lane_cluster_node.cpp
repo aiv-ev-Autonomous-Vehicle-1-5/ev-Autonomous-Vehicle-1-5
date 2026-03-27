@@ -4,16 +4,20 @@
  *
  * [처리 흐름]
  *   1. /perception/raw_lane_boundaries 수신
- *   2. 왼쪽/오른쪽 시드로 클러스터 매칭
- *   3. 양쪽 매칭 시 긴 쪽 선택 → track_width 안쪽 오프셋으로 반대편 가상 차선 생성
- *      한쪽만 매칭 시 가상 반대편 차선 생성 (기존 로직)
- *   4. 모든 boundary에 lane_side 라벨 (LEFT/RIGHT) 설정
- *   5. /perception/lane_boundaries 발행
- *   6. 디버그 마커 발행 (lazy)
+ *   2. 모든 클러스터 포인트를 LanePoint 풀로 flat화
+ *   3. LEFT/RIGHT seed로 가장 가까운 클러스터 선택
+ *   4. 선택된 클러스터의 x_min 포인트를 chaining seed로 backbone chaining
+ *   5. Backtracking으로 overlap 해소
+ *   6. 클러스터의 x_min (x,y)를 다음 프레임 seed 중심으로 저장
+ *   7. 긴 쪽 채택 + 가상 반대편 차선 생성
+ *   8. /perception/lane_boundaries 발행
  */
 #include "yolo_lane_cluster/yolo_lane_cluster_node.hpp"
 
+#include <algorithm>
 #include <cmath>
+#include <limits>
+#include <numeric>
 
 namespace yolo_lane_cluster
 {
@@ -22,39 +26,51 @@ YoloLaneClusterNode::YoloLaneClusterNode(const rclcpp::NodeOptions & options)
 : Node("yolo_lane_cluster_node", options)
 {
   // ── 파라미터 선언 ──
-  params_.seed_init_x        = declare_parameter("seed.init_x", 0.0);
-  params_.seed_left_y        = declare_parameter("seed.left_y", 0.75);
-  params_.seed_right_y       = declare_parameter("seed.right_y", -0.75);
-  params_.search_rect_width  = declare_parameter("seed.search_rect_width", 2.0);
-  params_.search_rect_height = declare_parameter("seed.search_rect_height", 8.0);
-  params_.track_width        = declare_parameter("virtual_lane.track_width", 1.5);
+  params_.seed_left_y        = declare_parameter("seed.left_y", 0.8);
+  params_.seed_right_y       = declare_parameter("seed.right_y", -0.8);
+  params_.seed_timeout_sec   = declare_parameter("seed.timeout_sec", 3.0);
+  params_.track_width        = declare_parameter("virtual_lane.track_width", 1.6);
 
-  // ── 시드 초기화 ──
-  reset_seed(left_seed_, LaneSide::LEFT);
-  reset_seed(right_seed_, LaneSide::RIGHT);
+  auto & cp = params_.chainer;
+  cp.d_max             = declare_parameter("chainer.d_max", 2.5);
+  cp.forward_cone_deg  = declare_parameter("chainer.forward_cone_deg", 120.0);
+  cp.lateral_gate      = declare_parameter("chainer.lateral_gate", 1.3);
+  cp.alpha             = declare_parameter("chainer.alpha", 1.2);
+  cp.beta              = declare_parameter("chainer.beta", 1.2);
+  cp.gamma             = declare_parameter("chainer.gamma", 0.7);
+  cp.lambda_side       = declare_parameter("chainer.lambda_side", 0.5);
+  cp.max_backtrack_count = declare_parameter("chainer.max_backtrack_count", 5);
+  cp.backtrack_w_curv  = declare_parameter("chainer.backtrack_w_curv", 1.0);
+  cp.backtrack_w_dist  = declare_parameter("chainer.backtrack_w_dist", 1.0);
+  cp.max_chain_len     = declare_parameter("chainer.max_chain_len", 300);
+
+  // ── Seed 초기화 ──
+  left_seed_.center_x  = 0.0;
+  left_seed_.center_y  = params_.seed_left_y;
+  right_seed_.center_x = 0.0;
+  right_seed_.center_y = params_.seed_right_y;
+  left_seed_last_seen_  = rclcpp::Time(0, 0, RCL_ROS_TIME);
+  right_seed_last_seen_ = rclcpp::Time(0, 0, RCL_ROS_TIME);
 
   // ── QoS: Best Effort, depth=1 ──
   rclcpp::QoS qos_be(1);
   qos_be.best_effort();
 
-  // ── 구독: 카메라 raw 차선 ──
   sub_ = create_subscription<ev_msgs::msg::LaneBoundaryArray>(
     "/perception/raw_lane_boundaries", qos_be,
     [this](ev_msgs::msg::LaneBoundaryArray::SharedPtr msg) {
       on_lane_boundaries(msg);
     });
 
-  // ── 발행: 가공된 차선 → planning ──
   pub_ = create_publisher<ev_msgs::msg::LaneBoundaryArray>(
     "/perception/lane_boundaries", qos_be);
 
-  // ── 디버그 발행 (lazy) ──
   rclcpp::QoS qos_debug(1);
   qos_debug.best_effort();
   debug_pub_ = create_publisher<visualization_msgs::msg::MarkerArray>(
     "/yolo_lane_cluster/debug/lane_points", qos_debug);
 
-  RCLCPP_INFO(get_logger(), "Yolo Lane Cluster 노드 가동!");
+  RCLCPP_INFO(get_logger(), "Yolo Lane Cluster 노드 가동! (backbone chaining 모드)");
 }
 
 void YoloLaneClusterNode::on_lane_boundaries(
@@ -68,84 +84,226 @@ void YoloLaneClusterNode::on_lane_boundaries(
     return;
   }
 
-  // ── Step 1: 시드 매칭 ──
-  int left_idx  = match_cluster_to_seed(left_seed_, *msg, -1);
-  int right_idx = match_cluster_to_seed(right_seed_, *msg, left_idx);
+  // ── Step 1: 포인트 풀 생성 ──
+  std::vector<LanePoint> points;
+  for (int bi = 0; bi < static_cast<int>(msg->boundaries.size()); ++bi) {
+    for (const auto & pt : msg->boundaries[bi].points) {
+      points.push_back({pt.x, pt.y, bi});
+    }
+  }
 
-  // 둘 다 같은 클러스터 매칭 방지 (left가 이미 exclude)
-  // right_idx에서 left_idx를 제외했으므로 충돌 없음
+  if (points.empty()) {
+    pub_->publish(output);
+    return;
+  }
 
-  // ── Step 2: 출력 구성 ──
-  bool left_matched  = (left_idx >= 0);
-  bool right_matched = (right_idx >= 0);
+  // ── Seed 타임아웃: 일정 시간 chaining 미성공 시 초기 위치로 리셋 ──
+  const rclcpp::Time now = msg->header.stamp;
+  const rclcpp::Duration timeout =
+    rclcpp::Duration::from_seconds(params_.seed_timeout_sec);
+
+  if (left_seed_last_seen_.nanoseconds() > 0 &&
+      (now - left_seed_last_seen_) > timeout) {
+    left_seed_.center_x = 0.0;
+    left_seed_.center_y = params_.seed_left_y;
+    RCLCPP_WARN(get_logger(), "LEFT seed 타임아웃 → 초기 위치로 리셋");
+  }
+  if (right_seed_last_seen_.nanoseconds() > 0 &&
+      (now - right_seed_last_seen_) > timeout) {
+    right_seed_.center_x = 0.0;
+    right_seed_.center_y = params_.seed_right_y;
+    RCLCPP_WARN(get_logger(), "RIGHT seed 타임아웃 → 초기 위치로 리셋");
+  }
+
+  // ── Step 2: 클러스터별 하단 K개 포인트의 평균 y로 좌/우 판별 ──
+  // 단일 x_min 포인트 대신 x가 가장 작은 K개의 평균 y를 사용하여
+  // 노이즈에 의한 좌/우 판별 플리핑 방지
+  const int num_clusters = static_cast<int>(msg->boundaries.size());
+  constexpr int K_BOTTOM = 5;  // 하단 포인트 수
+
+  std::vector<double> cluster_bottom_avg_y(num_clusters, 0.0);
+  for (int c = 0; c < num_clusters; ++c) {
+    const auto & bpts = msg->boundaries[c].points;
+    if (bpts.empty()) continue;
+
+    // x 기준 정렬된 인덱스 생성 (작은 순)
+    std::vector<int> sorted_idx(bpts.size());
+    std::iota(sorted_idx.begin(), sorted_idx.end(), 0);
+    std::partial_sort(sorted_idx.begin(),
+      sorted_idx.begin() + std::min(K_BOTTOM, static_cast<int>(bpts.size())),
+      sorted_idx.end(),
+      [&](int a, int b) { return bpts[a].x < bpts[b].x; });
+
+    // 하단 K개 평균 y
+    int k = std::min(K_BOTTOM, static_cast<int>(bpts.size()));
+    double sum_y = 0.0;
+    for (int i = 0; i < k; ++i) {
+      sum_y += bpts[sorted_idx[i]].y;
+    }
+    cluster_bottom_avg_y[c] = sum_y / k;
+  }
+
+  // dead zone: |avg_y| < 이 값이면 양쪽 seed 모두 후보 허용 (seed 거리로 결정)
+  // 커브에서 클러스터 하단이 y≈0 근처일 때 플리핑 방지
+  constexpr double SIDE_DEAD_ZONE = 0.15;
+
+  auto find_cluster_for_seed = [&](double sx, double sy, int exclude_cluster, bool want_left) -> int {
+    double best_sq = std::numeric_limits<double>::max();
+    int best_cluster = -1;
+    for (int i = 0; i < static_cast<int>(points.size()); ++i) {
+      int cl = points[i].label;
+      if (cl == exclude_cluster) continue;
+      // dead zone 밖에서만 hard y-sign 체크, 안에서는 양쪽 허용
+      double avg_y = cluster_bottom_avg_y[cl];
+      if (want_left && avg_y < -SIDE_DEAD_ZONE) continue;
+      if (!want_left && avg_y > SIDE_DEAD_ZONE) continue;
+      double dx = points[i].x - sx;
+      double dy = points[i].y - sy;
+      double d_sq = dx * dx + dy * dy;
+      if (d_sq < best_sq) {
+        best_sq = d_sq;
+        best_cluster = cl;
+      }
+    }
+    return best_cluster;
+  };
+
+  int left_cluster  = find_cluster_for_seed(
+    left_seed_.center_x, left_seed_.center_y, -1, true);
+  int right_cluster = find_cluster_for_seed(
+    right_seed_.center_x, right_seed_.center_y, left_cluster, false);
+
+  // ── Step 3: 각 클러스터의 x_min 포인트 → chaining seed ──
+  auto find_xmin_in_cluster = [&](int cluster_label) -> int {
+    int best = -1;
+    double min_x = std::numeric_limits<double>::max();
+    for (int i = 0; i < static_cast<int>(points.size()); ++i) {
+      if (points[i].label != cluster_label) continue;
+      if (points[i].x < min_x) {
+        min_x = points[i].x;
+        best = i;
+      }
+    }
+    return best;
+  };
+
+  int left_chain_seed  = (left_cluster >= 0)  ? find_xmin_in_cluster(left_cluster)  : -1;
+  int right_chain_seed = (right_cluster >= 0) ? find_xmin_in_cluster(right_cluster) : -1;
+
+  // ── Step 4: Backbone Chaining ──
+  // chaining 결과가 6개 이하면 fallback: 클러스터 전체 포인트 사용
+  auto collect_cluster = [&](int cluster_label) -> std::vector<int> {
+    std::vector<int> idxs;
+    for (int i = 0; i < static_cast<int>(points.size()); ++i) {
+      if (points[i].label == cluster_label) idxs.push_back(i);
+    }
+    return idxs;
+  };
+
+  std::vector<int> left_bb, right_bb;
+
+  if (left_chain_seed >= 0) {
+    left_bb = extract_backbone(points, left_chain_seed, true);
+    if (left_bb.size() <= 6) {
+      left_bb = collect_cluster(left_cluster);
+    }
+  }
+  if (right_chain_seed >= 0) {
+    right_bb = extract_backbone(points, right_chain_seed, false);
+    if (right_bb.size() <= 6) {
+      right_bb = collect_cluster(right_cluster);
+    }
+  }
+
+  // ── Step 5: Overlap 해소 ──
+  if (!left_bb.empty() && !right_bb.empty()) {
+    resolve_overlaps(points, left_bb, right_bb);
+  }
+
+  // ── Step 6: Seed 추적 업데이트 — 매칭 클러스터의 x_min (x,y) ──
+  bool left_chained  = (left_bb.size() >= 2);
+  bool right_chained = (right_bb.size() >= 2);
+
+  if (left_chained && left_chain_seed >= 0) {
+    left_seed_.center_x = points[left_chain_seed].x;
+    left_seed_.center_y = points[left_chain_seed].y;
+    left_seed_last_seen_ = now;
+    // y가 반대쪽으로 drift하면 초기값으로 리셋
+    if (left_seed_.center_y <= 0.0) {
+      left_seed_.center_x = 0.0;
+      left_seed_.center_y = params_.seed_left_y;
+    }
+  }
+  if (right_chained && right_chain_seed >= 0) {
+    right_seed_.center_x = points[right_chain_seed].x;
+    right_seed_.center_y = points[right_chain_seed].y;
+    right_seed_last_seen_ = now;
+    if (right_seed_.center_y >= 0.0) {
+      right_seed_.center_x = 0.0;
+      right_seed_.center_y = params_.seed_right_y;
+    }
+  }
+
+  // ── Step 7: 출력 구성 ──
   bool left_virtual  = false;
   bool right_virtual = false;
 
-  if (left_matched && right_matched) {
-    // 양쪽 다 보임 → 긴 쪽 선택, 반대편은 가상 생성
-    const auto & left_bd  = msg->boundaries[left_idx];
-    const auto & right_bd = msg->boundaries[right_idx];
+  if (left_chained && right_chained) {
+    auto left_bd  = backbone_to_boundary(points, left_bb, msg->header);
+    auto right_bd = backbone_to_boundary(points, right_bb, msg->header);
     double left_len  = path_length(left_bd);
     double right_len = path_length(right_bd);
 
     if (left_len >= right_len) {
-      // 왼쪽이 길거나 같음 → 왼쪽 채택, 가상 오른쪽 생성
       auto virtual_right = generate_virtual_lane(left_bd, LaneSide::LEFT);
-      auto real_left = left_bd;
-      real_left.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
-      output.boundaries.push_back(real_left);
+      filter_virtual_lane_outliers(virtual_right);
+      left_bd.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
+      output.boundaries.push_back(left_bd);
       if (!virtual_right.points.empty()) {
         virtual_right.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
         output.boundaries.push_back(virtual_right);
         right_virtual = true;
       }
     } else {
-      // 오른쪽이 길음 → 오른쪽 채택, 가상 왼쪽 생성
       auto virtual_left = generate_virtual_lane(right_bd, LaneSide::RIGHT);
+      filter_virtual_lane_outliers(virtual_left);
       if (!virtual_left.points.empty()) {
         virtual_left.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
         output.boundaries.push_back(virtual_left);
         left_virtual = true;
       }
-      auto real_right = right_bd;
-      real_right.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
-      output.boundaries.push_back(real_right);
+      right_bd.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
+      output.boundaries.push_back(right_bd);
     }
-    update_seed(left_seed_, left_bd);
-    update_seed(right_seed_, right_bd);
 
-  } else if (left_matched) {
-    // 왼쪽만 보임 → 가상 오른쪽 차선 생성
-    auto left_bd = msg->boundaries[left_idx];
+  } else if (left_chained) {
+    auto left_bd = backbone_to_boundary(points, left_bb, msg->header);
     left_bd.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
     auto virtual_right = generate_virtual_lane(left_bd, LaneSide::LEFT);
+    filter_virtual_lane_outliers(virtual_right);
     output.boundaries.push_back(left_bd);
     if (!virtual_right.points.empty()) {
       virtual_right.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
       output.boundaries.push_back(virtual_right);
       right_virtual = true;
     }
-    update_seed(left_seed_, left_bd);
 
-  } else if (right_matched) {
-    // 오른쪽만 보임 → 가상 왼쪽 차선 생성
-    auto right_bd = msg->boundaries[right_idx];
+  } else if (right_chained) {
+    auto right_bd = backbone_to_boundary(points, right_bb, msg->header);
     right_bd.lane_side = ev_msgs::msg::LaneBoundary::SIDE_RIGHT;
     auto virtual_left = generate_virtual_lane(right_bd, LaneSide::RIGHT);
+    filter_virtual_lane_outliers(virtual_left);
     if (!virtual_left.points.empty()) {
       virtual_left.lane_side = ev_msgs::msg::LaneBoundary::SIDE_LEFT;
       output.boundaries.push_back(virtual_left);
       left_virtual = true;
     }
     output.boundaries.push_back(right_bd);
-    update_seed(right_seed_, right_bd);
   }
-  // else: 매칭 없음 → 빈 배열 발행
 
   pub_->publish(output);
 
-  // ── Step 3: 디버그 ──
-  publish_debug_markers(output, left_matched, right_matched,
+  publish_debug_markers(output, left_chained, right_chained,
                         left_virtual, right_virtual);
 }
 

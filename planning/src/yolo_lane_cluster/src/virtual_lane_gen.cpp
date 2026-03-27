@@ -76,4 +76,40 @@ ev_msgs::msg::LaneBoundary YoloLaneClusterNode::generate_virtual_lane(
   return vl;
 }
 
+void YoloLaneClusterNode::filter_virtual_lane_outliers(
+  ev_msgs::msg::LaneBoundary & vl,
+  double angle_threshold_deg)
+{
+  auto & pts = vl.points;
+  if (pts.size() < 3) return;
+
+  const double cos_thresh = std::cos(angle_threshold_deg * M_PI / 180.0);
+
+  // 인접 세그먼트 간 각도 변화가 임계값을 초과하는 포인트를 마킹
+  std::vector<bool> keep(pts.size(), true);
+
+  for (size_t i = 1; i + 1 < pts.size(); ++i) {
+    double ax = pts[i].x - pts[i - 1].x;
+    double ay = pts[i].y - pts[i - 1].y;
+    double bx = pts[i + 1].x - pts[i].x;
+    double by = pts[i + 1].y - pts[i].y;
+
+    double la = std::sqrt(ax * ax + ay * ay);
+    double lb = std::sqrt(bx * bx + by * by);
+    if (la < 1e-9 || lb < 1e-9) { keep[i] = false; continue; }
+
+    double cos_angle = (ax * bx + ay * by) / (la * lb);
+    if (cos_angle < cos_thresh) {
+      keep[i] = false;
+    }
+  }
+
+  std::vector<geometry_msgs::msg::Point> filtered;
+  filtered.reserve(pts.size());
+  for (size_t i = 0; i < pts.size(); ++i) {
+    if (keep[i]) filtered.push_back(pts[i]);
+  }
+  pts = std::move(filtered);
+}
+
 }  // namespace yolo_lane_cluster
