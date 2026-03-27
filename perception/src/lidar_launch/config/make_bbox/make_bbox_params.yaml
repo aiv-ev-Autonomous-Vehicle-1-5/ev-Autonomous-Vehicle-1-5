@@ -6,15 +6,15 @@ make_bbox:
     
     # 분할 ROI (base_link 기준, 클러스터 중심이 ROI 안에 있을 때만 분할)
     # 앞 범퍼(0.8,0)부터 전방 6m, 폭 4m
-    split_roi_x_min: 0.8          # 앞 범퍼 x (m)
-    split_roi_x_max: 3.8          # 앞 범퍼 + 6m
-    split_roi_y_min: -3.0         # 좌측 (m)
-    split_roi_y_max: 3.0          # 우측 (m)
+    split_roi_x_min: 0.3          # 앞 범퍼 x (m)
+    split_roi_x_max: 4.8          # 앞 범퍼 + 6m
+    split_roi_y_min: -4.0         # 좌측 (m)
+    split_roi_y_max: 4.0          # 우측 (m)
 
     # 클러스터 분할 (붙어있는 콘 분리용)
     # XY 최장축이 cone_diameter보다 크면 k=round(최장축/cone_diameter)로 K-means 분할
     enable_cluster_split: true
-    split_cone_diameter_m: 0.6    # 콘 지름 기준 (m)
+    split_cone_diameter_m: 0.4    # 콘 지름 기준 (m)
     split_kmeans_max_iter: 15     # K-means 최대 반복
     split_min_points: 0           # 분할 후 최소 포인트 수 (미달 시 버림)
 
@@ -32,7 +32,7 @@ make_bbox:
 
     # 클러스터 중심 z 필터 (velodyne 프레임 기준, tf변환 전)
     # 클러스터 중심(center)의 z좌표가 범위 밖이면 bbox를 생성하지 않음
-    max_center_z: 0.7
+    max_center_z: 0.3
     min_center_z: -0.4
 
     # bbox 크기 하한 필터 (납작한 바닥 노이즈 클러스터 제거)
@@ -57,5 +57,5 @@ make_bbox:
     #   비-라바콘(ratio>=1.0): 3.0% (919개)  base=0.33m  height=0.26m
     #
     # 0.9 = p95 기준, 라바콘 95%+ 유지하면서 넓적한 비-라바콘 제거
-    max_base_height_ratio: 0.95
+    max_base_height_ratio: 0.8
 

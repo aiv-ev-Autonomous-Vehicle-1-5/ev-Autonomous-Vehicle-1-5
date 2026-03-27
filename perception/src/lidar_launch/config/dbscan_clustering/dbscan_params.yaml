@@ -3,7 +3,7 @@ dbscan_clustering:
     input_topic: "/patchworkpp/nonground"
     output_topic: "/pointcloud/clustered"
     eps: 0.15
-    min_points: 10
+    min_points: 5
     max_neighbors: 1024
     max_points: 80000
     queue_size: 1

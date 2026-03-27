@@ -118,7 +118,7 @@ class YoloInstanceSegNode(Node):
                         pt.z = 0.0
                         boundary_points.append(pt)
 
-                    if not boundary_points:
+                    if len(boundary_points) < 5:
                         continue
 
                     # 차량에서 가까운 점부터 정렬 (x 오름차순)
